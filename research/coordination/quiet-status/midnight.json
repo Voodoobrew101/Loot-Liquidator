@@ -1,111 +1,281 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-20T05:18:13.889Z",
-  "status": "Five new item-side, source-attributed Looter reference datasets captured (three LIVE, two PTR) with 16 output-row occurrences; no new independent 0-inclusive current-build yield cohorts or validated event-level output ranks.",
+  "updated_at": "2026-11-20T06:16:54.449Z",
+  "status": "Existing original-source and held-study triage completed. No genuinely new independent completed-cast, zero-inclusive or current-build Midnight yield cohort found or added this run; no evidence JSONL created.",
   "task_ids": [
     "T0026",
     "T0049",
-    "T0039",
     "T0005",
+    "T0039",
     "T0003",
     "T0002",
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0026: new gear 251255 (rare two-hand weapon), 250019 (epic cloak), 260370 (epic cloth head), 251204 (PTR leather hands), 251202 (PTR shield/offhand) item-side Looter output rows; original linked rank IDs, at-cast bonus/ilvl, skill/spec/build missing",
-    "T0049: 272246 Miststalker's Wristbands 206 base tooltip versus selected 305 preview and contrary cannot-disenchant catalog flag, no player-at-cast itemLink",
-    "T0039/T0005: 237362 Umbral Tin per-output 0/1/2 stacks, exact 242606/242607/242610/242611/242786/242788 ranks and Eversong Diamond 242608 unlock, refunds unknown",
-    "T0003/T0002: 237359 Copper and 237365 Silver source-original complete casts and rank-specific hit histograms absent",
-    "T0045: 236761 Tranquility Bloom -> 245807 Powder Pigment completed 10-herb operation logs, output hit counts/zero histogram absent"
+    "T0026: numeric disenchant baselines by rarity (uncommon/rare/epic), item level, armor/weapon, patch/build and skill/specialization; distinguish full coverage from positive-only receipts",
+    "T0049: item 272246 Miststalker's Wristbands actual at-cast bonus/ilvl (versus base 206 and selectable 305 preview), client eligibility and source-Looter semantics, not inferred from selected tooltip",
+    "T0005/T0039: Umbral Tin Ore 237362 observed completed operations, rank-specific hits/zeros/positive-stack histograms, inputs saved versus refunded, 242608 unlock and seven exact output-linked IDs",
+    "T0003/T0002: fresh independent source-original completed-cast and output rank/hit observations for Refulgent Copper 237359 and Brilliant Silver 237365",
+    "T0045: 236761 Tranquility Bloom -> Powder Pigment 245807 per 10-herb mill measured complete casts/hits/zeros/quantity ranks; separate resourcefulness input refunds"
   ],
-  "newly_verified_fields_or_cohorts": [
-    "LIVE 251255 Greatsword: source pooled 117 DE submissions, Eversinging Dust rows 98/117 and 1/117; Radiant Shard 15/117; Dawn Crystal 3/117; unresolved exact material rank, identity and event overlap",
-    "LIVE 250019 cloak: 19 pooled DE submissions, two undifferentiated Dawn Crystal rows 12/19 and 7/19",
-    "LIVE 260370 head: 9 pooled submissions, undifferentiated Dawn Crystal rows 7/9 and 2/9",
-    "PTR 12.1.0 251204 hands: 46 pooled submissions, Radiant Shard rows 17/46 and 3/46; Dawn Crystal rows 16/46 and 9/46",
-    "PTR 12.1.0 251202 shield/offhand: 34 pooled submissions, Dawn Crystal rows 13/34 and 8/34; Radiant Shard rows 10/34 and 2/34",
-    "Each item table is a single mutable source-side aggregation; the 16 records are NOT 16 independent original cohorts. No verified source-original outputs, no at-cast ilvl."
+  "triage": [
+    {
+      "category": "reviewable_existing_source_identity",
+      "input_id": 237362,
+      "source": "https://www.wowhead.com/item=237362/umbral-tin-ore#comments",
+      "evidence": "research/v3/evidence/midnight/2026-10-30T1824-midnight-prospecting-studies.jsonl; research/v3/evidence/master/20261117T1705-cardinalai-umbral-tin-source-denominator-and-linked-output-ids.md",
+      "original_rows": "midnight-20261030-003..009",
+      "source_original": {
+        "nominal_ore": 4000,
+        "resourcefulness_stat_percent": 39.6,
+        "completed_casts": null,
+        "observed_castsWithDrop": null,
+        "per_cast_histograms": null,
+        "exact_output_links_and_totals": [
+          {
+            "itemID": 242608,
+            "units": 30
+          },
+          {
+            "itemID": 242610,
+            "units": 124
+          },
+          {
+            "itemID": 242611,
+            "units": 104
+          },
+          {
+            "itemID": 242606,
+            "units": 144
+          },
+          {
+            "itemID": 242607,
+            "units": 147
+          },
+          {
+            "itemID": 242787,
+            "units": 597
+          },
+          {
+            "itemID": 242788,
+            "units": 911
+          }
+        ]
+      },
+      "disposition": "reviewable; existing linked identities need authorized correction/normalization, not new study",
+      "hold_reason": "4000 nominal ore divided by recipe 5 is only 800 nominal ore-equivalent casts; original source does not establish 800 actual operations or output hit histograms. Queue T0005/T0039 incorrectly says 800 completed; request Master correction."
+    },
+    {
+      "category": "admitted_existing_cohort",
+      "input_id": 237364,
+      "source": "https://www.wowhead.com/item=237364/brilliant-silver-ore#comments",
+      "evidence": "research/v3/evidence/midnight/2026-10-30T1824-midnight-prospecting-studies.jsonl; research/v3/evidence/master/20261117T0703-cardinalai-brilliant-silver-original-itemlinks-rank-identity-audit.md",
+      "original_rows": "midnight-20261030-010..016",
+      "source_original": {
+        "completed_casts": 800,
+        "nominal_ore": 4000,
+        "ore_saved": 715,
+        "net_ore_consumed": 3285,
+        "resourcefulness_percent": 39.6,
+        "per_output_hit_counts": null,
+        "per_cast_histograms": null,
+        "exact_output_links_and_totals": [
+          {
+            "itemID": 242608,
+            "units": 43
+          },
+          {
+            "itemID": 242613,
+            "units": 111
+          },
+          {
+            "itemID": 242612,
+            "units": 114
+          },
+          {
+            "itemID": 242553,
+            "units": 153
+          },
+          {
+            "itemID": 242554,
+            "units": 145
+          },
+          {
+            "itemID": 242787,
+            "units": 671
+          },
+          {
+            "itemID": 242788,
+            "units": 874
+          }
+        ]
+      },
+      "disposition": "existing one original cohort, source IDs reviewable, no additional cast/hit data",
+      "hold_reason": "No per-output zeros or rank-family completeness; 671 glass of exact rank item 242787 does not mean 129 zero-glass operations."
+    },
+    {
+      "category": "held_eligibility_conflict",
+      "input_id": 272246,
+      "source": "https://www.wowhead.com/item=272246/miststalkers-wristbands#disenchanting",
+      "secondary_source": "https://www.wowdb.com/items/272246-miststalkers-wristbands",
+      "source_original": {
+        "pooled_table_denominator": 140,
+        "reported_output_occurrence_rows": [
+          {
+            "itemID": 243606,
+            "hits": 48
+          },
+          {
+            "itemID": 243605,
+            "hits": 41
+          },
+          {
+            "itemID": 243602,
+            "hits": 24
+          },
+          {
+            "itemID": 243603,
+            "hits": 24
+          },
+          {
+            "itemID": 243599,
+            "hits": 2
+          }
+        ],
+        "actual_at_cast_ilvl": null,
+        "actual_at_cast_bonus": null,
+        "confirmed_live_de_eligibility": null
+      },
+      "disposition": "held; do not admit to present-build rate/EV",
+      "hold_reason": "WoWDB says cannot be disenchanted; Wowhead aggregate may reflect other versions or semantics; generic item level206 and tooltip selected305 do not establish at-cast item level."
+    },
+    {
+      "category": "admitted_existing_reviewed_local_export",
+      "input_id": 244752,
+      "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/research/mechanics/2026-11-19-observation-formulas.md",
+      "source_original": {
+        "item_level": 165,
+        "rarity": "rare",
+        "equipment_class": "armor",
+        "specialization": "none",
+        "skill64": {
+          "completed_casts": 31,
+          "rank1_shard_243602_units": 30,
+          "rank2_shard_243603_units": 1
+        },
+        "skill82": {
+          "completed_casts": 405,
+          "rank1_shard_243602_units": 368,
+          "rank2_shard_243603_units": 37
+        },
+        "skill_unknown": {
+          "completed_casts": 12,
+          "rank1_units": 11,
+          "rank2_units": 1
+        }
+      },
+      "disposition": "previously reviewed, not new; maintain original hash-bound admission, do not copy into another source cohort",
+      "hold_reason": "Only same exact input rarity/variant scoped skill anchors; not a generalized specialization, uncommon dust or epic crystal curve."
+    },
+    {
+      "category": "held_duplicate",
+      "input_id": 236761,
+      "source": "https://www.reddit.com/r/woweconomy/comments/1rteoqr/no_money_gain_possible_with_inscription_mats/",
+      "evidence": "research/v3/evidence/master/2026-10-30T2145-tranquility-bloom-milling.jsonl",
+      "source_original": {
+        "nominal_herbs": 1000,
+        "input_rank": 2,
+        "reported_pooled_pigment_units": 1473,
+        "completed_mills": null,
+        "output_quality_item_id": null,
+        "hits": null,
+        "histogram": null
+      },
+      "disposition": "duplicate of existing original SeniorEmployment932 report; do not append",
+      "hold_reason": "Original post does not identify output ranks, actual completed operations, refunds, stack distribution or full output vector."
+    },
+    {
+      "category": "held_unavailable_original_spreadsheet",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1rpwov0/disenchantingshard_help/",
+      "evidence": "research/v3/evidence/midnight/2026-11-02T0813-aspalar-rare-shard-averages.jsonl",
+      "source_original": {
+        "approximate_casts": 5000,
+        "approximate_rank1_shard_average": 0.42,
+        "approximate_rank2_shard_average": 0.97,
+        "claimed_total_average": 1.45,
+        "exact_gear_ids": null,
+        "original_workbook_url": null
+      },
+      "disposition": "already transcribed reference; held",
+      "hold_reason": "Source-linked spreadsheet not publicly available; rank means sum to 1.39, not stated 1.45; no exact source-event denominators/ranks or output vector."
+    },
+    {
+      "category": "held_derived_calculator",
+      "source": "https://github.com/crystaltech/GoldAdvisorMidnight/blob/5b0b253c7039b2379942951166b0cbb41b525fe3/GoldAdvisorMidnight/Data/RecipesGenerated.lua",
+      "evidence": "database/research/midnight-pigment-calculator-source.json",
+      "source_original": {
+        "recipeID": 1269575,
+        "batch_herbs": 10,
+        "modeled_pigment_units_per_cast": 13,
+        "measured_casts": null,
+        "original_workbook_public_url": null
+      },
+      "disposition": "held as unmeasured projection, not a new study",
+      "hold_reason": "Generated from unavailable private workbook; 13 is model input and not a sample-derived new Midnight pigment yield."
+    },
+    {
+      "category": "held_reference_not_independent",
+      "inputs": [
+        251255,
+        250019,
+        260370,
+        251204,
+        251202
+      ],
+      "evidence": "research/v3/evidence/midnight/2026-11-20T0518-five-new-item-looter-reference-holds.jsonl",
+      "disposition": "prior run reference-only 16 output rows across five mutable item-side aggregates",
+      "hold_reason": "Original per-event ledgers, at-cast variant and output-rank source links lacking; no new independent cohorts this run."
+    }
   ],
+  "newly_verified_fields_or_cohorts": [],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": {
-    "measured_casts": 0,
-    "measured_castsWithDrop": 0,
-    "measured_totalQuantity": 0,
-    "measured_histograms": 0,
-    "source_reference_items": 5,
-    "source_reference_rows": 16,
-    "source_labeled_table_denominators": [
-      117,
-      19,
-      9,
-      46,
-      34
-    ],
-    "new_exact_input_ids": [
-      251255,
-      250019,
-      260370,
-      251204,
-      251202
-    ],
-    "verified_output_item_ids": []
+    "new_measured_casts": 0,
+    "new_measured_castsWithDrop": 0,
+    "new_measured_totalQuantity": 0,
+    "new_zero_outcome_counts": 0,
+    "new_histograms": 0,
+    "new_verified_at_cast_item_variants": 0,
+    "new_independently_grounded_cohorts": 0
   },
-  "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-20T0518-five-new-item-looter-reference-holds.jsonl"
-  ],
-  "evidence_record_ids": [
-    "midnight-20261120-0517-001",
-    "midnight-20261120-0517-002",
-    "midnight-20261120-0517-003",
-    "midnight-20261120-0517-004",
-    "midnight-20261120-0517-005",
-    "midnight-20261120-0517-006",
-    "midnight-20261120-0517-007",
-    "midnight-20261120-0517-008",
-    "midnight-20261120-0517-009",
-    "midnight-20261120-0517-010",
-    "midnight-20261120-0517-011",
-    "midnight-20261120-0517-012",
-    "midnight-20261120-0517-013",
-    "midnight-20261120-0517-014",
-    "midnight-20261120-0517-015",
-    "midnight-20261120-0517-016"
-  ],
+  "evidence_files_added_this_run": [],
+  "original_study_ids_added": [],
   "source_links": [
-    "https://www.wowhead.com/item=251255/recovered-sanctum-greatsword",
-    "https://www.wowhead.com/item=250019/leafdrape-of-the-luminous-bloom",
-    "https://www.wowhead.com/item=260370/visage-of-unseen-truths",
-    "https://www.wowhead.com/ptr/item=251204/corewrights-zappers",
-    "https://www.wowhead.com/ptr/item=251202/reflux-reflector"
+    "https://www.wowhead.com/item=237362/umbral-tin-ore#comments",
+    "https://www.wowhead.com/item=237364/brilliant-silver-ore#comments",
+    "https://www.wowhead.com/item=272246/miststalkers-wristbands#disenchanting",
+    "https://www.wowdb.com/items/272246-miststalkers-wristbands",
+    "https://www.reddit.com/r/woweconomy/comments/1rteoqr/no_money_gain_possible_with_inscription_mats/",
+    "https://www.reddit.com/r/woweconomy/comments/1rpwov0/disenchantingshard_help/",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/research/mechanics/2026-11-19-observation-formulas.md"
   ],
   "blockers": [
-    "Wowhead item-side Looter rows have no original per-character event ledger; displayed denom/hit counts are pooled and unverified as completed player casts. Potential cumulative snapshot overlap and cross-row overlap prevent independent weighting.",
-    "No exact output material IDs or rank for same-name Dawn Crystal/Eversinging Dust/Radiant Shard rows, no source timestamps, no observed stack histograms/total units, no source-at-cast itemLink, bonus, ilvl, quality, skill/specialization or client patch.",
-    "Current priority raw 272246 DE, 237362 Umbral Tin, 237359 Copper, 237365 Silver, 236761 milling remains absent; original Cardinalai/Honeybone/MikiMM/Insomnist evidence deliberately not duplicated.",
-    "PTR 12.1.0 251204/251202 source does not establish live-client disenchant eligibility."
+    "Owner/manager queue T0005/T0039 incorrectly labels 237362 Cardinalai 4000 ore as 800 actual completed prospects; queue is Master-owned and unchanged.",
+    "No source-original completed/provenance-scoped Umbral Tin 237362 prospect operations/hits/zeros/stack histograms, or refund event ledger; cannot infer probabilities from totals.",
+    "272246 actual itemLink bonus, at-cast ilvl and live eligibility remain unconfirmed despite Looter occurrence rows.",
+    "No new per-item per-setup original current-build DE cohorts for uncommon, epic, or weapons with complete output and zero coverage.",
+    "No public original Aspalar spreadsheet; old 1473-pigment Reddit and modeled workbook claims do not establish per-cast zero-inclusive milling yields.",
+    "Current intended build-time auto-review/tools are implementation/validation work; not executed or claimed deployed by this worker."
   ],
   "exhausted_sources": [
-    "Earlier owned Cardinalai June10 Tin 800-cast, MikiMM Courtly Wrists 1000-cast, Honeybone April Copper, Insomnist KP-only n=5294, and Kestevavild KP-only observations were not copied or conflated with loot yields.",
-    "Previously indexed 251259 bow, 250020 bindings, 250052 touch, 251258 pole and 251254 sword Looter aggregates were excluded from this run."
+    "Existing Cardinalai Tin/Silver original comments and manager Nov17 source-link audits already preserve these cohorts; neither was duplicated.",
+    "Existing SeniorEmployment932 Reddit post and Aspalar original forum/research records: no new original spreadsheet or event-level casts found.",
+    "Previously indexed five mutable Looter item-side aggregate tables from prior run not refiled as independent studies.",
+    "Owner Nov19 default-branch saved-history audit and measured-capture reviews were examined for identity and denominator classification; existing hash-bound cohorts not re-admitted."
   ],
-  "next_concrete_step": "Obtain raw Wowhead material hyperlinks/stack observations and unique source-event counts for 251255, 251204, 251202, 250019, 260370, then request owner/player exports for 272246 bonus+ilvl and 237362/236761 per-event processing with rank and Resourcefulness. If no raw exports appear, move to a distinct unsampled Midnight input rather than recycling source mirrors.",
+  "next_concrete_step": "Ask Master to correct T0005/T0039 237362 stale denominator and review existing seven source hyperlink IDs in a controlled normalization layer. Prioritize a genuinely original existing raw-event/cast/zero-inclusive export with matching input variant, patch and provenance for 272246 or rank-specific 237362; otherwise inspect another independently stored Midnight DE or milling study rather than recycling Looter or Reddit snapshots.",
+  "verified_base_commit_sha": "c0e4be31bd3b56bfa8997f94708c787dd3dcdfff",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "verified_base_commit_sha": "03d6be99771ff4d17f779033209848006b918fa1",
-  "commit_note": "Status and one new JSONL written in one atomic commit; that commit SHA cannot self-reference inside its own content. Verify exact new SHA and file read-back externally after fast-forward with expected head.",
-  "source_evidence_links": [
-    "https://www.wowhead.com/item=251255/recovered-sanctum-greatsword",
-    "https://www.wowhead.com/item=250019/leafdrape-of-the-luminous-bloom",
-    "https://www.wowhead.com/item=260370/visage-of-unseen-truths",
-    "https://www.wowhead.com/ptr/item=251204/corewrights-zappers",
-    "https://www.wowhead.com/ptr/item=251202/reflux-reflector"
-  ],
-  "exact_gaps": [
-    "272246 actual ilvl and bonus at-cast",
-    "237362 exact output rank and 0-inclusive sample",
-    "236761 powder pigment per-cast histogram"
-  ],
-  "newly_verified_fields": [
-    "Five distinct new item-side Looter pooled reference tables, 16 source-original row numerators/denominators; NOT five independent measured cohorts."
-  ]
+  "commit_note": "This update writes only the role-owned quiet status file. An exact Git commit SHA cannot self-reference in its own committed contents; verify resulting commit and file content externally. No new evidence file or PR is justified under Nov19 owner policy."
 }
