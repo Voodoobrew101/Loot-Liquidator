@@ -1,20 +1,20 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-20T12:14:59.643Z",
-  "status": "Original author-linked four-herb Midnight milling IDs and legacy eight-row reference model rechecked. Found output-rank crosswalk hazard and preserved two unknown nominal herb denominators; no new independent numeric cohort, no new JSONL.",
+  "updated_at": "2026-11-20T13:14:11.278Z",
+  "status": "Identified a distinct open-source disenchant collector with per-rarity/per-skill-tier saved attempts, material hit counts and totals; confirmed that it omits at-cast gear IDs and zero-known-material events. No independent player export or new measured cohort; no JSONL.",
   "task_ids": [
-    "T0045",
-    "T0039",
     "T0026",
     "T0049",
+    "T0039",
     "T0005",
+    "T0045",
     "T0003"
   ],
   "exact_gaps_targeted": [
-    "Midnight milling 236761/236770/236778/236776: independently verify linked output item IDs/ranks, reported output units and only source-stated input counts; actual completed 10-herb operations, refunds, hits, zeros, histogram, skill/spec/build still unknown.",
-    "Separate existing Russian kyzenbka original report from eight unmeasured 2026-10-28 legacy milling proxy rows; prevent mixed rank and modeled P=1/min3/max6/expected4.5 from being treated as source-observed or conflated with firsthand family units.",
-    "Midnight disenchant: 272246 at-cast item level, 305/206 preview conflict, game build, actual eligibility; original DE gear-rarity/skill/spec and 0..N events remain absent.",
-    "Umbral Tin 237362: 4,000 nominal ore at 39.6% Resourcefulness, actual completed casts/refund ledger and rank-specific output occurrences/histograms remain unknown."
+    "T0026: original live Midnight armor/weapon disenchant cohort stratified by exact input ID/actual item-level bonus, quality, skill/spec, build, per-rank output hits/quantities/zero-inclusive histogram.",
+    "T0049: Miststalker's Wristbands 272246 base ilvl 206 vs selected 305 and contradictory no-disenchant eligibility versus 140 aggregated Looter rows; require actual original event receipt.",
+    "T0039/T0005: Umbral Tin Ore 237362 nominal 4000 ores at 39.6% Resourcefulness, true completed operations, refunds, per-rank hits/zeros/histograms remain unknown.",
+    "T0045: Midnight 10-herb milling original completed operations, per-output IDs/ranks and zeros, refunds, patch, skill/spec remain unknown."
   ],
   "triage": [
     {
@@ -540,11 +540,52 @@
       },
       "disposition": "held: all eight modeled reference proxies; no measured cohort and no promotion to chance or expected units",
       "hold_reason": "Legacy proxy output IDs mix ranks across four herbs; for Argentleaf and Mana Lily the proxy chooses rank-2 pigments, while original linked kyzenbka outputs are rank-1 245803 and 245867. Do not align these rows by family name and impute a level-dependent yield or admission without actual at-cast output rank and events."
+    },
+    {
+      "category": "reviewable_new_external_collector_schema_no_original_player_cohort_20261120",
+      "source": "https://github.com/brandanq2/disenchanting-advisor/blob/main/Data/Tracking.lua",
+      "secondary_source": "https://github.com/brandanq2/disenchanting-advisor/blob/main/README.md",
+      "exact_publisher_source_blob_sha": "d8f9bee1a1a4b10819bc872b689506ba05106ad9",
+      "input_ids": null,
+      "output_ids": [
+        243599,
+        243600,
+        243602,
+        243603,
+        243605,
+        243606
+      ],
+      "source_original": {
+        "addon_name": "Disenchanting Advisor",
+        "collected_original_player_exports": 0,
+        "measured_disenchant_operations": null,
+        "source_at_cast_item_ids": null,
+        "at_cast_item_level_or_bonus": null,
+        "output_skill_grouping": "Midnight expansion 11 x gear quality 2/3/4 x 25-point effective enchanting skillTier (0/25/50/75/100 and potentially above)",
+        "savedvariables_bucket_fields": [
+          "expansionID",
+          "quality",
+          "skillTier",
+          "attempts",
+          "matTotals",
+          "matCounts"
+        ],
+        "code_counting_behavior": "RecordResult increments attempts once on BAG_UPDATE_DELAYED after at least one known mat addition and attributed equippable removal, then sums matTotals by exact material itemID and matCounts once per matched added item slot; pendingSource attaches delayed material event for at most 3 seconds.",
+        "zero_material_operations_capture": "not reliably possible: without any added known mat RecordResult is not called; absence is not counted",
+        "per_operation_histograms": null,
+        "source_item_input_link_persisted": false,
+        "player_profession_specialization_nodes_persisted": false,
+        "build_time_or_historical_epoch_per_cast": null,
+        "static_table_measured_cohorts": null
+      },
+      "disposition": "reviewable acquisition lead only; collector can preserve bucket-level attempts/output hit counters and quantities in real consented SavedVariables; NO published observed cohort found, do not admit formula/sample or assume zero inclusivity",
+      "hold_reason": "Public repository contains addon code but not consented original SavedVariables study. Source groups multiple itemIDs/item levels/armor and weapons by rarity and coarse skill tier. Bag-delta attribution can be confounded by unrelated transactions; missing known outputs do not increment attempts. Even a real export requires event-completeness, overlap, version/skill-profile verification before per-output rates. Static DisenchantData.lua probability tables are labeled approximate NEEDS DATA, not observed. No source for item 272246's true eligibility or at-cast bonus."
     }
   ],
   "newly_verified_fields_or_cohorts": [
-    "Read-through of original kyzenbka item hyperlinks independently reaffirms four existing source-linked Midnight milling input/output ID pairs and exact output units: 236761→245807=1305, 236770→245864=1286, 236778→245867=1336, 236776→245803=1335. First two nominal input totals are each 1000 herbs; neither is an actual completed operation count. Last two nominal input quantities are unreported.",
-    "Original source versus eight-row legacy CSV QA: author-linked Argentleaf 245803 rank 1 differs from proxy 245804 rank 2; Mana Lily 245867 rank 1 differs from proxy 245866 rank 2. All eight legacy CSV chances=1, yield min=3/max=6, E=4.5 are explicitly modeled with zero observed cast denominators. Previously stored numeric records not duplicated or promoted."
+    "Inspected independent Disenchanting Advisor source Tracking.lua: retained SavedVariables bucket fields are quality, expansionID, skillTier, attempts, matTotals (exact output IDs and units), matCounts (material-positive detected events). Buckets cover Midnight rarities uncommon=2, rare=3, epic=4 and effective skill 25-point bands.",
+    "Critical zero-inclusive limitation: RecordResult only fires after known material addition plus gear removal; no known-mat all-zero operation is counted. Mixed gear item IDs/ilvl/weapon vs armor are collapsed and at-cast timestamp/build/spec nodes not stored. No raw original player sample was publicly bundled, so all measured numerator/denominator fields remain null.",
+    "Static DisenchantData.lua Midnight probabilities/ranges explicitly say pre-launch approximation/NEEDS DATA; do not promote them to measured data. Output ID rank crosswalk corroborates known 243599/243600 dust, 243602/243603 shard, 243605/243606 crystal; no new independent output cohort."
   ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": {
@@ -555,24 +596,29 @@
     "new_histograms": 0,
     "new_verified_at_cast_item_variants": 0,
     "new_independently_grounded_cohorts": 0,
-    "original_linked_input_output_pairs_reverified_existing": 4,
-    "legacy_model_only_rows_triaged": 8
+    "newly_verified_external_collector_saved_bucket_field_names": [
+      "attempts",
+      "matTotals",
+      "matCounts",
+      "quality",
+      "expansionID",
+      "skillTier"
+    ],
+    "inferred_rate_or_coefficient_values_created": 0
   },
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://www.wowhead.com/ru/item=245807/powder-pigment",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/evidence/observations/2026-10-28-2214-midnight-q24-batch022-kyzenbka-four-family-original-aggregate.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-01T1414-de-stack-histograms-and-milling.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/ledger/midnight-milling-field-review-2026-10-28.csv",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-08T1422-four-pigment-rank-pairs.jsonl"
+    "https://github.com/brandanq2/disenchanting-advisor/blob/main/Data/Tracking.lua",
+    "https://github.com/brandanq2/disenchanting-advisor/blob/main/Data/DisenchantData.lua",
+    "https://github.com/brandanq2/disenchanting-advisor/blob/main/README.md"
   ],
   "blockers": [
-    "Original 236761 and 236770 nominal 1000-herb input statements are not 100 completed mills with Resourcefulness and interrupted operations unobserved; 236778/236776 nominal herb counts are genuinely unstated, not transferable from earlier rows.",
-    "Source-linked outputs mix pigment ranks (245807 Q1, 245864 Q2, 245867 Q1, 245803 Q1); eight legacy CSV proxies cannot substitute output ranks or measured yields. Need Master/build-review source-aware rank mapping before admission.",
-    "Midnight milling 10-herb per-operation output units/hits/zero-inclusive histograms, live build, skills, refund ledger remain absent.",
-    "272246 305 versus base 206 tooltip and cannot-disenchant versus Looter table requires original per-event game client and item bonus/level data; current live disenchant eligibility unproved.",
-    "Umbral Tin Ore 237362 4000 nominal ores and 39.6% Resourcefulness have no observed operation/refund denominator, per-rank hits, zeros or histogram."
+    "No real Disenchanting Advisor saved player records or authenticated provenance; public source code and static rate tables alone are not numeric evidence.",
+    "Bag snapshot collector does not count all-zero-known-material disenchants and can select only first removed eligible gear in a multi-removal diff; its attempts are detected positive-material attribution events, not validated all completed disenchants.",
+    "Source collapsed exact source item ID, bonus/item level, armor versus weapon, date/build and detailed spec into quality+coarse skill tier. Any unverified export cannot resolve Miststalker 272246 eligibility or create item-level curves.",
+    "Umbral Tin 237362 actual completed prospect cast/refund ledger and per-rank output hits/zero-inclusive histograms remain unknown; 4000 nominal ore not 800 observed casts.",
+    "Midnight milling actual completed casts, output hit and conditional stack histories, build/skill and refund basis remain unavailable."
   ],
   "exhausted_sources": [
     "Current Wowhead 272246 item/bonus preview and WoWDB eligibility: no raw Looter events or verified at-cast bonus.",
@@ -582,11 +628,12 @@
     "Wowhead current 258931 and 251883 public text views show item level 44 but no per-event Looter raw HTML/character context; pages have dynamic version-dependent preview.",
     "Blizzard March 2026 resourcefulness-bug forum records nominal shattering and refunds only, not eligible Midnight output-yield original cohort.",
     "kyzenbka 2026-11-20 original Wowhead item hyperlink and existing v3 transcription reconciled; no per-cast ledger, histograms, skill/build or refunds. Multiple reposts are the same original author.",
-    "eight-row milling proxy CSV checked 2026-11-20: modeled only, not a new original measured cohort. Existing Oct 28 QA and Nov 8 output-rank catalog confirm reference-only interpretation."
+    "eight-row milling proxy CSV checked 2026-11-20: modeled only, not a new original measured cohort. Existing Oct 28 QA and Nov 8 output-rank catalog confirm reference-only interpretation.",
+    "Disenchanting Advisor public GitHub addon source (Tracking.lua/README/DisenchantData.lua): source schema found, no bundled original player SavedVariables or zero-inclusive per-event provenance; static approximate rates excluded."
   ],
-  "next_concrete_step": "Request Master/build-time reviewer to preserve original kyzenbka exact hyperlink output ranks and two known 1000-herb nominal inputs separately from eight legacy modeled mixed-rank CSV rows. Seek firsthand actual completed 10-herb milling event log (per output IDs, skills/spec, refunds, 0..N) or 272246 live item-link-at-DE receipts and 237362 actual operation ledger. Append evidence only for truly independent new primary data.",
-  "verified_base_commit_sha": "b87b697ea43a1235cb838a4e2a81d53c8788f7d6",
+  "next_concrete_step": "Look for consented first-person Retail Midnight SavedVariables from Disenchanting Advisor with documented date/build, per-character character identity anonymized, tier skill and sample chronology; verify attempts against actual events/zero capture and overlap before any sample. Prefer an event-level addon ledger preserving source itemLink, at-cast ilvl/bonus, outcome list and zero events; refer requested capture/schema change to Master (do not edit runtime). Continue original 272246 item event source and 237362 4k-ore complete operation/refund record search.",
+  "verified_base_commit_sha": "9f3bda20710c2c5f98b670a910081bd2970e8a31",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Substantive quiet-status-only triage commit; no new independent measured cohort, so no empty JSONL per Nov 19 policy. The SHA of this commit must be verified externally after writing; embedding its own commit SHA here would require another commit."
+  "commit_note": "Quiet status-only new independent collector provenance finding; no measured study, hence no JSONL. Current self-containing status commit SHA cannot be included atomically; must be verified by subsequent read-back."
 }
