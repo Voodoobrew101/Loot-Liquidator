@@ -19,6 +19,7 @@ import json
 import os
 import sys
 import unittest
+from unittest.mock import patch
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -27,6 +28,7 @@ sys.path.insert(0, os.path.join(HERE, "..", "..", "tools"))
 import build_estimates as b  # noqa: E402
 import estimator_effects as effects  # noqa: E402
 import units_report  # noqa: E402
+import validate as schema_validate  # noqa: E402
 from test_build_estimates import Fixture, drop  # noqa: E402
 
 URL = "https://reddit.com/r/x/comments/abc"
@@ -131,6 +133,14 @@ class IsoDates(Fixture):
 
 
 class PercentMeaning(Fixture):
+    def test_schema_accepts_null_as_unknown_and_rejects_invalid_nonnull_semantics(self):
+        unknown = drop('unknown', percentShown=25, percentMeaning=None)
+        self.assertFalse(any(issue[1] == 'PERCENT_MEANING_UNKNOWN' for issue in schema_validate.check_record(unknown)))
+        self.assertIsNone(b.chance_from_percent(unknown))
+        invalid = drop('invalid', percentShown=25, percentMeaning='quarter of something')
+        self.assertTrue(any(issue[1] == 'PERCENT_MEANING_UNKNOWN' for issue in schema_validate.check_record(invalid)))
+        self.assertIsNone(b.chance_from_percent(invalid))
+
     def test_unstated_meaning_is_not_a_per_cast_chance(self):
         r = drop("a", percentShown=25, percentMeaning=None)
         self.assertIsNone(b.chance_from_percent(r))
@@ -140,6 +150,25 @@ class PercentMeaning(Fixture):
     def test_only_per_cast_is_a_chance(self):
         for meaning, expected in (("perCast", 0.25), ("perInput", None), ("unclear", None), (None, None), ("other", None)):
             self.assertEqual(b.chance_from_percent(drop("a", percentShown=25, percentMeaning=meaning)), expected, meaning)
+
+    def test_append_only_prose_semantics_correction_never_invents_probability(self):
+        source = os.path.join(REPO, 'research/v3/evidence/war-within/2026-11-07T0828-gale-sovereign-shaman-epic-de-looter-counts.jsonl')
+        relative = os.path.relpath(source, REPO).replace(os.sep, '/')
+        with open(source, encoding='utf-8') as stream:
+            original = [dict(json.loads(line), _file=relative) for line in stream if line.strip()]
+        wanted = {f'war-within-202611070828-{i:03d}' for i in range(1, 13)}
+        original = [row for row in original if row['id'] in wanted]
+        self.assertEqual(len(original), 12)
+        with patch.object(b, 'ROOT', REPO):
+            corrected = b.apply_corrections(original)
+        self.assertEqual(len(corrected), 12)
+        for raw, effective in zip(original, corrected):
+            self.assertNotIn(raw['percentMeaning'], schema_validate.PERCENT_MEANINGS)
+            self.assertEqual(effective['percentMeaning'], 'unclear')
+            self.assertIsNone(b.chance_from_percent(raw))
+            self.assertIsNone(b.chance_from_percent(effective))
+            for field in ('casts', 'castsWithDrop', 'totalQuantity', 'source', 'percentShown'):
+                self.assertEqual(effective.get(field), raw.get(field))
 
     def test_a_reference_percentage_with_no_meaning_is_not_a_prior(self):
         ref = drop("r", sourceKind="tsm-table", percentShown=50, percentMeaning=None)
@@ -374,13 +403,17 @@ class Corpus(unittest.TestCase):
         # Measured in MIG-009: with no structured field anywhere, the text fallback decides everything.
         self.assertEqual(sum(1 for r in self.rows if "unlockState" in r), 0)
 
-    def test_no_prose_dates_and_no_null_percent_meaning(self):
+    def test_dates_and_nonnull_percent_meanings_follow_schema(self):
         for r in self.rows:
             for field in ("dataDate", "observedOn"):
                 if r.get(field) is not None:
                     self.assertIsNotNone(b.iso_date(r[field]), (r["id"], field, r[field]))
             if r.get("type") == "drop" and r.get("percentShown") is not None:
-                self.assertIsNotNone(r.get("percentMeaning"), r["id"])
+                meaning = r.get('percentMeaning')
+                if meaning is not None:
+                    self.assertIn(meaning, schema_validate.PERCENT_MEANINGS, r['id'])
+                else:
+                    self.assertIsNone(b.chance_from_percent(r), r['id'])
 
     def test_numeric_reasons_reconcile_with_the_m06_unused_list(self):
         """Every row the M06 report says contributes nothing is unused here too, with the same code or because
