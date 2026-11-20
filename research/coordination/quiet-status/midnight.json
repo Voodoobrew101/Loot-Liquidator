@@ -1,14 +1,14 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-20T22:15:08.523Z",
-  "status": "T0026/T0049 cross-source triage: a Retail catalog identifies rare mail wrist gear 245343 (Evercore Chainguards), but only an item-page variant identity, no original disenchant operation or material outputs. Independently checked the published Midnight Enchanting specialization guide: it explicitly separates Disenchanting Delegate/skill from profession stats (M13), without any numeric rates. Existing 272246, Umbral Tin 237362 and milling evidence still lacks source-event denominators, at-cast variants or zero-inclusive distributions. No genuinely new independent yield cohort; no evidence JSONL or rate admission.",
+  "updated_at": "2026-11-20T23:10:33.922Z",
+  "status": "T0039/T0045 original-source follow-up review: Apr 21 MaryJMenace describes '1-3 dust procs' after an Apr 4 maxed-node Crushing report; wording is ambiguous and has no recipe/input/output IDs or cast ledger. Jerek Apr 4 50 nominal ore / 2 unnamed gems already held in Master audit; no independent rank-identified current Retail yield cohort or new numeric admissions. Prior 272246 eligibility, 237362 actual casts/refunds and milling per-cast zeros remain blocked.",
   "task_ids": [
     "T0026",
     "T0049",
-    "T0005",
     "T0039",
-    "T0003",
-    "T0045"
+    "T0005",
+    "T0045",
+    "T0003"
   ],
   "exact_gaps_targeted": [
     "T0026: original current-Retail DE event logs partitioned by uncommon/rare/epic armor/weapon, actual item level, gear bonus, skill and Disenchanting Delegate branch",
@@ -1066,12 +1066,48 @@
       },
       "disposition": "held identity-only, not numerical baseline or a confirmed eligible DE input",
       "hold_reason": "Live Retail commodity listing is evidence of a named rare mail wrist gear identity, not that it was disenchanted at catalog item level 577 or disenchanted at all. No independent event ledger, output IDs or rate counts. GitHub default-branch code index returned no exact item 245343 match, but this is not a complete repository-wide deduplication census."
+    },
+    {
+      "category": "held_firsthand_apr21_dust_proc_phrase_ambiguous",
+      "source": "https://us.forums.blizzard.com/en/wow/t/prospectingcrushing-needs-a-huge-buff/2274222?page=3",
+      "source_original": {
+        "author": "MaryJMenace",
+        "posted": "2026-04-21",
+        "exact_words": "I mean I still only get 1-3 dust procs.",
+        "recipe_input_item_ids": null,
+        "output_item_ids": null,
+        "observed_completed_operations": null,
+        "per_operation_histograms": null,
+        "skill": null,
+        "build": null,
+        "previous_apr4_claim": "1 proc dust 5 times+ in a row"
+      },
+      "existing_source_audit": "research/v3/evidence/master/20261114T1604-midnight-apr4-unplaced-prospect-and-crush-ledger.md",
+      "disposition": "held, original-author follow-up to previously reviewed April 4 anecdote; not new independent study or measured 1..3 quantity range",
+      "hold_reason": "Ambiguous '1-3 dust procs' may refer to number or size of procs, without recipe or material IDs, counts or exact result states. Do not promote phrase to minSeen/maxSeen, a coefficient, cast denominator, or current numeric baseline."
+    },
+    {
+      "category": "held_unplaced_apr4_ore_input_aggregate",
+      "source": "https://us.forums.blizzard.com/en/wow/t/prospectingcrushing-needs-a-huge-buff/2274222?page=2",
+      "existing_source_audit": "research/v3/evidence/master/20261114T1604-midnight-apr4-unplaced-prospect-and-crush-ledger.md",
+      "source_original": {
+        "author": "Jerek",
+        "posted": "2026-04-04",
+        "nominal_ore": 50,
+        "unnamed_gem_units": 2,
+        "ore_item_id": null,
+        "output_item_id": null,
+        "completed_casts": null,
+        "resourcefulness_refunds": null
+      },
+      "disposition": "already documented by manager; held as unplaceable; no new source cohort added",
+      "hold_reason": "Neither ore nor output is identified, and nominal input/5 is not observed completed casts. Reply from different author speculating Refulgent Copper does not identify Jerek's ore."
     }
   ],
   "newly_verified_fields_or_cohorts": [
-    "Independent Retail item-catalog identity for 245343 Evercore Chainguards: rare mail wrist, catalog ilvl 577 and required player level 80; not at-cast item level/bonus or proof of disenchant eligibility.",
-    "Midnight Enchanting specialization guide (updated 2026-02-21) expressly says Disenchanting is unaffected by Multicraft, Resourcefulness and Ingenuity, while Skill and Disenchanting Delegate influence output; this is qualitative mechanic corroboration for existing M12/M13, not a measured skill coefficient. Request Master mechanics review rather than editing shared registry.",
-    "No new current-build original cast denominators, per-output hit counts, zero outcomes or measured material totals for 245343, 272246, 237362, 237359 or Midnight milling."
+    "Reviewed original Apr 21 MaryJMenace first-person follow-up in prospecting/crushing thread; exact '1-3 dust procs' wording corroborated, but quantity-vs-event interpretation cannot be resolved.",
+    "Cross-checked Jerek Apr 4 original 50 nominal ore and two unnamed gems against pre-existing Master source-only audit; already held, not a new independent sample.",
+    "No newly verified exact input/output IDs, actual operations, 0-outcome bins, stack histograms, output ranks, skill/spec/build or resourcefulness receipts. All unmeasured fields remain null."
   ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": {
@@ -1082,30 +1118,27 @@
     "new_midnight_histograms": 0,
     "new_measured_probabilities": 0,
     "new_live_eligible_yield_admissions": 0,
-    "catalog_gear_item_ids_identified": [
-      245343
-    ],
-    "catalog_only_item_level_245343": 577,
-    "at_cast_ilvl_245343": null,
-    "at_cast_ilvl_272246": null,
+    "new_rank_identified_input_ids": [],
+    "new_rank_identified_output_ids": [],
+    "apr4_jerek_nominal_ore_existing": 50,
+    "apr4_jerek_unnamed_gem_units_existing": 2,
+    "apr21_maryj_descriptive_dust_proc_phrase": "1-3 dust procs; not a measured minSeen/maxSeen",
     "actual_casts_237362": null,
-    "output_ranks_and_per_cast_histograms_new": null
+    "at_cast_ilvl_272246": null
   },
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://bootybaybroker.com/item/245343/evercore-chainguards/us/alterac-mountains",
-    "https://www.wowhead.com/item=245343/evercore-chainguards",
-    "https://www.wowhead.com/guide/midnight/professions/enchanting-specializations",
-    "https://ptr.wowdb.com/items/272246-miststalkers-wristbands",
-    "https://www.wowhead.com/item=237362/umbral-tin-ore#comments"
+    "https://us.forums.blizzard.com/en/wow/t/prospectingcrushing-needs-a-huge-buff/2274222?page=3",
+    "https://us.forums.blizzard.com/en/wow/t/prospectingcrushing-needs-a-huge-buff/2274222?page=2",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261114T1604-midnight-apr4-unplaced-prospect-and-crush-ledger.md"
   ],
   "blockers": [
-    "T0026: 245343 identity only; no confirmed live DE eligibility/event, at-cast bonus/ilvl, material IDs, ranks, casts or histogram. Catalog item level is not a processing event.",
-    "T0026: M13 independently supported by Wowhead specialization guide but shared mechanics status is 'likely'; Master must review mechanic-status change, separate from numeric data.",
-    "T0049: 272246 WoWDB says Cannot be disenchanted; Wowhead Looter aggregate 140 events lacks event-level build/bonus and observed eligible current-client trial.",
-    "T0005/T0039: 237362 4000 nominal ore with Resourcefulness, not an exact count of completed prospects; material totals known from original source but hits, zeros, ranks and per-cast receipts missing.",
-    "T0003/T0045: no independent post-hotfix Refulgent Copper ore-quality cast cohort or rank-linked 10-herb milling event export with actual completed casts/refunds."
+    "MaryJMenace Apr 21 dust-proc phrase lacks exact Crushing recipe, named input/output rank IDs, operation count, and per-cast quantity/zero histograms; ambiguous reference cannot enter measured baseline.",
+    "Jerek 50 nominal ore / 2 gems remains unidentified as to exact ore and outputs, and was already archived by Master; no new cohort and no denominator reconstruction.",
+    "272246: Wowhead aggregate vs WoWDB non-disenchant eligibility conflict; no live at-cast ilvl/bonus/skill and confirmed trial.",
+    "237362: Cardinalai 4000 nominal ore at 39.6% Resourcefulness, not a verified completed-cast count; no per-output hit/zero distributions.",
+    "Refulgent Copper, Brilliant Silver, and Midnight milling: missing independent current-build rank-specific original operation ledgers, output links, and refund-aware denominators."
   ],
   "exhausted_sources": [
     "kyzenbka 2026-11-20 original Wowhead item hyperlink and existing v3 transcription reconciled; no per-cast ledger, histograms, skill/build or refunds. Multiple reposts are the same original author.",
@@ -1125,11 +1158,15 @@
     "2026-11-20 250055 live Wowhead bonus=12790/12795/12796 and Mythic previews all show identical 73/37/33 Looter cumulative counts despite ilvl changes; PTR 70 and PTR-2 69 are not independent. Do not repeat per-bonus search without raw character/event provenance.",
     "2026-11-20 T0045: reviewed original eight-row legacy milling CSV and independent live commodity quality catalog for four pigment families; catalog supports rank IDs only, no casts or output distributions. Do not recheck rank labels without contradictory item evidence; next gap requires original per-event trials.",
     "2026-11-20 T0026: Evercore Chainguards 245343 Retail commodity catalog and indexed Wowhead item page establish only rare mail wrist identity. No original disenchant operation ledger; do not use displayed catalog ilvl577 or AH prices as at-cast or conversion evidence.",
-    "2026-11-20 M13: current Wowhead Midnight Enchanting specialization guide explicitly negates profession stats for disenchanting and distinguishes DE skill/spec; prior repo mechanic discussions already mention this, so no duplicate empirical study or synthetic formula."
+    "2026-11-20 M13: current Wowhead Midnight Enchanting specialization guide explicitly negates profession stats for disenchanting and distinguishes DE skill/spec; prior repo mechanic discussions already mention this, so no duplicate empirical study or synthetic formula.",
+    "2026-11-20 Apr 4 Jerek and MaryJ prospect/crush forum evidence compared to Master 20261114T1604; anonymous ore/gem and Crushing recipe IDs remain absent, existing sources not new cohorts.",
+    "2026-11-20 Apr 21 MaryJMenace same-author follow-up adds ambiguous '1-3 dust procs' phrase only; cannot assign measured 1–3 unit range, cast count or material ID without raw source receipts.",
+    "2026-11-20 Bue Jan 6 pre-release 1000x Copper prospect video was already transcribed as source-only in midnight 2026-11-18T1220 evidence; do not duplicate a video lead lacking event/output text.",
+    "2026-11-20 prospective NocD Imgur result image fOTeoFs remains inaccessible; previous midnight 2026-11-06T1211 hold persists. No fabricated outputs, casts or rank IDs."
   ],
-  "next_concrete_step": "Obtain a source-original Retail client DE transaction/export for exact rare mail wrist 245343 or 272246 with full itemLink bonus/at-cast ilvl, confirmation of eligibility, skill and Disenchanting Delegate node state, output IDs/ranks and per-cast quantity histogram; otherwise obtain 237362 original prospect ledger with completed casts (not nominal ore/5), refunded ore, ore/output ranks and zeros. Send M13 qualitative-source status request through Master; do not change shared mechanics.",
-  "verified_base_commit_sha": "82484ae5efc3821bee6425438d45c971ad5dcff9",
+  "next_concrete_step": "Find original current-release player-export per-operation event logs, prioritizing 272246/rare or epic gear with bonus+at-cast ilvl+skill/spec and raw rank outputs, or 237362 current ore-rank prospects with actual operations/refunded ore and 0/1/2+ material bins. Apr 2026 unidentified Jerek/MaryJ anecdotes are held and should not be re-searched without author-provided source export.",
+  "verified_base_commit_sha": "0eaf5225ff77bc015c38128bf7f9e46f26cb01aa",
   "commit_sha": null,
-  "verified_commit_sha": null,
-  "commit_note": "Status-only triage and independently linked qualitative source verification. No new measured output cohort: intentionally no JSONL/empty evidence commit. Verify new commit after write; a Git commit cannot embed its own SHA in a single atomic self-referential status payload."
+  "verified_commit_sha": "0eaf5225ff77bc015c38128bf7f9e46f26cb01aa",
+  "commit_note": "Status-only held-source triage, not a new measured evidence cohort. New status commit self-SHA cannot be embedded atomically; verified parent SHA is recorded here and status commit is read back independently after write. No evidence JSONL/PR/snapshot generated."
 }
