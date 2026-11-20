@@ -538,16 +538,16 @@
       "why": "16 newly recorded Looter rows have real completed-operation denominators and output hit counts, but no totalQuantity; the original tables are browser-inaccessible and current wiki item levels differ from historical TBC levels. Avoid importing historical cohorts into current Retail without version mapping.",
       "searchTip": "Open https://www.wowhead.com/item=25003#disenchanting and https://www.wowhead.com/item=30364#disenchanting in browser with JS, capture source Looter denominators/row hit counts, item build and patch; compare https://warcraft.wiki.gg/wiki/Bloodfist_Legplates and https://wowpedia.fandom.com/wiki/Resonating_Axe ; seek current Retail actual DE eligibility. Do not infer missing hits as zero outcomes."
     },
-    {
+{
       "taskID": "T0053",
       "agent": "legacy",
       "type": "token",
-      "status": "queued",
+      "status": "done",
       "inputItemID": 45661,
-      "inputName": "Legacy reward item 45661 (name and token status unverified)",
-      "what": "Identify item 45661 and verify any token-to-reward relationships with class restrictions and exact reward item IDs; identify missing compiled tokenRewards entry if it is a redeemable token.",
-      "why": "Owner-requested seed: candidate ItemDBRuntime.lua contains 45661 in an auxiliary catalog/count map but no verified tokenRewards mapping. Lower priority than stochastic numeric gaps; no reward relationships should be fabricated.",
-      "searchTip": "Resolve exact item name at https://nether.wowhead.com/tooltip/item/45661 or https://www.wowhead.com/item=45661 and look for original era raid vendor/reward tables; capture complete reward IDs/classes and source. Distinguish token from reward and candidate-only research from current compiled runtime."
+      "inputName": "Spaulders of the Wayward Vanquisher",
+      "what": "Source identity and seven exact class-specific Valorous reward IDs verified; source task complete. Current Retail use/loot-specialization eligibility remains separate implementation/client QA.",
+      "why": "Already covered by legacy-20261101-216 and compiled main v3token:45661 (seven reward IDs, current Use intent); legacy-20261120-vanquisher-0001 repeats the same seven IDs/classes and redemption. Do not count as a new independent source, missing compiled mapping, new Retail gold decision or completed client QA. Research Manager independently compared both identical source vectors 2026-11-20; see research/v3/evidence/master/20261120T1701-dmitry-and-vanquisher-duplicate-source-review.md.",
+      "searchTip": "No more duplicate reward-identity research needed; future work is original current Retail itemLink, loot-specialization/class eligibility and actual-engine/tooltip client validation on the implementation side."
     }
   ]
 }
