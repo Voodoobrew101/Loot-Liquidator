@@ -1,20 +1,19 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-20T13:14:11.278Z",
-  "status": "Identified a distinct open-source disenchant collector with per-rarity/per-skill-tier saved attempts, material hit counts and totals; confirmed that it omits at-cast gear IDs and zero-known-material events. No independent player export or new measured cohort; no JSONL.",
+  "updated_at": "2026-11-20T14:19:17.559Z",
+  "status": "Found and independently verified an exact itemID 272246 Wowhead bonus/ilvl 305 rendered variant and Blizzard armory named equipment at 292/305/321; confirmed generic 206 preview and WoWDB base no-disenchant flag do not identify at-cast variant. No new independently sampled yields, no JSONL added.",
   "task_ids": [
-    "T0026",
     "T0049",
+    "T0026",
     "T0039",
     "T0005",
     "T0045",
     "T0003"
   ],
   "exact_gaps_targeted": [
-    "T0026: original live Midnight armor/weapon disenchant cohort stratified by exact input ID/actual item-level bonus, quality, skill/spec, build, per-rank output hits/quantities/zero-inclusive histogram.",
-    "T0049: Miststalker's Wristbands 272246 base ilvl 206 vs selected 305 and contradictory no-disenchant eligibility versus 140 aggregated Looter rows; require actual original event receipt.",
-    "T0039/T0005: Umbral Tin Ore 237362 nominal 4000 ores at 39.6% Resourcefulness, true completed operations, refunds, per-rank hits/zeros/histograms remain unknown.",
-    "T0045: Midnight 10-herb milling original completed operations, per-output IDs/ranks and zeros, refunds, patch, skill/spec remain unknown."
+    "272246 Miststalker's Wristbands raw current-Retail disenchant eligibility and original Looter 140 operation attribution: exact at-cast ilvl/bonus/build/skill/spec, IDs 243606/243605/243602/243603/243599, zero-inclusive per-output outcomes",
+    "237362 Umbral Tin rank-specific actual prospect operation and Resourcefulness-reprospecting denominator, per-output hit/zero histograms and quality IDs 242606/242607/242610/242611/242786/242788; unlock-dependent 242608",
+    "236761/236770/236778/236776 Midnight milling original 10-herb completed casts, input/outputs ranks, output hits/histograms and refunds; 237359 Refulgent Copper and 237365 Brilliant Silver original cast studies"
   ],
   "triage": [
     {
@@ -580,12 +579,56 @@
       },
       "disposition": "reviewable acquisition lead only; collector can preserve bucket-level attempts/output hit counters and quantities in real consented SavedVariables; NO published observed cohort found, do not admit formula/sample or assume zero inclusivity",
       "hold_reason": "Public repository contains addon code but not consented original SavedVariables study. Source groups multiple itemIDs/item levels/armor and weapons by rarity and coarse skill tier. Bag-delta attribution can be confounded by unrelated transactions; missing known outputs do not increment attempts. Even a real export requires event-completeness, overlap, version/skill-profile verification before per-output rates. Static DisenchantData.lua probability tables are labeled approximate NEEDS DATA, not observed. No source for item 272246's true eligibility or at-cast bonus."
+    },
+    {
+      "category": "reviewable_272246_exact_bonus_305_live_preview_and_armory_variants_20261120",
+      "input_id": 272246,
+      "named_input": "Miststalker's Wristbands",
+      "source": "https://www.wowhead.com/item=272246/miststalkers-wristbands?bonus=6652:13696:12841:13662&ilvl=305&spec=102",
+      "secondary_sources": [
+        "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/stormrage/allurys/",
+        "https://worldofwarcraft.blizzard.com/en-us/worldsoul/eu/armory/character/draenor/Aernath",
+        "https://worldofwarcraft.blizzard.com/en-us/worldsoul/eu/armory/character/alexstrasza/qintia/",
+        "https://www.wowdb.com/items/272246-miststalkers-wristbands",
+        "https://www.wowhead.com/item=272246/miststalkers-wristbands"
+      ],
+      "source_original": {
+        "exact_wowhead_input_id": 272246,
+        "exact_wowhead_preview_ilvl": 305,
+        "wowhead_preview_bonus_ids": [
+          6652,
+          13696,
+          12841,
+          13662
+        ],
+        "wowhead_preview_spec_parameter": 102,
+        "generic_wowhead_preview_ilvl": 206,
+        "generic_wowdb_preview_ilvl": 206,
+        "wowdb_generic_eligibility_text": "Cannot be disenchanted",
+        "indexed_blizzard_armory_named_equipped_ilvls": [
+          292,
+          305,
+          321
+        ],
+        "verified_armory_slot_item_id": null,
+        "actual_at_disenchant_ilvl": null,
+        "actual_at_disenchant_bonus_ids": null,
+        "client_build_at_disenchant": null,
+        "real_current_game_disenchant_eligibility": null,
+        "raw_140_looter_operations": null,
+        "raw_looter_output_hits": null,
+        "raw_looter_output_total_quantities": null,
+        "per_cast_zero_histograms": null
+      },
+      "disposition": "reviewable NEW exact-input-ID 305 bonus-render identity link; supports variant-context problem, not item-level-305 disenchant sample or real-time eligibility override",
+      "hold_reason": "Wowhead query specifies a hypothetical/rendered bonus/ilvl context, not an observed disenchant event. Blizzard Armory indexed character snapshots corroborate variable equipped item level by name but indexed text does not expose stable item ID/bonus IDs or any DE event; WoWDB base flag says cannot disenchant. Need raw at-cast itemLink and live eligibility plus original 140-event Looter provenance before yield admission."
     }
   ],
   "newly_verified_fields_or_cohorts": [
-    "Inspected independent Disenchanting Advisor source Tracking.lua: retained SavedVariables bucket fields are quality, expansionID, skillTier, attempts, matTotals (exact output IDs and units), matCounts (material-positive detected events). Buckets cover Midnight rarities uncommon=2, rare=3, epic=4 and effective skill 25-point bands.",
-    "Critical zero-inclusive limitation: RecordResult only fires after known material addition plus gear removal; no known-mat all-zero operation is counted. Mixed gear item IDs/ilvl/weapon vs armor are collapsed and at-cast timestamp/build/spec nodes not stored. No raw original player sample was publicly bundled, so all measured numerator/denominator fields remain null.",
-    "Static DisenchantData.lua Midnight probabilities/ranges explicitly say pre-launch approximation/NEEDS DATA; do not promote them to measured data. Output ID rank crosswalk corroborates known 243599/243600 dust, 243602/243603 shard, 243605/243606 crystal; no new independent output cohort."
+    "Exact 272246 Wowhead Live query with bonus IDs 6652:13696:12841:13662 and ilvl=305/spec=102 renders Miststalker's Wristbands at 305; plain item=272246 renders generic 206. This is verified item ID/bonus preview identity, not a measured gear disenchanted at ilvl 305.",
+    "Independent Blizzard armory indexed player equipment displays Miststalker's Wristbands at ilvl 292, 305 and 321 (multiple named profiles). The snippets lack slot itemID and itemLink/bonus and are not raw event-linked evidence.",
+    "WoWDB live catalog marks generic item 272246 ilvl 206 as Cannot be disenchanted; catalog flag remains conflicting with previously indexed Wowhead 140-Looter aggregate. No assertion of live eligible or ineligible variants without in-game testing.",
+    "Follow-up original-source search found Cardinalai Umbral Tin four-thousand nominal ore and multilingual syndicated copies only, not a second cohort or any genuine completed prospect event denominator. Existing 7 output totals retained unchanged."
   ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": {
@@ -596,29 +639,31 @@
     "new_histograms": 0,
     "new_verified_at_cast_item_variants": 0,
     "new_independently_grounded_cohorts": 0,
-    "newly_verified_external_collector_saved_bucket_field_names": [
-      "attempts",
-      "matTotals",
-      "matCounts",
-      "quality",
-      "expansionID",
-      "skillTier"
+    "new_exact_item_id_plus_bonus_preview_identity_links": 1,
+    "verified_public_armory_item_level_examples": [
+      292,
+      305,
+      321
     ],
     "inferred_rate_or_coefficient_values_created": 0
   },
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/brandanq2/disenchanting-advisor/blob/main/Data/Tracking.lua",
-    "https://github.com/brandanq2/disenchanting-advisor/blob/main/Data/DisenchantData.lua",
-    "https://github.com/brandanq2/disenchanting-advisor/blob/main/README.md"
+    "https://www.wowhead.com/item=272246/miststalkers-wristbands?bonus=6652:13696:12841:13662&ilvl=305&spec=102",
+    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/stormrage/allurys/",
+    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/eu/armory/character/draenor/Aernath",
+    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/eu/armory/character/alexstrasza/qintia/",
+    "https://www.wowdb.com/items/272246-miststalkers-wristbands",
+    "https://www.wowhead.com/item=272246/miststalkers-wristbands",
+    "https://www.wowhead.com/item=237362/umbral-tin-ore"
   ],
   "blockers": [
-    "No real Disenchanting Advisor saved player records or authenticated provenance; public source code and static rate tables alone are not numeric evidence.",
-    "Bag snapshot collector does not count all-zero-known-material disenchants and can select only first removed eligible gear in a multi-removal diff; its attempts are detected positive-material attribution events, not validated all completed disenchants.",
-    "Source collapsed exact source item ID, bonus/item level, armor versus weapon, date/build and detailed spec into quality+coarse skill tier. Any unverified export cannot resolve Miststalker 272246 eligibility or create item-level curves.",
-    "Umbral Tin 237362 actual completed prospect cast/refund ledger and per-rank output hits/zero-inclusive histograms remain unknown; 4000 nominal ore not 800 observed casts.",
-    "Midnight milling actual completed casts, output hit and conditional stack histories, build/skill and refund basis remain unavailable."
+    "No independently verified live in-game disenchant acceptance/rejection or raw 272246 at-cast itemLink, source quality/bonus, game build, skill/spec and timestamp; 140 Looter observations and WoWDB base flag still conflict.",
+    "Wowhead 305 bonus query is a rendered variant, not a disenchant-time 305 sample. Armory named-equipped ilvl 292/305/321 is not source-event evidence and does not reveal slot item ID or disenchant eligibility.",
+    "No newly authenticated original zero-inclusive completed gear disenchant sample or per-output histograms for 243599/243600/243602/243603/243605/243606; output-ID linked rows remain unverified as independent gear cohorts.",
+    "Cardinalai 237362 four-thousand ore plus 39.6% Resourcefulness is nominal input with seven output totals, not 800 proven completed casts; refund/reprospecting chronology and output hit/histograms unknown.",
+    "Midnight 10-herb milling raw completed operations, quality-rank output histograms and refund/skill/build context missing; modeled 4.5 prior is not a measured baseline."
   ],
   "exhausted_sources": [
     "Current Wowhead 272246 item/bonus preview and WoWDB eligibility: no raw Looter events or verified at-cast bonus.",
@@ -629,11 +674,14 @@
     "Blizzard March 2026 resourcefulness-bug forum records nominal shattering and refunds only, not eligible Midnight output-yield original cohort.",
     "kyzenbka 2026-11-20 original Wowhead item hyperlink and existing v3 transcription reconciled; no per-cast ledger, histograms, skill/build or refunds. Multiple reposts are the same original author.",
     "eight-row milling proxy CSV checked 2026-11-20: modeled only, not a new original measured cohort. Existing Oct 28 QA and Nov 8 output-rank catalog confirm reference-only interpretation.",
-    "Disenchanting Advisor public GitHub addon source (Tracking.lua/README/DisenchantData.lua): source schema found, no bundled original player SavedVariables or zero-inclusive per-event provenance; static approximate rates excluded."
+    "Disenchanting Advisor public GitHub addon source (Tracking.lua/README/DisenchantData.lua): source schema found, no bundled original player SavedVariables or zero-inclusive per-event provenance; static approximate rates excluded.",
+    "2026-11-20 indexed Blizzard armory name/ilevel pages and Wowhead exact bonus 305 preview checked: new variant context only; no raw event/profession outcome or eligibility confirmation.",
+    "2026-11-20 broad original 2026 Midnight disenchant/prospect/mill experiment search: recycled Cardinalai, kyzenbka and generic guide estimates; no independent sample.",
+    "2026-11-20 multilingual Wowhead Umbral Tin copies (fr/es/pt/cn/ko) reproduce the exact same Cardinalai 4,000-ore comment; one original author only, no new cohort."
   ],
-  "next_concrete_step": "Look for consented first-person Retail Midnight SavedVariables from Disenchanting Advisor with documented date/build, per-character character identity anonymized, tier skill and sample chronology; verify attempts against actual events/zero capture and overlap before any sample. Prefer an event-level addon ledger preserving source itemLink, at-cast ilvl/bonus, outcome list and zero events; refer requested capture/schema change to Master (do not edit runtime). Continue original 272246 item event source and 237362 4k-ore complete operation/refund record search.",
-  "verified_base_commit_sha": "9f3bda20710c2c5f98b670a910081bd2970e8a31",
+  "next_concrete_step": "Obtain raw event-linked 272246 at-cast itemLink with full bonus IDs, actual effective ilvl, build/date, profession skill/spec and a witnessed Disenchant acceptance/rejection. Independently check the 140-event Wowhead Looter aggregate's exact operation and output details before deriving hits or admitting sample. Reopen Umbral Tin 237362 only for original casts/refund/outcomes ledger, then original Midnight milling event exports.",
+  "verified_base_commit_sha": "4443a8f0f2cd3f9a26cc9197fc11e7e932708fc7",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Quiet status-only new independent collector provenance finding; no measured study, hence no JSONL. Current self-containing status commit SHA cannot be included atomically; must be verified by subsequent read-back."
+  "commit_note": "Quiet status-only verified itemID/bonus preview variant provenance; no independent measured study, so Nov 19 policy forbids empty evidence JSONL. Self SHA cannot be embedded atomically in same commit; verify branch read-back."
 }
