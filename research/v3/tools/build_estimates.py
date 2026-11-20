@@ -653,7 +653,8 @@ def casefold_family_key(key):
 
 
 def _misplaced_copy_reasons(rows, names, vectors, pooled):
-    """id() of rows to leave out of every group: pooled studies, and rows of a copy that lost item IDs
+    """Row identity -> closed usage reason for copies to leave out of every group.
+    Includes pooled studies and rows of a copy that lost item IDs
     so they land in a vaguer estimate group than the original, where the per-group dedupe never sees
     both (S17). A row stating an unlock its original does not state stays, as in the unlock skip."""
     ids = item_names(rows)

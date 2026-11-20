@@ -18,6 +18,8 @@ jobs:
           python-version: '3.12'
       - name: Research Classic admission regression
         run: python -m unittest discover -s tests -p 'test_research_v3_flavor_admission.py' -v
+      - name: Research source-family deduplication regression
+        run: python -W ignore::ResourceWarning -m unittest discover -s tests -p 'test_research_v3_dedupe.py' -v
       - name: Run migration regressions
         run: python -m unittest discover -s research/v3/migration/tests -v
       - name: Reproduce the committed migration audit
