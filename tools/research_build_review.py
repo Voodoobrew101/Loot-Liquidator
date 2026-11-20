@@ -107,7 +107,8 @@ def build_review(snapshot, evidence_folder=Path('research/evidence/v3')):
     for record in records:
         prior = record.get('reviewedPublishedPrior')
         if prior:
-            reviewed_priors[(prior['sourceFile'], prior['sourceRecordID'])] = prior
+            for source_prior in prior.get('sourceRows', [prior]):
+                reviewed_priors[(source_prior['sourceFile'], source_prior['sourceRecordID'])] = source_prior
             prior_scopes.update((record['method'], str(record['inputItemID']), material['id']) for material in record['materials'])
     source_conditions = module.load_conditions(effective)
     built_fields = defaultdict(dict)

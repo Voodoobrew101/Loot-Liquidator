@@ -798,6 +798,11 @@ ARCHIVE_GLOB = "research/evidence/observations/*.json"
 V2_GLOB = "research/evidence/v2/*.json"
 LEADS_GLOB = "research/evidence/leads/*.json"
 LEGACY_MILLING = "research/evidence/observations/2026-10-28-legacy-milling-batch01.jsonl"
+LEGACY_MILLING_REFERENCE_SHA = "209db16ca170deca50923e98db2b6e6820edd82b8150df20eb71518d663840d6"
+LEGACY_MILLING_REFERENCE_TOTALS = {
+    152505: (814, 303, 136), 152506: (808, 279, 91), 152507: (832, 313, 150),
+    152508: (814, 332, 128), 152509: (799, 311, 115), 152511: (833, 268, 118),
+}
 RECIPE_METADATA = "research/evidence/observations/2026-10-28-2116-warwithin-batch014-q16-recipe-metadata.jsonl"
 COHORT_RECONCILIATION = "research/evidence/observations/2026-10-28-1231-dragonflight-batch012-source-cohort-reconciliation.jsonl"
 TBC_GUIDE = "research/evidence/observations/2026-10-28-0535-legacy-batch005-tbc-guide-source-only.json"
@@ -1067,6 +1072,15 @@ def map_tbc_guide(rel, data, present):
     return out
 
 
+def same_tbc_reference_value(row, probability):
+    """Comparable unranked five-input reference values, never observed cohorts."""
+    return (row.get("method") == "Prospect" and row.get("inputRank") is None
+            and row.get("outputRank") is None and num(row.get("inputsPerCast")) == 5
+            and row.get("patch") is None and row.get("dataDate") is None
+            and row.get("percentMeaning") == "perCast" and num(row.get("percentShown")) is not None
+            and abs(row["percentShown"] - probability * 100) < 1e-6)
+
+
 # ---- M03.3 mappers: evidence/v2 reports
 def map_zzyjzu(rel, data):
     out = []
@@ -1166,11 +1180,21 @@ def import_legacy_milling(hold):
         s = d.get("source") or {}
         author, herbs, total = s.get("commentAuthor"), num(s.get("originalHerbsConsumed")), num(s.get("reportedOutputTotal"))
         batch = num(s.get("observedMassMillReagentCount"))
+        # Reviewed preservation of the original Kidneph totals. A newer
+        # Baadkitty report says it is *different from* Kidneph; mentioning that
+        # name is not a held cohort. The exact archive and values are pinned.
+        # Unknown physical casts remain unknown: only a per-herb reference mean
+        # is exported, never the legacy estimator's 200 five-herb equivalents.
+        totals = LEGACY_MILLING_REFERENCE_TOTALS.get(d.get("inputItemId"), ())
+        expected = dict(zip((153635, 153636, 153669), totals)).get(d.get("outputItemId"))
+        reviewed_prior = (author == "Kidneph" and herbs == 1000 and batch == 20 and total == expected
+                          and expected is not None and source_key(s.get("url")) == "wowhead:item=153669"
+                          and file_sha(rel) == LEGACY_MILLING_REFERENCE_SHA)
         entry = {"line": ln, "recordKey": d.get("recordKey"), "author": author, "outcome": None, "reason": None}
         copy = held_totals.get((d.get("inputItemId"), d.get("outputItemId"), float(total))) if total is not None else None
         if copy:
             entry.update(outcome="skipped", reason=f"copy: v3 already holds input, output and total {total:g} ({copy[0]})")
-        elif hold.author_known(author):
+        elif hold.author_known(author) and not reviewed_prior:
             entry.update(outcome="skipped", reason=f"author {author!r} already appears in v3 agent evidence; link in M04.1")
         else:
             entry["outcome"] = "imported"
@@ -1189,6 +1213,13 @@ def import_legacy_milling(hold):
                           outputItemID=d.get("outputItemId"), outputName=d.get("outputName"),
                           inputsPerCast=batch, totalQuantity=total)
             r["inputsProcessed"] = herbs
+            if reviewed_prior:
+                r.update(sourceKind="reference", averageShown=total / herbs, averagePer="input")
+                r["notes"] += ("; reviewed historical per-input reference prior; actual operation count and occurrence "
+                               "hits are unknown. The 1000/5 nominal equivalents are not measured casts. Existing "
+                               "reference confidence policy applies; no empirical sample is added.")
+                r["derivations"] = [derivation("averageShown", f"totalQuantity / inputsProcessed = {total:g} / {herbs:g}",
+                                               "per-input mean only; physical casts and occurrence probability unknown")]
         else:
             # Melch1337: a published rate per 100 herbs from a pooled study, no herb count per species.
             r = hist_drop(rel, ref, s.get("url"), None, author, None,
@@ -1311,7 +1342,8 @@ def import_historical(prior_rows):
         for r in by_pair.get((inp, out), []):
             if source_key((r.get("source") or {}).get("url")) == "wow-professions.com/tbc/prospecting":
                 return True
-            if r.get("sourceKind") in ("compiled-research", "reference") and num(r.get("percentShown")) is not None:
+            if (r.get("sourceKind") in ("compiled-research", "reference")
+                    and same_tbc_reference_value(r, p)):
                 return True
             if r.get("sourceKind") == "tsm-table" and num(r.get("percentShown")) is not None and abs(r["percentShown"] - p * 100) < 1e-6:
                 return True
@@ -1436,7 +1468,10 @@ def main(argv=None):
     write("gamedata-tokens.jsonl", tokens)
     write("gamedata-mill-prospect-reference.jsonl", gdrefs)
     for name, rows in sorted(hist.items()):
-        if rows:  # a family whose every claim is skipped writes no file; the report lists it
+        # A newly empty family creates no file. An existing derived family
+        # must be emptied when its rows are superseded, or stale copies survive
+        # every supposedly deterministic rerun.
+        if rows or os.path.exists(os.path.join(OUT, name)):
             write(name, rows)
     print(f"old studies: {len(studies)} records ({study_log['existingRows']} kept IDs, "
           f"{len(studies) - study_log['existingRows']} name-only rows added; {skipped})")

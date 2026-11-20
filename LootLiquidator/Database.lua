@@ -631,6 +631,9 @@ local function sourceModel(self,f,option,r)
         end
         model.materials[#model.materials+1]=material
     end
+    if r.reviewedPublishedPrior and r.operationUnverified and r.quantityBasis=='per-input' then
+        model.adjustment='Published per-input reference'
+    end
     if self.ApplyGeneralProfessionModel and r.sourceKey~='personal' and r.sourceKey~='imported' then
         model=self:ApplyGeneralProfessionModel(f,option,model)
     end
@@ -846,6 +849,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             local specificity=(r.inputRarity~=nil and 1 or 0)+(r.inputClassID~=nil and 1 or 0)
             local exactInput=r.inputItemID==f.id and 1 or 0
             local exactBatch=r.inputCount==option.inputCount and 1 or 0
+            -- One input is this reference's unit normalization, not a verified
+            -- one-input operation that can outrank an actual measured batch.
+            if r.reviewedPublishedPrior and r.operationUnverified and r.quantityBasis=='per-input' then exactBatch=0 end
             -- Ordinary disenchant studies describe a physical gear category.
             -- The preserved exact-item source rows must not override the
             -- category aggregate or count a study for a second time. An item
@@ -1037,6 +1043,15 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                         acc.sum=acc.sum+v*weight;acc.weight=acc.weight+weight
                         local score=evidenceScore(metadata)
                         local c=(score or 0)>0 and score or UNKNOWN_CONFIDENCE
+                        -- Reviewed per-input references retain their original
+                        -- support weight separately from modeled applicability.
+                        -- Cap only this accepted field's confidence contribution.
+                        if field=='expectedQuantity' and r.reviewedPublishedPrior and finite(metadata.modelConfidenceCap) then
+                            c=math.min(c,metadata.modelConfidenceCap)
+                            b.reviewedPriorQuantity=true
+                        elseif field=='expectedQuantity' then
+                            b.otherQuantityContribution=true
+                        end
                         acc.confidence=(acc.confidence or 0)+c*weight
                         if field=='expectedQuantity' then
                             b.sourceMeanAccumulators=b.sourceMeanAccumulators or {}
@@ -1114,6 +1129,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         result.expectedInputCount=not consumptionIncomplete and batch*(consumptionSum/consumptionWeight) or nil
     end
     local totalContribution,confidenceTotal=0,0
+    local acceptedReviewedPrior,acceptedOtherQuantity=false,false
     for _,b in pairs(bins) do
         local e,p=b.fields.expectedQuantity,b.fields.dropChance
         b.expectedQuantity=e and e.sum/e.weight
@@ -1159,6 +1175,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             end
         end
         if e then
+            b.reviewedPublishedPriorOnly=b.reviewedPriorQuantity and not b.otherQuantityContribution or nil
+            acceptedReviewedPrior=acceptedReviewedPrior or b.reviewedPublishedPriorOnly==true
+            acceptedOtherQuantity=acceptedOtherQuantity or b.reviewedPublishedPriorOnly~=true
             -- Per-material confidence (A3): shown on request, and used to value-weight the
             -- option's figure. C1b: from casts and drops when the chance has them; a
             -- filled average counts at half; never above the
@@ -1199,10 +1218,12 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         if not e then b.unavailableReason=b.conditionalRequirement and ('Requires '..b.conditionalRequirement..'; conditional estimate excluded from current value')
             or outputReasons[b.id] or 'Average unavailable for this source/character context' end
         b.fields=nil;b.contributions=nil;b.chanceSources=nil;b.chanceContributions=nil
+        b.reviewedPriorQuantity=nil;b.otherQuantityContribution=nil
         b.chanceInferenceBlocked=nil;b.quantityInferenceBlocked=nil
         result.materials[#result.materials+1]=b
     end
     for key,v in pairs(result.sources) do result.sources[key]=v/math.max(1,totalContribution) end
+    result.reviewedPublishedPriorOnly=acceptedReviewedPrior and not acceptedOtherQuantity or nil
     if personal and (result.sources.personal or 0)>0 then
         result.personalStats={total=personal.samples or 0,effectiveSamples=personal.effectiveSamples or personal.samples or 0}
     end

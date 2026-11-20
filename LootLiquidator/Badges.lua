@@ -542,7 +542,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             if option.letter==decision.action then
                 local model=option.yieldModel
                 if option.available==false then suffix=suffix.." (unavailable)" end
-                if model and model.provisional and not professionSimulation(model) then suffix=suffix.." (estimate)" end
+                if model and model.provisional and not professionSimulation(model) and not model.reviewedPublishedPriorOnly then suffix=suffix.." (estimate)" end
                 if model and (model.partial or model.partialPrice) then suffix=suffix.." (partial)" end
                 break
             end
@@ -822,8 +822,8 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 end
                 if showProcessing and not simulated then
                     tooltip:AddLine("  "..(model.adjustment or "Unadjusted reference")..
-                        (model.provisional and " — provisional" or ""),.72,.70,.80,true)
-                elseif not option.name and model.provisional and not simulated then
+                        (model.provisional and not model.reviewedPublishedPriorOnly and " — provisional" or ""),.72,.70,.80,true)
+                elseif not option.name and model.provisional and not simulated and not model.reviewedPublishedPriorOnly then
                     tooltip:AddLine("  Estimate — provisional",.72,.70,.80,true)
                 end
                 if showResearch and model.warning and not simulated then tooltip:AddLine("  "..model.warning,1,.68,.3,true) end
@@ -885,7 +885,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     if model and (model.partial or model.partialPrice) then
                         status[#status+1]="partial"
                     end
-                    if model and (model.provisional or model.estimatedFrom) and not simulated then
+                    if model and (model.provisional or model.estimatedFrom) and not simulated and not model.reviewedPublishedPriorOnly then
                         status[#status+1]="estimate"
                     end
                     if option.available==false then

@@ -34,7 +34,7 @@ LL:MigrateEvidenceSettings()
 local original=LL.ItemDB
 local sources={}
 for _,record in ipairs(original.processing)do
-    if record.reviewedPublishedPrior then sources[#sources+1]=copy(record)end
+    if record.reviewedPublishedPrior and record.expansionID==10 then sources[#sources+1]=copy(record)end
 end
 check(#sources==2,'both exact published priors ship in compiled ItemDB')
 check(LL:InitializeItemDB(),LL.itemDBError)
