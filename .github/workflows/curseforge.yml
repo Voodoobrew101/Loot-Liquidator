@@ -1,0 +1,70 @@
+name: Publish version tag to CurseForge
+
+on:
+  push:
+    tags: ['v[0-9]*', '[0-9]*']
+  pull_request:
+    paths:
+      - '.github/workflows/curseforge.yml'
+      - 'tools/curseforge_release.py'
+      - 'tests/test_curseforge_release.py'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to validate without uploading (for example v0.12.41)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: curseforge-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Test release metadata and upload handling
+        run: python3 tests/test_curseforge_release.py -v
+      - name: Install Lua 5.1
+        run: sudo apt-get update -qq && sudo apt-get install -y lua5.1
+      - name: Compile pinned research (same gates as distribution.yml)
+        run: |
+          python3 tools/research_v3_to_baselines.py
+          python3 tools/evidence_to_baselines.py
+          python3 tools/capture_observations.py
+          python3 tools/att_token_references.py
+          python3 tools/recycling_capture_baselines.py --check
+          lua5.1 tools/compile_itemdb.lua LootLiquidator/ItemDBRuntime.lua
+      - name: Run all addon validation
+        run: bash tests/run.sh
+      - name: Prepare version and CurseForge metadata
+        env:
+          RELEASE_TAG: ${{ github.event_name == 'push' && github.ref_name || inputs.version || 'v0.0.0-alpha.1' }}
+        run: python3 tools/curseforge_release.py prepare
+      - name: Package and verify
+        run: |
+          python3 tools/package_addon.py dist/LootLiquidator.zip
+          python3 tools/verify_distribution.py dist/LootLiquidator.zip
+          sha256sum dist/LootLiquidator.zip > dist/SHA256SUMS.txt
+      - uses: actions/upload-artifact@v6
+        with:
+          name: LootLiquidator-curseforge
+          path: dist/
+          if-no-files-found: error
+      - name: Upload verified version tag to CurseForge
+        # PRs and manual runs validate/build only. No secret is passed to them.
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') && github.event.deleted == false
+        env:
+          CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
+        run: python3 tools/curseforge_release.py upload
