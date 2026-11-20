@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-20T02:17:41.106Z",
-  "status": "Verified a new independent Retail collector provenance/capture-channel caveat and live bag-item-level lookup lead; 0 new measured independent zero-inclusive yield cohorts.",
+  "updated_at": "2026-11-20T03:19:27.444Z",
+  "status": "Six new reference-only Wowhead spell-level pooled disenchant source rows; no independently measured, at-cast 0-inclusive Midnight yield cohort.",
   "task_ids": [
     "T0026",
     "T0039",
@@ -11,36 +11,41 @@
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0026: 272246 Miststalker's Wristbands before-cast itemLink/bonus/actual ilvl (selected preview305 vs base206) and disenchant event output IDs/0-inclusive histograms, rarity/slot/build/skill/spec",
-    "T0039/T0005: 237362 Umbral Tin rank-specific exact completed-cast outputs 242606/242607/242610/242611/242786/242788, diamond 242608 Tin-vestigator unlock and non-drop events",
-    "T0003/T0002: Copper 237359 and Silver 237365 original per-event ranks, refunds and output hit counts",
-    "T0045: 236761 Tranquility Bloom 10-herb completed mill -> 245807 Powder Pigment exact rank, skill and 0-inclusive distribution"
+    "T0026: Resolve 272246 Miststalker's Wristbands item-link bonus and real pre-DE ilvl305 vs base206, armor/weapon rarity output-rank ID and zero-inclusive per-event outcomes",
+    "T0026: Separate item, rank, actual ilvl, skill, specialization, patch and family output yields; spell 13262 pooled rows do not provide these cuts",
+    "T0039/T0005: 237362 Umbral Tin rank-specific prospecting item outputs 242606/242607/242610/242611/242786/242788 and Eversong Diamond 242608 Tin-vestigator gate",
+    "T0003/T0002: 237359 Refulgent Copper and 237365 Brilliant Silver completed original rank-specific cast logs and refunds",
+    "T0045: 236761 Tranquility Bloom ten-herb milling to Powder Pigment 245807, successful cast/zero outcomes/quality"
   ],
   "newly_verified_fields_or_cohorts": [
-    "WoWtility developer changelog 0.8.2 (2026-04-27): its prior loot UI omitted 'You create:' chat creation messages for disenchanting/milling/prospecting/crafting; this is a potential capture-channel completeness check, NOT evidence of missing Loot Liquidator player casts or material counts.",
-    "WoWtility Retail 12.1.5 v0.9.7 (2026-10-14) says bag item level is looked up via C_Item.GetDetailedItemLevelInfo. A contemporaneous before-DE itemLink+bonus+ilvl receipt could adjudicate 272246 displayed base206 vs selected preview305, but neither is confirmed at disenchant."
+    "Fresh indexed LIVE Wowhead spell13262 mixed-era source rows include uncommon ilvl1–279 Dawn Crystal 9,579/83,463 (11%) and 13,886/170,449 (8%); uncommon ilvl1–486 Radiant Shard 32,517/252,455 (13%) and Eversinging Dust 28,056/232,328 (12%).",
+    "Source also shows epic ilvl32–259 Dawn Crystal 22,716/93,494 (24%) and epic ilvl32–662 Dawn Crystal 25,825/93,303 (28%). These are pooled search-index snapshots only, NOT player-native cast cohorts. Neither same-name Dawn Crystal rank nor output ID is established.",
+    "These six rows are sourceKind=reference, percentMeaning=unclear, casts/castsWithDrop/totalQuantity/histogram=null; potential overlap with existing per-item Wowhead Looter rows and historic eras prevents baseline promotion."
   ],
-  "numeric_fields_advanced": [
-    "0 observed casts, castsWithDrop, totalQuantity, zero outcomes, histograms, input/output ranked yield distributions, probabilities or prices. Confirmed published 2026-04-27 UI fix and 2026-10-14 bag-item ilvl API lead only; no measured patient/player dataset."
-  ],
+  "numeric_fields_advanced": "Six source-reported pooled hit/denominator pairs preserved in quotes/notes, six rounded displayed percentages in percentShown; 0 casts, 0 hits or total-quantity sample fields newly measured.",
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-20T0217-retail-creation-chat-vs-loot-audit.jsonl"
+    "research/v3/evidence/midnight/2026-11-20T0217-retail-creation-chat-vs-loot-audit.jsonl",
+    "research/v3/evidence/midnight/2026-11-20T0319-wowhead-spell-de-reference-groups.jsonl"
   ],
-  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-20T0015-disenchantum-session-counter-not-cohort.jsonl",
+  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-20T0319-wowhead-spell-de-reference-groups.jsonl",
   "evidence_record_ids": [
-    "midnight-20261120-0217-001"
+    "midnight-20261120-spellref-01",
+    "midnight-20261120-spellref-02",
+    "midnight-20261120-spellref-03",
+    "midnight-20261120-spellref-04",
+    "midnight-20261120-spellref-05",
+    "midnight-20261120-spellref-06"
   ],
   "source_links": [
-    "https://www.curseforge.com/wow/addons/wowtility/files/9174698",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-20T0217-retail-creation-chat-vs-loot-audit.jsonl"
+    "https://www.wowhead.com/spell=13262/disenchanted-items"
   ],
-  "commit_sha": "8b2d9a75164408ac016e23e78c6feef337ac46dd",
-  "verified_commit_sha": "8b2d9a75164408ac016e23e78c6feef337ac46dd",
-  "commit_note": "Single-commit atomic update for new research evidence + own status. SHA fields identify verified pre-run branch parent; Git commit ID cannot be embedded in its own content without another commit. New commit SHA must be read back through Git after push. No merge/release.",
+  "commit_sha": "f31450901f27b9fcc09f95b40045832e47d57674",
+  "verified_commit_sha": "f31450901f27b9fcc09f95b40045832e47d57674",
+  "commit_note": "commit_sha/verified_commit_sha are the read-and-verified parent, not self SHA (which cannot be embedded in its own single atomic commit). Verify new commit from branch ref and diff.",
   "blockers": [
-    "No fresh original zero-inclusive Retail 12.1.5 disenchant events with 272246 actual before-cast itemLink/bonus/ilvl and skill/spec, linked ranked material receipts and patch. Generic base206 vs selected preview305 cannot be resolved from a standalone catalog URL.",
-    "No rank-specific 237362 Tin or 237359 Copper / 237365 Silver per-output completed-cast and zero histograms, 242608 unlock status, refund amounts or cross-channel dedupe.",
-    "No complete per-event 236761 10-herb mill log with 245807 Powder Pigment ranks/hits/zeros; WoWtility source provides a collection-lead only, not a raw study."
+    "No source-original bonus-linked Midnight gear with before-DE ilvl, character skill/spec, per-operation material outputs, zero events, or confirmed raw export; generic spell Looter row totals and percentages cannot be recast into completed casts or attributed to selected preview ilvl.",
+    "Unlinked same-name Dawn Crystal quality rows prevent output rank assignment; source does not isolate Midnight, character skill, build, or distinct 0-inclusive cohorts.",
+    "No independent rank-specific 237362 diamond-unlock yield distribution or 10-herb 236761 milling histogram."
   ],
   "exhausted_sources": [
     "2026-11-16T21:21:51.431Z: Fresh named-source original yield hunt for Miststalker's Wristbands 272246, Umbral Tin Ore 237362, Refulgent Copper Ore 237359, Brilliant Silver Ore 237365, and Tranquility Bloom 236761 across Reddit, Blizzard, Wowhead and profession guides yielded only previously indexed GamGem/WoWDB selected-ilvl vs base conflict, Cardinalai/JD3K/Draggoth estimates and guide/Reddit data. Do not duplicate them. Separate Wowhead item-side named searches uncovered unindexed Monk gear items 250010/250011/250012/250014/250015/250017. Existing branch/default-repo source checks found no owned Midnight evidence on these item IDs. 250010 and 250014 selected sources are PTR, not current Retail; their 13/8/4 and 27/16/10 records are reference only. LIVE inputs 250011 14/7/5; 250012 8/5/3; 250015 28/18/10; 250017 15/9/4 are pooled occurrence references. Sources in new evidence JSONL. Distinct indexed 249961, 250057, 250018 and other snapshots were excluded; no independent 0-inclusive original cohort was discovered.",
@@ -117,12 +122,13 @@
     "2026-11-19T23:15:41.193Z: Fresh original-by-item searches for Miststalker's Wristbands, Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore and Tranquility Bloom across Wowhead, Reddit, Blizzard forums, guide publishers and source/CurseForge addon releases found no NEW zero-inclusive Retail 12.1.5 output event cohort; prior Cardinalai/Honeybone/MikiMM/Draggoth and GatherBuffs sources not duplicated. NEW GoldCap Retail v0.29.0 (2026-11-14) reveals per-item learned DE material values but no public casts, zeros or log schema. Don't reindex this publisher until original consented SavedVariables/cast receipts or export documentation are provided.",
     "2026-11-20T00:21:17.746Z: NEW distinct Disenchantum v1.3 Retail 12.1.5 primary source checked (ZelionGG/Disenchantum commit 3a338116): UNIT_SPELLCAST_SUCCEEDED increments in-memory itemsDisenchanted; LOOT_READY/OPENED aggregates reagent quantities by itemID once per loot window, but no persisted per-operation input gear identity/output histogram. No published sample casts/zeros; cannot import as yield. Reddit 1rpwov0 Aspalar 0.42/0.97 shard averages, wow-professions Glimmering Powder and 250019/251255 Wowhead item Looter studies confirmed already in repository and NOT duplicated. Name-based 272246/237362/237359/237365/236761 searches elsewhere yielded no new independent zero-inclusive source. Avoid rechecking Disenchantum absent new public export or publisher-permissioned raw sessions.",
     "2026-11-20T01:11:53.160Z: By-name checks across Wowhead LIVE/PTR, WoWDB/WoW item indexes, Google-indexed Reddit/Blizzard/profession-guide results, current GitHub evidence and collector source lanes found no NEW original current-patch 0-inclusive disenchant/prospect/milling cohort for 272246/237362/237359/237365/236761; preserved earlier Cardinalai/Honeybone/Draggoth/MikiMM and prior Disenchantum/Goblinomics provenance, no duplicate numeric import. Found distinct LIVE Threadbare Mitts 258859 explicit cannot-DE source, unindexed in repo, and recorded one catalog-only T0025 item. Similar 258860, 266224 were already indexed; 258861/258863/258869 snippets did not independently establish cannot-DE and were not imported. Revisit numeric sources only with new actual player receipts or anonymized event ledgers.",
-    "2026-11-20T02:17:41.106Z: NEW original WoWtility Retail v0.8.2/v0.9.7 changelog checked (JoeW980, https://www.curseforge.com/wow/addons/wowtility/files/9174698); source release identifies 'You create:' output not displayed by a prior popup implementation and current C_Item.GetDetailedItemLevelInfo bag item lookup. Neither supplies complete per-event disenchant/prospect/milling player yields, and neither should be counted as an empirical cohort. 272246/237362/237359/237365 name searches return previously indexed Cardinalai/Honeybone/MikiMM/ArtisanLogbook or catalog, deliberately not duplicated. Do not recheck this collector without public raw event export."
+    "2026-11-20T02:17:41.106Z: NEW original WoWtility Retail v0.8.2/v0.9.7 changelog checked (JoeW980, https://www.curseforge.com/wow/addons/wowtility/files/9174698); source release identifies 'You create:' output not displayed by a prior popup implementation and current C_Item.GetDetailedItemLevelInfo bag item lookup. Neither supplies complete per-event disenchant/prospect/milling player yields, and neither should be counted as an empirical cohort. 272246/237362/237359/237365 name searches return previously indexed Cardinalai/Honeybone/MikiMM/ArtisanLogbook or catalog, deliberately not duplicated. Do not recheck this collector without public raw event export.",
+    "2026-11-20T03:19:27.444Z: NEW spell-level Wowhead Looter 13262 indexed-count provenance found (six rows). Classifies as mixed-era cumulative reference only, not independent Retail 12.1.5 disenchant outcome sample; don't repeat or pool this table with item-level Looter. Named 272246/237362/237359/237365/236761 original cohort lanes remain exhausted. Need new consented cast event receipts."
   ],
-  "next_concrete_step": "Ask Master to coordinate permissioned in-game Retail 12.1.5 at-cast instrumentation/export: capture before-cast exact gear itemLink+bonus+real ilvl using C_Item.GetDetailedItemLevelInfo, cast success and operation ID, deduped 'You create:' vs loot-window item quantities including zero outcomes; separately sample rank-specific 237362 prospects (242608 unlock) and 236761 10-herb milling with character skill/spec and refunds. Do not infer output probabilities or revisit guide/collector release notes without raw player receipts.",
-  "verified_base_commit_sha": "8b2d9a75164408ac016e23e78c6feef337ac46dd",
-  "next": "Ask Master to coordinate permissioned in-game Retail 12.1.5 at-cast instrumentation/export: capture before-cast exact gear itemLink+bonus+real ilvl using C_Item.GetDetailedItemLevelInfo, cast success and operation ID, deduped 'You create:' vs loot-window item quantities including zero outcomes; separately sample rank-specific 237362 prospects (242608 unlock) and 236761 10-herb milling with character skill/spec and refunds. Do not infer output probabilities or revisit guide/collector release notes without raw player receipts.",
-  "base_commit_sha": "8b2d9a75164408ac016e23e78c6feef337ac46dd",
+  "next_concrete_step": "Obtain permissioned Retail player itemLink+bonus+before-cast actual ilvl and 0-inclusive success/output event exports with skill/spec/build; request raw per-output IDs plus ranks for 237362 (Tin-vestigator gate) and 236761 10-herb milling. Do not estimate from this spell-level pooled table.",
+  "verified_base_commit_sha": "f31450901f27b9fcc09f95b40045832e47d57674",
+  "next": "Obtain permissioned Retail player itemLink+bonus+before-cast actual ilvl and 0-inclusive success/output event exports with skill/spec/build; request raw per-output IDs plus ranks for 237362 (Tin-vestigator gate) and 236761 10-herb milling. Do not estimate from this spell-level pooled table.",
+  "base_commit_sha": "f31450901f27b9fcc09f95b40045832e47d57674",
   "exact_gaps": [
     "T0026: 272246 Miststalker's Wristbands before-cast itemLink/bonus/actual ilvl (selected preview305 vs base206) and disenchant event output IDs/0-inclusive histograms, rarity/slot/build/skill/spec",
     "T0039/T0005: 237362 Umbral Tin rank-specific exact completed-cast outputs 242606/242607/242610/242611/242786/242788, diamond 242608 Tin-vestigator unlock and non-drop events",
@@ -130,8 +136,9 @@
     "T0045: 236761 Tranquility Bloom 10-herb completed mill -> 245807 Powder Pigment exact rank, skill and 0-inclusive distribution"
   ],
   "newly_verified_fields": [
-    "WoWtility developer changelog 0.8.2 (2026-04-27): its prior loot UI omitted 'You create:' chat creation messages for disenchanting/milling/prospecting/crafting; this is a potential capture-channel completeness check, NOT evidence of missing Loot Liquidator player casts or material counts.",
-    "WoWtility Retail 12.1.5 v0.9.7 (2026-10-14) says bag item level is looked up via C_Item.GetDetailedItemLevelInfo. A contemporaneous before-DE itemLink+bonus+ilvl receipt could adjudicate 272246 displayed base206 vs selected preview305, but neither is confirmed at disenchant."
+    "Fresh indexed LIVE Wowhead spell13262 mixed-era source rows include uncommon ilvl1–279 Dawn Crystal 9,579/83,463 (11%) and 13,886/170,449 (8%); uncommon ilvl1–486 Radiant Shard 32,517/252,455 (13%) and Eversinging Dust 28,056/232,328 (12%).",
+    "Source also shows epic ilvl32–259 Dawn Crystal 22,716/93,494 (24%) and epic ilvl32–662 Dawn Crystal 25,825/93,303 (28%). These are pooled search-index snapshots only, NOT player-native cast cohorts. Neither same-name Dawn Crystal rank nor output ID is established.",
+    "These six rows are sourceKind=reference, percentMeaning=unclear, casts/castsWithDrop/totalQuantity/histogram=null; potential overlap with existing per-item Wowhead Looter rows and historic eras prevents baseline promotion."
   ],
   "newly_verified_cohorts": []
 }
