@@ -40,14 +40,16 @@ Usage:
 import math
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import evidence_check  # noqa: E402
+from research_methods import METHOD_PROFESSIONS, processing_reasons, profession_for, GENERIC_METHODS
 
 DEFAULT_OUTPUT = Path('database/evidence-baselines.lua')
-SUPPORTED = {'Mill': 'Inscription', 'Prospect': 'Jewelcrafting', 'Disenchant': 'Enchanting', 'Smelt': 'Mining'}
+SUPPORTED = METHOD_PROFESSIONS
 STALE_FACTOR = 0.25        # same as Database.lua
 NOT_BASELINE_FACTOR = 0.5  # unknown skill, or skill/stats above the minimum
 GUESS_CASTS = 20           # LL.PRIOR_CASTS: a percentage without a sample size
@@ -122,6 +124,10 @@ def group_key(record):
     # A family total and a quantity for one exact rank are different measurements.
     # Keep their identities separate even when they use the same representative ID.
     scope = {name: record[name] for name in evidence_check.SCOPE_FIELDS if name in record}
+    if record['method'] in GENERIC_METHODS:
+        for field in ('skill', 'stats'):
+            if record.get(field) is not None:
+                scope['source'+field.title()] = record[field]
     families = sorted((out['item'], out['rankIDs']) for out in record['outputs'] if 'rankIDs' in out)
     if families:
         scope['outputFamilies'] = families
@@ -162,6 +168,10 @@ def build(report):
             notes['confirmed'] += 1
         if record['method'] not in SUPPORTED:
             notes['skipped'].append((entry['id'], f"method {record['method']} is not built into ItemDB yet (kept)"))
+            continue
+        reasons = processing_reasons(record, local=True)
+        if reasons:
+            notes['skipped'].append((entry['id'], '; '.join(reasons)))
             continue
         if isinstance(record['input'], str) and not record['input'].endswith((':armor', ':weapon')):
             notes['skipped'].append((entry['id'], 'gear key needs :armor or :weapon for ItemDB (kept)'))
@@ -223,7 +233,7 @@ def build(report):
             study += ':scope:' + hashlib.sha256(scope_key.encode('utf-8')).hexdigest()[:12]
         row = {
             'recordID': study, 'studyID': study, 'sourceKey': 'itemdb', 'method': method,
-            'profession': SUPPORTED[method], 'inputCount': per_cast, 'provisional': True,
+            'profession': profession_for(chosen[0][2]), 'inputCount': per_cast, 'provisional': True,
             'samples': round(max(max(acc['casts'], acc['qtyCasts']) for acc in outputs.values()), 4),
             'source': '; '.join(sorted({r['source'] for _, _, r in chosen})),
             'evidenceRecordIDs': [record_id for record_id, _, _ in chosen],
@@ -231,6 +241,9 @@ def build(report):
             'materials': materials,
         }
         row.update({name: chosen[0][2][name] for name in evidence_check.SCOPE_FIELDS if name in chosen[0][2]})
+        if method in GENERIC_METHODS:
+            row['sourceOperationScope'] = json.loads(scope_key)
+            row.setdefault('referenceContextID', 'local-operation:' + hashlib.sha256(scope_key.encode('utf-8')).hexdigest())
         minimums = {r.get('minimumSkill') for _, _, r in chosen} - {None}
         if len(minimums) == 1:
             row['evidenceMinimumSkill'] = minimums.pop()
@@ -299,19 +312,39 @@ def material(item, acc):
 
 
 # ---- writing Lua
+LUA_KEYWORDS = {'and', 'break', 'do', 'else', 'elseif', 'end', 'false', 'for', 'function',
+                'if', 'in', 'local', 'nil', 'not', 'or', 'repeat', 'return', 'then', 'true', 'until', 'while'}
+LUA_IDENTIFIER = re.compile(r'^[A-Za-z_][A-Za-z0-9_]*$')
+
+
+def lua_key(key):
+    if isinstance(key, str) and LUA_IDENTIFIER.fullmatch(key) and key not in LUA_KEYWORDS:
+        return key
+    if type(key) not in (str, int, float, bool):
+        raise TypeError(f'cannot write {type(key).__name__} as a Lua table key')
+    return '[' + lua(key) + ']'
+
+
 def lua(value):
+    if value is None:
+        return 'nil'
     if value is True or value is False:
         return 'true' if value else 'false'
     if isinstance(value, int):
         return str(value)
     if isinstance(value, float):
+        if not math.isfinite(value):
+            raise ValueError('cannot write non-finite number to Lua')
         return repr(value)
     if isinstance(value, str):
-        return '"' + value.replace('\\', '\\\\').replace('"', '\\"').replace('\n', '\\n') + '"'
+        escaped = ''.join({'\\': '\\\\', '"': '\\"', '\n': '\\n', '\r': '\\r', '\t': '\\t'}.get(c,
+                          ('\\' + str(ord(c)).zfill(3)) if ord(c) < 32 or ord(c) == 127 else c) for c in value)
+        return '"' + escaped + '"'
     if isinstance(value, list):
         return '{' + ','.join(lua(v) for v in value) + '}'
     if isinstance(value, dict):
-        return '{' + ','.join(f'{k}={lua(value[k])}' for k in sorted(value)) + '}'
+        return '{' + ','.join(f'{lua_key(k)}={lua(value[k])}'
+                              for k in sorted(value, key=lambda k: (type(k).__name__, str(k)))) + '}'
     raise TypeError(f'cannot write {type(value).__name__} to Lua')
 
 

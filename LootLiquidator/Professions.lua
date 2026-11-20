@@ -199,7 +199,11 @@ local function ReadSpec(skillLine)
     if not ok or type(config)~="number" or config<=0 then return nil end
     local tabsOK,tabs=pcall(api.GetSpecTabIDsForSkillLine,skillLine)
     if not tabsOK or type(tabs)~="table" or #tabs==0 then return nil end
-    local seen,rankList={},{}
+    local seen,rankList,invested,learned={},{},{},{}
+    local normalized=type(api.GetUnlockEntryForPath)=="function" and type(C_Traits.GetEntryInfo)=="function"
+    local function rankValue(value)
+        return type(value)=="number" and value==value and value>=0 and value<math.huge and value%1==0
+    end
     local failed=false
     local function Visit(path)
         if failed then return end
@@ -207,10 +211,30 @@ local function ReadSpec(skillLine)
         if seen[path] then return end
         seen[path]=true
         local valid,node=pcall(C_Traits.GetNodeInfo,config,path)
-        if not valid or type(node)~="table" or type(node.currentRank)~="number" then
+        if not valid or type(node)~="table" or not rankValue(node.currentRank) then
             failed=true;return
         end
         if node.currentRank>0 then rankList[#rankList+1]=path.."="..node.currentRank end
+        -- currentRank includes the path's learning entry. Manual sliders store
+        -- spend-entry points instead. Preserve the raw signature for empirical
+        -- matching, and expose a separate allocation only when the live entry
+        -- mapping establishes the conversion for every visited path.
+        if normalized then
+            local unlockOK,unlockID=pcall(api.GetUnlockEntryForPath,path)
+            local entryOK,entry
+            if unlockOK and PositiveInt(unlockID) then
+                entryOK,entry=pcall(C_Traits.GetEntryInfo,config,unlockID)
+            end
+            local unlockRanks=entryOK and type(entry)=="table" and entry.maxRanks
+            if not rankValue(unlockRanks) or not rankValue(node.maxRanks)
+                or unlockRanks>node.maxRanks or node.currentRank>node.maxRanks
+                or (node.currentRank>0 and node.currentRank<unlockRanks) then
+                normalized=false
+            else
+                invested[tostring(path)]=math.max(0,node.currentRank-unlockRanks)
+                if node.currentRank>0 then learned[tostring(path)]=true end
+            end
+        end
         local validChildren,children=pcall(api.GetChildrenForPath,path)
         if not validChildren then failed=true;return end
         -- Blizzard can return nil for a leaf specialization path.
@@ -226,12 +250,31 @@ local function ReadSpec(skillLine)
     end
     if failed then return nil end
     table.sort(rankList)
-    return #rankList>0 and table.concat(rankList,",") or "none"
+    return #rankList>0 and table.concat(rankList,",") or "none",{
+        signatureEncoding="trait-node-current-rank",pointsEncoding="invested-points",
+        known=normalized,points=normalized and invested or nil,learned=normalized and learned or nil}
 end
 
 -- Returns (skill, spec, skillLine) for THIS character and expansion.
 -- A previously verified spec can be reused when Blizzard temporarily hides
 -- trait data. 'Unknown' data is not silently upgraded or merged with verified.
+function LL:ProfessionAuraState()
+    local api=C_UnitAuras and C_UnitAuras.GetAuraDataByIndex
+    if type(api)~='function' then return nil,nil,false end
+    local buffs,stacks={},{}
+    for index=1,255 do
+        local ok,aura=pcall(api,'player',index,'HELPFUL')
+        if not ok then return nil,nil,false end
+        if not aura then return buffs,stacks,true end
+        local id=aura.spellId
+        if not (issecretvalue and issecretvalue(id)) and PositiveInt(id) then
+            buffs[tostring(id)]=true
+            local applications=aura.applications
+            if not (issecretvalue and issecretvalue(applications)) and PositiveInt(applications) then stacks[tostring(id)]=applications end
+        end
+    end
+    return nil,nil,false
+end
 function LL:GetResearchProfessionSnapshot(f,profession)
     local key=self:CharacterKey()
     local char=key and self.db and self.db.characters and self.db.characters[key]
@@ -260,7 +303,7 @@ function LL:GetResearchProfessionSnapshot(f,profession)
     local profileKey=tostring(profession)..":"..tostring(exp)
     char.researchProfiles=char.researchProfiles or {}
     local cached=char.researchProfiles[profileKey]
-    local spec=ReadSpec(tonumber(chosenID) or chosenID)
+    local spec,allocation=ReadSpec(tonumber(chosenID) or chosenID)
     if spec then
         char.researchProfiles[profileKey]={skill=skill,specialization=spec,
             bonusSkill=detail.skillModifier,equipment=char.professionEquipment,
@@ -271,6 +314,24 @@ function LL:GetResearchProfessionSnapshot(f,profession)
             equipment=char.professionEquipment,lineID=chosenID,observed=Now(),
             specializationVerified=false,previousSnapshot=cached and {
                 specialization=cached.specialization,observed=cached.observed} or nil}
+    end
+    local snapshot=char.researchProfiles[profileKey]
+    snapshot.buffs,snapshot.buffStacks,snapshot.buffsKnown=self:ProfessionAuraState()
+    if type(skill)=="number" and skill==skill and skill>=0 and skill<math.huge
+        and type(detail.skillModifier)=="number" and detail.skillModifier==detail.skillModifier
+        and detail.skillModifier>=0 and detail.skillModifier<math.huge then
+        snapshot.preSpecializationSkill=skill+detail.skillModifier
+    end
+    snapshot.specializationSignatureEncoding=allocation and allocation.signatureEncoding
+    snapshot.specializationKnown=allocation and allocation.known==true or false
+    snapshot.specializationEncoding=allocation and allocation.known and allocation.pointsEncoding or nil
+    snapshot.specializationPoints=allocation and allocation.known and allocation.points or nil
+    snapshot.learnedSpecializations=allocation and allocation.known and allocation.learned or nil
+    if profession=="Enchanting" then
+        snapshot.disenchantSpecializationKnown=allocation and allocation.known==true or false
+        snapshot.disenchantSpecializationEncoding=allocation and allocation.known and allocation.pointsEncoding or nil
+        snapshot.disenchantSpecializationPoints=allocation and allocation.points or nil
+        snapshot.disenchantLearnedSpecializations=allocation and allocation.learned or nil
     end
     self._activeResearchProfileCache[cacheKey]={at=now,skill=skill,
         spec=spec,lineID=chosenID}
@@ -314,14 +375,21 @@ function LL:CaptureCraftContext(recipeID,f,method,allocation,applyConcentration,
         end
     end
     local line=info and info.professionID
-    local spec=line and ReadSpec(line)
+    local spec,specAllocation
+    if line then spec,specAllocation=ReadSpec(line) end
     local context={character=self:CharacterKey(),recipeID=recipeID,method=method,
         profession=info and (info.parentProfessionName or info.professionName) or self:ProfessionForMethod(method),
         skillLineID=line,parentProfessionID=info and info.parentProfessionID,expansionName=info and info.expansionName,
         baseSkill=info and info.skillLevel,maxSkill=info and info.maxSkillLevel,bonusSkill=info and info.skillModifier,
         specialization=spec,equipment={},fieldStatus={},observed=Now(),profileKind="measured",
         inputExpansionID=f and f.expansionID,allocationKnown=type(allocation)=="table"}
+    context.specializationKnown=specAllocation and specAllocation.known==true or false
+    context.specializationEncoding=context.specializationKnown and 'invested-points' or nil
+    context.specializationPoints=context.specializationKnown and specAllocation.points or nil
+    context.learnedSpecializations=context.specializationKnown and specAllocation.learned or nil
+    context.buffs,context.buffStacks,context.buffsKnown=self:ProfessionAuraState()
     if type(context.baseSkill)=="number" and type(context.bonusSkill)=="number" then
+        context.preSpecializationSkill=context.baseSkill+context.bonusSkill
         context.effectiveSkill=context.baseSkill+context.bonusSkill
     end
     local slots=read(ui and ui.GetProfessionInventorySlots)
@@ -335,6 +403,7 @@ function LL:CaptureCraftContext(recipeID,f,method,allocation,applyConcentration,
     if OwnTradeSkillWindow() and allocation and type(applyConcentration)=="boolean" then
         local operation=read(ui and ui.GetCraftingOperationInfo,recipeID,allocation,allocationItemGUID,applyConcentration)
         if operation then
+            if self.CopyProfessionOperationContext then self:CopyProfessionOperationContext(context,operation,recipeID) end
             context.operationStats=operation.bonusStats
             context.operationBaseSkill=operation.baseSkill;context.operationBonusSkill=operation.bonusSkill
             context.craftingQuality=operation.craftingQuality
@@ -368,6 +437,140 @@ function LL:CaptureCraftContext(recipeID,f,method,allocation,applyConcentration,
 end
 
 function LL:ProfessionForMethod(method) return PROF[method] end
+function LL:ProfessionForRecipe(recipeID,character)
+    local key=character and character~='Current character' and character or self:CharacterKey()
+    local record=self.db and self.db.characters and self.db.characters[key]
+    local known=record and record.recipes and record.recipes[recipeID]
+    if known and type(known.profession)=='string' then return known.profession end
+    local recipes=self.ItemDB and self.ItemDB.professionProfiles and self.ItemDB.professionProfiles.recipes
+    local recipe=recipes and (recipes[recipeID] or recipes[tostring(recipeID)])
+    return recipe and recipe.profession
+end
+local GATHER_ABILITIES={Herbalism=2366,Mining=2575,Skinning=8613,Fishing=131474}
+local function profileCopy(value)
+    if type(value)~='table' then return value end
+    local copied={} for key,item in pairs(value) do copied[key]=profileCopy(item) end return copied
+end
+function LL:IsGatheringProfession(profession) return GATHER_ABILITIES[profession]~=nil end
+function LL:RegisterGatheringSimulationTarget(target)
+    if not self.db or type(target)~='table' or target.method~='Gather' or not GATHER_ABILITIES[target.profession]
+        or not PositiveInt(target.recipeID) or type(target.expansionID)~='number'
+        or target.expansionID<0 or target.expansionID>11 or target.expansionID%1~=0
+        or type(target.targetID)~='string' or target.targetID==''
+        or type(target.nativeTargetID)~='string' or target.nativeTargetID==''
+        or type(target.label)~='string' or target.label==''
+        or type(target.baseline)~='table' or type(target.baseline.materials)~='table'
+        or not (type(target.sourceURL)=='string' and target.sourceURL:match('^https://')
+            or type(target.sourceClaimIDs)=='table' and #target.sourceClaimIDs>0) then return false end
+    for _,material in ipairs(target.baseline.materials) do
+        local quantity=material.expectedQuantity
+        if not PositiveInt(material.id) or type(quantity)~='number' or quantity~=quantity or quantity<0 or quantity==math.huge then return false end
+    end
+    self.db.gatheringTargetProfiles=self.db.gatheringTargetProfiles or {}
+    self.db.gatheringTargetProfiles[target.targetID]=profileCopy(target)
+    if self.Invalidate then self:Invalidate() end
+    return true
+end
+function LL:GetGatheringSimulationTargets(profession,expansion)
+    local spell=GATHER_ABILITIES[profession]
+    if not spell then return {} end
+    local name
+    if C_Spell and type(C_Spell.GetSpellName)=='function' then
+        local ok,value=pcall(C_Spell.GetSpellName,spell)
+        if ok and type(value)=='string' then name=value end
+    end
+    local result={{targetID='native-gather:'..profession..':'..expansion,method='Gather',profession=profession,
+        expansionID=expansion,recipeID=spell,label=(name or profession)..' — general gathering',
+        nativeAbility=true,generalTarget=true,baseline={materials={},confidence=20},source='Native profession ability'}}
+    local explicit={}
+    local compiled=self.ItemDB and self.ItemDB.professionProfiles and self.ItemDB.professionProfiles.gatheringTargets
+    local studies=self.ItemDB and self.ItemDB.gatheringStudyBaselines and self.ItemDB.gatheringStudyBaselines.gatheringTargets
+    for _,registry in ipairs({compiled or {},studies or {},self.db and self.db.gatheringTargetProfiles or {}}) do
+        for _,target in pairs(registry) do
+            if type(target)=='table' and target.method=='Gather' and target.profession==profession
+                and target.expansionID==expansion and type(target.targetID)=='string'
+                and type(target.nativeTargetID)=='string' and type(target.label)=='string'
+                and type(target.baseline)=='table' and type(target.baseline.materials)=='table' then
+                explicit[target.targetID]=profileCopy(target)
+            end
+        end
+    end
+    local keys={} for id in pairs(explicit) do keys[#keys+1]=id end table.sort(keys)
+    for _,id in ipairs(keys) do result[#result+1]=explicit[id] end
+    return result
+end
+function LL:GatheringSimulationPreview(profession,expansion,targetID,character,simulated)
+    if not self.GatheringSimulationModel or not self.ProcessingPlayerConditions then return nil end
+    local targets=self:GetGatheringSimulationTargets(profession,expansion)
+    local selected=targets[1]
+    for _,target in ipairs(targets) do if target.targetID==targetID then selected=target;break end end
+    if not selected then return nil end
+    local db={} for key,value in pairs(self.db or {}) do db[key]=value end
+    db.rateProfile=simulated and 3 or 2;db.rateProfileCharacter=character or self:CharacterKey()
+    local proxy=setmetatable({db=db,_processingContextCache={},_processingModelCache={count=0}},{__index=self})
+    local context=proxy:ProcessingPlayerConditions({expansionID=expansion},'Gather',selected.recipeID,
+        db.rateProfileCharacter,profession)
+    local model=proxy:GatheringSimulationModel(selected,context)
+    return model,selected,context
+end
+-- World-loot and item-use perks have an explicit preview context. They never
+-- become bag-item conversions or acquire an invented per-kill denominator.
+function LL:GetProfessionOpportunityTargets(profession,expansion)
+    local data=self.ItemDB and self.ItemDB.professionProfiles
+    local profile=data and data.profiles and data.profiles[profession..':'..tostring(expansion)]
+    if not profile or self.ProfessionRuleMatchesBuild and not self:ProfessionRuleMatchesBuild(data) then return {} end
+    local groups={}
+    for nodeID,node in pairs(profile.nodes or {}) do
+        local function include(effects)
+            for _,effect in ipairs(effects or {}) do
+                local scope=effect.scope or {};local method=scope.method
+                if method=='Loot' or method=='Use' then
+                    local key=tostring(nodeID)..':'..method
+                    local target=groups[key]
+                    if not target then
+                        target={targetID='profession-opportunity:'..profession..':'..expansion..':'..key,
+                            profession=profession,expansionID=expansion,method=method,nodeID=nodeID,nodeName=node.name,
+                            label=(method=='Loot' and 'Loot' or 'Item use')..' — '..node.name,
+                            quantityBasis='Normalized reference: 1 baseline opportunity',
+                            labels={},effectEntryIDs={},familyNames={},_labels={},_entries={},_families={}}
+                        groups[key]=target
+                    end
+                    for _,labelID in ipairs(scope.labelIDs or {}) do target._labels[labelID]=true end
+                    target._entries[effect.entryID]=true
+                    local binding=effect.outputBinding or {}
+                    local family=binding.name or effect.targetFamily
+                    if type(family)=='string' and family~='' then target._families[family]=true end
+                end
+            end
+        end
+        include(node.pointEffects);include(node.learningEffects)
+        for _,milestone in ipairs(node.milestones or {}) do include(milestone.effects) end
+    end
+    local result={}
+    for _,target in pairs(groups) do
+        for id in pairs(target._labels) do target.labels[#target.labels+1]=id end
+        for id in pairs(target._entries) do target.effectEntryIDs[#target.effectEntryIDs+1]=id end
+        for name in pairs(target._families) do target.familyNames[#target.familyNames+1]=name end
+        table.sort(target.labels);table.sort(target.effectEntryIDs);table.sort(target.familyNames)
+        target._labels=nil;target._entries=nil;target._families=nil
+        result[#result+1]=target
+    end
+    table.sort(result,function(a,b)return a.label==b.label and a.targetID<b.targetID or a.label<b.label end)
+    return result
+end
+function LL:ProfessionOpportunityPreview(profession,expansion,targetID,character,simulated)
+    if not self.OpportunitySimulationModel or not self.ProcessingPlayerConditions then return nil end
+    local targets=self:GetProfessionOpportunityTargets(profession,expansion)
+    local selected=targets[1]
+    for _,target in ipairs(targets) do if target.targetID==targetID then selected=target;break end end
+    if not selected then return nil end
+    local db={} for key,value in pairs(self.db or {}) do db[key]=value end
+    db.rateProfile=simulated and 3 or 2;db.rateProfileCharacter=character or self:CharacterKey()
+    local proxy=setmetatable({db=db,_processingContextCache={},_processingModelCache={count=0}},{__index=self})
+    local context=proxy:ProcessingPlayerConditions({expansionID=expansion},selected.method,nil,
+        db.rateProfileCharacter,profession)
+    return proxy:OpportunitySimulationModel(selected,context),selected,context
+end
 -- Blizzard's UI catalog supplies labels and rank bounds, never yield factors.
 function LL:ProfessionExpansionName(expansion)
     return _G['EXPANSION_NAME'..tostring(expansion)]
@@ -420,10 +623,74 @@ function LL:GetBundledProfessionUIOptions(profession,expansion)
     end
     return options
 end
+function LL:AddProfessionConditionBuffs(options,profession,expansion)
+    options=options or {nodes={},buffs={}}
+    local buffs={}
+    for _,buff in ipairs(options.buffs or {}) do buffs[buff.id]=buff end
+    local profiles=self.ItemDB and self.ItemDB.professionProfiles and self.ItemDB.professionProfiles.profiles
+    local profile=profiles and profiles[profession..':'..expansion]
+    local visited={}
+    local function visit(value)
+        if type(value)~='table' or visited[value] then return end
+        visited[value]=true
+        for _,id in ipairs(type(value.condition)=='table' and value.condition.spellIDs or {}) do
+            if PositiveInt(id) and not buffs[id] then
+                local name
+                if C_Spell and type(C_Spell.GetSpellName)=='function' then
+                    local ok,result=pcall(C_Spell.GetSpellName,id);if ok and type(result)=='string' then name=result end
+                elseif type(GetSpellInfo)=='function' then
+                    local ok,result=pcall(GetSpellInfo,id);if ok and type(result)=='string' then name=result end
+                end
+                if name and name~='' then buffs[id]={id=id,name=name,source='native-spell-condition'} end
+            end
+        end
+        for _,item in pairs(value) do if type(item)=='table' then visit(item) end end
+    end
+    visit(profile)
+    options.buffs={}
+    for _,buff in pairs(buffs) do options.buffs[#options.buffs+1]=buff end
+    table.sort(options.buffs,function(a,b) return a.name<b.name end)
+    return options
+end
+function LL:GetProfessionConditionalEffects(profession,expansion,nodes)
+    local profiles=self.ItemDB and self.ItemDB.professionProfiles and self.ItemDB.professionProfiles.profiles
+    local profile=profiles and profiles[profession..':'..expansion]
+    if not profile then return {} end
+    local names={}
+    for _,node in ipairs(nodes or {}) do names[node.id]=node.name end
+    local entries={}
+    local function visit(value,nodeID,name,rank)
+        if type(value)~='table' then return end
+        local condition=value.condition or {}
+        local manualCondition=condition.event~=nil or next(condition.contextFlags or {})~=nil
+            or next(value.requiredContextFlags or {})~=nil
+            or condition.requiresActiveBuff==true and #(condition.spellIDs or {})==0
+        if PositiveInt(value.entryID) and manualCondition then
+            local existing=entries[value.entryID]
+            local stacks=PositiveInt(condition.maxStacks) and condition.maxStacks or 1
+            if not existing then
+                entries[value.entryID]={entryID=value.entryID,nodeID=nodeID,name=name..': conditional bonus',
+                    minimumRank=rank,maxStacks=stacks,durationSeconds=condition.durationSeconds}
+            else existing.minimumRank=math.min(existing.minimumRank,rank);existing.maxStacks=math.max(existing.maxStacks,stacks) end
+        end
+        for _,child in pairs(value) do if type(child)=='table' then visit(child,nodeID,name,rank) end end
+    end
+    for id,node in pairs(profile.nodes or {}) do
+        local nodeID=tonumber(id) or node.id
+        local name=names[nodeID] or node.name or ('Specialization '..tostring(nodeID))
+        visit(node.learningEffects,nodeID,name,0)
+        visit(node.pointEffects,nodeID,name,1)
+        for _,milestone in ipairs(node.milestones or {}) do visit(milestone.effects,nodeID,name,milestone.rank or 0) end
+    end
+    local result={}
+    for _,entry in pairs(entries) do result[#result+1]=entry end
+    table.sort(result,function(a,b) return a.entryID<b.entryID end)
+    return result
+end
 function LL:GetProfessionUIOptions(character,profession,expansion)
     local bundled=self:GetBundledProfessionUIOptions(profession,expansion)
     local char=self.db.characters and self.db.characters[character]
-    if not char then return bundled or {nodes={},buffs={}} end
+    if not char then return self:AddProfessionConditionBuffs(bundled,profession,expansion) end
     local key=profession..':'..expansion
     char.professionOptions=char.professionOptions or {}
     local previous=char.professionOptions[key] or {nodes={},buffs={}}
@@ -438,7 +705,7 @@ function LL:GetProfessionUIOptions(character,profession,expansion)
         bundled.operation=previous.operation
         previous=bundled
     end
-    if character~=self:CharacterKey() or not OwnTradeSkillWindow() then return previous end
+    if character~=self:CharacterKey() or not OwnTradeSkillWindow() then return self:AddProfessionConditionBuffs(previous,profession,expansion) end
     local line
     local snapshot=char.researchProfiles and char.researchProfiles[key]
     if snapshot then line=snapshot.lineID end
@@ -447,7 +714,7 @@ function LL:GetProfessionUIOptions(character,profession,expansion)
             line=tonumber(id) or id;break
         end
     end
-    if not line then return previous end
+    if not line then return self:AddProfessionConditionBuffs(previous,profession,expansion) end
     local function read(fn,...)
         if type(fn)~='function' then return nil end
         local ok,value=pcall(fn,...);if ok then return value end
@@ -526,7 +793,7 @@ function LL:GetProfessionUIOptions(character,profession,expansion)
     options.buffs={} for _,buff in pairs(buffs) do options.buffs[#options.buffs+1]=buff end
     table.sort(options.buffs,function(a,b) return a.name<b.name end)
     char.professionOptions[key]=options
-    return options
+    return self:AddProfessionConditionBuffs(options,profession,expansion)
 end
 -- Manual benchmark percentages are assumptions, never profession ratings.
 -- Return a fresh complete table so caller-owned or SavedVariables tables cannot
@@ -549,8 +816,66 @@ LL.ProfessionSimulationStats={
     {key='resourcefulness',name='Resourcefulness'},{key='multicraft',name='Multicraft'},
     {key='ingenuity',name='Ingenuity'},{key='craftingSpeed',name='Crafting speed'},
     {key='finesse',name='Finesse'},{key='perception',name='Perception'},{key='deftness',name='Deftness'}}
+function LL:ProfessionStatCalibration(stats)
+    local result={}
+    for _,native in ipairs(type(stats)=='table' and stats or {}) do
+        local key=native.statKey
+        if not key and type(native.bonusStatName)=='string' and not (issecretvalue and issecretvalue(native.bonusStatName)) then
+            local name=native.bonusStatName:lower():gsub('%s','')
+            for _,stat in ipairs(self.ProfessionSimulationStats) do
+                if name==stat.name:lower():gsub('%s','') then key=stat.key;break end
+            end
+        end
+        local rating,percent=native.bonusStatValue,native.ratingPct
+        if key and not (issecretvalue and (issecretvalue(rating) or issecretvalue(percent)))
+            and type(rating)=='number' and rating==rating and rating>=0 and rating<math.huge
+            and type(percent)=='number' and percent==percent and percent>=0 and percent<math.huge
+            then
+            result[key]={rating=rating,percent=percent,source='native-operation'}
+        end
+    end
+    return result
+end
+function LL:ProfessionRecipeDuration(context,recipeID)
+    if context.duration or not recipeID or not C_Spell or not C_Spell.GetSpellInfo then return end
+    local ok,spell=pcall(C_Spell.GetSpellInfo,recipeID)
+    if not ok then return end
+    local cast=type(spell)=='table' and spell.castTime
+    if not (issecretvalue and issecretvalue(cast)) and type(cast)=='number' and cast==cast and cast>0 and cast<math.huge then
+        context.duration=cast/1000
+        context.durationSource='native-spell';context.durationIncludesSpeed=true
+    end
+end
+function LL:CopyProfessionOperationContext(context,info,recipeID)
+    if type(context)~='table' or type(info)~='table' then return end
+    for _,field in ipairs({'baseDifficulty','bonusDifficulty','difficulty','craftingQuality','numCraftingQualities',
+        'lowerSkillThreshold','upperSkillThreshold','upperSkillTreshold','concentrationCost','craftingTime',
+        'baseCraftingTime','craftingTimeMilliseconds','craftingSpeed','craftingOutputQuantity','duration','craftTime',
+        'ingenuityRefund','expectedConcentrationCost','concentrationExpectedCost'}) do
+        local value=info[field]
+        if not (issecretvalue and issecretvalue(value)) and type(value)=='number'
+            and value==value and value>=0 and value<math.huge then context[field]=value end
+    end
+    for _,field in ipairs({'supportsConcentration','concentrationApplied','isRecraft','isEnchant','isSalvageRecipe'}) do
+        if type(info[field])=='boolean' and not (issecretvalue and issecretvalue(info[field])) then context[field]=info[field] end
+    end
+    context.operationStats=info.bonusStats or info.operationStats
+    context.operationStatsIncludeSpecialization=true
+    context.statCalibration=self:ProfessionStatCalibration(context.operationStats)
+    if not context.duration and type(context.craftingTimeMilliseconds)=='number' then
+        context.duration=context.craftingTimeMilliseconds/1000
+        context.durationSource='native-operation';context.durationIncludesSpeed=true
+    elseif not context.duration and type(context.baseCraftingTime)=='number' then
+        context.duration=context.baseCraftingTime
+        context.durationSource='native-base-operation';context.durationIncludesSpeed=false
+    end
+    self:ProfessionRecipeDuration(context,recipeID)
+end
 function LL:ProfessionSimulationStatOptions(profession)
-    local gathering=profession=='Herbalism' or profession=='Mining' or profession=='Skinning'
+    if profession=='Fishing' then
+        for _,stat in ipairs(self.ProfessionSimulationStats) do if stat.key=='perception' then return {stat} end end
+    end
+    local gathering=profession=='Herbalism' or profession=='Mining' or profession=='Skinning' or profession=='Fishing'
     local out={}
     for i,stat in ipairs(self.ProfessionSimulationStats) do
         if gathering and i>=5 or not gathering and i<=4 then out[#out+1]=stat end
@@ -575,7 +900,8 @@ function LL:SimulatedProfessionOperationStats(profile)
     end
     return #out>0 and out or nil
 end
--- Point sliders store the same node=rank signature as measured snapshots.
+-- Point sliders store invested points. Measured raw signatures retain the
+-- learning rank and require their separately verified allocation mapping.
 -- Expose a fresh allocation for recipe/category-specific research rules;
 -- an absent allocation remains unknown rather than becoming zero points.
 function LL:ProfessionSpecializationPoints(signature)
@@ -701,11 +1027,46 @@ function LL:SetManualProfessionProfile(character,profession,expansion,values)
             learned[tostring(id)]=true
         end
     end
+    local profileKey=profession..':'..expansion
+    local previous=chars[character][profileKey]
+    local char=self.db.characters and self.db.characters[character]
+    local scanned=char and char.researchProfiles and char.researchProfiles[profileKey]
+    local operation=scanned and char.professionOperationProfiles and char.professionOperationProfiles[tostring(scanned.lineID)]
+    local calibration=operation and operation.statCalibration or {}
+    local anchors={}
+    for _,stat in ipairs(self.ProfessionSimulationStats) do
+        local anchor=previous and previous.statAnchors and previous.statAnchors[stat.key]
+        if type(anchor)~='table' or type(anchor.rating)~='number' or type(anchor.percent)~='number'
+            or not finiteStat(anchor.rating) or not finiteStat(anchor.percent) then anchor=nil end
+        local supplied=stats and stats[stat.key]
+        if not anchor then
+            local prior=previous and previous.stats and previous.stats[stat.key]
+            if type(prior)=='table' and type(prior.rating)=='number' and type(prior.percent)=='number'
+                and finiteStat(prior.rating) and finiteStat(prior.percent) then anchor=prior
+            elseif supplied and supplied.rating~=nil and supplied.percent~=nil then anchor=supplied
+            else anchor=calibration[stat.key] end
+        end
+        anchors[stat.key]={rating=anchor and anchor.rating or 0,percent=anchor and anchor.percent or 0}
+    end
+    local effectStates
+    if values.effectStates~=nil then
+        if type(values.effectStates)~='table' then return false end
+        local caps={}
+        for _,effect in ipairs(self:GetProfessionConditionalEffects(profession,expansion)) do caps[effect.entryID]=effect.maxStacks end
+        effectStates={}
+        for id,state in pairs(values.effectStates) do
+            local entryID=tonumber(id)
+            if not PositiveInt(entryID) or type(state)~='table' or type(state.active)~='boolean'
+                or state.stacks~=nil and (not PositiveInt(state.stacks) or caps[entryID] and state.stacks>caps[entryID]) then return false end
+            effectStates[tostring(entryID)]={active=state.active,stacks=state.stacks or 1}
+        end
+    end
     local profile={enabled=values.enabled==true,skill=values.skill,specialization=values.specialization,stats=stats,
-        learnedSpecializations=learned,
+        effectStates=effectStates,
+        learnedSpecializations=learned,statAnchors=anchors,
         buffs=buffs,benchmark=benchmark,
         character=character,profession=profession,expansionID=expansion,simulated=true}
-    chars[character][profession..':'..expansion]=profile
+    chars[character][profileKey]=profile
     if self.Invalidate then self:Invalidate() end
     return true
 end
@@ -727,6 +1088,7 @@ function LL:RecordProfessionEquipment()
     char.professionEquipment=equipment
 end
 function LL:GetManualProfessionProfile(character,profession,expansion)
+    if type(profession)~='string' or profession=='' then return nil end
     local profiles=self.db and self.db.manualProfessionProfiles
     local p=profiles and profiles[character]
     return p and p[profession..':'..tostring(expansion)]
@@ -885,13 +1247,22 @@ function LL:CaptureProfessionOperation(recipeID,info)
     local function number(v) return type(v)=='number' and not (issecretvalue and issecretvalue(v)) and v==v and v or nil end
     local saved={recipeID=recipeID,observed=Now(),baseSkill=number(info.baseSkill),bonusSkill=number(info.bonusSkill),
         lowerSkillThreshold=number(info.lowerSkillThreshold),upperSkillThreshold=number(info.upperSkillTreshold),stats={}}
+    self:CopyProfessionOperationContext(saved,info,recipeID)
+    saved.profession=profession.parentProfessionName or profession.professionName
+    saved.operationBuild=GetBuildInfo and select(2,GetBuildInfo())
+    saved.operationStats={}
     for _,stat in ipairs(info.bonusStats or {}) do
         if type(stat.bonusStatName)=='string' and not (issecretvalue and issecretvalue(stat.bonusStatName)) then
             saved.stats[#saved.stats+1]={name=stat.bonusStatName,rating=number(stat.bonusStatValue),percent=number(stat.ratingPct)}
+            saved.operationStats[#saved.operationStats+1]={bonusStatName=stat.bonusStatName,
+                bonusStatValue=number(stat.bonusStatValue),ratingPct=number(stat.ratingPct),
+                bonusRatingPct=number(stat.bonusRatingPct),statKey=stat.statKey}
         end
     end
     char.professionOperationProfiles=char.professionOperationProfiles or {}
     char.professionOperationProfiles[tostring(profession.professionID)]=saved
+    char.professionRecipeOperations=char.professionRecipeOperations or {}
+    char.professionRecipeOperations[recipeID]=saved
 end
 function LL:HasCurrentProfession(name)
     if not name then return false end
@@ -1053,9 +1424,183 @@ function LL:CanUseConversion(f, conversion)
 end
 
 -- Scan the open profession window in small batches to avoid repeated, expensive
--- per-item UI queries. Save only a) materials consumed by other professions, and
--- b) single-reagent recipes with a fixed output. This is a discovery catalogue,
--- NOT proof all WoW recipes have been scanned.
+-- per-item UI queries. Keep structured learned requirements for every recipe;
+-- price only resolved allocations, including the cost of every extra reagent.
+function LL:RecipeOutputQualityItems(recipeID)
+    local api=C_TradeSkillUI
+    if type(api)~='table' then return nil,false,nil end
+    local map,invalid,count={},false,0
+    local function add(id,link)
+        if not PositiveInt(id) or type(api.GetItemCraftedQualityInfo)~='function' then invalid=true;return end
+        local ok,info=pcall(api.GetItemCraftedQualityInfo,link or id)
+        local rank=ok and type(info)=='table' and info.quality
+        if not PositiveInt(rank) or rank>5 then
+            if not link then
+                for _,known in pairs(map) do if known.id==id and known.itemLink then return end end
+            end
+            invalid=true;return
+        end
+        local previous=map[rank]
+        if previous and previous.id~=id then invalid=true;return end
+        if not previous then count=count+1 end
+        map[rank]={id=id,itemLink=type(link)=='string' and link or previous and previous.itemLink}
+    end
+    local default
+    if type(api.GetRecipeOutputItemData)=='function' then
+        local ok,data=pcall(api.GetRecipeOutputItemData,recipeID)
+        if ok and type(data)=='table' then default=data end
+        if type(api.GetQualitiesForRecipe)=='function' then
+            local valid,qualities=pcall(api.GetQualitiesForRecipe,recipeID)
+            if valid and type(qualities)=='table' then
+                for _,qualityID in ipairs(qualities) do
+                    if PositiveInt(qualityID) then
+                        local read,output=pcall(api.GetRecipeOutputItemData,recipeID,nil,nil,qualityID)
+                        if read and type(output)=='table' then add(output.itemID,output.hyperlink) else invalid=true end
+                    end
+                end
+            end
+        end
+    end
+    if type(api.GetRecipeQualityItemIDs)=='function' then
+        local ok,ids=pcall(api.GetRecipeQualityItemIDs,recipeID)
+        if ok and type(ids)=='table' then for _,id in ipairs(ids) do add(id) end end
+    end
+    return count>0 and map or nil,count>0 and not invalid or false,default
+end
+-- Read the player's existing allocation. These transaction methods only copy
+-- reagent selections; none allocate, purchase, or perform a craft.
+function LL:ReadSelectedProfessionAllocation(recipeID,recipe)
+    if not OwnTradeSkillWindow() then return nil end
+    local form=ProfessionsFrame and ProfessionsFrame.CraftingPage and ProfessionsFrame.CraftingPage.SchematicForm
+    local transaction=form and (qualityRead(form.GetTransaction,form) or form.transaction)
+    if not transaction or qualityRead(transaction.GetRecipeID,transaction)~=recipeID then return nil end
+    local rows,seen,bySlot={},{},{}
+    for _,method in ipairs({'CreateCraftingReagentInfoTbl','CreateReagentInfoTbl'}) do
+        local native=qualityRead(transaction[method],transaction)
+        for _,r in ipairs(type(native)=='table' and native or {}) do
+            if not PositiveInt(r.itemID) or not PositiveInt(r.quantity) or type(r.dataSlotIndex)~='number'
+                or r.dataSlotIndex<0 or r.dataSlotIndex%1~=0 then return nil end
+            local identity=r.dataSlotIndex..':'..r.itemID
+            if seen[identity] and seen[identity]~=r.quantity then return nil end
+            if not seen[identity] then
+                local row={itemID=r.itemID,quantity=r.quantity,dataSlotIndex=r.dataSlotIndex}
+                rows[#rows+1]=row;seen[identity]=r.quantity
+                bySlot[r.dataSlotIndex]=bySlot[r.dataSlotIndex] or {}
+                bySlot[r.dataSlotIndex][#bySlot[r.dataSlotIndex]+1]=row
+            end
+        end
+    end
+    local known={}
+    for _,slot in ipairs(recipe.reagentSlots or {}) do
+        known[slot.slotIndex]=true
+        local legal,total={},0
+        for _,r in ipairs(slot.alternatives or {}) do legal[r.itemID]=true end
+        for _,r in ipairs(bySlot[slot.slotIndex] or {}) do
+            if not legal[r.itemID] then return nil end
+            total=total+r.quantity
+        end
+        if not slot.isOptional and total~=slot.quantityRequired
+            or slot.isOptional and total>0 and total~=slot.quantityRequired then return nil end
+    end
+    for slot in pairs(bySlot) do if not known[slot] then return nil end end
+    return rows,qualityRead(transaction.IsApplyingConcentration,transaction)==true
+end
+
+-- Price legal alternatives at the time of the quote. A modeled allocation is
+-- separate from the saved native recipe and carries a zero confidence cap.
+function LL:LearnedRecipeConversionOptions(f)
+    if not self.db or self.db.enableLearnedRecipeDiscovery==false or not f or not PositiveInt(f.id) then return {} end
+    local current=self:CharacterKey()
+    local characters={}
+    for key in pairs(self.db.characters or {}) do characters[#characters+1]=key end
+    table.sort(characters,function(a,b) if a==current then return b~=current elseif b==current then return false else return a<b end end)
+    local out,seen={},{}
+    for _,key in ipairs(characters) do
+        local char=self.db.characters[key]
+        for recipeID,recipe in pairs(char.recipes or {}) do
+            if not seen[recipeID] and recipe.learned==true and not recipe.disabled and not recipe.isRecraft
+                and not recipe.isSalvageRecipe and recipe.recipeType~=2
+                and PositiveInt(recipe.outputID) and type(recipe.reagentSlots)=='table' then
+                local relevant=false
+                for _,slot in ipairs(recipe.reagentSlots) do
+                    if not slot.isOptional then
+                        for _,r in ipairs(slot.alternatives or {}) do if r.itemID==f.id then relevant=true end end
+                    end
+                end
+                if relevant then
+                    seen[recipeID]=true
+                    local rows,concentration
+                    if key==current then rows,concentration=self:ReadSelectedProfessionAllocation(recipeID,recipe) end
+                    local native=rows~=nil
+                    if rows then
+                        local found=false
+                        for _,row in ipairs(rows) do if row.itemID==f.id then found=true end end
+                        if not found then rows=nil;native=false end
+                    end
+                    local modeled,unresolved=false,false
+                    if not rows then
+                        rows={}
+                        local selections=char.recipeReagentSelections and char.recipeReagentSelections[recipeID]
+                        for _,slot in ipairs(recipe.reagentSlots) do
+                            local selected=selections and (selections[slot.slotIndex] or selections[tostring(slot.slotIndex)]) or slot.selectedItemID
+                            local choice,best,main,legal
+                            for _,r in ipairs(slot.alternatives or {}) do
+                                if r.itemID==f.id and not slot.isOptional then main=r.itemID end
+                                if r.itemID==selected then legal=r.itemID end
+                                local price=self:GetOutputPrice(r.itemID)
+                                if type(price)=='number' and price>=0 and (not best or price<best or price==best and r.itemID<choice) then
+                                    choice=r.itemID;best=price
+                                end
+                            end
+                            if not slot.isOptional or legal then
+                                local id=main or legal or choice
+                                local alternatives=slot.alternatives or {}
+                                if not id and #alternatives>0 then id=alternatives[1].itemID end
+                                if #alternatives>1 and (not legal or main and main~=legal) then modeled=true end
+                                if id and PositiveInt(slot.quantityRequired) then
+                                    rows[#rows+1]={itemID=id,quantity=slot.quantityRequired,dataSlotIndex=slot.slotIndex}
+                                    if id~=f.id and self:GetOutputPrice(id)==nil then unresolved=true end
+                                else unresolved=true end
+                            end
+                        end
+                    end
+                    local totals={}
+                    for _,r in ipairs(rows) do totals[r.itemID]=(totals[r.itemID] or 0)+r.quantity end
+                    local inputs,extras={},{}
+                    for id,amount in pairs(totals) do
+                        inputs[#inputs+1]={id=id,amount=amount}
+                        if id~=f.id then extras[#extras+1]={id=id,amount=amount} end
+                    end
+                    table.sort(inputs,function(a,b) return a.id<b.id end)
+                    table.sort(extras,function(a,b) return a.id<b.id end)
+                    if totals[f.id] then
+                        local candidate={recipeID=recipeID,requiredSpell=recipeID,skillLineID=recipe.skillLineID,
+                            sourceCharacter=key,method='Craft',profession=recipe.profession,expansion=recipe.skillLineName,
+                            inputCount=totals[f.id],outputID=recipe.outputID,outputCount=recipe.outputCount,
+                            outputQuantityMin=recipe.outputQuantityMin,outputQuantityMax=recipe.outputQuantityMax,
+                            outputQualityItems=recipe.outputQualityItems,qualityOrderVerified=recipe.qualityOrderVerified,
+                            outputItemLink=recipe.outputItemLink,requiredInputs=inputs,extraReagents=extras,
+                            confidence=recipe.outputCount and 'verified' or 'source-candidate',verifiedOutput=recipe.outputCount~=nil,
+                            source='In-game profession recipes',allocation=rows,allocationNative=native,
+                            modelAllocation=modeled,allocationConfidence=modeled and 0 or nil,allocationCostUnknown=unresolved}
+                        if key==current and not unresolved and OwnTradeSkillWindow() then
+                            local operation=qualityRead(C_TradeSkillUI and C_TradeSkillUI.GetCraftingOperationInfo,recipeID,rows,nil,native and concentration or false)
+                            if type(operation)=='table' then
+                                candidate.operationInfo=qualityCopy(operation);candidate.operationCharacter=current
+                                candidate.operationInfo.concentrationApplied=native and concentration or false
+                                candidate.operationBuild=qualityBuild()
+                            end
+                        end
+                        out[#out+1]=candidate
+                    end
+                end
+            end
+        end
+    end
+    table.sort(out,function(a,b) return a.recipeID<b.recipeID end)
+    return out
+end
+
 function LL:ScanProfessionRecipes()
     if not self.db or self.db.enableLearnedRecipeDiscovery==false then return end
     if not C_TradeSkillUI or not C_TradeSkillUI.GetAllRecipeIDs
@@ -1071,6 +1616,20 @@ function LL:ScanProfessionRecipes()
     self._recipeScanSerial=(self._recipeScanSerial or 0)+1
     local serial=self._recipeScanSerial
     self.db.recipeCandidates=self.db.recipeCandidates or {}
+    char.recipes=char.recipes or {}
+    for inputID,candidates in pairs(self.db.recipeCandidates) do
+        for recipeID,candidate in pairs(candidates) do
+            if candidate.profession==profession and (candidate.skillLineID==lineID or candidate.expansion==lineName) then
+                local otherKnown=false
+                for otherKey,other in pairs(self.db.characters or {}) do
+                    local known=otherKey~=key and other.recipes and other.recipes[recipeID]
+                    if known and known.learned==true and known.disabled~=true and known.profession==profession then otherKnown=true;break end
+                end
+                if not otherKnown then candidates[recipeID]=nil end
+            end
+        end
+        if not next(candidates) then self.db.recipeCandidates[inputID]=nil end
+    end
     self.db.reagentConsumers=self.db.reagentConsumers or {}
     char.reagentUses=char.reagentUses or {}
     char.salvageRecipes=char.salvageRecipes or {}
@@ -1100,49 +1659,36 @@ function LL:ScanProfessionRecipes()
             local goodSchem,schem=pcall(C_TradeSkillUI.GetRecipeSchematic,recipeID,false)
             if goodInfo and type(info)=="table" and goodSchem and type(schem)=="table" then
                 local slots=schem.reagentSlotSchematics or {}
-                local mainID,mainAmount,distinct= nil,nil,0
-                local allInputs,consumerIDs,requiredIDs={},{},{}
-                for _,slot in ipairs(slots) do
+                local allInputs,consumerIDs,requiredIDs,reagentSlots,totals={},{},{},{},{}
+                local requiredResolved=true
+                local selections=char.recipeReagentSelections and char.recipeReagentSelections[recipeID]
+                for slotIndex,slot in ipairs(slots) do
                     local rs=slot.reagents or {}
-                    local id= #rs==1 and (rs[1].itemID or rs[1].itemId)
                     local amount=slot.quantityRequired
-                    if id and PositiveInt(amount) then
-                        distinct=distinct+1
-                        mainID=id;mainAmount=amount
-                        allInputs[#allInputs+1]={id=id,amount=amount}
-                        consumerIDs[id]=true
-                        -- Single fixed reagent is proven; alternative/optional
-                        -- slots are not a reliable requirement for this item.
-                        if not slot.isOptional then requiredIDs[id]=true end
-                    else
-                        distinct=999 -- Optional, selectable, or unknown input: skip candidate.
-                    end
-                    -- Different professions consuming reagents is useful even
-                    -- when the recipe itself is multi-ingredient.
+                    local optional=slot.isOptional==true or slot.required==false
+                    local alternatives,choice,explicit={},nil,false
                     for _,r in ipairs(rs) do
                         local consumed=r.itemID or r.itemId
-                        if consumed then consumerIDs[consumed]=true end
+                        if PositiveInt(consumed) then
+                            consumerIDs[consumed]=true
+                            alternatives[#alternatives+1]={itemID=consumed,qualityRank=r.qualityRank}
+                            if selections and selections[slot.dataSlotIndex or slotIndex]==consumed then choice=consumed;explicit=true end
+                        end
+                    end
+                    if #alternatives==1 and not optional then choice=alternatives[1].itemID end
+                    reagentSlots[#reagentSlots+1]={slotIndex=slot.dataSlotIndex or slotIndex,
+                        quantityRequired=amount,isOptional=optional,alternatives=alternatives,selectedItemID=choice}
+                    if not optional or explicit then
+                        if choice and PositiveInt(amount) then
+                            totals[choice]=(totals[choice] or 0)+amount;requiredIDs[choice]=true
+                        else requiredResolved=false end
                     end
                 end
+                for id,amount in pairs(totals) do allInputs[#allInputs+1]={id=id,amount=amount} end
+                table.sort(allInputs,function(a,b) return a.id<b.id end)
                 for id in pairs(consumerIDs) do
                     self.db.reagentConsumers[id]=self.db.reagentConsumers[id] or {}
                     self.db.reagentConsumers[id][profession]=true
-                end
-                -- Also accept one core reagent plus extra vendor-purchased supplies.
-                -- Only trust vendorBuy when TSM knows the vendor cost; never
-                -- assume an absent cost is zero.
-                local vendorSupplies={}
-                if distinct>1 and distinct<999 then
-                    local core={}
-                    for _,v in ipairs(allInputs) do
-                        local cost=v.fixedBuyPrice -- Only verified vendor costs, not TSM data
-                        if cost then vendorSupplies[#vendorSupplies+1]={id=v.id,amount=v.amount}
-                        else core[#core+1]=v end
-                    end
-                    if #core==1 then
-                        mainID=core[1].id;mainAmount=core[1].amount
-                        distinct=1
-                    end
                 end
                 -- Salvage-style profession recipes are not fixed-output crafts.
                 -- Record verified learned spell accessibility, not fake output
@@ -1164,15 +1710,26 @@ function LL:ScanProfessionRecipes()
                 end
                 local output=schem.outputItemID
                 local qmin=schem.quantityMin; local qmax=schem.quantityMax
+                local qualityItems,qualityVerified,outputData=self:RecipeOutputQualityItems(recipeID)
+                if not PositiveInt(output) and outputData and PositiveInt(outputData.itemID) then output=outputData.itemID end
+                local outputLink=outputData and outputData.itemID==output and outputData.hyperlink or nil
                 if info.learned then
                     char.recipes[recipeID]={learned=true, disabled=info.disabled,
                         profession=profession,skillLineID=lineID,skillLineName=lineName,
                         relativeDifficulty=info.relativeDifficulty,
                         maxTrivialLevel=info.maxTrivialLevel,
                         canSkillUp=info.canSkillUp,numSkillUps=info.numSkillUps,
-                        firstCraft=info.firstCraft,scanned=Now(),name=info.name}
+                        firstCraft=info.firstCraft,scanned=Now(),name=info.name,
+                        isRecraft=info.isRecraft==true or schem.isRecraft==true,
+                        isSalvageRecipe=info.isSalvageRecipe,recipeType=schem.recipeType,
+                        reagentSlots=reagentSlots,requiredInputs=allInputs,requiredInputsResolved=requiredResolved,
+                        outputID=PositiveInt(output) and output or nil,
+                        outputCount=PositiveInt(qmin) and qmin==qmax and qmin or nil,
+                        outputQuantityMin=qmin,outputQuantityMax=qmax,
+                        outputQualityItems=qualityItems,qualityOrderVerified=qualityVerified,
+                        outputItemLink=outputLink}
                     if info.disabled~=true then
-                        for id in pairs(requiredIDs) do
+                        for id in pairs(consumerIDs) do
                             char.reagentUses[id]=char.reagentUses[id] or {}
                             char.reagentUses[id][recipeID]={skillLineID=lineID}
                         end
@@ -1181,16 +1738,26 @@ function LL:ScanProfessionRecipes()
                     -- Never keep a no-longer-learned recipe eligible.
                     char.recipes[recipeID]=nil
                 end
-                if distinct==1 and mainID and output and PositiveInt(qmin)
-                    and qmin==qmax and info.isRecraft~=true and schem.isRecraft~=true
+                if info.learned and info.disabled~=true and requiredResolved and #allInputs>0 and PositiveInt(output)
+                    and info.isRecraft~=true and schem.isRecraft~=true
                     and schem.recipeType~=2 and not info.isSalvageRecipe then
-                    local c=self.db.recipeCandidates[mainID] or {}
-                    c[recipeID]={recipeID=recipeID,requiredSpell=recipeID,
-                        method="Craft",profession=profession,expansion=lineName,
-                        inputCount=mainAmount,outputID=output,outputCount=qmin,
-                        vendorSupplies=vendorSupplies,
-                        source="In-game profession recipes",verifiedOutput=true}
-                    self.db.recipeCandidates[mainID]=c
+                    for _,main in ipairs(allInputs) do
+                        local extra={}
+                        for _,input in ipairs(allInputs) do if input.id~=main.id then extra[#extra+1]={id=input.id,amount=input.amount} end end
+                        local c=self.db.recipeCandidates[main.id] or {}
+                        local fixed=PositiveInt(qmin) and qmin==qmax
+                        c[recipeID]={recipeID=recipeID,requiredSpell=recipeID,skillLineID=lineID,
+                            sourceCharacter=key,
+                            method="Craft",profession=profession,expansion=lineName,
+                            inputCount=main.amount,outputID=output,outputCount=fixed and qmin or nil,
+                            outputQuantityMin=qmin,outputQuantityMax=qmax,
+                            outputQualityItems=qualityItems,qualityOrderVerified=qualityVerified,
+                            outputItemLink=outputLink,
+                            requiredInputs=allInputs,extraReagents=extra,
+                            confidence=fixed and 'verified' or 'source-candidate',
+                            source="In-game profession recipes",verifiedOutput=fixed or false}
+                        self.db.recipeCandidates[main.id]=c
+                    end
                 end
             end
         end

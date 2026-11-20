@@ -1,0 +1,9 @@
+# Preserve the original Mycobloom published means
+
+The existing v3 records `evidence:v3:Mill:210796:x10` and `evidence:v3:Mill:210797:x10` carried a published mean of respectively 11.5 and 13.5 rank-2 Nacreous Pigment (222619) per ten Mycobloom inputs. Their original source reported 1.15 and 1.35 per herb. Neither input rank has a separately reported operation denominator, output total, hit count, refund ledger or source profession profile. These were zero-sample provisional figures, never measured cast counts.
+
+The canonical source transcriptions are `war-within-20261031-211714` and `war-within-20261031-211715` in `research/v3/evidence/war-within/2026-10-31T2117-ironclaw-aqirite-mycobloom-studies.jsonl`, citing [the original milling report](https://www.reddit.com/r/woweconomy/comments/1fdmzwy). Their exact file, record identity, unit and raw-row SHA-256 are pinned in `database/research/reviewed-published-milling-priors.json`. The raw snapshot remains unchanged.
+
+New community skill-band condition metadata was interpreted by the vendored estimator as an unlock requirement and excluded these old figures. The explicit preservation adapter retains only the two previously compiled published means when ordinary estimation does not produce their records. It assumes a zero-skill/zero-stat source profile for normalization, marks that profile assumed with confidence zero, and preserves the original low source-support score separately. This is a forward-modeling prior, not a recovered or captured source profile.
+
+The adapter does not mark any specialization unlocked, infer casts from aggregate herb inventory, admit conditional empirical samples, turn the source means into unconditional hit probabilities, invent stack bounds, or fill unreported output qualities with zeros. Changed source bytes require renewed review. ItemDB source preferences, observation modes, recipe access and normal tooltip confidence rules continue to apply.

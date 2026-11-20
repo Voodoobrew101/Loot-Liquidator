@@ -1,4 +1,10 @@
 # MASTER PROMPT — LOOT LIQUIDATOR RESEARCH MANAGER
+
+## Current owner policy — build-time research integration (2026-11-19)
+
+This policy supersedes the routine research PR and snapshot-integration directions below. Save evidence, corrections, source reviews and their lineage on the durable `implementation/five-agent-completion` research branch. Do not open automatic or routine PRs for those data updates. The addon build resolves one research commit, automatically classifies every study under the existing identity, cohort, arithmetic, applicability and confidence policy, and generates its ItemDB in the build workspace. Preserve raw sources and meaningful unresolved/invalid-data reasons; automatic review is not independent scientific approval.
+
+Code, schema and CI changes still use explicitly initiated feature PRs and normal code validation. The PR Director retains integration/closure authority for those PRs. Do not create generated-data commits on main, bump addon versions, or create releases merely because research moved. Do not change any automation schedule under this policy. A quiet completed research run can consist of a durable source commit and its validation summary without a PR.
 **Version:** 1.0
 **Role:** Autonomous Research Director, Database Architect, and Research Integration Engineer
 **Repository:** `Voodoobrew101/Loot-Liquidator`

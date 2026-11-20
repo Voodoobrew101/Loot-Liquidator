@@ -37,6 +37,9 @@ local function compile()
         end end
         -- D1c: keep the real research v3 baselines out of this synthetic fixture.
         if path=='database/research-v3-baselines.lua' then return function() return {schemaVersion=1,processing={}} end end
+        if path=='database/research/build-study-review.lua' then return function()
+            return {schemaVersion=1,reviewType='AUTOMATIC_BUILD_REVIEW'}
+        end end
         if path=='database/evidence-baselines.lua' then return function() return {schemaVersion=1,processing={}} end end
         if path=='database/disenchant-category-baselines.lua' then return function() return {schemaVersion=1,processing={}} end end
         if path=='database/capture-observations.lua' then return function() return {schemaVersion=1,processing={}} end end

@@ -5,7 +5,7 @@ local function widget(kind,parent,template)
     local noop=function() end
     for _,name in ipairs({'SetSize','SetWidth','SetHeight','ClearAllPoints','SetAllPoints','SetColorTexture',
         'SetJustifyH','SetFontObject','SetTextInsets','SetAutoFocus','ClearFocus',
-        'RegisterEvent','SetVertexColor','SetHighlightTexture','SetTextColor','SetObeyStepOnDrag','SetButtonState','SetTexture','SetParent','SetScrollChild','SetMaxLetters','RegisterForDrag'}) do w[name]=noop end
+        'RegisterEvent','SetVertexColor','SetHighlightTexture','SetTextColor','SetObeyStepOnDrag','SetButtonState','SetTexture','SetParent','SetScrollChild','SetMaxLetters','RegisterForDrag','EnableMouse'}) do w[name]=noop end
     function w:SetPoint(...) self.point={...} end
     function w:Enable() self.enabled=true end
     function w:Disable() self.enabled=false end
@@ -550,6 +550,7 @@ do
     LL.GetProfessionUIOptions=realProfessionOptions
     assert(loadfile('LootLiquidator/ProfessionCatalog.lua'))('LL',LL)
     assert(loadfile('LootLiquidator/ProfessionModels.lua'))('LL',LL)
+    assert(loadfile('LootLiquidator/ProfessionCalculations.lua'))('LL',LL)
     assert(loadfile('LootLiquidator/ItemDBRuntime.lua'))('LL',LL)
     GetBuildInfo=function() return '12.1.5','70961','Nov 2026',120105 end
     assert(LL:InitializeItemDB())
@@ -601,7 +602,19 @@ do
     local crystalSlider=assert(sliderAt(crystal,before))
     assert(dustSlider.value==17 and crystalSlider.value==12,
         'restored researched branches load their previously saved point values')
-    assert(#slidersAfter(before)==5,'Enchanting exposes base skill and all four researched disenchanting nodes')
+    local catalogOptions=LL:GetProfessionUIOptions('Tester - Realm','Enchanting',11)
+    local capability=LL:GetProfessionSimulationControlSupport('Enchanting',11,catalogOptions.nodes)
+    local expectedSliders=capability.skill and 1 or 0
+    for _,node in ipairs(catalogOptions.nodes) do
+        if capability.nodes[tostring(node.id)] or capability.nodes[node.id] then expectedSliders=expectedSliders+1 end
+    end
+    for _,stat in ipairs(LL:ProfessionSimulationStatOptions('Enchanting')) do
+        local fields=capability.stats[stat.key] or {}
+        if fields.rating then expectedSliders=expectedSliders+1 end
+        if fields.percent then expectedSliders=expectedSliders+1 end
+    end
+    assert(#slidersAfter(before)==expectedSliders and expectedSliders>=5,
+        'Enchanting exposes every compiled node, base skill and applicable profession stat')
     assert(#labelsAfter(before,'Skill before specialization')==1,'known skill remains available as simulated tooltip context')
     local previousTooltip=GameTooltip
     local hoverLines={}
@@ -611,12 +624,12 @@ do
         assert(control.scripts.OnEnter,'researched branch must explain its effect on hover')
         control.scripts.OnEnter(control)
         local text=table.concat(hoverLines,'\n'):lower()
-        assert(text:find('not quantified',1,true) or text:find('unquantified',1,true),
-            'a described output effect explicitly discloses its unquantified numerical change')
+        assert(text:find('adjusts disenchant material',1,true) and not text:find('unquantified',1,true),
+            'the connected baseline model describes its material effect without a second uncertainty label')
     end
     GameTooltip=previousTooltip
-    assert(#labelsAfter(before,'Resourcefulness rating')==0 and #labelsAfter(before,'Crafting speed')==0,
-        'context-only crafting stats are not displayed as working controls')
+    assert(#labelsAfter(before,'Resourcefulness rating')>=1 and #labelsAfter(before,'Crafting speed')>=1,
+        'generic profession calculations expose the applicable crafting stat controls')
     assert(LL.db.professionTooltipProfiles.Enchanting==nil,'opening Advanced does not change the tooltip profile')
     slider:SetValue(7)
     assert(selector.initializer.setting:GetValue()==-1,'editing a specialization switches to Simulated')
@@ -657,17 +670,123 @@ do
             if w.template=='SettingsDropdownControlTemplate' then dropdowns[#dropdowns+1]=w end
             if w.kind=='Button' and w.text=='Advanced' then advanced=w end
         end
+        local opportunityTargets=LL.GetProfessionOpportunityTargets and LL:GetProfessionOpportunityTargets(profession,11) or {}
+        assert(#dropdowns==2+(LL:IsGatheringProfession(profession) and 1 or 0)+(#opportunityTargets>0 and 1 or 0),
+            'native gathering and opportunity contexts add relevant target selectors')
         if expansion~=11 then dropdowns[2].initializer.setting:SetValue(expansion) end
         assert(advanced);advanced.scripts.OnClick(advanced)
         return first,panel
     end
-    local jcFirst=nativePanel('Jewelcrafting',11)
-    assert(#slidersAfter(jcFirst)==3,'Midnight Jewelcrafting shows base skill and two quality-linked point controls')
-    assert(#labelsAfter(jcFirst,'Skill before specialization')==1)
-    local twwFirst=nativePanel('Jewelcrafting',10)
-    assert(#slidersAfter(twwFirst)==4,'TWW Jewelcrafting shows the four effective gem-replacement branches')
-    assert(#labelsAfter(twwFirst,'Skill before specialization')==0,'a replacement model does not make unrelated skill effective')
-    local unusedFirst=nativePanel('Blacksmithing',11)
-    assert(#slidersAfter(unusedFirst)==0,'an unmodeled profession does not expose inert skill, stat or point sliders')
-    print('PASS: researched skill and described-effect sliders, limitation hovers, saved allocations and numeric-support refresh')
+    for _,profession in ipairs({'Alchemy','Blacksmithing','Enchanting','Engineering','Herbalism','Inscription',
+        'Jewelcrafting','Leatherworking','Mining','Skinning','Tailoring','Cooking','Fishing'}) do
+        for _,expansion in ipairs({9,10,11}) do
+            local first=nativePanel(profession,expansion)
+            local options=LL:GetProfessionUIOptions('Tester - Realm',profession,expansion)
+            local support=LL:GetProfessionSimulationControlSupport(profession,expansion,options.nodes)
+            local expected=support.skill and 1 or 0
+            for _,node in ipairs(options.nodes) do
+                if support.nodes[tostring(node.id)] or support.nodes[node.id] then expected=expected+1 end
+            end
+            for _,stat in ipairs(LL:ProfessionSimulationStatOptions(profession)) do
+                local fields=support.stats[stat.key] or {}
+                if fields.rating then expected=expected+1 end
+                if fields.percent then expected=expected+1 end
+            end
+            assert(expected>0 and #slidersAfter(first)==expected,
+                profession..' '..expansion..' exposes every compiled skill, stat and specialization control')
+            assert(#labelsAfter(first,'Skill before specialization')==1,'all compiled profession profiles expose skill')
+            if profession=='Cooking' or profession=='Fishing' then assert(#options.nodes==0,'native profiles without specializations retain no fabricated tree') end
+        end
+    end
+    -- A native rank-zero perk is an actual learned state, rather than one
+    -- invented invested point. Exercise the real checkbox and native formula.
+    assert(LL:SetManualProfessionProfile('Tester - Realm','Enchanting',10,{enabled=true,skill=133,
+        specialization='none',learnedSpecializations={},buffs={}}))
+    local learningFirst,learningPanel=nativePanel('Enchanting',10)
+    local learningLabel=assert(labelsAfter(learningFirst,'Designated Disenchanter (')[1])
+    local learningSlider=assert(sliderAt(learningLabel,learningFirst))
+    local learningCheckbox
+    for i=learningFirst+1,#all do
+        local w=all[i]
+        if w.template=='SettingsCheckboxControlTemplate' and shown(w) and w.point
+            and w.point[5]<learningLabel.point[5]
+            and (not learningCheckbox or w.point[5]>learningCheckbox.point[5]) then learningCheckbox=w end
+    end
+    assert(learningCheckbox and learningCheckbox.llNativeCheckbox.enabled and not learningCheckbox:GetChecked(),
+        'a learned-at-zero checkbox starts enabled and unchecked at no investment')
+    local function learnedSkill()
+        local saved=LL:GetManualProfessionProfile('Tester - Realm','Enchanting',10)
+        local points={} for id,rank in saved.specialization:gmatch('(%d+)=(%d+)') do points[id]=tonumber(rank) end
+        return LL:ProfessionProfileParameters('Enchanting',10,{skill=saved.skill,preSpecializationSkill=saved.skill,
+            specializationPoints=points,learnedSpecializations=saved.learnedSpecializations,stats={}},
+            {name='Craft',recipeID=470726},{id=219950,reagentQuality=2,quality=3,classID=7,expansionID=10})
+    end
+    local function clickLearned(value)
+        local native=learningCheckbox.llNativeCheckbox
+        assert(native.enabled,'test only clicks enabled native checkboxes')
+        native:SetChecked(value);native.scripts.OnClick(native)
+    end
+    assert(learnedSkill().skill==133,'unlearned zero-point path has no learning grant')
+    clickLearned(true)
+    local learned=learnedSkill()
+    assert(learned.skill==138,'native zero-point learning grants exactly five Skill')
+    local grants=0
+    for _,effect in ipairs(learned.appliedEffects) do if effect.entryID==123451 and effect.metric=='skill' then grants=grants+1 end end
+    assert(grants==1,'the rank-zero perk dispatches exactly once')
+    clickLearned(true)
+    assert(learnedSkill().skill==138,'reselecting learned does not accumulate another learning grant')
+    clickLearned(false)
+    assert(learnedSkill().skill==133,'clearing learned at zero removes the grant')
+    assert(not LL:GetManualProfessionProfile('Tester - Realm','Enchanting',10).learnedSpecializations['99890'],
+        'clearing the checkbox persists the removed learning state')
+    learningSlider:SetValue(1)
+    assert(learningCheckbox:GetChecked() and not learningCheckbox.llNativeCheckbox.enabled,
+        'positive investment automatically learns the path and disables its learning toggle')
+    assert(learnedSkill().skill==139,'one invested point adds its one Skill plus one five-Skill learning grant')
+    learningSlider:SetValue(0)
+    assert(learningCheckbox.llNativeCheckbox.enabled and not learningCheckbox:GetChecked() and learnedSkill().skill==133,
+        'returning to zero restores the explicit unchecked learning state')
+    print('PASS: native learned-at-zero checkbox grants once, removes at zero and disables at positive investment')
+    -- The displayed opportunity result and its native hover must use the same
+    -- recalculated profile, with confidence carrying uncertainty.
+    assert(loadfile('LootLiquidator/ConversionEngine.lua'))('LL',LL)
+    LL.db.professionTooltipProfiles.Tailoring='@hypothetical'
+    assert(LL:SetManualProfessionProfile('Tester - Realm','Tailoring',11,{enabled=true,skill=100,specialization='none'}))
+    for _,target in ipairs(LL:GetProfessionOpportunityTargets('Tailoring',11)) do
+        if target.nodeID==104350 then
+            LL.db.professionOpportunitySelections=LL.db.professionOpportunitySelections or {}
+            LL.db.professionOpportunitySelections['Tailoring:11']=target.targetID
+        end
+    end
+    local opportunityFirst,opportunityPanel=nativePanel('Tailoring',11)
+    local fabricLabel=assert(labelsAfter(opportunityFirst,'Fabric Specialist (')[1])
+    local fabricSlider=assert(sliderAt(fabricLabel,opportunityFirst))
+    fabricSlider:SetValue(10)
+    local resultLabel=assert(labelsAfter(opportunityFirst,'Loot — Fabric Specialist')[1])
+    local resultFrame=resultLabel.parent
+    local previousTooltip=GameTooltip
+    local tooltipLines,tooltipShown={},false
+    GameTooltip={SetOwner=function()end,ClearLines=function()tooltipLines={}end,
+        AddLine=function(_,line)tooltipLines[#tooltipLines+1]=line end,
+        Show=function()tooltipShown=true end,Hide=function()tooltipShown=false end}
+    resultFrame.scripts.OnEnter(resultFrame)
+    local firstResult=table.concat(tooltipLines,'\n')
+    assert(tooltipShown and firstResult:find('discovery:',1,true) and firstResult:find('Confidence 0%',1,true),
+        'native hover displays the actual normalized output and confidence')
+    assert(not firstResult:lower():find('estimate',1,true) and not firstResult:lower():find('provisional',1,true),
+        'confidence is the uncertainty presentation')
+    fabricSlider:SetValue(20)
+    assert(table.concat(tooltipLines,'\n')~=firstResult,'active hover refreshes immediately when a native slider changes')
+    local characterSelector
+    for i=opportunityFirst+1,#all do
+        local w=all[i]
+        if w.template=='SettingsDropdownControlTemplate' then characterSelector=w;break end
+    end
+    characterSelector.initializer.setting:SetValue(0)
+    assert(opportunityPanel.opportunityPreview==nil and not tooltipShown,'hiding a profile clears its model and open tooltip')
+    resultFrame.scripts.OnEnter(resultFrame)
+    assert(not tooltipShown,'hidden preview retains no stale hover content')
+    GameTooltip=previousTooltip
+    print('PASS: native opportunity hover renders slider outputs, confidence and immediate refresh without stale hidden results')
+    print('PASS: all 39 profession profiles, native no-tree pages, gathering target selectors, saved allocations and numeric-support refresh')
 end

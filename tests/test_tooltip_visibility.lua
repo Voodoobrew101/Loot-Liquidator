@@ -80,6 +80,61 @@ for _,case in ipairs(cases) do
     end
 end
 print('PASS: '..renders..' tooltip renders: three screenshot paths, four levels, eight Advanced switch combinations')
+-- Profession simulations use their confidence score for uncertainty. Research
+-- flags remain on the model, while ordinary reference/token labels stay intact.
+LL.db={tooltipDetail=3,showTooltipExplanations=true,showProfessionDetails=true,showResearchDetails=true,
+    professionTooltipProfiles={Enchanting='@hypothetical',Inscription='@hypothetical',Jewelcrafting='@hypothetical'}}
+LL.ProfessionSimulationEffectNotes=function()
+    return {'Simulated skill: 125 (specialization bonus: +25).','Selected specialization: 10 / 30 points.'}
+end
+for _,case in ipairs({{'Disenchant','D','Enchanting',4},{'Mill','M','Inscription',7},{'Prospect','P','Jewelcrafting',7}}) do
+    local material={id=10,chance=.2,minQuantity=1,maxQuantity=2,expectedQuantity=.3,netExpectedValue=25,
+        derivedMean=true,inconsistentFields=true,samplingVariation=true,
+        unavailableReason='Conditional output excluded from current value',
+        sourceEstimates={fixture={dropChance=.2,inputCount=5,expectedQuantity=.3,sourceConflict=true,
+            heldExpectedQuantity={value=.9},heldDropChance={value=.8}}}}
+    local model={inputCount=5,materials={material,{id=12}},confidence=33,provisional=true,partial=true,
+        syntheticBenchmark=true,warning='Published endpoint: current applicability unverified',
+        adjustment='Research assumptions — provisional estimate',
+        context={simulated=true,profileKind='manual-simulation',profession=case[3],effectiveSkill=125,character='Tester'}}
+    local option={name=case[1],letter=case[2],profession=case[3],available=false,value=50,yieldModel=model,
+        tooltipProfileLabel='Simulated',why='No eligible character with verified recipe/unlock'}
+    local function simulationText()
+        local tip={lines={}}
+        function tip:AddLine(s)self.lines[#self.lines+1]=s end
+        function tip:AddDoubleLine(l,r)self.lines[#self.lines+1]=l..' | '..r end
+        LL:AppendRecommendationTooltip(tip,{action=case[2],converted=50,conversion={confidence='baseline'},
+            facts={id=1,classID=case[4]},disenchantEligible=true,conversionOptions={option}})
+        return table.concat(tip.lines,'\n')
+    end
+    for level=1,3 do
+        LL.db.tooltipDetail=level
+        local text=simulationText()
+        for _,word in ipairs({'estimate','provisional','assumptions','unquantified','Published endpoint',
+            'Estimated average','Source range retained','different sets of casts','Source fields disagree','Conflicting source'}) do
+            contains(text,word,false)
+        end
+        contains(text,'unavailable',true)
+        contains(text,'partial',true)
+        contains(text,'50 copper',true)
+        if level>=2 then
+            contains(text,'Confidence 33%',true)
+            contains(text,' — Simulated',true)
+            contains(text,option.why,true)
+            contains(text,'Selected specialization: 10 / 30 points.',true)
+        end
+        contains(text,'Material 12 (chance unavailable) [yield unavailable]',level==3)
+        contains(text,'Conditional output excluded from current value',level==3)
+        contains(text,'value counts only outputs',level==3)
+    end
+    LL.db.tooltipDetail=3
+    option.value=nil;option.eligibleInput=true;model.materials={};option.note='Insufficient Data: no matching output quantities'
+    contains(simulationText(),option.note,true)
+    assert(model.provisional and model.partial and material.netExpectedValue==25 and option.available==false,
+        'simulation presentation preserves evidence, values and access')
+end
+LL.ProfessionSimulationEffectNotes=nil
+print('PASS: profession simulations retain confidence, identity and missing-data notices without estimate labels')
 -- Also use the current shipped evidence for the exact reported item IDs.
 LL={}
 GetBuildInfo=function()return '12.1.5','123456','',120105 end

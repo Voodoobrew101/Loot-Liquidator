@@ -2,11 +2,13 @@
 
 The UI catalog supplies identity/rank bounds. This separate, sourced contract
 supplies calculations: per-point recipe skill, conserved gem replacement, and a
-separately observed complete-specialization reference. No description is parsed
-at runtime and no universal skill/yield curve is manufactured.
+separately observed complete-specialization reference. An explicit, low-confidence
+model contract supplies assumed interpolation without inventing observations.
+No description is parsed at runtime.
 """
 import argparse
 import copy
+from datetime import date
 import hashlib
 import json
 from pathlib import Path
@@ -16,6 +18,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / 'database/research/specialization-effects.json'
 CATALOG = ROOT / 'database/wago-professions-70783.json'
 OUTPUT = ROOT / 'database/specialization-effects.lua'
+CRYSTAL_EXTRAS = ROOT / 'database/research/crystal-collector-extra-materials.json'
 KINDS = {'skill-per-point', 'replace-family', 'reference-context'}
 PROFESSIONS = {'Disenchant': 'Enchanting', 'Mill': 'Inscription', 'Prospect': 'Jewelcrafting'}
 
@@ -92,7 +95,224 @@ def build_described_effects(document, catalog, sources):
     return sorted(result, key=lambda effect: effect['effectID'])
 
 
-def build(document, catalog):
+def build_published_references(document, catalog, sources):
+    """Keep historical reports as text; they cannot become output transforms."""
+    entries = document.get('publishedReferences', [])
+    if not isinstance(entries, list):
+        raise ValueError('Published specialization references must be a list')
+    allowed = {'referenceID', 'method', 'profession', 'expansionID', 'build',
+               'clientVersion', 'inputRarity', 'requiredNodes', 'displayPolicy',
+               'applyPolicy', 'displayText', 'notes', 'sourceClaimIDs'}
+    result, identities, scopes = [], set(), set()
+    for original in entries:
+        if not isinstance(original, dict) or set(original) != allowed:
+            raise ValueError('Published references are text-only; numeric transforms, sample counts and unknown fields are forbidden')
+        entry = copy.deepcopy(original)
+        identity = entry.get('referenceID')
+        if not isinstance(identity, str) or not identity or identity in identities:
+            raise ValueError('Invalid or duplicate published reference identity')
+        identities.add(identity)
+        if (entry.get('method') != 'Disenchant' or entry.get('profession') != 'Enchanting'
+                or entry.get('expansionID') != 11
+                or not whole(entry.get('build'), document['build'])
+                or not isinstance(entry.get('clientVersion'), str)
+                or not re.fullmatch(r'(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)', entry['clientVersion'])
+                or entry.get('displayPolicy') != 'MAX_INVESTMENT_SCENARIO_ONLY'
+                or entry.get('applyPolicy') != 'DISPLAY_ONLY'
+                or not whole(entry.get('inputRarity'), 2) or entry['inputRarity'] not in (2, 4)):
+            raise ValueError(f'{identity}: Invalid published reference display scope/policy')
+        if (not isinstance(entry.get('displayText'), str) or not entry['displayText'].strip()
+                or not isinstance(entry.get('notes'), list) or not entry['notes']
+                or any(not isinstance(note, str) or not note.strip() for note in entry['notes'])):
+            raise ValueError(f'{identity}: Published reference text/notes required')
+        refs = entry.get('sourceClaimIDs')
+        if (not isinstance(refs, list) or not refs or any(not isinstance(ref, str) for ref in refs)
+                or len(set(refs)) != len(refs) or any(ref not in sources for ref in refs)):
+            raise ValueError(f'{identity}: Invalid published reference source lineage')
+        for ref in refs:
+            source = sources[ref]
+            try:
+                date.fromisoformat(source.get('sourcePublishedOn', ''))
+            except (TypeError, ValueError):
+                raise ValueError(f'{identity}: Published reference source date required') from None
+            if source.get('displayReviewedBuild') != entry['build']:
+                raise ValueError(f'{identity}: Published reference display build has no matching review')
+        key = f'{entry["profession"]}:{entry["expansionID"]}'
+        nodes = {node['id']: node for node in catalog.get('catalogs', {}).get(key, {}).get('nodes', [])}
+        required = entry.get('requiredNodes')
+        child = 107648 if entry['inputRarity'] == 2 else 107646
+        if not isinstance(required, dict) or set(required) != {'107649', str(child)}:
+            raise ValueError(f'{identity}: Published reference needs the matching root/child display scenario')
+        for node_id, points in required.items():
+            if (not whole(points, 1) or int(node_id) not in nodes
+                    or points != nodes[int(node_id)]['maxRank']):
+                raise ValueError(f'{identity}: Published reference requires catalog maximum point caps')
+        scope = (entry['method'], entry['expansionID'], entry['inputRarity'], entry['build'],
+                 entry['clientVersion'], tuple(sorted(required.items())))
+        if scope in scopes:
+            raise ValueError(f'{identity}: Duplicate published reference display scope')
+        scopes.add(scope)
+        result.append(entry)
+    return sorted(result, key=lambda entry: entry['referenceID'])
+
+
+def build_modeled_disenchant_rules(document, catalog, sources):
+    """Validate explicit scenario assumptions separately from measured rules."""
+    entries = document.get('modeledDisenchantRules', [])
+    if not isinstance(entries, list):
+        raise ValueError('Modeled disenchant rules must be a list')
+    if not entries:
+        return []
+    if len(entries) != 3:
+        raise ValueError('Modeled disenchant rules require exactly three rarity scopes')
+    common = {'ruleID', 'method', 'profession', 'expansionID', 'build', 'clientVersion',
+              'inputRarity', 'inputClassIDs', 'rootNodeID', 'childNodeID', 'primaryRankIDs',
+              'confidence0to100', 'crossClassConfidence', 'sourceKey', 'skillMaximum',
+              'quantityMilestones', 'targetRank2Share', 'applyPolicy', 'evidenceStatus',
+              'assumptions', 'sourceClaimIDs'}
+    expected = {2: (107648, [243599, 243600], 'reference', 10, 5),
+                3: (107647, [243602, 243603], 'itemdb', 30, 15),
+                4: (107646, [243605, 243606], 'reference', 20, 20)}
+    nodes = {node['id']: node for node in catalog.get('catalogs', {}).get('Enchanting:11', {}).get('nodes', [])}
+    result, identities, rarities = [], set(), set()
+    for original in entries:
+        if not isinstance(original, dict):
+            raise ValueError('Modeled disenchant rule must be an object')
+        rarity = original.get('inputRarity')
+        if not whole(rarity, 2) or rarity not in expected or rarity in rarities:
+            raise ValueError('Invalid or duplicate modeled disenchant rarity scope')
+        rarities.add(rarity)
+        allowed = common | ({'targetPooledMean', 'baselineFallbackClassID'} if rarity == 2 else
+                            {'targetPooledMean', 'endpointRecordID'} if rarity == 3 else
+                            {'preservePrimaryTotal'})
+        if set(original) != allowed:
+            raise ValueError('Modeled disenchant rule has missing or unknown fields; observations and sample counts are forbidden')
+        rule = copy.deepcopy(original)
+        identity = rule.get('ruleID')
+        if (not isinstance(identity, str) or not identity.startswith('simulation:11:Disenchant:')
+                or identity in identities):
+            raise ValueError('Invalid or duplicate modeled disenchant rule identity')
+        identities.add(identity)
+        child, rank_ids, source_key, confidence_cap, cross_cap = expected[rarity]
+        if (rule.get('method') != 'Disenchant' or rule.get('profession') != 'Enchanting'
+                or not whole(rule.get('expansionID')) or rule['expansionID'] != 11
+                or not whole(rule.get('build')) or rule['build'] != 70961
+                or rule.get('clientVersion') != '12.1.5'
+                or rule.get('inputClassIDs') != [2, 4]
+                or any(not whole(value, 1) for value in rule['inputClassIDs'])
+                or not whole(rule.get('rootNodeID'), 1) or rule['rootNodeID'] != 107649
+                or not whole(rule.get('childNodeID'), 1) or rule['childNodeID'] != child
+                or rule.get('primaryRankIDs') != rank_ids
+                or any(not whole(value, 1) for value in rule['primaryRankIDs'])
+                or rule.get('sourceKey') != source_key
+                or rule.get('applyPolicy') != 'EXECUTE' or rule.get('evidenceStatus') != 'MODELED'):
+            raise ValueError(f'{identity}: Invalid modeled disenchant scope/identity/policy')
+        if any(node_id not in nodes or nodes[node_id]['maxRank'] != 30 for node_id in (107649, child)):
+            raise ValueError(f'{identity}: Modeled node identity/cap disagrees with catalog')
+        if (not finite(rule.get('confidence0to100'), 1, confidence_cap)
+                or not finite(rule.get('crossClassConfidence'), 1, cross_cap)
+                or rule['crossClassConfidence'] > rule['confidence0to100']):
+            raise ValueError(f'{identity}: Modeled confidence exceeds reviewed uncertainty caps')
+        if (not finite(rule.get('skillMaximum'), 1) or rule['skillMaximum'] != 290
+                or not finite(rule.get('targetRank2Share'), 0, 1)):
+            raise ValueError(f'{identity}: Invalid modeled skill/quality interpolation endpoint')
+        milestones = rule.get('quantityMilestones')
+        if (not isinstance(milestones, list) or len(milestones) != 2
+                or any(not isinstance(milestone, dict) or set(milestone) != {'rank', 'progress'}
+                       or not whole(milestone.get('rank'), 1)
+                       or not finite(milestone.get('progress'), .00000001, 1)
+                       for milestone in milestones)
+                or [m['rank'] for m in milestones] != [20, 30]
+                or [m['progress'] for m in milestones] != [.5, .5]):
+            raise ValueError(f'{identity}: Invalid modeled quantity milestone allocation')
+        if rarity == 4:
+            if rule.get('preservePrimaryTotal') is not True:
+                raise ValueError(f'{identity}: Crystal model must preserve the existing primary total')
+        elif not finite(rule.get('targetPooledMean'), .00000001):
+            raise ValueError(f'{identity}: Modeled pooled quantity endpoint must be positive')
+        if rarity == 2 and (not whole(rule.get('baselineFallbackClassID')) or rule['baselineFallbackClassID'] != 4):
+            raise ValueError(f'{identity}: Dust fallback must use the existing armor baseline')
+        if rarity == 3:
+            endpoint = rule.get('endpointRecordID')
+            references = {r.get('referenceContextID') for r in document.get('rules', [])
+                          if r.get('kind') == 'reference-context' and r.get('method') == 'Disenchant'
+                          and r.get('expansionID') == 11 and r.get('inputRarity') == 3
+                          and r.get('inputClassID') == 4}
+            if not isinstance(endpoint, str) or endpoint not in references:
+                raise ValueError(f'{identity}: Supplier model needs the reviewed full-specialization endpoint')
+        assumptions = rule.get('assumptions')
+        if (not isinstance(assumptions, list) or not assumptions
+                or any(not isinstance(text, str) or not text.strip() for text in assumptions)):
+            raise ValueError(f'{identity}: Explicit modeled assumptions required')
+        refs = rule.get('sourceClaimIDs')
+        if (not isinstance(refs, list) or not refs or any(not isinstance(ref, str) for ref in refs)
+                or len(set(refs)) != len(refs) or any(ref not in sources for ref in refs)):
+            raise ValueError(f'{identity}: Invalid modeled source lineage')
+        result.append(rule)
+    return sorted(result, key=lambda rule: rule['ruleID'])
+
+
+def add_crystal_extras(compiled, extras):
+    if not isinstance(extras, dict) or extras.get('schemaVersion') != 1:
+        raise ValueError('Invalid Crystal extra-material source')
+    rules = [rule for rule in compiled['modeledDisenchantRules'] if rule['ruleID'] == extras.get('ruleID')]
+    if len(rules) != 1:
+        raise ValueError('Crystal extra-material target missing or ambiguous')
+    rule = rules[0]
+    for key in ('method', 'profession', 'expansionID', 'build', 'clientVersion', 'rootNodeID',
+                'childNodeID', 'inputRarity', 'inputClassIDs'):
+        if extras.get(key) != rule.get(key):
+            raise ValueError(f'Crystal extra-material scope mismatch: {key}')
+    if extras.get('additionalOutputBaselinePolicy') != 'ZERO_BEFORE_UNLOCK':
+        raise ValueError('Invalid Crystal extra-material baseline policy')
+    outputs, milestones = extras.get('additionalOutputs'), extras.get('additionalOutputMilestones')
+    if not isinstance(outputs, list) or not outputs or not isinstance(milestones, list) or not milestones:
+        raise ValueError('Crystal extra-material quantities and milestones required')
+    seen = set()
+    for output in outputs:
+        if (not isinstance(output, dict) or set(output) != {'id', 'expectedQuantity', 'confidence0to100'}
+                or not whole(output.get('id'), 1) or output['id'] in seen
+                or output['id'] in rule['primaryRankIDs'] or not finite(output.get('expectedQuantity'), .00000001)
+                or not finite(output.get('confidence0to100'), 0, 100)):
+            raise ValueError('Invalid Crystal extra-material output')
+        seen.add(output['id'])
+    previous, total = 0, 0
+    for milestone in milestones:
+        if (not isinstance(milestone, dict) or set(milestone) != {'rank', 'progress'}
+                or not whole(milestone.get('rank'), 1) or not previous < milestone['rank'] <= 30
+                or not finite(milestone.get('progress'), .00000001, 1)):
+            raise ValueError('Invalid Crystal extra-material milestone')
+        previous = milestone['rank']; total += milestone['progress']
+    if abs(total - 1) > 1e-12:
+        raise ValueError('Crystal extra-material milestone progress must total one')
+    claims = extras.get('sourceClaims')
+    refs = extras.get('sourceClaimIDs')
+    if not isinstance(claims, list) or not isinstance(refs, list) or not refs:
+        raise ValueError('Crystal extra-material source lineage required')
+    source_ids = set()
+    for claim in claims:
+        if (not isinstance(claim, dict) or not isinstance(claim.get('id'), str) or not claim['id']
+                or claim['id'] in source_ids or not isinstance(claim.get('url'), str)
+                or not re.fullmatch(r'https://\S+', claim['url']) or not claim.get('support')):
+            raise ValueError('Invalid Crystal extra-material source claim')
+        source_ids.add(claim['id'])
+    if len(set(refs)) != len(refs) or set(refs) - source_ids:
+        raise ValueError('Invalid Crystal extra-material source references')
+    if not isinstance(extras.get('assumptions'), list) or not extras['assumptions']:
+        raise ValueError('Crystal extra-material model assumptions required')
+    existing = {claim['id'] for claim in compiled['sourceClaims']}
+    if source_ids & existing:
+        raise ValueError('Duplicate Crystal extra-material source identity')
+    for key in ('additionalOutputs', 'additionalOutputMilestones', 'additionalOutputBaselinePolicy'):
+        rule[key] = copy.deepcopy(extras[key])
+    rule['sourceClaimIDs'].extend(refs)
+    rule['assumptions'].extend(extras['assumptions'])
+    compiled['sourceClaims'].extend(copy.deepcopy(claims))
+    compiled['crystalExtraRevision'] = extras['revision']
+    return compiled
+
+
+def build(document, catalog, extras=None):
     if document.get('schemaVersion') != 1 or not whole(document.get('build'), 1):
         raise ValueError('Unsupported specialization effect schema/build')
     if not isinstance(document.get('revision'), str) or not document['revision']:
@@ -161,6 +381,22 @@ def build(document, catalog):
                         or not finite(milestone.get('skill'), .00000001)):
                     raise ValueError(f'{identity}: Invalid or unordered skill milestone')
                 previous = milestone['rank']
+        replacement_fields = {'replacementMilestones', 'replacementMilestoneBuild'} & set(rule)
+        if replacement_fields:
+            if (kind != 'replace-family'
+                    or not whole(rule.get('replacementMilestoneBuild'), rule['build'])
+                    or not any(sources[ref].get('build') == rule['replacementMilestoneBuild'] for ref in refs)
+                    or not isinstance(rule.get('replacementMilestones'), list)
+                    or not rule['replacementMilestones']):
+                raise ValueError(f'{identity}: Invalid sourced replacement milestone fields')
+            previous = 0
+            for milestone in rule['replacementMilestones']:
+                if (not isinstance(milestone, dict) or set(milestone) != {'rank', 'fraction'}
+                        or not whole(milestone.get('rank'), 1) or milestone['rank'] <= previous
+                        or not whole(rule.get('maxRank'), 1) or milestone['rank'] > rule['maxRank']
+                        or not finite(milestone.get('fraction'), .00000001, 1)):
+                    raise ValueError(f'{identity}: Invalid or unordered replacement milestone')
+                previous = milestone['rank']
         if rule.get('inputRarity') is not None and (not whole(rule['inputRarity'], 2) or rule['inputRarity'] > 8):
             raise ValueError(f'{identity}: Invalid physical rarity')
         if rule.get('inputClassID') is not None and rule['inputClassID'] not in (2, 4):
@@ -208,17 +444,22 @@ def build(document, catalog):
                         or rule.get('reservoirPolicy') != 'shared-original-source-quantity'):
                     raise ValueError(f'{identity}: Replacement must conserve the shared source reservoir')
                 reservoir = (key, rule.get('recipeID'), rule['sourceFamily']['id'])
-                reservoirs[reservoir] = reservoirs.get(reservoir, 0) + rule['perPoint'] * rule['maxRank']
+                maximum = rule['perPoint'] * rule['maxRank']
+                maximum += sum(milestone['fraction'] for milestone in rule.get('replacementMilestones', []))
+                reservoirs[reservoir] = reservoirs.get(reservoir, 0) + maximum
         if scope in scopes:
             raise ValueError(f'{identity}: Duplicate specialization rule scope')
         scopes.add(scope)
         result.append(rule)
     if any(total > 1 + 1e-12 for total in reservoirs.values()):
         raise ValueError('Combined replacement fractions exceed source reservoir')
-    return {'schemaVersion': 1, 'revision': document['revision'], 'build': document['build'],
+    compiled = {'schemaVersion': 1, 'revision': document['revision'], 'build': document['build'],
             'specializationRules': sorted(result, key=lambda rule: rule['ruleID']),
             'describedEffects': build_described_effects(document, catalog, sources),
+            'publishedReferences': build_published_references(document, catalog, sources),
+            'modeledDisenchantRules': build_modeled_disenchant_rules(document, catalog, sources),
             'sourceClaims': copy.deepcopy(claims), 'held': copy.deepcopy(document.get('held', []))}
+    return add_crystal_extras(compiled, extras) if extras is not None else compiled
 
 
 def lua(value):
@@ -237,7 +478,7 @@ def lua(value):
 
 def render(compiled):
     return ('-- Generated by tools/specialization_effects.py; never hand-edit.\n'
-            '-- Sourced point effects; no universal skill/yield curve or invented observations.\n'
+            '-- Reviewed point effects and explicit modeled scenarios; no invented observations.\n'
             'return ' + lua(compiled) + '\n')
 
 
@@ -246,14 +487,18 @@ def main(argv=None):
     parser.add_argument('--source', type=Path, default=SOURCE)
     parser.add_argument('--catalog', type=Path, default=CATALOG)
     parser.add_argument('--output', type=Path, default=OUTPUT)
+    parser.add_argument('--crystal-extras', type=Path, default=CRYSTAL_EXTRAS)
     parser.add_argument('--check', action='store_true')
     args = parser.parse_args(argv)
     document = json.loads(args.source.read_text(), object_pairs_hook=no_duplicate_keys)
     catalog = json.loads(args.catalog.read_text(), object_pairs_hook=no_duplicate_keys)
     if document.get('catalogSourceSHA256') != hashlib.sha256(args.catalog.read_bytes()).hexdigest():
         raise ValueError('Reviewed catalog checksum changed')
-    compiled = build(document, catalog)
+    extras = json.loads(args.crystal_extras.read_text(), object_pairs_hook=no_duplicate_keys)
+    compiled = build(document, catalog, extras)
     compiled['sourceSHA256'] = hashlib.sha256(args.source.read_bytes()).hexdigest()
+    compiled['crystalExtraSourceSHA256'] = hashlib.sha256(args.crystal_extras.read_bytes()).hexdigest()
+    compiled['revision'] += ':' + compiled['crystalExtraSourceSHA256']
     output = render(compiled)
     if args.check:
         if not args.output.exists() or args.output.read_text() != output:

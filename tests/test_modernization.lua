@@ -30,7 +30,7 @@ for line in io.lines(root..'LootLiquidator.toc') do
     end
 end
 check(not LL.itemDBError,LL.itemDBError)
-eq(#manifest,19,'runtime source count') -- Includes build provenance.
+eq(#manifest,20,'runtime source count') -- Includes profession calculations and build provenance.
 check(LL.ApplyVerifiedMechanics and LL.ResolveEvidenceModel and LL.QueueGuildRefresh and LL.QueueBlizzardBagRefresh)
 -- Names present before consolidation remain available.
 for _,name in ipairs({'SetIgnoreEntry','IsIgnoredAction','CanUseConversion','RecordProfessions',

@@ -440,6 +440,11 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
     local showProcessing=LA.db.showTooltipExplanations==true
     local showProfession=LA.db.showProfessionDetails==true
     local showResearch=LA.db.showResearchDetails==true
+    local function professionSimulation(model)
+        local context=model and model.context
+        return model and (model.disenchantBaselineApplied==true or model.generalProfessionApplied==true)
+            or type(context)=='table' and context.simulated==true and context.profileKind=='manual-simulation'
+    end
     local printedSamples=false
     local progress=(detail>=3 and showProfession and LA.ProfessionProgression and decision.facts)
         and LA:ProfessionProgression(decision.facts,decision) or {}
@@ -527,13 +532,17 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             local fallbackName=names[decision.fallback] or method
             if fallbackName then suffix=" ("..fallbackName..")" end
         end
+        local actionModel=decision.conversion and decision.conversion.yieldModel
+        for _,option in ipairs(decision.conversionOptions or {}) do
+            if option.letter==decision.action then actionModel=option.yieldModel;break end
+        end
         if decision.action=="D" and decision.conversion
-            and decision.conversion.confidence=="baseline" then suffix=" (estimated)" end
+            and decision.conversion.confidence=="baseline" and not professionSimulation(actionModel) then suffix=" (estimated)" end
         for _,option in ipairs(decision.conversionOptions or {}) do
             if option.letter==decision.action then
                 local model=option.yieldModel
                 if option.available==false then suffix=suffix.." (unavailable)" end
-                if model and model.provisional then suffix=suffix.." (estimate)" end
+                if model and model.provisional and not professionSimulation(model) then suffix=suffix.." (estimate)" end
                 if model and (model.partial or model.partialPrice) then suffix=suffix.." (partial)" end
                 break
             end
@@ -680,7 +689,21 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         end
         local function ShowMaterials(option,model)
             if detail<3 then return end
+            local simulated=professionSimulation(model)
+            for _,named in ipairs(model and model.namedOutputs or {}) do
+                local amount=type(named.expectedQuantity)=='number' and ('Average '..UnitsText(named.expectedQuantity))
+                    or type(named.chance)=='number' and ChanceText(named.chance)
+                    or type(named.discoveryFactor)=='number' and ('Discovery x'..UnitsText(named.discoveryFactor))
+                if amount then tooltip:AddDoubleLine('  '..named.name,amount,.85,.88,.95,.85,.88,.95) end
+            end
             local list=model and model.materials and LA:SortedTooltipMaterials(model.materials)
+            if type(list)=='table' then
+                local visible={}
+                for _,material in ipairs(list) do
+                    if not (material.additionalOutput and material.expectedQuantity==0) then visible[#visible+1]=material end
+                end
+                list=visible
+            end
             if type(list)=="table" and #list>0 then
                 local batch=math.max(1,tonumber(model.inputCount) or tonumber(option.inputCount) or 1)
                 local explanation=("  Per %d input(s); range when a material drops"):format(batch)
@@ -731,9 +754,9 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     two(left,amount,option.letter or "D")
                     if showResearch then
                         if m.unavailableReason then tooltip:AddLine('    '..m.unavailableReason,.90,.72,.45,true) end
-                        if m.derivedMean then tooltip:AddLine('    Estimated average: probability times conditional yield midpoint',.70,.75,.82,true) end
-                        if m.inconsistentFields then tooltip:AddLine('    Source range retained; selected average and chance disagree with it',.90,.72,.45,true) end
-                        if m.samplingVariation then tooltip:AddLine('    Drop chance and average use different sets of casts',.70,.75,.82,true) end
+                        if m.derivedMean and not simulated then tooltip:AddLine('    Estimated average: probability times conditional yield midpoint',.70,.75,.82,true) end
+                        if m.inconsistentFields and not simulated then tooltip:AddLine('    Source range retained; selected average and chance disagree with it',.90,.72,.45,true) end
+                        if m.samplingVariation and not simulated then tooltip:AddLine('    Drop chance and average use different sets of casts',.70,.75,.82,true) end
                         for _,rank in ipairs(m.rankReferences or {}) do
                             local fields={}
                             if rank.chance~=nil then fields[#fields+1]='chance '..ChanceText(rank.chance) end
@@ -747,12 +770,12 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                                 tooltip:AddLine(('    %s (per %d inputs): P %s; range %s–%s; E %s'):format(source,estimate.inputCount or batch,p,
                                     tostring(estimate.minQuantity or '?'),tostring(estimate.maxQuantity or '?'),
                                     UnitsText(estimate.expectedQuantity)),.65,.68,.76,true)
-                                if estimate.sourceConflict then tooltip:AddLine('    Source fields disagree; original values preserved',1,.68,.3,true) end
+                                if estimate.sourceConflict and not simulated then tooltip:AddLine('    Source fields disagree; original values preserved',1,.68,.3,true) end
                                 local heldChance,heldMean=estimate.heldDropChance,estimate.heldExpectedQuantity
-                                if heldChance and type(heldChance.value)=='number' then
+                                if not simulated and heldChance and type(heldChance.value)=='number' then
                                     tooltip:AddLine('    Conflicting source chance: '..ChanceText(heldChance.value)..' (excluded from estimate)',.90,.72,.45,true)
                                 end
-                                if heldMean and type(heldMean.value)=='number' then
+                                if not simulated and heldMean and type(heldMean.value)=='number' then
                                     tooltip:AddLine('    Conflicting source average: '..UnitsText(heldMean.value)..' (excluded from estimate)',.90,.72,.45,true)
                                 end
                                 if estimate.appliedRule then tooltip:AddLine('    Profession rule: '..estimate.appliedRule,.65,.68,.76,true) end
@@ -786,13 +809,24 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     tooltip:AddLine(("  %s (%s)"):format(ctx.character or "Unknown character",ctx.profileKind or "unknown context"),.70,.75,.82,true)
                     if ctx.stale or ctx.incomplete then tooltip:AddLine("  Profession snapshot stale or incomplete",1,.68,.3,true) end
                 end
-                if showProcessing then
+                if showProfession and model.generalProfessionApplied then
+                    if model.qualityRank and model.qualityRank>0 then
+                        tooltip:AddLine(('  Output quality: %d'):format(model.qualityRank),.78,.82,.95,true)
+                    end
+                    if model.duration and model.duration>0 then
+                        tooltip:AddLine(('  Time per operation: %.2f s'):format(model.duration),.78,.82,.95,true)
+                    end
+                    if model.concentrationCost and model.concentrationCost>0 then
+                        tooltip:AddLine(('  Concentration per operation: %.2f'):format(model.concentrationCost),.78,.82,.95,true)
+                    end
+                end
+                if showProcessing and not simulated then
                     tooltip:AddLine("  "..(model.adjustment or "Unadjusted reference")..
                         (model.provisional and " — provisional" or ""),.72,.70,.80,true)
-                elseif not option.name and model.provisional then
+                elseif not option.name and model.provisional and not simulated then
                     tooltip:AddLine("  Estimate — provisional",.72,.70,.80,true)
                 end
-                if showResearch and model.warning then tooltip:AddLine("  "..model.warning,1,.68,.3,true) end
+                if showResearch and model.warning and not simulated then tooltip:AddLine("  "..model.warning,1,.68,.3,true) end
                 if showProcessing and model.partial then
                     tooltip:AddLine("  Partial: value counts only outputs with a known amount and price",1,.82,.4,true)
                 elseif (showProcessing or not option.name) and model.partialPrice then
@@ -822,6 +856,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 -- Reuse the exact evaluated material model used to price this option.
                 local model=option.yieldModel
                 local hasMaterials=(model and model.materials and #model.materials>0)
+                    or (model and model.namedOutputs and #model.namedOutputs>0)
                 if option.value or hasMaterials or option.eligibleInput
                     or ((option.category=="destroy" or option.category=="research-operation") and
                         (methodName=="Mill" or methodName=="Prospect"))
@@ -834,12 +869,12 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         label=label.." — "..option.tooltipProfileLabel
                     end
                     local status={}
-                    local simulationNotes,unquantifiedEffects={},false
+                    local simulationNotes={}
                     if model and LA.ProfessionSimulationEffectNotes then
-                        simulationNotes,unquantifiedEffects=LA:ProfessionSimulationEffectNotes(f,option,model)
+                        simulationNotes=LA:ProfessionSimulationEffectNotes(f,option,model)
                     end
-                    if unquantifiedEffects then status[#status+1]='some specialization effects unquantified' end
-                    if model and model.syntheticBenchmark then
+                    local simulated=professionSimulation(model)
+                    if model and model.syntheticBenchmark and not simulated then
                         status[#status+1]="Simulated assumptions"
                     elseif model and model.confidenceUnscored then
                         status[#status+1]="Confidence unscored"
@@ -850,7 +885,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     if model and (model.partial or model.partialPrice) then
                         status[#status+1]="partial"
                     end
-                    if model and (model.provisional or model.estimatedFrom) then
+                    if model and (model.provisional or model.estimatedFrom) and not simulated then
                         status[#status+1]="estimate"
                     end
                     if option.available==false then
@@ -881,7 +916,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         end
                     end
                     if showResearch and not option.value and detail<3 then
-                        local note=(model and model.warning) or option.note
+                        local note=(not simulated and model and model.warning) or option.note
                         if note then tooltip:AddLine("  "..note,.83,.72,.59,true) end
                     end
                     if showProfession and option.available==false and option.why then

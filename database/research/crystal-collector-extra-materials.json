@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "revision": "crystal-collector-extras/2026-11-19",
+  "reviewedOn": "2026-11-19",
+  "ruleID": "simulation:11:Disenchant:crystals",
+  "profession": "Enchanting",
+  "method": "Disenchant",
+  "expansionID": 11,
+  "build": 70961,
+  "clientVersion": "12.1.5",
+  "rootNodeID": 107649,
+  "childNodeID": 107646,
+  "inputRarity": 4,
+  "inputClassIDs": [
+    2,
+    4
+  ],
+  "additionalOutputBaselinePolicy": "ZERO_BEFORE_UNLOCK",
+  "additionalOutputMilestones": [
+    {
+      "rank": 20,
+      "progress": 0.5
+    },
+    {
+      "rank": 30,
+      "progress": 0.5
+    }
+  ],
+  "additionalOutputs": [
+    {
+      "id": 236949,
+      "expectedQuantity": 0.07225,
+      "confidence0to100": 5
+    },
+    {
+      "id": 236950,
+      "expectedQuantity": 0.07225,
+      "confidence0to100": 5
+    },
+    {
+      "id": 236951,
+      "expectedQuantity": 0.07225,
+      "confidence0to100": 5
+    },
+    {
+      "id": 236952,
+      "expectedQuantity": 0.07225,
+      "confidence0to100": 5
+    }
+  ],
+  "identityStatus": "POSSIBLE_NATIVE_ESSENCE_POOL_NOT_VERIFIED_DISENCHANT_LOOT_LINK",
+  "outputNames": {
+    "236949": "Mote of Light",
+    "236950": "Mote of Primal Energy",
+    "236951": "Mote of Wild Magic",
+    "236952": "Mote of Pure Void"
+  },
+  "sourceClaimIDs": [
+    "crystal-native-essence-perks-70961",
+    "midnight-native-four-mote-family",
+    "crystal-extra-budget-transfer-courtly"
+  ],
+  "sourceClaims": [
+    {
+      "id": "crystal-native-essence-perks-70961",
+      "url": "https://wago.tools/db2/TraitDefinition?build=12.1.5.70961",
+      "sourceType": "BLIZZARD_DB2_PERK_DESCRIPTION",
+      "archive": "research/mechanics/2026-11-19-game-data-formulas.json",
+      "support": "Crystal rank20 perk107620/definition137719/trait18862 unlocks a chance for native magical essences. Rank30 perk107618/definition137717/trait18860 increases that chance and adds20EpicSkill. Neither gives essence IDs, proc probability or stack quantities.",
+      "milestones": [
+        {
+          "rank": 20,
+          "perkNodeID": 107620,
+          "definitionID": 137719,
+          "professionTraitID": 18862,
+          "effect": "unlock-native-magical-essences"
+        },
+        {
+          "rank": 30,
+          "perkNodeID": 107618,
+          "definitionID": 137717,
+          "professionTraitID": 18860,
+          "effect": "increase-native-magical-essence-chance",
+          "separateSkillBonus": 20
+        }
+      ]
+    },
+    {
+      "id": "midnight-native-four-mote-family",
+      "url": "https://www.wowhead.com/item=236949/mote-of-light",
+      "sourceType": "PRIMARY_ITEM_IDENTITY_AND_EXPLICIT_MODEL_POOL_MAPPING",
+      "accessedOn": "2026-11-19",
+      "additionalURLs": [
+        "https://www.wowhead.com/item=236950/mote-of-primal-energy",
+        "https://www.wowhead.com/item=236951/mote-of-wild-magic",
+        "https://www.wowhead.com/item=236952/mote-of-pure-void"
+      ],
+      "existingIdentityEvidence": "research/v3/evidence/midnight/2026-10-31T1012-alchemy-transmutes-recycling-and-exclusions.jsonl",
+      "support": "The four distinct current Midnight Mote IDs form the native Light/Primal/Wild/Void elemental essence family. Primary item tooltips identify coalesced light and solid wild magic; the Light item page also links all four diffuser/mote counterparts. Mapping the Crystal perk native-magical-essence phrase to this four-Mote pool is an explicit possibility assumption, not a verified disenchant loot-table join.",
+      "retrievalLimits": "Light and WildMagic item text retrieved. PrimalEnergy and PureVoid direct pages returned JavaScript challenges; their exact IDs/names are corroborated by existing primary transmute recipe records. No current retrieved source showed a concrete Mote disenchant outcome."
+    },
+    {
+      "id": "crystal-extra-budget-transfer-courtly",
+      "url": "https://www.wowhead.com/item=239671/courtly-wrists#comments",
+      "sourceType": "CROSS_RARITY_MODELED_EXPECTATION_TRANSFER",
+      "archive": "research/mechanics/midnight-enchanting-yields-2026-11-06.json",
+      "support": "The full Supplier Courtly cohort has a total of0.289bonus-material units per operation across five non-shard materials. Transfer that total unit budget to the Crystal native-essence pool, then allocate equally among four IDs. This does not transfer any sample count, observed proc probability, stack size or measured essence allocation.",
+      "sourceQuantityMean": 0.289,
+      "sourceMeasuredFor": "Shard Supplier rare armor; not Crystal Collector",
+      "targetAllocationPolicy": "EQUAL_FOUR_WAY_MODELED_PRIOR"
+    }
+  ],
+  "assumptions": [
+    "Canonical baseline expectation for each additional output is zero before the rank20 unlock. Source-observation rows remain immutable; a missing source row is not empirical proof of zero drops.",
+    "The four-Mote identity pool is possible and explicitly assumed; the DB2 description does not enumerate output IDs, and no concrete Mote disenchant outcome was found in the existing checked captures or retrieved source tables.",
+    "Transfer only the0.289pooledunitmean from the existing fullSupplierbonusvector. Assign one quarter to each Mote:0.07225units at full rank30. No Crystal sample count or confidence interval is created.",
+    "Assume half of that full expected quantity at rank20 and the remaining half at rank30. These increments model the unlocked and increased chances without claiming proc probabilities or conditional stack quantities.",
+    "Each output has confidence5 for combined identity, cross-rarity quantity and equal-split assumptions; this cap is independent of the Crystal primary quality model confidence20.",
+    "Additional means are additive and do not remove Crystal units. Forward arithmetic adds expectedQuantity times cumulative milestone progress; inverse arithmetic subtracts the same term and rejects inconsistent negative baselines.",
+    "The existing anonymized111-row SavedVariables aggregate contains no four-Mote output IDs. Its incomplete coverage is not admitted as a measured zero-essence cohort or used to estimate a rate."
+  ]
+}

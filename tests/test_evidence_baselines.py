@@ -31,11 +31,11 @@ for casts, expected in ((10, 33), (50, 65), (100, 81), (200, 94)):
 ok(eb.rate_confidence(0, 0) == 0, 'no casts, no confidence')
 
 report = evidence_check.check_folder(Path('tests/fixtures/evidence-v3'))
-ok(len(report['setAside']) == 1, 'the broken fixture record is set aside by the checker')
+ok(len(report['setAside']) == 2, 'broken data and a Craft record missing explicit profession/recipe scope are preserved by the checker')
 records, notes = eb.build(report)
 ok(len(records) == 3, 'three item records (the mismatch and the Craft record are left out)')
 ok(notes['mismatch'] == 1 and notes['confirmed'] == 1 and notes['duplicates'] == 1, 'notes count verdicts and copies')
-ok(any('Craft is not built' in why or 'method Craft' in why for _, why in notes['skipped']), 'Craft is reported as kept')
+ok(any('method Craft' in why for row in report['setAside'] for why in row['reasons']), 'unscoped Craft is reported as held without inventing its profession')
 
 r = next(row for row in records if row['inputItemID'] == 990001)
 ok(r['recordID'] == 'evidence:Prospect:990001:x5' and r['studyID'] == r['recordID'], 'record identity')

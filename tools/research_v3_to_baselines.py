@@ -53,6 +53,7 @@ import sys
 sys.dont_write_bytecode = True  # never leave cache files in the repo or snapshot
 import tarfile
 import io
+import hashlib
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -62,6 +63,8 @@ from research_v3_evidence import build_field_support  # noqa: E402
 from research_v3_reference_ranges import preserve_reference_range  # noqa: E402
 import research_v3_tokens  # noqa: E402  C4b3: token reward lists ride along with every refresh
 import research_v3_no_disenchant  # noqa: E402  D1c4: no-disenchant flags ride along too
+from research_methods import METHOD_PROFESSIONS, GENERIC_METHODS, operation_scope, profession_for, apply_reviewed_operation_aliases
+from research_published_priors import preserve_published_priors
 
 DEFAULT_REF = 'origin/implementation/five-agent-completion'
 DEFAULT_SNAPSHOT = Path('database/research/v3-snapshot')
@@ -69,7 +72,7 @@ DEFAULT_OUTPUT = Path('database/research-v3-baselines.lua')
 FAMILIES_FILE = Path(__file__).resolve().parent.parent / 'database' / 'research' / 'rank-families.json'
 SNAPSHOT_PATHS = ['research/v3/evidence', 'research/v3/corrections.jsonl', 'research/v3/conditions.jsonl',
                   'research/v3/rate-changes.jsonl', 'research/v3/tools']
-SUPPORTED = {'Mill': 'Inscription', 'Prospect': 'Jewelcrafting', 'Disenchant': 'Enchanting', 'Smelt': 'Mining'}
+SUPPORTED = METHOD_PROFESSIONS
 EXPANSIONS = {'classic': 0, 'the burning crusade': 1, 'burning crusade': 1, 'wrath of the lich king': 2,
               'cataclysm': 3, 'mists of pandaria': 4, 'warlords of draenor': 5, 'legion': 6,
               'battle for azeroth': 7, 'shadowlands': 8, 'dragonflight': 9, 'the war within': 10, 'midnight': 11}
@@ -262,7 +265,7 @@ def load_calculator(snapshot):
                         notes['malformed evidence row'] += 1
         scoped = resolve_replacements(rows, module, notes)
         module.evidence_load_notes = notes
-        return module.apply_corrections(scoped)
+        return module.apply_corrections(apply_reviewed_operation_aliases(scoped))
 
     module.load = scoped_load
     if hasattr(module, 'study_vectors') and hasattr(module, 'study_identity'):
@@ -394,9 +397,11 @@ def retail_admission(rows):
 
 
 def build(snapshot):
+    from research_build_review import automatic_admission
     module = load_calculator(snapshot)
     rows = resolve_ranked_outputs(preserve_reference_range(module.load()))
     total = len(rows)
+    rows, automatic_notes = automatic_admission(rows)
     rows, admission_notes = retail_admission(rows)
     names = module.name_maps(rows)
     counted = [r for r in rows if is_counted(r, module)]
@@ -405,13 +410,27 @@ def build(snapshot):
         if len(ids) == 1:
             names.setdefault(name, ids[0])
     ranges = reference_ranges(rows, module, names)
-    results, evidence_notes, unplaced = build_field_support(module, counted, names)
-    notes = module.evidence_load_notes + admission_notes + evidence_notes
+    ordinary = [row for row in counted if row.get('method') not in GENERIC_METHODS]
+    results, evidence_notes, unplaced = build_field_support(module, ordinary, names)
+    scoped = defaultdict(list)
+    for row in counted:
+        if row.get('method') in GENERIC_METHODS:
+            scoped[(row['method'], operation_scope(row))].append(row)
+    for (_, scope), source_rows in sorted(scoped.items()):
+        estimates, extra_notes, extra_unplaced = build_field_support(module, source_rows, names)
+        evidence_notes += extra_notes
+        unplaced += extra_unplaced
+        for estimate in estimates:
+            estimate['_operationScope'] = scope
+            estimate['_scopeSource'] = source_rows[0]
+            estimate['_scopeSources'] = source_rows
+        results.extend(estimates)
+    notes = module.evidence_load_notes + automatic_notes + admission_notes + evidence_notes
     groups = defaultdict(list)
     known_outputs = defaultdict(set)
     for e in results:
         if isinstance(e['outputItemID'], int) and supported_bound(e['inputsPerCast']) and not e['conditional']:
-            known_outputs[(e['method'], e['input'], int(e['inputsPerCast']))].add(e['outputItemID'])
+            known_outputs[(e['method'], e['input'], int(e['inputsPerCast']), e.get('_operationScope', ''))].add(e['outputItemID'])
     for e in results:
         if e['method'] not in SUPPORTED:
             notes['method not built into ItemDB yet'] += 1
@@ -424,12 +443,12 @@ def build(snapshot):
             notes['batch size (inputs per cast) not stated'] += 1
             continue
         scope = (e['method'], e['input'], e['outputItemID'], int(per_cast))
-        e['referenceRanges'] = ranges.get(scope, {})
+        e['referenceRanges'] = {} if e.get('_operationScope') else ranges.get(scope, {})
         if not isinstance(e['outputItemID'], int):
             ids = families.get(str(e['outputItemID']).replace('family:', '', 1).strip().lower())
             if ids and len(ids) == 1:
                 e['outputItemID'] = ids[0]
-            elif ids and known_outputs[(e['method'], e['input'], int(per_cast))] & set(ids):
+            elif ids and known_outputs[(e['method'], e['input'], int(per_cast), e.get('_operationScope', ''))] & set(ids):
                 notes['rank unknown, but this input already has figures for the ranks'] += 1
                 continue
             elif ids:   # D1c2: priced at the cheapest rank that has a price (runtime)
@@ -449,9 +468,9 @@ def build(snapshot):
                 continue
         else:
             key = e['input']
-        groups[(e['method'], key, int(per_cast))].append(e)
+        groups[(e['method'], key, int(per_cast), e.get('_operationScope', ''))].append(e)
     records = []
-    for (method, key, per_cast), estimates in sorted(groups.items()):
+    for (method, key, per_cast, operation_context), estimates in sorted(groups.items()):
         by_output = {}
         for e in estimates:   # a gear group written two ways (names / numbers) adds up
             by_output.setdefault(e['outputItemID'], []).append(e)
@@ -464,20 +483,37 @@ def build(snapshot):
             if m.get('samplingVariation'):
                 notes['+occurrence and quantity retained within sample variation tolerance'] += 1
         record_id = f'evidence:v3:{method}:{key}:x{per_cast}'
+        source = estimates[0].get('_scopeSource', {})
+        if operation_context:
+            record_id += ':scope:' + hashlib.sha256(operation_context.encode('utf-8')).hexdigest()[:12]
         row = {
             'recordID': record_id, 'studyID': record_id, 'sourceKey': 'itemdb', 'method': method,
-            'profession': SUPPORTED[method], 'inputCount': per_cast, 'provisional': True,
+            'profession': profession_for(source) if operation_context else SUPPORTED[method], 'inputCount': per_cast, 'provisional': True,
             'supersedesResearch': True, 'fieldSpecificEvidence': True,
             'samples': round(max(m['_casts'] for m in materials), 4),
             'source': 'research team v3 (research/v3 on implementation/five-agent-completion)',
             'baselineStatus': 'real studies only; samples not known to be at minimum skill count at half weight (no scaling rules yet)',
             'materials': [{k: v for k, v in m.items() if not k.startswith('_')} for m in materials],
         }
+        if operation_context:
+            row['sourceOperationScope'] = json.loads(operation_context)
+            row['referenceContextID'] = 'v3-operation:' + hashlib.sha256(operation_context.encode('utf-8')).hexdigest()
+            for field in ('recipeID', 'expansionID', 'inputQualityRank', 'inputRarity', 'inputClassID',
+                          'referenceConditions', 'baselineProfile', 'baselineProfileAssumed', 'baselineProfileConfidence',
+                          'sourceProfileAssumption', 'targetBuild', 'patchBuild', 'reagents'):
+                if source.get(field) is not None:
+                    row[field] = source[field]
+            if source.get('inputRank') is not None and 'inputQualityRank' not in row:
+                row['inputQualityRank'] = source['inputRank']
+            row['sourceEvidence'] = [{'recordID': r.get('id'), 'sourceFile': r.get('_file'),
+                                     **({'operationAlias': r['operationAlias']} if r.get('operationAlias') else {})}
+                                    for r in estimates[0]['_scopeSources']]
         if key.startswith('gear:'):
             row['gearKey'] = key
         else:
             row['inputItemID'] = int(key)
         records.append(row)
+    preserve_published_priors(rows, records, notes)
     return records, notes, total, len(counted), unplaced
 
 

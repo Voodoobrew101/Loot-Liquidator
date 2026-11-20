@@ -102,7 +102,8 @@ function tip:AddLine(text)self.lines[#self.lines+1]=text end
 function tip:AddDoubleLine(left,right)self.lines[#self.lines+1]=left..' | '..right end
 LL:AppendRecommendationTooltip(tip,{action='A',rawAuction=50,netAuction=50,facts=f,conversionOptions=actual})
 local text=table.concat(tip.lines,'\n')
-check(text:find('Simulated assumptions',1,true),'actual hypothetical tooltip identifies assumption status')
+check(not text:find('Simulated assumptions',1,true) and text:find('Confidence unscored',1,true),
+    'actual hypothetical tooltip uses confidence without a separate assumption label')
 check(not text:find('Confidence 0%',1,true),'scenario is not advertised as measured zero-percent confidence')
 -- Global what-if selection uses the same actual resolver and invalidates its
 -- caches when a saved setting changes.
@@ -146,6 +147,14 @@ for _,unsupported in ipairs({{method='Disenchant',expansion=9},{method='Smelt',e
     local skipped=LL:ApplySyntheticBenchmark({expansionID=unsupported.expansion},{name=unsupported.method},baseline,manual)
     near(skipped.expectedInputCount,4)
     check(skipped.syntheticResourcefulnessNote:find('skipped',1,true),'unsupported assumptions explain why savings were skipped')
+end
+for _,method in ipairs({'Loot','Use'}) do
+    local opportunity=clone(baseline)
+    opportunity.professionParameters={method=method,expansionID=11,recipe={}}
+    local skipped=LL:ApplySyntheticBenchmark({expansionID=11},{name=method},opportunity,manual)
+    near(skipped.expectedInputCount,4)
+    check(skipped.supplyCostFactor==nil and skipped.syntheticResourcefulnessNote:find('skipped',1,true),
+        'world loot and item-use previews never gain crafting reagent savings')
 end
 local nonmanual={simulated=true,profileKind='offline-snapshot',benchmark={outputLevel=200}}
 check(LL:ApplySyntheticBenchmark(f,option,baseline,nonmanual)==baseline,'scanned profiles cannot receive manual factors')
