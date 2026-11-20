@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-20T17:21:30.833Z",
-  "status": "research-active; source-integrity primary-source audit; no independent numeric cohort admissible",
+  "updated_at": "2026-11-20T18:27:11.133Z",
+  "status": "research-active; primary Excel workbook retrieved and source/formula audit completed; no independently admissible new measured TWW yield cohort",
   "task_ids": [
     "T0048",
     "T0040",
@@ -18,7 +18,7 @@
     "T0010/T0011/T0012 210796/210797/210798: first-person 10-herb mill casts by herb rank, 222618/222619 pigment quality outputs, skill/spec and 0..N distribution",
     "Historical shatter 219950/219951 into 219946/219947/219948: verify independent ~10k-shard original cohort versus comments, denominator/refund basis and distinct method schema"
   ],
-  "source_branch_head_reviewed": "0039b4ef2c1ad41f49cb9d88042e1392a8405d77",
+  "source_branch_head_reviewed": "8bfa41661ab1ba3ddc5f5b2a03a97844c6104312",
   "source_policy": "2026-11-19 owner policy: admit genuine original cohorts only; protect null denominators/hit probabilities; no routine research PRs, empty evidence JSONL, snapshots or runtime edits",
   "study_backlog_triage": [
     {
@@ -208,14 +208,15 @@
       "reason": "Historical original September/October 2024, separate commenters/cohorts; percentages are rounded, context ambiguous between output-unit share and cast-level hit probability, sums differ from 100, no 0..N histogram or patch/skill/spec/refund ledger. Shattering is NOT direct gear Disenchant; current worker evidence `drop.method` has no Shatter enum. Hold for Master schema/reviewer assessment; do not force into DE baseline or reclassify counted input shards as verified completed casts."
     },
     {
-      "status": "held",
+      "status": "reviewable",
       "original_cohort": "2024-09-25 TWW crafting spreadsheet using Blizzard and TSM APIs, referenced as maintained through February 2025",
       "source": "https://www.reddit.com/r/woweconomy/comments/1foca2r",
-      "secondary_source": "https://www.reddit.com/r/woweconomy/comments/1iviflu",
+      "secondary_source": "https://drive.google.com/file/d/1nM7SJGUGyCz7KeL72xm7vorkH_gNrrLl/view",
       "existing_ids": null,
-      "exact_inputs": "Potential TWW prospecting/milling/disenchanting/shattering recipe model rows; source workbook not retrieved or inspected; no rank-specific first-person study confirmed",
-      "outputs": null,
-      "reason": "Feb 22 2025 discussion calls this an Excel workbook covering multiple shuffles, with live API/price-model assumptions; no source-author original workbook bytes, raw measured operations, output-quality counts, per-cast histograms or independent cohort provenance accessible. Modelled recipe profitability is not a measured drop cohort. Separate from Kaychak originals; hold pending primary workbook access and source-vs-formula audit."
+      "exact_inputs": "Workbook Shuffles!B41:B49 has named Bismuth/Aqirite/Ironclaw ranks 1-3; Shuffles!B123:B125 has Mycobloom ranks 1-3, 10 herbs per nominal mill. No raw source itemIDs, actual per-rank operation counts, refunds or skill/spec logs.",
+      "outputs": "Original Shuffles!F41:H49 has average-return model constants (Bismuth R1 Pebbles 1.13, Glass 0.38, Amber 0.2375; Aqirite R1 Amber 0.24 with Emerald/Ruby 0.12 each derived as H44/2; Ironclaw R1 Amber 0.24 with Onyx/Ruby 0.12 each derived from H47/2). Other row values reference earlier cells and talent formulas, NOT per-cast observed outcomes. Shuffles!B137 gives illustrative 9–13/11–15/13–17 pigment range per 10-herb mill for herb qualities 1/2/3; named pigment-quality yield logs absent.",
+      "reason": "DIRECT original author XLSM 'Kalimdor Hold Em.xlsm' (Google Drive file ID 1nM7SJGUGyCz7KeL72xm7vorkH_gNrrLl, modified 2025-08-23 UTC; 6,037,097 bytes; SHA-256 79fdc959504b337511b7eae7d173893ea747d42c8bc945670401c341b8d5637a) retrieved 2026-11-20 and inspected read-only as OOXML without executing macros. Shuffles!B22/C22 dates table FINAL 2024-11-02 and asserts 'Most mats are supported by at least 10K prospects now', but NO per-rank study IDs, sample dates, exact completed operations, output-unit totals, castsWithDrop, zero outcomes, histograms, raw cohort rows, or Resourcefulness ledgers. Several 'averages' are formula copies/splits; output IDs/ranks not linked in this table; none may be admitted as measured hits or new independent cohorts. Reviewable as original reference formulas only. Owner's live-price EV remains addon-owned; no workbook frozen pricing imports.",
+      "scope": "original author workbook now inspected; reference-only numeric assumptions, NOT measured drop cohort"
     },
     {
       "status": "duplicate",
@@ -229,11 +230,15 @@
   ],
   "triage_counts": {
     "admitted": 5,
-    "reviewable": 4,
-    "held": 10,
+    "reviewable": 5,
+    "held": 9,
     "duplicate": 3
   },
-  "newly_verified_fields": [],
+  "newly_verified_fields": [
+    "Reference-only original workbook provenance: file title, size, modified timestamp, SHA-256",
+    "Exact original Shuffles!B22/C22 dated source coverage note; F41:H49 base cells vs formula-derived splits",
+    "Original Shuffles!B123:B125 Mycobloom 10-herb method labels and B137 reference pigment ranges"
+  ],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
   "new_reference_only_numeric_records": 0,
@@ -244,10 +249,10 @@
   "evidence_files": [],
   "evidence_source_links": [],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-20T0521-algari-pvp-item-metadata.jsonl",
-  "verified_commit_sha": "0039b4ef2c1ad41f49cb9d88042e1392a8405d77",
-  "verification": "Read current branch source rules/queue/mechanics/worker role, compared original source IDs against quiet-status backlog, and checked linked CraftSim original PR diffs/merge metadata. Source head anchored here; updated quiet-status blob uses SHA precondition. No new independent raw yield cohort; read-back of committed status performed outside record.",
+  "verified_commit_sha": "8bfa41661ab1ba3ddc5f5b2a03a97844c6104312",
+  "verification": "Read complete current README/evidence-format/mechanics/worker role and queue; identified fresh branch HEAD and inspected original XLSM locally read-only without VBA, preserving user/owner files. Source branch HEAD is stored as verified_commit_sha because a single atomic status update cannot refer to its own future commit SHA; verify committed status by read-back after write.",
   "blockers": [
-    "Public repository git tree (3,669 paths, at reviewed branch HEAD) has audit CSV files but no accessible original XLS/XLSX/ODS spreadsheets. Tomasz and the YouTube author's unpublished Google Sheets are therefore still held; do not reinterpret derived audit CSV as original operation exports.",
+    "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
     "On this research branch tools/research_build_review.py and tools/prepare_build_research.py returned GitHub 404; build-time admission/generation remains implementation review work, not deployed or worker-owned.",
     "Cumulative PTR Looter display rows contain repeated material names with linked rank IDs unavailable; no per-row independent study and no safe current-Retail rank-specific mapping.",
     "No independently verified post-2024-10-25 original TWW cast logs with completed operations, output-quality IDs, 0..N histograms, skill/spec/build and resourcefulness basis. Kaychak May-2025 named original XLSX is Patreon-locked; Jan-2026 advertised free workbook not retrieved, and neither is presently verified as an original measured yield study.",
@@ -255,31 +260,31 @@
     "2025-03-31 R1 Ironclaw anecdote has no output ledger and cannot support any drop-rate or totalQuantity field.",
     "Direct Wowhead raw HTML and Reddit source fetch unavailable on available browsers; targeted Firecrawl scraping was rejected by exhausted app credits (transient). No independently verified original live-page pctstack/bonus/build detail obtained.",
     "The research drop method enum lacks Shatter; shattering results must not be added as Disenchant. Master/reviewer decision required if original 2024 shatter output-quality shares become admissible.",
-    "Separate 2024 TWW Crafting Spreadsheet original workbook and cell lineage unavailable; API-based model output must not be mistaken for first-person measured recipe yields.",
     "Cross-file duplicate original cohort: DobberSH one Null Stone 210939 prospect is recorded twice in 2026-11-02T0918 and 20261117T1130 (four material rows each); source studyKey strings differ. Admission deduplication belongs to Master/build reviewer.",
     "Several older queue/status descriptions incorrectly say the gem-rate buff occurred October 16, 2024; official Blizzard running-list section and shared rate-changes.jsonl date it August 29, 2024. Master owns queue text reconciliation; do not misclassify September cohorts as pre-buff.",
     "Milling guidance inconsistency is SOURCE-RESOLVED as to nominal recipe units: live-indexed Khaz Algar Milling spell 444181 explicitly states 10 herbs and salvage effect value 10 (https://www.wowhead.com/spell=444181/khaz-algar-milling). Wowhead 2025 leveling shopping list says 35 crafts/175 herbs (5 each), incompatible with its own referenced spell. DO NOT derive operation denominators from that guide, and do not assume any source's purchased herbs equal completed casts, especially with Resourcefulness or Create All failures. No new numeric yield evidence.",
-    "Original CraftSim PRs #892/#894 (merged 2025-10-10): pre-20.3.0 advanced craft-log denominators could miscount completed operations; crushing-gem API returns can omit saved gems in Bismuth refund events. Historic CraftSim exports require explicit addon version, independently checked completed-operation counts, reagent/refund ledger and method identity; no invented TWW baseline rates. Master/reviewer owns schema and admission changes."
+    "Original CraftSim PRs #892/#894 (merged 2025-10-10): pre-20.3.0 advanced craft-log denominators could miscount completed operations; crushing-gem API returns can omit saved gems in Bismuth refund events. Historic CraftSim exports require explicit addon version, independently checked completed-operation counts, reagent/refund ledger and method identity; no invented TWW baseline rates. Master/reviewer owns schema and admission changes.",
+    "Original Liqourice5 6.0 MB macro-enabled source workbook is now accessible externally but raw supporting prospecting trial sheets and exact cast denominators are absent. Audit performed on OOXML cell values/formulas without executing VBA; '10K prospects' is general coverage claim, NOT a per-item measured cohort count. Master/reviewer must separately assess reference-only rows if desired."
   ],
   "exhausted_sources": [
     "Previously indexed 1f83cnd, 1g350pq, PeaEsk/434018, 1fdmzwy and 1f3qf96 already provide historical studies; source duplicates not re-imported.",
     "Previously checked 2024-12-28 Tomasz unpublished worksheet, 2025 YouTube 50k input description, 2025-06-09 1l3uqnw joint milling sample, and 229330/224758 PTR Looter snapshots yield no new eligible independent data.",
     "2026-11-20 new spreadsheet discovery checked Kaychak 2025-05-06 locked XLSX, Jan-2026 public announcement, SemiCollin Oct-2024 video, and 2025 community references; none exposed original operation logs. Reused Reddit 1f5rsk5 and Wowhead 223548 have existing records. Avoid recycling these as new studies.",
     "2026-11-20: Reddit 1ftqzxp historical shatter original/commenter estimates inspected; new but unfit for direct DE numeric admission without distinct recipe method/raw ledger; do not scrape it repeatedly without author export.",
-    "2026-11-20: original Excel-only 1foca2r workbook referenced by Feb 2025 1iviflu, not retrieved. Avoid treating downstream modelling as actual cast studies.",
+    "2026-11-20: Liqourice5 original 2024 TWW crafting workbook now retrieved from the author's directly linked Google Drive original, and its prospecting/milling formula and source-date cells audited. Not a new empirical study; do not revisit without the author’s original cast logs or source recipe table lineage.",
     "2026-11-20 11:22Z follow-up: April-2025 gem production economics, September-2024 Mycobloom Create-All bug, November-2025 housing dyes and previously indexed LotzBoi/Aqirite studies offer no new eligible post-hotfix 0..N material-yield cohorts. Revisit only on original per-operation logs.",
     "2026-11-20 follow-up: 1g9s48p repeats the already indexed 400 R1 Bismuth source; 1k78h4v and 1l91chl are 2025 financial/value comparisons without source output ledgers; 1nmnuc2 describes workflows only. Do not revisit these unless author publishes actual completed-operation exports."
   ],
-  "next_concrete_step": "Obtain original post-2024-10-25 TWW processing logs for 210930–210938 ore and 210796–210798 Mycobloom, with independently counted completed operations/hits, per-output rank IDs, 0..N histograms, skill/spec/build, and Resourcefulness. For CraftSim-derived logs require version >=20.3.0 or an external cast-count reconciliation and audited gem-crushing refunds; request Master method/schema decision instead of mixing crushing with gear Disenchant.",
-  "previous_status_updated_at": "2026-11-20T16:18:23.797Z",
+  "next_concrete_step": "Obtain Liqourice5's original per-rank 2024 prospect test logs underlying Shuffles!B22 and F41:H49 (raw 0..N outcome ledgers and independently completed cast counts), or another independent post-2024-10-25 TWW R1-R3 210930–210938 prospecting / 210796–210798 milling export. For DE T0048 recover per-item skill and exact positive-stack HTML. Do not promote spreadsheet average reference values, 10K generic claim, or calculated ore/5 to measured hits/casts; ask Master about any reference-only admission.",
+  "previous_status_updated_at": "2026-11-20T17:21:30.833Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "scan_at_utc": "2026-11-20T17:21:30.833Z",
-    "source_repo_head": "0039b4ef2c1ad41f49cb9d88042e1392a8405d77",
+    "scan_at_utc": "2026-11-20T18:27:11.133Z",
+    "source_repo_head": "8bfa41661ab1ba3ddc5f5b2a03a97844c6104312",
     "task_ids": [
       "T0048",
       "T0040",
@@ -292,30 +297,25 @@
     ],
     "results": [
       {
-        "status": "verified-primary-methodological-caveat",
-        "source": "https://github.com/derfloh205/CraftSim/pull/892",
-        "finding": "Merged CraftSim fix: before version 20.3.0, advanced craft-log numCrafts could undercount or overcount completed crafts from TRADE_SKILL_ITEM_CRAFTED_RESULT timing/frame-rate batching. This is NOT a measured TWW yield; review any alleged CraftSim-derived historical completed-cast denominators against addon version and independent operations."
-      },
-      {
-        "status": "verified-primary-resourcefulness-caveat",
-        "source": "https://github.com/derfloh205/CraftSim/pull/894",
-        "finding": "Merged CraftSim workaround for Blizzard crafting-result API omitting returned gems when crushing gems with Bismuth. Source gives examples Bismuth saved 1/2/3/4 -> corresponding saved gems 1/2/3/3, capped by three gem reagents. These are refund examples, NOT processed gem yields, cast probabilities or an independent input/output cohort; `Crush` is absent from worker drop.method enum. Request Master/schema reviewer if relevant to admission."
-      },
-      {
-        "status": "held-reference-not-study",
-        "source": "https://www.reddit.com/r/woweconomy/comments/1neicjm",
-        "finding": "Reddit commenter describes theoretical 10-herb mill outcomes 11/12/13/14/15 pigments with mean 13, but supplies no own measured sample, herb rank, pigment quality IDs, skill/spec, completed operations or 0..N histogram. Do not record as observed Mycobloom trial."
-      },
-      {
-        "status": "held-gated-model-spreadsheet",
-        "source": "https://www.patreon.com/Canadiatv/posts/update-on-120420069",
-        "finding": "Author advertises TWW every-rank prospecting profitability sheet adjusted for stats; original gateway spreadsheet is for paid subscribers and source post does not expose completed operation/output logs, 0..N histograms or original study provenance. Formula-based value models cannot seed measured baselines."
+        "status": "reviewable-reference-original-workbook-retrieved",
+        "source": "https://www.reddit.com/r/woweconomy/comments/1foca2r",
+        "original_file": "https://drive.google.com/file/d/1nM7SJGUGyCz7KeL72xm7vorkH_gNrrLl/view",
+        "filename": "Kalimdor Hold Em.xlsm",
+        "modified_utc": "2025-08-23T12:22:45.128Z",
+        "sha256": "79fdc959504b337511b7eae7d173893ea747d42c8bc945670401c341b8d5637a",
+        "size_bytes": 6037097,
+        "reviewed_cells": [
+          "Shuffles!B17:B22",
+          "Shuffles!B26:M63",
+          "Shuffles!B119:B140"
+        ],
+        "finding": "Original author-controlled macro workbook contains rank-specific prospecting average-return cells and 10-herb milling reference ranges; value/quality shifts and talent splits are formulas. B22 generic 10K+ prospects claim is unpartitioned. No original measured output histograms, completed cast ledger or per-rank sample IDs. No production or estimator import."
       }
     ],
     "new_independent_cohorts": 0,
     "new_output_fields": 0,
     "evidence_created": false,
-    "original_spreadsheet_check": "Reviewed new 2025 CanadiaTV paywalled rank-aware profitability model and public September-2025 milling methodology thread. No accessible author-owned original raw trial rows or output-quality-cast histograms; retain held/reference classification."
+    "original_spreadsheet_check": "Downloaded original 6,037,097-byte macro-enabled workbook via connected Google Drive; examined source OOXML/Excel cached values and formulas read-only, no macros run. Classified reviewable for non-empirical reference metadata only."
   },
   "source_integrity_findings": [
     {
@@ -341,6 +341,12 @@
       "date": "2025-01-20",
       "status": "held-gated-model-spreadsheet",
       "detail": "Author advertises TWW every-rank prospecting profitability sheet adjusted for stats; original gateway spreadsheet is for paid subscribers and source post does not expose completed operation/output logs, 0..N histograms or original study provenance. Formula-based value models cannot seed measured baselines."
+    },
+    {
+      "source": "https://drive.google.com/file/d/1nM7SJGUGyCz7KeL72xm7vorkH_gNrrLl/view",
+      "date": "2026-11-20",
+      "status": "reviewable-source-workbook-reference-only",
+      "detail": "Original Liqourice5 Kalimdor Hold Em.xlsm retrieved (file modified Aug 23, 2025). Shuffles B22/C22 FINAL Nov 2 2024 notes 10K+ prospects support for most materials without independent per-rank cohorts. F41:H49 are averaged/derived reference quantities, some formula split/copied, and milling B137 is an assumed 9–13/11–15/13–17 pigment range; absent per-operation hit/zero logs, precise output rank IDs, character skill and Resourcefulness. Do not admit as measured counts."
     }
   ]
 }
