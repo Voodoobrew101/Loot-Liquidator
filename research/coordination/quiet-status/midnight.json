@@ -1,23 +1,22 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-20T09:12:15.196Z",
-  "status": "Current branch queue/instructions and held Midnight evidence inspected. One independent profession-mechanics guide corroborates M13 (profession stats do not affect disenchanting; skill and specialization do). No new independently measured Retail Midnight processing operations, hit counts, totals, zero events, or histograms; only source/triage status changed.",
+  "updated_at": "2026-11-20T10:15:27.528Z",
+  "status": "Reviewed additional original Retail item pages and a firsthand resourcefulness forum discussion against existing Midnight research; exposed item-level preview drift and inferred-versus-raw positive histograms. No new independently grounded yield cohort or measured output field; only provenance triage/status updated.",
   "task_ids": [
     "T0026",
     "T0049",
-    "T0005",
     "T0039",
-    "T0045",
+    "T0005",
     "T0003",
-    "T0002",
+    "T0045",
     "T0034"
   ],
   "exact_gaps_targeted": [
-    "T0026: numeric disenchant baselines by rarity (uncommon/rare/epic), item level, armor/weapon, patch/build and skill/specialization; distinguish full coverage from positive-only receipts",
-    "T0049: item 272246 Miststalker's Wristbands actual at-cast bonus/ilvl (versus base 206 and selectable 305 preview), client eligibility and source-Looter semantics, not inferred from selected tooltip",
-    "T0005/T0039: Umbral Tin Ore 237362 observed completed operations, rank-specific hits/zeros/positive-stack histograms, inputs saved versus refunded, 242608 unlock and seven exact output-linked IDs",
-    "T0003/T0002: fresh independent source-original completed-cast and output rank/hit observations for Refulgent Copper 237359 and Brilliant Silver 237365",
-    "T0045: 236761 Tranquility Bloom -> Powder Pigment 245807 per 10-herb mill measured complete casts/hits/zeros/quantity ranks; separate resourcefulness input refunds"
+    "258931/251883 cumulative Looter item variant versus at-cast item level and raw positive stack events",
+    "272246 eligibility and at-cast item variant remains held; 140 Looter occurrences are not live cast proof",
+    "237362 operation/refund/hit/zero ledger still absent; source only nominal 4000 ore",
+    "236761→245807 skill/rank-resolved completed-mill yield histograms still absent",
+    "M13 guide-versus-player anecdote lacks controlled live comparison"
   ],
   "triage": [
     {
@@ -389,13 +388,66 @@
       "disposition": "secondary independently published guide corroborates pre-existing M13 claim; request Master mechanics.md source/status review, not a numeric cohort",
       "finding": "Wowhead Midnight Enchanting Specialization Guide explicitly says disenchanting is not affected by profession stats but is affected by overall Skill; Dust Deliverer, Shard Supplier, Crystal Collector are differentiated by uncommon/rare/epic inputs. Does not independently verify live 12.1.5 behavior or quantify gains.",
       "hold_reason": "No original client controlled test, per-cast skill comparison, output material sample, version, or sample denominator. Do not treat as observed probabilities."
+    },
+    {
+      "category": "reviewable_live_tooltip_version_drift_not_at_cast",
+      "inputs": [
+        258931,
+        251883
+      ],
+      "source": "https://www.wowhead.com/item=258931/tarnished-dawnlit-sentinels-cover",
+      "secondary_source": "https://www.wowhead.com/item=251883/umbrics-channeling-focus",
+      "evidence": "research/v3/evidence/midnight/2026-11-01T1608-8gear-rank-yields.jsonl",
+      "source_original": {
+        "currently_rendered_wowhead_item_levels": {
+          "251883": 44,
+          "258931": 44
+        },
+        "previous_evidence_page_snapshot_item_levels": {
+          "251883": 227,
+          "258931": 227
+        },
+        "observed_at_disenchant_item_level": null,
+        "live_raw_looter_disenchant_html": null,
+        "source_258931_reported_disenchants": 1485,
+        "source_258931_rank1_dust_reported_positive_hits": 896,
+        "source_258931_positive_stack_percentages": [
+          32.1429,
+          30.5804,
+          37.2768
+        ],
+        "evidence_258931_reconstructed_positive_histogram": {
+          "1": 288,
+          "2": 274,
+          "3": 334
+        }
+      },
+      "disposition": "reviewable pre-existing cohort; original positive-only percentages and historical vs present tooltip versions must be distinguished",
+      "hold_reason": "Current public pages render item level 44 while earlier research text cites 227; neither is an event-linked at-disenchant ilvl. The 288/274/334 positive-only histogram in existing record is arithmetically reconstructed from rounded percentages, not a raw event log. Do not admit a live item-level/skill-stratified rate or a measured all-cast zero histogram from this."
+    },
+    {
+      "category": "held_out_of_scope_refund_versus_disenchant_yield",
+      "source": "https://us.forums.blizzard.com/en/wow/t/resourcefulness-bugged/2261410",
+      "source_original": {
+        "author": "zarp",
+        "published": "2026-03-02/2026-03-03",
+        "claimed_nominal_shards_shattered": 800,
+        "actual_completed_operations": null,
+        "resourcefulness_stat_percent": 15,
+        "profession_skill": 67,
+        "shards_refunded": 45,
+        "output_rank": null,
+        "disenchant_gear_input_item_id": null,
+        "disenchant_output_yield_units": null
+      },
+      "disposition": "held as anecdotal shattering-craft refund context, NOT independent gear disenchant baseline",
+      "hold_reason": "Poster's 800 may describe shards used rather than confirmed craft events; 45 are refunded inputs, not disenchant output. Separate anecdote claims blue-gear disenchant Resourcefulness but lacks actual operation denominator and player stats; do not conflate with gear-disenchanting or M13 controlled validation."
     }
   ],
   "newly_verified_fields_or_cohorts": [
-    "Independent guide crosscheck: Wowhead Midnight Enchanting Specialization Guide (Penguinr2gt, updated 2026-02-21) says profession stats do not affect disenchanting while overall skill does; uncommon Dust Deliverer, rare Shard Supplier and epic Crystal Collector modify yields. Existing M13 marked likely; Master should review promotion and note absence of live test.",
-    "Rechecked source boundary: Miststalker's Wristbands 272246 live base ilvl 206, selected bonus example ilvl 305, WoWDB says Cannot be disenchanted; neither tooltip supplies at-cast variant/eligibility or original Wowhead Looter ledger.",
-    "Rechecked original Cardinalai 237362 report: 4,000 nominal Umbral Tin Ore and 39.6% Resourcefulness with seven named output totals, but no completed prospecting count, no refund event ledger, no per-output cast hit counts/zeros/histograms.",
-    "Inspected original repo Midnight milling CSV 236761→245807: its 4.5 and 3–6 numbers are explicitly modeled/proxy with sample_operations blank; no source-original measured 10-herb milling histogram. Previously indexed David111 generic 10-pigments-for-10-herbs anecdote is a duplicate, not new measured evidence."
+    "Source-page snapshot comparison: 258931 and 251883 currently render item level 44, while stored 2026-11-01 Looter evidence describes a then-current 227 preview; both are non-event-linked and must not define at-cast ilevel or rarity/skill stratification.",
+    "Evidence math audit (already recorded, NOT newly observed): 258931 rank-1 dust source-reported 896 positive hits out of 1485 item-side operations, with conditional percentages 32.1429/30.5804/37.2768; prior integers 288/274/334 were reconstructed from rounded percentages and must remain distinguished from a raw event histogram.",
+    "Newly inspected March 2–3 Blizzard forum firsthand account: '800 shard shattering', 45 shards refunded at 15% Resourcefulness and skill 67; actual completed shatter casts unspecified and refunded input is not gear-disenchant output. No item/quality linkage, not admissible numeric yield evidence."
   ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": {
@@ -410,29 +462,29 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://www.wowhead.com/guide/midnight/professions/enchanting-specializations",
-    "https://www.wow-professions.com/midnight/enchanting-specialization-guide-and-builds",
-    "https://www.wowhead.com/item=272246/miststalkers-wristbands?bonus=6652%3A13696%3A12841%3A13662%26ilvl=305",
-    "https://www.wowdb.com/items/272246-miststalkers-wristbands",
-    "https://www.wowhead.com/item=237362/umbral-tin-ore",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/ledger/midnight-milling-field-review-2026-10-28.csv",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-15T1719-midnight-milling-anecdote-12p15-search.jsonl"
+    "https://www.wowhead.com/item=258931/tarnished-dawnlit-sentinels-cover",
+    "https://www.wowhead.com/item=251883/umbrics-channeling-focus",
+    "https://us.forums.blizzard.com/en/wow/t/resourcefulness-bugged/2261410",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-01T1608-8gear-rank-yields.jsonl"
   ],
   "blockers": [
-    "Original 272246 at-disenchant itemLink (bonuses, actual item level, game build), current-client eligibility and 140-operation Looter event ledger remain unavailable; 206 and selected 305 are tooltip snapshots only.",
-    "Original 237362 completed-prospect operation count, exact ore consumed versus refunded/reused, output ranks 242606/242607/242610/242611/242786/242788 and diamond 242608 per-output hits, zeros and distributions remain missing.",
-    "Source-original 236761→245807 milling operation and output histograms by 10-herb cast, skill/spec, rank and refunds remain missing; repo 3–6 and 4.5 values are modeled, not samples.",
-    "Wowhead's M13 skill/stat statement is a secondary guide rather than controlled live-client test; independent corroboration warrants Master review, not numerical coefficients."
+    "Source-original event export for 258931/251883/272246 proving live build, bonus, actual at-disenchant item level, per-output 0..N including zeros, and player skill/spec not available; Wowhead's dynamic preview cannot backfill these fields.",
+    "258931 conditional histogram integers derive from rounded aggregate percentages, not per-event samples; request Master/build-review to preserve provenance and avoid falsely upgrading confidence.",
+    "237362 Cardinalai report has 4000 nominal ore/39.6% Resourcefulness and seven exact output totals, but no actual completed operations, refund ledger, per-output hits or histograms; 800 nominal equivalents is not observed casts.",
+    "236761 herb→245807 pigment original 10-herb milling cast and output distributions/ranks/skill remain absent; repo prior numeric 3–6 and 4.5 are modeled.",
+    "March forum shard-shattering resourcefulness refund anecdote is not gear disenchant yield nor controlled live test of M13."
   ],
   "exhausted_sources": [
     "Current Wowhead 272246 item/bonus preview and WoWDB eligibility: no raw Looter events or verified at-cast bonus.",
     "Existing Cardinalai Umbral Tin 237362 page: material totals but no actual operation/refund ledger.",
     "Previously saved 2026-11-15 David111 general milling anecdote and repository legacy proxy CSV: cannot fill sample denominators.",
-    "Public 2026 disenchant/prospect/milling guide and forum searches yielded old indexed cohorts, generic assertions, or modeled yield tables; no distinct original event source to import."
+    "Public 2026 disenchant/prospect/milling guide and forum searches yielded old indexed cohorts, generic assertions, or modeled yield tables; no distinct original event source to import.",
+    "Wowhead current 258931 and 251883 public text views show item level 44 but no per-event Looter raw HTML/character context; pages have dynamic version-dependent preview.",
+    "Blizzard March 2026 resourcefulness-bug forum records nominal shattering and refunds only, not eligible Midnight output-yield original cohort."
   ],
-  "next_concrete_step": "Request Master to review second independent Wowhead guide for M13, without modifying mechanics.md as worker. Seek consenting player original Retail 12.1.5+ disenchant ledger pairing item 272246 full at-cast bonus/ilvl and eligibility with output events/skill/spec; otherwise source-original 237362 cast/refund/hit ledger or 236761 10-herb milling per-cast export. Do not promote proxies or duplicate previous cohorts.",
-  "verified_base_commit_sha": "9f97b08575188b563da0713607760cd2476ab4f0",
+  "next_concrete_step": "Request Master to flag 258931/251883 historical item-level preview drift and rounded-percentage-derived Looter histograms for source-aware build-review handling (no worker schema changes). Seek original player event export for any rare/epic DE input (event-linked itemLink bonuses/ilvl, output IDs/ranks, skill/spec/build) or 237362 4000-ore actual cast/refund ledger; only append evidence on a genuinely new independent numeric cohort.",
+  "verified_base_commit_sha": null,
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Single quiet-status-only commit; no independent measured cohort and no new evidence JSONL. Git commit is read-back verified outside this self-referential JSON document."
+  "commit_note": "Quiet-status-only commit. Evidence JSONL intentionally omitted because no new independent cohort. GitHub contents blob SHA guard used and result will be independently read-back verified; self-referential commit SHA is not embedded."
 }
