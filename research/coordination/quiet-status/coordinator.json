@@ -1,89 +1,86 @@
 {
   "role": "research-manager",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-20T13:02:38.930Z",
-  "status": "Independently verified distinct 2024-08-29 gem-rate and 2024-10-25 byproduct/gem-yield hotfix epochs; corrected misleading T0009/T0040 pre/post dating. Confirmed DobberSH's one-original-Null-Stone-cast repeated across two evidence files, with 4/4 exact output tuple matches; kept originals intact. Reviewed existing estimator deduplication logic but did not run exact-SHA build or addon rendering. No new measured cohorts or gold decisions.",
+  "updated_at": "2026-11-20T14:08:42.000Z",
+  "status": "Static source-lineage review of T0051: independently compared four original-transcription files, all 13 output tuples identical (52 stored records; three 'study' copies and one reference copy). Identified an additional 29,865-ore historical source denominator/metadata concern: casts=5973 is explicitly calculated from nominal ore/5, but castsBasis is unset. Documented reproducible source fingerprints; no newly measured cohorts, no validated Retail gold decisions, and no exact-revision build or addon display test this run.",
   "task_ids": [
-    "T0009",
-    "T0040",
-    "T0048",
-    "T0046"
+    "T0051",
+    "T0042",
+    "T0048"
   ],
   "exact_gaps_targeted": [
-    "T0009/T0040: source cohorts were misclassified as pre-October-16 gem-buff; dated Blizzard 2024-08-29 gem buff comes before 2024-10-15 Reikah, while 2024-10-25 byproduct change follows; October 27 Glass averages postdate both. Prevent pooling or incorrect patch applicability.",
-    "DobberSH's one 5-Null-Stone 210939 original operation duplicated as 2026-11-02 four rows and 2026-11-17 four rows, with different studyKeys but same source URL and four output tuples (212495, 212505, 213398, 213399); expected estimator source/vector dedupe must be demonstrated in an actual exact-SHA generated review.",
-    "Still-held Xenastro original Dragonflight two-stage ore-plus-stone source requires output stage attribution; five source-verified Q3 Serevite batch rows cannot be assigned all direct ore units or observed operation counts."
+    "T0051: 48,315-ore Adamantite original Reddit reply transcribed four times with different studyKeys; source counts and provenance must remain one original study, not four cohorts.",
+    "T0051: historical 29,865-ore GuildLeaderCali source uses casts=5973 derived from reported ore/5, rather than independently logged completed casts; castsBasis unset, potentially affects weighting and confidence if admitted.",
+    "The 29,865 and 48,315 source snapshots share all output identities and the larger totals dominate, but source-author/cumulative relationship is not verified; source origin is TBC Classic, not current Retail.",
+    "Carry forward open TWW DobberSH one-original-cast source-copy admission test and Dragonflight Xenastro two-stage attribution gate."
   ],
   "newly_verified_fields_cohorts": {
-    "original_new_measured_cohorts": 0,
-    "usable_retail_gold_decisions_added": 0,
-    "verified_hotfix_dates": {
-      "gem_rate_quality": "2024-08-29",
-      "byproducts_gem_yield": "2024-10-25"
+    "new_independent_measured_cohorts": 0,
+    "new_supported_retail_gold_decisions": 0,
+    "adamantite_four_copies": {
+      "source": "https://www.reddit.com/r/classicwow/comments/p71mrp",
+      "stored_source_rows": 52,
+      "unique_output_tuples": 13,
+      "study_copy_files": 3,
+      "reference_copy_files": 1,
+      "distinct_studyKeys": 4,
+      "all_13_output_ID_total_pairs_match": true,
+      "actual_completed_casts": null,
+      "hit_counts": null,
+      "zero_histograms": null,
+      "nominal_input_ore": 48315,
+      "nominal_equivalents_at_5_per_cast": 9663,
+      "reported_powder_units": 9662
     },
-    "reclassified_sample_dates": {
-      "Reikah_Ironclaw": "2024-10-15 after Aug29 before Oct25",
-      "Glass_reference": "2024-10-27 after both"
+    "older_adamantite": {
+      "source": "https://www.reddit.com/r/classicwow/comments/ospt2y/prospecting_results_for_3k_and_30k_adamantite_ore/",
+      "source_reported_ore": 29865,
+      "source_row_casts_field": 5973,
+      "cast_field_derived_from_nominal_input": true,
+      "castsBasis_in_raw_records": null,
+      "correction_found_for_thirteen_record_IDs": false,
+      "independence_from_48315": "unverified"
     },
-    "repeated_original_cohort": "DobberSH Algari Prospecting Null Stone 210939 one 5-input cast",
-    "source_output_counts_one_each": [
-      212495,
-      212505,
-      213398,
-      213399
-    ],
-    "duplicate_material_tuples_verified": 4,
-    "stored_duplicates_total": 8,
-    "original_distinct_casts": 1,
-    "outcome_ids_originally_hyperlinked_in_comment": false,
-    "independent_source_comment_read": true,
-    "actual_estimator_dedupe_executed": false
+    "pipeline_source_dedupe_logic_read": true,
+    "actual_build_review_executed": false
   },
   "evidence_files": [
-    "research/v3/evidence/master/20261120T1300-tww-prospect-epoch-and-null-stone-duplicate-source-review.md"
+    "research/v3/evidence/master/20261120T1408-adamantite-four-copy-source-cohort-review.md"
   ],
   "source_links": [
-    "https://worldofwarcraft.blizzard.com/en-us/news/24134803",
-    "https://worldofwarcraft.blizzard.com/en-us/news/24148555/hotfixes-october-25-2024",
-    "https://www.wowhead.com/es/news/patch-11-0-5-hotfixes-for-oct-25th-more-class-bug-fixes-and-profession-economy-348782",
-    "https://www.wowhead.com/spell=434018/algari-prospecting",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-02T0918-null-stone-prospects-and-glass-cohorts.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/20261117T1130-original-de-rank-cohorts-nullstone-prospect.jsonl"
+    "https://www.reddit.com/r/classicwow/comments/p71mrp",
+    "https://www.reddit.com/r/classicwow/comments/ospt2y/prospecting_results_for_3k_and_30k_adamantite_ore/",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261120T1408-adamantite-four-copy-source-cohort-review.md"
   ],
   "verified_source_blob_sha_1": "97d5e2fd4000eddf5b9e9a3416231db67b9c2490",
   "verified_source_blob_sha_2": "d2c0c95cdefcf6cc5049344c15a395bfab993d68",
-  "verified_commit_sha": "3024625d8d95dc41de1b445b9d319495172995d6",
-  "manager_review_commit_sha": "df35f6746f7dac36638ab26288c8fc82edd9b116",
-  "dashboard_update_commit_sha": "07ea554b4d3697fa7f787bbd5c506dec325d2aff",
+  "verified_commit_sha": "a2b0848c2927cb1cb909bbd91d69e215771dc524",
+  "manager_review_commit_sha": "a2b0848c2927cb1cb909bbd91d69e215771dc524",
   "main_head_checked": "4190fe93cadfeda361445829750bb46d4fccc9f3",
-  "research_head_before_status_commit": "07ea554b4d3697fa7f787bbd5c506dec325d2aff",
+  "research_head_before_status_commit": "a2b0848c2927cb1cb909bbd91d69e215771dc524",
   "owner_three_pass_branch_head_checked": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "worker_reports_verified": [
-    "Dragonflight 2026-11-20T12:32:35.739Z: original workbook aggregates only, no completed operations",
-    "Legacy 2026-11-20T12:46:56.540Z: Warmaul positive histograms historical, no new Retail cohorts",
-    "Midnight 2026-11-20T12:14:59.643Z: 4-herb milling source hyperlink crosswalk, no new cohorts",
-    "War Within 2026-11-20T12:19:46.963Z: duplicate one-cast Null Stone and corrected epoch lead independently reviewed by manager"
+    "Legacy 2026-11-20T13:41:50.304Z: reported four copies of 48,315-ore source, without new independent cohort; manager independently compared source fingerprints."
   ],
   "blockers": [
-    "No exact-new-research-SHA build-time admission/ItemDB/tooltip fixture executed in this manager run; current research-candidate CI was in_progress on 3024625 when checked, not declared passing.",
-    "Null Stone original comment lacks sample date, output item hyperlinks, skill, specialization, patch/version, complete 0..N ledger and current Retail applicability.",
-    "Blizzard/guide hotfix statements are dated mechanic context, not source-derived numerical yields or cast samples.",
-    "Xenastro two-stage gem attribution and returned input denominator remain unresolved; worker source reports no per-operation event log.",
-    "Unresolved 5 validator errors, 2 M10 conflicts and Warrior 271457 catalog warning from owner handoff not claimed fixed."
+    "Original 48,315-ore Reddit thread was not independently reopened, so exact commenter identity and whether 29,865 and 48,315 source snapshots overlap are unverified.",
+    "No original reported completed prospect operation log, refund/reprocess ledger or per-output hit/zero histograms for 48,315 source; original 29,865 source casts=5973 are nominal-derived, not independently logged.",
+    "No exact-updated-research-SHA tools/prepare_build_research.py run; no generated review dispositions, runtime Lua, tooltip rendering or live WoW checks this run.",
+    "Previously tracked five validator errors, two M10 conflicts and Warrior 271457 catalog warning remain unresolved."
   ],
   "exhausted_sources": [
-    "Do not transcribe DobberSH Algari Prospecting 434018 comment again: both November files repeat one original operation; retain originals and audit effective dedupe.",
-    "Do not re-search the already read original Aug29/Oct25 Blizzard hotfix statements solely to manufacture a new study."
+    "Do not re-transcribe four 48,315 Adamantite source copies: identical 13 output tuples in each; prioritize source-author identity or exact-SHA dedupe check.",
+    "Do not infer Retail applicability or completed casts from historical TBC Classic ore totals."
   ],
-  "next_concrete_step": "Run tools/prepare_build_research.py on one fetched exact durable research SHA using main build scripts; inspect review dispositions for all eight DobberSH source rows and confirm one original cohort contributes only once while separate Genyachris records remain independent. Then target highest-value validated missing per-cast/rank evidence; keep the TWW Aug29/Oct25 epochs disjoint.",
+  "next_concrete_step": "Run existing main build review against one exact fetched durable research revision, confirm review dispositions for all 52 Adamantite copy rows and nominal-cast provenance for the 13 older rows; check whether historical adapter incorrectly treats derived casts as observed. If needed, scope corrective metadata in append-only corrections without changing source rows or building a data-only PR; then return to current-era unsampled cohorts.",
   "validation_this_run": {
-    "original_source_web_opened": true,
-    "eight_jsonl_rows_compared": true,
-    "four_of_four_output_tuples_identical": true,
-    "original_author_and_comment_equal": true,
-    "queue_corrected_and_committed": true,
-    "dashboard_updated_and_committed": true,
-    "build_review_script_read": true,
+    "four_raw_evidence_files_compared": true,
+    "all_13_output_tuples_identical_across_four": true,
+    "older_raw_source_compared": true,
+    "correction_lines_searched": true,
+    "current_estimator_source_dedupe_read": true,
+    "original_reddit_comment_opened": false,
+    "compiler_or_build_review_executed": false,
     "exact_revision_generated_itemdb": false,
     "actual_engine_tooltip_test": false,
     "lua_suite_executed": false,
