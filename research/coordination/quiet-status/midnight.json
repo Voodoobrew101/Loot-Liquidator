@@ -1,20 +1,20 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-20T21:16:41.300Z",
-  "status": "T0045 independently crosschecked Midnight pigment exact itemIDs against Retail commodity catalog quality labels and legacy ledger: four rank-1/rank-2 pigment pairs identified; historical eight-row milling CSV contains rank-mixed, reference-only modeled 3–6/4.5 proxies, not measured operation yields. No newly independent quantitative cohort, no new evidence JSONL, no admission or coefficient.",
+  "updated_at": "2026-11-20T22:15:08.523Z",
+  "status": "T0026/T0049 cross-source triage: a Retail catalog identifies rare mail wrist gear 245343 (Evercore Chainguards), but only an item-page variant identity, no original disenchant operation or material outputs. Independently checked the published Midnight Enchanting specialization guide: it explicitly separates Disenchanting Delegate/skill from profession stats (M13), without any numeric rates. Existing 272246, Umbral Tin 237362 and milling evidence still lacks source-event denominators, at-cast variants or zero-inclusive distributions. No genuinely new independent yield cohort; no evidence JSONL or rate admission.",
   "task_ids": [
-    "T0045",
     "T0026",
     "T0049",
     "T0005",
     "T0039",
-    "T0003"
+    "T0003",
+    "T0045"
   ],
   "exact_gaps_targeted": [
-    "236761/236770/236778/236776 rank-specific output identity versus historical modeled one-output-per-herb ledger and original firsthand kyzenbka reported totals",
-    "272246 item 305 selected tooltip versus 206 base and held live disenchant eligibility",
-    "237362 Umbral Tin actual completed casts/refunds/rank-specific 242608 and other material hit histograms",
-    "237359 Refulgent Copper post-hotfix source-linked denominators/output counts"
+    "T0026: original current-Retail DE event logs partitioned by uncommon/rare/epic armor/weapon, actual item level, gear bonus, skill and Disenchanting Delegate branch",
+    "T0049: Miststalker's Wristbands 272246 actual at-cast ilvl/bonus and eligibility conflict, not merely selected 305 vs base 206",
+    "T0005/T0039: Umbral Tin 237362 finished cast count vs 4000 nominal ore and Resourcefulness refunds, quality-linked outputs, hits, zeros and per-cast histograms",
+    "T0003/T0045: Refulgent Copper and Midnight herbs 236761/236770/236778/236776 actual prospect/mill operation and output-rank receipts"
   ],
   "triage": [
     {
@@ -1040,13 +1040,38 @@
       "original_reported_per_cast_histograms": null,
       "disposition": "catalog identities independently corroborated; old CSV yield numbers remain held as reference/model only; do not replace existing evidence, infer a rank distribution or promote to numeric baseline",
       "hold_reason": "Legacy CSV reports one output rank ID per herb with modeled 3–6 and 4.5, and never measured casts; source comment has quantities without event ledger, actual cast counts, refunds and profession context. Catalog quality labels are identity evidence, not a yield cohort. The opposite item ID ordering for Sanguithorn/Mana Lily (rank1 larger than rank2) makes arithmetic or alphabetical rank assumption unsafe."
+    },
+    {
+      "category": "held_new_retail_catalog_identity_only_no_de_event_20261120",
+      "task_id": "T0026",
+      "input_id": 245343,
+      "input_name": "Evercore Chainguards",
+      "input_rarity": "rare",
+      "input_kind": "mail armor, wrists",
+      "source": "https://bootybaybroker.com/item/245343/evercore-chainguards/us/alterac-mountains",
+      "source_secondary": "https://www.wowhead.com/item=245343/evercore-chainguards",
+      "source_original": {
+        "catalog_displayed_item_level": 577,
+        "catalog_required_player_level": 80,
+        "actual_at_disenchant_item_level": null,
+        "original_completed_disenchants": null,
+        "confirmed_live_disenchant_eligibility": null,
+        "output_item_ids": null,
+        "castsWithDrop": null,
+        "output_quantity": null,
+        "zero_outcome_histogram": null,
+        "profession_skill": null,
+        "specialization": null,
+        "game_build_at_cast": null
+      },
+      "disposition": "held identity-only, not numerical baseline or a confirmed eligible DE input",
+      "hold_reason": "Live Retail commodity listing is evidence of a named rare mail wrist gear identity, not that it was disenchanted at catalog item level 577 or disenchanted at all. No independent event ledger, output IDs or rate counts. GitHub default-branch code index returned no exact item 245343 match, but this is not a complete repository-wide deduplication census."
     }
   ],
   "newly_verified_fields_or_cohorts": [
-    "Independent exact output-quality itemID crosswalk from Retail commodity catalog: Powder Pigment 245807 (R1) / 245808 (R2); Sanguithorn Pigment 245865 (R1) / 245864 (R2); Mana Lily Pigment 245867 (R1) / 245866 (R2); Argentleaf Pigment 245803 (R1) / 245804 (R2).",
-    "Legacy eight-row Midnight milling field-review CSV places 236761/236767→245807, 236770/236771→245864, 236778/236779→245866, 236776/236777→245804 but explicitly marks drop chance as proxy, yield min/max and EV as modeled, sample_operations empty. These are not measured rank-specific pigment distributions.",
-    "Original kyzenbka comment quantities 1305/1286/1336/1335 are already indexed firsthand observations, not independently new cohorts. Only the first two inputs explicitly have 1,000 herbs; all completed operation/hit/zero/refund fields remain null.",
-    "No new independently verified measured yields or probabilities; no attempt to infer rank output fraction or to insert price data."
+    "Independent Retail item-catalog identity for 245343 Evercore Chainguards: rare mail wrist, catalog ilvl 577 and required player level 80; not at-cast item level/bonus or proof of disenchant eligibility.",
+    "Midnight Enchanting specialization guide (updated 2026-02-21) expressly says Disenchanting is unaffected by Multicraft, Resourcefulness and Ingenuity, while Skill and Disenchanting Delegate influence output; this is qualitative mechanic corroboration for existing M12/M13, not a measured skill coefficient. Request Master mechanics review rather than editing shared registry.",
+    "No new current-build original cast denominators, per-output hit counts, zero outcomes or measured material totals for 245343, 272246, 237362, 237359 or Midnight milling."
   ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": {
@@ -1057,46 +1082,30 @@
     "new_midnight_histograms": 0,
     "new_measured_probabilities": 0,
     "new_live_eligible_yield_admissions": 0,
-    "independently_catalog_verified_output_id_quality_pairs": 4,
-    "newly_resolved_pigment_rank_output_ids": [
-      245807,
-      245808,
-      245865,
-      245864,
-      245867,
-      245866,
-      245803,
-      245804
+    "catalog_gear_item_ids_identified": [
+      245343
     ],
-    "legacy_milling_proxy_rows_inspected": 8,
-    "existing_original_milling_unit_totals_not_new": [
-      1305,
-      1286,
-      1336,
-      1335
-    ],
-    "original_milling_actual_casts": null
+    "catalog_only_item_level_245343": 577,
+    "at_cast_ilvl_245343": null,
+    "at_cast_ilvl_272246": null,
+    "actual_casts_237362": null,
+    "output_ranks_and_per_cast_histograms_new": null
   },
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://goldcap.gg/retail/tw/items/245807",
-    "https://goldcap.gg/retail/tw/items/245808",
-    "https://goldcap.gg/retail/us/items/245865",
-    "https://goldcap.gg/retail/tw/items/245864",
-    "https://goldcap.gg/retail/us/items/245867",
-    "https://goldcap.gg/retail/us/items/245866",
-    "https://goldcap.gg/retail/us/items/245803",
-    "https://goldcap.gg/retail/us/items/245804",
-    "https://www.wowhead.com/item=245807/powder-pigment#comments",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/ledger/midnight-milling-field-review-2026-10-28.csv"
+    "https://bootybaybroker.com/item/245343/evercore-chainguards/us/alterac-mountains",
+    "https://www.wowhead.com/item=245343/evercore-chainguards",
+    "https://www.wowhead.com/guide/midnight/professions/enchanting-specializations",
+    "https://ptr.wowdb.com/items/272246-miststalkers-wristbands",
+    "https://www.wowhead.com/item=237362/umbral-tin-ore#comments"
   ],
   "blockers": [
-    "T0045: catalog confirms rank IDs only, not whether any individual 10-herb milling cast yielded which rank; missing original per-cast logs, completed operation counts, per-output hit/zero counts, Resourcefulness refunds and skill/spec/build. No promotion of modeled 3–6/4.5 proxies.",
-    "T0045: legacy CSV one-output-per-input rank selection omits the alternate rank IDs; any itemDB rank mapping/admission check belongs to Master build-time review, not a worker file or addon runtime edit.",
-    "T0049: 272246 still lacks exact at-cast itemLink/bonus, current Retail DE-eligibility confirmation and event ledger; item tooltip preview is not at-cast ilvl.",
-    "T0005/T0039: 237362 has nominal 4,000 ore and material totals but completed casts, refunds, per-output hit/zero histogram and rank-linked original receipts remain unknown.",
-    "T0003: 237359 independent post-hotfix input-quality-specific operations and zero-inclusive outcomes absent."
+    "T0026: 245343 identity only; no confirmed live DE eligibility/event, at-cast bonus/ilvl, material IDs, ranks, casts or histogram. Catalog item level is not a processing event.",
+    "T0026: M13 independently supported by Wowhead specialization guide but shared mechanics status is 'likely'; Master must review mechanic-status change, separate from numeric data.",
+    "T0049: 272246 WoWDB says Cannot be disenchanted; Wowhead Looter aggregate 140 events lacks event-level build/bonus and observed eligible current-client trial.",
+    "T0005/T0039: 237362 4000 nominal ore with Resourcefulness, not an exact count of completed prospects; material totals known from original source but hits, zeros, ranks and per-cast receipts missing.",
+    "T0003/T0045: no independent post-hotfix Refulgent Copper ore-quality cast cohort or rank-linked 10-herb milling event export with actual completed casts/refunds."
   ],
   "exhausted_sources": [
     "kyzenbka 2026-11-20 original Wowhead item hyperlink and existing v3 transcription reconciled; no per-cast ledger, histograms, skill/build or refunds. Multiple reposts are the same original author.",
@@ -1114,11 +1123,13 @@
     "2026-11-20 JD3K spell original 50-ore rank2 tests and two historical v3 repeats reconciled with legacy denominator-corrected observation; source lacks raw 0-inclusive event/refund ledger, no repeat search unless independent export appears.",
     "2026-11-20 275221 indexed PTR-only 12.1.7 182/94/83 and PTR-2 12.1.5 171/90/77: no event log/output IDs; do not recount unless first-party data emerges.",
     "2026-11-20 250055 live Wowhead bonus=12790/12795/12796 and Mythic previews all show identical 73/37/33 Looter cumulative counts despite ilvl changes; PTR 70 and PTR-2 69 are not independent. Do not repeat per-bonus search without raw character/event provenance.",
-    "2026-11-20 T0045: reviewed original eight-row legacy milling CSV and independent live commodity quality catalog for four pigment families; catalog supports rank IDs only, no casts or output distributions. Do not recheck rank labels without contradictory item evidence; next gap requires original per-event trials."
+    "2026-11-20 T0045: reviewed original eight-row legacy milling CSV and independent live commodity quality catalog for four pigment families; catalog supports rank IDs only, no casts or output distributions. Do not recheck rank labels without contradictory item evidence; next gap requires original per-event trials.",
+    "2026-11-20 T0026: Evercore Chainguards 245343 Retail commodity catalog and indexed Wowhead item page establish only rare mail wrist identity. No original disenchant operation ledger; do not use displayed catalog ilvl577 or AH prices as at-cast or conversion evidence.",
+    "2026-11-20 M13: current Wowhead Midnight Enchanting specialization guide explicitly negates profession stats for disenchanting and distinguishes DE skill/spec; prior repo mechanic discussions already mention this, so no duplicate empirical study or synthetic formula."
   ],
-  "next_concrete_step": "Seek original dated 10-herb milling event-export for 236761/236770/236778/236776 with source-linked input/output ranks (all eight pigment IDs), actual completed operations, Resourcefulness refunded reagent quantities, and per-cast 0/1/2+ output stack counts; request Master build-review check of rank mappings in old eight-row modeled CSV. If unavailable, focus fresh Retail 272246 DE event or 237362 original ore ledger.",
-  "verified_base_commit_sha": "aa27fd4f7f97b8ef0dcbb026de3adc6de6cedfb6",
+  "next_concrete_step": "Obtain a source-original Retail client DE transaction/export for exact rare mail wrist 245343 or 272246 with full itemLink bonus/at-cast ilvl, confirmation of eligibility, skill and Disenchanting Delegate node state, output IDs/ranks and per-cast quantity histogram; otherwise obtain 237362 original prospect ledger with completed casts (not nominal ore/5), refunded ore, ore/output ranks and zeros. Send M13 qualitative-source status request through Master; do not change shared mechanics.",
+  "verified_base_commit_sha": "82484ae5efc3821bee6425438d45c971ad5dcff9",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Status-only identity/provenance triage; no source-grade new quantitative cohort, no evidence JSONL. New commit verified after write; self-commit SHA cannot be encoded in its own payload."
+  "commit_note": "Status-only triage and independently linked qualitative source verification. No new measured output cohort: intentionally no JSONL/empty evidence commit. Verify new commit after write; a Git commit cannot embed its own SHA in a single atomic self-referential status payload."
 }
