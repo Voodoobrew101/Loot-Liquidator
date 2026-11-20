@@ -652,7 +652,7 @@ def casefold_family_key(key):
                  for part in key)
 
 
-def misplaced_copies(rows, names, vectors, pooled):
+def _misplaced_copy_reasons(rows, names, vectors, pooled):
     """id() of rows to leave out of every group: pooled studies, and rows of a copy that lost item IDs
     so they land in a vaguer estimate group than the original, where the per-group dedupe never sees
     both (S17). A row stating an unlock its original does not state stays, as in the unlock skip."""
@@ -673,7 +673,10 @@ def misplaced_copies(rows, names, vectors, pooled):
                 out[id(r)] = "copy:vaguerGroup"
             elif any(study_ref(o) < study_ref(r) and k != ok
                      and casefold_family_key(k) == casefold_family_key(ok)
+                     and source_key(r) == source_key(o)
+                     and r.get("inputRank") == o.get("inputRank")
                      and r.get("outputRank") == o.get("outputRank")
+                     and (row_unit(r) is None or row_unit(o) is None or row_unit(r) == row_unit(o))
                      and numbers_agree(row_numbers(r), row_numbers(o)) and same_output(r, o, ids)
                      and (unlock_state(o) is True or unlock_state(r) is not True)
                      for o, ok in pairs):
@@ -681,6 +684,11 @@ def misplaced_copies(rows, names, vectors, pooled):
                 # not two estimates. Respect explicit rank, batch and source identities.
                 out[id(r)] = "duplicateStudy"
     return out
+
+
+def misplaced_copies(rows, names, vectors, pooled):
+    """Keep the established public set-of-row-identities API for source adapters."""
+    return set(_misplaced_copy_reasons(rows, names, vectors, pooled))
 
 
 # M08: why a record adds nothing to any estimate. One code per record; `detail` names the group or the
@@ -740,7 +748,7 @@ def analyze(rows):
     Every row has an entry: used (roles chance, average, prior, range, condition) or a reason code."""
     names = name_maps(rows)
     vectors, _, pooled = study_vectors(rows)
-    copies = misplaced_copies(rows, names, vectors, pooled)
+    copies = _misplaced_copy_reasons(rows, names, vectors, pooled)
     conds = load_conditions(rows)
     changes = load_rate_changes()
     families = defaultdict(set)   # input name -> item IDs, for family-level unlock checks

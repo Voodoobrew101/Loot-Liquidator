@@ -62,7 +62,8 @@ class MaterialIdentityTests(unittest.TestCase):
         names = live.name_maps(rows)
         vectors, _, pooled = live.study_vectors(rows)
         dropped = live.misplaced_copies(rows, names, vectors, pooled)
-        self.assertEqual(dropped, {id(second): 'duplicateStudy'})
+        self.assertIsInstance(dropped, set, 'Preserve the source-adapter helper API')
+        self.assertEqual(dropped, {id(second)})
         # Missing cast denominators cannot be priced as observed means.
         estimated, _, usage = live.analyze(rows)
         self.assertFalse(any(e.get('averageSource') == 'measured' for e in estimated))
@@ -77,6 +78,36 @@ class MaterialIdentityTests(unittest.TestCase):
                    row('a.jsonl', 'same-batch-2', 'pigment (unspecified)')]
         vb, _, pb = live.study_vectors(batches)
         self.assertFalse(live.misplaced_copies(batches, live.name_maps(batches), vb, pb))
+
+    def test_case_variant_preserves_explicit_batch_source_input_rank_and_unlock(self):
+        import build_estimates as live
+        def row(**values):
+            result = dict(_file='a.jsonl', studyKey='source-a', type='drop', sourceKind='study',
+                          method='Mill', inputItemID=236761, inputName='Tranquility Bloom', inputRank=2,
+                          outputItemID=None, outputName='Pigment (unspecified)', outputRank=None,
+                          casts=10, totalQuantity=1473, inputsPerCast=5,
+                          source={'url':'https://example.org/one-original'}, cohortKey='explicit-cohort')
+            result.update(values)
+            return result
+        first = row()
+        second = row(_file='b.jsonl', studyKey='source-b', outputName='pigment (unspecified)')
+        def dropped(a, b):
+            rows = [a, b]
+            vectors, _, pooled = live.study_vectors(rows)
+            return live.misplaced_copies(rows, live.name_maps(rows), vectors, pooled)
+        self.assertEqual(dropped(first,second),{id(second)})
+        for change in [dict(inputsPerCast=10), dict(inputRank=3), dict(outputRank=2),
+                       dict(source={'url':'https://example.org/different-original'}),
+                       dict(inputItemID=236762), dict(unlockState=True)]:
+            other = dict(second, **change)
+            self.assertFalse(dropped(first,other),change)
+        # Two explicit material IDs never become aliases through name casing.
+        self.assertFalse(dropped(dict(first,outputItemID=100),dict(second,outputItemID=200)))
+        # The public API and old vaguer-group reason remain stable.
+        exact = dict(first,outputItemID=100,outputName='Pigment',outputRank=1)
+        alias = dict(second,outputItemID=None,outputName='Pigment',outputRank=1)
+        v,_,p = live.study_vectors([exact,alias])
+        self.assertIsInstance(live.misplaced_copies([exact,alias],{},v,p),set)
 
 
 if __name__ == '__main__':
