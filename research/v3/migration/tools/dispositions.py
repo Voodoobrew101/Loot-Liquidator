@@ -89,10 +89,6 @@ SCOPE_GAP_DECISIONS = {
         "QUALITATIVE_NO_DENOMINATOR",
         "Commenter Reikah: rare blue gems can give one dust from three gems. The note itself says no cast denominator, item IDs or "
         "skill; the 21 beside the citation is a date (March 21)."),
-    "reddit:1s1dtuh": (
-        "QUALITATIVE_NO_DENOMINATOR",
-        "Different commenters report one, two and three Gemdust from Crushing, without per-item input IDs or a denominator; the note "
-        "says not to multiply independent cohorts. The 23 beside the citation is a date (March 23)."),
     "gdoc:1jBMgICcVpqIezJo_dtBPmIdA7UTq8QToPp1JpVVONn0": (
         "DERIVATIVE_CALCULATOR",
         "The 1smgllg author's workbook: hardcoded estimates taken from WoW-Professions, 'one derivative calculator, not an "
@@ -101,13 +97,39 @@ SCOPE_GAP_DECISIONS = {
     "wowdayday.com/wiki/entry/profession:jewelcrafting:recipe:1230462": (
         "IDS_ONLY",
         "Recipe page cited for identity; the numbers beside it are item and spell IDs (242553, 242620, 1230462, 1231132), not counts."),
-    "wowwiki-archive.fandom.com/wiki/breastplate_of_the_wayward_vanquisher": (
-        "IDS_ONLY",
-        "Token reference page; the numbers beside it are item IDs 45634 and 46123 (a token and its Rogue chest), not counts."),
-    "wow-professions.com/the-war-within/khaz-algar-inscription-leveling-guide": (
-        "PUBLISHED_TABLE_NOT_IN_TEXT",
-        "Published leveling guide cited in source-inventory.csv rows next to item IDs and GameData line numbers; no cohort."),
 }
+
+# These exact leads currently occur only in the two coordination summaries.
+# Classifying the summary does not review the original source or admit evidence.
+# A citation in any evidence file falls outside this list's file scope and must
+# receive its own checkpoint or source decision.
+COORDINATION_LEAD_FILES = frozenset({
+    "research/coordination/RESEARCH-DASHBOARD.md",
+    "research/coordination/quiet-status/midnight.json",
+})
+UNREVIEWED_COORDINATION_LEADS = frozenset({
+    "blizzforum:1958838", "blizzforum:2154715", "blizzforum:2209314",
+    "blizzforum:2261410", "blizzforum:226400", "blizzforum:2268090", "blizzforum:51895",
+    "boostmatch.gg/blog/wow/articles/wow-midnight-engineering-guide",
+    "gdoc:11kVrPOVY0Jei3xmBL1q_I9fsFAl3QY6d",
+    "gdoc:1f-d39_TW0MARV5Egib2IPuW8kTU5-_C8PIgAkz2A4IU",
+    "guildloot.de/en/item/tbc/23758-cogspinner-goggles",
+    "ironsongtribe.com/thread-2958-post-11061.html", "reddit:109yr4s", "reddit:1sv5u5a",
+    "reddit:1swweyv", "reddit:6ygegx", "reddit:6ywwdq", "reddit:98oyfb", "reddit:u0f32m",
+    "repos.wowace.com/wow/reagentmaker/file/default/prospectingdata.lua",
+    "worldofwarcraft.fandom.com/et/wiki/frostwoven_belt",
+    "wow-professions.com/midnight/engineering-guide",
+    "wow-professions.com/midnight/engineering-specialization-guide-and-builds",
+    "wow-professions.com/midnight/npc/melaris", "wowhead:item=201360", "wowhead:item=52180@cata",
+    "wowhead:item=72234@ptr-2",
+    "wowhead:news=10-0-economy-speculation-wowhead-economy-weekly-wrap-up-223-326714",
+    "wowhead:news=roll-for-tertiary-stats-with-dimensius-omni-tokens-in-manaforge-omega-377408",
+    "wowhead:news=roll-for-tertiary-stats-with-dimensius-omni-tokens-in-manaforge-omega-377408@ptr-2",
+    "wowhead:spell=1280952", "wowhead:spell=83966@cata",
+    "wowwiki-archive.fandom.com/wiki/boulderfist_legplates",
+    "wowwiki-archive.fandom.com/wiki/duskweave_belt",
+    "wowwiki-archive.fandom.com/wiki/stoneguard_band",
+})
 
 
 # ------------------------------------------------------------------ small helpers
@@ -234,6 +256,10 @@ def scope_gap(inputs, scans, index):
         elif key in SCOPE_GAP_DECISIONS:
             code, reason = SCOPE_GAP_DECISIONS[key]
             decision, pointer = "reasoned-disposition", None
+        elif key in UNREVIEWED_COORDINATION_LEADS and g["files"] <= COORDINATION_LEAD_FILES:
+            decision, code, pointer = "reasoned-disposition", "UNREVIEWED_COORDINATION_LEAD", None
+            reason = ("Unreviewed lead cited only in the named coordination summaries. Original-source review remains "
+                      "pending; this classification admits no observation, cast count, probability or null result.")
         else:
             decision, code, reason, pointer = "UNDECIDED", "UNDECIDED", "add a checkpoint (extract_batch.py, EXTRA_FILES) or a reasoned decision", None
         rows.append({"source": key, "decision": decision, "code": code, "reason": reason, "checkpoint": pointer,

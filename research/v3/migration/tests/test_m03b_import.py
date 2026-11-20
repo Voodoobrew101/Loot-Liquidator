@@ -139,6 +139,18 @@ class Rules(Repo):
 
 
 class Archives(Repo):
+    def test_reference_suppression_preserves_different_values_and_scope(self):
+        row = drop("guide", sourceKind="reference", method="Prospect", inputsPerCast=5,
+                   percentShown=3.33, percentMeaning="perCast", inputRank=None, outputRank=None)
+        self.assertTrue(ie.same_tbc_reference_value(row, 0.0333))
+        row["source"]["url"] = "https://other.example/reference"
+        self.assertTrue(ie.same_tbc_reference_value(row, 0.0333))
+        self.assertFalse(ie.same_tbc_reference_value(row, 0.03))
+        for field, value in (("inputsPerCast", 20), ("inputRank", 2), ("outputRank", 2),
+                             ("method", "Mill"), ("patch", "2.4.0"), ("dataDate", "2011-02-02")):
+            changed = dict(row, **{field: value})
+            self.assertFalse(ie.same_tbc_reference_value(changed, 0.0333), field)
+
     """M03.2: observation .json archives."""
 
     def test_tbc_guide_only_missing_rows_as_reference(self):
@@ -215,6 +227,47 @@ class OtherSchema(Repo):
                 "source": {"url": "https://www.wowhead.com/item=153669/viridescent-pigment", "commentAuthor": author,
                            "originalHerbsConsumed": herbs, "reportedOutputTotal": total, "sampleContext": "c",
                            "observedMassMillReagentCount": 20}}
+
+    def test_reviewed_kidneph_prior_survives_a_false_author_mention_without_casts(self):
+        with open(os.path.join(REPO, ie.LEGACY_MILLING), "rb") as fh:
+            original = fh.read()
+        self.put(ie.LEGACY_MILLING, "")
+        with open(os.path.join(self.root, ie.LEGACY_MILLING), "wb") as fh:
+            fh.write(original)
+        mention = drop("baadkitty", url="https://www.wowhead.com/item=153669/viridescent-pigment",
+                       inputItemID=152505, outputItemID=153635, totalQuantity=151, casts=None,
+                       notes="Separate from commenter Kidneph's different 1000-herb study")
+        self.agent([mention])
+        rows, _ = ie.import_legacy_milling(ie.Holdings([]))
+        priors = [r for r in rows if r["source"]["author"] == "Kidneph"]
+        self.assertEqual(len(priors), 18)
+        for row in priors:
+            self.assertEqual(row["sourceKind"], "reference")
+            self.assertEqual((row["inputsProcessed"], row["inputsPerCast"]), (1000, 20))
+            self.assertEqual(row["averageShown"], row["totalQuantity"] / 1000)
+            self.assertEqual(row["averagePer"], "input")
+            self.assertIsNone(row["casts"])
+            self.assertIsNone(row["castsBasis"])
+            self.assertIsNone(row["castsWithDrop"])
+            self.assertIsNone(row["percentShown"])
+            self.assertEqual(row["migratedFrom"]["sha256"], ie.LEGACY_MILLING_REFERENCE_SHA)
+        estimates, _ = b.build(priors)
+        self.assertEqual(len(estimates), 18)
+        self.assertTrue(all(e["studyCasts"] == 0 and e["studies"] == 0 for e in estimates))
+
+        # An actual exact held input/output/total still suppresses its copy.
+        actual = drop("kidneph", url="https://www.wowhead.com/item=153669/viridescent-pigment",
+                      inputItemID=152505, outputItemID=153635, totalQuantity=814, casts=None)
+        self.agent([mention, actual])
+        rows, _ = ie.import_legacy_milling(ie.Holdings([]))
+        self.assertEqual(len([r for r in rows if r["source"]["author"] == "Kidneph"]), 17)
+
+        # The exception cannot apply to a changed archive.
+        with open(os.path.join(self.root, ie.LEGACY_MILLING), "wb") as fh:
+            fh.write(original + b"\n")
+        ie._SHA.clear()
+        rows, _ = ie.import_legacy_milling(ie.Holdings([]))
+        self.assertFalse(any(r["source"]["author"] == "Kidneph" for r in rows))
 
     def test_failed_search_mentioning_author_does_not_suppress_milling(self):
         self.agent([{"id": "search", "type": "searched", "notes": "No cohort found for KnownAuthor",
@@ -325,7 +378,7 @@ class Committed(unittest.TestCase):
         # Dragonflight worker, and 1smgllg's 14 approximate-rate copies by the
         # Midnight worker (17 source rows, no measured cast denominator).
         # Original archive files remain untouched; retained IDs never renumber.
-        dropped = {"import-v2report-00016"} | {f"import-v2report-{i:05d}" for i in range(1, 15)}
+        dropped = {f"import-v2report-{i:05d}" for i in range(1, 17)}
         self.assertEqual(now, [p for p in pinned if p["id"] not in dropped])
         hold = ie.Holdings(self.prior)
         self.assertTrue(hold.held("reddit:zzyjzu"))
@@ -355,7 +408,16 @@ class Committed(unittest.TestCase):
             "reddit:zzyjzu": "dragonflight-20261101-88008",
             "reddit:y3e8ek": "dragonflight-20261102-143001",
         }
-        self.assertEqual(set(k for k in ie.NEW_SOURCES if hold.held(k) and k not in ie.ROW_CHECKED_SOURCES), {"reddit:zzyjzu"})
+        current = {"reddit:zzyjzu": "dragonflight-20261031-906", "reddit:1fb0vv5": "war-within-20261106-001",
+                   "wowhead:item=192870": "dragonflight-20261118-212901", "reddit:1g8kbaq": "war-within-20261118-1226-001",
+                   "reddit:10s9ol9": "dragonflight-20261110-0251-001", "reddit:1vknxyy": "midnight-20261103-1705-001",
+                   "reddit:1rrn6of": "midnight-20261107-012", "blizzforum:1944679": "war-within-20261114-2325-002",
+                   "blizzforum:2362528": "midnight-20261106-2314-11", "blizzforum:2287404": "midnight-20261118-1319-001",
+                   "blizzforum:2316717": "midnight-20261106-2314-08"}
+        self.assertEqual(set(k for k in ie.NEW_SOURCES if hold.held(k) and k not in ie.ROW_CHECKED_SOURCES), set(current))
+        for key, rid in current.items():
+            self.assertTrue(any(r.get("id") == rid and r.get("type") in ("drop", "recipe")
+                                for _, r in hold.held(key)), key)
         for key, rid in reviewed.items():
             self.assertTrue(any(r.get("id") == rid and r.get("type") == "drop" for _, r in hold.held(key)), key)
             self.assertFalse(any(ie.thread_of(ie.source_key(r["source"]["url"])) == key
@@ -419,14 +481,14 @@ class Committed(unittest.TestCase):
 
     def test_reference_rows_never_reach_study_counts(self):
         refs = [r for rows in self.rows.values() for r in rows if r["sourceKind"] == "reference"]
-        self.assertEqual(len(refs), 8)
+        self.assertEqual(len(refs), 26)   # eight guide rows plus 18 cast-unknown per-herb Kidneph priors
         rows = b.load()
         groups = {}
         for r in rows:
             if r.get("id") in {x["id"] for x in refs}:
                 self.assertFalse(b.is_study_row(r))
                 groups[b.key_of(r, b.name_maps(rows))] = True
-        self.assertEqual(len(groups), 8)
+        self.assertEqual(len(groups), 26)
 
 
 if __name__ == "__main__":

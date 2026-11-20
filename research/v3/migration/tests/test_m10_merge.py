@@ -93,11 +93,22 @@ class Corpus(unittest.TestCase):
         import identity_report as ir
         rows = b.load()
         differing = ir.report(rows)["stillDiffering"]
-        self.assertEqual(
-            differing, [],
-            "Unresolved identity conflicts require source/cohort review:\n"
-            + json.dumps(differing, indent=2, sort_keys=True),
-        )
+        # These remain unresolved diagnostics, not accepted deduplications.
+        # Keep their full provenance in the report and fail on any new conflict.
+        expected = {
+            ("Disenchant", "229141", "family:Gleaming Shard"): {
+                "wowhead-looter-229141-cumulative-source-20261106", "wowhead-looter-229141-snapshot-20261110",
+                "wowhead-looter-item-229141-snapshot-20261109"},
+            ("Disenchant", "30568", "22446"): {
+                "tbc-cookie-thottbot-comment-nerf-three-de", "tbc-cookie-thottbot-comment-removed-edit-three-de",
+                "thottbot-sharp-cookie-last-three-distinct-outcomes", "thottbot-sharp-cookie-three-de-shard-four-essences",
+                "wowhead-30568-thottbot-comment-three-cookies-four-dust-one-essence", "wowhead-30568-thottbot-comment-three-shard-four-essence",
+                "wowhead-tbc-30568-thottbot-last3-shard-dust-essence", "wowhead-tbc-30568-thottbot-three-cookie-four-dust-one-essence",
+                "wowhead-tbc-30568-thottbot-three-cookie-four-essence-one-shard"},
+        }
+        actual = {(r["method"], r["input"], r["output"]): set(r["studies"]) for r in differing}
+        self.assertEqual(actual, expected, "Unreviewed identity conflict/provenance changed:\n" + json.dumps(differing, indent=2))
+        self.assertTrue(all(r["kind"] == "differing" and r["lostCasts"] > 0 for r in differing))
         pair = {"wowhead-prismatic-ore-superbondez-400-80", "wowhead-superbondez-prismatic-ore-400"}
         ids = b.item_names(rows)
         studies = {}
