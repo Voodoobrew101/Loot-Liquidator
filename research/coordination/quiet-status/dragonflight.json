@@ -2,15 +2,15 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-20T13:39:31.380Z",
-  "status": "Reconciled four Xenastro source Statistics summaries to 28 filtered pre-existing original Prospecting Log rows; inclusive skill/inspiration/resourcefulness thresholds reproduce ore/gem/epic totals exactly. No new independent casts, output-cohort admissions, JSONL, production, PR or release.",
+  "updated_at": "2026-11-20T14:34:23Z",
+  "status": "Original Xenastro XLSX native-formula audit verified the four Statistics SUMIFS pools use inclusive skill/inspiration/resourcefulness filters and that displayed 'Chance' values divide OUTPUT UNITS by NOMINAL ORE UNITS. Those are not observed per-completed-cast hit probabilities. No new independent numeric cohort, output ID or casts; no evidence file, PR or runtime change.",
   "task_ids": [
     "T0020",
-    "T0018",
-    "T0041",
     "T0019",
+    "T0041",
     "T0046",
-    "standing-original-workbook-held-triage"
+    "T0018",
+    "T0015"
   ],
   "exact_gaps_targeted": [
     "Draconium R1 ore 189143 remains without validated exact-rank original completed-prospect output/cast event ledger; existing historic source rank IDs and output units cannot fill P(hit).",
@@ -18,20 +18,16 @@
     "Bubble Poppy 191467, Saxifrage 191464/191465/191466 and Prismatic Ore 194545 still lack new firsthand completed-cast zero-inclusive per-output processing tables."
   ],
   "newly_verified_fields": [
-    "Reopened original public Xenastro Prospecting Calculator V1.xlsx directly via Google Drive file ID 1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m (70,052 bytes; created 2023-02-07T11:29:24.736Z; modified 2024-03-27T00:01:37.900Z). The raw Prospecting Log includes exactly 66 named input rows indexed 0–65 and source Total quantity 733,939; row 66 is an aggregate, not an additional cohort.",
-    "Original row composition: 19 Serevite Q2 (183,811 nominal units), 31 Serevite Q3 (307,585), 5 Draconium Q2 (70,543), 9 Draconium Q3 (170,000), 1 Khaz'gorite Q2 (1,000) and 1 Magma Thresher (1,000). Thus full-source 733,939 cannot all be called ore input: ore subtotal 732,939. These are source-worksheet input quantities, never completed casts.",
-    "Only 49 of 66 input rows carry Datetime, from 2022-12-30 through 2023-02-06. Exactly 33 of 66 source Ore Refund cells are populated, summing to 45,007 refund units; the other 33 are blank/UNKNOWN, not measured zero refunds. No completed cast, Resourcefulness proc histogram or reprocessing denominator follows from either quantity.",
-    "Xenastro's firsthand original Reddit text confirms prospecting ore with Resourcefulness gear followed by prospecting Prismatic and Crumbled Stones with Inspiration gear. Across all 66 original rows this creates a potential stage-identity/lineage gate, not a new direct per-ore material hit rate. The source's 'Epic rate per ore' entries are quantity ratios, never measured P(cast with drop).",
-    "Direct read of the separate 2022 DRAGONFLIGHT JC YIELD CALCULATOR reproduces the already documented six profile / 5,000 nominal ore per-profile source structure and prior 222 expected-formula-cell discrepancy; those 444 transcriptions are pre-existing source rows, not fresh studies.",
-    "Re-read original author-hosted Xenastro Prospecting Calculator V1.xlsx (Google Drive file ID 1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m) and independently reconciled source 'Statistics' pools against raw 'Prospecting Log' rows. All four summaries reproduce exactly from quality/ore and INCLUSIVE threshold filters on skill, inspiration and resourcefulness, despite displayed source labels 'Skill >', 'Inspiration >', 'Resourcefulness >'. Strict > fails to match; do not claim native Excel formula was inspected (Drive readable extraction, not binary formula audit).",
-    "Source Statistics Serevite Q2: threshold skill >=234, inspiration >=0.300, resourcefulness >=0.103; log CSV rows 31,33,34,46,59 (5 source batches) => 84,050 nominal ore / 27,173 gem units / 102 epic units. Serevite Q3: >=270 / >=0.198 / >=0.306; rows 41,42,43,44,45,47,48,49,55,57 (10) => 166,859 nominal ore / 60,533 gem units / 233 epic units.",
-    "Source Statistics Draconium Q2: >=248 / >=0.300 / >=0.133; rows 50,52,53,60 (4) => 62,000 nominal ore / 33,813 gem units / 198 epic units. Draconium Q3: >=280 / >=0.198 / >=0.306; rows 51,54,56,58,61,62,63,64,65 (9) => 170,000 nominal ore / 100,690 gem units / 664 epic units. Combined four summaries represent 28 already-present source log batches / 482,909 nominal ore, a filtered subset of original 66 rows / 733,939 input units including 1,000 Magma Thresher, NOT four new independent cohorts.",
-    "Full 66-row workbook source arithmetic QA: independently checked the nine source grade bucket totals (green/blue/epic subtotals, Total Gems, Total Q3) against displayed summed grade components; zero inconsistent source row totals. These source numbers are output quantities and derived proportions, not P(at least one output per completed cast)."
+    "Downloaded and inspected original XLSX binary, not merely text-rendered Drive extraction: Xenastro Prospecting Calculator V1.xlsx, Drive id 1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m; SHA256 847caa75c43c1227a29eb0939c80cc0d077c997c3321d3bd76dc640a519bb4ca; 70,052 bytes. Original four tabs Start Here, Prospecting, Prospecting Log, Crushing.",
+    "Native workbook Prospecting!O3/O15/O27/O39 SUMIFS formulas directly filter 'Prospecting Log'!C2:C67 with A=ore family, B=input quality and Z >= skill, AA >= inspiration, AB >= resourcefulness. This confirms thresholds are INCLUSIVE, notwithstanding 'Skill >' labels; not only a reconstructed inference. Cached nominal-ore subgroup totals: Serevite Q2 84,050; Serevite Q3 166,859; Draconium Q2 62,000; Draconium Q3 170,000.",
+    "Native formulas Prospecting!O9/O21/O33/O45 SUMIFS on Log!L total GREEN gem units yield 20,836/42,662/22,170/60,269 for the four matching pools; O11/O23/O35/O47 SUMIFS on Log!T EPIC units yield 102/233/198/664, and O12/O24/O36/O48 sum source green+blue+epic units to 27,173/60,533/33,813/100,690. These are source totals already represented in 28 raw rows, not independent cohorts.",
+    "Source explicitly computes 'Green Chance' in Prospecting!C6/F6/I6/L6 as O9/O3, O21/O15, O33/O27, O45/O39, respectively: output GEM QUANTITY / nominal ore quantity. E.g. 20,836 / 84,050 = 0.2479000595. The nearby R9/R21/R33/R45 formulas instead divide the same gem-unit totals by nominalOre/5 (five-ore-equivalent projection), NOT counted completed casts; their labels/rates must not become P(at least one output per actual cast).",
+    "Source's epic output proportions C8/F8/I8/L8 etc. likewise divide grade-specific item UNITS by nominal ore (for example Serevite Q2 Q3-epic U11/O3 = 29/84,050 = 0.0003450327186), not event hit counts. Source epic rate, class 'chance', and saved ore cannot establish outcome histograms or actual operation denominators."
   ],
   "newly_verified_cohorts": [],
-  "new_numerical_measurements": "None new or independent; verified historical source summary filtering and row-level arithmetic only. Four summaries are derived views of existing 28 input rows, not four fresh processing studies or observed casts.",
+  "new_numerical_measurements": "Zero new independent source cohorts, observed casts, castsWithDrop, zero-event histograms or verified output rank IDs. Reconfirmed source calculations in the original XLSX formulas without new evidence admission.",
   "numerical_fields_improved": [
-    "Original Xenastro workbook Statistics summary provenance/filters and four ore/gem/epic-unit aggregate crosschecks; zero new original cohort units, observed casts, castsWithDrop or histograms."
+    "Direct original-XLSX formula provenance, inclusive threshold semantics, output-unit-vs-input denominator for misleading Chance column, 4 cached input and gem totals crosschecks; historical data already archived, no novel measured numeric field."
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-19T0334-prismatic-selected-batch-and-rank-gap.jsonl",
@@ -69,11 +65,14 @@
     "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
     "https://www.reddit.com/r/woweconomy/comments/10vz6jh/prospecting_calculator_not_for_squids/",
     "https://docs.google.com/spreadsheets/d/1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q/edit",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/reviews/2026-11-02-dragonflight-jc-workbook-context.md"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/reviews/2026-11-02-dragonflight-jc-workbook-context.md",
+    "https://drive.google.com/file/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/view",
+    "https://www.wowhead.com/spell=374627/dragon-isles-prospecting",
+    "https://www.wowhead.com/item=194545/prismatic-ore"
   ],
-  "verified_parent_sha": "cc3809c91a1ede9fd9694aba8eef204f9dffca83",
+  "verified_parent_sha": "6413e328a6428207ce8a4d480b4f7bfea8329b1a",
   "verified_commit_sha": "e9c4c31fd05d3dfa4f4e1adf5dd3d62e530ae1de",
-  "commit_sha_scope": "verified_parent_sha is the fetched target branch head before this status-only write; verified_commit_sha names the last earlier reviewed commit because a file cannot contain its own SHA. Current commit verified by post-write GitHub commit/path and file read-back.",
+  "commit_sha_scope": "verified_parent_sha is the fetched live branch HEAD before this status-only commit. verified_commit_sha refers to previously verified status commit because a commit cannot embed its own hash; this write's returned SHA must be checked directly against GitHub history.",
   "blockers": [
     "Master documented Bugy held archive's four Neltharite/Ysemerald swapped outputFamilyAnchorID values and held affected rows. The builder/importer remediation decision and an exact-SHA build-review fixture are still outstanding. Do not modify the source archive or infer production valuation impact.",
     "No independent exact-input R1 Draconium 189143 numeric per-cast study; Bugy's nominal ore total and 5-ore equivalent cannot be used as observed cast denominator.",
@@ -83,7 +82,8 @@
     "Master review requested: 28 source-only Bugy Draconium output rows contain the identical legacy fieldConfidence 0/0/0/45 placeholders, which cannot be admitted as observed probabilities, positive-stack bounds or true confidence; check every future legacy archive adapter with exact-source-SHA review. This is distinct from the already held four Neltharite/Ysemerald swapped anchor IDs. Current source archive is outside v3 recursive evidence input; no demonstrated generated-ItemDB effect.",
     "Original author Xenastro explicitly states a two-stage workflow: prospect ore with a Resourcefulness tool, then prospect Prismatic and Crumbled Stones with an Inspiration tool; 'data is based on this methodology' (https://www.reddit.com/r/woweconomy/comments/10vz6jh/prospecting_calculator_not_for_squids/). Do not assume all workbook gem totals belong to the named ore input until Prospecting Log row/worksheet accounting verifies isolation; second-stage inputs and denominator may be distinct. No new casts, per-output hit events, or histograms established.",
     "Original Xenastro 66-row log is not an event ledger. The publicly accessible worksheet does not partition post-ore Prismatic/Crumbled Stone reprospect outputs from ore outputs; its 33 blank refund cells are unknown, and 33 reported refund totals cannot yield actual completed casts. Master must decide historic mixed-stage admission/hold before any estimate or importer change.",
-    "Four Xenastro Statistics page pooled charts are FILTERED DERIVATIVE summaries (28 of 66 raw input rows), and are not separately admissible cohorts. Original Excel formula structure was not inspected, though inclusive thresholds reconstruct published sums. Maintain one identity for each original Prospecting Log row and continue holding mixed ore/secondary-stone attribution."
+    "Four Xenastro Statistics page pooled charts are FILTERED DERIVATIVE summaries (28 of 66 raw input rows), and are not separately admissible cohorts. Original Excel formula structure was not inspected, though inclusive thresholds reconstruct published sums. Maintain one identity for each original Prospecting Log row and continue holding mixed ore/secondary-stone attribution.",
+    "Native workbook 'Chance' is quantities/nominal ore (Prospecting C6/F6/I6/L6), NOT measured per-cast P(hit); 5-ore equivalents in R9 etc do not prove actual operation counts amid refunds and stage-two re-prospecting. Master must verify build-time admission does not map these to observed rates."
   ],
   "exhausted_sources": [
     {
@@ -818,8 +818,8 @@
       ]
     }
   ],
-  "next_concrete_step": "Ask/locate original workbook stage-1 ore vs stage-2 Prismatic/Crumbled Stone transaction output attribution and inspect actual XLSX formulas if available; confirm only source Prospecting Log rows are counted, not overlapping Statistics-filtered pools. Continue T0020 rank-1 Draconium (189143) completed-cast zeros and rank-specific Bubble Poppy/Saxifrage milling. All new data and admission decisions through Master review.",
-  "validation": "2026-11-20 primary connected Drive workbook text re-read: original 66-row Prospecting Log (four groups), exact 28-row inclusive-threshold subgroup matches all four raw ore/gem/epic Statistics totals (12 comparisons); strict > disagreed. All 66 row-wise source green/blue/epic/total/Q3 arithmetic checks consistent; no raw XLSX formula audit, no build/ItemDB/production validation.",
+  "next_concrete_step": "Request Master fixture guarding interpretation of Xenastro XLSX 'Chance' as source output units per nominal ore (not P(cast with drop)), plus verify source stages 1 ore/2 Prismatic and Crumbled-Stone outputs via original raw event log. After that, pursue R1 Draconium 189143 and rank-specific Bubble Poppy 191467/Saxifrage 191465 actual completed-cast zero-inclusive logs. No source duplicated or runtime modified.",
+  "validation": "Opened actual 70,052-byte XLSX with artifact_tool and inspected native OOXML formulas/cached values using stdlib zip/XML. 4 exact source SUMIFS filter formulas checked; 4 green and 4 epic unit numerators, 4 cached ore totals, 4 grade summaries, and explicit output-units/ore formulas verified against source; NO cast-level event or refunded-input denominator obtained. Public Wowhead/Reddit candidate leads matched pre-existing Bugy, superbondez, neoslayyer, Aary, Zuhla/Hotfor/TheChisel, not newly independent. No build or production validation.",
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
