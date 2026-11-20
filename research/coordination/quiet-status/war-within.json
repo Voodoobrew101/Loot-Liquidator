@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-20T05:21:10.959Z",
-  "status": "10 NEW source-backed item-template no-disenchant identities for Algari Competitor's crafted TWW PvP gear (217125, 217126, 217127, 217128, 217132, 217133, 217135, 217136, 217137, 217149); catalog flag only, actual live client eligibility unverified. Zero new completed processing cohorts, hits, zeros, histograms, or measured yields.",
+  "updated_at": "2026-11-20T06:26:24.379Z",
+  "status": "Original-source backlog triage completed against branch instructions, original archive, indexed v3 evidence and held studies. No independently new completed TWW processing experiment or verified output identity discovered; no new evidence file created.",
   "task_ids": [
     "T0048",
     "T0040",
@@ -10,147 +10,202 @@
     "T0007",
     "T0010",
     "T0011",
-    "T0012"
+    "T0012",
+    "T0032"
   ],
   "exact_gaps_targeted": [
-    "T0048/T0040: War Within gear eligibility metadata by exact itemID versus live-result and per-cast disenchant evidence",
-    "T0009/T0008/T0007: Bismuth, Ironclaw and Aqirite input-rank/skill/unlock-specific posthotfix casts, output item IDs and histograms still unverified",
-    "T0010/T0011/T0012: Khaz Algar Mycobloom milling output rank, exact completed operations, zero outcomes, histograms and Resourcefulness/refund basis still unverified"
+    "T0048 gear DE 232446/229150/237126/233262: character skill, item bonus/build and original item/output-rank 0..N histogram provenance",
+    "T0009/T0008/T0007: 210930..210938 ore ranks with independently verified completed operations, per-material hits/zeros, output ranks, hotfix epoch, spec and refunded input basis",
+    "T0010/T0011/T0012: Mycobloom 210796/210797/210798 -> rank-specific Nacreous Pigment 222618/222619 per-10-herb actual completed cast/hit/zero histograms and skill/context"
   ],
-  "newly_verified_fields": [
-    "itemID 217125 (Algari Competitor's Cloth Cloak): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://www.wowdb.com/items/217125-algari-competitors-cloth-cloak",
-    "itemID 217126 (Algari Competitor's Leather Boots): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://www.wowdb.com/items/217126-algari-competitors-leather-boots",
-    "itemID 217127 (Algari Competitor's Leather Chestpiece): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://www.wowdb.com/items/217127-algari-competitors-leather-chestpiece",
-    "itemID 217128 (Algari Competitor's Leather Mask): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://www.wowdb.com/items/217128-algari-competitors-leather-mask",
-    "itemID 217132 (Algari Competitor's Leather Gloves): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://ptr.wowdb.com/items/217132-algari-competitors-leather-gloves",
-    "itemID 217133 (Algari Competitor's Leather Wristwraps): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://ptr.wowdb.com/items/217133-algari-competitors-leather-wristwraps",
-    "itemID 217135 (Algari Competitor's Chain Chainmail): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://ptr.wowdb.com/items/217135-algari-competitors-chain-chainmail",
-    "itemID 217136 (Algari Competitor's Chain Cowl): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://ptr.wowdb.com/items/217136-algari-competitors-chain-cowl",
-    "itemID 217137 (Algari Competitor's Chain Epaulets): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://ptr.wowdb.com/items/217137-algari-competitors-chain-epaulets",
-    "itemID 217149 (Algari Competitor's Plate Waistguard): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://www.wowdb.com/items/217149-algari-competitors-plate-waistguard"
+  "source_branch_head_reviewed": "35110e0635ddb5209a21ed9c524f2e768535275d",
+  "source_policy": "2026-11-19 owner update; no routine PRs or empty evidence files",
+  "study_backlog_triage": [
+    {
+      "status": "admitted",
+      "scope": "research-only; no production baseline",
+      "original_cohort": "2024-09-03 Aqirite 1,040 completed clicks; 5,200 initial ore, saved ore reprocessed",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1f83cnd",
+      "existing_ids": "war-within-20261030-101..106",
+      "exact_inputs": "Aqirite, rank/itemID unknown",
+      "outputs": "Radiant Ruby 210; Extravagant Emerald 199; Ostentatious Onyx 174; Stunning Sapphire 166; Glittering Glass 165; Handful of Pebbles 523 (rank IDs unresolved)",
+      "reason": "Original six output totals and operation count preserved; no per-output hits/0..N, skill/specialization/build or refunded input totals. Historical pre-October-2024 hotfix; no rank-specific current chance."
+    },
+    {
+      "status": "reviewable",
+      "original_cohort": "2024-10-14 11,000 R1 Aqirite and 10,000 R2 Aqirite reports",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1g350pq",
+      "existing_ids": "war-within-20261030-201..214; later 2026-11-02 replacements",
+      "exact_inputs": "210933 R1; 210934 R2 (verify independent row attribution)",
+      "outputs": "Gem/byproduct per-1,000-ore reported means; no exact independent output hit counts",
+      "reason": "Original says saved ore NOT re-prospected; nominal 5-ore equivalents 2,200/2,000 require cast interpretation QA. Per-output hit/zero histograms and actual output quality IDs not in source. Pre-hotfix and source averages do not establish measured P(hit)."
+    },
+    {
+      "status": "reviewable",
+      "original_cohort": "PeaEsk Wowhead Algari Prospecting rank-2 ore comments",
+      "source": "https://www.wowhead.com/spell=434018/algari-prospecting",
+      "existing_ids": "war-within-20261031-619201..619213",
+      "exact_inputs": "210937 Ironclaw R2; 210934 Aqirite R2; Bismuth R2 210931 where mapped",
+      "outputs": "Exact gem IDs and total units in source rows; no reliable completed-cast count",
+      "reason": "Reported 100 rank-2 ore inputs per trial rather than author-confirmed operations; skill, knowledge, refunds, patch, hit and zero counts unknown; do not convert total units to P(hit)."
+    },
+    {
+      "status": "admitted",
+      "scope": "research-only, limited historical applicability",
+      "original_cohort": "Aug-2024 six enumerated uncommon-gear disenchants",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1f3qf96",
+      "existing_ids": "war-within-20261101-82001..82003",
+      "exact_inputs": "6 uncommon TWW gear, armor/weapon/IDs unknown",
+      "outputs": "219946 Storm Dust R1 3 hits/9 units; 219947 R2 2 hits/6 units; 219948 R3 1 hit/3 units",
+      "reason": "Original six per-cast outcomes support per-material zeros/histograms; separate 100- and 535-green commenters in same thread are NOT the same cohort. Skill/spec/patch and gear-item identity remain missing."
+    },
+    {
+      "status": "admitted",
+      "scope": "research-only, explicit negative outcome",
+      "original_cohort": "2024-09-21 Carynara 10 green disenchants",
+      "source": "https://eu.forums.blizzard.com/en/wow/t/somethings-not-right-with-disenchanting-talents/538682",
+      "existing_ids": "war-within-20261114-1733-001 replaces war-within-20261102-1620-012",
+      "exact_inputs": "10 unspecified green gear, armor/weapon unknown; 30 Designated Disenchanter + 30 Uncommon Utilitarian",
+      "outputs": "219948 Storm Dust R3: zero units and zero hits/10 casts; histogram {0:10}",
+      "reason": "Explicit author zero is independently supported for this output, not a claim of zero-output operations; positive R1/R2 stack histograms unknown."
+    },
+    {
+      "status": "admitted",
+      "scope": "research-only, explicit negative outcome",
+      "original_cohort": "Raven11 20 rank-1 Ironclaw prospects",
+      "source": "https://www.wowhead.com/item=212495/radiant-ruby",
+      "existing_ids": "war-within-20261114-1733-002 replaces war-within-20261101-021719",
+      "exact_inputs": "210936 Ironclaw R1; 20 completed 5-ore casts",
+      "outputs": "Extravagant Emerald family 212505: explicitly no emerald, 0 hits/20; output quality rank null",
+      "reason": "Do not add this as 20 independent casts beyond the existing study; cannot infer any other material's zeros."
+    },
+    {
+      "status": "reviewable",
+      "original_cohort": "2026-11-01 cumulative Wowhead Boreal Rifle snapshot",
+      "source": "https://www.wowhead.com/item=232446",
+      "existing_ids": "war-within-20261101-120017..120021 replaces earlier 20261101 hit-only rows",
+      "exact_inputs": "232446 Boreal Rifle, 48 item-side disenchants",
+      "outputs": "219946: 27 hits/52 units; 219947: 9/19; 219948: 10/24; 219949: 1/1; 219950: 1/1",
+      "reason": "Positive stack histograms exist in archived research file; require independent original page HTML, version/bonus, source-cohort overlap and actual character skill before build-time admission. Five outcome rows share ONE 48-operation cohort."
+    },
+    {
+      "status": "held",
+      "original_cohort": "2026-11-18 PTR Looter Confessor's Unshakable Faulds",
+      "source": "https://www.wowhead.com/ptr/item=229330/confessors-unshakable-faulds",
+      "existing_ids": "war-within-20261118-0224-001..003",
+      "exact_inputs": "229330; 90 item-side disenchants",
+      "outputs": "Refulgent Crystal names: 52,29,8 occurrence rows; exact output item IDs/qualities unknown",
+      "reason": "Three cumulative rows are NOT independent cohorts; PTR-only, output ranks unresolved, totals/histograms/skill/build absent. No current Retail estimator admission."
+    },
+    {
+      "status": "held",
+      "original_cohort": "2026-11-18 PTR Looter Stolen Stormwind Helmet",
+      "source": "https://www.wowhead.com/ptr/item=224758/stolen-stormwind-helmet",
+      "existing_ids": "war-within-20261118-0224-004..",
+      "exact_inputs": "224758; 25 item-side disenchants",
+      "outputs": "Storm Dust rank ID unknown; Large Brilliant Shard 14344 among mixed TWW/legacy results",
+      "reason": "One mixed-expansion PTR cohort, repeated-name/quality ambiguity; 1-3 positive stack range is NOT zero-inclusive histogram, no source build/skill."
+    },
+    {
+      "status": "held",
+      "original_cohort": "Tomasz December-2024 original prospecting Google Sheet (unpublished)",
+      "source": "https://eu.forums.blizzard.com/en/wow/t/it-is-impossible-to-earn-gold-via-prospecting-now/554920",
+      "existing_ids": "war-within-20261114-2127-001 searched lead only",
+      "exact_inputs": "Bismuth 210930/210931/210932; Aqirite 210933/210934/210935; Ironclaw 210936/210937/210938",
+      "outputs": null,
+      "reason": "Author says per-rank worksheets exist but no public sheet, operation rows, exact material IDs/quantities, zero/hit histogram or character context. Do not invent missing sheet data."
+    },
+    {
+      "status": "held",
+      "original_cohort": "'Prospecting Stocks Gone Up' unpublished Aqirite/Bismuth/Ironclaw video worksheet",
+      "source": "https://www.youtube.com/watch?v=g0j3PLV34Ko",
+      "existing_ids": "war-within-20261116-0327-002 searched lead only",
+      "exact_inputs": "50,000 R1 Aqirite ore mentioned; 10,000 Bismuth and 10,000 Ironclaw ore, ranks unverified",
+      "outputs": null,
+      "reason": "Source numbers are ore inputs not completed cast counts; spreadsheet not accessible, no output totals/hits/zero logs; independent cohort identity and publication build unverified."
+    },
+    {
+      "status": "held",
+      "original_cohort": "June-2025 pooled Orbinid/Blessing Blossom pigment milling",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1l3uqnw",
+      "existing_ids": "war-within-20261117-102201..102202 (same studyKey)",
+      "exact_inputs": "1,500 Orbinid plus 1,500 Blessing Blossom purchased; ranks and actual successful casts unknown",
+      "outputs": "2,268–2,317 pigment-yield interval NOT attributed to either herb",
+      "reason": "Two evidence lines are ONE joint firsthand account; interval is NOT output histogram or guaranteed units per herb; 33% Resourcefulness described but refunds/reuse unreported."
+    },
+    {
+      "status": "reviewable",
+      "original_cohort": "September-2024 Mycobloom milling rank/skill comparison",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1fdmzwy",
+      "existing_ids": "research/evidence/observations/2026-10-29-0120-warwithin-q27-batch025-mycobloom-2024-original-rank-source-only.md; v3 indexed rows",
+      "exact_inputs": "210796 Mycobloom R1 vs 210797 Mycobloom R2",
+      "outputs": "222618 Nacreous Pigment R1 and 222619 R2 are both source-described depending on character conditions",
+      "reason": "Source's 20,000+ herbs pooled across unpartitioned rank/skill contexts, 1.15/1.35 pigment-per-herb means and 100-cast illustration cannot establish actual per-rank completed operations/hits/zeros; missing skill/spec and refunds."
+    },
+    {
+      "status": "admitted",
+      "scope": "reference-only refund evidence; NOT measured processing yield",
+      "original_cohort": "Rank-3 Gleaming Shatter 1,700 casts and 185 saved shards",
+      "source": "https://www.wowhead.com/item=232492/gleaming-shatter",
+      "existing_ids": "war-within-20261120-0338-001",
+      "exact_inputs": "219951 R3 Gleaming Shard; 1 input per craft; 34% displayed Resourcefulness",
+      "outputs": null,
+      "reason": "Refund count 185 is an input-savings observation, never dust yield or castsWithDrop. Material quality split, output quantities, 0..N histograms unknown."
+    },
+    {
+      "status": "duplicate",
+      "original_cohort": "October-2028 source-only Aqirite 1,040-click archive and same-source v3 rows",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1f83cnd",
+      "existing_ids": "research/evidence/observations/2026-10-28-0418-warwithin-batch004-resourcefulness-source-only.json vs war-within-20261030-101..106",
+      "exact_inputs": "Aqirite rank unspecified",
+      "outputs": "six already indexed totals",
+      "reason": "Archive recites the SAME 2024-09-03 original author cohort; not a second independent 1,040 casts. Keep provenance and no new drop evidence."
+    },
+    {
+      "status": "duplicate",
+      "original_cohort": "Pre-replacement hit-only and histogram-enriched Boreal Rifle/Lamplighter rows",
+      "source": "https://www.wowhead.com/item=232446",
+      "existing_ids": "2026-11-01T1216-wowhead-disenchant-stack-histograms.jsonl explicitly replaces early 2026-11-01 rows",
+      "exact_inputs": "232446 48 casts and 229150 37 casts",
+      "outputs": "219946/219947/219948/219949/219950 and linked 229150 outcomes",
+      "reason": "Same cumulative Looter snapshots, not added sample; preserve replaces lineage and avoid any denominator inflation."
+    }
   ],
+  "triage_counts": {
+    "admitted": 5,
+    "reviewable": 4,
+    "held": 5,
+    "duplicate": 2
+  },
+  "newly_verified_fields": [],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
   "new_reference_only_numeric_records": 0,
-  "new_token_identity_records": 0,
-  "new_search_only_records": 0,
-  "evidence_file": "research/v3/evidence/war-within/2026-11-20T0521-algari-pvp-item-metadata.jsonl",
-  "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-20T0521-algari-pvp-item-metadata.jsonl"
-  ],
-  "evidence_source_links": [
-    "https://www.wowdb.com/items/217125-algari-competitors-cloth-cloak",
-    "https://www.wowdb.com/items/217126-algari-competitors-leather-boots",
-    "https://www.wowdb.com/items/217127-algari-competitors-leather-chestpiece",
-    "https://www.wowdb.com/items/217128-algari-competitors-leather-mask",
-    "https://ptr.wowdb.com/items/217132-algari-competitors-leather-gloves",
-    "https://ptr.wowdb.com/items/217133-algari-competitors-leather-wristwraps",
-    "https://ptr.wowdb.com/items/217135-algari-competitors-chain-chainmail",
-    "https://ptr.wowdb.com/items/217136-algari-competitors-chain-cowl",
-    "https://ptr.wowdb.com/items/217137-algari-competitors-chain-epaulets",
-    "https://www.wowdb.com/items/217149-algari-competitors-plate-waistguard"
-  ],
+  "new_no_disenchant_records": 0,
+  "new_condition_records": 0,
+  "numeric_fields_advanced": [],
+  "evidence_file": null,
+  "evidence_files": [],
+  "evidence_source_links": [],
+  "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-20T0521-algari-pvp-item-metadata.jsonl",
   "verified_commit_sha": null,
-  "verification": "Catalog item-side 'Cannot be disenchanted' text verified; these are NOT verified current Retail eligibility tests or statistical baselines. Commit SHA cannot be included in the very commit containing this status file. After writing, verify both paths and branch HEAD against commit hash.",
+  "verification": "This status-only update requires its own commit; self-containing commit SHA cannot appear inside that commit's content. Writer must verify the returned SHA and refetch this exact status file after the write.",
   "blockers": [
-    "WoWDB catalog/PTR flags may not match actual current Retail disenchant eligibility; Master should reconcile version and live item-test state before excluding these items.",
-    "No original TWW rank-and-skill-qualified independent complete input/output processing ledger for posthotfix disenchant, Bismuth/Ironclaw/Aqirite prospecting or Khaz Algar milling; sample denominator, per-material castsWithDrop, zero outcome histograms and Resourcefulness/refund data remain unknown."
+    "Public repository git tree (3,669 paths, at reviewed branch HEAD) has audit CSV files but no accessible original XLS/XLSX/ODS spreadsheets. Tomasz and the YouTube author's unpublished Google Sheets are therefore still held; do not reinterpret derived audit CSV as original operation exports.",
+    "On this research branch tools/research_build_review.py and tools/prepare_build_research.py returned GitHub 404; build-time admission/generation remains implementation review work, not deployed or worker-owned.",
+    "No new posthotfix independently source-attributed cast ledger that captures exact rank/skill/quality IDs plus per-output hits/zeros and Resourcefulness refunds. Original old cohorts have these missing fields and must not be filled with zeros.",
+    "Cumulative PTR Looter display rows contain repeated material names with linked rank IDs unavailable; no per-row independent study and no safe current-Retail rank-specific mapping."
   ],
   "exhausted_sources": [
-    "2026-11-19T01:24:57.773Z: Current worker queue and old source inventory cross-checked. Targeted name-based research for Ironclaw Ore, Aqirite, Bismuth, Khaz Algar herbs and disenchant cast histograms returned no original independently new posthotfix operation/hit logs; PeaEsk on Algari Prospecting and DobberSH on Null Stone are already indexed. The original 1g9l8t8 cloth cuffs cohort is already indexed and only missing per-cast input count was completed; no repeated cast sample.",
-    "2026-11-19T02:22:56.711Z: Refreshed current v3 queue/mechanics, checked original Ironclaw/Aqirite/Bismuth ore and Mycobloom milling sources against already indexed Raven11, PeaEsk, Reikah, LotzBoi and source-hit PTR Looter cohorts. 2026 indexed source IDs were already present; no independently verifiable new complete posthotfix per-output cast histograms. New item 237698 Looter occurrences 77/45/22 of 145 have unexposed rank IDs, not used as rank-specific DE observations. Pivot to distinctly uncovered Druid/Warlock Tier 34 237602 curio exchange edges; original Warcraft Wiki item pages state one curio cost, legacyofwarcraft/Blizzard items verify ten IDs. Firecrawl raw HTML request unavailable due credit exhaustion, not used.",
-    "2026-11-19T03:23:11.957Z: Name-based numeric searches across Reddit r/woweconomy, Blizzard forums, Wowhead and Warcraft Wiki for Ironclaw/Bismuth/Aqirite prospecting, Mycobloom milling, DE cast histograms returned previously indexed Reikah/PeaEsk/1fdmzwy/LotzBoi or gathering-only samples. New independent estimator-qualified numerical cohort not found. Distinct new Tier 34 Paladin/Mage 1:1 curio redemption item pages/Blizzard API-derived IDs documented, do not re-add these 10.",
-    "2026-11-19T04:26:17.416Z: Followed current T0009/T0008/T0010/T0011/T0040/T0048 open-queue gaps. Novel by-name 2025-26 Reddit, Blizzard, WoWhead and Warcraft Wiki searches found previous 1g350pq/1fdmzwy/1jnvht8, 2025 profit discussions without original completed operation exports, and 237608/237707 current Midnight 'Refulgent Crystal' Looter rows conflicting with WoWDB Tier34 no-DE flags; no valid independent TWW current-build rank/hit/zero histogram. Moved to T0027 new Priest/Warrior curio direct fixed-cost vendor options; do not reuse these 10 identities next run.",
-    "2026-11-19T05:28:24.676Z: New by-name, original Wowhead item-side searches focused 11 distinct Hunter/Shaman Tier 34 epic mail pieces (not repeating the previously indexed 65-result Curio token). Indexed Looter counts found for IDs 237636,237638,237635,237645,237647,237646,237637,237634,237639,237648,237643; accessible output links collapse all three Refulgent Crystal ranks into identical labels. Previous source-name/ore/herb numeric search paths already exhausted; do not re-add existing full Tier 34 curio exchange options as novel identities, and do not re-snapshot these 11 rows without actual rank/skill or new independent cohort.",
-    "2026-11-19T06:27:10.702Z: Tried distinct by-name posthotfix TWW Bismuth/Ironclaw/Aqirite prospecting, Khaz Algar Mycobloom milling and gear DE original 0..N observations on Reddit r/woweconomy, Wowhead, Method, Blizzard forums and Warcraft Wiki; only previously indexed Reikah/PeaEsk/Raven11/LotzBoi/1fhkjm9/1f83cnd/1g350pq cohorts or unmeasured economic anecdotes were found. No new independent eligible numeric result. Pivoted to ten distinctly uncovered DK/DH item-side fixed-cost T0027 vendor routes; do not redo these routes next run.",
-    "2026-11-19T07:20Z: Targeted distinct per-cast and original sample queries for Ironclaw/Bismuth/Aqirite, Mycobloom and TWW disenchants across WoWhead, Reddit, Blizzard, Method and wiki returned pre-indexed PeaEsk 100-rank2 summaries, poisonousfrog/blupache 1700 Shatter (not gear DE), guides and craft-unit anecdotes without post-hotfix original completed-cast/0-inclusive histograms. No repeated numeric records. A distinct direct-cost vendor research lane sourced 15 Evoker/Monk/Rogue Tier34 base-piece 1:1 exchanges and independently mapped Blizzard API IDs; these alternatives are not new item identity discoveries nor estimator-eligible results.",
-    "2026-11-19T08:28:26.888Z: New original by-name checks (Reddit WoWEconomy Ironclaw/Bismuth/Storm Dust/Mycobloom, Blizzard forums Aqirite, Warcraft Wiki TWW item pages) surfaced already indexed March-2025 600 R1 Ironclaw and economic discussions, not an independently new operation/hit/zero/histogram series. Do not re-scan same leads. Pivoted to direct item-specific fixed vendor routes for Hunter/Shaman; cost one Hungering Void Curio verified by the wiki with Blizzard-data-backed item IDs.",
-    "2026-11-19T09:25:00.651Z: Refreshed TWW worker README, evidence format, mechanics, queue, and 339-item existing evidence inventory; post-Oct-25 rank/skill-qualified original operation/hit/zero histograms still unavailable from prior researched Reikah/PeaEsk/Raven11/LotzBoi and Wowhead source paths. Did not re-record already indexed ore/herb studies, Tier34 237602 redemptions, or Tier33 Monk 228819 redemptions (229298/229296/229301/229299/229297). Instead checked 10 distinct original Warcraft Wiki tier33 DK/DH gear item pages which directly specify one 228819 at Kari; no processing yields asserted.",
-    "2026-11-19T10:21:33.725Z: Targeted by-name Bismuth/Ironclaw/Aqirite prospecting, Mycobloom milling and Boreal Rifle DE 2025 histogram search failed to reveal independently usable completed operation/hit/zero logs; general numeric paths Reikah/PeaEsk/LotzBoi already exhausted in prior runs. Do not count source-side economic discussions as processing studies.",
-    "2026-11-19T11:27:57.579Z: Name-based original result searches for TWW Bismuth/Ironclaw/Aqirite prospecting, Mycobloom milling and DE histograms on Reddit r/woweconomy, Wowhead, Blizzard/forums and Warcraft Wiki returned previously indexed old historical cohorts and economic posts without novel operation/hit/zero logs; do not re-import. Fallback T0027 sourced direct Druid/Warlock tier-33 fixed vendor choices from wiki item pages and Kari Bridgeblaster vendor table.",
-    "2026-11-19T12:25Z: New targeted by-name searches for post-hotfix Ironclaw Ore 2025 casts, Bismuth/Aqirite rank histograms, Mycobloom 2025 mill logs, Boreal Rifle disenchant 48-cast output histograms yielded no new original rank-and-skill-complete operation logs. Previously indexed Adreymar 50,000-ore pooled glass rate and Blizzard 2024 Aqirite stack bug were explicitly excluded as new processing evidence. New Tier33 Hunter/Shaman direct redemption edges verified from Warcraft Wiki item/set pages; next run should avoid resampling these 10.",
-    "2026-11-19T13Z: New by-name original-source checks for Bismuth/Aqirite/Khaz Algar mills yielded previously indexed studies, economic-only reports or insufficiently attributable cohorts; excluded from measured baselines. Sourced unused Tier 33 Evoker/Rogue item-specific cost edges instead; do not resample these ten.",
-    "2026-11-19T14:23:01.955Z: New 2025-by-name Ironclaw Ore/Bismuth/Aqirite/Mycobloom and TWW Storm Dust cast-log searches on Reddit r/woweconomy and Blizzard forums recovered already indexed Reikah 1968257, 1fmrp4z/1f9qado/1g9l8t8 or economic discussion without novel per-output 0-inclusive histograms. Did not duplicate; pivoted to previously unrecorded Tier33 Priest/Warrior one-curio direct cost routes verified against Warcraft Wiki set/vendor and item pages with Wowhead/Blizzard item IDs. Avoid redoing these ten.",
-    "2026-11-19T15:23:17.178Z: New name-based post-2024-10-25 Bismuth, Ironclaw, Aqirite, Mycobloom, Boreal Rifle/Storm Dust searches on Reddit r/woweconomy, Wowhead, and public guide/wiki sites uncovered only previously indexed March 2025 r/woweconomy 1jnvht8 (600 R1 Ironclaw with no per-output counts), r/woweconomy 1k78h4v (unmeasured Aqirite/Ironclaw economic comparisons), late-2025 economic anecdotes without original operation logs, and Canadia's paid Jan 2025 profit model with no accessible cast data. Do not repeat or recast these as independent measured sample cohorts. Ten source-original item-specific Wiki Tier34 Priest/Warrior 1-curio cost pages discovered and cross-checked to Wowhead item IDs.",
-    "2026-11-19T16:22:05.674Z: Distinct new search avenue: 2025 Patch 11.2 K'aresh Om'mit and mining-vendor exchange. Firecrawl original HTML of Wowhead Neryssa guide yields 16 item-ID-exact quality-specific herb exchange rows (239690/691/692 and 240194). Om'mit Wowhead player comment explicitly notes daily changing costs, so source-derived historical quantities require a dynamic-rate warning and are NOT eligible as guaranteed present-day gold conversions. No newly measured prospect/mill/disenchant player cast denominator was found in nonrecycled original searches.",
-    "2026-11-19T17:24:42.829Z: New by-name 2025 Bismuth/Ironclaw/Aqirite prospecting, Mycobloom milling and Khaz Algar DE hit/stack histogram searches spanned Reddit (1jnvht8, 1k78h4v, 1fisfkn, 1g350pq, 1f83cnd), Blizzard EU/US, Wowhead, Method, Warcraft Wiki and WoW-Professions. 2024 rank cohorts and Carynara ten greens were verified ALREADY INDEXED by original cohort ID; no new estimator-grade numeric outputs. Novel Nov 11 2025 Teishoku source describes final Uncommon Utilitarian node raising additional dust but no measured coefficient; keep source only and refer schema issue to Master.",
-    "2026-11-19T18:29:59.272Z: Distinct by-name original studies for Ironclaw/Aqirite/Bismuth posthotfix, Mycobloom mills and 232446/229150 disenchants searched across Wowhead, Method, Reddit r/woweconomy, Blizzard US forums and WoW-Professions; reached previously indexed Sept/Oct 2024 cohorts and qualitative guides, not independent completed casts/zeros/histograms. Newly identified previously unindexed PTR no-DE item IDs 227208,233063,237130,243344,247704; avoid resampling these five. No current live confirmation.",
-    "2026-11-19T19:24:21.291Z: Examined original dated Blizzard hotfix entry, unlike previous pooled result searches. Prior no-DE Delver and Radiant Echoes item identities were already recorded in 2026-10-31 worker evidence, so avoided duplicate source-only records. Posthotfix original new operation datasets remain unavailable. The material new finding is an erroneous 2024-10-16 cut point caused by the later running-article title; source text sits at August 29.",
-    "2026-11-19T20:28:20.361Z: Refreshed README/evidence-format/mechanics/worker/queue; reconfirmed Ironclaw/Aqirite/Bismuth/Mycobloom and 824-green/20k TWW DE original sources already indexed. Searched recent numeric/original source avenues and historical Neryssa K'aresh vendor table; latter already in 2026-10-30T2022/2026-10-31T1216/2026-11-01T0116, NOT novel. Found two otherwise absent explicit Retail Wowhead no-DE identity facts 235575/235624.",
-    "2026-11-19T21:25:11.677Z: Narrow current target by-name search across Reddit/WoWEconomy, profession sources and Wowhead recovered previously indexed Sept/Oct 2024 Ironclaw/Aqirite cohorts, 2025 600-rank1 Ironclaw economic-only report and no novel full TWW milling/DE histograms. Pivoted to distinct 11.2 cosmetic Manaforge Raider weapon item-template no-DE identities; these 11 IDs were absent from prior war-within noDE inventory. Do not resample the 11 IDs.",
-    "2026-11-19T22:23:52.386Z: New distinct 2025-09-11 r/woweconomy 1neicjm milling discussion and March-2025 1jc2ya5 showed generic per-10 herb theoretical yields/skill anecdotes but no original Mycobloom/Luredrop rank/skill-qualified actual 0..N log; no numeric records. Original 2024 PeaEsk and LotzBoi source references already indexed, not reused. Switched to ten NEW exact WoWDB PvP/cosmetic noDisenchant template identities with directly linked original catalog pages; compared identities with indexed recent worker files and search-index snapshots to avoid duplicates.",
-    "2026-11-19T23:32:05.191Z: Prior original ore/herb/gear name-based quantitative sources rechecked against indexed cohorts rather than re-recorded. The distinct by-name LIVE item catalog search produced ten unused 11.2.5 noDisenchant identity pages, no measured data. Stop expanding this appearance-only catalog lane after this batch and seek original current-build operation exports instead.",
-    "2026-11-20T00:30:36.389Z: Novel search lane targeted published addon source exports (ProspectMate records samples privately, no published cohort) and rank-specific pigment skill mechanics, avoiding prior Reikah/PeaEsk/Raven11/LotzBoi numeric studies. Original LotzBoi guide had previously indexed quantity-range reference records, but its 0–252/253–504/505+ rank eligibility bands were absent from v3 worker evidence/conditions. Four family mappings now documented as 12 application rows from ONE source; still no independently new completed-cast logs.",
-    "2026-11-20T01:31:49.126Z: NEW per-name 2025–26 public-source check across Reddit/WoWEconomy, Wowhead item-side Looter, Method profession guides and Blizzard forum by-name index. All outcome-bearing rows intersect previously indexed Reikah/1g350pq/1fisfkn/1fqb34c or existing Looter snapshots; no newly verified per-cast zero-inclusive histogram or character/refund ledger. Cross-check scope recorded in research/v3/evidence/war-within/2026-11-20T0131-targeted-original-yield-source-gaps.jsonl; do not repeat identical leads absent newly published originals.",
-    "2026-11-20T02:22:39.473Z: Distinct NEW public raw-export avenue: by-name GitHub Lua/CSV code+result queries, CurseForge 2026 Forever Stats/GatherValue/ProspectMate/Profession Assistance, Wago, old Reddit spreadsheet proposal and Wowhead lookup. Capability descriptions found, but no publicly shared original TWW rank-qualified complete per-cast dataset. Do not repeat this tool-catalog scan without a posted real data export.",
-    "2026-11-20T03:xxZ: Distinct by-name source checks on 2025/26 TWW Mycobloom/Luredrop/Orbinid/Blossom mills and Bismuth/Ironclaw/Aqirite prospects (Reddit, Blizzard forums, Wowhead, Method) returned only previously indexed cohorts/guide references. NEW, separate direct indexed Gleaming Shatter R3 refund-only 1700/185/34 source recorded; do not resample. Direct HTML lacks author and cohort output ranks.",
-    "This run checked Wowhead/Reddit/Blizzard and confirmed four new WoWDB PvP item flags; no independent cast-level data for IDs 217129/217130/217131/217134. Do not present these flags as confirmed live disenchant exclusions.",
-    "2026-11-20T05:21:10.959Z: Current queue reviewed and existing PeaEsk, Reikah, Raven11, LotzBoi, prior 11.2.5 appearance-only and prior four 217129/217130/217131/217134 TWW flags were not re-added; no independent measured posthotfix per-output completed cast/zero histogram recovered. New distinct WoWDB 11.0.0 crafted PvP item-template eligibility records captured for 10 other item IDs. Do not count catalog template flags as current-game DE tests or numeric yields; avoid repeating these IDs."
+    "Previously indexed 1f83cnd, 1g350pq, PeaEsk/434018, 1fdmzwy and 1f3qf96 already provide historical studies; source duplicates not re-imported.",
+    "Previously checked 2024-12-28 Tomasz unpublished worksheet, 2025 YouTube 50k input description, 2025-06-09 1l3uqnw joint milling sample, and 229330/224758 PTR Looter snapshots yield no new eligible independent data.",
+    "2026-11-20 public searches for independent raw TWW prospect/mill/DE spreadsheets surfaced generic profession explanations, fixed Gleaming Shatter recipes and already indexed refund source, not new original completed-operation logs."
   ],
-  "next_concrete_step": "Master eligibility/version reconcile IDs 217125, 217126, 217127, 217128, 217132, 217133, 217135, 217136, 217137, 217149 using current live item-tool client before production use; resume unique original operation-export search for T0048 gear DE (232446/229150/237126/233262) and T0009/T0008/T0010-12 ranked prospect/milling rather than another broad WoWDB catalog sweep.",
+  "next_concrete_step": "Obtain a raw source-linked 2025+ post-October-hotfix TWW original spreadsheet or addon export with completed operation IDs, exact 210930..210938 ore/210796..210798 herb/item ranks, output item IDs and ranks, skill/spec/build, per-output 0..N histograms, and separate Resourcefulness refunds. If unobtainable, resolve 232446/229150 original Looter linked material IDs/bonus version from archived original HTML before advancing T0048; request missing compiler/schema support via Master, no runtime edits.",
+  "previous_status_updated_at": "2026-11-20T05:21:10.959Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
-  "parent_commit_sha": "ade848958d86beb76ba7b07cab4e08444ce1fc81",
-  "new_no_disenchant_records": 10,
-  "numeric_fields_advanced": [],
-  "evidence_record_ids": [
-    "war-within-20261120-0521-001",
-    "war-within-20261120-0521-002",
-    "war-within-20261120-0521-003",
-    "war-within-20261120-0521-004",
-    "war-within-20261120-0521-005",
-    "war-within-20261120-0521-006",
-    "war-within-20261120-0521-007",
-    "war-within-20261120-0521-008",
-    "war-within-20261120-0521-009",
-    "war-within-20261120-0521-010"
-  ],
-  "new_reference_only_qualitative_records": 0,
-  "new_exchange_records": 0,
-  "newly_verified_fields_or_cohorts": [
-    "itemID 217125 (Algari Competitor's Cloth Cloak): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://www.wowdb.com/items/217125-algari-competitors-cloth-cloak",
-    "itemID 217126 (Algari Competitor's Leather Boots): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://www.wowdb.com/items/217126-algari-competitors-leather-boots",
-    "itemID 217127 (Algari Competitor's Leather Chestpiece): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://www.wowdb.com/items/217127-algari-competitors-leather-chestpiece",
-    "itemID 217128 (Algari Competitor's Leather Mask): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://www.wowdb.com/items/217128-algari-competitors-leather-mask",
-    "itemID 217132 (Algari Competitor's Leather Gloves): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://ptr.wowdb.com/items/217132-algari-competitors-leather-gloves",
-    "itemID 217133 (Algari Competitor's Leather Wristwraps): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://ptr.wowdb.com/items/217133-algari-competitors-leather-wristwraps",
-    "itemID 217135 (Algari Competitor's Chain Chainmail): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://ptr.wowdb.com/items/217135-algari-competitors-chain-chainmail",
-    "itemID 217136 (Algari Competitor's Chain Cowl): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://ptr.wowdb.com/items/217136-algari-competitors-chain-cowl",
-    "itemID 217137 (Algari Competitor's Chain Epaulets): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://ptr.wowdb.com/items/217137-algari-competitors-chain-epaulets",
-    "itemID 217149 (Algari Competitor's Plate Waistguard): WoWDB catalog states no disenchant, patch 11.0.0 build 54210; live in-game behavior untested; https://www.wowdb.com/items/217149-algari-competitors-plate-waistguard"
-  ],
-  "exact_gaps": [
-    "T0048/T0040: War Within gear eligibility metadata by exact itemID versus live-result and per-cast disenchant evidence",
-    "T0009/T0008/T0007: Bismuth, Ironclaw and Aqirite input-rank/skill/unlock-specific posthotfix casts, output item IDs and histograms still unverified",
-    "T0010/T0011/T0012: Khaz Algar Mycobloom milling output rank, exact completed operations, zero outcomes, histograms and Resourcefulness/refund basis still unverified"
-  ],
-  "source_links": [
-    "https://www.wowdb.com/items/217125-algari-competitors-cloth-cloak",
-    "https://www.wowdb.com/items/217126-algari-competitors-leather-boots",
-    "https://www.wowdb.com/items/217127-algari-competitors-leather-chestpiece",
-    "https://www.wowdb.com/items/217128-algari-competitors-leather-mask",
-    "https://ptr.wowdb.com/items/217132-algari-competitors-leather-gloves",
-    "https://ptr.wowdb.com/items/217133-algari-competitors-leather-wristwraps",
-    "https://ptr.wowdb.com/items/217135-algari-competitors-chain-chainmail",
-    "https://ptr.wowdb.com/items/217136-algari-competitors-chain-cowl",
-    "https://ptr.wowdb.com/items/217137-algari-competitors-chain-epaulets",
-    "https://www.wowdb.com/items/217149-algari-competitors-plate-waistguard"
-  ],
-  "commit_sha": null,
-  "base_commit_sha": "ade848958d86beb76ba7b07cab4e08444ce1fc81",
-  "next": "Master eligibility/version reconcile IDs 217125, 217126, 217127, 217128, 217132, 217133, 217135, 217136, 217137, 217149 using current live item-tool client before production use; resume unique original operation-export search for T0048 gear DE (232446/229150/237126/233262) and T0009/T0008/T0010-12 ranked prospect/milling rather than another broad WoWDB catalog sweep.",
-  "evidence_source_urls_verified": [
-    "https://www.wowdb.com/items/217125-algari-competitors-cloth-cloak",
-    "https://www.wowdb.com/items/217126-algari-competitors-leather-boots",
-    "https://www.wowdb.com/items/217127-algari-competitors-leather-chestpiece",
-    "https://www.wowdb.com/items/217128-algari-competitors-leather-mask",
-    "https://ptr.wowdb.com/items/217132-algari-competitors-leather-gloves",
-    "https://ptr.wowdb.com/items/217133-algari-competitors-leather-wristwraps",
-    "https://ptr.wowdb.com/items/217135-algari-competitors-chain-chainmail",
-    "https://ptr.wowdb.com/items/217136-algari-competitors-chain-cowl",
-    "https://ptr.wowdb.com/items/217137-algari-competitors-chain-epaulets",
-    "https://www.wowdb.com/items/217149-algari-competitors-plate-waistguard"
-  ],
-  "new_condition_records": 0
+  "pr_created": false,
+  "notification_requested": false
 }
