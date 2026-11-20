@@ -53,6 +53,8 @@ compiled="$compiled_dir/ItemDBRuntime.lua"
 trap 'rm -rf "$compiled_dir"' EXIT
 "$lua_bin" tools/compile_itemdb.lua "$compiled"
 cmp "$compiled" LootLiquidator/ItemDBRuntime.lua
+"$lua_bin" tests/test_itemdb_memory.lua
+"$lua_bin" tests/test_itemdb_serialization_parity.lua
 test ! -e "$compiled_dir/itemTSM.lua"  # B2: frozen TSM table is no longer built
 test ! -e "$compiled_dir/GameData.lua"  # C3: old estimates live inside ItemDB now
 python3 tests/validate_package.py
