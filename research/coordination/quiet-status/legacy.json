@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-20T10:42:28.586Z",
-  "status": "Independently inspected original ereduns_log.lua Enchantrix SavedVariables contributor: 613 named exact item/material native rows, 538 input gear IDs, 595 variants, 23 material IDs, 813 positive output sightings and 1,729 output material units. Recorded as historical, positive-only data (no full cast denominator or negative-event histogram); current Retail rate/eligibility remains held.",
+  "updated_at": "2026-11-20T11:40:52.811Z",
+  "status": "Source-variant review staged on isolated legacy worker branch during owner integration hold. New item-identity cross-check identifies conflicting Retail displayed item levels, not a new measured disenchant cohort. Previous ereduns historical raw evidence unchanged.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -720,7 +720,7 @@
     "hotfix": null,
     "era": "Historical WoW Classic contributor local source (file includes original 2019-20 price-cache timestamps, not per-event dated/built records); not current Retail validation"
   },
-  "numeric_summary": "New independently contributed named inputs 538, material outputs 23, 613 original positive-only item/material rows, 813 native positive material sightings, 1729 output units; complete casts, zero outcomes and version unknown.",
+  "numeric_summary": "Current run: 0 newly established measured casts, 0 new zero-outcome observations, 0 new histograms, 0 new source-native output totals, 0 new evidence files. Distinct patch 2.4.3 game-data reference for 24995 TBC item-level group is not a measured Retail cohort. Earlier ereduns native 613 rows, 813 positive sightings, 1729 units retained unchanged.",
   "evidence_file": "research/v3/evidence/legacy/2026-11-20T1037-ereduns-original-enchantrix-item-material.jsonl",
   "source_urls": [
     "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/ereduns_log.lua",
@@ -733,7 +733,8 @@
     "24995 source Looter counts remain version/eligibility ambiguous and lack original stack totals and complete negative distribution; WoWDB current 24995 says Cannot be disenchanted.",
     "No independent current Retail Cobalt 36909 or Fel Iron 23424 completed prospect ledger with per-output hits/zeros and refunds.",
     "Enchantrix contributors preserve native material positive events, but not full cast/zero denominators, exact item quality/level, skill, specializations, build or patch. This is historical source-only admission, not live recommendation probability.",
-    "Build-time ItemDB review/admission is owner-controlled implementation, not a legacy worker runtime modification."
+    "Build-time ItemDB review/admission is owner-controlled implementation, not a legacy worker runtime modification.",
+    "Current Retail item 24995 displays differing level/variant data across providers (Wowhead 14/74, WoWDB 31), and WoWDB lists no-DE; only in-game item link with bonus IDs/patch, CanDisenchant/eligibility check, or actual current Retail casts can resolve."
   ],
   "exhausted_sources": [
     {
@@ -775,6 +776,16 @@
       "status": "admitted",
       "scope": "Token 45661 seven class rewards",
       "reason": "Existing prior identity mapping; no duplicate new evidence."
+    },
+    {
+      "status": "reviewable",
+      "scope": "24995 variant/era conflict (2026-11-20 cross-check)",
+      "reason": "TBC iLvl108 and requires Disenchant 275; Retail Wowhead displays iLvl14 and 74 while live WoWDB displays iLvl31 and Cannot be disenchanted; no current-game item/bonus/build eligibility bridge. Patch 2.4.3 75/22/3 is a reference model only."
+    },
+    {
+      "status": "duplicate",
+      "scope": "Reaver Legplates 24979 -> Arcane Dust 22445 x5 first-person outcome",
+      "reason": "Original Allakhazam report is already admitted as legacy-20261101-12004; no repetition."
     }
   ],
   "prior_cohort_pointer": {
@@ -783,6 +794,82 @@
     "previous_evidence": "research/v3/evidence/legacy/2026-11-20T0948-andrew-tiller-native-material-events.jsonl",
     "previous_cohort": "andrew-tiller-original-EnchantedLocal"
   },
-  "next_concrete_step": "Seek 24995 item-specific actual disenchants with each output's stack histogram/zero outcomes and patch/bonus/skill. Then seek firsthand current Retail 36909/23424 prospect logs with refund/cast linkage. Audit a previously unrecorded independent original Enchantrix contributor only for unique positive counters; never reimport pooled or derivative views. Master handles any schema/version-validation requirement.",
-  "previous_verified_evidence_sha": "6f423e4ceb5ca7f6e5f2e5a1df749d7ed7ae5e47"
+  "next_concrete_step": "After owner freeze expires or explicit handoff, refresh implementation/five-agent-completion and reconcile this staged quiet-status review without overwriting other workers. Seek an original per-input Warmaul 24995 Looter export with dated build, exact variant/bonus IDs, full outcome rows and stack histograms; separately require in-game current Retail eligibility. Search independent current Retail completed 36909 and 23424 prospect ledgers (not old nominal-ore studies). Escalate schema/eligibility gate concerns to Master; do not treat historical 2.4.3 model as observed drops.",
+  "previous_verified_evidence_sha": "6f423e4ceb5ca7f6e5f2e5a1df749d7ed7ae5e47",
+  "latest_source_checks": {
+    "checked_at_utc": "2026-11-20T11:40:52.811Z",
+    "Warmaul_Legplates_24995": {
+      "historical_tbc": {
+        "item_level": 108,
+        "item_quality": "Uncommon",
+        "armor_kind": "plate legs",
+        "source": "https://www.wowhead.com/tbc/item=24995/warmaul-legplates",
+        "eligibility": "TBC Classic page lists Disenchantable (275)"
+      },
+      "retail_wowhead": {
+        "source": "https://www.wowhead.com/item=24995/warmaul-legplates",
+        "item_levels_shown": [
+          14,
+          74
+        ],
+        "disenchant_eligibility": "not established by page; item versions/scale ambiguous"
+      },
+      "retail_wowdb": {
+        "source": "https://www.wowdb.com/items/24995-warmaul-legplates",
+        "item_level_shown": 31,
+        "disenchant_eligibility": "Cannot be disenchanted; database statement only, not an in-game attempted cast"
+      },
+      "patch_243_reference": {
+        "source": "https://legacyofwarcraft.com/db/tbc/professions/disenchanting.html",
+        "gear_group": "uncommon armor item level 102-120",
+        "output_ids": {
+          "22445": {
+            "range": [
+              2,
+              5
+            ],
+            "percent_shown": 75
+          },
+          "22446": {
+            "range": [
+              1,
+              2
+            ],
+            "percent_shown": 22
+          },
+          "22449": {
+            "range": [
+              1,
+              1
+            ],
+            "percent_shown": 3
+          }
+        },
+        "semantics": "model/game-data reference only; casts=null, castsWithDrop=null, totalQuantity=null, histogram=null; no measured probability or current Retail implication"
+      },
+      "looter_cumulative_not_verified": {
+        "casts_reported_previously": 2068,
+        "observed_positive_hits_previously": {
+          "22445": 1559,
+          "22446": 417,
+          "22447": 7,
+          "22449": 48
+        },
+        "unassigned_not_zeros": 37,
+        "source": "https://www.wowhead.com/item=24995/warmaul-legplates",
+        "notes": "Static page lacks JS Looter row content; no independent new denominator or stack histogram verified"
+      }
+    },
+    "duplicate_check": {
+      "source": "https://www.wowhead.com/tbc/item=24979/reaver-legplates",
+      "positive_observation": "Reaver Legplates 24979 -> 5 Arcane Dust 22445 reported by Allakhazam",
+      "existing_record": "legacy-20261101-12004",
+      "existing_file": "research/v3/evidence/legacy/2026-11-01T1240-legacy-de-hits-histograms-and-patch-boundaries.jsonl",
+      "classification": "duplicate, no new evidence or cohort"
+    }
+  },
+  "current_run_new_evidence_file": null,
+  "current_run_staged_branch": "research/legacy-20261120-variant-triage",
+  "current_run_base_sha": "44aee4db3ccbcac07135e60427039910ab6aafea",
+  "current_run_owner_hold": "No writes to implementation/five-agent-completion before 2026-11-20T12:00:00Z or explicit owner completion handoff."
 }
