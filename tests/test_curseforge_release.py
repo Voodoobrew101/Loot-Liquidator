@@ -56,7 +56,7 @@ class ReleaseTests(unittest.TestCase):
             self.fixture(root)
             (root / 'dist/LootLiquidator.zip').write_bytes(b'zip-fixture')
             versions = [{'id': 10, 'name': '12.1.0'}, {'id': 20, 'name': '12.1.5'}]
-            with patch.dict(os.environ, {'CURSEFORGE_API_TOKEN': 'test-token'}), patch.object(release, 'request_json', side_effect=[versions, {'id': 123}]) as request:
+            with patch.dict(os.environ, {'CURSEFORGE_API_TOKEN': 'test-token'}, clear=True), patch.object(release, 'request_json', side_effect=[versions, {'id': 123}]) as request:
                 self.assertEqual(release.upload(root), 123)
                 self.assertEqual(request.call_count, 2)
                 path, token, body, content_type = request.call_args.args
@@ -73,7 +73,7 @@ class ReleaseTests(unittest.TestCase):
             self.fixture(root)
             (root / 'dist/LootLiquidator.zip').write_bytes(b'zip-fixture')
             versions = [{'id': 10, 'name': '12.1.0'}, {'id': 20, 'name': '12.1.5'}]
-            with patch.dict(os.environ, {'CURSEFORGE_API_TOKEN': 'test-token'}), patch.object(release, 'request_json', side_effect=[versions, ValueError('timeout')]) as request:
+            with patch.dict(os.environ, {'CURSEFORGE_API_TOKEN': 'test-token'}, clear=True), patch.object(release, 'request_json', side_effect=[versions, ValueError('timeout')]) as request:
                 with self.assertRaises(ValueError):
                     release.upload(root)
                 self.assertEqual(request.call_count, 2)

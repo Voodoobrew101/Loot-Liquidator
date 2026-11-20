@@ -4,7 +4,7 @@ Destination: [Loot Liquidator by Voodoobrew](https://www.curseforge.com/wow/addo
 
 ## One-time credential setup
 
-1. Generate an upload API token in [CurseForge Authors](https://authors.curseforge.com/account/api-tokens) using the account that can upload to project 1760478.
+1. Open **API Tokens** in your [CurseForge Authors account](https://authors.curseforge.com/) and generate an upload API token using the account that can upload to project 1760478.
 2. Open [repository Actions secrets](https://github.com/Voodoobrew101/Loot-Liquidator/settings/secrets/actions) and add a repository secret named `CURSEFORGE_API_TOKEN` with that token. Do not put the token in source files or chat.
 3. Merge the publishing workflow before creating a release tag. The tag must point to a commit containing `.github/workflows/curseforge.yml`.
 
