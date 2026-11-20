@@ -1,14 +1,17 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-20T16:13:17.910Z",
-  "status": "Original 272246 Wowhead HTML independently opened and parsed: five exact named outputs with source item qualityTier and positive stack min/max recovered. Five new reference-only superseding rows; no new independent study, live-build eligibility or zero-inclusive histogram.",
+  "updated_at": "2026-11-20T17:14:34.721Z",
+  "status": "Original July 3 Stormwarning rank-2 ore report deduplicated against two existing Midnight evidence files: 13/13 output rows duplicate the same firsthand source, with conflicting catalog-assigned diamond and glass quality IDs. No new independent casts, hit/zero histogram or admissible yield.",
   "task_ids": [
     "T0049",
     "T0026",
     "T0039",
     "T0005",
     "T0003",
-    "T0045"
+    "T0045",
+    "T0001",
+    "T0002",
+    "T0004"
   ],
   "exact_gaps_targeted": [
     "272246 Miststalker's Wristbands raw current-Retail disenchant eligibility and original Looter 140 operation attribution: exact at-cast ilvl/bonus/build/skill/spec, IDs 243606/243605/243602/243603/243599, zero-inclusive per-output outcomes",
@@ -747,12 +750,74 @@
       },
       "disposition": "reviewable original cumulative Looter data, existing cohort superseded reference-only; not independently new casts and not admitted as live yield",
       "hold_reason": "Same aggregate as November 13. 140 are reported historical item-side entries, not independently time/bonus/skill-partitioned live casts; 139 linked output sightings do not establish zero disenchants. Base tooltip noDE conflict unresolved."
+    },
+    {
+      "category": "duplicate_same_original_stormwarning_2026_07_03_quality_id_conflicts",
+      "source": "https://us.forums.blizzard.com/en/wow/t/sunglass-vial-1-hour-material-test/2323248",
+      "source_published": "2026-07-03",
+      "existing_evidence": [
+        "research/v3/evidence/midnight/2026-10-31T1911-stormwarning-r2-prospecting.jsonl",
+        "research/v3/evidence/midnight/2026-11-03T0614-rank2-ore-prospecting-player-test.jsonl"
+      ],
+      "old_record_ids": "midnight-20261031-191101..191113",
+      "repeated_record_ids": "midnight-20261103-601..613",
+      "exact_source_row_matches": 13,
+      "matched_by": "Original source URL, input ID, normalized output name, reported output quantity, input/output rank; record IDs and studyKeys differ",
+      "input_groups": [
+        {
+          "input_id": 237361,
+          "rank": 2,
+          "source_reported_gathered_ore": 67,
+          "duplicate_output_rows": 5,
+          "completed_casts": null
+        },
+        {
+          "input_id": 237365,
+          "rank": 2,
+          "source_reported_gathered_ore": 66,
+          "duplicate_output_rows": 7,
+          "completed_casts": null
+        },
+        {
+          "input_id": 237363,
+          "rank": 2,
+          "source_reported_gathered_ore": 8,
+          "duplicate_output_rows": 1,
+          "completed_casts": null
+        }
+      ],
+      "conflicting_id_crosswalk": [
+        {
+          "inputs": [
+            237361,
+            237365
+          ],
+          "output": "Eversong Diamond",
+          "source_rank": 2,
+          "oct31_catalog_id": 242712,
+          "nov03_duplicate_id": 242608,
+          "issue": "242608 catalog is rank1; 242712 catalog is rank2, but original post contains no linked output item ID"
+        },
+        {
+          "inputs": [
+            237361,
+            237365
+          ],
+          "output": "Crystalline Glass",
+          "source_rank": 2,
+          "oct31_catalog_id": 242787,
+          "nov03_duplicate_id": null,
+          "issue": "242787 catalog is rank1; rank2 catalog ID is 242786; original report lacks linked output ID"
+        }
+      ],
+      "disposition": "duplicate; retain both originals unchanged; request Master/build-review dedup by original source+input/output identity and source-linked correction of rank IDs before any admission or valuation",
+      "hold_reason": "Same 2026-07-03 original author and output totals are repeated 13/13 with different studyKeys; gathered ore not proven consumed, actual casts/refunds, character assignment, output links, hits/zeros, histograms and build unknown."
     }
   ],
   "newly_verified_fields_or_cohorts": [
-    "Original raw Wowhead script for Miststalker's Wristbands 272246 specifies 140 Looter disenchant entries and five output rows: 243599 rank1 count2 stack2-2 impliedUnits4; 243602 rank1 count24 stack1-1 impliedUnits24; 243603 rank2 count24 stack1-1 impliedUnits24; 243605 rank1 count41 stack1-1 impliedUnits41; 243606 rank2 count48 stack1-1 impliedUnits48.",
-    "Five rows already represented by 2026-11-13 reference evidence; their count values remain unchanged, so not a new cohort. qualityTier read from embedded raw item cache, per-hit stack extrema from source Listview.",
-    "Total 139 positive row counts vs 140 reported source operations; missing one is not evidence of a true zero-output cast. No at-cast gear ilvl, bonus IDs, client build, profession skill/spec, event-level output histogram or actual current disenchant eligibility."
+    "Source-lineage audit identifies exact duplicate 13/13 Stormwarning original-output rows across two Midnight evidence files; no second independent cohort (source July 3, 2026).",
+    "Copper 237361 five output rows; Silver 237365 seven; Tin 237363 one. Reported gathered ore 67, 66, 8 respectively, with actual prospects and refund/leftover basis unknown.",
+    "Conflicting rank-2 Eversong Diamond catalog assignment: prior 242712 versus later duplicated 242608 (catalog rank1); R2 Crystalline Glass earlier catalog 242787 (rank1) versus later null, catalog R2 242786. Original source provides only names/rank, no material itemLinks."
   ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": {
@@ -762,96 +827,31 @@
     "new_midnight_zero_outcome_counts": 0,
     "new_midnight_histograms": 0,
     "new_measured_probabilities": 0,
-    "existing_source_reported_operations": 140,
-    "existing_source_linked_positive_rows_total": 139,
-    "newly_source_verified_output_ranks": [
-      {
-        "itemID": 243599,
-        "rank": 1
-      },
-      {
-        "itemID": 243602,
-        "rank": 1
-      },
-      {
-        "itemID": 243603,
-        "rank": 2
-      },
-      {
-        "itemID": 243605,
-        "rank": 1
-      },
-      {
-        "itemID": 243606,
-        "rank": 2
-      }
-    ],
-    "newly_source_verified_positive_stack_bounds": [
-      {
-        "itemID": 243599,
-        "min": 2,
-        "max": 2
-      },
-      {
-        "itemID": 243602,
-        "min": 1,
-        "max": 1
-      },
-      {
-        "itemID": 243603,
-        "min": 1,
-        "max": 1
-      },
-      {
-        "itemID": 243605,
-        "min": 1,
-        "max": 1
-      },
-      {
-        "itemID": 243606,
-        "min": 1,
-        "max": 1
-      }
-    ],
-    "source_implied_totals_reference_only": [
-      {
-        "itemID": 243599,
-        "units": 4
-      },
-      {
-        "itemID": 243602,
-        "units": 24
-      },
-      {
-        "itemID": 243603,
-        "units": 24
-      },
-      {
-        "itemID": 243605,
-        "units": 41
-      },
-      {
-        "itemID": 243606,
-        "units": 48
-      }
+    "existing_study_duplicate_rows_matched": 13,
+    "existing_original_authors_for_matched_rows": 1,
+    "affected_input_ids": [
+      237361,
+      237365,
+      237363
     ],
     "new_live_eligible_yield_admissions": 0
   },
-  "evidence_files_added_this_run": [
-    "research/v3/evidence/midnight/2026-11-20T1614-272246-looter-rank-stack-readback.jsonl"
-  ],
+  "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://www.wowhead.com/item=272246/miststalkers-wristbands#disenchanting",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-13T0118-live-looter-miststalkers-evercore-outcome-counts.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-20T1614-272246-looter-rank-stack-readback.jsonl"
+    "https://us.forums.blizzard.com/en/wow/t/sunglass-vial-1-hour-material-test/2323248",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-10-31T1911-stormwarning-r2-prospecting.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-03T0614-rank2-ore-prospecting-player-test.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-09T0400-midnight-crystalline-glass-prospect-rank-crosscheck.md",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261114T0810-existing-july-rank2-diamond-firsthand-source-reconciliation.md"
   ],
   "blockers": [
     "272246 raw HTML original recovered (140 reported source Looter events; five output rank/count/fixed-stack lines), but missing actual at-cast itemLink/bonus/effective ilvl, skill/spec/build and true zero-inclusive per-cast event trace; current eligibility conflicts with WowDB base flag. Reference only.",
     "No new zero-inclusive current-build raw disenchant studies for 243599/243600/243602/243603/243605/243606 with gear rank/build/profession skill and specialization.",
     "237362 Umbral Tin source specifies 4000 nominal ore, 39.6% Resourcefulness and seven output totals, not actual completed casts; refund/reprospecting event chronology and per-output hits/histograms remain absent.",
     "236761/236770/236778/236776 Midnight herb 10-input mill original current-build events/quality ranks/refunds remain unverified; earlier 20-herb Shadowlands casts may not be used to fill.",
-    "Firsthand March 12 Resourcefulness-hidden-UI report confirms a capture caveat but has no numerical cast/refund denominator; do not infer effective Resourcefulness=0 from a blank craft-details field."
+    "Firsthand March 12 Resourcefulness-hidden-UI report confirms a capture caveat but has no numerical cast/refund denominator; do not infer effective Resourcefulness=0 from a blank craft-details field.",
+    "One firsthand July 3 Stormwarning source duplicated into 13+13 evidence rows with mismatched studyKeys and rank/ID discrepancies; Master/build-time importer must dedupe/correct originals without overwriting source."
   ],
   "exhausted_sources": [
     "Current Wowhead 272246 item/bonus preview and WoWDB eligibility: no raw Looter events or verified at-cast bonus.",
@@ -869,11 +869,13 @@
     "2026-11-20 original archived Jiyao six input cohorts checked; expansionID8 Shadowlands 20-herb mass mills and rounded pigment averages, not Midnight study (310 operations excluded).",
     "2026-11-20 original Laving corrected file checked; expansionID9 Dragonflight Crumbled Stone 192880 60 operations, not Midnight (excluded).",
     "2026-11-20 OldWolf2 March 12 r/woweconomy original thread verified: qualitative saved ore despite Resourcefulness hidden on Crafting Details, no Midnight prospect operation denominator/refund ledger. Do not repeat unless follow-up includes raw events.",
-    "2026-11-20 direct original 272246 HTML Looter _totalCount 140 and embedded material qualityTier/stack bound recovered; source still lacks event-level bonus/skill/build; no re-search until first-party event export or materially changed page."
+    "2026-11-20 direct original 272246 HTML Looter _totalCount 140 and embedded material qualityTier/stack bound recovered; source still lacks event-level bonus/skill/build; no re-search until first-party event export or materially changed page.",
+    "2026-11-20 original Stormwarning July 3 firsthand R2 ore source fully matched 13/13 to October 31 and November 3 records; no independent second cohort or completed-cast ledger; do not re-search unless original event/itemLinks emerge.",
+    "2026-11-20 Midnight milling field-review CSV 8 rows inspected: 4.5 expected, 3-6 range are explicitly modeled proxies with zero measured casts; cannot promote to empirical baseline."
   ],
-  "next_concrete_step": "Seek a genuine 272246 at-cast itemLink/bonus/ilvl and Disenchant acceptance/rejection plus profession skill/spec and patch, to explain WoWDB noDE vs historic 140 Looter source rows; recover original current-build 237362 Prospect and 236761/236770/236778/236776 Mill cast-by-cast ledgers, separating refunds from actual operations.",
-  "verified_base_commit_sha": "ff514681a98f0f412da4d52e726e7344ae5a5c40",
+  "next_concrete_step": "Master should deduplicate Stormwarning July 3 original author records across mismatched studyKeys and reconcile 242608/242712 Diamond and 242787/242786 Glass rank crosswalk using an actual output itemLink. Then prioritize unrecorded raw 272246 current-client disenchant eligibility/variant and 237362 Tin prospect 0..N event export/refund ledger, followed by 236761/236770/236778/236776 cast-level milling originals.",
+  "verified_base_commit_sha": "5b2d1f0a1ca106a26d94aa930108613708b3119b",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Status and one new source-corroborated reference-only JSONL file are one atomic commit. Self SHA cannot be embedded in its own commit; external read-back establishes SHA."
+  "commit_note": "Status-only commit: 13 same-original rows already recorded, so Nov 19 policy forbids duplicate JSONL or empty evidence. Git commit SHA cannot be included in same commit's content; verify new commit and status by read-back."
 }
