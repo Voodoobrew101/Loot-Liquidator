@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-20T20:17:19.983Z",
-  "status": "research-active; new independent methodological source and original Shatter refund-only claim triaged; no new estimator-eligible TWW numeric yields",
+  "updated_at": "2026-11-20T21:17:26.003Z",
+  "status": "research-active; one newly identified scaled-gear source-identity risk held; no independently verifiable TWW numeric yields",
   "task_ids": [
     "T0048",
     "T0040",
@@ -18,7 +18,7 @@
     "T0010/T0011/T0012 210796/210797/210798: first-person 10-herb mill casts by herb rank, 222618/222619 pigment quality outputs, skill/spec and 0..N distribution",
     "Historical shatter 219950/219951 into 219946/219947/219948: verify independent ~10k-shard original cohort versus comments, denominator/refund basis and distinct method schema"
   ],
-  "source_branch_head_reviewed": "01cc5633c35f74484a117ff21f952417791d2042",
+  "source_branch_head_reviewed": "72bd2a9585428e35a393dd3f3baea4b45dd4bd54",
   "source_policy": "2026-11-19 owner policy: admit genuine original cohorts only; protect null denominators/hit probabilities; no routine research PRs, empty evidence JSONL, snapshots or runtime edits",
   "study_backlog_triage": [
     {
@@ -235,12 +235,21 @@
       "exact_inputs": "Ironclaw Ore rank/item ID unknown; approximate 1000 owned, one pile ~700",
       "outputs": null,
       "reason": "Two nominal successful operations before UI failure are reported, not a verified complete craft session; no raw completed cast ledger, item rank, output counts or refunds. Inputs owned and crafting UI count cannot be converted to measured output denominators."
+    },
+    {
+      "status": "held",
+      "original_cohort": "2026-08-02 player report of scaled gear disenchanted into wrong-expansion materials; item identities undisclosed",
+      "source": "https://us.forums.blizzard.com/en/wow/t/how-do-i-figure-out-disenchants-with-scaling-gear/2332185",
+      "existing_ids": null,
+      "exact_inputs": "Unknown scaled equipment IDs; unknown bonus, rarity, armor/weapon, item level",
+      "outputs": null,
+      "reason": "First-person August 2, 2026 report: player bought gear scaled to TWW character levels but obtained non-TWW disenchanting materials; respondent attributes material family to item expansion of origin. No actual item IDs, source loot-table keys, final disenchant output IDs/counts, rarity, build, skill or operation log are provided. This is a new source-identity risk lead only: character-level scaling, item level, and displayed expansion are not direct proof of source item's DE loot family. Obtain exact scaled itemID/bonus and observed drops before creating noDisenchant or numerical estimates; do not treat respondent's rule as independently confirmed for all items."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 5,
-    "held": 10,
+    "held": 11,
     "duplicate": 3
   },
   "newly_verified_fields": [],
@@ -254,8 +263,8 @@
   "evidence_files": [],
   "evidence_source_links": [],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-20T0521-algari-pvp-item-metadata.jsonl",
-  "verified_commit_sha": "01cc5633c35f74484a117ff21f952417791d2042",
-  "verification": "Refreshed target branch and reread README, evidence format, mechanics, worker role, full current queue and own quiet status. Compared source-indexed Boreal Rifle 48-cast table to 2026-11-01 histogram replacement file without treating it as independent; independently inspected new Mar 2025 Ironclaw interrupted-crafting and original Gleaming Shatter refund-only statements. No eligible measured yields; no evidence file/PR/merge/release. verified_commit_sha is the pre-status-write branch HEAD because the file cannot atomically contain its own commit SHA. Read back new commit and status file after write.",
+  "verified_commit_sha": "72bd2a9585428e35a393dd3f3baea4b45dd4bd54",
+  "verification": "Refreshed implementation/five-agent-completion; read README, evidence-format, mechanics, worker role, queue and own status. Searched original Ironclaw/Aqirite/Bismuth rank and Mycobloom milling studies and TWW gear disenchants; checked existing corpus for Elfshinobi1, 1fvhzy0, 1g8kbaq, Canadiatv, fish milling and 1942494 before avoiding duplicate evidence. New 2026-08-02 scaling-gear report has no exact item/output identifiers or valid operation denominator and remains held. No new JSONL or numeric claim. Source head shown is pre-status-write commit (cannot self-store own commit hash).",
   "blockers": [
     "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
     "On this research branch tools/research_build_review.py and tools/prepare_build_research.py returned GitHub 404; build-time admission/generation remains implementation review work, not deployed or worker-owned.",
@@ -270,7 +279,8 @@
     "Milling guidance inconsistency is SOURCE-RESOLVED as to nominal recipe units: live-indexed Khaz Algar Milling spell 444181 explicitly states 10 herbs and salvage effect value 10 (https://www.wowhead.com/spell=444181/khaz-algar-milling). Wowhead 2025 leveling shopping list says 35 crafts/175 herbs (5 each), incompatible with its own referenced spell. DO NOT derive operation denominators from that guide, and do not assume any source's purchased herbs equal completed casts, especially with Resourcefulness or Create All failures. No new numeric yield evidence.",
     "Original CraftSim PRs #892/#894 (merged 2025-10-10): pre-20.3.0 advanced craft-log denominators could miscount completed operations; crushing-gem API returns can omit saved gems in Bismuth refund events. Historic CraftSim exports require explicit addon version, independently checked completed-operation counts, reagent/refund ledger and method identity; no invented TWW baseline rates. Master/reviewer owns schema and admission changes.",
     "Original Liqourice5 6.0 MB macro-enabled source workbook is now accessible externally but raw supporting prospecting trial sheets and exact cast denominators are absent. Audit performed on OOXML cell values/formulas without executing VBA; '10K prospects' is general coverage claim, NOT a per-item measured cohort count. Master/reviewer must separately assess reference-only rows if desired.",
-    "2025-03-21 original Ironclaw player reports Prospect All ending after two attempts despite 1,000 ore owned; UI nominal craft count may differ from successful operations even without a logged Resourcefulness proc. Any sample based on ore/5 without independent completed-operation confirmation remains held."
+    "2025-03-21 original Ironclaw player reports Prospect All ending after two attempts despite 1,000 ore owned; UI nominal craft count may differ from successful operations even without a logged Resourcefulness proc. Any sample based on ore/5 without independent completed-operation confirmation remains held.",
+    "2026-08-02 scaling-gear wrong-expansion-mats report lacks original item IDs/bonus, loot-family and observed output IDs/counts. Obtain firsthand exact IDs and link current retail patch before any TWW disenchant estimate."
   ],
   "exhausted_sources": [
     "Previously indexed 1f83cnd, 1g350pq, PeaEsk/434018, 1fdmzwy and 1f3qf96 already provide historical studies; source duplicates not re-imported.",
@@ -281,16 +291,16 @@
     "2026-11-20 11:22Z follow-up: April-2025 gem production economics, September-2024 Mycobloom Create-All bug, November-2025 housing dyes and previously indexed LotzBoi/Aqirite studies offer no new eligible post-hotfix 0..N material-yield cohorts. Revisit only on original per-operation logs.",
     "2026-11-20 follow-up: 1g9s48p repeats the already indexed 400 R1 Bismuth source; 1k78h4v and 1l91chl are 2025 financial/value comparisons without source output ledgers; 1nmnuc2 describes workflows only. Do not revisit these unless author publishes actual completed-operation exports."
   ],
-  "next_concrete_step": "Obtain original rank-linked Looter source/captured pctstack for Boreal Rifle 232446 / Lamplighter 229150, explicitly verify output itemIDs and stacked quantities without duplicating source snapshots. Seek independently audited completed-craft result exports for post-2024-10-25 Ironclaw, Aqirite and Bismuth rank samples and Mycobloom R1–R3, with output IDs/qualities, skill/spec/build, all zeros and Resourcefulness refunds. Master should decide whether separate Shatter/refund-only cohorts have a supported evidence method; no DE substitution.",
-  "previous_status_updated_at": "2026-11-20T19:20:35.712Z",
+  "next_concrete_step": "For T0048, obtain an original scaled gear itemID/bonus paired with source-reported TWW-vs-legacy disenchant output IDs before classifying any gear-group baseline; independently verify raw Looter pctstack/quality links for 232446 and 229150. For T0040 seek post-2024-10-25 input-rank-separated completed 5-ore prospects; for T0010–T0012 require completed 10-herb mills, pigment quality IDs and zero-inclusive outcomes. No shared code/queue edits.",
+  "previous_status_updated_at": "2026-11-20T20:17:19.983Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "scan_at_utc": "2026-11-20T20:17:19.983Z",
-    "source_repo_head": "01cc5633c35f74484a117ff21f952417791d2042",
+    "scan_at_utc": "2026-11-20T21:17:26.003Z",
+    "source_repo_head": "72bd2a9585428e35a393dd3f3baea4b45dd4bd54",
     "task_ids": [
       "T0048",
       "T0040",
@@ -303,25 +313,25 @@
     ],
     "results": [
       {
-        "source": "https://www.wowhead.com/item=232446/boreal-rifle",
-        "status": "duplicate-cohort-source-index-corroboration-not-independent-source",
-        "finding": "Search-indexed Wowhead Looter table now explicitly renders Boreal Rifle 232446, 48 reported disenchants and 5 material hit rows: 27 Storm Dust, 10 Storm Dust, 9 Storm Dust, 1 Gleaming Shard, 1 Gleaming Shard (rank links absent in indexed text). This agrees numerically with preexisting replacement cohort war-within-20261101-120017..120021, including 219946/219947/219948 and 219949/219950 as previously assigned, but cannot independently verify row-to-quality item hyperlinks, the 1-3 pctstack distributions, skill/spec, item bonus/build or study dates. Page open still hides table without JavaScript. No new independent sample; no new fields admitted."
+        "source": "https://us.forums.blizzard.com/en/wow/t/how-do-i-figure-out-disenchants-with-scaling-gear/2332185",
+        "status": "held-new-original-identity-lead",
+        "finding": "First-person August 2, 2026 report: player bought gear scaled to TWW character levels but obtained non-TWW disenchanting materials; respondent attributes material family to item expansion of origin. No actual item IDs, source loot-table keys, final disenchant output IDs/counts, rarity, build, skill or operation log are provided. This is a new source-identity risk lead only: character-level scaling, item level, and displayed expansion are not direct proof of source item's DE loot family. Obtain exact scaled itemID/bonus and observed drops before creating noDisenchant or numerical estimates; do not treat respondent's rule as independently confirmed for all items."
       },
       {
-        "source": "https://us.forums.blizzard.com/en/wow/t/prospecting-ore-on-jeweler-keeps-stopping/2080583",
-        "status": "verified-firsthand-methodological-caveat-not-yield-study",
-        "finding": "Original TWW player says Ironclaw Ore Create All executes two operations then stops with an 'Requires 5 Ironclaw Ore' error despite about 1,000 units owned (one stack ~700, all same quality; bags not warbank); follow-up March 24 reports persistence. The claimed two completions are NOT a full batch cast ledger; no ore item rank ID, gem output totals, hit/zero histogram, profession context or refund basis. Distinguish displayed available inputs/nominal ore÷5 from successful operations even when Resourcefulness is absent. Do not record any yield or infer 200 completed prospects."
+        "source": "https://www.wowhead.com/item=212495/radiant-ruby",
+        "status": "already-recorded-duplicate-original-commenter",
+        "finding": "Elfshinobi1's 450 Ironclaw ore/10 Ruby original is already in war-within-20261031T1324; no second independent study or new numeric cast denominator."
       },
       {
-        "source": "https://www.wowhead.com/item=232492/gleaming-shatter",
-        "status": "held-original-refund-only-shatter-cohort",
-        "finding": "Source comments include a first-person claim of 1,700 quality-3 Gleaming Shard shatters at displayed 34% Resourcefulness and 185 saved shards. Input material may be R3 Gleaming Shard 219951 by rank family, but link and exact variant not confirmed from nested-comment context; 1,700 is writer-reported crafts, not independently audited completed log. No output Storm Dust rank breakdown/quantities/hits/zeros/histogram; Shatter is not an allowed worker drop method, so do not contaminate gear Disenchant yields or infer a refund rate from the 185. Hold pending Master schema/method review and original cast/output ledger."
+        "source": "https://www.reddit.com/r/woweconomy/comments/1fvhzy0",
+        "status": "already-indexed-held-pooled-milling-approximation",
+        "finding": "Historical pooled pigment multipliers already held by v3 rows 20261101-2110/2111; no per-herb completed casts or quality identities."
       }
     ],
     "new_independent_cohorts": 0,
     "new_output_fields": 0,
     "evidence_created": false,
-    "original_spreadsheet_check": "Prior original Liqourice5 XLSM remains formula/reference-only; no new raw independent TWW 0..N log or accessible Kaychak spreadsheet recovered."
+    "original_spreadsheet_check": "Previously inspected author workbooks/reference sheets have no new independently grounded 0..N logs; 2025 CanadiaTV prospective all-rank spreadsheet remains paywall-only and already classified as held; no redundant new evidence."
   },
   "source_integrity_findings": [
     {
@@ -371,6 +381,12 @@
       "date": null,
       "status": "held-original-refund-only-shatter-cohort",
       "detail": "Source comments include a first-person claim of 1,700 quality-3 Gleaming Shard shatters at displayed 34% Resourcefulness and 185 saved shards. Input material may be R3 Gleaming Shard 219951 by rank family, but link and exact variant not confirmed from nested-comment context; 1,700 is writer-reported crafts, not independently audited completed log. No output Storm Dust rank breakdown/quantities/hits/zeros/histogram; Shatter is not an allowed worker drop method, so do not contaminate gear Disenchant yields or infer a refund rate from the 185. Hold pending Master schema/method review and original cast/output ledger."
+    },
+    {
+      "source": "https://us.forums.blizzard.com/en/wow/t/how-do-i-figure-out-disenchants-with-scaling-gear/2332185",
+      "date": "2026-08-02",
+      "status": "held-new-original-identity-lead",
+      "detail": "First-person August 2, 2026 report: player bought gear scaled to TWW character levels but obtained non-TWW disenchanting materials; respondent attributes material family to item expansion of origin. No actual item IDs, source loot-table keys, final disenchant output IDs/counts, rarity, build, skill or operation log are provided. This is a new source-identity risk lead only: character-level scaling, item level, and displayed expansion are not direct proof of source item's DE loot family. Obtain exact scaled itemID/bonus and observed drops before creating noDisenchant or numerical estimates; do not treat respondent's rule as independently confirmed for all items."
     }
   ]
 }
