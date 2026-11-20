@@ -1,21 +1,20 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-20T20:16:39.293Z",
-  "status": "250055 source-quality check: live Looter 73 reported entries with 37/33 same-name Dawn Crystal rows is invariant across selected bonus previews (ilvl 263/266/269/289), so no at-cast ilvl stratification. PTR 70 and PTR-2 69 are overlapping snapshots, not independent studies. No new measured live yield cohorts or evidence files.",
+  "updated_at": "2026-11-20T21:16:41.300Z",
+  "status": "T0045 independently crosschecked Midnight pigment exact itemIDs against Retail commodity catalog quality labels and legacy ledger: four rank-1/rank-2 pigment pairs identified; historical eight-row milling CSV contains rank-mixed, reference-only modeled 3–6/4.5 proxies, not measured operation yields. No newly independent quantitative cohort, no new evidence JSONL, no admission or coefficient.",
   "task_ids": [
+    "T0045",
     "T0026",
     "T0049",
     "T0005",
     "T0039",
-    "T0045",
     "T0003"
   ],
   "exact_gaps_targeted": [
-    "250055 selected-bonus item-level preview versus Looter aggregate cohort, two material-rank identities and live/PTR deduplication",
-    "272246 Miststalker's Wristbands actual at-cast ilvl/bonus (base206 versus selected305) and live disenchant eligibility",
-    "237362 Umbral Tin 4000 nominal ore, completed casts, refunds, per-output hits/histograms, 242608 unlock",
-    "236761/236770/236778/236776 10-herb milling actual casts, ranks and per-event pigment output",
-    "237359 rank1 Refulgent Copper true original prospect operations and per-output 0/1/2+"
+    "236761/236770/236778/236776 rank-specific output identity versus historical modeled one-output-per-herb ledger and original firsthand kyzenbka reported totals",
+    "272246 item 305 selected tooltip versus 206 base and held live disenchant eligibility",
+    "237362 Umbral Tin actual completed casts/refunds/rank-specific 242608 and other material hit histograms",
+    "237359 Refulgent Copper post-hotfix source-linked denominators/output counts"
   ],
   "triage": [
     {
@@ -973,13 +972,81 @@
       },
       "disposition": "reviewable existing aggregate; new independent per-bonus display invariance test only. No new cohort or rate admission.",
       "hold_reason": "The same 73/37/33 source Looter totals appear at multiple selected gear upgrade-level previews (263/266/269/289). Therefore these public pages do not stratify reported disenchants by the selected bonus or prove any at-cast item level; PTR and PTR-2 are separate cumulative snapshots and must not be summed with live data. Two unnamed Dawn Crystal rows cannot be assigned 243605 versus 243606 without source links."
+    },
+    {
+      "category": "reviewable_independent_current_catalog_rank_identity_not_yield_cohort",
+      "task_id": "T0045",
+      "source_kind": "third-party Retail commodity item-ID/quality catalog, not an original milling trial or event ledger",
+      "source_catalog": "https://goldcap.gg/retail/us/items/245803",
+      "source_original_milling_comment": "https://www.wowhead.com/item=245807/powder-pigment#comments",
+      "existing_reference_rows": "research/ledger/midnight-milling-field-review-2026-10-28.csv (8 legacy-reference rows)",
+      "validated_rank_item_pairs": [
+        {
+          "input_id": 236761,
+          "herb": "Tranquility Bloom",
+          "rank1_output_id": 245807,
+          "rank2_output_id": 245808,
+          "pigment": "Powder Pigment",
+          "rank1_url": "https://goldcap.gg/retail/tw/items/245807",
+          "rank2_url": "https://goldcap.gg/retail/tw/items/245808"
+        },
+        {
+          "input_id": 236770,
+          "herb": "Sanguithorn",
+          "rank1_output_id": 245865,
+          "rank2_output_id": 245864,
+          "pigment": "Sanguithorn Pigment",
+          "rank1_url": "https://goldcap.gg/retail/us/items/245865",
+          "rank2_url": "https://goldcap.gg/retail/tw/items/245864"
+        },
+        {
+          "input_id": 236778,
+          "herb": "Mana Lily",
+          "rank1_output_id": 245867,
+          "rank2_output_id": 245866,
+          "pigment": "Mana Lily Pigment",
+          "rank1_url": "https://goldcap.gg/retail/us/items/245867",
+          "rank2_url": "https://goldcap.gg/retail/us/items/245866"
+        },
+        {
+          "input_id": 236776,
+          "herb": "Argentleaf",
+          "rank1_output_id": 245803,
+          "rank2_output_id": 245804,
+          "pigment": "Argentleaf Pigment",
+          "rank1_url": "https://goldcap.gg/retail/us/items/245803",
+          "rank2_url": "https://goldcap.gg/retail/us/items/245804"
+        }
+      ],
+      "legacy_ledger_output_ids": [
+        245807,
+        245864,
+        245866,
+        245804
+      ],
+      "original_reported_milling_total_units": {
+        "236761": 1305,
+        "236770": 1286,
+        "236776": 1335,
+        "236778": 1336
+      },
+      "original_reported_herb_input_count": {
+        "236761": 1000,
+        "236770": 1000,
+        "236776": null,
+        "236778": null
+      },
+      "original_reported_completed_milling_operations": null,
+      "original_reported_per_cast_histograms": null,
+      "disposition": "catalog identities independently corroborated; old CSV yield numbers remain held as reference/model only; do not replace existing evidence, infer a rank distribution or promote to numeric baseline",
+      "hold_reason": "Legacy CSV reports one output rank ID per herb with modeled 3–6 and 4.5, and never measured casts; source comment has quantities without event ledger, actual cast counts, refunds and profession context. Catalog quality labels are identity evidence, not a yield cohort. The opposite item ID ordering for Sanguithorn/Mana Lily (rank1 larger than rank2) makes arithmetic or alphabetical rank assumption unsafe."
     }
   ],
   "newly_verified_fields_or_cohorts": [
-    "250055 existing live Wowhead item-side aggregate: 73 reported disenchants and two same-name Dawn Crystal material appearance counts 37/33; no newly independent study.",
-    "Same 73/37/33 counts remain unchanged when the page selects different item bonus 12790 (display ilvl263), 12795 (266), 12796 (269), and a Mythic displayed ilvl289; source table cannot establish at-cast item variant or ilvl.",
-    "250055 PTR 12.1.7: 70 and 35/32; PTR-2 12.1.5: 69 and 35/31, overlapping historical snapshots, not additional independent cohorts.",
-    "Two Dawn Crystal source rows have unresolved output item links/quality-rank identity. Skill, specialization, actual bonus, all material units and event histograms remain unknown."
+    "Independent exact output-quality itemID crosswalk from Retail commodity catalog: Powder Pigment 245807 (R1) / 245808 (R2); Sanguithorn Pigment 245865 (R1) / 245864 (R2); Mana Lily Pigment 245867 (R1) / 245866 (R2); Argentleaf Pigment 245803 (R1) / 245804 (R2).",
+    "Legacy eight-row Midnight milling field-review CSV places 236761/236767→245807, 236770/236771→245864, 236778/236779→245866, 236776/236777→245804 but explicitly marks drop chance as proxy, yield min/max and EV as modeled, sample_operations empty. These are not measured rank-specific pigment distributions.",
+    "Original kyzenbka comment quantities 1305/1286/1336/1335 are already indexed firsthand observations, not independently new cohorts. Only the first two inputs explicitly have 1,000 herbs; all completed operation/hit/zero/refund fields remain null.",
+    "No new independently verified measured yields or probabilities; no attempt to infer rank output fraction or to insert price data."
   ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": {
@@ -990,53 +1057,48 @@
     "new_midnight_histograms": 0,
     "new_measured_probabilities": 0,
     "new_live_eligible_yield_admissions": 0,
-    "previously_indexed_item_ids_rechecked": [
-      250055
+    "independently_catalog_verified_output_id_quality_pairs": 4,
+    "newly_resolved_pigment_rank_output_ids": [
+      245807,
+      245808,
+      245865,
+      245864,
+      245867,
+      245866,
+      245803,
+      245804
     ],
-    "live_existing_aggregate_source_reports": 73,
-    "live_existing_aggregate_dawn_crystal_row_appearances": [
-      37,
-      33
+    "legacy_milling_proxy_rows_inspected": 8,
+    "existing_original_milling_unit_totals_not_new": [
+      1305,
+      1286,
+      1336,
+      1335
     ],
-    "selected_bonus_preview_item_levels": [
-      263,
-      266,
-      269,
-      289
-    ],
-    "ptr_historical_snapshot_reports": [
-      70,
-      69
-    ]
+    "original_milling_actual_casts": null
   },
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://www.wowhead.com/item=250055/voidbreakers-encryption",
-    "https://www.wowhead.com/item=250055/voidbreakers-encryption?bonus=12790",
-    "https://www.wowhead.com/item=250055/voidbreakers-encryption?bonus=12795",
-    "https://www.wowhead.com/item=250055/voidbreakers-encryption?bonus=12796",
-    "https://www.wowhead.com/ptr/item=250055/voidbreakers-encryption",
-    "https://www.wowhead.com/ptr-2/item=250055/voidbreakers-encryption"
+    "https://goldcap.gg/retail/tw/items/245807",
+    "https://goldcap.gg/retail/tw/items/245808",
+    "https://goldcap.gg/retail/us/items/245865",
+    "https://goldcap.gg/retail/tw/items/245864",
+    "https://goldcap.gg/retail/us/items/245867",
+    "https://goldcap.gg/retail/us/items/245866",
+    "https://goldcap.gg/retail/us/items/245803",
+    "https://goldcap.gg/retail/us/items/245804",
+    "https://www.wowhead.com/item=245807/powder-pigment#comments",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/ledger/midnight-milling-field-review-2026-10-28.csv"
   ],
   "blockers": [
-    "272246 raw HTML original recovered (140 reported source Looter events; five output rank/count/fixed-stack lines), but missing actual at-cast itemLink/bonus/effective ilvl, skill/spec/build and true zero-inclusive per-cast event trace; current eligibility conflicts with WowDB base flag. Reference only.",
-    "No new zero-inclusive current-build raw disenchant studies for 243599/243600/243602/243603/243605/243606 with gear rank/build/profession skill and specialization.",
-    "237362 Umbral Tin source specifies 4000 nominal ore, 39.6% Resourcefulness and seven output totals, not actual completed casts; refund/reprospecting event chronology and per-output hits/histograms remain absent.",
-    "236761/236770/236778/236776 Midnight herb 10-input mill original current-build events/quality ranks/refunds remain unverified; earlier 20-herb Shadowlands casts may not be used to fill.",
-    "Firsthand March 12 Resourcefulness-hidden-UI report confirms a capture caveat but has no numerical cast/refund denominator; do not infer effective Resourcefulness=0 from a blank craft-details field.",
-    "One firsthand July 3 Stormwarning source duplicated into 13+13 evidence rows with mismatched studyKeys and rank/ID discrepancies; Master/build-time importer must dedupe/correct originals without overwriting source.",
-    "JD3K three-file duplication: 51 v3 records preserve only 17 distinct original output observations (34 repeats); all cast=10 values are unsupported 50/5 nominal equivalents and need Master/build-review source-level dedup and denominator hold, not worker rewriting.",
-    "275221 12.1.7 PTR item-side Looter has rank-unknown Dawn Crystal rows, no actual events, no at-cast skill/bonus/build/output units and no confirmed live eligibility; reference only.",
-    "250055 Looter aggregate invariant under multiple bonus-specific item-level previews; needs individual actual game itemLink/bonus, skill/spec, build and material link IDs to stratify 73 reported entries. Live and PTR snapshots must not be added."
+    "T0045: catalog confirms rank IDs only, not whether any individual 10-herb milling cast yielded which rank; missing original per-cast logs, completed operation counts, per-output hit/zero counts, Resourcefulness refunds and skill/spec/build. No promotion of modeled 3–6/4.5 proxies.",
+    "T0045: legacy CSV one-output-per-input rank selection omits the alternate rank IDs; any itemDB rank mapping/admission check belongs to Master build-time review, not a worker file or addon runtime edit.",
+    "T0049: 272246 still lacks exact at-cast itemLink/bonus, current Retail DE-eligibility confirmation and event ledger; item tooltip preview is not at-cast ilvl.",
+    "T0005/T0039: 237362 has nominal 4,000 ore and material totals but completed casts, refunds, per-output hit/zero histogram and rank-linked original receipts remain unknown.",
+    "T0003: 237359 independent post-hotfix input-quality-specific operations and zero-inclusive outcomes absent."
   ],
   "exhausted_sources": [
-    "Current Wowhead 272246 item/bonus preview and WoWDB eligibility: no raw Looter events or verified at-cast bonus.",
-    "Existing Cardinalai Umbral Tin 237362 page: material totals but no actual operation/refund ledger.",
-    "Previously saved 2026-11-15 David111 general milling anecdote and repository legacy proxy CSV: cannot fill sample denominators.",
-    "Public 2026 disenchant/prospect/milling guide and forum searches yielded old indexed cohorts, generic assertions, or modeled yield tables; no distinct original event source to import.",
-    "Wowhead current 258931 and 251883 public text views show item level 44 but no per-event Looter raw HTML/character context; pages have dynamic version-dependent preview.",
-    "Blizzard March 2026 resourcefulness-bug forum records nominal shattering and refunds only, not eligible Midnight output-yield original cohort.",
     "kyzenbka 2026-11-20 original Wowhead item hyperlink and existing v3 transcription reconciled; no per-cast ledger, histograms, skill/build or refunds. Multiple reposts are the same original author.",
     "eight-row milling proxy CSV checked 2026-11-20: modeled only, not a new original measured cohort. Existing Oct 28 QA and Nov 8 output-rank catalog confirm reference-only interpretation.",
     "Disenchanting Advisor public GitHub addon source (Tracking.lua/README/DisenchantData.lua): source schema found, no bundled original player SavedVariables or zero-inclusive per-event provenance; static approximate rates excluded.",
@@ -1051,11 +1113,12 @@
     "2026-11-20 Midnight milling field-review CSV 8 rows inspected: 4.5 expected, 3-6 range are explicitly modeled proxies with zero measured casts; cannot promote to empirical baseline.",
     "2026-11-20 JD3K spell original 50-ore rank2 tests and two historical v3 repeats reconciled with legacy denominator-corrected observation; source lacks raw 0-inclusive event/refund ledger, no repeat search unless independent export appears.",
     "2026-11-20 275221 indexed PTR-only 12.1.7 182/94/83 and PTR-2 12.1.5 171/90/77: no event log/output IDs; do not recount unless first-party data emerges.",
-    "2026-11-20 250055 live Wowhead bonus=12790/12795/12796 and Mythic previews all show identical 73/37/33 Looter cumulative counts despite ilvl changes; PTR 70 and PTR-2 69 are not independent. Do not repeat per-bonus search without raw character/event provenance."
+    "2026-11-20 250055 live Wowhead bonus=12790/12795/12796 and Mythic previews all show identical 73/37/33 Looter cumulative counts despite ilvl changes; PTR 70 and PTR-2 69 are not independent. Do not repeat per-bonus search without raw character/event provenance.",
+    "2026-11-20 T0045: reviewed original eight-row legacy milling CSV and independent live commodity quality catalog for four pigment families; catalog supports rank IDs only, no casts or output distributions. Do not recheck rank labels without contradictory item evidence; next gap requires original per-event trials."
   ],
-  "next_concrete_step": "Seek a dated first-party 250055 or 272246 Retail Disenchant event export with the exact gear itemLink/bonus and profession skill/spec, then original 237362 Umbral Tin cast/refund ledger. Do not normalize historical Looter counts by selected wowhead ilvl.",
-  "verified_base_commit_sha": "ce621ecab2733b94cd5567913c429af04c09e184",
+  "next_concrete_step": "Seek original dated 10-herb milling event-export for 236761/236770/236778/236776 with source-linked input/output ranks (all eight pigment IDs), actual completed operations, Resourcefulness refunded reagent quantities, and per-cast 0/1/2+ output stack counts; request Master build-review check of rank mappings in old eight-row modeled CSV. If unavailable, focus fresh Retail 272246 DE event or 237362 original ore ledger.",
+  "verified_base_commit_sha": "aa27fd4f7f97b8ef0dcbb026de3adc6de6cedfb6",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Owned status-only update, no independent study or new evidence JSONL. Commit SHA cannot be embedded in its own content; check target branch ref and read-back after commit."
+  "commit_note": "Status-only identity/provenance triage; no source-grade new quantitative cohort, no evidence JSONL. New commit verified after write; self-commit SHA cannot be encoded in its own payload."
 }
