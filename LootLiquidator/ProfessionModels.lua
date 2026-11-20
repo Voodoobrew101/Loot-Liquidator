@@ -428,6 +428,7 @@ function LL:ApplySyntheticBenchmark(f,option,model,context)
         local method=option and option.name
         local params=model.professionParameters or model.generalProfessionParameters
         local craft=params and params.method~='Disenchant' and params.method~='Gather'
+            and params.method~='Loot' and params.method~='Use'
             and params.method~='Skin' and params.method~='Fish' and params.recipe
             and params.recipe.supportsResourcefulness~=false
         local expansion=params and params.expansionID or f and f.expansionID
@@ -1062,6 +1063,27 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
     if mixed then
         local byID={}
         for _,material in ipairs(materials) do byID[material.id]=material end
+        -- A newly introduced rank or bonus has no per-material contribution
+        -- row yet. Give it only the selected ItemDB primary family's share,
+        -- rather than a full-strength bonus beside mostly legacy evidence.
+        local primary={}
+        for _,id in ipairs(selected.rule.primaryRankIDs or {}) do primary[id]=true end
+        local originalIDs,primarySum,weightedPrimary={},0,0
+        for _,original in ipairs(model.materials or {}) do
+            originalIDs[original.id]=true
+            local weight=original.sourceContributions and original.sourceContributions.itemdb
+            local source=original.sourceEstimates and original.sourceEstimates.itemdb
+            if primary[original.id] and finite(weight) and weight>=0 and weight<=1
+                and source and finite(source.expectedQuantity) and source.expectedQuantity>=0
+                and finite(source.inputCount) and source.inputCount>0 then
+                local quantity=source.expectedQuantity/source.inputCount
+                primarySum=primarySum+quantity;weightedPrimary=weightedPrimary+quantity*weight
+            end
+        end
+        local familyWeight=primarySum>0 and weightedPrimary/primarySum or 0
+        for id,projected in pairs(byID) do
+            if not originalIDs[id] then projected.expectedQuantity=projected.expectedQuantity*familyWeight end
+        end
         for _,original in ipairs(model.materials or {}) do
             if type(original.rankIDs)=='table' then
                 for _,id in ipairs(original.rankIDs) do if byID[id] then return model end end

@@ -64,6 +64,7 @@ from research_v3_reference_ranges import preserve_reference_range  # noqa: E402
 import research_v3_tokens  # noqa: E402  C4b3: token reward lists ride along with every refresh
 import research_v3_no_disenchant  # noqa: E402  D1c4: no-disenchant flags ride along too
 from research_methods import METHOD_PROFESSIONS, GENERIC_METHODS, operation_scope, profession_for, apply_reviewed_operation_aliases
+from research_published_priors import preserve_published_priors
 
 DEFAULT_REF = 'origin/implementation/five-agent-completion'
 DEFAULT_SNAPSHOT = Path('database/research/v3-snapshot')
@@ -512,6 +513,7 @@ def build(snapshot):
         else:
             row['inputItemID'] = int(key)
         records.append(row)
+    preserve_published_priors(rows, records, notes)
     return records, notes, total, len(counted), unplaced
 
 

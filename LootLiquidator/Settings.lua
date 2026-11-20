@@ -530,6 +530,52 @@ function LL:CreateProfessionProfilePanel(profession)
         LL.db.gatheringSimulationSelections[profession..':'..expansion]=target.targetID
         refresh(false)
     end) end
+    local opportunityTitle=label('Loot and item-use preview')
+    local opportunityTargets={}
+    local opportunityLines={}
+    local opportunityTooltipOpen=false
+    local opportunityResults=CreateFrame('Frame',nil,body)
+    opportunityResults:SetWidth(590);opportunityResults:EnableMouse(true)
+    local opportunityText=opportunityResults:CreateFontString(nil,'ARTWORK','GameFontHighlight')
+    opportunityText:SetWidth(590);opportunityText:SetJustifyH('LEFT')
+    opportunityText:SetPoint('TOPLEFT',opportunityResults,'TOPLEFT',0,0)
+    local function refreshOpportunityTooltip()
+        if not GameTooltip then return end
+        if #opportunityLines==0 then
+            if opportunityTooltipOpen then GameTooltip:ClearLines();GameTooltip:Hide() end
+            opportunityTooltipOpen=false;return
+        end
+        GameTooltip:SetOwner(opportunityResults,'ANCHOR_RIGHT');GameTooltip:ClearLines()
+        for _,text in ipairs(opportunityLines) do GameTooltip:AddLine(text,1,1,1,true) end
+        GameTooltip:Show()
+    end
+    opportunityResults:SetScript('OnEnter',function()
+        if #opportunityLines==0 then return end
+        opportunityTooltipOpen=true;refreshOpportunityTooltip()
+    end)
+    opportunityResults:SetScript('OnLeave',function()
+        opportunityTooltipOpen=false;if GameTooltip then GameTooltip:Hide() end
+    end)
+    local opportunityTarget
+    local function ensureOpportunityTarget()
+        if opportunityTarget then return end
+        opportunityTarget=LL:CreateSettingsDropdown(body,function()
+            opportunityTargets=LL.GetProfessionOpportunityTargets and LL:GetProfessionOpportunityTargets(profession,expansion) or {}
+            local rows={}
+            for index,target in ipairs(opportunityTargets) do rows[#rows+1]={index,target.label,target.quantityBasis} end
+            return choices(rows)
+        end,function()
+            local saved=LL.db.professionOpportunitySelections and LL.db.professionOpportunitySelections[profession..':'..expansion]
+            for index,target in ipairs(opportunityTargets) do if target.targetID==saved then return index end end
+            return 1
+        end,function(index)
+            local target=opportunityTargets[index]
+            if not target then return end
+            LL.db.professionOpportunitySelections=LL.db.professionOpportunitySelections or {}
+            LL.db.professionOpportunitySelections[profession..':'..expansion]=target.targetID
+            refresh(false)
+        end)
+    end
     local skillLabel=label('Skill before specialization',245)
     local skill=LL:CreateSettingsCanvasSlider(body,0,300,1,0,function(v)update(function(p)p.skill=v end)end)
     skill.expandRange=true
@@ -619,6 +665,67 @@ function LL:CreateProfessionProfilePanel(profession)
                 if #(model.materials or {})==0 then lines[#lines+1]='Choose a known target to see its material outputs.' end
             else lines[1]='No gathering profile is available for this selection.' end
             gatheringResults:SetText(table.concat(lines,'\n'));place(gatheringResults,y);y=y+#lines*22+26
+        end
+        panel.opportunityPreview=nil
+        panel.opportunityTarget=nil
+        opportunityLines={}
+        opportunityText:SetText('')
+        opportunityTargets=LL.GetProfessionOpportunityTargets and LL:GetProfessionOpportunityTargets(profession,expansion) or {}
+        if selection~='@hide' and #opportunityTargets>0 and LL.ProfessionOpportunityPreview then
+            ensureOpportunityTarget()
+            local targetID=LL.db.professionOpportunitySelections and LL.db.professionOpportunitySelections[profession..':'..expansion]
+            local model,target,context=LL:ProfessionOpportunityPreview(profession,expansion,targetID,selected,selection=='@hypothetical')
+            panel.opportunityPreview=model
+            panel.opportunityTarget=target
+            if model and target then
+                opportunityLines[#opportunityLines+1]=target.label
+                opportunityLines[#opportunityLines+1]=target.quantityBasis or 'Normalized baseline opportunity = 1; no per-kill rate'
+                if type(model.confidence)=='number' then opportunityLines[#opportunityLines+1]=('Confidence %d%%'):format(model.confidence) end
+                for _,output in ipairs(model.relativeOutputs or {}) do
+                    local name=output.name or ('Item '..tostring(output.id))
+                    if type(output.value)=='number' then
+                        if output.unit=='relative-factor' or output.metric=='discovery' then
+                            opportunityLines[#opportunityLines+1]=('%s discovery: %.3gx baseline'):format(name,output.value)
+                        elseif output.unit=='percent' then
+                            opportunityLines[#opportunityLines+1]=('%s: %.3g%%'):format(name,output.value)
+                        else
+                            opportunityLines[#opportunityLines+1]=('%s: %+.3g normalized units'):format(name,output.value)
+                        end
+                    end
+                end
+                local params=model.professionParameters or model.params or model.parameters or model.generalProfessionParameters or {}
+                if type(params.skill)=='number' then opportunityLines[#opportunityLines+1]=('Skill: %g'):format(params.skill) end
+                local statNames={resourcefulness='Resourcefulness',multicraft='Multicraft',ingenuity='Ingenuity',
+                    finesse='Finesse',perception='Perception',deftness='Deftness',craftingSpeed='Crafting Speed',inspiration='Inspiration'}
+                for _,key in ipairs({'resourcefulness','multicraft','ingenuity','finesse','perception','deftness','craftingSpeed','inspiration'}) do
+                    local value=params.stats and params.stats[key]
+                    if type(value)=='number' and value~=0 then
+                        opportunityLines[#opportunityLines+1]=('%s: %.3g%%'):format(statNames[key],key=='craftingSpeed' and value or value*100)
+                    end
+                end
+                if type(params.inputFactor)=='number' and params.inputFactor~=1 then
+                    opportunityLines[#opportunityLines+1]=('Input consumption factor: %.3gx'):format(params.inputFactor)
+                end
+                for _,metric in ipairs({{'resourcefulnessSaved','Resourcefulness extra saving','%'},
+                    {'multicraftExtra','Multicraft extra yield','%'},{'finesseExtra','Finesse extra yield','%'},
+                    {'inspirationSkill','Inspiration skill',''},{'concentrationCost','Concentration cost modifier','%'},
+                    {'concentrationRefund','Concentration refund modifier','%'}}) do
+                    local value=params.effectTotals and params.effectTotals[metric[1]]
+                    if type(value)=='number' and value~=0 then
+                        opportunityLines[#opportunityLines+1]=('%s: %+.3g%s'):format(metric[2],value,metric[3])
+                    end
+                end
+                local unlockCount=0 for _,active in pairs(params.unlocks or {}) do if active then unlockCount=unlockCount+1 end end
+                if unlockCount>0 then opportunityLines[#opportunityLines+1]='Recipe unlocks: '..unlockCount end
+                if params.simulatedEligibility then opportunityLines[#opportunityLines+1]='Eligibility: unlocked' end
+                local conveniences=params.effectTotals and params.effectTotals.nonOutput
+                if type(conveniences)=='number' and conveniences>0 then opportunityLines[#opportunityLines+1]=('Convenience bonuses: %g'):format(conveniences) end
+            else opportunityLines[1]='No profile is available for this context.' end
+            place(opportunityTitle,y);y=y+30
+            place(opportunityTarget,y);y=y+42
+            opportunityText:SetText(table.concat(opportunityLines,'\n'))
+            opportunityResults:SetHeight(math.max(24,#opportunityLines*22))
+            place(opportunityResults,y);y=y+math.max(24,#opportunityLines*22)+26
         end
         if selection~='@hide' then
             advanced:SetText(advancedOpen and 'Hide advanced' or 'Advanced')
@@ -891,10 +998,17 @@ function LL:CreateProfessionProfilePanel(profession)
         end
         for _,w in ipairs({skillLabel,skill,reset,scan,empty,advanced,buffsTitle,noBuffs,note,statsTitle,statsNote,scannedStats}) do hideUnused(w) end
         hideUnused(gatheringTitle);hideUnused(gatheringTarget);hideUnused(gatheringResults);hideUnused(conditionsTitle)
+        hideUnused(opportunityTitle);hideUnused(opportunityTarget);hideUnused(opportunityResults)
+        if opportunityTooltipOpen then refreshOpportunityTooltip() end
         body:SetHeight(math.max(y,260))
-        character:Refresh();era:Refresh();if gatheringTarget then gatheringTarget:Refresh() end;refreshing=false
+        character:Refresh();era:Refresh();if gatheringTarget then gatheringTarget:Refresh() end;if opportunityTarget then opportunityTarget:Refresh() end;refreshing=false
     end
     panel:SetScript('OnShow',function()refresh(true)end)
+    panel:SetScript('OnHide',function()
+        panel.opportunityPreview=nil;panel.opportunityTarget=nil;opportunityLines={}
+        opportunityText:SetText('')
+        if opportunityTooltipOpen then refreshOpportunityTooltip() end
+    end)
     return panel
 end
 

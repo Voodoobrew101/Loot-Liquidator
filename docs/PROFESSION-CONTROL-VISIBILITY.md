@@ -8,6 +8,8 @@ The controls affect the dimension their native effect describes: quality, quanti
 
 Gathering has a separate target selector and result card, including 173 native material/variant ability targets. Targets do not become inventory self-conversions or liquidation recommendations. Empirical gathering studies use creature, game-object or fishing identities in their own pipeline.
 
+World loot and item use have a separate context selector, result card and hover tooltip. All 49 native output entries in these scopes reach 25 selectable contexts. Missing event frequencies use normalized output/discovery indexes at confidence zero; they do not become items per kill or actionable sale conversions. See [native opportunity previews](PROFESSION-OPPORTUNITY-PREVIEWS.md).
+
 Static rules explicitly covering client12.1.5 can run on that version's compatible hotfix builds at or above their source build. Native captures remain exact to character, recipe, input allocation, build and freshness. An unknown later patch does not silently inherit an older numerical claim.
 
 Confidence is the tooltip uncertainty signal. Assumptions and unresolved output identities stay in research/build metadata; the tooltip does not add estimate/provisional/unquantified caveats. Source-backed named outcomes can appear without an invented item ID or sale value, leaving valuation partial where necessary.

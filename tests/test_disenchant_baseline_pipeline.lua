@@ -180,12 +180,48 @@ for _,case in ipairs({{rarity=2,node=107648,low=243599,high=243600,total=2.9},
         near(mixedMeans[case.low],alpha*means[case.low]+(1-alpha)*10,'relative source weight preserves the other low-rank mean')
         near(mixedMeans[case.high],alpha*means[case.high]+(1-alpha)*12,'relative source weight preserves the other high-rank mean')
         near(mixedMeans[999999],7,'a non-ItemDB-only material stays unchanged')
+        if case.rarity==4 then
+            local bonus=0
+            for _,id in ipairs({236949,236950,236951,236952}) do
+                near(mixedMeans[id],means[id]*alpha,'new Crystal extras retain the selected ItemDB share')
+                bonus=bonus+mixedMeans[id]
+            end
+            near(bonus,.289*alpha,'Crystal bonus pool scales with the 10/90 or 80/20 source mixture')
+            local missingHigh=copy(combined);table.remove(missingHigh.materials,2)
+            local withNewRank=LL:ApplyDisenchantBaseline(facts,option,missingHigh,model.context,1)
+            local missingMeans=amounts(withNewRank.materials)
+            near(missingMeans[case.high],means[case.high]*alpha,'a newly introduced primary rank receives only its ItemDB family share')
+            local missingBonus=0
+            for _,id in ipairs({236949,236950,236951,236952}) do missingBonus=missingBonus+(missingMeans[id] or 0) end
+            near(missingBonus,.289*alpha,'a missing original high-rank row does not amplify Crystal extras')
+        end
         check(same(mixed.sources,combined.sources),'combined source contributions retain their original weights')
         check(same(combined,beforeCombined),'mixed projection never rewrites the original weighted model')
         local pooled=copy(combined)
         pooled.materials[1].rankIDs={case.low,case.high}
         check(LL:ApplyDisenchantBaseline(facts,option,pooled,model.context,1)==pooled,
             'overlapping pooled and exact rank distributions are not projected twice')
+    end
+    if case.rarity==4 then
+        local uneven={confidence=80,sources={itemdb=.5,legacy=.5},materials={
+            {id=case.low,expectedQuantity=2,sourceContributions={itemdb=1},sourceEstimates={itemdb={expectedQuantity=2,inputCount=1}}},
+            {id=case.high,expectedQuantity=12,sourceContributions={itemdb=0,legacy=1},sourceEstimates={itemdb={expectedQuantity=3,inputCount=1}}}}}
+        local unevenBefore=copy(uneven)
+        local unevenProjection=LL:ApplyDisenchantBaseline(facts,option,uneven,model.context,1)
+        local unevenMeans=amounts(unevenProjection.materials)
+        local bonus=0
+        for _,id in ipairs({236949,236950,236951,236952}) do bonus=bonus+(unevenMeans[id] or 0) end
+        near(bonus,.289*2/5,'uneven primary weights use quantity-weighted ItemDB family share')
+        near(unevenMeans[case.high],12,'a legacy-only original primary rank remains unchanged')
+        check(same(uneven,unevenBefore),'family-share projection preserves its weighted source inputs')
+        local noItemDB=copy(uneven);noItemDB.sources={legacy=1}
+        for _,material in ipairs(noItemDB.materials) do material.sourceContributions={legacy=1} end
+        local absent=LL:ApplyDisenchantBaseline(facts,option,noItemDB,model.context,1)
+        local absentMeans=amounts(absent.materials)
+        for _,id in ipairs({236949,236950,236951,236952}) do near(absentMeans[id] or 0,0,'no accepted ItemDB primary contribution creates no extra Mote units') end
+        LL.db.source_itemdb_enabled=false
+        check(LL:ApplyDisenchantBaseline(facts,option,uneven,model.context,1)==uneven,'disabled ItemDB source cannot add mixed-source Crystal extras')
+        LL.db.source_itemdb_enabled=true
     end
     local ordinary={sources={itemdb=1},materials={{id=case.low,expectedQuantity=123}}}
     check(LL:ApplyDisenchantBaseline(facts,option,ordinary,model.context,2)==ordinary,

@@ -148,6 +148,14 @@ for _,unsupported in ipairs({{method='Disenchant',expansion=9},{method='Smelt',e
     near(skipped.expectedInputCount,4)
     check(skipped.syntheticResourcefulnessNote:find('skipped',1,true),'unsupported assumptions explain why savings were skipped')
 end
+for _,method in ipairs({'Loot','Use'}) do
+    local opportunity=clone(baseline)
+    opportunity.professionParameters={method=method,expansionID=11,recipe={}}
+    local skipped=LL:ApplySyntheticBenchmark({expansionID=11},{name=method},opportunity,manual)
+    near(skipped.expectedInputCount,4)
+    check(skipped.supplyCostFactor==nil and skipped.syntheticResourcefulnessNote:find('skipped',1,true),
+        'world loot and item-use previews never gain crafting reagent savings')
+end
 local nonmanual={simulated=true,profileKind='offline-snapshot',benchmark={outputLevel=200}}
 check(LL:ApplySyntheticBenchmark(f,option,baseline,nonmanual)==baseline,'scanned profiles cannot receive manual factors')
 local damaged={simulated=true,profileKind='manual-simulation',benchmark={outputLevel=math.huge}}

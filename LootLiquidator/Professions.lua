@@ -513,6 +513,64 @@ function LL:GatheringSimulationPreview(profession,expansion,targetID,character,s
     local model=proxy:GatheringSimulationModel(selected,context)
     return model,selected,context
 end
+-- World-loot and item-use perks have an explicit preview context. They never
+-- become bag-item conversions or acquire an invented per-kill denominator.
+function LL:GetProfessionOpportunityTargets(profession,expansion)
+    local data=self.ItemDB and self.ItemDB.professionProfiles
+    local profile=data and data.profiles and data.profiles[profession..':'..tostring(expansion)]
+    if not profile or self.ProfessionRuleMatchesBuild and not self:ProfessionRuleMatchesBuild(data) then return {} end
+    local groups={}
+    for nodeID,node in pairs(profile.nodes or {}) do
+        local function include(effects)
+            for _,effect in ipairs(effects or {}) do
+                local scope=effect.scope or {};local method=scope.method
+                if method=='Loot' or method=='Use' then
+                    local key=tostring(nodeID)..':'..method
+                    local target=groups[key]
+                    if not target then
+                        target={targetID='profession-opportunity:'..profession..':'..expansion..':'..key,
+                            profession=profession,expansionID=expansion,method=method,nodeID=nodeID,nodeName=node.name,
+                            label=(method=='Loot' and 'Loot' or 'Item use')..' — '..node.name,
+                            quantityBasis='Normalized reference: 1 baseline opportunity',
+                            labels={},effectEntryIDs={},familyNames={},_labels={},_entries={},_families={}}
+                        groups[key]=target
+                    end
+                    for _,labelID in ipairs(scope.labelIDs or {}) do target._labels[labelID]=true end
+                    target._entries[effect.entryID]=true
+                    local binding=effect.outputBinding or {}
+                    local family=binding.name or effect.targetFamily
+                    if type(family)=='string' and family~='' then target._families[family]=true end
+                end
+            end
+        end
+        include(node.pointEffects);include(node.learningEffects)
+        for _,milestone in ipairs(node.milestones or {}) do include(milestone.effects) end
+    end
+    local result={}
+    for _,target in pairs(groups) do
+        for id in pairs(target._labels) do target.labels[#target.labels+1]=id end
+        for id in pairs(target._entries) do target.effectEntryIDs[#target.effectEntryIDs+1]=id end
+        for name in pairs(target._families) do target.familyNames[#target.familyNames+1]=name end
+        table.sort(target.labels);table.sort(target.effectEntryIDs);table.sort(target.familyNames)
+        target._labels=nil;target._entries=nil;target._families=nil
+        result[#result+1]=target
+    end
+    table.sort(result,function(a,b)return a.label==b.label and a.targetID<b.targetID or a.label<b.label end)
+    return result
+end
+function LL:ProfessionOpportunityPreview(profession,expansion,targetID,character,simulated)
+    if not self.OpportunitySimulationModel or not self.ProcessingPlayerConditions then return nil end
+    local targets=self:GetProfessionOpportunityTargets(profession,expansion)
+    local selected=targets[1]
+    for _,target in ipairs(targets) do if target.targetID==targetID then selected=target;break end end
+    if not selected then return nil end
+    local db={} for key,value in pairs(self.db or {}) do db[key]=value end
+    db.rateProfile=simulated and 3 or 2;db.rateProfileCharacter=character or self:CharacterKey()
+    local proxy=setmetatable({db=db,_processingContextCache={},_processingModelCache={count=0}},{__index=self})
+    local context=proxy:ProcessingPlayerConditions({expansionID=expansion},selected.method,nil,
+        db.rateProfileCharacter,profession)
+    return proxy:OpportunitySimulationModel(selected,context),selected,context
+end
 -- Blizzard's UI catalog supplies labels and rank bounds, never yield factors.
 function LL:ProfessionExpansionName(expansion)
     return _G['EXPANSION_NAME'..tostring(expansion)]

@@ -102,6 +102,14 @@ def build_review(snapshot, evidence_folder=Path('research/evidence/v3')):
         if len(ids) == 1:
             names.setdefault(name, ids[0])
     records, notes, total, counted, unplaced = v3.build(snapshot)
+    reviewed_priors = {}
+    prior_scopes = set()
+    for record in records:
+        prior = record.get('reviewedPublishedPrior')
+        if prior:
+            reviewed_priors[(prior['sourceFile'], prior['sourceRecordID'])] = prior
+            prior_scopes.update((record['method'], str(record['inputItemID']), material['id']) for material in record['materials'])
+    source_conditions = module.load_conditions(effective)
     built_fields = defaultdict(dict)
     for record in records:
         item = record.get('inputItemID', record.get('gearKey'))
@@ -142,7 +150,17 @@ def build_review(snapshot, evidence_folder=Path('research/evidence/v3')):
         else:
             row = candidates[0]
             entry['effectiveSHA256'] = sha256(canonical({k: v for k, v in row.items() if not k.startswith('_')}).encode()).hexdigest()
-            if not module.is_study_row(row):
+            identity = module.key_of(row, names)
+            prior = reviewed_priors.get((file, row.get('id')))
+            if prior and entry['rawSHA256'] == prior['rawSHA256']:
+                entry.update(disposition='ADMITTED_AS_REVIEWED_PUBLISHED_PRIOR', supportedFields=['expectedQuantity'],
+                             observedSamplesAdded=0, modeledSourceProfileConfidence=0,
+                             reasons=['Exact reviewed source mean; unknown source profile uses a zero-confidence modeling prior, with no empirical conditional-gate bypass'])
+            elif (identity in prior_scopes and module.condition_for(source_conditions, *identity) is not None
+                  and module.unlock_state(row) is not True):
+                entry.update(disposition='PRESERVED_UNRESOLVED_CONDITIONAL_SCOPE',
+                             reasons=['The reviewed published-prior exception does not admit other conditional source cohorts'])
+            elif not module.is_study_row(row):
                 entry.update(disposition='PRESERVED_METADATA', reasons=['Separate metadata/token/restriction adapter; no processing cast samples'])
             elif not v3.is_counted(row, module):
                 entry.update(disposition='PRESERVED_REFERENCE', reasons=['Reference or existing addon copy; not additional independent observed casts'])

@@ -28,6 +28,8 @@ The declared fallback models include:
 
 An exact item identity is not proof of its probability or expected quantity. Source-backed named output families can be shown numerically while their item identities remain unresolved; they receive no invented item ID or market price. The quote remains partial where an output cannot be valued. Bound and conjured copies do not gain Auction House sale value. Species-dependent skinning pools require an explicit compatible target-output filter, or remain named opportunities.
 
+World-loot and item-use effects have their own selectable context preview on the profession page. The displayed result and its hover tooltip use normalized output indexes and discovery factors at confidence zero when no measured event denominator is available. These previews do not assert items per kill, grant a craft or register an item-to-itself sale conversion. Crafting Resourcefulness and Multicraft do not apply to these event contexts.
+
 ## Research and build path
 
 `tools/prepare_build_research.py` resolves a fetched immutable research commit, runs the source generators, reviews every study row and compiles ItemDB in the build workspace. Its manifest records the exact research revision, review results and runtime hash. With no new ref it reproduces the committed pin.

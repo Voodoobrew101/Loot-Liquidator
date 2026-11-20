@@ -5,7 +5,7 @@ local function widget(kind,parent,template)
     local noop=function() end
     for _,name in ipairs({'SetSize','SetWidth','SetHeight','ClearAllPoints','SetAllPoints','SetColorTexture',
         'SetJustifyH','SetFontObject','SetTextInsets','SetAutoFocus','ClearFocus',
-        'RegisterEvent','SetVertexColor','SetHighlightTexture','SetTextColor','SetObeyStepOnDrag','SetButtonState','SetTexture','SetParent','SetScrollChild','SetMaxLetters','RegisterForDrag'}) do w[name]=noop end
+        'RegisterEvent','SetVertexColor','SetHighlightTexture','SetTextColor','SetObeyStepOnDrag','SetButtonState','SetTexture','SetParent','SetScrollChild','SetMaxLetters','RegisterForDrag','EnableMouse'}) do w[name]=noop end
     function w:SetPoint(...) self.point={...} end
     function w:Enable() self.enabled=true end
     function w:Disable() self.enabled=false end
@@ -670,8 +670,9 @@ do
             if w.template=='SettingsDropdownControlTemplate' then dropdowns[#dropdowns+1]=w end
             if w.kind=='Button' and w.text=='Advanced' then advanced=w end
         end
-        assert(#dropdowns==(LL:IsGatheringProfession(profession) and 3 or 2),
-            'only gathering pages add a target selector to character and expansion')
+        local opportunityTargets=LL.GetProfessionOpportunityTargets and LL:GetProfessionOpportunityTargets(profession,11) or {}
+        assert(#dropdowns==2+(LL:IsGatheringProfession(profession) and 1 or 0)+(#opportunityTargets>0 and 1 or 0),
+            'native gathering and opportunity contexts add relevant target selectors')
         if expansion~=11 then dropdowns[2].initializer.setting:SetValue(expansion) end
         assert(advanced);advanced.scripts.OnClick(advanced)
         return first,panel
@@ -746,5 +747,46 @@ do
     assert(learningCheckbox.llNativeCheckbox.enabled and not learningCheckbox:GetChecked() and learnedSkill().skill==133,
         'returning to zero restores the explicit unchecked learning state')
     print('PASS: native learned-at-zero checkbox grants once, removes at zero and disables at positive investment')
+    -- The displayed opportunity result and its native hover must use the same
+    -- recalculated profile, with confidence carrying uncertainty.
+    assert(loadfile('LootLiquidator/ConversionEngine.lua'))('LL',LL)
+    LL.db.professionTooltipProfiles.Tailoring='@hypothetical'
+    assert(LL:SetManualProfessionProfile('Tester - Realm','Tailoring',11,{enabled=true,skill=100,specialization='none'}))
+    for _,target in ipairs(LL:GetProfessionOpportunityTargets('Tailoring',11)) do
+        if target.nodeID==104350 then
+            LL.db.professionOpportunitySelections=LL.db.professionOpportunitySelections or {}
+            LL.db.professionOpportunitySelections['Tailoring:11']=target.targetID
+        end
+    end
+    local opportunityFirst,opportunityPanel=nativePanel('Tailoring',11)
+    local fabricLabel=assert(labelsAfter(opportunityFirst,'Fabric Specialist (')[1])
+    local fabricSlider=assert(sliderAt(fabricLabel,opportunityFirst))
+    fabricSlider:SetValue(10)
+    local resultLabel=assert(labelsAfter(opportunityFirst,'Loot — Fabric Specialist')[1])
+    local resultFrame=resultLabel.parent
+    local previousTooltip=GameTooltip
+    local tooltipLines,tooltipShown={},false
+    GameTooltip={SetOwner=function()end,ClearLines=function()tooltipLines={}end,
+        AddLine=function(_,line)tooltipLines[#tooltipLines+1]=line end,
+        Show=function()tooltipShown=true end,Hide=function()tooltipShown=false end}
+    resultFrame.scripts.OnEnter(resultFrame)
+    local firstResult=table.concat(tooltipLines,'\n')
+    assert(tooltipShown and firstResult:find('discovery:',1,true) and firstResult:find('Confidence 0%',1,true),
+        'native hover displays the actual normalized output and confidence')
+    assert(not firstResult:lower():find('estimate',1,true) and not firstResult:lower():find('provisional',1,true),
+        'confidence is the uncertainty presentation')
+    fabricSlider:SetValue(20)
+    assert(table.concat(tooltipLines,'\n')~=firstResult,'active hover refreshes immediately when a native slider changes')
+    local characterSelector
+    for i=opportunityFirst+1,#all do
+        local w=all[i]
+        if w.template=='SettingsDropdownControlTemplate' then characterSelector=w;break end
+    end
+    characterSelector.initializer.setting:SetValue(0)
+    assert(opportunityPanel.opportunityPreview==nil and not tooltipShown,'hiding a profile clears its model and open tooltip')
+    resultFrame.scripts.OnEnter(resultFrame)
+    assert(not tooltipShown,'hidden preview retains no stale hover content')
+    GameTooltip=previousTooltip
+    print('PASS: native opportunity hover renders slider outputs, confidence and immediate refresh without stale hidden results')
     print('PASS: all 39 profession profiles, native no-tree pages, gathering target selectors, saved allocations and numeric-support refresh')
 end

@@ -312,6 +312,7 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
     end
     local method=option.name
     local gather=methodIsGather(method)
+    local opportunity=method=='Loot' or method=='Use'
     local de=method=='Disenchant'
     local stochastic=de or method=='Mill' or method=='Prospect' or method=='Crush'
     local supportsMC=option.supportsMulticraft
@@ -319,14 +320,14 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
     if explicitNativeStats then supportsMC=nativeStat(context,'multicraft')~=nil end
     if supportsMC==nil then supportsMC=number(recipe.outputCount,number(option.outputCount))>1 end
     local extraFraction=(number(native.MinCraftExtraQtyPct,1)+number(native.MaxCraftExtraQtyPct,250))/200
-    if not stochastic and not gather and not customQuality and supportsMC then
+    if not stochastic and not gather and not opportunity and not customQuality and supportsMC then
         params.outputFactor=1+params.stats.multicraft*extraFraction*(1+number(params.effectTotals.multicraftExtra)/100)
         if params.stats.multicraft>0 then params.confidence=math.min(params.confidence,15) end
         if not explicitNativeStats and recipe.capabilityConfidence then
             params.confidence=math.min(params.confidence,number(recipe.capabilityConfidence.multicraft,100))
         end
     end
-    if not de and not gather and option.supportsResourcefulness~=false and recipe.supportsResourcefulness~=false then
+    if not de and not gather and not opportunity and option.supportsResourcefulness~=false and recipe.supportsResourcefulness~=false then
         local saved=(number(native.ResourcefulEffectLow,20)+number(native.ResourcefulEffectHigh,40))/200
         params.inputFactor=clamp(1-params.stats.resourcefulness*saved*(1+number(params.effectTotals.resourcefulnessSaved)/100),.01,1)
         if params.stats.resourcefulness>0 then params.confidence=math.min(params.confidence,15) end
@@ -854,6 +855,64 @@ function LL:GatheringSimulationModel(target,context)
     if self.ApplySyntheticBenchmark then
         result=self:ApplySyntheticBenchmark(target,option,result,context)
         if result.benchmarkOutputFactor then result.yieldFactor=result.yieldFactor*result.benchmarkOutputFactor end
+    end
+    return result
+end
+
+-- These are normalized scenario indexes, not item quantities per kill/use and
+-- not liquidation EV. Real item identities remain separate from named pools.
+function LL:OpportunitySimulationModel(target,context)
+    if type(target)~='table' or (target.method~='Loot' and target.method~='Use')
+        or type(target.profession)~='string' or type(target.expansionID)~='number' then return nil end
+    context=context or {}
+    local option={name=target.method,labels=copy(target.labels or {}),inputCount=1}
+    local params=self:ProfessionProfileParameters(target.profession,target.expansionID,context,option,
+        {expansionID=target.expansionID})
+    local data=self.ItemDB and self.ItemDB.professionProfiles or {}
+    local relativeOutputs={}
+    local total=0
+    local function itemName(id)
+        local item=lookup(data.items,id)
+        return item and item.name or 'Item '..id
+    end
+    local function add(name,value,metric,unit,id,policy)
+        if type(value)=='number' and value~=0 then
+            relativeOutputs[#relativeOutputs+1]={name=name,value=value,metric=metric,unit=unit,id=id,
+                economicPolicy=policy,confidence=0}
+            if metric=='additional-output' then total=total+value end
+        end
+    end
+    for id,quantity in pairs(params.extraOutputs) do add(itemName(id),quantity,'additional-output','normalized-additional-units',id) end
+    for id,quantity in pairs(params.nontradableExtraOutputs) do add(itemName(id),quantity,'additional-output','normalized-additional-units',id,'nontradable') end
+    for id,fraction in pairs(params.relativeExtraOutputs) do add(itemName(id),1+fraction,'discovery','relative-factor',id) end
+    for id,minimum in pairs(params.minimumOutputs) do add(itemName(id),minimum,'guaranteed-output-floor','normalized-output-floor',id) end
+    for _,named in ipairs(params.namedOutputs) do
+        if type(named.expectedQuantity)=='number' then add(named.name,named.expectedQuantity,'additional-output','normalized-additional-units')
+        elseif type(named.discoveryFactor)=='number' then add(named.name,named.discoveryFactor,'discovery','relative-factor')
+        elseif type(named.chance)=='number' then
+            -- A typed chance term is displayed on a reference index rather
+            -- than asserted as an absolute probability for an unknown kill.
+            add(named.name,1+named.chance,'discovery','relative-factor')
+        end
+    end
+    table.sort(relativeOutputs,function(a,b)
+        return a.name==b.name and a.metric<b.metric or a.name<b.name
+    end)
+    local result={kind='profession-opportunity-preview',targetID=target.targetID,method=target.method,
+        profession=target.profession,expansionID=target.expansionID,actionable=false,
+        confidence=0,baselineIndex=1,outputIndex=1+total,quantityBasis=target.quantityBasis,
+        relativeOutputs=relativeOutputs,params=params,professionParameters=params,
+        unlocks=copy(params.unlocks),effectTotals=copy(params.effectTotals),appliedEffects=copy(params.appliedEffects),
+        materials={},namedOutputs={},inputCount=1,context=copy(context)}
+    if self.ApplySyntheticBenchmark then
+        result=self:ApplySyntheticBenchmark({expansionID=target.expansionID},option,result,context)
+        local factor=result.benchmarkOutputFactor
+        if factor then
+            result.outputIndex=result.outputIndex*factor
+            for _,output in ipairs(result.relativeOutputs) do
+                if output.unit=='normalized-additional-units' or output.unit=='normalized-output-floor' then output.value=output.value*factor end
+            end
+        end
     end
     return result
 end
