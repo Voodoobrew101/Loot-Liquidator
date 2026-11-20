@@ -744,10 +744,25 @@ class CommittedFiles(unittest.TestCase):
 
     def test_no_extracted_source_is_held_by_another_file(self):
         by_key, by_thread, thread = eb.held_keys(REPO)
-        for key, (ck, _) in self.states.items():
-            if ck["status"] == "rows":
-                self.assertNotIn(eb.strip_lang(key), by_key, key)
-                self.assertNotIn(thread(key), by_thread, key)
+        rows, report = eb.run_writer(REPO)
+        for row in rows:
+            key = eb.normalize_url(row["source"]["url"])
+            self.assertNotIn(eb.strip_lang(key), by_key, key)
+            self.assertNotIn(thread(key), by_thread, key)
+        # The old checkpoint remains immutable; its two unplaced Felwort
+        # totals are now held with exact identities in the primary beta report.
+        held = {r["source"] for r in report if r["status"] == "held"}
+        self.assertEqual(held, {"wowhead:item=129034"})
+        self.assertFalse(any(eb.normalize_url(r["source"]["url"]) in held for r in rows))
+        import build_estimates as estimates
+        evidence = {r.get("id"): r for r in estimates.load()}
+        for rid, output_id, total in (("legacy-20261116-011", 129032, 17), ("legacy-20261116-012", 129034, 89)):
+            row = evidence[rid]
+            self.assertEqual((row["method"], row["inputItemID"], row["outputItemID"], row["totalQuantity"]),
+                             ("Mill", 124106, output_id, total))
+            self.assertEqual(eb.normalize_url(row["source"]["url"]), "wowhead:item=129034")
+            self.assertIsNone(row["casts"])
+            self.assertIsNone(row["castsWithDrop"])
 
 
 if __name__ == "__main__":

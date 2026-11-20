@@ -2659,6 +2659,14 @@
     "claims": 2,
     "held": [
      {
+      "at": "$.originalSources[0].url",
+      "heldStudies": [
+       "reddit-1g8kbaq-20241021-max-prospect-kp-amber-qualitative"
+      ],
+      "matched": [],
+      "source": "reddit:1g8kbaq"
+     },
+     {
       "at": "$.originalSources[1].url",
       "heldStudies": [
        "reddit-1f83cnd-aqirite-1040-clicks",
@@ -2672,18 +2680,12 @@
     ],
     "imported": 0,
     "outcomes": {
-     "held: numbers match": 1,
-     "new source skipped": 1
+     "held: no number compared": 1,
+     "held: numbers match": 1
     },
     "path": "research/evidence/observations/2026-10-28-0516-warwithin-batch005-resourcefulness-queue-source-only.json",
     "reason": null,
-    "skippedNew": [
-     {
-      "at": "$.originalSources[0].url",
-      "reason": "Prospect All queue behaviour (1,000-ore stack queues 200 casts); mechanics, no outputs",
-      "source": "reddit:1g8kbaq"
-     }
-    ]
+    "skippedNew": []
    },
    {
     "claims": 3,
@@ -2785,6 +2787,7 @@
      {
       "at": "$.observations[2].url",
       "heldStudies": [
+       "reddit-10h6ccx-20230120-khazgorite-r2-comment",
        "reddit-10h6ccx-comment-100-r2-khazgorite-zero-diamonds"
       ],
       "matched": [
@@ -2798,7 +2801,8 @@
        "midnight-20261102-031211",
        "midnight-20261102-031212",
        "midnight-20261102-141312",
-       "midnight-20261102-141313"
+       "midnight-20261102-141313",
+       "midnight-20261108-0716-001"
       ],
       "matched": [],
       "source": "worldofwarcraft.blizzard.com/en-us/news/24266320"
@@ -3016,20 +3020,30 @@
   "leads": [
    {
     "claims": 1,
-    "held": [],
+    "held": [
+     {
+      "at": "$.sourceUrl",
+      "heldStudies": [
+       "wowhead-bugy-374627-draconium-ore-1",
+       "wowhead-bugy-374627-draconium-ore-2",
+       "wowhead-bugy-374627-khaz-gorite-ore-1",
+       "wowhead-bugy-374627-khaz-gorite-ore-2",
+       "wowhead-bugy-374627-serevite-ore-1",
+       "wowhead-bugy-374627-serevite-ore-2"
+      ],
+      "matched": [
+       0.02
+      ],
+      "source": "wowhead:item=192870"
+     }
+    ],
     "imported": 0,
     "outcomes": {
-     "new source skipped": 1
+     "held: numbers match": 1
     },
     "path": "research/evidence/leads/dragonflight-draconium-illimited-diamond-two-2000ore-cohorts.json",
     "reason": null,
-    "skippedNew": [
-     {
-      "at": "$.sourceUrl",
-      "reason": "Bugy's two 2,000-ore Draconium cohorts (3 and 8 Illimited Diamonds): the same author's table is held by the dragonflight agent under wowhead spell=374627 (S17 copy)",
-      "source": "wowhead:item=192870"
-     }
-    ]
+    "skippedNew": []
    }
   ],
   "ledgers": [
@@ -3096,9 +3110,9 @@
     "reason": "Titanium totals from two sources; each row compared with held rows (rowChecks)",
     "rowChecks": [
      {
-      "heldStudy": null,
+      "heldStudy": "reddit-s6bfrl-titanium-20220117",
       "line": 2,
-      "outcome": "held source, output not held: M04.1 source check",
+      "outcome": "copy",
       "output": "Bloodstone",
       "source": "reddit:s6bfrl",
       "total": 53.0
@@ -3112,9 +3126,9 @@
       "total": 250.0
      },
      {
-      "heldStudy": null,
+      "heldStudy": "reddit-s6bfrl-titanium-20220117",
       "line": 4,
-      "outcome": "held source, output not held: M04.1 source check",
+      "outcome": "copy",
       "output": "Sun Crystal",
       "source": "reddit:s6bfrl",
       "total": 44.0
@@ -3128,9 +3142,9 @@
       "total": 263.0
      },
      {
-      "heldStudy": null,
+      "heldStudy": "reddit-s6bfrl-titanium-20220117",
       "line": 6,
-      "outcome": "held source, output not held: M04.1 source check",
+      "outcome": "copy",
       "output": "Chalcedony",
       "source": "reddit:s6bfrl",
       "total": 49.0
@@ -3144,9 +3158,9 @@
       "total": 253.0
      },
      {
-      "heldStudy": null,
+      "heldStudy": "reddit-s6bfrl-titanium-20220117",
       "line": 8,
-      "outcome": "held source, output not held: M04.1 source check",
+      "outcome": "copy",
       "output": "Shadow Crystal",
       "source": "reddit:s6bfrl",
       "total": 53.0
@@ -3160,9 +3174,9 @@
       "total": 255.0
      },
      {
-      "heldStudy": null,
+      "heldStudy": "reddit-s6bfrl-titanium-20220117",
       "line": 10,
-      "outcome": "held source, output not held: M04.1 source check",
+      "outcome": "copy",
       "output": "Huge Citrine",
       "source": "reddit:s6bfrl",
       "total": 47.0
@@ -3176,9 +3190,9 @@
       "total": 227.0
      },
      {
-      "heldStudy": null,
+      "heldStudy": "reddit-s6bfrl-titanium-20220117",
       "line": 12,
-      "outcome": "held source, output not held: M04.1 source check",
+      "outcome": "copy",
       "output": "Dark Jade",
       "source": "reddit:s6bfrl",
       "total": 59.0
@@ -3450,21 +3464,21 @@
      "author": "Baadkitty",
      "line": 22,
      "outcome": "skipped",
-     "reason": "copy: v3 already holds input, output and total 157 (midnight-b010-bfa-baadkitty-152510-200herbs)",
+     "reason": "copy: v3 already holds input, output and total 157 (wowhead-baadkitty-bfa-152510-200herbs-original)",
      "recordKey": "output-main:compiled:mill:152510:153635:L183"
     },
     {
      "author": "Baadkitty",
      "line": 23,
      "outcome": "skipped",
-     "reason": "copy: v3 already holds input, output and total 71 (midnight-b010-bfa-baadkitty-152510-200herbs)",
+     "reason": "copy: v3 already holds input, output and total 71 (wowhead-baadkitty-bfa-152510-200herbs-original)",
      "recordKey": "output-main:compiled:mill:152510:153636:L184"
     },
     {
      "author": "Baadkitty",
      "line": 24,
      "outcome": "skipped",
-     "reason": "copy: v3 already holds input, output and total 64 (midnight-b010-bfa-baadkitty-152510-200herbs)",
+     "reason": "copy: v3 already holds input, output and total 64 (wowhead-baadkitty-bfa-152510-200herbs-original)",
      "recordKey": "output-main:compiled:mill:152510:153669:L185"
     },
     {
@@ -3515,56 +3529,56 @@
      "id": "tww-q16-20261028-recipe-102167",
      "line": 1,
      "outcome": "skipped",
-     "reason": "recipe already in v3 (import-recipe-00008, legacy-20261031-912)",
+     "reason": "recipe already in v3 (import-recipe-00008, legacy-20261031-912, legacy-20261109-94004)",
      "spell": 102167
     },
     {
      "id": "tww-q16-20261028-recipe-2659",
      "line": 2,
      "outcome": "skipped",
-     "reason": "recipe already in v3 (import-recipe-00001)",
+     "reason": "recipe already in v3 (import-recipe-00001, legacy-20261109-005003)",
      "spell": 2659
     },
     {
      "id": "tww-q16-20261028-recipe-29356",
      "line": 3,
      "outcome": "skipped",
-     "reason": "recipe already in v3 (import-recipe-00003)",
+     "reason": "recipe already in v3 (import-recipe-00003, legacy-20261106-smelt-002)",
      "spell": 29356
     },
     {
      "id": "tww-q16-20261028-recipe-29360",
      "line": 4,
      "outcome": "skipped",
-     "reason": "recipe already in v3 (import-recipe-00004)",
+     "reason": "recipe already in v3 (import-recipe-00004, legacy-20261106-smelt-007)",
      "spell": 29360
     },
     {
      "id": "tww-q16-20261028-recipe-3569",
      "line": 5,
      "outcome": "skipped",
-     "reason": "recipe already in v3 (import-recipe-00002)",
+     "reason": "recipe already in v3 (import-recipe-00002, legacy-20261109-005007)",
      "spell": 3569
     },
     {
      "id": "tww-q16-20261028-recipe-46353",
      "line": 6,
      "outcome": "skipped",
-     "reason": "recipe already in v3 (import-recipe-00005, legacy-20261031-902)",
+     "reason": "recipe already in v3 (import-recipe-00005, legacy-20261031-902, legacy-20261109-94005)",
      "spell": 46353
     },
     {
      "id": "tww-q16-20261028-recipe-55208",
      "line": 7,
      "outcome": "skipped",
-     "reason": "recipe already in v3 (import-recipe-00006, legacy-20261031-906)",
+     "reason": "recipe already in v3 (import-recipe-00006, legacy-20261031-906, legacy-20261109-94006)",
      "spell": 55208
     },
     {
      "id": "tww-q16-20261028-recipe-74537",
      "line": 8,
      "outcome": "skipped",
-     "reason": "recipe already in v3 (import-recipe-00007, legacy-20261031-909)",
+     "reason": "recipe already in v3 (import-recipe-00007, legacy-20261031-909, legacy-20261109-94007)",
      "spell": 74537
     }
    ]
@@ -3574,7 +3588,7 @@
    "leads-cohorts.jsonl": 0,
    "legacy-milling-cohorts.jsonl": 27,
    "submission-cohorts.jsonl": 0,
-   "v2-report-cohorts.jsonl": 1
+   "v2-report-cohorts.jsonl": 0
   },
   "submissions": [
    {
@@ -5403,7 +5417,8 @@
      {
       "at": "$.sources[1].url",
       "heldStudies": [
-       "legion-felslate-113mass-wowhead-indexed-unmapped"
+       "legion-felslate-113mass-wowhead-indexed-unmapped",
+       "wowhead-murban-715-leystone-4400ore-220-mass-prospects"
       ],
       "matched": [
        113.0
@@ -5438,7 +5453,8 @@
      {
       "at": "$.sources[1].url",
       "heldStudies": [
-       "legion-felslate-113mass-wowhead-indexed-unmapped"
+       "legion-felslate-113mass-wowhead-indexed-unmapped",
+       "wowhead-murban-715-leystone-4400ore-220-mass-prospects"
       ],
       "matched": [
        113.0
@@ -5474,7 +5490,9 @@
       "at": "$.sources[0].url",
       "heldStudies": [
        "legacy-b007-felslate-2017-mass-20261028",
-       "legacy-b007-felslate-2017-regular-20261028"
+       "legacy-b007-felslate-2017-regular-20261028",
+       "scribd-2017-leystone-mass-20000ore",
+       "scribd-2017-leystone-regular-20000ore"
       ],
       "matched": [],
       "source": "scribd.com/document/359130779/full-legion-worksheet"
@@ -5505,7 +5523,9 @@
       "at": "$.sources[0].url",
       "heldStudies": [
        "legacy-b007-felslate-2017-mass-20261028",
-       "legacy-b007-felslate-2017-regular-20261028"
+       "legacy-b007-felslate-2017-regular-20261028",
+       "scribd-2017-leystone-mass-20000ore",
+       "scribd-2017-leystone-regular-20000ore"
       ],
       "matched": [],
       "source": "scribd.com/document/359130779/full-legion-worksheet"
@@ -5536,7 +5556,9 @@
       "at": "$.sources[0].url",
       "heldStudies": [
        "legacy-b007-felslate-2017-mass-20261028",
-       "legacy-b007-felslate-2017-regular-20261028"
+       "legacy-b007-felslate-2017-regular-20261028",
+       "scribd-2017-leystone-mass-20000ore",
+       "scribd-2017-leystone-regular-20000ore"
       ],
       "matched": [],
       "source": "scribd.com/document/359130779/full-legion-worksheet"
@@ -5582,7 +5604,7 @@
        "retail12.0.5:prospect:36910:46849:globalmenace",
        "wowhead-titanium-powder-154957-ptr-1000-stacks",
        "wowhead-titanium-powder-176019-21-stacks",
-       "wowhead-titanium-powder-codiferous87-retail-101"
+       "wowhead-titanium-powder-502210-some-ore-two-powders"
       ],
       "matched": [
        16.0,
@@ -5730,13 +5752,61 @@
       ],
       "matched": [],
       "source": "warcraft.wiki.gg/wiki/cobalt_ore"
+     },
+     {
+      "at": "line 14.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
+     },
+     {
+      "at": "line 15.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
+     },
+     {
+      "at": "line 16.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
+     },
+     {
+      "at": "line 17.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
+     },
+     {
+      "at": "line 18.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
+     },
+     {
+      "at": "line 19.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
      }
     ],
     "imported": 0,
     "outcomes": {
-     "held: no number compared": 6,
+     "held: no number compared": 12,
      "held: numbers match": 7,
-     "reference or identity link": 27
+     "reference or identity link": 21
     },
     "path": "research/coordination/submissions/loot-liquidator-legacy/2026-10-28-1440-legacy-q16-batch014-40key-fourfield-audit.jsonl",
     "reason": "process artifact: field audit, validation or confidence chart (scores and derived values, not observations)",
@@ -5753,7 +5823,7 @@
        "retail12.0.5:prospect:36910:46849:globalmenace",
        "wowhead-titanium-powder-154957-ptr-1000-stacks",
        "wowhead-titanium-powder-176019-21-stacks",
-       "wowhead-titanium-powder-codiferous87-retail-101"
+       "wowhead-titanium-powder-502210-some-ore-two-powders"
       ],
       "matched": [
        200.0
@@ -5925,6 +5995,54 @@
       "source": "warcraft.wiki.gg/wiki/cobalt_ore"
      },
      {
+      "at": "line 14.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
+     },
+     {
+      "at": "line 15.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
+     },
+     {
+      "at": "line 16.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
+     },
+     {
+      "at": "line 17.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
+     },
+     {
+      "at": "line 18.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
+     },
+     {
+      "at": "line 19.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
+     },
+     {
       "at": "line 34.sourceURL",
       "heldStudies": [
        "df-r3-serevite-8000-casts-2023-source-recheck-20261028",
@@ -6015,9 +6133,9 @@
     ],
     "imported": 0,
     "outcomes": {
-     "held: no number compared": 14,
+     "held: no number compared": 20,
      "held: numbers match": 9,
-     "reference or identity link": 18
+     "reference or identity link": 12
     },
     "path": "research/coordination/submissions/loot-liquidator-legacy/2026-10-28-1540-legacy-q17-batch015-40key-fourfield-audit.jsonl",
     "reason": "process artifact: field audit, validation or confidence chart (scores and derived values, not observations)",
@@ -6034,7 +6152,7 @@
        "retail12.0.5:prospect:36910:46849:globalmenace",
        "wowhead-titanium-powder-154957-ptr-1000-stacks",
        "wowhead-titanium-powder-176019-21-stacks",
-       "wowhead-titanium-powder-codiferous87-retail-101"
+       "wowhead-titanium-powder-502210-some-ore-two-powders"
       ],
       "matched": [],
       "source": "wowhead:item=46849"
@@ -6170,6 +6288,54 @@
       ],
       "matched": [],
       "source": "warcraft.wiki.gg/wiki/cobalt_ore"
+     },
+     {
+      "at": "line 14.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
+     },
+     {
+      "at": "line 15.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
+     },
+     {
+      "at": "line 16.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
+     },
+     {
+      "at": "line 17.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
+     },
+     {
+      "at": "line 18.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
+     },
+     {
+      "at": "line 19.sourceURL",
+      "heldStudies": [
+       "wowhead-masterc34-titanium-powder-wotlk-classic-prior"
+      ],
+      "matched": [],
+      "source": "wowhead:item=46849@wotlk"
      },
      {
       "at": "line 32.sourceURL",
@@ -6524,9 +6690,9 @@
     ],
     "imported": 0,
     "outcomes": {
-     "held: no number compared": 7,
+     "held: no number compared": 13,
      "held: numbers match": 24,
-     "reference or identity link": 27
+     "reference or identity link": 21
     },
     "path": "research/coordination/submissions/loot-liquidator-legacy/2026-10-28-1742-legacy-q19-batch017-40key-fourfield-audit.jsonl",
     "reason": "process artifact: field audit, validation or confidence chart (scores and derived values, not observations)",
@@ -6643,7 +6809,8 @@
        "midnight-20261102-031211",
        "midnight-20261102-031212",
        "midnight-20261102-141312",
-       "midnight-20261102-141313"
+       "midnight-20261102-141313",
+       "midnight-20261108-0716-001"
       ],
       "matched": [],
       "source": "worldofwarcraft.blizzard.com/en-us/news/24266320"
@@ -6690,7 +6857,8 @@
        "midnight-20261102-031211",
        "midnight-20261102-031212",
        "midnight-20261102-141312",
-       "midnight-20261102-141313"
+       "midnight-20261102-141313",
+       "midnight-20261108-0716-001"
       ],
       "matched": [],
       "source": "worldofwarcraft.blizzard.com/en-us/news/24266320"
@@ -6748,8 +6916,12 @@
      {
       "at": "$.sources[3].url",
       "heldStudies": [
+       "blizz-2274222-jacara-march22-guildmate-secondhand",
+       "blizz-2274222-jacara-march22-self",
+       "blizz-2274222-jerek-april04",
        "blizzard-2274222-jacara-400ore-20260322",
-       "blizzard-2274222-jacara-guildmate-100ore-20260322"
+       "blizzard-2274222-jacara-guildmate-100ore-20260322",
+       "blizzard-2274222-post26-jerek-20260404-50ore"
       ],
       "matched": [],
       "source": "blizzforum:2274222"
@@ -6782,7 +6954,8 @@
        "midnight-20261102-031211",
        "midnight-20261102-031212",
        "midnight-20261102-141312",
-       "midnight-20261102-141313"
+       "midnight-20261102-141313",
+       "midnight-20261108-0716-001"
       ],
       "matched": [],
       "source": "worldofwarcraft.blizzard.com/en-us/news/24266320"
@@ -7471,23 +7644,24 @@
        8000.0
       ],
       "source": "reddit:108782r"
+     },
+     {
+      "at": "$.sources[2].url",
+      "heldStudies": [
+       "reddit-10s9ol9-r2-serevite-diamond-anecdotal-reference"
+      ],
+      "matched": [],
+      "source": "reddit:10s9ol9"
      }
     ],
     "imported": 0,
     "outcomes": {
-     "held: no number compared": 1,
-     "held: numbers match": 1,
-     "new source skipped": 1
+     "held: no number compared": 2,
+     "held: numbers match": 1
     },
     "path": "research/coordination/submissions/loot-liquidator-war-within/2026-10-28-0625-warwithin-batch006-numeric-candidate.json",
     "reason": "mechanics hypothesis card (reference/target contexts restate held cohorts; BLOCKED, no new measurement)",
-    "skippedNew": [
-     {
-      "at": "$.sources[2].url",
-      "reason": "Resourcefulness saved-ore rate (mechanics), no outputs",
-      "source": "reddit:10s9ol9"
-     }
-    ]
+    "skippedNew": []
    },
    {
     "claims": 4,
@@ -7513,6 +7687,14 @@
       "source": "reddit:1g350pq"
      },
      {
+      "at": "$.sources[2].url",
+      "heldStudies": [
+       "reddit-1g8kbaq-20241021-max-prospect-kp-amber-qualitative"
+      ],
+      "matched": [],
+      "source": "reddit:1g8kbaq"
+     },
+     {
       "at": "$.sources[3].url",
       "heldStudies": [
        "df-r3-serevite-8000-casts-2023-source-recheck-20261028",
@@ -7530,19 +7712,12 @@
     ],
     "imported": 0,
     "outcomes": {
-     "held: no number compared": 2,
-     "held: numbers match": 1,
-     "new source skipped": 1
+     "held: no number compared": 3,
+     "held: numbers match": 1
     },
     "path": "research/coordination/submissions/loot-liquidator-war-within/2026-10-28-0724-warwithin-batch007-numeric-candidate.json",
     "reason": "mechanics hypothesis card (reference/target contexts restate held cohorts; BLOCKED, no new measurement)",
-    "skippedNew": [
-     {
-      "at": "$.sources[2].url",
-      "reason": "Prospect All queue behaviour (1,000-ore stack queues 200 casts); mechanics, no outputs",
-      "source": "reddit:1g8kbaq"
-     }
-    ]
+    "skippedNew": []
    },
    {
     "claims": 0,
@@ -7556,6 +7731,14 @@
    {
     "claims": 6,
     "held": [
+     {
+      "at": "$.referenceContext.TWW2024QueueRefunds.source",
+      "heldStudies": [
+       "reddit-1g8kbaq-20241021-max-prospect-kp-amber-qualitative"
+      ],
+      "matched": [],
+      "source": "reddit:1g8kbaq"
+     },
      {
       "at": "$.sources[0].url",
       "heldStudies": [
@@ -7577,6 +7760,14 @@
       "source": "reddit:1g350pq"
      },
      {
+      "at": "$.sources[2].url",
+      "heldStudies": [
+       "reddit-1g8kbaq-20241021-max-prospect-kp-amber-qualitative"
+      ],
+      "matched": [],
+      "source": "reddit:1g8kbaq"
+     },
+     {
       "at": "$.sources[3].url",
       "heldStudies": [
        "df-r3-serevite-8000-casts-2023-source-recheck-20261028",
@@ -7590,33 +7781,24 @@
        8000.0
       ],
       "source": "reddit:108782r"
+     },
+     {
+      "at": "$.sources[4].url",
+      "heldStudies": [
+       "reddit-1g8kbaq-20241021-max-prospect-kp-amber-qualitative"
+      ],
+      "matched": [],
+      "source": "reddit:1g8kbaq"
      }
     ],
     "imported": 0,
     "outcomes": {
-     "held: no number compared": 2,
-     "held: numbers match": 1,
-     "new source skipped": 3
+     "held: no number compared": 5,
+     "held: numbers match": 1
     },
     "path": "research/coordination/submissions/loot-liquidator-war-within/2026-10-28-0818-warwithin-batch008-tww-resourcefulness-numeric-candidate.json",
     "reason": "mechanics hypothesis card (reference/target contexts restate held cohorts; BLOCKED, no new measurement)",
-    "skippedNew": [
-     {
-      "at": "$.referenceContext.TWW2024QueueRefunds.source",
-      "reason": "Prospect All queue behaviour (1,000-ore stack queues 200 casts); mechanics, no outputs",
-      "source": "reddit:1g8kbaq"
-     },
-     {
-      "at": "$.sources[2].url",
-      "reason": "Prospect All queue behaviour (1,000-ore stack queues 200 casts); mechanics, no outputs",
-      "source": "reddit:1g8kbaq"
-     },
-     {
-      "at": "$.sources[4].url",
-      "reason": "Prospect All queue behaviour (1,000-ore stack queues 200 casts); mechanics, no outputs",
-      "source": "reddit:1g8kbaq"
-     }
-    ]
+    "skippedNew": []
    },
    {
     "claims": 0,
@@ -7706,9 +7888,12 @@
      {
       "at": "$.sources[1].sourceURL",
       "heldStudies": [
+       "reddit-zzcnjw-20221230-four-thousand-approx-prospects",
+       "reddit-zzcnjw-20221230-serevite-1000-nominal",
+       "reddit-zzcnjw-20221231-serevite-5000-nominal",
        "reddit-zzcnjw-comment-20221231-1000-serevite-one-diamond",
        "reddit-zzcnjw-comment-20221231-5000-serevite-zero-diamond",
-       "reddit-zzcnjw-comment-approximately-4000-prospects-diamonds"
+       "reddit-zzcnjw-comment-4000-prospects"
       ],
       "matched": [
        16.0,
@@ -7755,10 +7940,20 @@
    },
    {
     "claims": 2,
-    "held": [],
+    "held": [
+     {
+      "at": "$.sources[1].url",
+      "heldStudies": [
+       "blizzard-feaver-20240905-mycobloom-createall-interruption"
+      ],
+      "matched": [],
+      "source": "blizzforum:1944679"
+     }
+    ],
     "imported": 0,
     "outcomes": {
-     "new source skipped": 2
+     "held: no number compared": 1,
+     "new source skipped": 1
     },
     "path": "research/evidence/v2/2026-10-29T1527Z-F004-tww-mycobloom-bulk-abort-denominator.json",
     "reason": null,
@@ -7767,11 +7962,6 @@
       "at": "$.sources[0].url",
       "reason": "bulk-milling failure report; no outputs",
       "source": "blizzforum:1927887"
-     },
-     {
-      "at": "$.sources[1].url",
-      "reason": "bulk-milling failure report; no outputs",
-      "source": "blizzforum:1944679"
      }
     ]
    },
@@ -8005,6 +8195,8 @@
      {
       "at": "$.sourceUrl",
       "heldStudies": [
+       "reddit-1fvhzy0-100k-herbs-152",
+       "reddit-1fvhzy0-30k-herbs-149",
        "reddit-1fvhzy0-pooled-herbs-100k",
        "reddit-1fvhzy0-pooled-herbs-30k"
       ],
@@ -8204,6 +8396,18 @@
     "claims": 5,
     "held": [
      {
+      "at": "$.sources[1].url",
+      "heldStudies": [
+       "reddit-1vknxyy-20260813-copper-100000",
+       "reddit-1vknxyy-20260813-silver-tin-10000-pooled",
+       "reddit-1vknxyy-aug13-copper-aggregate",
+       "reddit-1vknxyy-aug13-tin-silver-aggregate",
+       "reddit-1vknxyy-tired-and-fed-up-aug-2026-prospect-pooled"
+      ],
+      "matched": [],
+      "source": "reddit:1vknxyy"
+     },
+     {
       "at": "$.sources[2].url",
       "heldStudies": [
        "blizzard-forum-2272506-jacara-prospect-20260410"
@@ -8214,8 +8418,8 @@
     ],
     "imported": 0,
     "outcomes": {
-     "held: no number compared": 1,
-     "new source skipped": 3,
+     "held: no number compared": 2,
+     "new source skipped": 2,
      "reference or identity link": 1
     },
     "path": "research/evidence/v2/2026-10-29T2332Z-F004-midnight-crushing-net-gem-context.json",
@@ -8225,11 +8429,6 @@
       "at": "$.sources[0].url",
       "reason": "crushing rate forecast (dust per gem); the author's 100,000 ore and 13,000 gems are not a processed batch",
       "source": "reddit:1v5esk0"
-     },
-     {
-      "at": "$.sources[1].url",
-      "reason": "same author repeats the crushing rate; no cohort",
-      "source": "reddit:1vknxyy"
      },
      {
       "at": "$.sources[3].url",
@@ -8249,27 +8448,42 @@
       ],
       "matched": [],
       "source": "warcraft.wiki.gg/wiki/midnight_milling"
+     },
+     {
+      "at": "$.sources[3].url",
+      "heldStudies": [
+       "midnight-20261106-2314-11",
+       "midnight-20261118-1319-002"
+      ],
+      "matched": [],
+      "source": "blizzforum:2362528"
      }
     ],
     "imported": 0,
     "outcomes": {
-     "held: no number compared": 1,
-     "new source skipped": 1,
+     "held: no number compared": 2,
      "reference or identity link": 5
     },
     "path": "research/evidence/v2/2026-10-30T0030Z-F004-midnight-milling-batch-and-mixed-rank.json",
     "reason": null,
-    "skippedNew": [
-     {
-      "at": "$.sources[3].url",
-      "reason": "milling UI and skill-threshold discussion; no outputs",
-      "source": "blizzforum:2362528"
-     }
-    ]
+    "skippedNew": []
    },
    {
     "claims": 4,
     "held": [
+     {
+      "at": "$.observations[0].url",
+      "heldStudies": [
+       "war-within-20261110-0626-001",
+       "war-within-20261110-0626-002",
+       "war-within-20261110-0626-003",
+       "war-within-20261110-0626-004",
+       "war-within-20261110-0733-001",
+       "war-within-20261110-0733-002"
+      ],
+      "matched": [],
+      "source": "wowdb.com/spells/444181-khaz-algar-milling"
+     },
      {
       "at": "$.observations[2].url",
       "heldStudies": [
@@ -8283,9 +8497,9 @@
     ],
     "imported": 0,
     "outcomes": {
-     "held: no number compared": 1,
+     "held: no number compared": 2,
      "new source skipped": 1,
-     "reference or identity link": 2
+     "reference or identity link": 1
     },
     "path": "research/evidence/v2/2026-10-30T0132Z-F004-tww-milling-live-batch-epoch-reconciliation.json",
     "reason": null,
@@ -8303,6 +8517,7 @@
      {
       "at": "$.sourceLineage.canonicalURL",
       "heldStudies": [
+       "reddit-1smgllg-nezroy-apr17-approx-midnight-prospect",
        "reddit-1smgllg-nezroy-copper-approx-rates",
        "reddit-1smgllg-nezroy-pooled-byproducts",
        "reddit-1smgllg-nezroy-silver-approx-rates",
@@ -8386,23 +8601,25 @@
       ],
       "matched": [],
       "source": "method.gg/guides/midnight-jewelcrafting-profession-guide"
+     },
+     {
+      "at": "$.newFirstPersonUIContext.url",
+      "heldStudies": [
+       "midnight-20261107-012",
+       "reddit-1rrn6of-OldWolf2-copper-qualitative"
+      ],
+      "matched": [],
+      "source": "reddit:1rrn6of"
      }
     ],
     "imported": 0,
     "outcomes": {
-     "held: no number compared": 1,
-     "new source skipped": 1,
+     "held: no number compared": 2,
      "reference or identity link": 8
     },
     "path": "research/evidence/v2/2026-10-30T0432Z-F004-crushing-rank-identity-and-reagent-variant.json",
     "reason": null,
-    "skippedNew": [
-     {
-      "at": "$.newFirstPersonUIContext.url",
-      "reason": "Resourcefulness UI observation while crushing; no outputs",
-      "source": "reddit:1rrn6of"
-     }
-    ]
+    "skippedNew": []
    },
    {
     "claims": 13,
@@ -8422,7 +8639,9 @@
       "at": "$.patch121RefiningIdentityCrossCheck[1].liveSpellSource",
       "heldStudies": [
        "master-20261030-008",
-       "midnight-20261031-9702"
+       "midnight-20261031-9702",
+       "midnight-20261110-051508",
+       "midnight-20261115-2021-002"
       ],
       "matched": [
        18.0
@@ -8433,16 +8652,28 @@
       "at": "$.sourceLineages[1].url",
       "heldStudies": [
        "reddit-1sp0dax-lucariolu-kit-100-ore",
-       "reddit-1sp0dax-runeprophecy166-300-ore"
+       "reddit-1sp0dax-runeprophecy166-300-ore",
+       "reddit-1sp0dax-shawnstik-nominal1400-ore-prospect-crush"
       ],
       "matched": [],
       "source": "reddit:1sp0dax"
      },
      {
+      "at": "$.sourceLineages[2].url",
+      "heldStudies": [
+       "midnight-20261107-012",
+       "reddit-1rrn6of-OldWolf2-copper-qualitative"
+      ],
+      "matched": [],
+      "source": "reddit:1rrn6of"
+     },
+     {
       "at": "$.sourceLineages[3].url",
       "heldStudies": [
        "master-20261030-008",
-       "midnight-20261031-9702"
+       "midnight-20261031-9702",
+       "midnight-20261110-051508",
+       "midnight-20261115-2021-002"
       ],
       "matched": [],
       "source": "wowhead:spell=1307466"
@@ -8459,20 +8690,13 @@
     ],
     "imported": 0,
     "outcomes": {
-     "held: no number compared": 3,
+     "held: no number compared": 4,
      "held: numbers match": 2,
-     "new source skipped": 1,
      "reference or identity link": 7
     },
     "path": "research/evidence/v2/2026-10-30T0529Z-F004-crushing-selector-matrix-and-refining-identity.json",
     "reason": null,
-    "skippedNew": [
-     {
-      "at": "$.sourceLineages[2].url",
-      "reason": "Resourcefulness UI observation while crushing; no outputs",
-      "source": "reddit:1rrn6of"
-     }
-    ]
+    "skippedNew": []
    },
    {
     "claims": 2,
@@ -8560,6 +8784,30 @@
     "claims": 8,
     "held": [
      {
+      "at": "$.traits[1].url",
+      "heldStudies": [
+       "midnight-20261106-132401"
+      ],
+      "matched": [],
+      "source": "wowhead:/profession-trait/tin-vestigator-106980"
+     },
+     {
+      "at": "$.traits[2].url",
+      "heldStudies": [
+       "midnight-20261106-132402"
+      ],
+      "matched": [],
+      "source": "wowhead:/profession-trait/silver-scrapper-106979"
+     },
+     {
+      "at": "$.traits[3].url",
+      "heldStudies": [
+       "midnight-20261106-132403"
+      ],
+      "matched": [],
+      "source": "wowhead:/profession-trait/thorium-thresher-106978"
+     },
+     {
       "at": "$.guideCrosschecks[0].url",
       "heldStudies": [
        "midnight-20261030-200",
@@ -8601,8 +8849,8 @@
     ],
     "imported": 0,
     "outcomes": {
-     "held: no number compared": 3,
-     "reference or identity link": 5
+     "held: no number compared": 6,
+     "reference or identity link": 2
     },
     "path": "research/evidence/v2/2026-10-30T0826Z-F004-midnight-diamond-ore-trait-gates.json",
     "reason": null,
@@ -8652,10 +8900,24 @@
    },
    {
     "claims": 1,
-    "held": [],
+    "held": [
+     {
+      "at": "$.source.url",
+      "heldStudies": [
+       "war-within-20261120-0030-001",
+       "war-within-20261120-0030-002",
+       "war-within-20261120-0030-003",
+       "war-within-20261120-0030-004",
+       "war-within-20261120-0030-005",
+       "war-within-20261120-0030-006"
+      ],
+      "matched": [],
+      "source": "wowhead:item=222618"
+     }
+    ],
     "imported": 0,
     "outcomes": {
-     "reference or identity link": 1
+     "held: no number compared": 1
     },
     "path": "research/evidence/v2/2026-10-30T1032Z-F004-tww-milling-skill-rank.json",
     "reason": null,
@@ -8691,6 +8953,14 @@
    {
     "claims": 5,
     "held": [
+     {
+      "at": "$.sources[0].url",
+      "heldStudies": [
+       "midnight-20261118-1319-001"
+      ],
+      "matched": [],
+      "source": "blizzforum:2287404"
+     },
      {
       "at": "$.sources[1].url",
       "heldStudies": [
@@ -8729,19 +8999,12 @@
     ],
     "imported": 0,
     "outcomes": {
-     "held: no number compared": 3,
-     "new source skipped": 1,
+     "held: no number compared": 4,
      "reference or identity link": 1
     },
     "path": "research/evidence/v2/2026-10-30T1233Z-F004-midnight-milling-batch-selector-yield-conflict.json",
     "reason": null,
-    "skippedNew": [
-     {
-      "at": "$.sources[0].url",
-      "reason": "milling selector report (17 displayed crafts, not completed casts); no outputs",
-      "source": "blizzforum:2287404"
-     }
-    ]
+    "skippedNew": []
    },
    {
     "claims": 7,
@@ -8749,12 +9012,9 @@
      {
       "at": "$.sources[0].url",
       "heldStudies": [
-       "blizzard-forum-2276246-draggoth-powder-reference",
-       "blizzard-forum-2276246-draggoth-rare-81-reference",
-       "blizzard-forum-2276246-draggoth-rare-90-reference",
-       "forum-2276246-draggoth-rare-ilvl81-shard",
-       "forum-2276246-draggoth-rare-ilvl90-shard",
-       "forum-2276246-draggoth-tranquility-milling"
+       "blizzard-2276246-Agni-ambiguous-ore-to-gems-20260321",
+       "blizzard-2276246-Draggoth-milling-noKP-20260321",
+       "blizzard-2276246-Draggoth-mixed-copper-tin-silver-20260321"
       ],
       "matched": [
        12.5
@@ -8764,23 +9024,32 @@
      {
       "at": "$.sources[0].fallbackUrl",
       "heldStudies": [
+       "blizzard-2276246-agni-early-ore-gem-rough-reference",
+       "blizzard-2276246-draggoth-level81-90-rare-shard-reference",
        "blizzard-forum-2276246-draggoth-powder-reference",
        "blizzard-forum-2276246-draggoth-rare-81-reference",
        "blizzard-forum-2276246-draggoth-rare-90-reference",
-       "forum-2276246-draggoth-rare-ilvl81-shard",
-       "forum-2276246-draggoth-rare-ilvl90-shard",
-       "forum-2276246-draggoth-tranquility-milling"
+       "draggoth-2276246-rare-lvl81-illustration"
       ],
       "matched": [
        12.5
       ],
       "source": "blizzforum:2276246"
+     },
+     {
+      "at": "$.sources[1].url",
+      "heldStudies": [
+       "warcraftable-homely-wall-shelves-guide-milling-plan"
+      ],
+      "matched": [],
+      "source": "warcraftable.com/homely-wall-shelves"
      }
     ],
     "imported": 0,
     "outcomes": {
+     "held: no number compared": 1,
      "held: numbers match": 2,
-     "reference or identity link": 5
+     "reference or identity link": 4
     },
     "path": "research/evidence/v2/2026-10-30T1331Z-F004-midnight-powder-yield-rank-context.json",
     "reason": null,
@@ -8953,10 +9222,22 @@
    },
    {
     "claims": 2,
-    "held": [],
-    "imported": 1,
+    "held": [
+     {
+      "at": "$.source.url",
+      "heldStudies": [
+       "reddit-1fb0vv5-saisino-luredrop-milling-sep2024"
+      ],
+      "matched": [
+       11.0,
+       17.0
+      ],
+      "source": "reddit:1fb0vv5"
+     }
+    ],
+    "imported": 0,
     "outcomes": {
-     "imported": 1,
+     "held: numbers match": 1,
      "reference or identity link": 1
     },
     "path": "research/evidence/v2/2026-10-30T1626Z-F004-tww-luredrop-per-operation-range.json",
@@ -8965,35 +9246,52 @@
    },
    {
     "claims": 4,
-    "held": [],
-    "imported": 0,
-    "outcomes": {
-     "new source skipped": 4
-    },
-    "path": "research/evidence/v2/2026-10-30T1733Z-F004-midnight-prospecting-gear-refresh-rank-gate.json",
-    "reason": null,
-    "skippedNew": [
+    "held": [
      {
       "at": "$.source.url",
-      "reason": "posts 2, 6 and 7: gear re-equip changed displayed skill, output quality and gemdust rate compared in words; no casts or totals",
+      "heldStudies": [
+       "blizzard-loolie-20260627-prospect-skill-refresh-anecdote"
+      ],
+      "matched": [],
       "source": "blizzforum:2316717"
      },
      {
       "at": "$.primaryBeforeAfter.url",
-      "reason": "posts 2, 6 and 7: gear re-equip changed displayed skill, output quality and gemdust rate compared in words; no casts or totals",
+      "heldStudies": [
+       "midnight-20261118-1513-001",
+       "midnight-20261118-1513-002"
+      ],
+      "matched": [],
       "source": "blizzforum:2316717:7"
      },
      {
       "at": "$.separateAdvisory.url",
-      "reason": "posts 2, 6 and 7: gear re-equip changed displayed skill, output quality and gemdust rate compared in words; no casts or totals",
+      "heldStudies": [
+       "blizzard-loolie-20260627-prospect-skill-refresh-anecdote",
+       "midnight-20261118-1513-001",
+       "midnight-20261118-1513-002"
+      ],
+      "matched": [],
       "source": "blizzforum:2316717:6"
      },
      {
       "at": "$.separateQuantityClaim.url",
-      "reason": "posts 2, 6 and 7: gear re-equip changed displayed skill, output quality and gemdust rate compared in words; no casts or totals",
+      "heldStudies": [
+       "blizzard-loolie-20260627-prospect-skill-refresh-anecdote",
+       "midnight-20261118-1513-001",
+       "midnight-20261118-1513-002"
+      ],
+      "matched": [],
       "source": "blizzforum:2316717:2"
      }
-    ]
+    ],
+    "imported": 0,
+    "outcomes": {
+     "held: no number compared": 4
+    },
+    "path": "research/evidence/v2/2026-10-30T1733Z-F004-midnight-prospecting-gear-refresh-rank-gate.json",
+    "reason": null,
+    "skippedNew": []
    },
    {
     "claims": 3,
@@ -9050,9 +9348,12 @@
      {
       "at": "$.source.url",
       "heldStudies": [
+       "reddit-zzcnjw-20221230-four-thousand-approx-prospects",
+       "reddit-zzcnjw-20221230-serevite-1000-nominal",
+       "reddit-zzcnjw-20221231-serevite-5000-nominal",
        "reddit-zzcnjw-comment-20221231-1000-serevite-one-diamond",
        "reddit-zzcnjw-comment-20221231-5000-serevite-zero-diamond",
-       "reddit-zzcnjw-comment-approximately-4000-prospects-diamonds"
+       "reddit-zzcnjw-comment-4000-prospects"
       ],
       "matched": [
        16.0,
@@ -9163,9 +9464,12 @@
      {
       "at": "$.exactDuplicate.sourceURL",
       "heldStudies": [
+       "reddit-zzcnjw-20221230-four-thousand-approx-prospects",
+       "reddit-zzcnjw-20221230-serevite-1000-nominal",
+       "reddit-zzcnjw-20221231-serevite-5000-nominal",
        "reddit-zzcnjw-comment-20221231-1000-serevite-one-diamond",
        "reddit-zzcnjw-comment-20221231-5000-serevite-zero-diamond",
-       "reddit-zzcnjw-comment-approximately-4000-prospects-diamonds"
+       "reddit-zzcnjw-comment-4000-prospects"
       ],
       "matched": [
        16.0,

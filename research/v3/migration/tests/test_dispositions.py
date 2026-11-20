@@ -74,6 +74,22 @@ def run(row, ins, scans=None, exc=None, index=None):
 
 
 class TestHelpers(unittest.TestCase):
+    def test_coordination_lead_classification_never_admits_an_evidence_citation(self):
+        key = "reddit:109yr4s"
+        dashboard = "research/coordination/RESEARCH-DASHBOARD.md"
+        evidence = "research/evidence/observations/new.jsonl"
+        ins = inputs()
+        ins.inventory = [inv(dashboard, "process-artifact")]
+        scan = {dashboard: [{"key": key, "status": "lead-only", "big": [100]}]}
+        row, = dp.scope_gap(ins, scan, FakeIndex())
+        self.assertEqual(row["code"], "UNREVIEWED_COORDINATION_LEAD")
+        self.assertIsNone(row["checkpoint"])
+        self.assertIn("review remains pending", row["reason"])
+        ins.inventory.append(inv(evidence, "candidate-unmigrated"))
+        scan[evidence] = scan[dashboard]
+        row, = dp.scope_gap(ins, scan, FakeIndex())
+        self.assertEqual(row["decision"], "UNDECIDED")
+
     def test_clean_key_cuts_a_csv_row_from_the_url(self):
         self.assertEqual(dp.clean_key("wow-professions.com/tbc/prospecting,no,12"), "wow-professions.com/tbc/prospecting")
         self.assertEqual(dp.clean_key("reddit:abc123"), "reddit:abc123")
@@ -243,8 +259,8 @@ class TestCommittedManifest(unittest.TestCase):
         paths = [r["path"] for r in self.committed]
         # Main adds five research documents/tests and one archive-provenance
         # file; the three original addon inputs move without changing bytes.
-        self.assertEqual(len(paths), 1250)
-        self.assertEqual(len(set(paths)), 1250)
+        self.assertEqual(len(paths), 1259)
+        self.assertEqual(len(set(paths)), 1259)
         self.assertEqual(set(paths), {r["path"] for r in self.inv})
         by_inv = {r["path"]: r for r in self.inv}
         for r in self.committed:
@@ -301,14 +317,16 @@ class TestCommittedManifest(unittest.TestCase):
         import build_estimates as be
         index = ls.V3Index(be.load())
         held = {s for s in nulls if index.held(s)}
-        self.assertEqual(held, {"wowhead:item=52984@cata"})
+        self.assertEqual(held, {"wowhead:item=52984@cata", "reddit:1ub8pxv", "wowhead:item=222618",
+                                "wowhead:guide=professions", "blizzforum:1440624", "wowhead:item=46849@wotlk",
+                                "reddit:1k78h4v", "reddit:1wwd0w0", "wowhead:item=153706"})
         for source, ck in nulls.items():
             if source not in held:
                 self.assertIn(f"{source} ({ck['answer']['reasonCode']})", reasons, source)
 
     def test_the_residue_files_are_all_disposed(self):
         residue = {r["path"] for r in self.links if r["kind"] == "file" and r["outcome"] == "residue"}
-        self.assertEqual(len(residue), 41)   # 42 until the M10 merge: an agent recorded one source
+        self.assertEqual(len(residue), 35)   # newer worker transcriptions now hold six source files
         by = {r["path"]: r["disposition"] for r in self.committed}
         for p in residue:
             self.assertIn(by[p], ("extracted-null", "exception-queued", "extracted"), p)
@@ -316,7 +334,7 @@ class TestCommittedManifest(unittest.TestCase):
     def test_every_linker_exception_file_is_queued(self):
         exc_files = {r["path"] for r in self.links if r["kind"] == "source" and r["status"] == "exception"}
         by = {r["path"]: r["disposition"] for r in self.committed}
-        self.assertEqual(len(exc_files), 65)  # new y3e8ek workbook/source-context conflict remains queued
+        self.assertEqual(len(exc_files), 57)  # current source/conflict membership remains explicit
         for p in exc_files:
             self.assertEqual(by[p], "exception-queued", p)
 
@@ -333,7 +351,7 @@ class TestCommittedManifest(unittest.TestCase):
     def test_the_known_exception_groups_are_all_queued(self):
         kinds = collections.Counter(e["kind"] for e in self.committed_ex)
         self.assertEqual(kinds["held-source-numbers-differ"], sum(1 for r in self.links if r["kind"] == "source" and r["status"] == "exception"))
-        self.assertEqual(kinds["held-source-numbers-differ"], 82)
+        self.assertEqual(kinds["held-source-numbers-differ"], 77)
         self.assertTrue(any(e["subject"] == "reddit:y3e8ek cited in 2026-10-28-0525-dragonflight-batch005-report.md"
                             for e in self.committed_ex if e["kind"] == "held-source-numbers-differ"))
         self.assertEqual(kinds["imported-vs-agent-totals-differ"], 0)  # six raw Jallfo cooutputs now source-linked
@@ -384,8 +402,8 @@ class TestCommittedManifest(unittest.TestCase):
 
     def test_summary_counts_add_up(self):
         s = self.summary
-        self.assertEqual(sum(s["byDisposition"].values()), 1250)
-        self.assertEqual(s["files"], 1250)
+        self.assertEqual(sum(s["byDisposition"].values()), 1259)
+        self.assertEqual(s["files"], 1259)
         self.assertEqual(s["sha256Mismatches"], [])
         self.assertEqual(s["exceptions"]["total"], len(self.committed_ex))
         for cell in s["byInventoryDisposition"].values():
