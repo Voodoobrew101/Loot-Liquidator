@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-20T09:18:49.765Z",
-  "status": "Read current README, evidence-format, mechanics, worker role and queue; triaged two additional original-source leads. Neither supplied an accessible original workbook or material-specific measured cast/hit/zero output table. No independently grounded numeric evidence added; no empty evidence JSONL or production artifacts.",
+  "updated_at": "2026-11-20T10:26:39.624Z",
+  "status": "Reviewed current research policy, mechanics, worker instructions, queue, originals and held-study leads. Located two new historical source leads; both held pending primary workbook/raw operation proof and shattering method separation. No new independently verified processing yields or eligible numeric evidence. No empty JSONL, PR, generation or release.",
   "task_ids": [
     "T0048",
     "T0040",
@@ -14,11 +14,12 @@
     "T0032"
   ],
   "exact_gaps_targeted": [
-    "T0048 232446/229150 (and 233264/233265/229143/229162): validate raw source HTML pctstack and cohort overlap, output rank item IDs, version/bonus, build, skill/spec",
-    "T0040/T0009/T0008/T0007 210930–210938: first-person post-2024-10-25 rank-specific completed cast ledgers, output IDs and quality, material hits/zeros/0..N, refunds/reprocessing and unlock state",
-    "T0010/T0011/T0012 210796/210797/210798: 10-herb mill operation histograms to 222618/222619 with skill/spec/output-rank and Resourcefulness"
+    "T0048 232446/229150 and related 233264/233265/229143/229162: original live Retail Looter pctstack, nonoverlap, source build/skill, material IDs and zero-inclusive stack histograms",
+    "T0040/T0009/T0008/T0007 210930..210938: post-2024-10-25 original per-rank prospecting casts, per-output 0..N/hits/zeros, exact item ranks, unlocks and Resourcefulness",
+    "T0010/T0011/T0012 210796/210797/210798: first-person 10-herb mill casts by herb rank, 222618/222619 pigment quality outputs, skill/spec and 0..N distribution",
+    "Historical shatter 219950/219951 into 219946/219947/219948: verify independent ~10k-shard original cohort versus comments, denominator/refund basis and distinct method schema"
   ],
-  "source_branch_head_reviewed": "7ecd1be21752d9ccfeb1712aaaf5bbf3bc2c3f80",
+  "source_branch_head_reviewed": "93608578860e2ead34ff5df99e1c1814f5df46d0",
   "source_policy": "2026-11-19 superseding policy; review originals and held studies; no routine PR, empty JSONL, generated snapshot or implementation/runtime changes",
   "study_backlog_triage": [
     {
@@ -197,12 +198,31 @@
       "exact_inputs": "Ironclaw R1 210936 (600 initial ore claimed; 117 prospects mentioned, independent completed-operation ledger unverified)",
       "outputs": null,
       "reason": "Firsthand discussion offers purchase/cast-scale context only; no per-output IDs, total units, hits, zeros or 0..N distributions. Resourcefulness/refunds and '117 prospects' verification/context unavailable. Not a numeric yield study; do not convert 600/5 into measured casts or estimate P(hit)."
+    },
+    {
+      "status": "held",
+      "original_cohort": "Firsthand 2024-10-01 thread: one commenter says ~10,000 rank-2 Gleaming Shards shattered with approximate 66% R1 / 33% R2 Storm Dust quality shares; other commenters report distinct samples and Resourcefulness",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1ftqzxp",
+      "existing_ids": null,
+      "exact_inputs": "219950 Gleaming Shard R2 for one speaker; separate R3 219951 and R2 samples by other speakers; source reports input shards, not independently enumerated completed recipe executions",
+      "outputs": "219946 Storm Dust R1 approx 66% and 219947 R2 approx 33% in one speaker's unverified units; another speaker approx R3-shatter dust quality shares 40% R1/40% R2/20% R3 and R2 64% R1/34% R2. No exact unit totals or castsWithDrop.",
+      "reason": "Historical original September/October 2024, separate commenters/cohorts; percentages are rounded, context ambiguous between output-unit share and cast-level hit probability, sums differ from 100, no 0..N histogram or patch/skill/spec/refund ledger. Shattering is NOT direct gear Disenchant; current worker evidence `drop.method` has no Shatter enum. Hold for Master schema/reviewer assessment; do not force into DE baseline or reclassify counted input shards as verified completed casts."
+    },
+    {
+      "status": "held",
+      "original_cohort": "2024-09-25 TWW crafting spreadsheet using Blizzard and TSM APIs, referenced as maintained through February 2025",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1foca2r",
+      "secondary_source": "https://www.reddit.com/r/woweconomy/comments/1iviflu",
+      "existing_ids": null,
+      "exact_inputs": "Potential TWW prospecting/milling/disenchanting/shattering recipe model rows; source workbook not retrieved or inspected; no rank-specific first-person study confirmed",
+      "outputs": null,
+      "reason": "Feb 22 2025 discussion calls this an Excel workbook covering multiple shuffles, with live API/price-model assumptions; no source-author original workbook bytes, raw measured operations, output-quality counts, per-cast histograms or independent cohort provenance accessible. Modelled recipe profitability is not a measured drop cohort. Separate from Kaychak originals; hold pending primary workbook access and source-vs-formula audit."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 4,
-    "held": 8,
+    "held": 10,
     "duplicate": 2
   },
   "newly_verified_fields": [],
@@ -217,31 +237,36 @@
   "evidence_source_links": [],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-20T0521-algari-pvp-item-metadata.jsonl",
   "verified_commit_sha": null,
-  "verification": "Status-only commit; resulting Git commit SHA cannot be self-embedded in this file. Read back file at branch ref and verify commit SHA through GitHub.",
+  "verification": "Status-only commit; its own SHA cannot be embedded in the same commit. Verify branch SHA and status file read-back after write.",
   "blockers": [
     "Public repository git tree (3,669 paths, at reviewed branch HEAD) has audit CSV files but no accessible original XLS/XLSX/ODS spreadsheets. Tomasz and the YouTube author's unpublished Google Sheets are therefore still held; do not reinterpret derived audit CSV as original operation exports.",
     "On this research branch tools/research_build_review.py and tools/prepare_build_research.py returned GitHub 404; build-time admission/generation remains implementation review work, not deployed or worker-owned.",
     "Cumulative PTR Looter display rows contain repeated material names with linked rank IDs unavailable; no per-row independent study and no safe current-Retail rank-specific mapping.",
     "No independently verified post-2024-10-25 original TWW cast logs with completed operations, output-quality IDs, 0..N histograms, skill/spec/build and resourcefulness basis. Kaychak May-2025 named original XLSX is Patreon-locked; Jan-2026 advertised free workbook not retrieved, and neither is presently verified as an original measured yield study.",
     "2025-06-21 'Prospecting Shattering Cheat Sheet.xlsx' is shown as a Patreon attachment but access is join/login-gated; no original workbook bytes or raw cast rows to audit.",
-    "2025-03-31 R1 Ironclaw anecdote has no output ledger and cannot support any drop-rate or totalQuantity field."
+    "2025-03-31 R1 Ironclaw anecdote has no output ledger and cannot support any drop-rate or totalQuantity field.",
+    "Direct Wowhead raw HTML and Reddit source fetch unavailable on available browsers; targeted Firecrawl scraping was rejected by exhausted app credits (transient). No independently verified original live-page pctstack/bonus/build detail obtained.",
+    "The research drop method enum lacks Shatter; shattering results must not be added as Disenchant. Master/reviewer decision required if original 2024 shatter output-quality shares become admissible.",
+    "Separate 2024 TWW Crafting Spreadsheet original workbook and cell lineage unavailable; API-based model output must not be mistaken for first-person measured recipe yields."
   ],
   "exhausted_sources": [
     "Previously indexed 1f83cnd, 1g350pq, PeaEsk/434018, 1fdmzwy and 1f3qf96 already provide historical studies; source duplicates not re-imported.",
     "Previously checked 2024-12-28 Tomasz unpublished worksheet, 2025 YouTube 50k input description, 2025-06-09 1l3uqnw joint milling sample, and 229330/224758 PTR Looter snapshots yield no new eligible independent data.",
     "2026-11-20 new spreadsheet discovery checked Kaychak 2025-05-06 locked XLSX, Jan-2026 public announcement, SemiCollin Oct-2024 video, and 2025 community references; none exposed original operation logs. Reused Reddit 1f5rsk5 and Wowhead 223548 have existing records. Avoid recycling these as new studies.",
-    "2026-11-20 current run: named Kaychak Jun21 worksheet, Reddit Mar31 Ironclaw anecdote, Oct21 Prospect All mechanics and Method milling guide examined; no new independent material-output study. Do not repeat without original XLSX/cast evidence."
+    "2026-11-20 current run: named Kaychak Jun21 worksheet, Reddit Mar31 Ironclaw anecdote, Oct21 Prospect All mechanics and Method milling guide examined; no new independent material-output study. Do not repeat without original XLSX/cast evidence.",
+    "2026-11-20: Reddit 1ftqzxp historical shatter original/commenter estimates inspected; new but unfit for direct DE numeric admission without distinct recipe method/raw ledger; do not scrape it repeatedly without author export.",
+    "2026-11-20: original Excel-only 1foca2r workbook referenced by Feb 2025 1iviflu, not retrieved. Avoid treating downstream modelling as actual cast studies."
   ],
-  "next_concrete_step": "Obtain source-author-permitted bytes of Kaychak's June 21 2025 'Prospecting Shattering Cheat Sheet.xlsx' or Jan 2026 publicly released workbook, inspect each sheet for raw first-person completed casts (not spreadsheet/model formulas), exact material quality IDs, 0..N outputs, skill/spec, build/refunds, and dedupe cohorts; otherwise return to T0048 independently retrievable Looter raw HTML, without modifying implementation.",
-  "previous_status_updated_at": "2026-11-20T08:21:34.920Z",
+  "next_concrete_step": "Seek source-author-permitted original 1foca2r Excel workbook or Kaychak June-2025 XLSX and inspect formulas versus observed operation rows; for T0048 retrieve same-cohort live item-page pctstack source HTML and item bonus/build with original casts before any evidence admission. Separately request Master review of Shatter method boundary for 1ftqzxp; never include it as gear Disenchant.",
+  "previous_status_updated_at": "2026-11-20T09:18:49.765Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "scan_at_utc": "2026-11-20T09:18:49.765Z",
-    "source_repo_head": "7ecd1be21752d9ccfeb1712aaaf5bbf3bc2c3f80",
+    "scan_at_utc": "2026-11-20T10:26:39.624Z",
+    "source_repo_head": "93608578860e2ead34ff5df99e1c1814f5df46d0",
     "task_ids": [
       "T0048",
       "T0040",
@@ -255,40 +280,32 @@
     ],
     "results": [
       {
-        "status": "held-new-original-worksheet-lead",
-        "source": "https://www.patreon.com/Kaychak/posts/free-crafting-131980321",
-        "detail": "Jun 21 2025 'Prospecting Shattering Cheat Sheet.xlsx' is an attached free/join-gated workbook. Cannot inspect its original sheets, casts, outputs, IDs or provenance; do not use as measured evidence."
+        "status": "held-firsthand-distinct-shatter-method",
+        "source": "https://www.reddit.com/r/woweconomy/comments/1ftqzxp",
+        "detail": "Oct 1 2024 separate speakers: 10k R2 shard claim with 66/33 quality shares; 40/40/20 R3 and 64/34 R2 references; 3x1k attempts with 22% resourcefulness but no exact complete output or refund-ledger counts. Shatter not direct gear DE."
       },
       {
-        "status": "held-outputless-firsthand-anecdote",
-        "source": "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
-        "detail": "Mar 31 2025 discussion claims 600 rank-1 Ironclaw ore and 117 prospects but no per-output quantities/hits, resourcefulness/refund accounting or raw operation ledger. Not estimator-eligible."
+        "status": "held-thirdparty-workbook-model",
+        "source": "https://www.reddit.com/r/woweconomy/comments/1foca2r",
+        "secondary": "https://www.reddit.com/r/woweconomy/comments/1iviflu",
+        "detail": "Excel model covering TWW shuffles cited and apparently maintained in Feb 2025, but original workbook/actual measured rows not obtained."
       },
       {
-        "status": "methodology-not-output-study",
-        "source": "https://www.reddit.com/r/woweconomy/comments/1g8kbaq",
-        "detail": "Oct 21 2024 firsthand reports Prospect All queues 200 actions for a full 1000-ore stack even when refunded ore stays; not proof all 200 completed, or an independent output cohort. Avoid deriving casts from initial ore in other reports."
-      },
-      {
-        "status": "source-original-html-unavailable",
+        "status": "no-new-raw-cohort",
         "source": "https://www.wowhead.com/item=232446/boreal-rifle",
-        "detail": "Public rendered item page omitted underlying Looter pctstack tables; raw source cohort, build, skill, bonuses and per-stack distribution unverified."
+        "detail": "Raw pctstack inaccessible; source-specific DE histogram, skill/build and variant unresolved."
       },
       {
-        "status": "duplicate",
-        "source": "https://www.reddit.com/r/woweconomy/comments/1g350pq",
-        "detail": "Oct 14 2024 Aqirite rank 1/rank 2 aggregated per-1000-ore source already indexed; no new independent cohort."
-      },
-      {
-        "status": "reference-not-study",
-        "source": "https://www.method.gg/guides/the-war-within-inscription-profession-leveling-guide",
-        "detail": "Guide confirms 10-herb Khaz Algar Milling and resourcefulness context; no source-level per-herb operation histograms."
+        "status": "reference-not-new",
+        "source": "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide",
+        "detail": "Herb-pigment family mapping and quality determinants only, no observed casts/hits."
       }
     ],
-    "original_spreadsheet_check": "Named May 2025 and Jun 2025 Kaychak XLSX attachments plus Jan 2026 free-announcement lead remain inaccessible or uninspected; no bytes or original rows were retrieved.",
+    "original_spreadsheet_check": "Repository tree checked at current branch head: 3,677 entries, many audit CSV but no original XLS/XLSX/ODS. Kaychak and separately identified 1foca2r Excel workbook bytes not retrieved or audited.",
     "evidence_created": false,
     "new_independent_cohorts": 0,
     "new_output_fields": 0,
-    "pipeline_check": "Build-time review/generation is implementation-only and unvalidated; no addon snapshot."
+    "pipeline_check": "Build-time review not validated/deployed. No addon snapshot, PR or code/schema modification.",
+    "firecrawl": "Transient connector-credit exhaustion; source HTML remains unverified."
   }
 }
