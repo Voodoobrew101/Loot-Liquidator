@@ -1,19 +1,21 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-20T19:24:24.041Z",
-  "status": "One new held 12.1.7 PTR-only epic mace item-side Looter reference: item 275221, 182 reported cumulative disenchants, two unresolved Dawn Crystal material rows 94 and 83 appearances. PTR-2 12.1.5 171/90/77 is not an independent cohort. Zero measured new live Retail rate samples.",
+  "updated_at": "2026-11-20T20:16:39.293Z",
+  "status": "250055 source-quality check: live Looter 73 reported entries with 37/33 same-name Dawn Crystal rows is invariant across selected bonus previews (ilvl 263/266/269/289), so no at-cast ilvl stratification. PTR 70 and PTR-2 69 are overlapping snapshots, not independent studies. No new measured live yield cohorts or evidence files.",
   "task_ids": [
     "T0026",
     "T0049",
     "T0005",
     "T0039",
-    "T0045"
+    "T0045",
+    "T0003"
   ],
   "exact_gaps_targeted": [
-    "275221 two Dawn Crystal material rank/ID links, at-cast ilvl/bonus/skill/spec/build, output units and event-level histograms; PTR-only hold",
-    "272246 actual live disenchant eligibility and at-cast ilvl versus selected 305/base206",
-    "237362 Umbral Tin 4000 nominal ore actual completed casts/refunds/hits; 242608 conditional unlock",
-    "236761/236770/236778/236776 10-herb Midnight milling outputs and actual casts"
+    "250055 selected-bonus item-level preview versus Looter aggregate cohort, two material-rank identities and live/PTR deduplication",
+    "272246 Miststalker's Wristbands actual at-cast ilvl/bonus (base206 versus selected305) and live disenchant eligibility",
+    "237362 Umbral Tin 4000 nominal ore, completed casts, refunds, per-output hits/histograms, 242608 unlock",
+    "236761/236770/236778/236776 10-herb milling actual casts, ranks and per-event pigment output",
+    "237359 rank1 Refulgent Copper true original prospect operations and per-output 0/1/2+"
   ],
   "triage": [
     {
@@ -918,13 +920,66 @@
       },
       "disposition": "held reference only, no measured live rate admission",
       "hold_reason": "PTR provenance, unknown source-event build/bonus/skill, unknown rank-identity, quantities, cast-level outputs and zero outcomes. 12.1.5 and 12.1.7 are potentially overlapping cumulative item-side views; cannot add counts or label difference new casts."
+    },
+    {
+      "category": "held_cumulative_item_looter_not_bonus_stratified_20261120",
+      "input_id": 250055,
+      "input_name": "Voidbreaker's Encryption",
+      "rarity": "epic",
+      "equipment_kind": "cloak",
+      "sources": [
+        "https://www.wowhead.com/item=250055/voidbreakers-encryption",
+        "https://www.wowhead.com/item=250055/voidbreakers-encryption?bonus=12790",
+        "https://www.wowhead.com/item=250055/voidbreakers-encryption?bonus=12795",
+        "https://www.wowhead.com/item=250055/voidbreakers-encryption?bonus=12796",
+        "https://www.wowhead.com/ptr/item=250055/voidbreakers-encryption",
+        "https://www.wowhead.com/ptr-2/item=250055/voidbreakers-encryption"
+      ],
+      "checked_utc": "2026-11-20T20:16:39.293Z",
+      "verified_visible_fields": {
+        "base_display_ilvl": 44,
+        "selected_live_bonus_preview_ilvl": {
+          "12790": 263,
+          "12795": 266,
+          "12796": 269
+        },
+        "other_selected_live_mythic_preview_ilvl": 289,
+        "live_aggregate_reported_disenchants": 73,
+        "live_aggregate_two_same_name_dawn_crystal_appearance_counts": [
+          37,
+          33
+        ],
+        "ptr_12_1_7_aggregate_reported_disenchants": 70,
+        "ptr_12_1_7_dawn_crystal_appearance_counts": [
+          35,
+          32
+        ],
+        "ptr_12_1_5_aggregate_reported_disenchants": 69,
+        "ptr_12_1_5_dawn_crystal_appearance_counts": [
+          35,
+          31
+        ],
+        "live_aggregate_constant_across_all_tested_bonus_previews": true,
+        "at_cast_ilvl": null,
+        "at_cast_bonus": null,
+        "skill": null,
+        "specialization": null,
+        "client_build_at_cast": null,
+        "output_item_ids": null,
+        "output_ranks": null,
+        "material_total_units": null,
+        "zero_outcome_casts": null,
+        "per_cast_histogram": null
+      },
+      "disposition": "reviewable existing aggregate; new independent per-bonus display invariance test only. No new cohort or rate admission.",
+      "hold_reason": "The same 73/37/33 source Looter totals appear at multiple selected gear upgrade-level previews (263/266/269/289). Therefore these public pages do not stratify reported disenchants by the selected bonus or prove any at-cast item level; PTR and PTR-2 are separate cumulative snapshots and must not be summed with live data. Two unnamed Dawn Crystal rows cannot be assigned 243605 versus 243606 without source links."
     }
   ],
   "newly_verified_fields_or_cohorts": [
-    "Previously unindexed in this role status: 275221 Beast Collector's Cudgel, 12.1.7 PTR epic 1H mace source item identity.",
-    "One cumulative PTR Looter source shows 182 reported disenchant entries and two same-name Dawn Crystal appearances 94 and 83; exact linked IDs/ranks unknown.",
-    "PTR-2 12.1.5 shows 171 reports and 90/77 material row appearances: comparative snapshot, not another independent cohort.",
-    "No measured actual live cast denominator, per-output quantity, zero outcome, histogram, current client build, skill, or specialization."
+    "250055 existing live Wowhead item-side aggregate: 73 reported disenchants and two same-name Dawn Crystal material appearance counts 37/33; no newly independent study.",
+    "Same 73/37/33 counts remain unchanged when the page selects different item bonus 12790 (display ilvl263), 12795 (266), 12796 (269), and a Mythic displayed ilvl289; source table cannot establish at-cast item variant or ilvl.",
+    "250055 PTR 12.1.7: 70 and 35/32; PTR-2 12.1.5: 69 and 35/31, overlapping historical snapshots, not additional independent cohorts.",
+    "Two Dawn Crystal source rows have unresolved output item links/quality-rank identity. Skill, specialization, actual bonus, all material units and event histograms remain unknown."
   ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": {
@@ -934,29 +989,35 @@
     "new_midnight_zero_outcome_counts": 0,
     "new_midnight_histograms": 0,
     "new_measured_probabilities": 0,
-    "new_reference_only_ptr_input_ids": [
-      275221
+    "new_live_eligible_yield_admissions": 0,
+    "previously_indexed_item_ids_rechecked": [
+      250055
     ],
-    "ptr_12_1_7_item_side_reported_disenchants": 182,
-    "ptr_12_1_7_material_appearance_rows": [
-      94,
-      83
+    "live_existing_aggregate_source_reports": 73,
+    "live_existing_aggregate_dawn_crystal_row_appearances": [
+      37,
+      33
     ],
-    "ptr_12_1_5_nonindependent_snapshot_reports": 171,
-    "ptr_12_1_5_material_appearance_rows": [
-      90,
-      77
+    "selected_bonus_preview_item_levels": [
+      263,
+      266,
+      269,
+      289
     ],
-    "new_live_eligible_yield_admissions": 0
+    "ptr_historical_snapshot_reports": [
+      70,
+      69
+    ]
   },
-  "evidence_files_added_this_run": [
-    "research/v3/evidence/midnight/2026-11-20T1924-beast-collectors-ptr-looter-hold.jsonl"
-  ],
+  "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://www.wowhead.com/ptr/item=275221/beast-collectors-cudgel",
-    "https://www.wowhead.com/ptr-2/item=275221/beast-collectors-cudgel",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-20T1924-beast-collectors-ptr-looter-hold.jsonl"
+    "https://www.wowhead.com/item=250055/voidbreakers-encryption",
+    "https://www.wowhead.com/item=250055/voidbreakers-encryption?bonus=12790",
+    "https://www.wowhead.com/item=250055/voidbreakers-encryption?bonus=12795",
+    "https://www.wowhead.com/item=250055/voidbreakers-encryption?bonus=12796",
+    "https://www.wowhead.com/ptr/item=250055/voidbreakers-encryption",
+    "https://www.wowhead.com/ptr-2/item=250055/voidbreakers-encryption"
   ],
   "blockers": [
     "272246 raw HTML original recovered (140 reported source Looter events; five output rank/count/fixed-stack lines), but missing actual at-cast itemLink/bonus/effective ilvl, skill/spec/build and true zero-inclusive per-cast event trace; current eligibility conflicts with WowDB base flag. Reference only.",
@@ -966,7 +1027,8 @@
     "Firsthand March 12 Resourcefulness-hidden-UI report confirms a capture caveat but has no numerical cast/refund denominator; do not infer effective Resourcefulness=0 from a blank craft-details field.",
     "One firsthand July 3 Stormwarning source duplicated into 13+13 evidence rows with mismatched studyKeys and rank/ID discrepancies; Master/build-time importer must dedupe/correct originals without overwriting source.",
     "JD3K three-file duplication: 51 v3 records preserve only 17 distinct original output observations (34 repeats); all cast=10 values are unsupported 50/5 nominal equivalents and need Master/build-review source-level dedup and denominator hold, not worker rewriting.",
-    "275221 12.1.7 PTR item-side Looter has rank-unknown Dawn Crystal rows, no actual events, no at-cast skill/bonus/build/output units and no confirmed live eligibility; reference only."
+    "275221 12.1.7 PTR item-side Looter has rank-unknown Dawn Crystal rows, no actual events, no at-cast skill/bonus/build/output units and no confirmed live eligibility; reference only.",
+    "250055 Looter aggregate invariant under multiple bonus-specific item-level previews; needs individual actual game itemLink/bonus, skill/spec, build and material link IDs to stratify 73 reported entries. Live and PTR snapshots must not be added."
   ],
   "exhausted_sources": [
     "Current Wowhead 272246 item/bonus preview and WoWDB eligibility: no raw Looter events or verified at-cast bonus.",
@@ -988,11 +1050,12 @@
     "2026-11-20 original Stormwarning July 3 firsthand R2 ore source fully matched 13/13 to October 31 and November 3 records; no independent second cohort or completed-cast ledger; do not re-search unless original event/itemLinks emerge.",
     "2026-11-20 Midnight milling field-review CSV 8 rows inspected: 4.5 expected, 3-6 range are explicitly modeled proxies with zero measured casts; cannot promote to empirical baseline.",
     "2026-11-20 JD3K spell original 50-ore rank2 tests and two historical v3 repeats reconciled with legacy denominator-corrected observation; source lacks raw 0-inclusive event/refund ledger, no repeat search unless independent export appears.",
-    "2026-11-20 275221 indexed PTR-only 12.1.7 182/94/83 and PTR-2 12.1.5 171/90/77: no event log/output IDs; do not recount unless first-party data emerges."
+    "2026-11-20 275221 indexed PTR-only 12.1.7 182/94/83 and PTR-2 12.1.5 171/90/77: no event log/output IDs; do not recount unless first-party data emerges.",
+    "2026-11-20 250055 live Wowhead bonus=12790/12795/12796 and Mythic previews all show identical 73/37/33 Looter cumulative counts despite ilvl changes; PTR 70 and PTR-2 69 are not independent. Do not repeat per-bonus search without raw character/event provenance."
   ],
-  "next_concrete_step": "Find 272246 live Retail disenchant event logs with at-cast itemLink/skill and reconcile eligibility, then 237362 Umbral Tin raw completed prospect/refund events; 275221 PTR material link IDs/variant needed before any potential admission.",
-  "verified_base_commit_sha": "671e92657c1103933e2db4bb2403e6f94a3db915",
+  "next_concrete_step": "Seek a dated first-party 250055 or 272246 Retail Disenchant event export with the exact gear itemLink/bonus and profession skill/spec, then original 237362 Umbral Tin cast/refund ledger. Do not normalize historical Looter counts by selected wowhead ilvl.",
+  "verified_base_commit_sha": "ce621ecab2733b94cd5567913c429af04c09e184",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "One atomic evidence+owned-status commit. The new commit SHA cannot be embedded into its own contents; verify with GitHub ref and post-commit read-back."
+  "commit_note": "Owned status-only update, no independent study or new evidence JSONL. Commit SHA cannot be embedded in its own content; check target branch ref and read-back after commit."
 }
