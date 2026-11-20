@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-20T06:43:52.808Z",
-  "status": "New independently contributed original ploxl Classic exact-item Enchantrix source: 179 output rows, 171 distinct item-variant keys, 168 item IDs. Source-native material-positive sightings and quantities verified, completed casts/zero outcomes unknown; 24995/36909/23424 gaps remain. No Retail numeric admission.",
+  "updated_at": "2026-11-20T07:45:35.721Z",
+  "status": "New independently named original Classic contributor imba.lua checked; 141 positive-output observations preserved from 136 distinct exact item variants, no full cast denominator or zero histograms. Current Retail admission held.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -12,878 +12,276 @@
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "24995 Warmaul Legplates TBC gear: original historic 2068 Looter source lacks output quantities, audited completed casts, per-cast zeros/histograms, patch, skill and Retail eligibility",
-    "36909 Cobalt Ore and 23424 Fel Iron Ore: previously preserved ore/stack quantities lack independently observed per-output castsWithDrop and 0..N distributions, and input-refund audits",
-    "Classic exact-item (not matching BC Warmaul-level) DE: ploxl original 171 item-variant SavedVariables records supply positive sightings and raw material units, but no complete cast denominator",
-    "45661 Wayward Vanquisher spaulders already has historical class reward IDs in owned evidence; avoid duplication"
+    "Warmaul Legplates 24995: firsthand item-specific full completed casts, 22445/22446/22447/22449 quantity histograms/zeros, historical versus Retail version, skill/patch eligibility",
+    "Cobalt Ore 36909: named per-cast 0-N output counts / actual operations, input refunds, build and gems",
+    "Fel Iron Ore 23424: additional independent completed-prospect event logs and per-gem histograms",
+    "Historic original Classic Enchantrix accounts: exact item/material names with source-native positive counters, no simulated denominators"
   ],
   "newly_verified_fields_cohorts": {
-    "source": "Original independent named contributor ploxl.lua, EnchantedLocal; exact itemID:enchantID:suffixID and outputID:positive sightings:material units:0. Original item_names.csv lookup, parser table_parse.py, grouped-vs-local crosscheck.",
+    "source": "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/imba.lua",
+    "era": "historical Classic only",
+    "inputIdentity": "exact itemID:enchantID:suffixID from EnchantedLocal",
     "exactInputIDs": [
-      3196,
-      4047,
-      4089,
+      863,
+      1465,
+      1624,
+      1990,
+      2034,
+      2578,
+      2585,
+      2982,
+      3042,
+      3058,
+      3184,
+      3199,
+      3235,
+      3307,
+      3324,
+      3645,
+      3739,
+      3743,
+      3748,
+      3749,
+      3750,
+      3760,
+      3761,
+      4039,
+      4071,
       4107,
-      4109,
       4112,
+      4115,
       4117,
-      4131,
+      4121,
       4133,
-      4430,
-      4564,
-      6340,
-      6424,
-      6426,
-      6686,
-      6727,
-      6750,
-      6780,
-      7446,
-      7472,
-      7519,
+      4309,
+      4316,
+      4561,
+      4566,
+      4697,
+      4706,
+      4729,
+      5007,
+      5299,
+      5306,
+      5313,
+      5326,
+      5340,
+      5343,
+      5355,
+      5356,
+      6226,
+      6238,
+      6319,
+      6335,
+      6407,
+      6414,
+      6417,
+      6420,
+      6477,
+      6482,
+      6505,
+      6541,
+      6551,
+      6573,
+      6612,
+      6616,
+      6627,
+      6679,
+      6738,
+      6739,
+      6797,
+      6903,
+      7001,
+      7111,
+      7366,
+      7406,
+      7461,
+      7522,
+      7685,
       7711,
-      8114,
-      8246,
-      8253,
-      8269,
-      8284,
-      8288,
-      8291,
-      8292,
-      8295,
-      8298,
-      8309,
-      9288,
-      9390,
-      9414,
-      9419,
-      9637,
-      9640,
-      9646,
-      9862,
-      9930,
-      9941,
-      9948,
-      9953,
-      9999,
-      10003,
-      10024,
-      10025,
-      10041,
-      10066,
-      10082,
-      10099,
-      10108,
-      10174,
-      10210,
-      10214,
-      10216,
-      10237,
-      10262,
-      10265,
-      10376,
-      10380,
-      10461,
-      10462,
-      10780,
-      10782,
-      11669,
-      11807,
-      11820,
-      11823,
-      11869,
-      11917,
-      11919,
-      11924,
-      11926,
-      11929,
-      11934,
-      11945,
-      11988,
-      12038,
-      12046,
-      12057,
-      12082,
-      12113,
-      12936,
-      13142,
-      13171,
-      13216,
-      13315,
-      13344,
-      13376,
-      13400,
-      13524,
-      13528,
-      13531,
-      13537,
-      13538,
-      13856,
-      13863,
-      13950,
-      13961,
-      14242,
-      14268,
-      14269,
-      14276,
-      14296,
-      14309,
-      14323,
-      14324,
-      14441,
-      14447,
-      14503,
-      14620,
-      14622,
-      14626,
-      14641,
-      14661,
-      14662,
-      14802,
-      14957,
-      14960,
-      15227,
-      15239,
-      15323,
-      15324,
-      15393,
-      15452,
-      15497,
-      15533,
-      15629,
-      15644,
-      15704,
-      15708,
-      15799,
-      15804,
-      15813,
-      15855,
-      15873,
-      15982,
-      16673,
-      16683,
-      16685,
-      16691,
-      16694,
-      16696,
-      16699,
-      16723,
-      16740,
-      17755,
-      17768,
-      18022,
-      18083,
-      18302,
-      18382,
-      18425,
-      18527,
-      18720,
-      18730,
-      19039,
-      19040,
-      19116,
-      19119,
-      19125,
-      19126,
-      19507,
-      20641,
-      20642
+      7714,
+      7756,
+      8071,
+      8135,
+      8277,
+      9633,
+      9660,
+      9766,
+      9767,
+      9792,
+      9810,
+      9856,
+      9871,
+      9881,
+      9998,
+      10008,
+      10404,
+      10657,
+      10763,
+      10767,
+      10919,
+      12977,
+      14119,
+      14124,
+      14165,
+      14177,
+      14179,
+      14225,
+      14370,
+      14406,
+      14559,
+      14726,
+      15117,
+      15135,
+      15226,
+      15250,
+      15285,
+      15339,
+      15343,
+      15373,
+      15457,
+      15464,
+      15467,
+      15471,
+      15487,
+      15514,
+      15527,
+      15539,
+      15690,
+      15697,
+      16661,
+      16741,
+      16788,
+      16791,
+      16887,
+      16975,
+      17005,
+      17692,
+      19509
     ],
     "exactOutputIDs": [
       10938,
       10939,
       10940,
+      10978,
+      10998,
+      11082,
       11083,
+      11084,
       11134,
       11135,
       11137,
+      11138,
+      11139,
       11174,
-      11175,
       11176,
-      11177,
-      11178,
-      14343,
-      14344,
-      16202,
-      16203,
-      16204
+      11177
     ],
-    "recordCount": 179,
-    "distinctStudyKeys": 171,
-    "distinctInputItemIDs": 168,
-    "sourceObservedPositiveMaterialSightings": 239,
-    "sourceObservedMaterialUnits": 475,
-    "advancedFields": [
-      "inputItemID exact and inputName catalog lookup",
-      "outputItemID exact and outputName catalog lookup",
-      "castsWithDrop output-positive saved-variable occurrence counter only",
-      "totalQuantity raw material units",
-      "item enchant/suffix variant in source quote and studyKey"
+    "outputNames": [
+      "10938:Lesser Magic Essence",
+      "10939:Greater Magic Essence",
+      "10940:Strange Dust",
+      "10978:Small Glimmering Shard",
+      "10998:Lesser Astral Essence",
+      "11082:Greater Astral Essence",
+      "11083:Soul Dust",
+      "11084:Large Glimmering Shard",
+      "11134:Lesser Mystic Essence",
+      "11135:Greater Mystic Essence",
+      "11137:Vision Dust",
+      "11138:Small Glowing Shard",
+      "11139:Large Glowing Shard",
+      "11174:Lesser Nether Essence",
+      "11176:Dream Dust",
+      "11177:Small Radiant Shard"
     ],
-    "castBasis": "unknown: source reports material-specific positive sightings but no distinct completed cast operations",
-    "zeros": null,
-    "histogram": null,
+    "originalItemVariants": 136,
+    "materialRows": 141,
+    "outputPositiveSightings": 271,
+    "materialUnits": 680,
+    "sourceLevelGroupedKeys": 60,
+    "groupVsLocalMaterialChecks": "all material-positive and unit sums exactly match; NOT independent cohorts",
+    "sourceNamesValidatedAgainst": "https://raw.githubusercontent.com/alex-berliner/wow_classic_de_table/5918ca3e44f6e4bba9071731ab28be3189498001/item_names.csv",
+    "sourceSemanticsValidatedAgainst": "https://raw.githubusercontent.com/alex-berliner/wow_classic_de_table/5918ca3e44f6e4bba9071731ab28be3189498001/table_parse.py",
+    "completedCasts": null,
+    "completeZeros": null,
+    "zeroInclusiveHistogram": null,
+    "quality": null,
+    "itemLevel": null,
     "skill": null,
     "specialization": null,
     "patch": null,
-    "retailEligibility": "unverified; held from current Retail numeric admission"
+    "hotfix": null,
+    "dataRestrictions": "Raw source per-output positive counters only; Classic historical evidence not Retail baseline; source suffix is item variant, not output rank."
   },
-  "numeric_summary": "ploxl EnchantedLocal 171 exact item-variant keys, 168 unique input item IDs, 179 source-original output rows, 239 material-specific positive sightings, 475 total output units and 17 distinct material IDs. These are not 239 completed disenchants, rates, or known zeros. Grouped counters exactly match individual totals and are not imported twice.",
-  "evidence_file": "research/v3/evidence/legacy/2026-11-20T0636-ploxl-original-exact-classic-item-results.jsonl",
+  "numeric_summary": "141 new original per-material rows; 136 exact item IDs; 16 exact material IDs; source reports 271 positive-material observations and 680 material units. No completed casts or overall zero outcomes inferred.",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-20T0745-imba-original-classic-item-results.jsonl",
   "source_urls": [
-    "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/ploxl.lua",
+    "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/imba.lua",
+    "https://raw.githubusercontent.com/alex-berliner/wow_classic_de_table/5918ca3e44f6e4bba9071731ab28be3189498001/item_names.csv",
     "https://raw.githubusercontent.com/alex-berliner/wow_classic_de_table/5918ca3e44f6e4bba9071731ab28be3189498001/table_parse.py",
-    "https://raw.githubusercontent.com/alex-berliner/wow_classic_de_table/5918ca3e44f6e4bba9071731ab28be3189498001/item_names.csv"
+    "https://www.wowhead.com/item=24995/warmaul-legplates",
+    "https://www.wowhead.com/item=45661/spaulders-of-the-wayward-vanquisher"
   ],
-  "verified_base_commit_sha": "b00a06ffd30ca5e3b0187cde40deae3292802c1d",
+  "verified_base_commit_sha": "6bfaa5508b48d6693aa59730adc2e2affa781c28",
   "verified_commit_sha": null,
-  "commit_note": "One atomic branch commit with only the new legacy JSONL plus own quiet status. Commit SHA cannot self-reference inside its own content; read-back verification is performed after ref update.",
+  "commit_note": "One atomic commit changes only this newly grounded legacy evidence JSONL and this owned quiet status. Commit SHA cannot self-reference from within same commit; verify the commit SHA and both files in a post-update read-back.",
   "blockers": [
-    "24995 Warmaul 2068-item Looter historical source: not an independently timestamped 0..N cast ledger, patch/build and Retail gear version/eligibility unresolved",
-    "36909 Cobalt and 23424 Fel Iron: original preserved prospect studies/nominal ore equivalents lack verified completed click counts for all outputs, hit/zero distributions, refunds and client build",
-    "ploxl historical Classic source contains exact item/output IDs and material-positive counts/units only, no audited full operations. Avoid current Retail rates until version and denominator review",
-    "Same-contributor EnchantedItemTypes and pooled detable.csv reproduce EnchantedLocal observations; duplicated imported records would inflate confidence. Patch, skill, stats and zero outcomes unknown"
+    "Warmaul 24995 historical source 2068 reported item operations but no source-era timestamp, exact material units, per-cast zeros, bonus/item version, skill or verified current Retail Disenchant eligibility",
+    "Cobalt 36909 and Fel Iron 23424: previously captured studies lack additional independent complete-cast hit/zero histograms and refund control; no new ore processing events in imba source",
+    "imba Classic source reports positive material sightings and material quantities only; cannot derive complete casts, per-item zeros, histogram, Retail build, rank or item-level from exact local record",
+    "EnchantedItemTypes is same contributor's grouped view; detable.csv is a pooled derivative; both excluded to prevent duplicate cohort weight"
   ],
   "exhausted_sources": [
     {
-      "lookingFor": "Previously uninspected original Enchantrix account processing counters for Cobalt Ore 36909, Fel Iron Ore 23424 and TBC disenchant gear including Warmaul Legplates 24995",
-      "whereLooked": [
-        "Item-name searches: Warmaul Legplates (Wowhead Classic/WotLK, Warcraft Wiki, WoWDB, Evowow) — historical/modern conflict already recorded, no new individual cast log",
-        "Item-name searches: Cobalt Ore (Wowhead regional comments, Warcraft Wiki and WoW-Professions) — existing 180-ore, 24-stack and reference results; no per-output zeros",
-        "Item-name searches: Fel Iron Ore (Wowhead TBC/WotLK, Warcraft Wiki and WoW-Professions) — previously recorded 100-/565-ore cohorts, no new completed-cast export",
-        "https://github.com/sfpprxy/wow-addon/blob/a2bf27027c33019dafa1cfb5713a85f16a6d6415/WTF/Account/235540318%231/SavedVariables/Enchantrix.lua — original SavedVariables read; EnchantedLocal, ProspectedLocal and MillingLocal all empty",
-        "https://github.com/sfpprxy/wow-addon/blob/a2bf27027c33019dafa1cfb5713a85f16a6d6415/WTF/Account/186557135%232/SavedVariables/Enchantrix.lua — original SavedVariables read; EnchantedLocal, ProspectedLocal and MillingLocal all empty",
-        "https://github.com/sfpprxy/wow-addon/blob/a2bf27027c33019dafa1cfb5713a85f16a6d6415/WTF/Account/178635643%231/SavedVariables/Enchantrix.lua — original SavedVariables read; EnchantedLocal, ProspectedLocal and MillingLocal all empty",
-        "https://github.com/sfpprxy/wow-addon/blob/a2bf27027c33019dafa1cfb5713a85f16a6d6415/WTF/Account/178635643%232/SavedVariables/Enchantrix.lua — original SavedVariables read; EnchantedLocal, ProspectedLocal and MillingLocal all empty",
-        "https://github.com/rbutera/ModernClassic/blob/093007ff732cbeafcc9dc3241a7988d66cce1317/WTF/Account/ZEROPOSITIVE/SavedVariables/Enchantrix.lua — original SavedVariables read; EnchantedLocal, ProspectedLocal and MillingLocal all empty",
-        "https://github.com/ingshtrom/wow-ui/blob/83746f918aa9b31c8b585ccb64261e69cced66d7/WTF/Account/AVIDGAMER123/SavedVariables/Enchantrix.lua — original SavedVariables read; EnchantedLocal, ProspectedLocal and MillingLocal all empty",
-        "https://github.com/stevehulme/classic-era-config/blob/366d5f684087fd9bd98952937d7ae3a46c13e6f3/Account/THELASTPOET/SavedVariables/Enchantrix.lua — original SavedVariables read; EnchantedLocal, ProspectedLocal and MillingLocal all empty",
-        "https://github.com/ELLIOTTCABLE/Warcrack/blob/04e75a363d06caaafac078e76a83eb68b3506a4a/WTF/Account/84813902%231/SavedVariables/Enchantrix.lua — original SavedVariables read; EnchantedLocal, ProspectedLocal and MillingLocal all empty",
-        "https://github.com/ELLIOTTCABLE/Warcrack/blob/04e75a363d06caaafac078e76a83eb68b3506a4a/WTF/Account/84813902%232/SavedVariables/Enchantrix.lua — original SavedVariables read; EnchantedLocal, ProspectedLocal and MillingLocal all empty",
-        "https://github.com/amdam/wow_retail_wtf/blob/981c4755d0541737b3e09effe0e87cc5bfad8526/Account/310647873%231/SavedVariables/Enchantrix.lua — original SavedVariables read; EnchantedLocal, ProspectedLocal and MillingLocal all empty",
-        "https://github.com/sfpprxy/wow-addon/blob/a2bf27027c33019dafa1cfb5713a85f16a6d6415/WTF/Account/186557135%232/SavedVariables/Enchantrix.lua.bak — original SavedVariables read; EnchantedLocal, ProspectedLocal and MillingLocal all empty",
-        "https://github.com/rbutera/ModernClassic/blob/093007ff732cbeafcc9dc3241a7988d66cce1317/WTF/Account/ZEROPOSITIVE/SavedVariables/Enchantrix.lua.bak — original SavedVariables read; EnchantedLocal, ProspectedLocal and MillingLocal all empty",
-        "https://github.com/stevehulme/classic-era-config/blob/366d5f684087fd9bd98952937d7ae3a46c13e6f3/Account/THELASTPOET/SavedVariables/Enchantrix.lua.bak — original SavedVariables read; EnchantedLocal, ProspectedLocal and MillingLocal all empty"
-      ]
+      "lookingFor": "24995 Warmaul, 36909 Cobalt and 23424 Fel Iron actual logged event denominators",
+      "result": "Existing named Wowhead/Thottbot references and previously transcribed 2068/180-/100-/565-ore cohorts remain unaltered; no independently corroborated fresh complete 0-N casts found in this run; omit duplicate research"
     },
     {
-      "lookingFor": "New original Warmaul Legplates 24995 and Cobalt/Fel Iron completed cast logs, plus independent Obsidium inventory cohort",
+      "lookingFor": "Unprocessed imba Enchantrix historical account source",
       "whereLooked": [
-        "Warmaul Legplates name searches against Wowhead source snippets, WoWDB, related TBC gear — no independent complete cast log or Retail eligibility test",
-        "Cobalt Ore and Fel Iron Ore targeted first-person Wowhead/Thottbot primary comments — only previously indexed 180-ore/100-ore/565-ore cohorts, not new complete per-cast hits",
-        "Github code-search for ProspectedLocal / EnchantedLocal, and indexed Enchantrix.lua saved variables — largely addon code and prior exhausted accounts, not newly verified casts",
-        "Original Wowhead Obsidium Ore comment Rikikijr 1755 ore and 12 exact inventory rows, new source distinct from 61125, nubi and 253385"
-      ]
-    },
-    {
-      "lookingFor": "New Warmaul Legplates, Cobalt Ore and Fel Iron Ore verified original per-event disenchants/prospects; checked new historic original DE item families",
-      "whereLooked": [
-        "Warmaul Legplates item-name web search across Wowhead, WowDB and Warcraft Wiki — existing historic 2068 Looter output hits and scaled current no-DE conflict, no new primary casts",
-        "Cobalt Ore name-based prospect result searches across Wowhead, Warcraft Wiki, r/woweconomy and historical profession guides — no new non-copied completed-cast/histogram report",
-        "Fel Iron Ore name-based original prospecting searches across Wowhead TBC/WotLK/MoP mirrors, guides, Reddit and old Thottbot references — prior 20-cast and input-ore cohorts already recorded",
-        "GitHub search checked 1115352, 1Beachcomber, 87384, Westy543, Wizardweave Leggings names against prior evidence: no matching authored evidence rows found",
-        "Wizardweave Leggings original Thottbot and Allakhazam numeric comments verified directly at https://www.wowhead.com/wotlk/item=14132/wizardweave-leggings"
-      ]
-    },
-    {
-      "lookingFor": "New original Warmaul Legplates/BC DE, Cobalt and Fel Iron per-cast event histograms plus 45661 token missing identities; checked against existing authored evidence before recording",
-      "whereLooked": [
-        "Warmaul Legplates name and TBC/modern version searches across Wowhead TBC, WotLK, retail, WoWDB, Warcraft Wiki, EvoWoW and classic JudgeHype: no independent new original per-output event log",
-        "Cobalt Ore original prospect-result searches across Wowhead WotLK regional mirrors, WoW-Professions, r/woweconomy and Google-indexed comments: no new explicit completed casts/histograms",
-        "Fel Iron Ore prospect-result searches across Wowhead TBC, Reddit and profession guides: original 100-/565-ore cohorts previously captured; no new independent hits",
-        "Spaulders of the Wayward Vanquisher 45661 and Mantle of the Wayward Vanquisher 45658 wiki/Wowhead: seven class rewards already captured as authored evidence; not duplicated",
-        "Elementium Ore other author originals checked against existing authored files: Fawnish/jjhilly 100-cast, 243051 382-outcome bins, 846144 10k ore, 724811, 705616 Spirea, 61125, Uldz and others previously recorded; not duplicated",
-        "Independent Frostadamus original Classic TBC Adamantite prospect video cited by AzerothCore #14441; source two pooled material-tier quantities had no matching prior authored study."
-      ]
-    },
-    {
-      "lookingFor": "New official Blizzard-game 24995, Cobalt and Fel Iron per-event original evidence; versus original 2023 emulator anomaly",
-      "whereLooked": [
-        "Warmaul Legplates original item-name searches Wowhead TBC, WotLK, Evowow and current scaled item info; no newly verified 2068-histogram or Retail in-game eligible test",
-        "Cobalt Ore original item-name searches Wowhead WotLK and profession guides; generic aggregate Looter counts and existing guide rates not per-output histograms",
-        "Fel Iron Ore original item-name searches Wowhead multi-language TBC/WotLK + prospecting spell comments; prior 100-/565-ore cohorts and patch-2.1 interpretation repeated, no new independent cast ledger",
-        "Adamantite Ore: verified original ChromieCraft #4749 reproduction as emulator regression and checked prior research files for Frostadamus/Diary duplication",
-        "Searched historical ProspectMe table and add-on SavedVariables leads; recipe skill tables are static, not completed cast exports"
-      ]
-    },
-    {
-      "lookingFor": "Fresh firsthand completed Warmaul 24995 / Cobalt 36909 / Fel Iron 23424 operations with 0-N histograms; checked new original 2020 Laestrite and anonymous TBC prospect outcome cohorts",
-      "whereLooked": [
-        "Warmaul Legplates named searches, current WoWDB scaled no-DE item and Wowhead historical 2068 pooled Looter context: no new per-hit 0-N logs or current Retail eligibility confirmation.",
-        "Cobalt Ore named searches, historical Wowhead and Reddit posts: existing source totals but no novel per-cast hits, zeros or skill/build fields.",
-        "Fel Iron Ore named searches and Wowhead Adamantite Powder original comments: recovered 5-stack 2/2/1 rare gem totals without actual operation count.",
-        "Adamantite Powder original Thottbot comments: independently recorded 50 Adamantite Ore -> 2 Living Ruby and 1 Star of Elune; did not reuse earlier 35-stack Gary13579 sample.",
-        "Reddit r/woweconomy kadrxj original replies from 2020-12-17 and 2020-12-18: distinct A/B/C material totals not identical to Reddit k6fuik previously imported first-person cohort."
-      ]
-    },
-    {
-      "lookingFor": "Previously unrecorded Warmaul 24995, Cobalt 36909 and Fel Iron 23424 original per-event records; broadened into distinct Cataclysm milling firsthand totals and raw historical source models",
-      "whereLooked": [
-        "Repeated Warmaul Legplates item-name primary Looter and modern wowdb checks; no original 0-N stack ledger or current-game disenchant confirmation; previously exhausted sources not re-recorded",
-        "Cobalt Ore and Fel Iron Ore event-denominator checks against already-recorded Wowhead sources; only nominal ore/stack totals; no newly verified cast/hit/zero records",
-        "Wowhead Burning Embers item comments: original author 775895 independently identifies mixed 19+3+2 stacks and two direct pigment/ember totals; unique from previously authored Cata named cohorts",
-        "Wowhead author blackdrako3000 Cataclysm six-herb reference rates cross-checked with independent 2011 ReagentMaker code for item IDs/batch size. Same broad fan model, not separate measured samples."
-      ]
-    },
-    {
-      "lookingFor": "Fresh novel original Warmaul 24995, Cobalt 36909, Fel Iron 23424 and same-ilvl BC disenchant cohorts, distinct from previous legacy records, checked 2026-11-17",
-      "whereLooked": [
-        "T0047: New original Warmaul Legplates (24995) completed disenchant casts and 0-N output histogram, dated build, profession skill and current Retail item-instance eligibility — https://www.wowhead.com/tbc/item=24995/warmaul-legplates ; https://www.wowdb.com/items/24995-warmaul-legplates ; https://legacyofwarcraft.com/db/tbc/professions/disenchanting.html — no new independent measured cohort",
-        "T0022: New independent Cobalt Ore (36909) prospecting original completed-cast log, per-gem zero/hit histogram, conditional stack quantities and named game build — https://www.wowhead.com/wotlk/item=36909/cobalt-ore ; https://wowwiki-archive.fandom.com/wiki/Cobalt_Ore ; https://www.wow-professions.com/wotlk/prospecting-table-wotlk-classic — no new independent measured cohort",
-        "T0044: New 2026 TBC Anniversary original Fel Iron Ore (23424) prospecting samples beyond already documented 100-ore and 565-ore cohorts — https://www.wowhead.com/tbc/item=23424/fel-iron-ore ; https://www.curseforge.com/wow/addons/prospectbuddy ; https://fullboosts.com/blog/wow-tbc-classic-anniversary/articles/wow-tbc-anniversary-jewelcrafting-leveling-guide-1-375 ; https://www.wow-professions.com/tbc/prospecting — no new independent measured cohort",
-        "T0042: Previously unindexed TBC armor/weapon positive per-cast disenchant stack histogram from archived first-person comments — https://www.wowhead.com/tbc/item=21854/netherweave-robe ; https://www.wowhead.com/tbc/item=30568/the-sharp-cookie ; https://www.wowhead.com/tbc/item=22449/large-prismatic-shard ; https://www.wowhead.com/tbc/item=25686/fel-leather-boots — no new independent measured cohort"
-      ]
-    },
-    {
-      "lookingFor": "Previously uninspected original account Enchantrix 24995/36909/23424 event counters and new item-name-based source checks; all four account counters empty",
-      "whereLooked": [
-        "Warmaul Legplates name search, WoWDB current scaled item 24995 (no-DE catalog flag), Wowhead TBC item 24995 (old ilvl108), and current Wowhead retail variants (ilvl14/74): no new dated player item-instance completed DE log.",
-        "Warmaul Legplates name search on BootyBayBroker item 24995 (https://bootybaybroker.com/item/24995/warmaul-legplates/us/alleria) independently corroborates ilvl31 contemporary catalog/AH item; not an actual enchant eligibility trial nor output statistics.",
-        "Cobalt Ore name search, Wowhead MoP Classic Cobalt Ore and r/woweconomy: only prior 180-ore/24-stack groups and no newly attributable 0-N per-material event ledger.",
-        "Fel Iron Ore name search, Wowhead WotLK/TBC and Wow-Professions TBC prospecting: historical aggregate studies/reference tables, no new exact completed-cast+hit-count matched source.",
-        "Warmaul Legplates name search Warcraft Wiki, historical expansion-variant item levels and disenchanting groups: no first-person cast log.",
-        "https://raw.githubusercontent.com/ELLIOTTCABLE/Warcrack/04e75a363d06caaafac078e76a83eb68b3506a4a/WTF/Account/55689639%231/SavedVariables/Enchantrix.lua — fetched original account SavedVariables; EnchantedLocal, ProspectedLocal, MillingLocal all explicitly empty.",
-        "https://raw.githubusercontent.com/burned05/Classic-Addons/25d399efa097776c83da577f15907ec90e557301/WTF/Account/398438309%231/SavedVariables/Enchantrix.lua — fetched original account SavedVariables; EnchantedLocal, ProspectedLocal, MillingLocal all explicitly empty.",
-        "https://raw.githubusercontent.com/BestLanguage/bless-fraternity/63d688674601d556067f5c9be9fc47e54237e81e/WTF/Account/157763925%231/SavedVariables/Enchantrix.lua — fetched original account SavedVariables; EnchantedLocal, ProspectedLocal, MillingLocal all explicitly empty.",
-        "https://raw.githubusercontent.com/Industrial/nixos-dotfiles/e6251db290308075fea426721557974bda77469c/features/games/wow-classic/WTF/Account/2NDUSTRIAL/SavedVariables/Enchantrix.lua — fetched original account SavedVariables; EnchantedLocal, ProspectedLocal, MillingLocal all explicitly empty."
-      ]
-    },
-    {
-      "lookingFor": "Fresh Warmaul Legplates 24995, Cobalt Ore 36909, Fel Iron Ore 23424 primary 0–N event reports, and independent milling sources with unrepeated original cohorts",
-      "whereLooked": [
-        "Priority 24995 Warmaul Legplates and historical TBC armor/weapon original Wowhead item comment/Looter outcome reports: source-specific completed output stack ledger/patch remains unavailable; do not re-record the existing 2068 Looter cohort.",
-        "Cobalt Ore and Fel Iron Ore prospect name-based original searches against previously logged Wowhead/Thottbot/WoW-Professions and research queue: no new complete per-material 0–N ledger or identifiable build/skill; prior 180-ore and 100-/565-ore groups skipped as duplicates.",
-        "Wowhead original Azure Pigment comment killerpet https://www.wowhead.com/wotlk/item=39343/azure-pigment: earlier Icy Pigment comment same author is overlapping partial snapshot and was intentionally not recorded anew; previously captured Deadnettle, Fire Leaf, Talandra's Rose and Icethorn from this same updated table excluded.",
-        "Wowhead same Azure Pigment comment author Sgtown (128 Adder/256 Icethorn mills) already recorded in legacy/2026-11-09T0956; not double-counted.",
-        "Wowhead Adder's Tongue herb comment author 198659 (208 mills/620 Azure/102 Icy) already recorded legacy/20261107T1253; not double-counted.",
-        "Independent original wowhead Darkmoon Card of the North comment author 317829 gives 270 higher-herb mills and 0.59 Icy + 2.95 Azure per mill; herb mixture is unallocated and is separately recorded as two rows."
-      ]
-    },
-    {
-      "lookingFor": "New verified Warmaul 24995/Cobalt 36909/Fel Iron 23424 physical casts and original independent legacy processing material totals; checked existing imported research before accepting any original.",
-      "whereLooked": [
-        "Warmaul Legplates TBC and scaled Retail item-name search versus prior already-recorded Wowhead Looter 2068 cohort: no new raw 0-N source table or modern eligible character operation.",
-        "Cobalt Ore and Fel Iron Ore name-based Wowhead, historical WotLK/TBC pages and original discussion searches: old 180-,100- and 565-ore cohorts duplicated; original loler 8-stack one-blue-gem note is newly recorded, original complete casts/IDs unknown.",
-        "Original Wowhead Legion Jewelcrafting commenter Deckven 3200 Felslate and Traziz 752-skill Felslate/Leystone already in pre-v3 observation archives and study audit, not reimported or counted.",
-        "Original Empyrium and Argus gem commenters Apphrodite 2000 Empyrium and Xeforolan 1000 mass Empyrium checked by author/exact quantities against current v3 GitHub code search, unrecorded as distinct cohorts; recorded exactly once."
-      ]
-    },
-    {
-      "lookingFor": "New independently sourced original Warmaul 24995 DE, Cobalt 36909 and Fel Iron 23424 per-cast distributions, and additional otherwise unrecorded early Wrath milling events",
-      "whereLooked": [
-        "Warmaul Legplates original Wowhead TBC/WotLK and Warcraft Wiki item-name pages; historical 2068 item-specific Looter counts remain unverified as per-output stack histogram.",
-        "Cobalt Ore named historic WotLK page and ore/prospecting guides; existing samples lack independently logged physical casts.",
-        "Fel Iron Ore TBC/WotLK first-person comments and guide tables; existing 100-/565-ore cohorts are previously recorded, avoided duplication.",
-        "Cross-checked named Ghost Iron, Kyparite, Thorium, Empyrium and Legion milling authors against repository; already recorded cohorts intentionally not duplicated.",
-        "Fresh early WoTLK original author 171157 on https://www.wowhead.com/wotlk/item=39334/dusky-pigment has separately stated 4 Briarthorn and 2 Swiftthistle completed mill events, every event 2–3 units; unlike previously published author 180977 PTR histograms, this author absent from repository search."
-      ]
-    },
-    {
-      "lookingFor": "Distinct, source-backed Classic/TBC/WotLK eligibility identities after Warmaul/Cobalt/Fel Iron raw-event searches produced no unrecorded independent cast reports; no replay of previous source cohorts",
-      "whereLooked": [
-        "Warmaul Legplates, Cobalt Ore, Fel Iron Ore name-based original-source searches on Wowhead/Classic, Warcraft Wiki/WoWDB, Reddit and profession guides: previously captured Looter/ore-equivalent studies only; no fresh actual operation ledger or histogram",
-        "https://www.wowhead.com/classic/item=20408/twilight-cultist-cowl — archived original no-disenchant testimony and set-level eligibility reversal; no dated hotfix number",
-        "https://www.wowhead.com/item=20407/twilight-cultist-robe ; https://www.wowhead.com/item=20406/twilight-cultist-mantle — different original item IDs with no-DE evidence",
-        "https://www.wowhead.com/classic/item=11287/lesser-magic-wand ; https://wotlkdb.com/?item=11288 ; https://wotlkdb.com/?item=11289 ; https://wotlkdb.com/?item=11290 — distinct old enchanting wand nonDE item IDs",
-        "https://www.wowhead.com/item=23321/recruits-robe ; https://www.wowhead.com/wotlk/item=23479/recruits-robe ; https://www.wowhead.com/ptr/item=52729/recruits-robe — three same-name different legacy robe item IDs with noDE flags",
-        "https://www.wowhead.com/item=5347/pestilent-wand — vendor wand marked non-disenchantable"
-      ]
-    },
-    {
-      "lookingFor": "New original per-event Warmaul 24995 and Cobalt 36909 / Fel Iron 23424 measurement and previously unrecorded legacy item-specific casts, without reusing prior sources",
-      "whereLooked": [
-        "Warmaul Legplates historical Thottbot/Wowhead cumulative Looter and scaled WoWDB version mapping remain previously logged, no independent item-instance original cast ledger",
-        "Cobalt Ore WotLK comments and profession guide sample totals provide no independently new measured 0-N cast distributions beyond previously authored cohorts",
-        "Fel Iron Ore TBC Classic/Thottbot first-person ore samples previously captured; no newly distinct completed gem-hit histograms",
-        "https://www.wowhead.com/wotlk/item=21861/imbued-netherweave-robe — one newly independently verified Thottbot author with exactly two separate completed rare-chest sharding casts; same person not duplicate two authors",
-        "Exact historical Wowhead Classic/WotLK non-disenchant catalog flags for 11 item IDs; name+ID repository search found no authored same-ID evidence for these"
-      ]
-    },
-    {
-      "lookingFor": "Previously unrecorded first-person measured Warmaul 24995, Cobalt 36909, Fel Iron 23424 versus independent Classic glove/mask cohorts",
-      "whereLooked": [
-        "Priority named Warmaul 24995, Cobalt 36909 and Fel Iron 23424 searches: only already recorded historical Looter and nominal ore studies; no independent new complete event log",
-        "Distinct original Wowhead Vision Dust commenter 1066284 and Pegleg: Black Mageweave Gloves 10003 dated patch/skill unavailable, two independent physical cast cohorts",
-        "Original Lesser Nether Essence commenter 1001850: 20 crafted White Bandit Masks 10008 and 3 exact output totals; actual completed DE count not documented",
-        "Original White Bandit Mask commenters 979581 and aprildawn567 and Vision Dust commenter 1129489: approximate craft totals vs pooled per-cloth-stack reference, no physical cast ledger",
-        "Original Black Mageweave Headband commenters 324456 and 500383 found already authored in research/v3, excluded to avoid duplicate 40/15-cast cohorts",
-        "Independent prior Black Mageweave Gloves FlayOnDarkIron, Darkbain and White Bandit Mask VBishop/633256/253863/353567 already authored, not re-recorded"
-      ]
-    },
-    {
-      "lookingFor": "Current-run Warmaul 24995, Cobalt Ore 36909 and Fel Iron Ore 23424 original completed item-specific 0-N event histograms before branching into independently measured Wrath gear",
-      "whereLooked": [
-        "Named Warmaul Legplates source Wowhead WotLK/TBC + Evowow reference weights; no new physical cast ledger, modern retail catalog remains version ambiguous",
-        "Named Cobalt Ore originals: Wowhead mining-run gem outcomes are NOT prospecting evidence, excluded; previously captured 180-ore prospect aggregate not recopied",
-        "Named Fel Iron Ore originals Wowhead TBC and Mop Classic: 100/565 ore cohorts and patch 2.1 statements already present, not recopied",
-        "New originals: Notched Cobalt War Axe Wowhead WotLK archive original commenters 367103/217678/nfw73",
-        "New originals: Horned Cobalt Helm Wowhead WotLK/MoP archive original commenters 114044/Thalor19",
-        "New original 2009-10-29 historical observed Infinite Dust item-level bands: Wowhead forums RottweilerCP; 489863 reference before/after model kept non-measured"
-      ]
-    },
-    {
-      "lookingFor": "New original full numeric Warmaul Legplates 24995, Cobalt Ore 36909, Fel Iron Ore 23424 processing logs and previously unrecorded original TBC eligibility identities",
-      "whereLooked": [
-        "Warmaul Legplates name searches and original Looter table lead: no new distinct event-level yield/hit histogram; do not repeat already recorded 2068 historical rows",
-        "Cobalt Ore/Fel Iron Ore and historical addon Enchantrix SavedVariables searches across Wowhead/Thottbot, guides and GitHub: checked new Warcrack account 55689639#1, EnchantedLocal, ProspectedLocal, MillingLocal empty",
-        "Multiple original TBC disenchant comment searches on Wowhead (Arcane Dust, Netherweave Boots, Arcanoweave Boots, Netherweave Robe, Thick Draenic Boots) resolved to previously recorded cohorts; no double-count",
-        "WoWDB LIVE TBC raid Onslaught and Lightbringer exact item-level/eligible flags; 11 independently linked records; additional Warden's Hauberk original Wowhead player comment"
-      ]
-    },
-    {
-      "lookingFor": "Uninspected Enchantrix personal SavedVariables primary DE/prospect counters in SWEETDOC archived account",
-      "whereLooked": [
-        "https://github.com/mmathias01/WoWza/blob/b209e3f8faae341d99b9c007d28365935fff1f62/WTF/Account/SWEETDOC/SavedVariables/Enchantrix.lua — all three personal processing tables empty; no casts measured"
-      ]
-    },
-    {
-      "lookingFor": "2026-11-18 original named Warmaul 24995/Cobalt 36909/Fel Iron 23424 cast/hit-zero ledger; non-duplicated near-level TBC and Cataclysm original DE sources",
-      "whereLooked": [
-        "Original Warmaul Legplates 24995 TBC ilvl108 versus scaled Retail historical Looter study, previously stored; no new actual dated character/event ledger or 0–N histograms; skipped duplicated 2068-source evidence.",
-        "Cobalt Ore 36909 and Fel Iron Ore 23424 name-based original prospect research and historical SavedVariables refs already in queue/status; no novel complete 0-N first-person cast logs; skipped previously recorded 40 OZZIEEM Cobalt, 100-/565-ore Fel Iron and reference tables.",
-        "Original TBC nearby Reaver Legplates 24979 and Khorium Plated Bludgeon 25122 Wowhead comments found already authored multiple times; Blade of Retribution 31821 already present in multiple previously authored files; not repeated.",
-        "Independent Doometh Saronite 10000-prospect, myrmideon Saronite 30-stack, and Deathsilk Cowl 40-/100-cast Wowhead original cohorts compared against existing evidence; all already recorded, not double-counted.",
-        "New previously unrecorded first-person Deathsilk Belt 54471 original commenter 388442: 20 completed disenchants, zero essence-family drops, source https://www.wowhead.com/cata/item=54471/deathsilk-belt. Retained as one distinct original cohort."
-      ]
-    },
-    {
-      "lookingFor": "2026-11-18 new Warmaul 24995 and Cobalt 36909/Fel Iron 23424 per-event originals after prior sources exhausted; newly inspected Black Mageweave Vest and Inscribed Leather Gloves originals",
-      "whereLooked": [
-        "Existing Warmaul 24995/Cobalt 36909/Fel Iron 23424 name/source gap checks plus README queue/history; no new independent 0-N original event export; existing pooled cohorts explicitly not duplicated",
-        "TBC Classic Wowhead Black Mageweave Vest 9998 original Kefra 50 completed source with output hits and totals, separate Thottbot 4 completed with unspecified dust stack: https://www.wowhead.com/tbc/item=9998/black-mageweave-vest",
-        "TBC Classic original Inscribed Leather Gloves 2988 Allakhazam one DE yielding exactly 2 Strange Dust: https://www.wowhead.com/tbc/item=2988/inscribed-leather-gloves",
-        "GitHub code search prior 9998/Black Mageweave Vest/Kefra 50vest/2988/Inscribed Leather Gloves shows no matching previous item-specific cohorts; Kefra's separate Runecloth Belt cohort preserved",
-        "Do not re-use already recorded Wicked Leather Bracers, Netherweave Tunic, Avenging Blades, Thorium Blades, Black Mageweave Gloves and other original studies exposed during search."
-      ]
-    },
-    {
-      "lookingFor": "New November 18 firsthand Warmaul Legplates 24995, Cobalt Ore 36909, Fel Iron Ore 23424 cast-level event logs versus novel exact-item historical no-disenchant exceptions",
-      "whereLooked": [
-        "Warmaul Legplates TBC vs modern scaled records, original Wowhead Looter source already represented: no unrecorded completed-cast or source build/histogram; do not recopy cumulative 2068.",
-        "Cobalt Ore and Fel Iron Ore prospect original WoWhead/WoW-Professions/Reddit event denominators: only previously recorded nominal ore cohorts and separate reference percentages; no first-person 0-N new log.",
-        "Disenchant original comments on Apothecary's Waistband, Crown of Endless Knowledge, Crystalforged Sword, Valanos' Longbow, Mallet of Zul'Farrak and Runed Copper Rod independently report inability to disenchant; linked under per-item records.",
-        "Exact Classic/TBC/WotLK catalog noDE flags for Druid 18863/Paladin 18864 PvP trinkets, shirt 52019, SoD utility neck 208425, modern Fingerless Gloves 6202, vendor chain gloves 20917; none provides cast/drop probabilities.",
-        "Checked GitHub repository code search for proposed named items; avoided previously recorded Netherweave/Runed cloth source counts and same Warmaul/Cobalt/Fel Iron cumulative cohorts."
-      ]
-    },
-    {
-      "lookingFor": "Fresh original Warmaul 24995/Cobalt 36909/Fel Iron 23424 per-cast and current Retail version evidence versus already-captured token 45661 mapping",
-      "whereLooked": [
-        "Prior original Warmaul Looter 2068-operation study and modern WoWDB noDE catalog: no independent new event log, exact total stack units or client build.",
-        "Prior original Cobalt 180-ore and 24-stack sources: denominators nominal, no attributable hit/zero ledger.",
-        "Prior Fel Iron 100- and 565-ore cohorts: no new actual-cast histogram; avoid reusing same study.",
-        "Existing original token records legacy-20261101-216 and legacy-20261107-234113 plus master token identity audit: all seven historical output IDs already present; no duplicate."
-      ]
-    },
-    {
-      "lookingFor": "New original Warmaul/Cobalt/Fel Iron event-level records and distinct directly stated older-gear DE cohorts, not copied sources",
-      "whereLooked": [
-        "Warmaul Legplates by name: Wowhead, Warcraft Wiki and era-specific TBC catalog, no new original per-event log",
-        "Cobalt Ore by name: Wowhead WotLK regional catalog, profession guides and old gem comment mirrors, no new independent actual cast/hit ledger",
-        "Fel Iron Ore by name: Wowhead TBC, historical Thottbot discussion, 2006-era beta and jewelcrafting guides, no new independent physical cast/zero ledger",
-        "Reaver Legplates 24979 first-person 5 Arcane Dust original Allakhazam cohort checked but already recorded in 2026-11-08T1750; excluded to prevent duplicate",
-        "Wicked Leather Headband checked against existing 20/30/37/69 and 2025 Moritussum studies; recorded only four separate comments, original cross-language copies counted once",
-        "Arcane Dust original TBC page: 16088 craft quantities and independent five-Netherweave-Gloves historical result verified; crafted count not promoted to completed casts"
-      ]
-    },
-    {
-      "lookingFor": "2026-11-18 newly distinct one-cast historical gear disenchants after Warmaul/Cobalt/Fel Iron priority search and old source dedupe",
-      "whereLooked": [
-        "Warmaul Legplates 24995 source and archived Looter: no newly verified direct item-specific 0..N ledger; do not recopy earlier 2068-operation cumulative snapshot.",
-        "Cobalt Ore 36909 / Fel Iron Ore 23424 original prospects: old nominal original samples already captured, no newly independent gem hit or zero event ledger.",
-        "Current-branch existing legacy 5766 Lesser Wizard's Robe, 25118 Battle Star, 11882 Outrider Leggings, 43244 Crystal Citrine Necklace, 7053 Azure Silk Cloak etc already authored: excluded from this run.",
-        "New first-person sources: https://www.wowhead.com/classic/item=14449/highborne-crown; https://www.wowhead.com/tbc/item=14288/arachnidian-armor; https://www.wowhead.com/classic/item=19128/seared-mail-vest; https://www.wowhead.com/classic/item=12041/windshear-leggings; https://www.wowhead.com/classic/item=4132/darkspear-armsplints; https://www.wowhead.com/classic/item=7054/robe-of-power; https://www.wowhead.com/classic-ptr/item=17004/sarahs-guide; https://www.wowhead.com/classic/item=18402/glowing-crystal-ring; https://www.wowhead.com/classic/item=7685/orb-of-the-forgotten-seer; https://www.wowhead.com/classic/item=19040/zorbins-mega-slicer; https://www.wowhead.com/cata/item=15094/runic-leather-headband",
-        "Glowing Crystal Ring 18402 identical original comment repeated 3 times across one page; counted as a single cohort."
-      ]
-    },
-    {
-      "lookingFor": "2026-11-18 new distinct Warmaul 24995 / Cobalt 36909 / Fel Iron 23424 completed 0-N outcome ledgers; unindexed legacy firsthand item-level DE originals",
-      "whereLooked": [
-        "Priority name-based Warmaul, Cobalt and Fel Iron original numeric source trails and queue carry no newly independent raw event histogram; existing Wowhead Looter and ore-equivalent reports not duplicated.",
-        "Verified 13 original comment results on distinct Classic/TBC item pages: Ironvine Belt, Aboriginal Footwraps, Wicked Blackjack, Medicine Staff, Pale Skinner, Disciple's Vest, Northern Shortsword, Staff of Nobles, Inscribed Leather Belt, Soldier's Shield, Edged Bastard Sword, Infantry Shield and Veteran Shield; migrated Allakhazam source person/epoch unknown.",
-        "Compared names against repository GitHub code search; excluded already indexed Brown Linen Robe, Rough Boomstick, Soft-soled Linen Boots, Short Bastard Sword, Bard's Belt, Willow Cape, Cogspinner Goggles, Fel Leather Boots, Staunch Hammer and multiple TBC/Netherweave original cohorts."
-      ]
-    },
-    {
-      "lookingFor": "2026-11-18 item-specific completed Warmaul 24995, Cobalt 36909, Fel Iron 23424 zero-inclusive independent logs; adjacent Burning Crusade rarity and iLvl matched original Looter",
-      "whereLooked": [
-        "Rendered live Wowhead Warmaul 24995 disenchanting: 2068/1559/417/7/48 existing cumulative source independently confirmed, not duplicated.",
-        "Cobalt 36909 Wowhead comments and historical Wow-Professions/Reddit: historic mining Run 1/2 with gem finds is NOT prospecting and excluded; existing 180-ore and other cohorts not recopied.",
-        "Fel Iron 23424 Wowhead TBC and Prospecting spell discussion: 100-ore, 565-ore, and 10-stack JC361 and 8-stack blue-gem comments already present in prior evidence, no double count.",
-        "Ulduar token 45661 existing ATT and legacy token 7 reward IDs checked, duplicate not authored.",
-        "Three newly source-checked distinct TBC iLvl105 armor item Looter tables: Boulderfist Legplates 24987 (1550); Boulderfist Armor 24984 (1726); Boulderfist Greaves 24983 (1951); recorded as source-reported reference rather than contemporary retail measured studies."
-      ]
-    },
-    {
-      "lookingFor": "New first-person Warmaul/Cobalt/Fel Iron event-denominator evidence and uninspected original Enchantrix accounts; focused novel source rescue rather than re-recording Looter/guide priors",
-      "whereLooked": [
-        "Warmaul Legplates name and TBC-era item checks: historical item level/modern catalog conflict, no independent per-event 0-N log",
-        "Cobalt Ore and Fel Iron Ore original name searches: archived guide/Thottbot studies already represented; no novel per-cast 0-N record",
-        "https://github.com/rbutera/modernclassicmac/blob/b8871f80894a3df52467b0306d209db2dc0794a5/WTF/Account/ZEROPOSITIVE/SavedVariables/Enchantrix.lua: original ZEROPOSITIVE EnchantedLocal has 38 nonempty distinct variant material tuples; ProspectedLocal and MillingLocal are empty",
-        "https://github.com/BestLanguage/bless-fraternity/blob/63d688674601d556067f5c9be9fc47e54237e81e/WTF/Account/157763925%231/SavedVariables/Enchantrix.lua — all three processing tables empty",
-        "https://github.com/burned05/Classic-Addons/blob/25d399efa097776c83da577f15907ec90e557301/WTF/Account/54989383%235/SavedVariables/Enchantrix.lua — all three processing tables empty",
-        "https://github.com/Industrial/nixos-dotfiles/blob/0c11c53e4df368956da1496ccf86529e6ae0dd3e/features/games/wow-classic/WTF/Account/2NDUSTRIAL/SavedVariables/Enchantrix.lua — all three processing tables empty",
-        "https://github.com/ELLIOTTCABLE/Warcrack/blob/04e75a363d06caaafac078e76a83eb68b3506a4a/WTF/Account/55689639%232/SavedVariables/Enchantrix.lua — all three processing tables empty",
-        "https://github.com/mmathias01/WoWza/blob/b209e3f8faae341d99b9c007d28365935fff1f62/WTF/Account/SWEETDOC/SavedVariables/Enchantrix.lua — all three processing tables empty",
-        "https://github.com/gordon-to/wow-ui/blob/a379400d142ca423ddd34b6c0c1b845c7765045d/WTF/Account/9INCHTOENAILS/SavedVariables/Enchantrix.lua — all three processing tables empty"
-      ]
-    },
-    {
-      "lookingFor": "New Warmaul Legplates, Cobalt and Fel Iron complete event ledgers; unrecorded independent Classic armor/weapon disenchant cast cohorts",
-      "whereLooked": [
-        "Current queue and previous 27 source-exhaustion notes checked; prior Looter and Enchantrix pooled/source accounts not duplicated",
-        "Name-based Black Mageweave Headband / Greater Nether Essence Wowhead archived original comments (324456,500383,Meowie,874940,539433,405835,Fanderay), verified against GitHub authored default-branch code search; none already indexed for item 10024",
-        "Name-based Nightscape Pants original archived ten-item Thottbot commenter plus WotLK/TBC Classic item identification (8193); no per-hit ledger",
-        "Additional GitHub Enchantrix SavedVariables account search: sampled archived accounts had EnchantedLocal, EnchantedItemTypes, ProspectedLocal and MillingLocal empty or already exhausted original snapshots"
-      ]
-    },
-    {
-      "lookingFor": "2026-11-18 independent original Warmaul/Cobalt/Fel Iron event ledgers and new single-cast historic weapon sources",
-      "whereLooked": [
-        "Named Warmaul Legplates and TBC iLvl108/Looter 2068 already in earlier evidence, not re-recorded",
-        "Named Cobalt Ore and Fel Iron Ore historic Wowhead/guide samples: no newly attributable completed prospect per-output hit/zero ledger, old cohorts not duplicated",
-        "Historical original comments on The Staff of Twin Worlds, Chillnail Splinter and Will of the Mountain Giant: 3 distinct previously unauthored physical item outcome reports",
-        "Excluded already authored The Sharp Cookie 30568, Black Mageweave Vest 9998, Gossamer Belt 7526, Totemic Staff 25494, Windshear Leggings 12041 and Runecloth Belt 13856 original cohorts"
-      ]
-    },
-    {
-      "lookingFor": "2026-11-18 novel Warmaul Legplates, Cobalt Ore, Fel Iron Ore event-level originals and distinct early-game historical disenchants",
-      "whereLooked": [
-        "Warmaul Legplates item by name: TBC/WotLK Classic iLvl108 vs modern WoWhead scaled iLvl14 and variable versions; historical 2068 Looter reference and TBC same-band prior cohorts already indexed, no new first-person per-cast log",
-        "Cobalt Ore and Fel Iron Ore item names on Wowhead TBC/WotLK and historical forum examples: all source-attributed 180-/100-/565-ore and nominal casts already recorded; excluded duplicate snapshots and mining outcomes",
-        "Ulduar Spaulders of the Wayward Vanquisher 45661: previously recorded original seven-class reward mapping, not copied",
-        "Rechecked existing first-person Wizardweave Turban 1Beachcomber, Black Mageweave Gloves 42 DE, Shrouded Cloth Bracers five 20-cast batches, Nightscape Headband 74 DE, Duskweave Belt 28/50/100: already indexed, excluded",
-        "New original independent source: https://www.wowhead.com/item=190336/thrumming-powerstone — five original comment cohorts, Soul Dust 172230 and Lattice 189153; seven real negative lattice results with profession skill 1/115",
-        "New original independent source: https://www.wowhead.com/item=11083/soul-dust — Cutthroat 30 Silk Headband and pherkier 53 Crimson Silk Vest original studies, total material units by exact legacy IDs",
-        "Repository name/commenter-based search for Thrumming Powerstone, Cutthroat and pherkier returned no matching previously authored cohorts; 14 new material rows; no price inputs saved"
-      ]
-    },
-    {
-      "lookingFor": "2026-11-18 original Warmaul/Cobalt/Fel Iron event-level histograms versus new Cataclysm shard physical studies",
-      "whereLooked": [
-        "Warmaul Legplates 24995 named original Wowhead Looter/modern scaled versions: 2068/1559/417/7/48 already authored and current ilvl14/74 conflicts original historical ilvl108; no new distinct zero-inclusive ledger",
-        "Cobalt Ore 36909 named original Wowhead 180-ore Strikk3r aggregate already authored; per-output completed casts and zeros not confirmed; mining drops excluded",
-        "Fel Iron Ore 23424 named TBC Thottbot 100/565-ore aggregate original posts and patch2.1 notes previously authored; no new physical event ledger",
-        "Fresh independent Lynlee 55039 28-cast no-perk report and Scott75 55038 100-cast 115-shard patch4.3 Bountiful Bags study, distinct from Scott75 70 Netherweave Bracers report",
-        "Nine additional original item-specific Wowhead Looter 52721 positive hit counts (unique input IDs) kept as reference sourceKind; repo code-search for these names returned no previously indexed records"
-      ]
-    },
-    {
-      "lookingFor": "Fresh Warmaul, Cobalt, Fel Iron physical operation logs and novel legacy milling study not previously converted into v3",
-      "whereLooked": [
-        "Warmaul Legplates named primary Wowhead/WoWDB historical Looter results checked against existing 2068 cohort and modern scaled eligibility; no new independent per-cast ledger",
-        "Cobalt Ore and Fel Iron Ore named original reports versus previously preserved 180-/100-/565-ore historical comments and references; no new independent per-event hit/zero series",
-        "Wowhead Viridescent Pigment original Baadkitty firsthand seven-herb 200-each report; checked repo search for Baadkitty in v3 evidence and imported/legacy-milling-cohorts, absent; different Kidneph 1000-herb imported study is kept separate",
-        "https://www.wowhead.com/item=153669/viridescent-pigment"
-      ]
-    },
-    {
-      "lookingFor": "2026-11-19 novel Warmaul 24995, Cobalt 36909, Fel Iron 23424 original event ledgers and source-backed TBC iLvl105-111 adjacent exact-gear identities",
-      "whereLooked": [
-        "Fresh named Warmaul Legplates WotLK, WoWDB and Retail Looter search: only previously recorded pooled 2068 and historical/scaled discrepancy; no unrecorded player event log.",
-        "Fresh named Cobalt Ore prospecting Wowhead, Warcraft forums and Reddit: historical mining ore/gem finds cannot be treated as prospecting; old 180-ore and nominal studies not repeated.",
-        "Fresh named Fel Iron Ore prospecting TBC/WotLK Wowhead/Thottbot and profession guides: prior 100-ore and 565-ore source rows already present; no new first-person 0-N gem event ledger.",
-        "Archived WoWWiki Murkblood Avenger's Legplates and quests Whelps of the Wyrmcult, Thwart the Dark Conclave, The Sigil of Krasus: novel source-reported model/identity rows for seven quest rewards, with 22/75/3 template deduplicated as one reference prior.",
-        "Current GitHub code search by each of seven exact item IDs found no existing legacy evidence rows."
-      ]
-    },
-    "2026-11-19: audited original classic Greater Nether Essence Allakhazam comment and checked target Wowhead/Warcraft Wiki model sources. Prior Forever stress/beta cohorts (reddit 1xc29vk) and Arcane Salvager 100-cast pool (reddit 1x3c863) are already in legacy 2026-11-16T2250 and were deliberately not duplicated; Rose Colored Goggles candidate not verified.",
-    {
-      "lookingFor": "2026-11-19 original per-event Warmaul 24995, Cobalt 36909 and Fel Iron 23424 source logs after previous source exhaustion; alternative new historical 265-craft jewelry/18-green/10-classic-item originals",
-      "whereLooked": [
-        "Warmaul Legplates WotLK original and Evowow 108-item-level, modern WoWDB scaled item; preexisting 2068-count Looter and opaque reference weights are not novel measured completed casts",
-        "Cobalt Ore WotLK prospecting named sources and wiki; repeated 180-ore pooled and percent guides lack novel per-material 0-N operation histograms",
-        "Fel Iron Ore original TBC / MoP Classic named comments and patch 2.1 prose; previously recorded 100- and 565-ore cohorts not copied",
-        "Unique 500383 second 265 jewelry round on https://www.wowhead.com/cata/item=52309/nightstone-choker : did not re-import prior 36 craft sample; full mixed outputs separately captured",
-        "Original 1059575 Stonecore 18 greens / 3 runs on https://www.wowhead.com/item=52555/hypnotic-dust ; did not count four BoE blues as disenchants",
-        "Thottbot anonymous 10 level41-45 greens original on https://www.wowhead.com/wotlk/item=11175/greater-nether-essence : positive shard and material-specific zero",
-        "Prehotfix Hyjal commenters cywang86 and psathyanhome distinct authors, no completed DE denominator; approximate amounts held outside numeric totals"
-      ]
-    },
-    {
-      "lookingFor": "Fresh original Warmaul Legplates 24995 completed disenchant, Cobalt Ore 36909 and Fel Iron Ore 23424 prospecting per-cast histograms before standing-task expansion",
-      "whereLooked": [
-        "Warmaul Legplates item-name wiki and 2.4.3 TBC disenchant table, prior original Looter 2068 context: historical reference only and Retail version/eligibility conflict; no new raw stack/hit export",
-        "Cobalt Ore name and Warcraft Wiki prospect guide, previously saved RU 24-stack and 180-ore sources: reference rates/total units only, no new completed-cast or zero bins",
-        "Fel Iron Ore name and Warcraft Wiki prospect guide, previously captured Thottbot and comments: no new independent per-cast export",
-        "New Reddit oahhoi first-person cumulative Shadowlands 9.0–9.1 herb totals, checked GitHub search for source key and distinctive output quantities: not previously authored",
-        "New Wowhead Whiptail commenter 858818 first-person mixed Whiptail/Cinderbloom outcomes, checked original page and GitHub search for commenter id: no prior authored legacy record"
-      ]
-    },
-    {
-      "lookingFor": "Novel Warmaul 24995, Cobalt 36909 and Fel Iron 23424 verified completed operation + output hit/zero logs; independent unrecorded Shadowlands original sources",
-      "whereLooked": [
-        "Warmaul Legplates item-name web search, legacy Evowow 7500/2200/300 opaque reference weights and 2026 scaled BootyBayBroker ilvl31: no new completed disenchant output-stack evidence; weights never treated as casts/chances.",
-        "Cobalt Ore and Fel Iron Ore primary original prospecting name searches across historical Wowhead, profession guides and Reddit: no new verifiable source-derived per-output 0..N histograms; exhausted previously logged 180-ore, 100-/565-ore sources not duplicated.",
-        "https://www.reddit.com/r/woweconomy/comments/l20qzi — new independent 209 performed 20-herb mass mills, three exact pigment totals.",
-        "https://www.wowhead.com/item=175788/tranquil-pigment — new independent original Papa63 400 Nightshade and three material totals.",
-        "https://www.reddit.com/r/woweconomy/comments/lcw8dr — original 2000 Death Blossom and three total pigments, completed casts unknown.",
-        "https://www.reddit.com/r/woweconomy/comments/n3owrw — original 1000 Nightshade plus 6000 Death Blossom separated output totals; no source-specific operations counted.",
-        "https://www.reddit.com/r/woweconomy/comments/k7x9y5 — existing authored imported original cohort identified in preexisting research snapshot; intentionally not re-recorded."
-      ]
-    },
-    {
-      "lookingFor": "2026-11-19 new original Warmaul 24995, Cobalt 36909, Fel Iron 23424 per-operation event/histogram after established source leads; further distinct Shadowlands player prospecting original data",
-      "whereLooked": [
-        "Priority Warmaul Legplates 24995 original Wowhead/WoWDB level/rarity and original 2068 Looter studies already recorded; no independently new raw operation log.",
-        "Cobalt Ore 36909 named historical original prospect and prior 180-ore study, not duplicated; no new 0-N ledger.",
-        "Fel Iron Ore 23424 original 100-/565-ore cohorts and post-patch gem comments already recorded; no new per-output hit histogram.",
-        "Original first-person December 2020 Reddit replies https://www.reddit.com/r/woweconomy/comments/k6fuik: two non-identical input cohorts 10000 and 19600 ore, distinct from the original thread poster and already indexed studies; exact 7 output quantities each.",
-        "Checked GitHub code search by distinctive values `1021 Umbryl`, `1040 Oriblase`, `19600`, `1937 Angerseye`, `1893 Oriblase`; no same raw cohort found in repo."
-      ]
-    },
-    {
-      "lookingFor": "Original priority 24995/Cobalt/Fel Iron per-event evidence versus new independent 2019 Osmenite totals",
-      "whereLooked": [
-        "Warmaul Legplates original event/hit name search: only old static TBC probability weights and pre-recorded 2068 Looter aggregate; no new physical cast table",
-        "Cobalt Ore first-person prospect name search: no new independent source with per-gem successes or zero stack bins",
-        "Fel Iron Ore Thottbot/Wowhead source-search: old 565/100 input ore snapshots already captured; no novel physical cast histograms",
-        "Original r/woweconomy c8lcye 2019-07-03 16760 ore and cj6ju4 2019-07-29 6800 ore mass-prospect reports newly located. Dedup searched exact Reddit thread IDs, author-cohort input totals and material IDs in current repo before recording."
-      ]
-    },
-    {
-      "lookingFor": "Fresh directly logged Warmaul Legplates, Cobalt Ore or Fel Iron Ore processing 0–N events after previous exhausted sources; searched different BfA original first-person DE sources instead",
-      "whereLooked": [
-        "Warmaul Legplates / Cobalt Ore / Fel Iron Ore named search results revisited only for novel cast logs; no new event-level cohort found",
-        "Original Reddit author of 2019 blue Tidespray Linen Bracers 4,730 completed disenchants",
-        "Original Wowhead Tidespray Linen Bracers crafting commenter Etamalgren (852 green, 148 blue with Rod)",
-        "Original May 2020 Reddit Tidespray mixed-quality bracer disenchant 1,000-piece experiment"
-      ]
-    },
-    {
-      "lookingFor": "New original Warmaul Legplates, Cobalt Ore and Fel Iron Ore completed-event logs; distinct Titanium material identities not represented in v3",
-      "whereLooked": [
-        "Warmaul 24995 source Looter, Cobalt 36909 historical prospects and Fel Iron 23424 original Thottbot accounts remain event-level blocked; no historical cohorts duplicated.",
-        "Compared named historical Elementium/Obsidium and Titanium studies against existing authored data; Spirea 705616, Uldz 924406, Obsidium 253385, rowanr 27928 and Ceari 582232 were already present and treated as SAME studies, not new samples.",
-        "Verified 32 previously NULL Titanium material output IDs from https://repos.wowace.com/wow/reagentmaker/file/default/ProspectingData.lua?style=paper; repaired existing row IDs legacy-20261031-1027..legacy-20261031-1043 and legacy-20261031-1063..legacy-20261031-1079 by explicit replaces rather than counting another cohort."
-      ]
-    },
-    {
-      "lookingFor": "2026-11-19 fresh Warmaul 24995, Cobalt 36909 and Fel Iron 23424 fully event-level source outcomes; separated already-authored TBC material-side cohorts",
-      "whereLooked": [
-        "Original name-based Warmaul Legplates, Cobalt Ore and Fel Iron Ore source/index reviews: previously recorded 2068-Looter, nominal 180-ore, 24-stack, 100/565-ore cohorts; not recopied.",
-        "Name-based Wowhead PTR Arcane Dust 22445 50-row Looter material-side table versus GitHub repository authored TBC records: Ranger Gloves, Amethyst Pendant, Nexus-Strider Greaves, Umbrafen Britches, Der'izu Belt/Greaves, Feralfen Sandals, Laughing Skull Pants, Smoky Quartz Ring, Vindicator Pants, Warmaul Breastplate, Ambusher's Cloak, Bloodfist Vambraces, Boneshredder Shoulderguards, Clefthoof Bracers previously authored and excluded.",
-        "Novel standalone Azurite Ring 25045 material-side 2792/3655 found; existing RIKU6 Enchantrix one-event record is a distinct source format but cannot be presumed non-overlapping.",
-        "Original Wowhead Arcane Dust commenters 16088 and Jakebees and existing 1043898 reference model checked against previously authored files; excluded.",
-        "45661 Spaulders of the Wayward Vanquisher seven historical class rewards already researched; no duplicate."
-      ]
-    },
-    {
-      "lookingFor": "2026-11-19 fresh original Warmaul 24995, Cobalt 36909 and Fel Iron 23424 per-event logs before researching unrecorded 2019 mass prospecting originals",
-      "whereLooked": [
-        "Warmaul item-name Wowhead Looter / WoWDB / 24995 historic-vs-scaled: earlier 2068/1559 hit cohort already recorded; no 0–N cast log.",
-        "Cobalt Ore item-name WotLK prospecting and saved original 180-ore / 24-stack reports: no new completed cast/histogram.",
-        "Fel Iron Ore item-name TBC/WotLK 100- and 565-ore original cohort and 2.1 patch: already recorded, no new event source.",
-        "Independent 2019 Platinum original https://www.reddit.com/r/woweconomy/comments/aebyge/ : new 13 gem totals from 4000 ore, no completed cast audit.",
-        "Secondary preserved original /u/jamphat Monelite 64620 ore 13 gem totals https://www.wowhead.com/news/wow-economy-weekly-wrap-up-8-1-5-ptr-data-mining-managing-transmog-plus-valuing-289700 ; source Reddit aeoy1e deleted, no original per-event export.",
-        "GitHub repo code-search exact 64620, 64,620, 4000 Platinum Ore, jamphat, SpellNinja and Wowhead 289700: no earlier authored record found."
-      ]
-    },
-    {
-      "date": "2026-11-19",
-      "scope": "Current run priority source checks (not counted as new cohorts)",
-      "urls": [
-        "https://www.wowhead.com/wotlk/item=24995/warmaul-legplates",
-        "https://www.wowhead.com/mop-classic/item=36909/cobalt-ore",
-        "https://www.wowhead.com/wotlk/spell=31252/prospecting",
-        "https://legacyofwarcraft.com/db/tbc/professions/disenchanting.html"
+        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/imba.lua",
+        "https://raw.githubusercontent.com/alex-berliner/wow_classic_de_table/5918ca3e44f6e4bba9071731ab28be3189498001/table_parse.py",
+        "https://raw.githubusercontent.com/alex-berliner/wow_classic_de_table/5918ca3e44f6e4bba9071731ab28be3189498001/item_names.csv"
       ],
-      "result": "All useful Warmaul/Cobalt material results and TBC 2.4.3 group model priors were already preserved in branch/main snapshot lineage. Reused sources rejected; no new cast-level data. Only newly transcribed source this run is the distinct 2007 Killer Guides Fel Iron model, not a new study."
-    },
-    {
-      "date": "2026-11-19",
-      "scope": "2026-11-19 priority original-source check plus new Legion milling original source discovery",
-      "urls": [
-        "https://www.wowhead.com/tbc/item=24995/warmaul-legplates",
-        "https://www.wowhead.com/item=24995/warmaul-legplates",
-        "https://www.wowhead.com/mop-classic/item=36909/cobalt-ore",
-        "https://www.wowhead.com/tbc/item=23424/fel-iron-ore",
-        "https://www.reddit.com/r/woweconomy/comments/kz3sf5",
-        "https://www.reddit.com/r/woweconomy/comments/ey901y"
-      ],
-      "result": "Priority 24995,36909,23424 source data exhausted/no novel actual 0-N cast ledger. Two never-before-indexed original Reddit comments newly transcribed as 20 raw historic per-input percent yield rows; no guessed casts/hits/zeros."
-    },
-    {
-      "lookingFor": "New nonduplicate original Warmaul Legplates 24995, Cobalt Ore 36909, Fel Iron Ore 23424 per-cast rows; checked original Wrath Classic Titanium patch change and 255922 first-person 16 prospects",
-      "whereLooked": [
-        "Warmaul Legplates name searches (Wowhead TBC/retail, WoWDB, Warcraft Wiki) yielded previous cumulative 2068 Looter item-only reporting and historical/modern item-level conflict, no new verified DE ledger",
-        "Cobalt Ore name searches (Wowhead MoP Classic item comments, r/woweconomy, profession guide tables) reused prior Strikk3r 180 ore and generic non-cast guide data; no new independent material-positive events",
-        "Fel Iron Ore name searches (Wowhead TBC item comments, archived Thottbot Adamantite Powder, Blizzard forums) showed copied 100-/565-ore, five-stack gems and reference rates; excluded duplicates",
-        "Titanium Powder original quest 14103 Wowhead historical commenter 255922 separately reports 16 completed prospects and eight powders plus four unnamed epic gems, not in existing legacy authored source ID search",
-        "Blizzard official October 6 2022 historical Titanium Ore prospect disabling note and September 1 Smelt Titansteel cooldown fix, Warcraft Wiki June 20 2023 patch 3.4.2 release and Titanium Powder historical quest exchange"
-      ]
-    },
-    {
-      "lookingFor": "Current run novel priority 24995/36909/23424 original completed-event data and unindexed historic WoD firsthand disenchant comparison",
-      "whereLooked": [
-        "Warmaul Legplates original Evowow 108 ilvl and current 31 ilvl; opaque reference table and already-indexed 2068 Looter outputs not duplicated.",
-        "Cobalt Ore 36909 named WoWhead WotLK, historical 180-ore and 24-stack comments already indexed; no distinct per-gem physical 0-N ledger.",
-        "Fel Iron Ore 23424 name-specific Wowhead/Thottbot studies: 100/565-ore and five-stack rare-gem comments previously preserved; no duplicate casts.",
-        "https://www.wowhead.com/item=109693/draenic-dust: independently named first-person lordlight and Scii original comments; code-search dedup of 'lordlight', '5 ilvl 630 blues', 'Blackrock Band', '10.5 dust' yielded no matching original authored records.",
-        "https://worldofwarcraft.blizzard.com/en-gb/news/16561638: official November 25, 2014 historic Enchanting hotfix; no numeric rate supplied.",
-        "Other candidates Elementium original 382, Fel Iron five-stacks, Saronite 1100, Adamantite 48315, and Spiritmend 40 already authored, skipped."
-      ]
-    },
-    {
-      "date": "2026-11-19",
-      "lookingFor": "Fresh 24995/36909/23424 player-cast export and additional historic BfA nonduplicate firsthand records",
-      "whereLooked": [
-        "Warmaul, Cobalt, Fel Iron named primary-search leads from prior queue already exhausted; no repeated cohorts imported",
-        "Github code search Deckven 3200 Felslate and Kyparite 555434/965740: already converted and deduped, excluded",
-        "Github search gdmjtv, g8xuhl and author edwallols plus distinctive raw source numerators: no previous matching cohorts indexed",
-        "https://www.reddit.com/r/woweconomy/comments/gdmjtv — two distinct commenters 1000 Tidespray bracers, tracked separately",
-        "https://www.reddit.com/r/woweconomy/comments/g8xuhl — 600 crafted bracers, 2 output totals",
-        "https://www.wowhead.com/item=161984/tidespray-linen-bracers — original edwallols 3384 rare disenchant source, Iwen's Rod; 3 output units-per-input percentages",
-        "Excluded previously indexed large Shrouded 50k and Shadowlace Cuffs cohorts"
-      ]
-    },
-    {
-      "lookingFor": "2026-11-19 new original Warmaul Legplates, Cobalt Ore and Fel Iron Ore complete per-event samples versus independently unindexed Wrath enchanting conversion source",
-      "whereLooked": [
-        "Warmaul Legplates named Wowhead TBC, current WowDB and existing historical Looter: previously authored 2068 operation snapshots and Retail scaled noDE catalog, no new first-person versioned 0-N event log",
-        "Cobalt Ore named WotLK Wowhead comments and past Enchantrix SavedVariables account sources: existing 180-ore / stack cohorts and nominal equivalents not duplicated",
-        "Fel Iron Ore named TBC Wowhead/Thottbot and profession guides: 100- and 565-ore original studies previously captured; no new completed per-gem ledger",
-        "Original Wowhead WotLK Abyssal Shatter spell comment page: independent commenters Lobo2me, Iceleaf, 102221, 58442, elgustav, Random6, rilgania, 575857, 658197, Chakja, Glica, 912130, 338957, Reckish with precise raw counts",
-        "Original Wowhead WotLK Essence or Dust item commenter 467194 reports 20 event claim but only 19 literal D/E observations, captured raw positive-stack bins separately",
-        "Original Wowhead Infinite Dust commenter 639265: 13 Abyss Crystals directly shatters to 86 Infinite Dust 34054 and 14 Greater Cosmic Essence 34055",
-        "GitHub repo name/author searches for Abyssal Shatter, elgustav, Chakja, 467194, 58442, 69412: no matching earlier source cohorts; only general recipe mention in one prior Duskweave evidence file"
-      ]
-    },
-    {
-      "lookingFor": "2026-11-19 exact original Warmaul 24995 event details plus new adjacent TBC item-plate Looter aggregate rows",
-      "whereLooked": [
-        "Independently opened and clicked the Disenchanting (4) tab of https://www.wowhead.com/item=24995/warmaul-legplates, matching already recorded 2068/1559/417/48/7 source and revealing no new raw material totals/skill/patch",
-        "Independently opened Disenchanting tab of https://www.wowhead.com/item=24989/boulderfist-bracers, yielded NEW source denominator/hit/stack-range records",
-        "Independently opened Disenchanting tab of https://www.wowhead.com/item=25000/bloodfist-breastplate, yielded NEW source denominator/hit/stack-range records",
-        "Independently opened Disenchanting tab of https://www.wowhead.com/item=25002/bloodfist-helmet, yielded NEW source denominator/hit/stack-range records",
-        "Repository search for input IDs 24989, 25000, 25002 and exact counts 1477, 4184, 4310, 1993, 5588, 5816 to avoid copying existing evidence; only prior eligibility/model records surfaced, no Looter material-hit cohorts"
-      ]
-    },
-    {
-      "date": "2026-11-19",
-      "lookingFor": "New original Warmaul 24995, Cobalt Ore 36909, Fel Iron Ore 23424 raw event logs, and independent adjacent BC armor item-side outcomes",
-      "whereLooked": [
-        "Warmaul, Cobalt, Fel Iron existing original-cast cohorts checked against prior saved status/source exhaustion; no newly verified independent per-event material zero/hit logs, skipped known source copies",
-        "https://www.wowhead.com/item=25001/bloodfist-gloves — newly transcribed 5777 cumulative operation denominator and 4 output hit rows",
-        "https://www.wowhead.com/item=25004/bloodfist-epaulets — newly transcribed 5714 cumulative operation denominator and 4 output hit rows",
-        "https://www.wowhead.com/item=25005/bloodfist-vambraces — newly transcribed 6079 cumulative operation denominator and 4 output hit rows",
-        "Existing legacy historical Evowow model-only Bloodfist 25001/25004/25005 weights and WoWDB no-disenchant flags left unchanged; cohort provenance is different",
-        "GitHub repository code search for 5777, 5714, 6079 and 'wowhead-looter-25001' plus direct relevant legacy evidence files found no prior exact input-and-source aggregate row"
-      ]
-    },
-    {
-      "date": "2026-11-19",
-      "lookingFor": "Novel original Warmaul 24995, Cobalt 36909 and Fel Iron 23424 per-operation totals; secondary source-reported nonduplicate item-specific Looter counts",
-      "whereLooked": [
-        "Warmaul Legplates name-search across Wowhead (historical and current) and BC DE model tables: earlier 2068 Looter data already indexed; no new verified raw cast ledger",
-        "Cobalt Ore named WotLK WoWhead, wiki and past 180-ore/24-stack sources: no new 0-N gem histograms",
-        "Fel Iron Ore named BC Wowhead, wiki and 100-/565-ore original studies: no new completed 0-N casts",
-        "Wisdom Blade 25145 PTR Wowhead Looter 221 source-reported cases; vintage gear not available until WoD, no BC transfer",
-        "Bookmaker's Scepter 4122 MoP Classic Looter 188 source-reported DE, distinct item and historical ilvl37",
-        "Desert Shoulders 15457 MoP Classic Looter 247 cases, historical ilvl28",
-        "Harvester's Robe 1561 MoP Classic Looter 576 cases, historical ilvl15",
-        "GitHub repo search original item IDs, exact item names and studyKeys: no existing authored hit cohort for 25145/4122/15457/1561 in live research path",
-        "Existing 25159,25494,29325,186057 Looter cohorts found in repo and deliberately excluded as duplicates"
-      ]
-    },
-    {
-      "lookingFor": "Independent original 24995 Warmaul Legplates, 36909 Cobalt Ore and 23424 Fel Iron Ore completed-operation logs vs original raw nonduplicated Classic evidence (2026-11-19)",
-      "whereLooked": [
-        "Name-based Wowhead TBC/WotLK sources for Warmaul Legplates, Cobalt Ore, Fel Iron Ore returned previously recorded Looter/nominal-ore cohorts, no new actual per-event outputs",
-        "Original archived Fel Iron vs Cobalt prospecting guides and comments cross-checked: source rates, not newly confirmed per-cast zeros/histograms",
-        "Wowhead Arcane Dust 22445 and Azure Pigment 39343 player comments had Netherweave Belt 10/25, 30-stack Saronite myrmideon and rmmoreira two-ore milling data already authored in repository; not duplicated",
-        "GitHub-original alex-berliner/wow_classic_de_table/dbfiles/aure.lua distinct from previously authored ereduns, astroid, dmitry, eoghal, lavasalesman, alex logs; raw grouped positive hits and quantities accepted once",
-        "Classic grouped source fields do not give actual zero disenchants or audited per-operation denominators, so no simulated casts/histogram produced"
-      ]
-    },
-    {
-      "lookingFor": "Fresh Warmaul Legplates, Cobalt Ore and Fel Iron Ore per-operation evidence versus independent original Classic Enchantrix contributor",
-      "whereLooked": [
-        "Previously exhausted named-item Wowhead/WoWDB/source-search leads reused only as gap context, with no duplicate evidence records",
-        "2020-06-15 original gnarm.lua account EnchantedItemTypes directly fetched and parsed: 23 new numeric output rows from 14 unique uncommon item-level gear groups",
-        "Original gnarm.lua EnchantedLocal coexists with grouped table; excluded due potentially shared events"
-      ]
-    },
-    {
-      "lookingFor": "Previously unused original kron Enchantrix logs addressing priority Warmaul 24995 and prospecting Cobalt 36909/Fel Iron 23424",
-      "whereLooked": [
-        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/kron.lua original EnchantedItemTypes source: 13 untouched historical Classic disenchant rarity/level/kind groups with 32 material positive hits/total quantity records; not current Retail evidence",
-        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/kron.lua checked raw file for 24995, 36909 and 23424 exact IDs: no item-specific Warmaul entry or independently recorded ore prospecting events; ProspectedLocal and MillingLocal are empty"
-      ]
-    },
-    {
-      "lookingFor": "Warmaul Legplates 24995/Cobalt 36909/Fel Iron 23424 events in newly audited kybele original Classic Enchantrix source; unrecorded Classic grouped numeric bands",
-      "whereLooked": [
-        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/kybele.lua — exact 24995, 36909, 23424 keys absent from EnchantedLocal; ProspectedLocal and MillingLocal explicitly empty",
-        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/table_parse.py — verifies raw grouped record key level:quality:kind and per-output positive sightings/quantity, not measured casts",
-        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/kybele.lua — 80 original disjoint grouped counter keys; kybele filename absent from current owned evidence file list; included exactly once"
-      ]
-    },
-    {
-      "lookingFor": "Warmaul 24995, Cobalt 36909 and Fel Iron 23424 measured operation counters in new independent contributor wintermute original Enchantrix source",
-      "whereLooked": [
-        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/wintermute.lua — no Warmaul 24995 item-specific EnchantedLocal record; no prospecting event counters (ProspectedLocal is empty) for Cobalt or Fel Iron",
-        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/wintermute.lua — new 45 source-native historical Classic grouped disenchant keys; 73 positive-material output observations sourced without separately importing overlapping EnchantedLocal",
-        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/table_parse.py — parser confirms level:quality:kind and times_seen/items_yielded, not complete disenchant casts"
-      ]
-    },
-    {
-      "lookingFor": "New independent original Warmaul 24995, Cobalt 36909, Fel Iron 23424 complete event logs and legacy armor/weapon cast histograms; broadened to queued T0021 Titanium Ore author-reported material totals",
-      "whereLooked": [
-        "Original Warmaul Legplates TBC Looter 2068 and older historical reference checks: existing studies, no new complete per-event ledger, no Retail eligibility proof",
-        "Cobalt Ore and Fel Iron Ore original comments and prior status dedupe: previous 180-/100-/565-ore sample contexts already authored, no new trustworthy complete per-event evidence",
-        "Titanium Ore Wowhead WotLK original comment authors 582232, 412775 and dragunknight92: separate personal original samples, checked author IDs against GitHub indexed authored evidence; 22 identified outputs recorded with no cast imputation",
-        "Spaulders of the Wayward Vanquisher 45661: previously recorded class reward mappings, no duplication"
-      ]
-    },
-    {
-      "date": "2026-11-20",
-      "lookingFor": "Original Warmaul Legplates 24995, Cobalt Ore 36909 and Fel Iron Ore 23424 event-level samples in previously untouched Enchantrix dblink account versus new grouped Classic numeric evidence",
-      "whereLooked": [
-        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/dblink.lua original EnchantedItemTypes contains 89 new Classic gear groups; exact item-specific Warmaul 24995 not present",
-        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/dblink.lua ProspectedLocal and MillingLocal are empty; ore item IDs in cached item text are not recorded casts",
-        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/dblink.lua EnchantedLocal same contributor overlaps with grouped counts and is excluded",
-        "Original item-name searches and previously exhausted primary Warmaul 2068, Cobalt ore/stack and Fel Iron cohorts yielded no newly separable event logs; kept existing evidence unchanged"
-      ]
-    },
-    {
-      "date": "2026-11-20",
-      "lookingFor": "Unprocessed account-export source for Warmaul 24995, Cobalt 36909, Fel Iron 23424 completed casts, and nonduplicate exact input/out numeric observations",
-      "whereLooked": [
-        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/ploxl.lua — source EnchantedLocal has 171 original Classic exact input item-variant entries with material-positive hit counters; no 24995 source keys, ProspectedLocal and MillingLocal empty; stored Cobalt/Fel Iron item IDs in price caches are NOT processing events",
-        "https://raw.githubusercontent.com/alex-berliner/wow_classic_de_table/5918ca3e44f6e4bba9071731ab28be3189498001/table_parse.py — source format validates positive sightings and unit quantities, not complete cast totals, histogram or failed-cast zeros",
-        "https://raw.githubusercontent.com/alex-berliner/wow_classic_de_table/5918ca3e44f6e4bba9071731ab28be3189498001/item_names.csv — independently checked names for all exact raw input and output IDs",
-        "Existing original account cohort search for ploxl.lua and enchantrix-ploxl: no prior authored study found in repository"
-      ],
-      "result": "Original ploxl local rows added once; grouped table is a duplicate and excluded; held for Retail numeric admission (Classic era, patch and cast denominator unverified)."
+      "result": "Exact keys 24995/36909/23424 absent from EnchantedLocal processing; ProspectedLocal and MillingLocal are empty; cache item names/prices do not imply casts. Positive local DE rows independently transcribed once, grouped view discarded."
     }
   ],
-  "next_concrete_step": "Pursue original 24995 TBC-versus-scaled Retail item-specific 0..N disenchant logs, including output totals and build; for 36909/23424 find prospect addon exports with actual completed click counters and per-output zero/positive bins. Inspect independent original account exports, not previously captured cohorts; do not promote historic Classic item observations into Retail rates.",
-  "previous_verified_commit_sha": "993ca27e9dabe349db0198759f2170f9420456ff",
+  "archived_exhausted_sources": {
+    "previous_count": 60,
+    "previous_status_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/6bfaa5508b48d6693aa59730adc2e2affa781c28/research/coordination/quiet-status/legacy.json",
+    "reason": "Prior detailed negative source searches remain in the immutable predecessor commit; compressed here to keep this owned quiet-status durable and concise."
+  },
   "backlog_triage": [
     {
       "status": "admitted",
-      "scope": "source-preserving historical research only",
-      "item": "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/ploxl.lua",
-      "reason": "179 original source output rows with exact item and material IDs/names and raw positive counters, but no rates; one contributor"
+      "scope": "source-preserving original historical Classic observations only",
+      "source": "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/imba.lua",
+      "reason": "141 exact-ID material rows from 136 source-native item variants; 271 output-positive sightings and 680 material units; not Retail rates or full DE denominators"
     },
     {
       "status": "reviewable",
-      "scope": "future denominator and epoch audit",
-      "item": "ploxl EnchantedLocal",
-      "reason": "Independence of original contributor file from other accounts is likely but no linked player identity, complete casts, client build or per-event ledger"
+      "scope": "independent account/era and actual denominator audit",
+      "source": "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/imba.lua",
+      "reason": "Individual original contributor file is separate, but linked player identity, full per-item completed operations, skill and build unverified"
     },
     {
       "status": "held",
-      "scope": "Retail numeric admission",
-      "item": "24995 Warmaul / 36909 Cobalt / 23424 Fel Iron and ploxl Classic account",
-      "reason": "No matching independently logged 0–N events, exact historical-to-Retail version, skill/hotfix or total operation denominator"
+      "scope": "current Retail numeric admission",
+      "items": [
+        24995,
+        36909,
+        23424
+      ],
+      "reason": "No new 0..N current Retail event ledger; Warmaul historic 2068 Looter source is version-ambiguous; ore full-cast, output zeros and refund semantics unverified; imba is historical Classic"
     },
     {
       "status": "duplicate",
-      "scope": "same-contributor grouped view",
-      "item": "ploxl EnchantedItemTypes and combined detable.csv",
-      "reason": "Grouped and local counters match exactly: same 239 positive material sightings and 475 material units; excluded as overlapping evidence"
+      "scope": "same-contributor source views",
+      "source": "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/imba.lua",
+      "reason": "EnchantedItemTypes totals exactly match EnchantedLocal by material ID, 271 hits and 680 units; neither grouped view nor aggregated detable.csv reimported"
     }
-  ]
+  ],
+  "next_concrete_step": "Seek a new original, non-overlapping Retail/BC item-specific event export for 24995 including 0-N per-material stacks and item build; else a Cobalt/Fel Iron prospect recorder with actual operation counts, refunds and output histograms. Continue inspecting unprocessed individual account exports only for new independent raw IDs/counters; hold historical material-positive counts outside Retail estimates.",
+  "previous_verified_commit_sha": "993ca27e9dabe349db0198759f2170f9420456ff"
 }
