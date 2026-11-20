@@ -71,7 +71,11 @@ line = runtime[0]
 
 def ids_in(key):
     m = re.search(r'\["%s"\]=\{([^}]*)\}' % key, line)
-    return {int(x) for x in re.findall(r'\]=(\d+)', m.group(1))} if m else set()
+    if not m:
+        return set()
+    entries = re.sub(r'\[\d+\]=', '', m.group(1))
+    assert re.fullmatch(r'(?:\d+,)*', entries), 'Invalid restriction list'
+    return {int(x) for x in entries.split(',') if x}
 
 
 game, added = ids_in('noDisenchant'), ids_in('researchNoDisenchant')
