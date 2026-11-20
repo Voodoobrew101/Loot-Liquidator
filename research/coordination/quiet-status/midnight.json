@@ -1,23 +1,19 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-20T18:18:16.696Z",
-  "status": "JD3K original rank-2 prospecting source triaged: exactly 17 distinct original output rows are repeated verbatim across three v3 Midnight evidence files (51 records, 34 duplicate repetitions); 10 casts per ore is nominal 50/5, not source-verified actual completed operations. No new independent cohort or yield measurement.",
+  "updated_at": "2026-11-20T19:24:24.041Z",
+  "status": "One new held 12.1.7 PTR-only epic mace item-side Looter reference: item 275221, 182 reported cumulative disenchants, two unresolved Dawn Crystal material rows 94 and 83 appearances. PTR-2 12.1.5 171/90/77 is not an independent cohort. Zero measured new live Retail rate samples.",
   "task_ids": [
-    "T0049",
     "T0026",
-    "T0039",
+    "T0049",
     "T0005",
-    "T0045",
-    "T0003",
-    "T0001",
-    "T0002",
-    "T0004"
+    "T0039",
+    "T0045"
   ],
   "exact_gaps_targeted": [
-    "272246 Miststalker's Wristbands current-Retail DE eligibility, at-cast bonus/ilvl/skill/build and 140 Looter provenance; IDs 243599/243602/243603/243605/243606",
-    "237362 Umbral Tin completed prospect operations and refund ledger, true material 0..N histograms, 242608 conditional unlock and rank-accurate outputs",
-    "JD3K original 50 rank-2 each ore 237361/237363/237365: three copy locations and 10-cast nominal-versus-observed denominator; maintain per-output quality/rank unknown",
-    "236761/236770/236778/236776 original Midnight 10-herb milling cast/hits/ranks and skill/refund context"
+    "275221 two Dawn Crystal material rank/ID links, at-cast ilvl/bonus/skill/spec/build, output units and event-level histograms; PTR-only hold",
+    "272246 actual live disenchant eligibility and at-cast ilvl versus selected 305/base206",
+    "237362 Umbral Tin 4000 nominal ore actual completed casts/refunds/hits; 242608 conditional unlock",
+    "236761/236770/236778/236776 10-herb Midnight milling outputs and actual casts"
   ],
   "triage": [
     {
@@ -869,40 +865,98 @@
       "owner_context": "Original firsthand commenter states 'Tests with quality 2 ores' and 50 ore for each input; no specialization/profession tools; sample collection date/at-cast skill/client build/refunds/actual completed operations not stated. No source-linked output itemIDs/quality variants. The same 17 input+outputName+quantity observations appear exactly three times with different studyKey layouts.",
       "disposition": "duplicate; hold 10 inferred nominal operations as not verified completed casts; keep every original unchanged; request Master/build-time originalSource and per-input/output dedup plus measured-denominator hold",
       "hold_reason": "Each of the three v3 files assigns casts=10 from 50/5, but 50 is ore mentioned, not explicit completed operation count. Legacy later denominator-reconciliation file correctly stores completedOperations=null. No per-output hit/zero counts, refunds or event ledger. Do not count as three studies or 30 observed operations per ore."
+    },
+    {
+      "category": "held_new_ptr_only_epic_weapon_looter_item_side_20261120",
+      "input_id": 275221,
+      "input_name": "Beast Collector's Cudgel",
+      "input_kind": "epic one-hand mace",
+      "source": "https://www.wowhead.com/ptr/item=275221/beast-collectors-cudgel",
+      "secondary_source": "https://www.wowhead.com/ptr-2/item=275221/beast-collectors-cudgel",
+      "evidence": "research/v3/evidence/midnight/2026-11-20T1924-beast-collectors-ptr-looter-hold.jsonl",
+      "source_original": {
+        "environment": "12.1.7 PTR indexed Wowhead Looter cumulative page",
+        "reported_disenchants": 182,
+        "material_rows": [
+          {
+            "row": 1,
+            "name": "Dawn Crystal",
+            "linked_output_id": null,
+            "rank": null,
+            "positive_material_appearances": 94,
+            "quantity": null,
+            "histogram": null,
+            "rounded_percentage": 52
+          },
+          {
+            "row": 2,
+            "name": "Dawn Crystal",
+            "linked_output_id": null,
+            "rank": null,
+            "positive_material_appearances": 83,
+            "quantity": null,
+            "histogram": null,
+            "rounded_percentage": 46
+          }
+        ],
+        "base_tooltip_item_level": 197,
+        "selected_preview_item_level": 289,
+        "at_cast_item_level": null,
+        "client_build_at_each_cast": null,
+        "actual_recorded_independent_live_operations": null,
+        "zero_outcome_events": null,
+        "skill": null,
+        "specialization": null,
+        "prior_ptr_12_1_5_snapshot": {
+          "reported_disenchants": 171,
+          "material_row_appearances": [
+            90,
+            77
+          ],
+          "independent_cohort": false
+        }
+      },
+      "disposition": "held reference only, no measured live rate admission",
+      "hold_reason": "PTR provenance, unknown source-event build/bonus/skill, unknown rank-identity, quantities, cast-level outputs and zero outcomes. 12.1.5 and 12.1.7 are potentially overlapping cumulative item-side views; cannot add counts or label difference new casts."
     }
   ],
   "newly_verified_fields_or_cohorts": [
-    "One JD3K original first-hand Wowhead comment supplies exactly 17 output-name/quantity rows across Copper 237361 (6), Tin 237363 (5), Silver 237365 (6), all input quality rank 2 and reported 50 ore per group.",
-    "Exact line-level triple match in v3 Midnight files October 30, October 31 and November 1: 17 unique original rows x 3 = 51 published records, 34 duplicate repeat rows; three different studyKey schemes cannot identify unique independent cohorts.",
-    "All three v3 versions assign casts=10 to each ore solely from 50 ore / 5-input recipe. Original source supplies 50 ore and outputs, but no actual completed prospect count, refunded ore chronology, per-output hits or zeros. Older denominator-corrected observation explicitly has completedOperations=null.",
-    "At-cast item-level, output rank-specific itemIDs, actual output histogram and dated client build are not substantiated by the original."
+    "Previously unindexed in this role status: 275221 Beast Collector's Cudgel, 12.1.7 PTR epic 1H mace source item identity.",
+    "One cumulative PTR Looter source shows 182 reported disenchant entries and two same-name Dawn Crystal appearances 94 and 83; exact linked IDs/ranks unknown.",
+    "PTR-2 12.1.5 shows 171 reports and 90/77 material row appearances: comparative snapshot, not another independent cohort.",
+    "No measured actual live cast denominator, per-output quantity, zero outcome, histogram, current client build, skill, or specialization."
   ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": {
-    "new_independent_midnight_studies": 0,
-    "new_measured_midnight_casts": 0,
+    "new_independent_midnight_live_studies": 0,
+    "new_measured_midnight_live_casts": 0,
     "new_measured_midnight_castsWithDrop": 0,
     "new_midnight_zero_outcome_counts": 0,
     "new_midnight_histograms": 0,
     "new_measured_probabilities": 0,
-    "existing_original_jd3k_distinct_rows": 17,
-    "existing_original_jd3k_repeated_rows": 34,
-    "existing_original_jd3k_stored_rows": 51,
-    "affected_input_ids": [
-      237361,
-      237363,
-      237365
+    "new_reference_only_ptr_input_ids": [
+      275221
+    ],
+    "ptr_12_1_7_item_side_reported_disenchants": 182,
+    "ptr_12_1_7_material_appearance_rows": [
+      94,
+      83
+    ],
+    "ptr_12_1_5_nonindependent_snapshot_reports": 171,
+    "ptr_12_1_5_material_appearance_rows": [
+      90,
+      77
     ],
     "new_live_eligible_yield_admissions": 0
   },
-  "evidence_files_added_this_run": [],
+  "evidence_files_added_this_run": [
+    "research/v3/evidence/midnight/2026-11-20T1924-beast-collectors-ptr-looter-hold.jsonl"
+  ],
   "original_study_ids_added": [],
   "source_links": [
-    "https://www.wowhead.com/spell=1231127/midnight-prospecting",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-10-30T1824-midnight-prospecting-studies.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-10-31T1611-jd3k-q2-prospecting.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-01T0310-jd3k-rank2-prospecting.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/evidence/observations/2026-10-28-midnight-batch002-denominator-and-thorium.jsonl"
+    "https://www.wowhead.com/ptr/item=275221/beast-collectors-cudgel",
+    "https://www.wowhead.com/ptr-2/item=275221/beast-collectors-cudgel",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-20T1924-beast-collectors-ptr-looter-hold.jsonl"
   ],
   "blockers": [
     "272246 raw HTML original recovered (140 reported source Looter events; five output rank/count/fixed-stack lines), but missing actual at-cast itemLink/bonus/effective ilvl, skill/spec/build and true zero-inclusive per-cast event trace; current eligibility conflicts with WowDB base flag. Reference only.",
@@ -911,7 +965,8 @@
     "236761/236770/236778/236776 Midnight herb 10-input mill original current-build events/quality ranks/refunds remain unverified; earlier 20-herb Shadowlands casts may not be used to fill.",
     "Firsthand March 12 Resourcefulness-hidden-UI report confirms a capture caveat but has no numerical cast/refund denominator; do not infer effective Resourcefulness=0 from a blank craft-details field.",
     "One firsthand July 3 Stormwarning source duplicated into 13+13 evidence rows with mismatched studyKeys and rank/ID discrepancies; Master/build-time importer must dedupe/correct originals without overwriting source.",
-    "JD3K three-file duplication: 51 v3 records preserve only 17 distinct original output observations (34 repeats); all cast=10 values are unsupported 50/5 nominal equivalents and need Master/build-review source-level dedup and denominator hold, not worker rewriting."
+    "JD3K three-file duplication: 51 v3 records preserve only 17 distinct original output observations (34 repeats); all cast=10 values are unsupported 50/5 nominal equivalents and need Master/build-review source-level dedup and denominator hold, not worker rewriting.",
+    "275221 12.1.7 PTR item-side Looter has rank-unknown Dawn Crystal rows, no actual events, no at-cast skill/bonus/build/output units and no confirmed live eligibility; reference only."
   ],
   "exhausted_sources": [
     "Current Wowhead 272246 item/bonus preview and WoWDB eligibility: no raw Looter events or verified at-cast bonus.",
@@ -932,11 +987,12 @@
     "2026-11-20 direct original 272246 HTML Looter _totalCount 140 and embedded material qualityTier/stack bound recovered; source still lacks event-level bonus/skill/build; no re-search until first-party event export or materially changed page.",
     "2026-11-20 original Stormwarning July 3 firsthand R2 ore source fully matched 13/13 to October 31 and November 3 records; no independent second cohort or completed-cast ledger; do not re-search unless original event/itemLinks emerge.",
     "2026-11-20 Midnight milling field-review CSV 8 rows inspected: 4.5 expected, 3-6 range are explicitly modeled proxies with zero measured casts; cannot promote to empirical baseline.",
-    "2026-11-20 JD3K spell original 50-ore rank2 tests and two historical v3 repeats reconciled with legacy denominator-corrected observation; source lacks raw 0-inclusive event/refund ledger, no repeat search unless independent export appears."
+    "2026-11-20 JD3K spell original 50-ore rank2 tests and two historical v3 repeats reconciled with legacy denominator-corrected observation; source lacks raw 0-inclusive event/refund ledger, no repeat search unless independent export appears.",
+    "2026-11-20 275221 indexed PTR-only 12.1.7 182/94/83 and PTR-2 12.1.5 171/90/77: no event log/output IDs; do not recount unless first-party data emerges."
   ],
-  "next_concrete_step": "Request Master/build-time reviewer to unify the three JD3K source copies by original Wowhead author+inputID+output name+quantity, hold source-unverified casts=10 and require actual operation/refund history before rate admission; resume priority-first 272246 live disenchant per-event eligibility and 237362 current prospecting raw cast ledger, then Midnight milling.",
-  "verified_base_commit_sha": "f623e8c565533f9ad218bb286edbcb6f2128702c",
+  "next_concrete_step": "Find 272246 live Retail disenchant event logs with at-cast itemLink/skill and reconcile eligibility, then 237362 Umbral Tin raw completed prospect/refund events; 275221 PTR material link IDs/variant needed before any potential admission.",
+  "verified_base_commit_sha": "671e92657c1103933e2db4bb2403e6f94a3db915",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Status-only commit (Nov 19 owner policy): one JD3K original, no novel independent evidence, so no duplicate/empty JSONL. Commit ID cannot appear in its own content; verify by post-write read-back."
+  "commit_note": "One atomic evidence+owned-status commit. The new commit SHA cannot be embedded into its own contents; verify with GitHub ref and post-commit read-back."
 }
