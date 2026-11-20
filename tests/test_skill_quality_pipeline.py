@@ -56,6 +56,38 @@ class SkillQualityPipelineTests(unittest.TestCase):
                 self.assertEqual(result['skillQualityRules'], [])
                 self.assertTrue(result['held'][0]['reason'])
 
+    def test_patch_compatibility_metadata_is_preserved_and_never_inferred(self):
+        data = fixture()
+        data['rules'][0].update(build=70783, clientVersion='12.1.5')
+        rule = quality.build(data)['skillQualityRules'][0]
+        self.assertEqual((rule['build'], rule['clientVersion']), (70783, '12.1.5'))
+        unscoped = quality.build(fixture())['skillQualityRules'][0]
+        self.assertNotIn('build', unscoped)
+        self.assertNotIn('clientVersion', unscoped)
+        del data['rules'][0]['clientVersion']
+        exact = quality.build(data)['skillQualityRules'][0]
+        self.assertEqual(exact['build'], 70783)
+        self.assertNotIn('clientVersion', exact)
+
+    def test_patch_compatibility_rejects_malformed_versions_and_missing_build(self):
+        for value in (None, True, 120105, '', '12.1', '12.1.5.70961', '12.1.x',
+                      ' 12.1.5', '12.1.5\n', '012.1.5'):
+            with self.subTest(value=value):
+                data = fixture()
+                data['rules'][0].update(build=70783, clientVersion=value)
+                with self.assertRaisesRegex(ValueError, 'client version/build'):
+                    quality.build(data)
+        for value in (None, True, 0, -1, '70783', 70783.5):
+            with self.subTest(build=value):
+                data = fixture()
+                data['rules'][0].update(build=value, clientVersion='12.1.5')
+                with self.assertRaises(ValueError):
+                    quality.build(data)
+        data = fixture()
+        data['rules'][0]['clientVersion'] = '12.1.5'
+        with self.assertRaisesRegex(ValueError, 'client version/build'):
+            quality.build(data)
+
     def test_unproven_conditional_or_overlapping_maps_stay_held(self):
         for patch in ({'rankMappingStatus': 'UNVERIFIED'}, {'conditional': True},
                       {'rankItemIDs': [100, 100]}, {'rankItemIDs': [True, 100]},
@@ -117,6 +149,8 @@ class SkillQualityPipelineTests(unittest.TestCase):
         data = json.loads(quality.SOURCE.read_text())
         result = quality.build(data)
         self.assertEqual({r['method'] for r in result['skillQualityRules']}, {'Prospect', 'Mill'})
+        self.assertTrue(all(r['build'] == 70783 and r['clientVersion'] == '12.1.5'
+                            for r in result['skillQualityRules']))
         families = {f['name']: f for r in result['skillQualityRules'] for f in r['outputFamilies']}
         self.assertEqual(families['Crystalline Glass']['rankItemIDs'], [242787, 242786])
         self.assertEqual(families['Sanguithorn Pigment']['rankItemIDs'], [245865, 245864])

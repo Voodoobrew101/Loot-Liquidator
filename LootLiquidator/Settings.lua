@@ -474,7 +474,7 @@ function LL:CreateProfessionProfilePanel(profession)
         return c:GetData()
     end
     local title=label(profession..' — tooltip results')
-    local intro=label('Choose a character, Simulated results, or Don\'t show. Only modifiers with researched output calculations are shown.')
+    local intro=label('Choose a character, Simulated results, or Don\'t show. Known output effects are editable; effects without a numerical model are labeled unquantified.')
     local character=LL:CreateSettingsDropdown(body,function()
         local keys={} for k in pairs(LL.db.characters or {}) do keys[#keys+1]=k end
         table.sort(keys);panel.characterKeys=keys
@@ -522,14 +522,14 @@ function LL:CreateProfessionProfilePanel(profession)
     local scan=button('Refresh specialization choices from current profession',function()
         LL:GetResearchProfessionSnapshot({expansionID=expansion},profession);refresh(true)
     end)
-    local empty=label('No calculated output modifiers are available for this profession and expansion yet. Saved choices are retained for future research.')
+    local empty=label('No researched skill or output-effect controls are available for this profession and expansion yet. Saved choices are retained for future research.')
     local advanced=button('Advanced',function()advancedOpen=not advancedOpen;refresh(false)end)
     local buffsTitle=label('Buffs')
     local noBuffs=label('No captured buffs. Open this profession on the character to refresh available choices.')
     local statsTitle=label('Profession / crafting stats')
     local statsNote=label('Whole-number simulation controls. Ratings and percentages are separate. Slider ranges are editing spans, not game caps; saved values above a span are retained.')
     local scannedStats=label('')
-    local note=label('Controls return as supported calculations are added. Simulated choices never change your actual character.')
+    local note=label('Known effects without a numerical model are shown as unquantified. Simulated choices never change your actual character.')
     local function ranks()
         local out={} for id,n in (profile().specialization or ''):gmatch('(%d+)=(%d+)') do out[id]=tonumber(n) end
         return out
@@ -573,7 +573,7 @@ function LL:CreateProfessionProfilePanel(profession)
         end
         if selection~='@hide' then
             status:SetText(selection=='@hypothetical'
-                and 'Simulated profile. Only modifiers with researched output effects are available.'
+                and 'Simulated profile. Known skill and output effects are available; unquantified effects do not change calculated yields.'
                 or 'Uses scanned character data. Advanced shows researched modifiers; editing switches to Simulated.')
             if advancedOpen then
             if controlSupport.skill then
@@ -650,6 +650,12 @@ function LL:CreateProfessionProfilePanel(profession)
                         end
                         if controlSupport.dependencyNodes and controlSupport.dependencyNodes[tostring(n.id)] then
                             lines[#lines+1]='These points unlock a specialization with a researched output effect.'
+                        end
+                        for _,description in ipairs(controlSupport.nodeDescriptions and controlSupport.nodeDescriptions[tostring(n.id)] or {}) do
+                            lines[#lines+1]=description
+                        end
+                        if controlSupport.unquantifiedNodes and controlSupport.unquantifiedNodes[tostring(n.id)] then
+                            lines[#lines+1]='Some yield or quality effects at this allocation are unquantified. Values change only when a matching numerical model or measured reference is available; no extra multiplier is inferred.'
                         end
                         return lines
                     end)

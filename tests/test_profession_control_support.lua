@@ -1,5 +1,5 @@
--- Visibility follows executable outcome support, not the presence of a catalog
--- description, captured stat or otherwise inert context field.
+-- Sourced output effects remain editable even when a quantity curve is not
+-- known. Capability distinguishes descriptive context from executed arithmetic.
 local count=0
 local function check(value,label) assert(value,label);count=count+1 end
 local function copy(value)
@@ -18,9 +18,11 @@ local function support(profession,expansion,nodes)
 end
 local native=LL.ItemDB
 local enchant=support('Enchanting',11)
-check(not enchant.skill,'enchanting skill alone has no executable yield/quality model')
+check(enchant.skill,'enchanting skill stays editable as known profession context')
 check(enchant.nodes['107649'] and enchant.nodes['107647'],'both known full-reference allocations remain editable')
-check(not enchant.nodes['107648'] and not enchant.nodes['107646'],'skill-only and unquantified enchanting nodes stay hidden')
+check(enchant.nodes['107648'] and enchant.nodes['107646'],'Dust Deliverer and Crystal Collector remain editable')
+check(enchant.unquantifiedNodes['107648'] and enchant.unquantifiedNodes['107646'],
+    'known dust/crystal effects explicitly lack numerical yield curves')
 check(not next(enchant.stats) and not next(enchant.buffs),'captured stats/buffs alone do not expose controls')
 local jc=support('Jewelcrafting',11)
 check(jc.skill and jc.nodes['106982'] and jc.nodes['106983'],'Midnight prospecting skill reaches a quality calculation')
@@ -29,8 +31,12 @@ check(mill.skill and mill.nodes['109653'] and mill.nodes['109655'] and mill.node
 local tww=support('Jewelcrafting',10)
 check(not tww.skill,'TWW skill has no supported outcome model')
 for _,id in ipairs({'98659','98660','98661','98662'}) do check(tww.nodes[id],'TWW shared-reservoir replacement '..id) end
-check(not next(support('Enchanting',10).nodes),'TWW skill-only points do not imply an outcome change')
-check(not next(support('Inscription',9).nodes),'Dragonflight skill-only points do not imply an outcome change')
+local twwEnchant=support('Enchanting',10)
+check(twwEnchant.skill and twwEnchant.nodes['99890'] and twwEnchant.unquantifiedNodes['99890'],
+    'TWW sourced skill points remain editable with their unquantified output state')
+local dragonflight=support('Inscription',9)
+check(dragonflight.skill and dragonflight.nodes['34832'] and dragonflight.unquantifiedNodes['34832'],
+    'Dragonflight sourced skill context does not require an invented output curve')
 check(not support('Blacksmithing',11).skill and not next(support('Blacksmithing',11).nodes),'unsupported professions show no inert inputs')
 GetBuildInfo=function() return 'future','999999' end
 check(not next(support('Jewelcrafting',11).nodes) and not next(support('Enchanting',11).nodes),'wrong-build specialization research is not executable')
@@ -75,7 +81,8 @@ numeric.skillFactors={{skill=0,factor=1},{skill=100,factor=2}}
 local point=copy(common);point.ruleID='synthetic-point';point.kind='skill-per-point';point.nodeID=12;point.maxRank=30;point.perPoint=1
 LL.ItemDB.specializationRules={point};LL.ItemDB.professionRules={numeric}
 check(support('Inscription',11,nodes).skill,'a valid skill curve supports base skill')
-check(not support('Inscription',11,nodes).nodes['12'],'a curve rejecting changed specialization cannot support points')
+check(support('Inscription',11,nodes).nodes['12'] and support('Inscription',11,nodes).unquantifiedNodes['12'],
+    'a curve rejecting changed specialization retains separately sourced skill context')
 numeric.specializationFactors={none=1,['12=1']=1}
 check(support('Inscription',11,nodes).nodes['12'],'an accepting varying skill model connects the sourced point bonus')
 numeric.skillFactors={{skill=0,factor=1},{skill=100,factor=1}}
@@ -123,7 +130,14 @@ for _,record in ipairs(LL.ItemDB.processing) do
         record.gearKey='gear:10:4:weapon'
     end
 end
-check(not next(support('Enchanting',11).nodes),'a gear-key-only baseline from another scope cannot enable the reference')
+local function referenceSupported()
+    local capability=support('Enchanting',11)
+    for _,effects in pairs(capability.nodeEffects) do
+        for _,id in ipairs(effects) do if id=='specialization:11:Disenchant:max-shard-reference' then return true end end
+    end
+    return false
+end
+check(not referenceSupported(),'a gear-key-only baseline from another scope cannot enable the reference')
 for _,key in ipairs({'gear:11:4:armor','gear:11:3:weapon'}) do
     LL.ItemDB=copy(native)
     for _,record in ipairs(LL.ItemDB.processing) do
@@ -131,19 +145,44 @@ for _,key in ipairs({'gear:11:4:armor','gear:11:3:weapon'}) do
             record.inputRarity=nil;record.inputClassID=nil;record.expansionID=nil;record.gearKey=key
         end
     end
-    check(not next(support('Enchanting',11).nodes),'a gear-key-only baseline must match exact rarity/type: '..key)
+    check(not referenceSupported(),'a gear-key-only baseline must match exact rarity/type: '..key)
 end
 LL.ItemDB=copy(native)
 for _,rule in ipairs(LL.ItemDB.specializationRules) do
     if rule.kind=='reference-context' then rule.requiredNodeCaps={['107649']=29,['107647']=30} end
 end
-check(not next(support('Enchanting',11).nodes),'an unreachable required-node cap hides the reference control')
+check(not referenceSupported(),'an unreachable required-node cap cannot advertise reference arithmetic')
+check(support('Enchanting',11).nodes['107649'],'known Delegate skill remains editable independently of the held reference')
 LL.ItemDB=native
 check(not next(support('Enchanting',11,{{name='bad catalog'},{id=107647,maxRank='30'}}).nodes),'malformed catalog entries cannot create a visible control')
 LL.ItemDB=copy(native);LL.ItemDB.skillQualityRules={}
-check(not next(support('Jewelcrafting',11).nodes) and not support('Jewelcrafting',11).skill,'removing the skill outcome path hides skill-only controls')
+local contextOnly=support('Jewelcrafting',11)
+check(contextOnly.nodes['106982'] and contextOnly.skill and contextOnly.unquantifiedNodes['106982'],
+    'removing a quantity/quality path retains known skill context and marks it unquantified')
 LL.ItemDB=copy(native);LL.ItemDB.skillQualityRules[3]=copy(LL.ItemDB.skillQualityRules[1])
 local duplicate=LL.ItemDB.skillQualityRules[3]
-check(not support(duplicate.method=='Mill' and 'Inscription' or 'Jewelcrafting',11).skill,'ambiguous quality models cannot advertise working skill controls')
+local ambiguous=support(duplicate.method=='Mill' and 'Inscription' or 'Jewelcrafting',11)
+check(ambiguous.skill and next(ambiguous.unquantifiedNodes),
+    'ambiguous quality models retain sourced skill context without advertising quantified output')
+-- Described output effects require their own source, patch, catalog and baseline
+-- scope. A description does not create a skill bonus or multiplier rule.
+local crystal
+for _,effect in ipairs(native.specializationDescriptions) do if effect.nodeID==107646 then crystal=copy(effect) end end
+check(crystal~=nil,'the shipped Crystal Collector description is available')
+local descriptionBaseline={method='Disenchant',expansionID=11,inputRarity=4,inputClassID=4,
+    materials={{id=243605,expectedQuantity=field(1)}}}
+LL.ItemDB={processing={descriptionBaseline},specializationDescriptions={crystal}}
+local described=support('Enchanting',11)
+check(described.nodes['107646'] and described.unquantifiedNodes['107646'] and not described.skill,
+    'Crystal description supplies its point control but invents no skill bonus')
+check(described.nodeDescriptions['107646'][1]==crystal.description,'the source description reaches editor capability')
+for key,value in pairs({clientVersion='12.1.6',expansionID=10,profession='Inscription',method='Mill',maxRank=29,inputRarity=2}) do
+    LL.ItemDB.specializationDescriptions={copy(crystal)}
+    LL.ItemDB.specializationDescriptions[1][key]=value
+    check(not support('Enchanting',11).nodes['107646'],'description scope mismatch remains excluded: '..key)
+end
+LL.ItemDB.specializationDescriptions={copy(crystal)}
+LL.ItemDB.specializationDescriptions[1].sourceClaimIDs={}
+check(not support('Enchanting',11).nodes['107646'],'an unsourced description cannot expose an output control')
 LL.ItemDB=native
 print('PASS: '..count..' research-driven control capability, restoration, prerequisite, model and scope assertions')

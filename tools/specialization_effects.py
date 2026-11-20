@@ -39,6 +39,59 @@ def finite(value, minimum=0, maximum=None):
             and (maximum is None or value <= maximum))
 
 
+def build_described_effects(document, catalog, sources):
+    """Validate researched descriptions without granting numeric execution."""
+    entries = document.get('describedEffects', [])
+    if not isinstance(entries, list):
+        raise ValueError('Described specialization effects must be a list')
+    allowed = {'effectID', 'method', 'profession', 'expansionID', 'build', 'clientVersion',
+               'nodeID', 'nodeName', 'maxRank', 'inputRarity', 'inputClassID', 'recipeID',
+               'description', 'sourceClaimIDs'}
+    result, identities, scopes = [], set(), set()
+    for original in entries:
+        if not isinstance(original, dict) or set(original) - allowed:
+            raise ValueError('Described specialization effects cannot carry numeric transforms or unknown fields')
+        effect = copy.deepcopy(original)
+        identity = effect.get('effectID')
+        if not isinstance(identity, str) or not identity or identity in identities:
+            raise ValueError('Invalid or duplicate described specialization effect identity')
+        identities.add(identity)
+        if (effect.get('method') not in PROFESSIONS
+                or effect.get('profession') != PROFESSIONS[effect['method']]
+                or not whole(effect.get('expansionID')) or effect.get('build') != document['build']
+                or not whole(effect.get('build'), 1)
+                or not isinstance(effect.get('clientVersion'), str)
+                or not re.fullmatch(r'(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)', effect['clientVersion'])):
+            raise ValueError(f'{identity}: Invalid described effect scope/build')
+        if (not isinstance(effect.get('description'), str) or not effect['description'].strip()
+                or not isinstance(effect.get('nodeName'), str) or not effect['nodeName'].strip()):
+            raise ValueError(f'{identity}: Described effect name/text required')
+        refs = effect.get('sourceClaimIDs')
+        if (not isinstance(refs, list) or not refs or any(not isinstance(ref, str) for ref in refs)
+                or len(set(refs)) != len(refs) or any(ref not in sources for ref in refs)):
+            raise ValueError(f'{identity}: Missing or invalid described effect source lineage')
+        if effect.get('inputRarity') is not None and (not whole(effect['inputRarity'], 2) or effect['inputRarity'] > 8):
+            raise ValueError(f'{identity}: Invalid described effect physical rarity')
+        if effect.get('inputClassID') is not None and effect['inputClassID'] not in (2, 4):
+            raise ValueError(f'{identity}: Invalid described effect physical class')
+        if effect.get('recipeID') is not None and not whole(effect['recipeID'], 1):
+            raise ValueError(f'{identity}: Invalid described effect recipe')
+        key = f'{effect["profession"]}:{effect["expansionID"]}'
+        nodes = {node['id']: node for node in catalog.get('catalogs', {}).get(key, {}).get('nodes', [])}
+        node_id = effect.get('nodeID')
+        if (not whole(node_id, 1) or node_id not in nodes
+                or not whole(effect.get('maxRank'), 1) or effect['maxRank'] != nodes[node_id]['maxRank']
+                or effect['nodeName'] != nodes[node_id]['name']):
+            raise ValueError(f'{identity}: Invalid described effect catalog node/cap/name')
+        scope = (key, effect['method'], effect.get('recipeID'), node_id,
+                 effect.get('inputRarity'), effect.get('inputClassID'))
+        if scope in scopes:
+            raise ValueError(f'{identity}: Duplicate described specialization effect scope')
+        scopes.add(scope)
+        result.append(effect)
+    return sorted(result, key=lambda effect: effect['effectID'])
+
+
 def build(document, catalog):
     if document.get('schemaVersion') != 1 or not whole(document.get('build'), 1):
         raise ValueError('Unsupported specialization effect schema/build')
@@ -67,18 +120,47 @@ def build(document, catalog):
             raise ValueError(f'{identity}: Unsupported specialization effect')
         if (rule.get('method') not in PROFESSIONS
                 or rule.get('profession') != PROFESSIONS[rule['method']]
-                or not whole(rule.get('expansionID')) or rule.get('build') != document['build']
+                or not whole(rule.get('expansionID')) or not whole(rule.get('build'), 1)
                 or not finite(rule.get('confidence0to100'), 1, 100)
                 or rule.get('evidenceStatus') != 'SOURCED_PROVISIONAL'
                 or rule.get('applyPolicy') != 'EXECUTE'):
             raise ValueError(f'{identity}: Invalid scope, evidence or confidence')
+        if 'clientVersion' in rule and (
+                not isinstance(rule['clientVersion'], str)
+                or not re.fullmatch(r'(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)', rule['clientVersion'])
+                or not whole(rule.get('build'), 1)):
+            raise ValueError(f'{identity}: Invalid client version/build scope')
         refs = rule.get('sourceClaimIDs')
         if (not isinstance(refs, list) or not refs or len(set(refs)) != len(refs)
                 or any(source not in sources for source in refs)):
             raise ValueError(f'{identity}: Missing or invalid source lineage')
-        for key in ('samples', 'casts', 'effectiveSamples', 'skillFactors', 'quantityMultiplier', 'inputItemID'):
+        # Catalog identity may be pinned to an older client than newly resolved
+        # arithmetic. A later build needs an explicit matching evidence claim;
+        # never silently stamp new evidence with the old catalog's build.
+        def supports_build(value):
+            return value == document['build'] or any(sources[ref].get('build') == value for ref in refs)
+        if rule['build'] < document['build'] or not supports_build(rule['build']):
+            raise ValueError(f'{identity}: Rule build has no matching source evidence')
+        for key in ('samples', 'casts', 'effectiveSamples', 'skillFactors', 'quantityMultiplier', 'inputItemID',
+                    'procChance', 'procRate', 'procProbability', 'bonusQuantity', 'yieldMultiplier', 'quantityMilestones'):
             if key in rule:
                 raise ValueError(f'{identity}: Unsupported empirical claim or item-specific gate: {key}')
+        skill_fields = {'learningSkill', 'skillMilestones', 'skillMilestoneBuild'} & set(rule)
+        if skill_fields:
+            if (kind != 'skill-per-point'
+                    or not finite(rule.get('learningSkill'), .00000001)
+                    or not whole(rule.get('skillMilestoneBuild'), rule['build'])
+                    or not any(sources[ref].get('build') == rule['skillMilestoneBuild'] for ref in refs)
+                    or not isinstance(rule.get('skillMilestones'), list) or not rule['skillMilestones']):
+                raise ValueError(f'{identity}: Invalid sourced learning/milestone skill fields')
+            previous = 0
+            for milestone in rule['skillMilestones']:
+                if (not isinstance(milestone, dict) or set(milestone) != {'rank', 'skill'}
+                        or not whole(milestone.get('rank'), 1) or milestone['rank'] <= previous
+                        or not whole(rule.get('maxRank'), 1) or milestone['rank'] > rule['maxRank']
+                        or not finite(milestone.get('skill'), .00000001)):
+                    raise ValueError(f'{identity}: Invalid or unordered skill milestone')
+                previous = milestone['rank']
         if rule.get('inputRarity') is not None and (not whole(rule['inputRarity'], 2) or rule['inputRarity'] > 8):
             raise ValueError(f'{identity}: Invalid physical rarity')
         if rule.get('inputClassID') is not None and rule['inputClassID'] not in (2, 4):
@@ -135,6 +217,7 @@ def build(document, catalog):
         raise ValueError('Combined replacement fractions exceed source reservoir')
     return {'schemaVersion': 1, 'revision': document['revision'], 'build': document['build'],
             'specializationRules': sorted(result, key=lambda rule: rule['ruleID']),
+            'describedEffects': build_described_effects(document, catalog, sources),
             'sourceClaims': copy.deepcopy(claims), 'held': copy.deepcopy(document.get('held', []))}
 
 

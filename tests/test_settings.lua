@@ -545,12 +545,13 @@ do
 end
 do
     -- Exercise real research support and the bundled catalog through the UI.
-    -- Catalog membership alone must never expose a slider with no calculation.
+    -- Catalog membership alone is insufficient; researched skill contributions
+    -- and described output effects remain editable even without a yield curve.
     LL.GetProfessionUIOptions=realProfessionOptions
     assert(loadfile('LootLiquidator/ProfessionCatalog.lua'))('LL',LL)
     assert(loadfile('LootLiquidator/ProfessionModels.lua'))('LL',LL)
     assert(loadfile('LootLiquidator/ItemDBRuntime.lua'))('LL',LL)
-    GetBuildInfo=function() return '12.1.5','70783' end
+    GetBuildInfo=function() return '12.1.5','70961','Nov 2026',120105 end
     assert(LL:InitializeItemDB())
     local function shown(w)
         while w do if w.shown==false then return false end;w=w.parent end
@@ -591,13 +592,29 @@ do
     toggle.scripts.OnClick(toggle)
     local delegate=assert(labelsAfter(before,'Disenchanting Delegate (')[1])
     local shard=assert(labelsAfter(before,'Shard Supplier')[1])
+    local dust=assert(labelsAfter(before,'Dust Deliverer')[1])
+    local crystal=assert(labelsAfter(before,'Crystal Collector')[1])
     local slider=sliderAt(delegate,before)
     assert(slider and slider.maximum==30 and slider.parent.parent.shown)
     assert(sliderAt(shard,before),'the sourced max-specialization reference keeps both required point sliders')
-    assert(#slidersAfter(before)==2,'Enchanting has only its two calculated reference-allocation sliders')
-    assert(#labelsAfter(before,'Crystal Collector')==0 and #labelsAfter(before,'Dust Deliverer')==0,
-        'skill-only branches without an output model stay hidden')
-    assert(#labelsAfter(before,'Skill before specialization')==0,'skill alone has no Enchanting output model')
+    local dustSlider=assert(sliderAt(dust,before))
+    local crystalSlider=assert(sliderAt(crystal,before))
+    assert(dustSlider.value==17 and crystalSlider.value==12,
+        'restored researched branches load their previously saved point values')
+    assert(#slidersAfter(before)==5,'Enchanting exposes base skill and all four researched disenchanting nodes')
+    assert(#labelsAfter(before,'Skill before specialization')==1,'known skill remains available as simulated tooltip context')
+    local previousTooltip=GameTooltip
+    local hoverLines={}
+    GameTooltip={SetOwner=function()end,ClearLines=function()hoverLines={}end,
+        AddLine=function(_,text)hoverLines[#hoverLines+1]=text end,Show=function()end,Hide=function()end}
+    for _,control in ipairs({dustSlider,crystalSlider}) do
+        assert(control.scripts.OnEnter,'researched branch must explain its effect on hover')
+        control.scripts.OnEnter(control)
+        local text=table.concat(hoverLines,'\n'):lower()
+        assert(text:find('not quantified',1,true) or text:find('unquantified',1,true),
+            'a described output effect explicitly discloses its unquantified numerical change')
+    end
+    GameTooltip=previousTooltip
     assert(#labelsAfter(before,'Resourcefulness rating')==0 and #labelsAfter(before,'Crafting speed')==0,
         'context-only crafting stats are not displayed as working controls')
     assert(LL.db.professionTooltipProfiles.Enchanting==nil,'opening Advanced does not change the tooltip profile')
@@ -607,29 +624,29 @@ do
     assert(saved.specialization:find('107649=7',1,true))
     assert(saved.specialization:find('107646=12',1,true) and saved.specialization:find('107648=17',1,true)
         and saved.skill==245 and saved.stats.resourcefulness.percent==17 and saved.buffs['123'],
-        'editing a supported slider preserves hidden points, skill, stats and buffs')
+        'editing a supported slider preserves the other points, skill, hidden stats and buffs')
     selector.initializer.setting:SetValue(1)
     assert(slider.parent.parent.shown,'character view also exposes the specialization editor')
     toggle.scripts.OnClick(toggle)
     assert(not slider.parent.parent.shown,'one Advanced toggle still collapses everything')
-    -- A newly supplied executable formula brings its control back on refresh.
+    -- Numeric formulas may later augment an already known described effect.
     -- This coefficient is explicitly synthetic; it is never shipped research.
     local added={ruleID='synthetic-ui-only:crystal-output',kind='quantity-multiplier',
         method='Disenchant',profession='Enchanting',expansionID=11,inputRarity=4,
-        nodeID=107646,maxRank=30,perPoint=.01,build=70783,
+        nodeID=107646,maxRank=30,perPoint=.01,build=70961,
         applyPolicy='EXECUTE',evidenceStatus='SOURCED_PROVISIONAL',confidence0to100=70,
         sourceClaimIDs={'synthetic-ui-test-only'}}
     LL.ItemDB.specializationRules[#LL.ItemDB.specializationRules+1]=added
     editor.scripts.OnShow(editor);toggle.scripts.OnClick(toggle)
-    local restored=assert(labelsAfter(before,'Crystal Collector')[1],'new compatible research restores the named slider')
+    local restored=assert(labelsAfter(before,'Crystal Collector')[1],'numeric research retains the named described-effect slider')
     local restoredSlider=assert(sliderAt(restored,before))
-    assert(restoredSlider.value==12,'the returning control restores its saved point value')
+    assert(restoredSlider.value==12,'new numeric support preserves the existing point value')
     table.remove(LL.ItemDB.specializationRules)
     editor.scripts.OnShow(editor)
-    assert(#labelsAfter(before,'Crystal Collector')==0 and not shown(restoredSlider),
-        'removing executable support hides an existing pooled control again')
+    assert(#labelsAfter(before,'Crystal Collector')==1 and shown(restoredSlider),
+        'removing a numeric formula retains a researched described-effect control')
     assert(LL:GetManualProfessionProfile('Tester - Realm','Enchanting',11).specialization:find('107646=12',1,true),
-        'hiding a control never deletes the saved allocation')
+        'removing numeric support never deletes the saved allocation')
     local function nativePanel(profession,expansion)
         local first=#all
         local panel=LL:CreateProfessionProfilePanel(profession)
@@ -652,5 +669,5 @@ do
     assert(#labelsAfter(twwFirst,'Skill before specialization')==0,'a replacement model does not make unrelated skill effective')
     local unusedFirst=nativePanel('Blacksmithing',11)
     assert(#slidersAfter(unusedFirst)==0,'an unmodeled profession does not expose inert skill, stat or point sliders')
-    print('PASS: real research hides inactive sliders, retains calculated points and restores controls and saved values with new support')
+    print('PASS: researched skill and described-effect sliders, limitation hovers, saved allocations and numeric-support refresh')
 end

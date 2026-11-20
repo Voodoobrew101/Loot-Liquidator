@@ -10,6 +10,7 @@ import hashlib
 import json
 import math
 from pathlib import Path
+import re
 
 SOURCE = Path('database/research/skill-quality-rules.json')
 OUTPUT = Path('database/skill-quality-rules.lua')
@@ -91,6 +92,13 @@ def build(data):
         if rule_id in seen:
             raise ValueError('Duplicate skill-quality rule identity: ' + rule_id)
         seen.add(rule_id)
+        if 'build' in original and not integer(original['build']):
+            raise ValueError('Invalid skill-quality build: ' + rule_id)
+        if 'clientVersion' in original and (
+                not isinstance(original['clientVersion'], str)
+                or not re.fullmatch(r'(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)', original['clientVersion'])
+                or not integer(original.get('build'))):
+            raise ValueError('Invalid skill-quality client version/build scope: ' + rule_id)
         source_ids = claims(original.get('sourceClaimIDs'), sources, rule_id)
         confidence = original.get('confidence0to100')
         if isinstance(confidence, bool) or not isinstance(confidence, (int, float)) or not math.isfinite(confidence) or not 0 < confidence <= 100:
@@ -158,6 +166,9 @@ def build(data):
                     sourceClaimIDs=source_ids, outputFamilies=sorted(families, key=lambda f: f['name']))
         if input_ids is not None:
             rule['inputItemIDs'] = sorted(input_ids)
+        for key in ('build', 'clientVersion'):
+            if key in original:
+                rule[key] = original[key]
         rules.append(rule)
     for pending in data.get('held', []):
         if not isinstance(pending, dict) or not isinstance(pending.get('reason'), str):

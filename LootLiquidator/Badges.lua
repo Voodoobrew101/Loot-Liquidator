@@ -834,6 +834,11 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         label=label.." — "..option.tooltipProfileLabel
                     end
                     local status={}
+                    local simulationNotes,unquantifiedEffects={},false
+                    if model and LA.ProfessionSimulationEffectNotes then
+                        simulationNotes,unquantifiedEffects=LA:ProfessionSimulationEffectNotes(f,option,model)
+                    end
+                    if unquantifiedEffects then status[#status+1]='some specialization effects unquantified' end
                     if model and model.syntheticBenchmark then
                         status[#status+1]="Simulated assumptions"
                     elseif model and model.confidenceUnscored then
@@ -860,6 +865,9 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         two(label,"Insufficient Data",option.letter or "D")
                     end
                     ShowMaterials(option,model)
+                    if showProfession then
+                        for _,note in ipairs(simulationNotes) do tooltip:AddLine('  '..note,.78,.82,.95,true) end
+                    end
                     if option.eligibleInput and option.available==false and option.why then
                         tooltip:AddLine('  '..option.why,.83,.72,.59,true)
                     end

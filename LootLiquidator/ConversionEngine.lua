@@ -169,6 +169,11 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
         ctx.skill=simulated.skill;ctx.effectiveSkill=simulated.skill
         ctx.buffs=simulated.buffs
         ctx.specialization=simulated.specialization
+        ctx.learnedSpecializations=nil
+        if type(simulated.learnedSpecializations)=='table' then
+            ctx.learnedSpecializations={}
+            for id,value in pairs(simulated.learnedSpecializations) do if value==true then ctx.learnedSpecializations[tostring(id)]=true end end
+        end
         ctx.specializationPoints=self.ProfessionSpecializationPoints and self:ProfessionSpecializationPoints(simulated.specialization) or nil
         ctx.stats={}
         for stat,values in pairs(simulated.stats or {}) do ctx.stats[stat]={rating=values.rating,percent=values.percent} end
