@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-21T05:42:24.525Z",
-  "status": "Source-first legacy research pass: no new independent completed casts, measured hits, zeros, unconditional yields or 0..N histograms verified for 24995/36909/23424. Inspected original current-version ItemDisenchantLoot field layout and multiple retail Warmaul metadata providers; these expose unresolved item-level/eligibility interpretation, not a new drop cohort. No evidence JSONL created; status-only update, no other role/implementation/catalogue files touched.",
+  "updated_at": "2026-11-21T06:41:59.663Z",
+  "status": "Source-first post-cutoff legacy search: no new independent 24995 disenchant log or 36909/23424 prospect operations with actual casts, per-output hits, zeros, totalQuantity or histograms. Newly located 2026 TBC Classic tooltip-model addon and WorthIt preset exports are NOT measurements or evidence of Retail yields. No new JSONL; this update only affects legacy quiet status and leaves Codex-owned catalogue untouched.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -21,8 +21,10 @@
     "Interpret primary 12.1.7 DisenchantLoot DB2 row data and exact 24995 itemLink/version/bonus eligibility before using 2007 Looter cohort as 2026 Retail; published claim that levels are ignored is not established by schema."
   ],
   "newly_verified_fields_cohorts": [
-    "Schema only, NOT measured yields: wowdev/WoWDBDefs definitions/ItemDisenchantLoot.dbd for retail 12.1.7.71087 (layout 5845A4AA) defines MinLevel, MaxLevel, SkillRequired, ExpansionID, Class, Subclass, Quality; documentation alone does not establish which fields actual server matching uses or prove 24995 can be disenchanted.",
-    "Identity/context only, NOT direct game-state QA: current providers show divergent Warmaul Legplates 24995 item levels (Wowhead dynamic display 14 and 74, TSM Retail 74, BootyBayBroker/WoWDB 31). Do not collapse scaled/normal/transmog-era item versions into one known eligibility/loot group."
+    "0 new empirical input/output records, 0 current Retail completed operations, 0 per-output hits/zeros, 0 unconditional material totals, 0 event histograms.",
+    "Source classification only: ProspectBuddy 1.0.4 (Aug 19, 2026) is explicitly TBC Classic 2.5.5/2.5.6; its estimated gem chances are sourced from WoW-Professions TBC tables rather than new original completed processing logs. Do not import estimates as Retail empirical rates.",
+    "Source classification only: DalaGG's WorthIt listings '1000 Cobalt Ore Prospecting' and '1000 Fel Iron Ore Prospecting' are addon Flip export presets, not documented completed prospecting experiments, and provide no public zero-inclusive ledger.",
+    "Historical-vs-Retail context reconfirmed without new yield evidence: 24995 TBC Classic item level 108 disenchantable at 275 versus Retail database representation of item level 31; version/eligibility must be verified before any cross-era conversion."
   ],
   "source_urls": [
     "https://thewowdb.com/guides/disenchant-roi-trap/",
@@ -44,15 +46,20 @@
     "https://github.com/wowdev/WoWDBDefs/blob/master/definitions/ItemDisenchantLoot.dbd",
     "https://tradeskillmaster.com/retail/us/items/24995",
     "https://bootybaybroker.com/item/24995/warmaul-legplates/us/alleria",
-    "https://main.trinitycore.net/dd/de6/structitemdisenchantlootloadinfo"
+    "https://main.trinitycore.net/dd/de6/structitemdisenchantlootloadinfo",
+    "https://www.curseforge.com/wow/addons/prospectbuddy",
+    "https://dalaggstudios.com/worthit-exports",
+    "https://www.wowhead.com/tbc/item=24995/warmaul-legplates",
+    "https://www.wowhead.com/ptr/item=23424/fel-iron-ore",
+    "https://www.wowhead.com/ru/item=36909"
   ],
-  "numeric_summary": "This run: 0 newly verified original measured Retail cohorts, 0 completed-cast denominators, 0 new per-output hit/zero counts, 0 raw quantities, 0 0..N histograms and 0 evidence records. Confirmed schema fields are metadata, not measured loot statistics. Legacy 24995 historical hits 1559/417/7/48 out of source 2068 operations remain historical and incomplete; 37 unmatched is not a zero count.",
+  "numeric_summary": "0 new reviewed original evidence records, 0 source-observed casts, 0 input-output quantity advances, 0 output hits/zero counts, 0 histograms. Historical 24995 source retains 2068 Looter operations and 1559/417/7/48 output hits for 22445/22446/22447/22449; 37 unaccounted operations must NOT be called zeros. Post-cutoff estimates/export preset numbers cannot be interpreted as measured N.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
+  "verified_parent_sha": "c88016678a65a2f6419a0eae00466d31e92c1cca",
   "verified_commit_sha": null,
-  "commit_note": "Status-only update of own research/coordination/quiet-status/legacy.json; no new independent evidence JSONL. Commit SHA cannot be embedded in same content. Verify commit and live branch read-back externally.",
+  "commit_note": "Status-only update; no new independently grounded empirical record so no JSONL manufactured. Commit SHA and branch read-back must be checked after write.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -152,47 +159,49 @@
     {
       "source": "https://www.wowhead.com/item=46849/titanium-powder",
       "reason": "ZeRoTaCtIcS and 154957 historic source samples already recorded in legacy files."
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/prospectbuddy",
+      "reason": "Classic TBC expected-rate tooltip using historical published table, not original measurements or 2026 Retail."
+    },
+    {
+      "source": "https://dalaggstudios.com/worthit-exports",
+      "reason": "WorthIt flipping import presets called 1000 prospects, not source-observed 1000 operations or logged outcomes."
     }
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Seek new primary post-cutoff Retail DE/prospect logs with true successful-operation denominators, all output and zero events plus itemLink/build/skill/spec/refunds. For 24995, ask Master/implementation to inspect actual 12.1.7 DB2 row values and item eligibility before any tooltip/admission change; keep 725-source cutoff catalogue Codex-owned and avoid rerunning prior historical positive-only sources.",
+  "next_concrete_step": "Continue NEW post-cutoff original Retail data search for 24995 exact itemLink/build, a complete 0..N disenchant log and verified current eligibility; and for Cobalt 36909/Fel Iron 23424 zero-inclusive per-prospect logs with counts, output IDs, quality, skill/refund and build. Avoid existing 731-source catalogue, pre-cutoff copied cohorts, TBC Classic model guesses and WorthIt named flip presets. Raise schema/eligibility issues only through Master.",
   "coordination_cutoff": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42; 713+12 existing backlog sources owned by active Codex review team; no rerun of that catalogue",
   "sources_reviewed_this_run": [
     {
-      "url": "https://github.com/wowdev/WoWDBDefs/blob/master/definitions/ItemDisenchantLoot.dbd",
-      "type": "primary schema definitions",
-      "disposition": "verified-schema-context-not-yield-evidence",
-      "detail": "Retail 12.1.7.71087 listed with layout 5845A4AA; fields MinLevel MaxLevel SkillRequired ExpansionID Class Subclass Quality. No row values, item eligibility or server matching code."
+      "url": "https://www.curseforge.com/wow/addons/prospectbuddy",
+      "type": "2026 published tooltip addon (TBC Classic only)",
+      "disposition": "held-reference-table-not-independent-measurement",
+      "detail": "1.0.4 released 2026-08-19 supports TBC Classic 2.5.5/2.5.6; documented estimates from WoW-Professions TBC guide and market-priced EV, not author-reported operation logs or Retail drop cohorts."
     },
     {
-      "url": "https://thewowdb.com/guides/disenchant-roi-trap/",
-      "type": "secondary 2026 published overview",
-      "disposition": "held-for-mechanic-interpretation",
-      "detail": "Claims item level/skill do not affect modern bracket matching; primary schema has corresponding columns, so semantics remain unverified. No independent 24995 casts or output histograms."
+      "url": "https://dalaggstudios.com/worthit-exports",
+      "type": "WorthIt Flipping exports",
+      "disposition": "not-study-nominal-preset",
+      "detail": "Names include 1000 Cobalt Ore Prospecting and 1000 Fel Iron Ore Prospecting; page explicitly describes importable addon Flip templates, not 1,000 processed actual ore/operations or output totals."
     },
     {
-      "url": "https://www.wowhead.com/item=24995/warmaul-legplates",
-      "type": "retail item metadata",
-      "disposition": "ambiguous-variant-not-measured-de",
-      "detail": "Retail dynamic page displays multiple levels 14 and 74; no completed DE event or exact current bonus ID."
+      "url": "https://www.wowhead.com/tbc/item=24995/warmaul-legplates",
+      "type": "TBC Classic item metadata",
+      "disposition": "historic-mechanics-not-contemporary-retail-yield",
+      "detail": "Historical TBC Classic 2.5.1 item shows item level 108 and disenchantable 275; no modern Retail execution or per-event histogram."
     },
     {
-      "url": "https://tradeskillmaster.com/retail/us/items/24995",
-      "type": "retail item metadata",
-      "disposition": "variant-disparity-not-eligibility",
-      "detail": "Retail item listing displays level 74, unlike WoWDB/BootyBayBroker iLvl31. Does not prove ability to disenchant."
+      "url": "https://www.wowhead.com/ptr/item=23424/fel-iron-ore",
+      "type": "2026 PTR indexed item comments",
+      "disposition": "duplicates-and-qualitative-claims",
+      "detail": "Old mined ore information and isolated 8-stack 1-blue report; no independent post-cutoff full prospect ledger or zero-inclusive output IDs."
     },
     {
-      "url": "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
-      "type": "historical original comments",
-      "disposition": "duplicate-existing-original",
-      "detail": "Thottbot 100 ore and 565 ore records already present; no per-output zeros, measured operation denominator for 565, or new current retail profile."
-    },
-    {
-      "url": "https://psynister.wordpress.com/2011/02/02/professions-leveling-jewelcrafting-1-525/",
-      "type": "historical guide reference",
-      "disposition": "secondary-percentages-not-independent-study",
-      "detail": "Old Cobalt/Fel Iron percentage guidance, no casts/source cohorts/patch-specific current Retail observations."
+      "url": "https://www.wowhead.com/ru/item=36909",
+      "type": "Cobalt original comment mirror",
+      "disposition": "existing-or-not-prospect-evidence",
+      "detail": "Indexed run reports 95+75+35 mined ore and found gems; those are gathering runs, not casts of prospecting, and can't be used for prospecting yield."
     }
   ]
 }
