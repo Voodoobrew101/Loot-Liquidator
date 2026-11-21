@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-21T08:14:09.280Z",
-  "status": "Refreshed research rules, evidence format, checked mechanics, worker role and current assigned queue. Searched for post-cutoff original Retail Midnight processing logs; none supplied verifiable completed operations, per-output hits/zeros/histograms or at-disenchant item-instance links. New independent Blizzard-hosted armory search-index evidence corroborates equipped Miststalker's Wristbands at levels 292/305/321, but its raw item ID/bonus string and disenchant eligibility cannot be confirmed from these excerpts. Status-only: no yield study admission, evidence JSONL or data PR.",
+  "updated_at": "2026-11-21T09:17:00.857Z",
+  "status": "Reviewed current Midnight role instructions/mechanics and live queue; targeted first-person Retail disenchant, prospecting and milling logs. Recent searches across Reddit, Blizzard Forums, Wowhead, Warcraft Wiki, external guides and public spreadsheet/code indexes produced no new independent source with actual completed operations, material per-event hits/zeros, item-instance bonuses, and profession context. Known pre-cutoff examples (Cardinalai 237362, Honeybone 237361, MikiMM 239671 and the March rare-gear ~5000 sample) were not recopied. The November 20 official WoW: Forever hotfix belongs to a separate ruleset, not Retail Midnight. Status-only research checkpoint; no invented JSONL, yield model, PR, or merge.",
   "task_ids": [
     "T0026",
     "T0049",
@@ -1298,8 +1298,8 @@
     }
   ],
   "newly_verified_fields_or_cohorts": [
-    "Miststalker's Wristbands (named item; catalogue input ID 272246): official Blizzard-hosted character armory indexed gear-slot excerpts display worn variants at 292, 305 and 321. These are player-equipped display levels, NOT the at-disenchant ilvl/bonus, successful event or confirmed 272246 item ID from raw armory links. Direct page access returned 403; this is limited to searchable official page text.",
-    "Current owner 731-source catalogue receipt is marked CLOSED_VERIFIED_CURRENT_PIPELINE with scope-level review and main integration; do not re-catalogue cutoff corpus or conflate main integration with addon release."
+    "Provenance exclusion: Blizzard's November 20, 2026 'WoW: Forever' hotfixes and November 16 Arcane Salvager disenchant bonus refer to WoW: Forever, not Retail Midnight; they do not support an M12/M13 Retail rate or mechanic correction.",
+    "Known raw sources revisited only to deduplicate: Wowhead Cardinalai 237362 reports 4,000 ore (not verified operation count), Reddit March 10 rare disenchant spreadsheet discussion reports ~5,000 disenchants and average ranks without an event export; EU Honeybone April 22 claims 1,000 copper ore and 10 diamonds in a pre-known study. None is a new post-cutoff independent Retail cohort."
   ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": {
@@ -1314,31 +1314,26 @@
     "new_rank_identified_output_ids": [],
     "completed_casts_237362": null,
     "at_cast_ilvl_272246": null,
-    "indexed_armory_named_272246_equipped_ilvls": [
-      292,
-      305,
-      321
-    ],
-    "armory_exact_item_instance_bonus_ids": null,
-    "armory_raw_item_id_visible": null
+    "at_cast_bonus_272246": null,
+    "independently_new_237359_processed_casts": null,
+    "notes": "All source-listed means are preserved in existing prior evidence; no new real processing CSV/ledger, item-instance/de eligibility or denomination advance found this run."
   },
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/eu/armory/character/ambossar/gearless/",
-    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/eu/armory/character/grim-batol/mistyweave/",
-    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/eu/armory/character/tarren-mill/ingsoc/",
-    "https://www.wowhead.com/item=272246/miststalkers-wristbands?bonus=6652:13696:12841:13662&ilvl=305&spec=102",
-    "https://www.wowdb.com/items/272246-miststalkers-wristbands",
     "https://www.wowhead.com/item=237362/umbral-tin-ore",
-    "https://www.reddit.com/r/woweconomy/comments/1wwd0w0/should_i_use_my_1_time_swap_for_jc_to_go_from_gem/",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/coordination/backlog-catalogue-20261120.json"
+    "https://www.wowhead.com/item=272246/miststalkers-wristbands",
+    "https://www.reddit.com/r/woweconomy/comments/1rpwov0/disenchantingshard_help/",
+    "https://eu.forums.blizzard.com/en/wow/t/prospecting-1000-refulgent-copper-ore-zero-rare-gems-updated/616811",
+    "https://worldofwarcraft.blizzard.com/en-us/news/24315281/wow-forever-hotfixes-november-20-2026",
+    "https://www.wowhead.com/spell=1231127/midnight-prospecting"
   ],
   "blockers": [
-    "272246: Blizzard-hosted armory indexed player equipment confirms multiple worn-level variants of the named item but not original per-instance bonus IDs, actual at-cast item level, successful DE events, player enchanting skill or client build. WoWDB base record still flags cannot be disenchanted; historical Wowhead Looter aggregate conflicts. Keep held.",
-    "237362: Cardinalai's original 4000 nominal ore and 39.6% resourcefulness do not establish completed operations after refunds. Per-output rank-identity checks, actual operations, positive hit counts, zero-event histograms, skill/spec/patch remain unresolved; do not infer 800 casts.",
-    "237359/237364/236761: searched newly published public references; no new attributable per-operation current Retail processing export, including 0/1/2+ output vectors, input grade, skill/profession profile, resourcefulness/refund ledger and build.",
-    "The cutoff 731-source per-scope catalogue is Codex-owned and completed; avoid duplicating its work. Changes to runtime/schema/tooling require Master/implementation review."
+    "272246 Miststalker's Wristbands: prior 140 Looter item-side rows do not resolve Cannot be disenchanted base flag, actual at-cast gear bonus/iLvl, eligibility, client build, skill, or event-level 0..N outcomes.",
+    "237362 Umbral Tin: Cardinalai's original 4,000 nominal ore, 39.6% Resourcefulness and material totals are not a counted number of completed operation events; raw refunds/consumption, per-output ranks, hit counts, zero casts and histograms absent.",
+    "237359 Refulgent Copper, 237364/237365 Brilliant Silver, 236761/236770/236776/236778 milling: the historical published studies are already in the cutoff corpus and lack event-by-event profiled logs; no new post-cutoff independent original found.",
+    "2026-11-20 published WoW: Forever hotfixes cannot be used as Retail Midnight disenchant evidence. Do not conflate rulesets.",
+    "Current queue/cutoff catalogue remains Codex-owned; no duplicate catalogue, runtime changes, or unreviewed admission authorized."
   ],
   "exhausted_sources": [
     {
@@ -1360,11 +1355,23 @@
     {
       "url": "https://worldofwarcraft.blizzard.com/en-us/worldsoul/eu/armory/character/grim-batol/mistyweave/",
       "reason": "Official armory search excerpt displays the named wrist item at level 305; the full page denies automated access and does not report disenchant operation, event-linked bonus IDs, material output, or skill. Other public armory levels 292 and 321 corroborate upgrade variability only."
+    },
+    {
+      "url": "https://worldofwarcraft.blizzard.com/en-us/news/24315281/wow-forever-hotfixes-november-20-2026",
+      "reason": "Hotfix official but WoW: Forever, not Retail Midnight; November 16 Arcane Salvager effect is out of scope for Midnight yield mechanics."
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1rpwov0/disenchantingshard_help/",
+      "reason": "March 10 original rare-gear ~5,000 disenchants and rank-mean claims already in pre-cutoff catalogue/status, no new released per-event spreadsheet or separate cohort."
+    },
+    {
+      "url": "https://eu.forums.blizzard.com/en/wow/t/prospecting-1000-refulgent-copper-ore-zero-rare-gems-updated/616811",
+      "reason": "April 22 first-person Honeybone report is previously documented; ore rank, refund ledger and exact event output vectors still absent."
     }
   ],
-  "next_concrete_step": "Find NEW post-cutoff first-person Retail disenchant SavedVariables/CSV or combat-system event receipts for item 272246 containing literal |Hitem:272246:... bonus, observed ilvl, successful/blocked DE result and actual spec/skill/build. Separately seek rank-separated Umbral Tin 237362 original per-operation logs with completed operations, Resourcefulness refunds, exact output ID/qty and zero outcomes. No more ordinary item tooltip/armory re-checks, and do not re-catalogue the 731-source cutoff.",
-  "verified_base_commit_sha": "8aba2f95cdd5eafa29d279c148c5543ea894b08f",
+  "next_concrete_step": "Search for genuinely new *post-cutoff* original Retail Midnight SavedVariables/CSV operations ledger with exact input itemLink/bonus/ilvl and successful disenchant result (especially 272246), or quality-linked Umbral Tin 237362 operation/refund logs with output IDs, 0/1/2+ casts and skill/spec/build. Do not rework 731-source Codex catalogue or old articles that cannot provide additional denominators.",
+  "verified_base_commit_sha": "716f5a269a3bcc46bf685562f9fa0b5733e8d047",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Status-only owned-file commit; exact resulting commit SHA is confirmed by post-write readback, and cannot be embedded in its own commit without a second commit. No evidence JSONL was manufactured."
+  "commit_note": "Owned quiet-status-only checkpoint, because no genuinely new numeric/identity cohort warrants JSONL evidence; resulting SHA verified by subsequent fetch and cannot be embedded in its own commit."
 }
