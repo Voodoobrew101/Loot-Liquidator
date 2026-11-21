@@ -754,7 +754,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     local needsAverage=type(m.expectedQuantity)=='number' and (type(m.chance)~='number'
                         or m.inconsistentFields or not m.minQuantity and not m.maxQuantity)
                     if LA.db.showAverageQuantity~=true and needsAverage then
-                        if option.name=='Prospect' then
+                        if option.name=='Prospect' and not model.operationUnverified and not option.operationUnverified then
                             left=left..(' [avg %s per prospect]'):format(UnitsText(m.expectedQuantity))
                         else
                             left=left..(' [avg %s per %d %s]'):format(UnitsText(m.expectedQuantity),batch,batch==1 and 'input' or 'inputs')

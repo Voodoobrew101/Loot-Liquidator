@@ -63,6 +63,10 @@ local perProspect=render(false)
 assert(perProspect:find('[avg 0.200 per prospect]',1,true) and not perProspect:find('20%',1,true),
     'a five-ore prospect average is not divided again or converted into occurrence probability')
 assert(model.value==12 and a.netExpectedValue==3,'per-prospect labels leave valuation unchanged')
+model.operationUnverified=true;model.inputCount=1
+assert(render(false):find('[avg 0.200 per 1 input]',1,true),
+    'a per-input reference with no verified prospecting operation retains its own denominator')
+model.operationUnverified=nil;model.inputCount=5
 a.chance=.2;a.expectedQuantity=.375
 a.minQuantity=lo;a.maxQuantity=hi
 -- Technical details are independent opt-ins; core values remain visible.
