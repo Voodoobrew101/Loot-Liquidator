@@ -1062,7 +1062,7 @@ function LL:CreateProfessionProfilePanel(profession)
             for _,effect in ipairs(conditions) do
                 local rank=points[tostring(effect.nodeID)] or 0
                 local learned=rank>0 or profile().learnedSpecializations and profile().learnedSpecializations[tostring(effect.nodeID)]
-                if learned and rank>=effect.minimumRank then
+                if supportedNodes[effect.nodeID] and learned and rank>=effect.minimumRank then
                     if not conditionTitleShown then place(conditionsTitle,y);y=y+30;conditionTitleShown=true end
                     local id=effect.entryID
                     local function setState(field,value)

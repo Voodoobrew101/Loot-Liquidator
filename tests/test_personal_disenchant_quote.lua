@@ -166,3 +166,58 @@ for _,simulated in ipairs({false,true})do
 end
 LL.ProjectPersonalEstimate=originalProjection
 print('PASS: matching personal DE quote and same-build mismatched live/manual profile isolation')
+
+-- Crafting-only and foreign-profession allocations cannot change the DE cohort.
+for _,record in ipairs(fixture.craftResearch.records)do record.build='70783' end
+for _,study in pairs(fixture.craftResearch.studies)do study.build='70783' end
+activeBuffs={}
+local originalSupport=LL:GetProfessionSimulationControlSupport('Enchanting',11)
+for _,id in ipairs({107769,107764,107762,107761,107763}) do
+    assert(not originalSupport.nodes[tostring(id)],'crafting-only node must stay out of DE controls')
+end
+for _,id in ipairs({107649,107648,107647,107646}) do
+    assert(originalSupport.nodes[tostring(id)],'material-affecting DE node remains editable')
+end
+for _,signature in ipairs({'107769=30,107764=20,107762=20,107761=20,107763=20','106982=30'}) do
+    LL.ProcessingPlayerConditions=function()
+        local target=context();target.specialization=signature
+        target.specializationPoints=LL:ProfessionSpecializationPoints(signature)
+        target.learnedSpecializations={}
+        for id in pairs(target.specializationPoints) do target.learnedSpecializations[id]=true end
+        return target
+    end
+    LL.db.disenchantDataMode=1;LL._processingModelCache=nil
+    local quote=assert(LL:EvaluateDisenchant({id=244752,classID=4,quality=3,expansionID=11,itemLevel=168,count=1}))
+    assert(quote.confidence==85 and #quote.yieldModel.materials==2,'unrelated allocations retain measured goggles baseline and confidence')
+    assert(quote.yieldModel.personalStats.total==200,'unrelated allocations do not replace actual 200-cast evidence')
+end
+local relevant=context();relevant.specialization='107647=10';relevant.specializationPoints={['107647']=10}
+assert(not LL:DisenchantObservationProfileKey(relevant),'actual DE milestone must retain its normal transform boundary')
+relevant.specialization='999999999=1';relevant.specializationPoints={['999999999']=1}
+assert(not LL:DisenchantObservationProfileKey(relevant),'unknown specialization is not silently classified as irrelevant')
+-- Synthetic condition IDs test scanner routing without adding game observations.
+local oldDB=LL.ItemDB
+LL.ItemDB={professionProfiles={profiles={
+ ['Enchanting:11']={nodes={[1]={learningEffects={
+  {metric='skill',scope={method='Disenchant'},condition={spellIDs={101}}},
+  {metric='multicraft',scope={method='Craft'},condition={spellIDs={102}}},
+  {metric='skill',scope={labelIDs={5022}},condition={spellIDs={103}}}}}}},
+ ['Alchemy:11']={nodes={[2]={learningEffects={{metric='resourcefulness',scope={method='Craft'},condition={spellIDs={201}}}}}}}}}}
+local requested={}
+C_UnitAuras={GetPlayerAuraBySpellID=function(id)
+ requested[id]=true;return {spellId=id,applications=2}
+end,GetAuraDataByIndex=function()error('direct known-ID reads must not enumerate combat buffs')end}
+local buffs,stacks,known=LL:ProfessionAuraState('Enchanting',11,'Disenchant')
+assert(known and buffs['101'] and stacks['101']==2 and not buffs['102'] and not buffs['201'])
+assert(requested[101] and not requested[102] and not requested[103] and not requested[201])
+requested={}
+buffs=LL:ProfessionAuraState('Alchemy',11,'Craft')
+assert(buffs['201'] and not requested[101] and not requested[102],'other professions have separate aura scopes')
+C_UnitAuras={GetAuraDataByIndex=function(_,index)
+ if index==1 then return {spellId=999999,applications=20} end
+ if index==2 then return {spellId=101,applications=3} end
+end}
+buffs,stacks,known=LL:ProfessionAuraState('Enchanting',11,'Disenchant')
+assert(known and buffs['101'] and stacks['101']==3 and not buffs['999999'],'fallback also excludes unrelated auras')
+LL.ItemDB=oldDB;C_UnitAuras=nil
+print('PASS: crafting/foreign talent isolation, measured confidence, scoped known-ID and fallback aura reads')

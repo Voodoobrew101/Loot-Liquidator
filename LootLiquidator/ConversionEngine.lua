@@ -202,7 +202,7 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character,professionHin
     ctx.stale=ctx.profileKind=="offline-snapshot" and (not ctx.observed or (snapshotNow and snapshotNow-ctx.observed>7*86400)) or false
     ctx.incomplete=not validNumber(ctx.effectiveSkill) or not ctx.specialization
     if key==current and self.ProfessionAuraState then
-        ctx.buffs,ctx.buffStacks,ctx.buffsKnown=self:ProfessionAuraState()
+        ctx.buffs,ctx.buffStacks,ctx.buffsKnown=self:ProfessionAuraState(profession,f and f.expansionID,method)
     elseif saved and saved.buffsKnown==true then
         ctx.buffs={};ctx.buffStacks={};ctx.buffsKnown=true
         for id,value in pairs(saved.buffs or {}) do if value==true then ctx.buffs[tostring(id)]=true end end

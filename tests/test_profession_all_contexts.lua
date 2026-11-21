@@ -324,7 +324,10 @@ check(state.active==false and state.stacks==7,'conditional activation and stacks
 LL.GetProfessionUIOptions=oldOptions
 LL.ItemDB.professionProfiles.profiles['Alchemy:11']=originalAlchemy
 C_UnitAuras={GetAuraDataByIndex=function(_,index) if index==1 then return {spellId=433230,applications=3} end end}
-local buffs,stacks,known=LL:ProfessionAuraState()
+local auraProfile=LL.ItemDB.professionProfiles.profiles['Alchemy:11']
+LL.ItemDB.professionProfiles.profiles['Alchemy:11']={nodes={[101]={learningEffects={{metric='resourcefulness',scope={method='Craft'},condition={spellIDs={433230}}}}}}}
+local buffs,stacks,known=LL:ProfessionAuraState('Alchemy',11,'Craft')
+LL.ItemDB.professionProfiles.profiles['Alchemy:11']=auraProfile
 check(known and buffs['433230'] and stacks['433230']==3,'native helpful aura identity and actual stack count are preserved')
 C_UnitAuras=nil
 
