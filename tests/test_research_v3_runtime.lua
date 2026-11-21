@@ -118,10 +118,17 @@ prices={[242607]=50,[242720]=30}
 ok(LL:GetMaterialPrice({id=242607,expectedQuantity=1})==50,'a ranked material is priced by its own ID')
 local priced={inputCount=5,materials={{id=242607,rankIDs={242607,242720},expectedQuantity=2,confidence=50}},confidence=50}
 ok(math.abs(LL:ValueProcessingModel(priced,0,true)-12)<1e-9,'value uses the cheapest rank (2 x 30 / 5)')
--- D1c4: a research no-disenchant flag (Moth-Ridden Slippers, a Delver item the game-file
--- list lacks) reaches the lookup the disenchant check reads; game-file entries stay.
-ok(LL.ItemRestrictions[220308]==true,'research no-disenchant flag is used')
-ok(#LL.ItemDB.restrictions.researchNoDisenchant>100,'research no-disenchant flags ship')
+-- Page observations preserve their source scope; only native flags prohibit an
+-- item globally. The historical Delver catalog claim remains available to review.
+local current={}
+assert(loadfile('LootLiquidator/ItemDBRuntime.lua'))('LootLiquidator',current)
+assert(loadfile('LootLiquidator/Database.lua'))('LootLiquidator',current)
+current.db={};current:MigrateEvidenceSettings();ok(current:InitializeItemDB(),current.itemDBError)
+ok(current.ItemRestrictions[220308]~=true,'catalog observation is not an item-wide native flag')
+ok(#current.ItemDB.restrictions.researchNoDisenchantObservations>100,'research no-disenchant observations ship')
+local catalog
+for _,record in ipairs(current.ResearchNoDisenchantObservations) do if record.itemID==220308 then catalog=record end end
+ok(catalog and #catalog.observations>0 and catalog.observations[1].rawSHA256,'catalog source lineage and raw hash retained')
 for _,id in ipairs(LL.ItemDB.restrictions.noDisenchant) do
     if not LL.ItemRestrictions[id] then ok(false,'game-file no-disenchant entry lost: '..id) end
 end

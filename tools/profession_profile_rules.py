@@ -378,18 +378,37 @@ def compile_entry(node, entry, nodes, recipes):
         discovery_only = bool(re.search(r"discover.*recipes|learn.*recipes", text)) and not re.search(r"additional|yield|grant|recover|receive", text)
         if re.search(extra_pattern, text) and not pure_non_material and not buff_configuration and not savings_term and not discovery_only and not ("multicraftExtra" in numeric_metrics and "multicraft" in text):
             amount = re.search(r"(?:grant you|gain|yields?|receive) (\d+) (?:additional |extra |soulbound |conjured )", text)
-            explicit_percent = re.search(r"(\d+(?:\.\d+)?)%", text)
+            # A speed/stat percentage in a neighboring sentence is not an
+            # output chance. Read numeric output terms only from clauses that
+            # actually describe material opportunities.
+            output_clauses = [clause for clause in re.split(r"\|n|(?<!\d)[.;]|\n", text)
+                              if re.search(extra_pattern, clause)]
+            output_text = " ".join(output_clauses)
+            explicit_percent = re.search(r"(\d+(?:\.\d+)?)%", output_text)
             finesse_conditional = "finesse" in text and "finesseExtra" not in numeric_metrics
             metric = "finesseExtra" if finesse_conditional else "dropChance" if explicit_percent else "extraOutput"
             magnitude = float(explicit_percent[1]) if explicit_percent else 5 if finesse_conditional else float(amount[1]) if amount else .05
             unit = "percent" if finesse_conditional or explicit_percent else "quantity"
             if amount is None and not explicit_percent and not finesse_conditional:
                 magnitude = .0001 if "extremely rare" in text else .001 if "very rare" in text or "diamond" in text else .05
-            relative = bool(explicit_percent and ("increase" in text or "increased" in text) and not re.search(r"\+\d+(?:\.\d+)?%", text))
+            relative = bool(explicit_percent and ("increase" in output_text or "increased" in output_text) and not re.search(r"\+\d+(?:\.\d+)?%", output_text))
+            # This exact native milestone promises a relative improvement,
+            # not .05 new units divided uniformly over every gem and rank.
+            # The coefficient remains a confidence-zero quantity prior.
+            if (node["nodeID"] == 28609 and entry["entryID"] == 36393
+                    and node["catalogKey"] == "Jewelcrafting:9"
+                    and text.strip() == "increases your chances of acquiring raw gems when prospecting."):
+                relative, magnitude, unit = True, .05, "fraction"
+            output_scope = dict(scope)
+            if (node["nodeID"] == 28609 and entry["entryID"] == 36392
+                    and node["catalogKey"] == "Jewelcrafting:9"):
+                # The adjacent +15% applies to speed. The material opportunity
+                # is restricted to prospecting this exact native BoP input.
+                output_scope["inputItemIDs"] = [194545]
             specific_loot = "darkmoon cards" in text or "mystic items" in text
             emit(metric, magnitude, unit, 50 if amount or explicit_percent else 0,
                  mechanism="finesse-conditional-yield-prior" if finesse_conditional else "explicit-extra-output" if amount or explicit_percent else "qualitative-extra-output-prior", source_effects=custom_ids,
-                 outputItemIDs=output_ids, recipeIDs=refs,
+                 scope=output_scope, outputItemIDs=output_ids, recipeIDs=refs,
                  legalOutputRefs={"kind": "native-recipe-or-selected-baseline", "recipeIDs": refs, "itemIDs": output_ids},
                  economicPolicy="nontradable" if "soulbound" in text else "normal",
                  identityUnresolved=not bool(output_ids),

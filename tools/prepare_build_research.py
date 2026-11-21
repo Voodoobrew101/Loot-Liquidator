@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
 
 import research_build_review
 import research_v3_to_baselines as v3
@@ -50,12 +51,52 @@ def prepare(research_ref=None, lua=None, run=subprocess.run, root=ROOT):
         review = research_build_review.write_review(v3.DEFAULT_SNAPSHOT, review_path)
         run([*(lua or [os.environ.get('LUA51', 'lua5.1')]), 'tools/compile_itemdb.lua',
              'LootLiquidator/ItemDBRuntime.lua'], check=True, cwd=root)
+        run([*(lua or [os.environ.get('LUA51', 'lua5.1')]), 'tools/disenchant_research_gaps.lua'], check=True, cwd=root)
         source = json.loads((v3.DEFAULT_SNAPSHOT / 'SNAPSHOT.json').read_text())
         manifest = {'schemaVersion': 1, 'policy': research_build_review.POLICY,
                     'researchSnapshot': source, 'automatedReview': review,
                     'runtimeSHA256': sha256(Path('LootLiquidator/ItemDBRuntime.lua').read_bytes()).hexdigest(),
                     'sourceEvidencePreserved': True, 'generatedInBuildWorkspace': True,
                     'automaticPullRequests': False}
+        from source_catalogue_review import review_source_catalogue
+        from source_catalogue_registry import catalogue_paths
+        folders = [folder for folder in catalogue_paths(v3.DEFAULT_SNAPSHOT)
+                   if (v3.DEFAULT_SNAPSHOT / folder / 'manifest.json').exists()]
+        if folders:
+            from reviewed_source_catalogue import canonical_hash
+            raw, _ = research_build_review.raw_rows(v3.DEFAULT_SNAPSHOT)
+            module = v3.load_calculator(v3.DEFAULT_SNAPSHOT)
+            effective = module.load_reviewed_source_rows()
+            effective_by_id = {(row.get('_file'), row.get('id')): row for row in effective}
+            current = {}
+            for file, line, row in raw:
+                if isinstance(row, dict):
+                    corrected = effective_by_id.get((file, row.get('id')))
+                    current[f'{file}:{line}'] = {'rawSHA256': canonical_hash(row),
+                        'effectiveSHA256': canonical_hash(corrected) if corrected is not None else None}
+            with tempfile.TemporaryDirectory(prefix='loot-catalogue-consumers-') as temporary:
+                exported = Path(temporary) / 'consumers.json'
+                run([*(lua or [os.environ.get('LUA51', 'lua5.1')]), 'tools/export_pipeline_audit.lua',
+                     exported.as_posix(), '--catalogue'], check=True, cwd=root)
+                actual = json.loads(exported.read_text(encoding='utf-8'))
+            catalogues = []
+            for folder in folders:
+                catalogue = review_source_catalogue(v3.DEFAULT_SNAPSHOT,
+                    consumer_model_ids=actual['models'], consumer_fact_ids=actual['facts'], current_rows=current,
+                    catalogue_path=folder)
+                catalogue['consumerValidation'] = 'compiled-runtime-initialized'
+                catalogue['factRuntimeValidation'] = actual['factRuntimeValidation']
+                catalogue['cataloguePath'] = folder.as_posix()
+                catalogue['runtimeSHA256'] = manifest['runtimeSHA256']
+                if not catalogue['complete']:
+                    raise ValueError('Compiled source catalogue is incomplete: ' + json.dumps(catalogue['errors'][:12]))
+                catalogues.append(catalogue)
+            manifest['sourceCatalogues'] = catalogues
+            if len(catalogues)==1:
+                manifest['sourceCatalogue'] = catalogues[0]
+            Path('database/research/source-catalogue-build-review.json').write_text(
+                json.dumps({'catalogues': catalogues, 'complete': True}, ensure_ascii=False, sort_keys=True, indent=2) + '\n',
+                encoding='utf-8', newline='\n')
         world_review_path = Path('database/research/gathering-study-review.json')
         if world_review_path.exists():
             world_review_bytes = world_review_path.read_bytes()

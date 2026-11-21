@@ -184,6 +184,7 @@ function LL:RecordCraftObservation(record)
     end
     local id=contextID(self,measured);if not id then return false,"Context capacity reached; export research before continuing" end
     local r=copy(record);r.context=nil;r.contextID=id;r.schemaVersion=SCHEMA;r.recorderRevision=RECORDER_REVISION
+    r.clientVersion=GetBuildInfo and select(1,GetBuildInfo()) or nil
     r.addonCommit=self.buildInfo and (self.buildInfo.headCommit or self.buildInfo.commit)
     r.studyID=d.activeStudy or self:StartCraftStudy();r.recordedAt=stamp()
     r.provenance={sampleKind="RAW_CAST_LOG",source="measured-addon-capture",independentReview="PENDING",
@@ -836,7 +837,7 @@ function LL:ConfirmEmptyCraft()
     end
     return false,"No isolated empty-result candidate; missing or interrupted captures cannot be confirmed as zero"
 end
-function LL:CraftBaseline(studyID,contextRef,recipeID)
+function LL:CraftBaseline(studyID,contextRef,recipeID,options)
     local d=self.db and self.db.craftResearch;if not d then return nil end
     local study=d.studies[studyID]
     if not study or study.truncated or study.globalCoverageGap then return nil,"Study has unresolved coverage gaps" end
@@ -847,11 +848,15 @@ function LL:CraftBaseline(studyID,contextRef,recipeID)
             if r.studyID==studyID and r.contextID==contextRef and r.recipeID==recipeID then method=r.method;break end
         end
     end
+    local subset=type(options)=='table' and options.allowCompleteDisenchantSubset==true
+        and method=='Disenchant' and recipeID==13262 and study.coverageVersion==2
+        and self.DisenchantObservationProfileKey and self:DisenchantObservationProfileKey(context)~=nil
+    local scopedGap=study.coverageGaps and study.coverageGaps[tostring(method)..':'..recipeID]
     local review
     if study.censored then
         if not method then return nil,"Unknown operation coverage" end
         if study.coverageVersion==2 and type(study.coverageGaps)=="table" and next(study.coverageGaps) then
-            if study.coverageGaps[tostring(method)..":"..recipeID] then return nil,"Recipe has unresolved coverage gaps" end
+            if study.coverageGaps[tostring(method)..":"..recipeID] and not subset then return nil,"Recipe has unresolved coverage gaps" end
         else
             review=self.ItemDB and self.ItemDB.captureCoverageReviews and self.ItemDB.captureCoverageReviews[studyID]
             if not review or review.method~=method or review.recipeID~=recipeID
@@ -865,23 +870,41 @@ function LL:CraftBaseline(studyID,contextRef,recipeID)
         numericTransformValidated=false,applyPolicy="NO_NUMERIC_TRANSFORM"}
     base.patchBuild=study.build
     base.observationContext=copy(d.contexts[contextRef])
+    if subset and study.censored and scopedGap then
+        base.studyCoverageCensored=true;base.coverageCensored=false;base.studyCoverageGap=copy(scopedGap)
+        base.coverageSelection='complete-retained-context-records'
+        base.excludedUnresolvedOperations=0;base.excludedUnresolvedRecordIDs={}
+    end
     local totals,inputTotals,signature={},{},nil
+    local unknownClientVersion=false
     for _,r in ipairs(d.records) do if r.studyID==studyID and r.contextID==contextRef and r.recipeID==recipeID then
         if review and not review.operations[r.operationID] then return nil,"Operation is outside the reviewed legacy capture" end
-        if r.outputCoverage~="complete" then return nil,"Unresolved output coverage" end
+        if r.outputCoverage~="complete" then
+            if not subset then return nil,"Unresolved output coverage" end
+            base.coverageCensored=true
+            base.excludedUnresolvedOperations=(base.excludedUnresolvedOperations or 0)+1
+            base.excludedUnresolvedRecordIDs=base.excludedUnresolvedRecordIDs or {}
+            base.excludedUnresolvedRecordIDs[#base.excludedUnresolvedRecordIDs+1]=r.operationID
+        else
         local inputSignature=json(d.contexts[r.contextID].inputIdentity)
         if signature and signature~=inputSignature then return nil,"Different input batches or variants" end
         signature=inputSignature;base.inputs=r.nominalInputs or r.inputs;base.method=r.method
         for _,item in ipairs(r.inputs) do inputTotals[item.itemID]=(inputTotals[item.itemID] or 0)+item.quantity end
         base.operations=base.operations+1;base.sourceRecordIDs[#base.sourceRecordIDs+1]=r.operationID
+        if r.clientVersion then
+            if base.clientVersion and base.clientVersion~=r.clientVersion then return nil,'Different source client versions' end
+            base.clientVersion=r.clientVersion
+        else unknownClientVersion=true end
         for _,m in ipairs(r.outputs) do
             local t=totals[m.itemID] or {itemID=m.itemID,qualityRank=m.qualityRank,rarity=m.rarity,quantity=0,occurrences=0,histogram={}}
             totals[m.itemID]=t;t.quantity=t.quantity+m.quantity;t.occurrences=t.occurrences+1
             t.minimum=math.min(t.minimum or m.quantity,m.quantity);t.maximum=math.max(t.maximum or m.quantity,m.quantity)
             t.histogram[tostring(m.quantity)]=(t.histogram[tostring(m.quantity)] or 0)+1
         end
+        end
     end end
     if base.operations==0 then return nil end
+    if unknownClientVersion then base.clientVersion=nil end
     base.expectedInputsConsumed={}
     for _,item in ipairs(base.inputs) do
         base.expectedInputsConsumed[#base.expectedInputsConsumed+1]={itemID=item.itemID,expectedQuantity=(inputTotals[item.itemID] or 0)/base.operations}
@@ -918,7 +941,7 @@ local function disenchantInputMatches(input,f)
         and (input.rarity==nil or input.rarity==f.quality)
         and (input.classID==nil or input.classID==f.classID)
 end
-function LL:GetRecordedDisenchantCategoryEstimate(f,recipeID)
+function LL:GetRecordedDisenchantCategoryEstimate(f,recipeID,targetContext)
     local category=disenchantCategory(f)
     local d=self.db and self.db.craftResearch
     if not category or not d or not self.CaptureCraftContext then return nil end
@@ -930,26 +953,39 @@ function LL:GetRecordedDisenchantCategoryEstimate(f,recipeID)
         local inputs=r.nominalInputs or r.inputs
         local queryID=tostring(r.studyID)..':'..tostring(r.contextID)
         if r.method=='Disenchant' and r.recipeID==recipeID and r.character==character
-            and r.build==currentBuild and #inputs==1 and inputs[1].quantity==1
+            and #inputs==1 and inputs[1].quantity==1
             and disenchantCategory(inputs[1])==category and not checked[queryID] then
             checked[queryID]=true
-            local baseline=self:CraftBaseline(r.studyID,r.contextID,recipeID)
             local context=d.contexts[r.contextID]
+            local sourceProfile=self.DisenchantObservationProfileKey and self:DisenchantObservationProfileKey(context)
+            local historical=r.build~=currentBuild
+            -- Other talent states retain the exact-build/explicit-rule path.
+            -- A known zero-spec source may remain an explicitly historical
+            -- source reference; no cross-build count is made current.
+            local baseline=not historical or sourceProfile
+            baseline=baseline and self:CraftBaseline(r.studyID,r.contextID,recipeID,
+                {allowCompleteDisenchantSubset=sourceProfile~=nil})
             if baseline and context and context.character==character then
                 local query=json({allocation=r.allocation,concentration=r.applyConcentration})
                 local current=queries[query]
                 if not current then
-                    current=self:CaptureCraftContext(recipeID,f,'Disenchant',r.allocation,r.applyConcentration)
+                    -- This is a valuation target, not a new recorded capture.
+                    -- The selected skill-reader/simulation profile can remain
+                    -- usable while the profession window is closed.
+                    current=targetContext and copy(targetContext)
+                        or self:CaptureCraftContext(recipeID,f,'Disenchant',r.allocation,r.applyConcentration)
                     queries[query]=current
                 end
-                local exact=current.effectiveSkill and current.specialization and current.skillLineID
-                    and current.fieldStatus.equipment=='measured'
-                    and categoryProfileIdentity(context)==categoryProfileIdentity(current)
+                local sameProfile=sourceProfile and self.DisenchantObservationProfileKey
+                    and sourceProfile==self:DisenchantObservationProfileKey(current)
+                local exact=not historical and (sameProfile or (current.effectiveSkill and current.specialization and current.skillLineID
+                    and type(current.fieldStatus)=='table' and current.fieldStatus.equipment=='measured'
+                    and categoryProfileIdentity(context)==categoryProfileIdentity(current)))
                 if exact or self.ProjectPersonalEstimate then
-                    local signature=categoryProfileIdentity(context)
+                    local signature=tostring(r.build)..':'..(sourceProfile or categoryProfileIdentity(context))
                     local group=groups[signature]
                     if not group then
-                        group={context=context,current=current,exact=exact,baselines={}}
+                        group={context=context,current=current,exact=exact,sourceBuild=r.build,baselines={}}
                         groups[signature]=group;order[#order+1]=group
                     end
                     group.baselines[#group.baselines+1]=baseline
@@ -959,6 +995,8 @@ function LL:GetRecordedDisenchantCategoryEstimate(f,recipeID)
     end
     for _,group in ipairs(order) do
         local totals,operations,members,studies,contexts,sourceRecords={},0,{},{},{},{}
+        local coverageCensored,studyCoverageCensored,excludedUnresolved,excludedIDs,coverageGaps=false,false,0,{},{}
+        local clientVersion,unknownClientVersion
         for _,baseline in ipairs(group.baselines) do
             local present={}
             for _,material in ipairs(baseline.materials) do
@@ -981,20 +1019,34 @@ function LL:GetRecordedDisenchantCategoryEstimate(f,recipeID)
                 if not present[id] then total.histogram['0']=(total.histogram['0'] or 0)+baseline.operations end
             end
             operations=operations+baseline.operations
+            coverageCensored=coverageCensored or baseline.coverageCensored==true
+            studyCoverageCensored=studyCoverageCensored or baseline.studyCoverageCensored==true
+            excludedUnresolved=excludedUnresolved+(baseline.excludedUnresolvedOperations or 0)
+            for _,id in ipairs(baseline.excludedUnresolvedRecordIDs or {}) do excludedIDs[#excludedIDs+1]=id end
+            if baseline.studyCoverageGap then coverageGaps[baseline.studyID]=copy(baseline.studyCoverageGap) end
+            if baseline.clientVersion then
+                if clientVersion and clientVersion~=baseline.clientVersion then unknownClientVersion=true end
+                clientVersion=clientVersion or baseline.clientVersion
+            else unknownClientVersion=true end
             members[baseline.inputs[1].itemID]=true
             studies[baseline.studyID]=true;contexts[baseline.referenceContextID]=true
             for _,recordID in ipairs(baseline.sourceRecordIDs) do sourceRecords[#sourceRecords+1]=recordID end
         end
         local context=copy(group.context)
+        if unknownClientVersion then clientVersion=nil end
         context.inputIdentity=nil;context.inputCategory=category
         context.expansionID=f.expansionID;context.skill=context.baseSkill
-        context.verifiedAt=group.current.observed;context.incomplete=context.operationStats==nil
+        context.verifiedAt=context.observed;context.incomplete=context.operationStats==nil
         local baseline={method='Disenchant',inputCount=1,expectedInputCount=1,
             effectiveSamples=operations,samples=operations,operations=operations,
             studyID='category:'..category..':'..table.concat(keys(studies),','),
             observationContextID='category:'..table.concat(keys(contexts),','),
             sourceStudyIDs=keys(studies),sourceRecordIDs=sourceRecords,memberInputItemIDs=keys(members),
-            gearKey=category,isDisenchantCategory=true,patchBuild=currentBuild,
+            gearKey=category,isDisenchantCategory=true,patchBuild=group.sourceBuild,sourcePatchBuild=group.sourceBuild,
+            clientVersion=clientVersion,coverageCensored=coverageCensored,
+            studyCoverageCensored=studyCoverageCensored,
+            excludedUnresolvedOperations=excludedUnresolved,excludedUnresolvedRecordIDs=excludedIDs,
+            studyCoverageGaps=coverageGaps,coverageSelection=studyCoverageCensored and 'complete-retained-context-records' or nil,
             observationContext=context,source='Measured personal disenchant category',provisional=true,materials={}}
         for _,id in ipairs(keys(totals)) do
             local total=totals[id]
@@ -1014,9 +1066,9 @@ function LL:GetRecordedDisenchantCategoryEstimate(f,recipeID)
         end
     end
 end
-function LL:GetRecordedProcessingEstimate(f,method,batch,recipeID)
+function LL:GetRecordedProcessingEstimate(f,method,batch,recipeID,targetContext)
     if method=='Disenchant' and batch==1 then
-        local category=self:GetRecordedDisenchantCategoryEstimate(f,recipeID)
+        local category=self:GetRecordedDisenchantCategoryEstimate(f,recipeID,targetContext)
         if category then return category end
     end
     local d=self.db and self.db.craftResearch;if not d or not self.CaptureCraftContext then return nil end
@@ -1077,8 +1129,8 @@ end
 function LL:GetLearnedProcessingEstimate(f,method,batch,recipeID)
     return self:GetRecordedProcessingEstimate(f,method,batch,recipeID)
 end
-function LL:GetLearnedDisenchantEstimate(f)
-    return self:GetRecordedProcessingEstimate(f,"Disenchant",1,13262)
+function LL:GetLearnedDisenchantEstimate(f,family,targetContext)
+    return self:GetRecordedProcessingEstimate(f,"Disenchant",1,13262,targetContext)
 end
 -- Build only the requested export snapshot. Older batches remain in SavedVariables.
 function LL:SnapshotRecordedResearch(latestOnly)

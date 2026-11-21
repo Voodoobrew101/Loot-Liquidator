@@ -44,11 +44,18 @@ python3 tests/test_disenchant_categories.py
 python3 tests/test_specialization_effects_pipeline.py
 python3 tests/test_crystal_collector_extras_metadata.py
 python3 tests/test_build_research_pipeline.py
+python3 tests/test_source_catalogue_review.py
+python3 tests/test_source_catalogue_registry.py
+python3 tests/test_reviewed_catalogue_proof_stage.py
+python3 tests/test_profession_output_clauses.py
+python3 tests/test_assemble_source_catalogue.py
+python3 tests/test_processing_source_fact_translation.py
 python3 tests/test_curseforge_release.py
 python3 tests/test_profession_study_admission.py
 python3 tests/test_shatter_quality_models.py
 python3 tests/test_published_milling_priors.py
 python3 tests/test_published_per_input_priors.py
+python3 tests/test_reviewed_source_catalogue.py
 compiled_dir=$(mktemp -d)
 compiled="$compiled_dir/ItemDBRuntime.lua"
 trap 'rm -rf "$compiled_dir"' EXIT
@@ -101,6 +108,8 @@ python3 tests/test_radiant_shatter_contract.py
 python3 tests/test_compact_transfer.py
 "$lua_bin" tests/test_compact_transfer.lua
 "$lua_bin" tests/test_disenchant_recording_categories.lua
+"$lua_bin" tests/test_personal_disenchant_source_reference.lua
+"$lua_bin" tests/test_personal_disenchant_quote.lua
 "$lua_bin" tests/test_craft_operations.lua
 "$lua_bin" tests/test_imported_results.lua
 "$lua_bin" tests/test_salvage_imports.lua
@@ -118,6 +127,7 @@ python3 tests/test_recipe_coverage.py
 "$lua_bin" tools/audit_profession_scaling.lua
 
 "$lua_bin" tests/test_disenchant_gaps.lua
+"$lua_bin" tools/disenchant_research_gaps.lua database/research/disenchant-gaps.lua --check
 python3 tests/test_token_source_applicability.py
 python3 tests/test_token_source_compiler.py "$lua_bin"
 python3 tests/test_token_research.py
@@ -141,6 +151,9 @@ python3 tests/test_legacy_cohort_admission.py
 "$lua_bin" tests/test_numeric_refresh_tooltip.lua "$compiled_dir"
 "$lua_bin" tests/test_tooltip_preferences.lua
 "$lua_bin" tests/test_tooltip_visibility.lua
+"$lua_bin" tests/reviewed_source_facts.lua
+"$lua_bin" tests/test_reviewed_net_input_basis.lua
+"$lua_bin" tests/test_reviewed_quality_profile.lua
 "$lua_bin" tests/test_profession_tooltip_visibility.lua
 "$lua_bin" tests/test_profession_tooltip_profiles.lua
 "$lua_bin" tests/test_synthetic_benchmark.lua
@@ -155,8 +168,11 @@ python3 tests/test_legacy_cohort_admission.py
 "$lua_bin" tests/test_disenchant_context_inputs.lua
 "$lua_bin" tests/test_disenchant_baseline_pipeline.lua
 "$lua_bin" tests/test_disenchant_baseline_runtime.lua
+"$lua_bin" tests/test_reviewed_disenchant_prior.lua
 "$lua_bin" tests/test_crystal_collector_extras.lua
 "$lua_bin" tests/test_profession_calculations.lua
+"$lua_bin" tests/test_processing_zero_bonus_regression.lua
+"$lua_bin" tests/test_processing_inverse_edge_cases.lua
 "$lua_bin" tests/test_gem_replacement_milestones.lua
 "$lua_bin" tests/test_profession_baseline_pipeline.lua
 "$lua_bin" tests/test_shatter_profession_runtime.lua
@@ -167,6 +183,9 @@ python3 tests/test_legacy_cohort_admission.py
 "$lua_bin" tests/test_reference_fallback.lua
 "$lua_bin" tests/test_usable_field_flow.lua
 python3 tests/test_research_v3_no_disenchant.py
+python3 tests/test_scoped_disenchant_restrictions.py
+"$lua_bin" tests/test_scoped_disenchant_restrictions.lua
+"$lua_bin" tests/test_reviewed_use_container.lua
 python3 tests/test_rank_families.py
 python3 tests/test_input_ranks.py
 python3 tests/test_package_addon.py

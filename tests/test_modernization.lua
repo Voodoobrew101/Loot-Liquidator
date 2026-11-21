@@ -30,7 +30,7 @@ for line in io.lines(root..'LootLiquidator.toc') do
     end
 end
 check(not LL.itemDBError,LL.itemDBError)
-eq(#manifest,20,'runtime source count') -- Includes profession calculations and build provenance.
+eq(#manifest,21,'runtime source count') -- Includes reviewed source facts.
 check(LL.ApplyVerifiedMechanics and LL.ResolveEvidenceModel and LL.QueueGuildRefresh and LL.QueueBlizzardBagRefresh)
 -- Names present before consolidation remain available.
 for _,name in ipairs({'SetIgnoreEntry','IsIgnoredAction','CanUseConversion','RecordProfessions',
@@ -334,4 +334,4 @@ for _,r in ipairs(LL.ItemDB.processing) do
         end
     end
 end
-print('PASS: '..count..' modernization assertions; 20 modules loaded; in-game QA pending')
+print('PASS: '..count..' modernization assertions; '..#manifest..' modules loaded; in-game QA pending')

@@ -309,6 +309,7 @@ local function exerciseEffect(profile,nodeID,node,effect,rank,learned,perPoint)
     for flag,value in pairs(c.contextFlags or {}) do ctx.contextFlags[type(flag)=='number' and value or flag]=true end
     for flag,value in pairs(effect.requiredContextFlags or {}) do ctx.contextFlags[type(flag)=='number' and value or flag]=true end
     local input=facts(profile.profession);input.expansionID=profile.expansionID
+    if scope.inputItemIDs then input.id=scope.inputItemIDs[1] end
     input.quality=scope.inputRarity or 2;input.classID=scope.inputClassID or 4
     local params=assert(LL:ProfessionProfileParameters(profile.profession,profile.expansionID,ctx,op,input))
     local found=false

@@ -4,7 +4,7 @@ Generated from pinned public client tables and existing reviewed output bindings
 
 The compiler maps 727 paths and 4821 actual milestones (6275 client entries) into 7350 typed handlers across 39 modern profession profiles. Cooking and Fishing have stat profiles without invented specialization trees. Legacy recipe identities and minimum Skill remain separate from modern specialization catalogs.
 
-This is semantic coverage, **not complete empirical calibration**. There are 1588 explicit structural, timing, convenience or progression handlers; 252 output/profile terms use declared zero-confidence models; and 84 output terms retain source-backed family names with unresolved item IDs. Those named outcomes carry no invented Auction House valuation.
+This is semantic coverage, **not complete empirical calibration**. There are 1588 explicit structural, timing, convenience or progression handlers; 254 output/profile terms use declared zero-confidence models; and 84 output terms retain source-backed family names with unresolved item IDs. Those named outcomes carry no invented Auction House valuation.
 
 Primary Item → CraftingQuality joins establish 700 ordered families. Item IDs are never numerically sorted to infer quality. The dataset includes 11791 native recipe identities, 29222 reduced item rows and 173 material-named native gathering targets.
 

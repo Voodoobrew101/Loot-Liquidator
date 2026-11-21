@@ -356,6 +356,9 @@ def build_field_support(module, rows, names):
             sizes = denominators[cohort]
             shared_casts = next(iter(sizes)) if len(sizes) == 1 else None
             for field, options in row_support(module, row, batch, weight, notes, shared_casts).items():
+                if field in row.get('_reviewedSupersededFields', []):
+                    notes['reviewed cohort field replaced by explicit normalized model'] += 1
+                    continue
                 cohorts[cohort][field].extend(options)
 
         selected = defaultdict(list)

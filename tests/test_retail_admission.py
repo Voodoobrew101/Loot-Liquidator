@@ -8,6 +8,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, 'tools')
 import research_v3_to_baselines as v3
+import source_catalogue_registry as catalogue_registry
 
 FIXTURE = Path('tests/fixtures/retail-admission')
 SNAPSHOT = Path('database/research/v3-snapshot')
@@ -38,6 +39,7 @@ class AdmissionTests(unittest.TestCase):
         before = copy.deepcopy(loaded)
         module = v3.load_calculator(SNAPSHOT)
         with (patch.object(module, 'load', return_value=loaded),
+              patch.object(catalogue_registry, 'catalogue_paths', return_value=[]),
               patch.object(v3, 'load_calculator', return_value=module),
               patch.object(v3, 'reference_ranges', wraps=v3.reference_ranges) as ranges,
               patch.object(v3, 'build_field_support', wraps=v3.build_field_support) as supports):
@@ -71,7 +73,9 @@ class AdmissionTests(unittest.TestCase):
             self.assertIsNone(row['castsWithDrop'])
         self.assertEqual(evidence[3]['averageShown'], 2.85)
         self.assertIsNone(evidence[3]['outputItemID'])
-        with patch.object(module, 'load', return_value=evidence), patch.object(v3, 'load_calculator', return_value=module):
+        with (patch.object(module, 'load', return_value=evidence),
+              patch.object(catalogue_registry, 'catalogue_paths', return_value=[]),
+              patch.object(v3, 'load_calculator', return_value=module)):
             records, *_ = v3.build(SNAPSHOT)
         self.assertEqual(records, [])
 

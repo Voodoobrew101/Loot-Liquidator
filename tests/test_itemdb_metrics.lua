@@ -28,7 +28,12 @@ local function render(f,option)
 end
 -- Actual shipped BFA research uses mass-milling recipes, despite the old
 -- compatibility hints saying five herbs. Match the complete operation.
-local shipped=LL.ItemDB.processing
+-- Keep this two-source regression scoped to its original cohorts. Newly
+-- reviewed independent sources have separate source-control/projection tests.
+local shipped={}
+for _,record in ipairs(LL.ItemDB.processing)do
+    if not record.reviewedBacklogModel then shipped[#shipped+1]=record end
+end
 local withoutPerInput,perInputMeans={},{}
 for _,r in ipairs(shipped)do
     if r.reviewedPublishedPrior and r.reviewedPublishedPrior.kind=='ARCHIVED_PER_INPUT_TOTALS'then
@@ -107,7 +112,7 @@ assert(text:find('50%',1,true) and text:find('[10-20]',1,true) and text:find('  
 material.dropChance.status='provisional'
 assert(render(f,option()):find('50%',1,true) and not render(f,option()):find('~50%',1,true),'probabilities omit tilde prefixes')
 material.dropChance=field(nil,'unknown');material.minQuantity=field(nil,'unknown');material.maxQuantity=field(nil,'unknown')
-text=render(f,option());assert(text:find('[yield unavailable]',1,true) and text:find('chance unavailable',1,true) and not text:find('50%',1,true))
+text=render(f,option());assert(not text:find('[yield unavailable]',1,true) and text:find('chance unavailable',1,true) and not text:find('50%',1,true))
 material.dropChance=field(1e-7);material.expectedQuantity=field(1e-7)
 material.minQuantity=field(1);material.maxQuantity=field(1)
 text=render(f,option())

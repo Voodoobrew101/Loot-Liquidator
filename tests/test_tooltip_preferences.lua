@@ -51,6 +51,14 @@ assert(explained:find('Per 5 input',1,true) and explained:find('average units in
 LL.db.showTooltipExplanations=false
 assert(not render(true):find('Unadjusted reference',1,true),'explanations hide again')
 assert(model.value==12 and a.netExpectedValue==3 and b.netExpectedValue==9,'presentation leaves economic values unchanged')
+-- Missing conditional ranges do not make a known mean yield unavailable.
+local lo,hi=a.minQuantity,a.maxQuantity
+a.minQuantity=nil;a.maxQuantity=nil
+local meanOnly=render(false)
+assert(not meanOnly:find('yield unavailable',1,true) and not meanOnly:find('0.375',1,true),
+    'known mean stays valued without a false missing-yield label or changing average preference')
+assert(render(true):find('0.375',1,true),'known mean remains visible when averages are enabled')
+a.minQuantity=lo;a.maxQuantity=hi
 -- Technical details are independent opt-ins; core values remain visible.
 model.sources={legacy=100};LL.SourceOrder={'legacy'}
 model.context={profession='Enchanting',effectiveSkill=104,character='Tester',profileKind='live'}

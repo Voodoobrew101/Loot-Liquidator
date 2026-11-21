@@ -24,6 +24,9 @@ def preserve_published_priors(rows, records, notes, snapshot=None):
         row = sources.get((prior['sourceFile'], prior['sourceRecordID']))
         if not row or prior['recordID'] in existing:
             continue
+        if 'expectedQuantity' in row.get('_reviewedSupersededFields', []):
+            notes['reviewed published prior replaced by a scoped normalized source model'] += 1
+            continue
         if canonical_hash(row) != prior['rawSHA256']:
             notes['reviewed published prior source changed; preserved for renewed review'] += 1
             continue

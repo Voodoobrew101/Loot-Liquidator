@@ -34,7 +34,8 @@ LL:MigrateEvidenceSettings()
 local original=LL.ItemDB
 local sources={}
 for _,record in ipairs(original.processing)do
-    if record.reviewedPublishedPrior and record.expansionID==10 then sources[#sources+1]=copy(record)end
+    if record.reviewedPublishedPrior and not record.reviewedBacklogModel
+        and record.expansionID==10 then sources[#sources+1]=copy(record)end
 end
 check(#sources==2,'both exact published priors ship in compiled ItemDB')
 check(LL:InitializeItemDB(),LL.itemDBError)
@@ -90,4 +91,69 @@ for _,record in ipairs(sources)do
     LL.db.source_itemdb_enabled=true;LL:Invalidate()
 end
 check(same(sources,before),'normalization, projection and rendering preserve the original numerical prior records')
+-- Applicability confidence is separate from source-support blending. These
+-- synthetic means/factors test that contract through the real evidence fusion;
+-- they do not describe additional game studies or profession coefficients.
+local function blendRecord(id,mean,confidence,samples)
+    return {recordID=id,studyID=id,source=id,sourceKey='itemdb',fixedReference=true,
+        method='Mill',profession='Inscription',expansionID=11,recipeID=1269575,inputItemID=900001,inputCount=10,
+        baselineProfile={skill=0,preSpecializationSkill=0,specializationPoints={},stats={}},
+        materials={{id=900002,expectedQuantity={value=mean,status='historical',confidence=confidence,
+            samples=samples,sampleSizeKnown=samples>0},dropChance={status='unknown',confidence=0},
+            minQuantity={status='unknown',confidence=0},maxQuantity={status='unknown',confidence=0}}}}
+end
+local ordinary,prior=blendRecord('blend:observed',2,80,100),blendRecord('blend:explicit-prior',10,20,0)
+prior.reviewedPublishedPrior={kind='SYNTHETIC_CONFIDENCE_TEST'}
+prior.baselineProfileConfidence=0;prior.baselineProfileAssumed=true
+prior.materials[1].expectedQuantity.modelConfidenceCap=0
+local records={ordinary,prior}
+LL.ItemDB={schemaVersion=1,processing=records,professionProfiles=original.professionProfiles}
+LL.ItemDB.modeledProfessionBaselines=assert(loadfile('tools/profession_baselines.lua'))()(LL.ItemDB,LL)
+check(LL:InitializeItemDB(),LL.itemDBError)
+local savedRecords=copy(records)
+local facts={id=900001,expansionID=11,classID=7,count=10}
+local operation={name='Mill',profession='Inscription',recipeID=1269575,inputCount=10}
+LL.ProcessingPlayerConditions=function()return {character='Player',profession='Inscription',expansionID=11,
+    skill=0,effectiveSkill=0,preSpecializationSkill=0,specialization='none',specializationPoints={},learnedSpecializations={},
+    stats={},buffs={},simulated=true,profileKind='manual-simulation',confidenceTestTarget=true}end
+local general=LL.ApplyGeneralProfessionModel
+local function fuse(project)
+    LL:Invalidate();LL.ApplyGeneralProfessionModel=project and general or nil
+    return assert(LL:ComputeEvidenceModel(facts,operation,nil,1,LL:ProcessingPlayerConditions()))
+end
+local sourceBlend,identityBlend=fuse(false),fuse(true)
+near(identityBlend.materials[1].expectedQuantity,sourceBlend.materials[1].expectedQuantity,
+    'explicit prior identity cap cannot reweight a mixed source mean')
+local expectedMean=(2*LL:EvidenceReliability(ordinary.materials[1].expectedQuantity,ordinary)
+    +10*LL:EvidenceReliability(prior.materials[1].expectedQuantity,prior))
+    /(LL:EvidenceReliability(ordinary.materials[1].expectedQuantity,ordinary)
+    +LL:EvidenceReliability(prior.materials[1].expectedQuantity,prior))
+near(identityBlend.materials[1].expectedQuantity,expectedMean,'source support determines blending before model confidence cap')
+check(identityBlend.materials[1].confidence<80,'explicit zero-confidence prior still lowers displayed blended confidence')
+local parameters=LL.ProfessionProfileParameters
+LL.ProfessionProfileParameters=function(self,profession,expansion,context,op,f)
+    local params=parameters(self,profession,expansion,context,op,f)
+    if context.confidenceTestTarget then params.outputFactor=1.25;params.confidence=25 end
+    return params
+end
+local positive=fuse(true)
+near(positive.materials[1].expectedQuantity,sourceBlend.materials[1].expectedQuantity*1.25,
+    'positive transform applies once without changing the sources relative support')
+check(positive.materials[1].confidence<=25,'positive transform cannot exceed its explicit applicability cap')
+check(ordinary.materials[1].expectedQuantity.samples==100 and prior.materials[1].expectedQuantity.samples==0,
+    'source observations never change under identity or positive transforms')
+LL.ProfessionProfileParameters=parameters
+-- Existing imported ordinal support must be retained even if statistical
+-- confidence is unknown; it must not be replaced with the fallback weight.
+ordinary.materials[1].expectedQuantity.evidenceScore=70
+prior.materials[1].expectedQuantity.evidenceScore=35
+ordinary.materials[1].expectedQuantity.confidence=0
+local ordinalSource,ordinalIdentity=fuse(false),fuse(true)
+near(ordinalIdentity.materials[1].expectedQuantity,ordinalSource.materials[1].expectedQuantity,
+    'existing ordinal evidence scores survive an identity model-confidence cap')
+LL.ApplyGeneralProfessionModel=general
+ordinary.materials[1].expectedQuantity.evidenceScore=nil
+prior.materials[1].expectedQuantity.evidenceScore=nil
+ordinary.materials[1].expectedQuantity.confidence=80
+check(same(records,savedRecords),'confidence projection never mutates source fields or sample counts')
 print('PUBLISHED MILLING RUNTIME: '..checks..' checks passed')

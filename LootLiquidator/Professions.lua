@@ -1290,12 +1290,75 @@ function LL:CanTransferToAlt(f)
     end
     return false
 end
+-- Item-use availability belongs to the current owned instance. Published bag
+-- contents identify outputs; they never establish that this character can use it.
+function LL:CanUseConversionUse(f,conversion,mode)
+    local current=self.CharacterKey and self:CharacterKey()
+    local function ordinary(v) return not (issecretvalue and issecretvalue(v)) end
+    local function positive(v) return ordinary(v) and type(v)=='number' and v==v and v>0 and v<math.huge end
+    if not f or not positive(f.id) then return false,'Item-use identity not verified' end
+    if conversion.character and conversion.character~='Current character' and conversion.character~=current then
+        return false,'Item use requires the current character'
+    end
+    if mode==4 and self.AltMethodEnabled and not self:AltMethodEnabled(current,'C') then
+        return false,'No current character selected for item use'
+    end
+    local need=conversion.inputCount or 1
+    if not positive(need) or need%1~=0 then return false,'Item-use input count not verified' end
+    local count,openable,locked
+    local context=f.context or {}
+    local bag,slot=context.bagID,context.slotID
+    if (type(bag)~='number' or type(slot)~='number') and context.itemLocation
+        and type(context.itemLocation.GetBagAndSlot)=='function' then
+        local ok,b,s=pcall(context.itemLocation.GetBagAndSlot,context.itemLocation)
+        if ok then bag,slot=b,s end
+    end
+    if type(bag)=='number' and type(slot)=='number' and C_Container and C_Container.GetContainerItemInfo then
+        local ok,info=pcall(C_Container.GetContainerItemInfo,bag,slot)
+        if ok and type(info)=='table' and ordinary(info.itemID) then
+            if info.itemID~=f.id then return false,'Item in this bag slot changed' end
+            openable=ordinary(info.hasLoot) and info.hasLoot==true
+            locked=ordinary(info.isLocked) and info.isLocked==true
+            if positive(info.stackCount) then count=info.stackCount end
+        end
+    end
+    if locked then return false,'Item is locked' end
+    local countAPI=C_Item and C_Item.GetItemCount or GetItemCount
+    if not count and type(countAPI)=='function' then
+        local ok,owned=pcall(countAPI,f.id,false)
+        if ok and ordinary(owned) and type(owned)=='number' then count=owned end
+    end
+    if not positive(count) or count<need then return false,'Owned item-use inputs not verified' end
+    local spellAPI=C_Item and C_Item.GetItemSpell or GetItemSpell
+    local spell
+    if type(spellAPI)=='function' then
+        local ok,_,id=pcall(spellAPI,f.link or f.id)
+        if ok and positive(id) then spell=id end
+    end
+    if not spell and not openable then return false,'Native item-use ability not verified' end
+    local usableAPI=C_Item and C_Item.IsUsableItem or IsUsableItem
+    local usable
+    if type(usableAPI)=='function' then
+        local ok,value,noMana=pcall(usableAPI,f.link or f.id)
+        if ok and ordinary(value) and type(value)=='boolean' then usable=value end
+        if ok and ordinary(noMana) and noMana==true then return false,'Item-use resource requirement not met' end
+    end
+    if usable==false then return false,'Native item-use requirements not met' end
+    if usable~=true and not openable then return false,'Native item-use requirements not verified' end
+    if positive(conversion.requiredLevel) then
+        local ok,level=pcall(function()return UnitLevel and UnitLevel('player')end)
+        if not ok or not positive(level) then return false,'Item-use level requirement not verified' end
+        if level<conversion.requiredLevel then return false,'Item-use level requirement not met' end
+    end
+    return true,nil,'Current character'
+end
 function LL:CanUseConversion(f, conversion)
     local method=conversion.method
     local letter=({Disenchant="D",Mill="M",Prospect="P",Smelt="S",
         Craft="C",Recycle="R",Research="R",Exchange="X",Combine="X",Split="X"})[method] or "C"
     local mode=self.ProcessingMethodMode and self:ProcessingMethodMode(letter) or 2
     if mode==3 then return false,"Disabled" end
+    if method=='Use' then return self:CanUseConversionUse(f,conversion,mode) end
     if method=="Exchange" or method=="Combine" or method=="Split" then
         -- These operations need no learned profession, but Manual must still
         -- respect the actual character selections in the roster table.

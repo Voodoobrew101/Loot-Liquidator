@@ -1,0 +1,26 @@
+# Reviewed research enters the normal build
+
+The finite catalogue covers 731 source keys: the original 713 pending sources, 12 additional source keys, and 6 previously cleared sources whose other fields still required review at the task cutoff `0cd0bad8867e7a8d909b4ecae74f6136a3e23d42`. Source/cohort/field decisions reuse valid prior research and preserve every original evidence row. Review counts are not cast counts or independent-study counts.
+
+The archived catalogue is `research/v3/evidence/master/backlog-catalogue-20261120/`. Its manifest, exact assignments, canonical proposal definitions, dispositions and admitted models/facts form the reproducible receipt. Additional same-source fields recovered during the final audit have their own explicit proposal files. Known source-profile values without an identified inverse remain source-context facts; precise field exclusions prevent an older aggregate from also pricing those nontransferable fields.
+
+Normal `tools/prepare_build_research.py` ingestion consumes enabled entries from `research/v3/evidence/master/source-catalogues.json`. A new reviewed catalogue can therefore be added as research data, without changing addon code or opening a routine research PR. Registry paths must remain inside the pinned evidence tree; explicit registry entries require a catalogue manifest. Older snapshots without the registry retain their original default-catalogue behavior.
+
+For new evidence, scheduled research should:
+
+1. Retain the original source and exact units/profile/epoch/identity. Reuse existing source assessment; investigate only changed or genuinely new scopes.
+2. Write a source/cohort/field assessment and explicit terminal proposal dispositions. Identify concrete numerical models, informational source facts, already represented evidence, or a precise current-numerical rejection with a future evidence trigger.
+3. Preserve the original observation count separately. An input budget, output units, positive-material counters, table sightings or a rounded source mean must never become invented observed casts/hits. A supported mean can be used without known casts as a declared confidence-zero prior.
+4. Provide `admitted-models.json`, assignments, final decisions, proposal definitions/dispositions and a hashed manifest under a new catalogue folder. Add its enabled registry entry on the durable research branch. Keep record/fact IDs globally unique; overlapping or cumulative cohorts require explicit deduplication or scoped replacement rather than extra independent weight.
+5. Use actual source-profile inverse/forward behavior. Do not turn an invested/maxed source into a zero-profile observation. Unknown profiles may use explicit authorized priors with separate confidence; unsupported source transfers remain facts rather than active gold estimates.
+6. Preserve quantities, occurrence, positive ranges, quality shares, input savings, extra products, time and nontradable knowledge/currency as distinct dimensions. Named/unresolved outcomes remain unpriced. Source facts do not grant profession, recipe, item-use or disenchant eligibility.
+
+The build reads the same immutable source-replacement/correction layer used for review proofs **before** numerical operation aliases, reference-range injection and native identity inference. Row appends do not expire unrelated scoped reviews. An actual source correction expires the affected proof; its reviewed model/fact cannot silently remain active. Native item/quality identities and source interpretations retain their separate receipts.
+
+The official producer verifies every admitted model/fact reference. After compiling, the build loads and initializes the actual addon database and verifies those consumers again. Every literal compiled fact must also pass its scoped public lookup and renderer, personal-only exclusion, and disabled-source exclusion. The audit must not add input selectors or substitute a synthetic scope into the fact. An active incomplete catalogue or an unreachable fact fails the build. `database/research/source-catalogue-build-review.json` and the build manifest contain the compiled-consumer result; the compact study-review summary remains versioned. These checks prove coverage/provenance/consumption, not independent scientific approval.
+
+The build also regenerates the research-only list of empty disenchant categories from the compiled database. A newly populated category therefore stops appearing as an empty research target without requiring another research PR. Low-confidence modeled categories still need confidence research; existence of a record is not proof of a measured distribution.
+
+Routine source evidence and review metadata belong on the research branch. Keep scheduled agents focused on new published/original evidence and confidence improvements; retain their existing cadence and quiet reporting. Code/schema changes use the independent implementation review path. No research task requires in-game crafting, disenchanting, item destruction, knowledge spending or purchases.
+
+The owner uses confidence scores to express estimation. Do not add estimate/provisional caveats to the ordinary modeled tooltip rows. Research detail retains the explicit assumptions and original source profile.

@@ -1,0 +1,23 @@
+# Xenastro original Draconium Q3 legacy study-key alias and two-stage source hold — 2026-11-20 21:57 UTC
+
+**Result: 18 confirmed duplicate source-result rows spanning two original dated batches; 27 legacy rows changed to effective reference (held) classification. No new observed operations or usable direct-ore gold EV.** This is a repository JSONL/source-provenance cross-check; the original XLSX was **not reopened** in this pass. The newer Dragonflight worker separately reports original workbook review. No in-game, compiler, exact-SHA review or tooltip test was performed by the coordinator.
+
+## File-level source identity comparison
+
+| Original XLSX Prospecting Log index/date | Original legacy file rows (`2026-11-02T1025`) | Original nominal ore (not casts) | Source-reported pooled gem units | Nov 20 held-reference duplication |
+| --- | --- | ---: | ---: | --- |
+| 61 / 2023-02-02 | `dragonflight-20261102-102501..102509` | 30,000 | 17,765 | **9/9** rows duplicate Nov 20 `xendrac61` |
+| 63 / 2023-02-04 | `dragonflight-20261102-102510..102518` | 30,000 | 17,925 | **9/9** rows duplicate Nov 20 `xendrac63` |
+| 65 / 2023-02-06 | `dragonflight-20261102-102519..102527` | 20,000 | 11,825 | No newly indexed mirror in Nov 20 file; same author's stage-mixed batch |
+
+In the two mirrored batches, all **18/18** output rows match by original date, output class (green/blue/epic diamond), quality grade and exact source `totalQuantity` (six pooled green/blue rows plus three epic ranks per batch). The Nov 2 rows name the epic bucket generically without an output item ID, whereas Nov 20 assigns `Illimited Diamond` 192869/192870/192871. This **does not establish direct-ore attribution** or resolve old item-identity gaps; matching figures prove source-record reuse, not independent studies. Exact `studyKey` strings differ between the two dated copies and therefore cannot reliably dedupe them alone.
+
+Each original batch has `casts=null`, `castsWithDrop=null`, `histogram=null`. Original report uses ore input totals and a workflow that processes ore then secondary Prismatic/Crumbled Stone; the gem cells do not separate processing stages. The author/worksheet does not supply zero-inclusive per-stage event records, current Retail patch or complete species IDs. Feb 6 is the same source kind and ambiguity despite no newly duplicated mirror. Do not sum these date snapshots as independent cohorts or infer casts/average/probabilities from nominal ore or pooled gem units.
+
+## Scoped admission guard
+
+All **27** legacy rows in `research/v3/evidence/dragonflight/2026-11-02T1025-xenastro-draconium-r3-original-batches.jsonl` were `sourceKind=study` with no existing sourceKind corrections. Appended **27 file-scoped** `sourceKind=reference` overlays in `research/v3/corrections.jsonl`; originals and the Nov 20 held-reference file were left untouched. The existing estimator's `CORRECTABLE` includes `sourceKind`, with file-aware overlays; `reference` is not counted as measured study. The current main build review records corrected/held rows rather than silently turning them into verified observations. The records still have no defined `averageShown`/`percentShown`/completed casts; even reference starting values cannot be computed from these rows alone. This is a **static code-path inspection**, not proof of exact-SHA build classification.
+
+Source archive: [Xenastro original workbook](https://drive.google.com/file/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/view), [author's two-stage discussion](https://www.reddit.com/r/woweconomy/comments/10vz6jh/prospecting_calculator_not_for_squids/). Evidence: [Nov 2 file](https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-02T1025-xenastro-draconium-r3-original-batches.jsonl), [Nov 20 held-reference mirror](https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-20T2032-xenastro-draconium-r3-feb02-feb04-held-original.jsonl); prior [manager stage memo](https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261120T2106-draconium-dated-batch-reference-classification-guard.md).
+
+**Next:** obtain a genuinely stage-separated original author export/ledger (ore vs secondary processing; completed casts, refunds, rank-qualified species, per-event zeros/hits) before direct-ore valuation. Source-preserving correction leaves the earlier study family reviewable rather than inventing new casts, coefficients or prices. PR Director, main, integration implementation and worker-owned files remain untouched.

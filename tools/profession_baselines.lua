@@ -15,15 +15,20 @@ return function(db,LL)
             local materials={}
             for _,material in ipairs(record.materials) do
                 materials[#materials+1]={id=material.id,expectedQuantity=material.expectedQuantity.value,
-                    confidence=material.expectedQuantity.confidence}
+                    confidence=material.expectedQuantity.confidence,rankIDs=copy(material.rankIDs),
+                    economicPolicy=material.economicPolicy}
             end
             local source=record.baselineProfile or {skill=0,preSpecializationSkill=0,stats={},specializationPoints={}}
-            local option={name=record.method,recipeID=record.recipeID,inputCount=record.inputCount,profession=profession}
+            local option={name=record.method,recipeID=record.recipeID,inputCount=record.inputCount,profession=profession,
+                reviewedEffectOverrides=copy(record.reviewedEffectOverrides)}
             local facts={id=record.inputItemID,reagentQuality=record.inputQualityRank,
                 expansionID=expansion,quality=record.inputRarity,classID=record.inputClassID}
             local params=LL:ProfessionProfileParameters(profession,expansion,source,option,facts)
             local normalized=LL:NormalizeProfessionBaseline({inputCount=record.inputCount,
-                expectedInputCount=record.expectedInputCount,duration=record.duration,materials=materials},params,option)
+                expectedInputCount=record.expectedInputCount,duration=record.duration,materials=materials,
+                sourceQuantityBasis=record.sourceQuantityBasis,reviewedQualityProjection=record.reviewedQualityProjection,
+                reviewedBacklogModel=record.reviewedBacklogModel,
+                reviewedQualityZeroShares=record.reviewedQualityZeroShares},params,option)
             if normalized then
                 normalized.sourceRecordID=record.recordID
                 normalized.sourceProfileAssumed=record.baselineProfile==nil or record.baselineProfileAssumed==true
