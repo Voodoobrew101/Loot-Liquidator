@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-21T06:23:15.884Z",
-  "status": "research-active; verified previously omitted Mycobloom R1 profession-tool context; no new independently measured yield",
+  "updated_at": "2026-11-21T07:19:29.953Z",
+  "status": "research-active; held newly identified Wowhead Looter item-type/direction anomaly (227659), no new empirical TWW yield",
   "task_ids": [
     "T0010",
     "T0011",
@@ -283,15 +283,12 @@
   },
   "newly_verified_fields": [
     {
-      "field": "source-character-profile/equipment affecting observed pigment-quality",
-      "input": "Mycobloom R1, itemID 210796",
-      "output": "Nacreous Pigment R1, itemID 222618; versus reported R2, itemID 222619, while tool was equipped",
-      "source": "https://www.reddit.com/r/woweconomy/comments/1fdmzwy",
-      "equipment_source": "https://www.wowhead.com/item=222574/silver-tongues-quill",
-      "equipment_itemID": 222574,
-      "equipment_name": "Silver Tongue's Quill",
-      "source_reported_change": "Original 2024-09-10 poster removed this tool and reported being able to mill R1 Mycobloom into R1 instead of R2 pigment, with the same amount as before. Tool page independently states +18 Khaz Algar Inscription skill when equipped.",
-      "limitation": "Skill before/after, other bonuses, specialization, independent before/after operation counts, material quantities and exact threshold unknown; context only, no rate or per-cast measured cohort."
+      "field": "Wowhead Looter source semantics/eligibility hold",
+      "input": "Fleeting Arcane Manifestation, itemID 227659; consumable and disenchant-derived weekly knowledge item, not identified gear",
+      "source": "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation",
+      "observed_site_statistic": "Indexed table claims 14 disenchants of item 227659 with TWW and Dragonflight outputs",
+      "eligibility": "unverified; do not assert cannotDisenchant from contradictory site metadata",
+      "limitation": "Site table could invert process direction or mix client eras; cannot infer any material yield rates, cast count, drop probabilities, noDisenchant or source gear identity"
     }
   ],
   "newly_verified_cohorts": [],
@@ -302,10 +299,13 @@
   "numeric_fields_advanced": [],
   "evidence_file": null,
   "evidence_files": [],
-  "evidence_source_links": [],
+  "evidence_source_links": [
+    "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation",
+    "https://warcraft.wiki.gg/wiki/Disenchant"
+  ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-20T0521-algari-pvp-item-metadata.jsonl",
   "verified_commit_sha": "53c9ab94f26517dc9acecb36e620c29801cff6fc",
-  "verification": "Read current branch README, evidence-format, mechanics, worker instructions and queue; independently matched Reddit original author follow-up to named 222574 tool and its +18 Inscription skill tooltip. Status-only GitHub commit; external read-back of resultant status file and commit performed separately. No evidence JSONL because author has no independent new per-operation yield or skill-threshold measurement.",
+  "verification": "Fetched current repository guidance, queue and owned status; source checked against primary Wowhead item metadata and indexed Looter block; item 227659 absent from owner cutoff manifest. No new evidence JSONL without trustworthy eligible raw outcomes. Status-only update via GitHub contents API with original blob SHA, readback pending.",
   "blockers": [
     "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
     "On this research branch tools/research_build_review.py and tools/prepare_build_research.py returned GitHub 404; build-time admission/generation remains implementation review work, not deployed or worker-owned.",
@@ -326,7 +326,8 @@
     "219474 Tracker's Chitin Cuffs: Jan 2025 firsthand cuff disenchants and Sept 2025 macro/1,428 planned inputs conflict with current WoWDB 'Cannot be disenchanted'; do not infer successful casts from intended count, attribute the author's >120 total to cuffs, infer ordinary material zeros from gated Shimmering Dust, or seed live Retail DE without exact item version/bonus and per-cast material output IDs.",
     "Four separate studyKey rows for the same Golgoth Specular Rainbowfish original three-unit anecdote could inflate totals under studyKey-only admission; output 222618 is link identity, not independently verified receipt quality. Codex owner reviewers must dedupe by original author/source before any build-time ingestion.",
     "Focused provenance flag: Elfshinobi1 450 Ironclaw ore / 10 Radiant Ruby original is duplicated across war-within-20261031-132410 and war-within-20261101-021724 with distinct studyKeys. Codex owner catalogue/build reviewer must admit once; do not independently rewrite original evidence or inflate operations.",
-    "Mycobloom 210796 author observed pigment-quality change after removing Silver Tongue's Quill 222574 (+18 skill); no exact before/after character skill, specialization, comparable raw casts/quantities, output item hyperlinks, or refund ledger. Preserve as historical source context only; require source logs before inferring a threshold or quality-dependent yield."
+    "Mycobloom 210796 author observed pigment-quality change after removing Silver Tongue's Quill 222574 (+18 skill); no exact before/after character skill, specialization, comparable raw casts/quantities, output item hyperlinks, or refund ledger. Preserve as historical source context only; require source logs before inferring a threshold or quality-dependent yield.",
+    "New 227659 Wowhead Looter table claims disenchant samples of a knowledge consumable with cross-era outputs; input/loot direction and eligibility uncertain; held pending original client logs or Master source parser review."
   ],
   "exhausted_sources": [
     "Previously indexed 1f83cnd, 1g350pq, PeaEsk/434018, 1fdmzwy and 1f3qf96 already provide historical studies; source duplicates not re-imported.",
@@ -335,56 +336,56 @@
     "2026-11-20: Reddit 1ftqzxp historical shatter original/commenter estimates inspected; new but unfit for direct DE numeric admission without distinct recipe method/raw ledger; do not scrape it repeatedly without author export.",
     "2026-11-20: Liqourice5 original 2024 TWW crafting workbook now retrieved from the author's directly linked Google Drive original, and its prospecting/milling formula and source-date cells audited. Not a new empirical study; do not revisit without the author’s original cast logs or source recipe table lineage.",
     "2026-11-20 11:22Z follow-up: April-2025 gem production economics, September-2024 Mycobloom Create-All bug, November-2025 housing dyes and previously indexed LotzBoi/Aqirite studies offer no new eligible post-hotfix 0..N material-yield cohorts. Revisit only on original per-operation logs.",
-    "2026-11-20 follow-up: 1g9s48p repeats the already indexed 400 R1 Bismuth source; 1k78h4v and 1l91chl are 2025 financial/value comparisons without source output ledgers; 1nmnuc2 describes workflows only. Do not revisit these unless author publishes actual completed-operation exports."
+    "2026-11-20 follow-up: 1g9s48p repeats the already indexed 400 R1 Bismuth source; 1k78h4v and 1l91chl are 2025 financial/value comparisons without source output ledgers; 1nmnuc2 describes workflows only. Do not revisit these unless author publishes actual completed-operation exports.",
+    "2026-11-21 focused scan: 1fisfkn and 1f9qado are owner-catalogued cutoff sources; their old cohorts were not repeated. Wowhead 227659 has only contradictory site-reported Looter data, not a trustworthy original cast ledger."
   ],
-  "next_concrete_step": "For Mycobloom 210796..210798, seek original raw before/after quill 222574 source character skill/spec/equipment and actual 10-herb cast ledgers with quality IDs/hits/zeros and refunds, instead of reusing a 20k+ pooled historical mean. Continue seeking truly new independent post-hotfix rank-specific Bismuth 210930..210932, Ironclaw 210936..210938, Aqirite 210933..210935 and named gear disenchant logs. Do not touch Codex cutoff catalogue, PRs or runtime.",
-  "previous_status_updated_at": "2026-11-21T05:24:22.432Z",
+  "next_concrete_step": "Continue seeking independent Retail post-hotfix named gear TWW disenchant logs (actual completed casts, 0..N, rank-linked 219946..219955, skill/spec/build), Mycobloom 210796..210798 10-herb quality-correct mill ledgers and Bismuth/Ironclaw/Aqirite 210930..210938 rank-specific prospecting export. Refer 227659 source direction/eligibility to Master for source-parser triage only if candidate for admission; do not contaminate known gear yields. No changes to Codex 731-source catalogue or runtime.",
+  "previous_status_updated_at": "2026-11-21T06:23:15.884Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "scan_at_utc": "2026-11-21T06:23:15.884Z",
+    "scan_at_utc": "2026-11-21T07:19:29.953Z",
     "task_ids": [
+      "T0048",
+      "T0040",
       "T0010",
       "T0011",
       "T0012",
-      "T0040",
       "T0009",
       "T0008",
-      "T0007",
-      "T0048"
+      "T0007"
     ],
     "results": [
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1fdmzwy",
-        "status": "new-focused-source-profile-context-on-existing-original",
-        "finding": "Same original Mycobloom R1 author described R2 pigment with profession tool, then R1 pigment after removing Silver Tongue's Quill; 'same amount' is qualitative, not a new output total or hit-rate study."
+        "source": "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation",
+        "status": "new-held-looter-source-direction-and-item-type-anomaly-not-numeric-drop",
+        "finding": "Consumable knowledge token 227659 flagged as disenchant input with 14 site-reported operations and TWW+Dragonflight material lines; not a valid empirically matched gear yield cohort."
       },
       {
-        "source": "https://www.wowhead.com/item=222574/silver-tongues-quill",
-        "status": "verified-equipment-identity",
-        "finding": "Silver Tongue's Quill itemID 222574: +18 Khaz Algar Inscription skill when equipped. Not enough evidence for exact user's skill threshold."
+        "source": "https://www.reddit.com/r/woweconomy/comments/1fisfkn",
+        "status": "already-owned-cutoff",
+        "finding": "Historic 2024 Ironclaw/Aqirite pooled and beta samples already in 731-source owner catalogue; not re-ingested."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1fdqzep",
-        "status": "catalogue-owned-excluded-from-new-evidence",
-        "finding": "Multiple historic shatter commenters with separate cohorts and refund counts; source 1fdqzep present in 2026-11-20 cutoff manifest. Shatter method remains outside worker drop enum; no copy, no PR."
+        "source": "https://www.reddit.com/r/woweconomy/comments/1f9qado",
+        "status": "already-owned-cutoff",
+        "finding": "Historical original storm-dust shuffle worksheet/comment cohorts already catalogued; not re-ingested."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1g8kbaq",
-        "status": "already-documented-methodology",
-        "finding": "Prospect All UI stack selection and interrupted nominal cast queue; already referenced in existing quiet status. No newly measured gem/yield values."
+        "source": "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide",
+        "status": "guide-reference-not-raw-operations",
+        "finding": "Rank/skill milling guide provides no independent completed-cast 0..N data; no new empirical records."
       }
     ],
     "new_independent_cohorts": 0,
     "new_output_fields": 0,
-    "new_source_identity_flags": 0,
-    "new_source_profile_contexts": 1,
+    "new_source_identity_flags": 1,
+    "new_source_profile_contexts": 0,
     "evidence_created": false,
-    "original_spreadsheet_check": "No newly accessible original complete processing logs or XLSX sample sheets; no recataloguing of 731 cutoff sources.",
-    "owner_catalogue_note": "Current research/v3/README.md and research/coordination/backlog-catalogue-20261120.json report cutoff scoped catalogue CLOSED_VERIFIED_CURRENT_PIPELINE; no changes to catalogue branches or build."
+    "owner_catalogue_note": "Cutoff 731-source catalogue belongs to active Codex team and was not modified."
   },
   "source_integrity_findings": [
     {
@@ -495,6 +496,14 @@
       "status": "verified-original-post-equipment-profile-context-no-new-numeric-cohort",
       "detail": "Author's follow-up says removing Silver Tongue's Quill allowed R1 Mycobloom (210796) to produce R1 rather than R2 Nacreous Pigment, without changing the observed quantity. Wowhead item 222574 confirms quill grants +18 Khaz Algar Inscription skill. R1/R2 Nacreous IDs 222618/222619 are family identities, not proof of exact recorded per-cast IDs or character total skill. The original's 1.15 per-input R2 yield must not be relabeled as R1 material or equated with any new controlled cast trial. Exact skill, spec, herb volume partition, casts, hits, zeros, raw output, build and refund basis unknown. This source was already in cutoff catalogue; this is a source-context annotation only, not a duplicate yield cohort.",
       "equipment": "https://www.wowhead.com/item=222574/silver-tongues-quill"
+    },
+    {
+      "source": "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation",
+      "date": "2026-11-21",
+      "status": "new-held-looter-source-direction-and-item-type-anomaly-not-numeric-drop",
+      "detail": "Indexed original Wowhead item page labels Fleeting Arcane Manifestation 227659 a bind-on-pickup, item-level-1 consumable that is used to gain +1 Khaz Algar Enchanting Knowledge and marks it 'Cannot be destroyed'; nevertheless its Looter 'Disenchanting' block claims 'This item has been disenchanted 14 times' and lists rank-unlinked Gleaming Shard/Storm Dust/Refulgent Crystal alongside a Dragonflight Resonant Crystal. The page says the knowledge consumable comes FROM disenchanting other gear, so the tab's apparent input/output direction, item eligibility and source-game-epoch mix are inconsistent. The 14 is site-reported, NOT accepted completed gear disenchants; material occurrence counts are not a shared 14-cast probability cohort. Original commenters report weekly knowledge gating and a rough 20-green/one-drop anecdote but no named gear item IDs, independently audited completed casts, material ranks, source bonuses, skill or zeros. Hold; do not create a noDisenchant assertion or feed these as TWW material yields. Seek item-version-qualified client outcome and real gear-to-material cast records, flag method taxonomy to Master if a build attempts ingestion.",
+      "related_source": "https://warcraft.wiki.gg/wiki/Disenchant",
+      "context_source": "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation"
     }
   ]
 }
