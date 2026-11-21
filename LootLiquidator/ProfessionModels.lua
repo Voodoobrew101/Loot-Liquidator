@@ -199,21 +199,9 @@ end
 -- subclass, UI allocation-table format, or a Crafting Speed rating. At known
 -- zero specialization, the measured effective skill already includes actual
 -- gear/enchant skill once. Other talent states still need their normal model.
--- Exact reviewed combat/form auras, not a general aura-type allowlist. The
--- pinned native rows and closed trigger graph are retained in
--- database/research/disenchant-nonoutput-auras-70961.json. Unknown IDs remain
--- profile constraints; a known profession condition always takes precedence.
-local disenchantNonOutputAuras70961={
-    ['1126']=true,   -- Mark of the Wild: combat Versatility and its highlight.
-    ['5487']=true,   -- Bear Form: form/combat modifiers and maximum health.
-    ['22812']=true,  -- Barkskin: damage/healing/health and pushback protection.
-    ['22842']=true,  -- Frenzied Regeneration: health recovery.
-    ['61336']=true,  -- Survival Instincts: combat defensive configuration.
-    ['192081']=true, -- Ironfur: armor and its combat Mastery effect.
-    ['1251877']=true,-- Gift of an Ancient Guardian: combat Mastery.
-    ['1261872']=true,-- Heart of the Wild: maximum health.
-    ['1271910']=true,-- Mark of the Wild Highlight: its zero-valued UI marker.
-}
+-- Material baselines depend on skill, specialization and modeled outcome
+-- modifiers. Full aura maps remain observation metadata; an unrelated or
+-- unmodeled aura must not replace a measured baseline with a category prior.
 function LL:DisenchantModelAuraSet(context)
     local database=self.ItemDB
     local db=database or {}
@@ -232,14 +220,22 @@ function LL:DisenchantModelAuraSet(context)
     local scope=expansion==nil and '*' or tostring(expansion)
     if cached.scopes[scope] then return cached.scopes[scope] end
     local ids,visited={},{}
-    local function visit(value)
+    local function visit(value,materialEffect)
         if type(value)~='table' or visited[value] then return end
         visited[value]=true
+        if value.metric~=nil then
+            materialEffect=value.metric=='skill' or value.metric=='yieldMultiplier'
+                or value.metric=='extraOutput' or value.metric=='dropChance'
+        end
+        local scope=value.scope or {}
+        if scope.method and scope.method~='Disenchant' then materialEffect=false end
+        if scope.recipeID and scope.recipeID~=13262 then materialEffect=false end
+        if materialEffect==false then return end
         for _,id in ipairs(type(value.condition)=='table' and value.condition.spellIDs or {}) do ids[tostring(id)]=true end
         for id,active in pairs(type(value.buffs)=='table' and value.buffs or {}) do
             if active then ids[tostring(type(active)=='number' and active or id)]=true end
         end
-        for _,entry in pairs(value) do if type(entry)=='table' then visit(entry) end end
+        for _,entry in pairs(value) do if type(entry)=='table' then visit(entry,materialEffect) end end
     end
     if expansion~=nil then visit(profiles and profiles['Enchanting:'..tostring(expansion)])
     else
@@ -252,6 +248,8 @@ function LL:DisenchantModelAuraSet(context)
     for _,name in ipairs({'professionRules','personalPatchRules','mechanicRules'}) do
         for _,rule in ipairs(db[name] or {}) do
             if (rule.profession=='Enchanting' or rule.method=='Disenchant')
+                and (rule.method==nil or rule.method=='Disenchant')
+                and (rule.recipeID==nil or rule.recipeID==13262)
                 and (expansion==nil or rule.expansionID==nil or rule.expansionID==expansion) then visit(rule) end
         end
     end
@@ -277,18 +275,15 @@ function LL:DisenchantObservationProfileKey(context)
         and type(context.specializationPoints or context.disenchantSpecializationPoints)=='table' then zero=true end
     if not zero then return nil end
     if context.fieldStatus and context.fieldStatus.effectiveSkill=='unknown' then return nil end
-    -- Only reviewed non-output IDs may disappear from this comparison. A
-    -- missing native condition is not proof that an unknown aura is harmless.
-    -- Keep full aura capture unchanged for recordings and all other recipes.
+    -- Keep only declared material-model dependencies in the matching key.
+    -- Unknown aura differences remain in both complete contexts, but supply
+    -- no invented multiplier and do not invalidate measured quantities.
     local relevant=self:DisenchantModelAuraSet(context)
-    local version,build
-    if type(GetBuildInfo)=='function' then version,build=GetBuildInfo() end
-    local reviewedBuild=version=='12.1.5' and tostring(build)=='70961'
     local buffs,values={},{}
     for _,auraMap in ipairs({context.buffs or {},context.activeBuffs or {}}) do
         for id,active in pairs(auraMap) do
             local key=tostring(id)
-            if active and (not reviewedBuild or not disenchantNonOutputAuras70961[key] or relevant[key]) then
+            if active and relevant[key] then
                 local stacks=context.buffStacks or {}
                 local value=tostring(stacks[id] or stacks[key] or stacks[tonumber(key)] or active)
                 if values[key] and values[key]~=value then return nil end
@@ -335,6 +330,7 @@ function LL:ReuseDisenchantSourceProfile(f,option,raw,target,targetBuild)
     result.professionProjected=true
     result.numericTransformApplied=false
     result.personalSourceProfileMatched=true
+    result.profileEquivalencePolicy='disenchant-material-dependencies/2'
     result.sourceReferenceOnly=historical or raw.coverageCensored==true
     result.sourceApplicabilityConfidence=historical and 0 or nil
     result.currentPatchApplicabilityConfidence=historical and 0 or nil
