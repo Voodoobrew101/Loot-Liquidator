@@ -290,4 +290,31 @@ for _,material in ipairs(unscaled.materials) do
 end
 check(LL:ApplySyntheticBenchmark(rare,de,benchmark,benchmark.context)==benchmark,'benchmark replay is idempotent')
 check(LL:ResolveEvidenceModel(rare,de,nil,1)==benchmark,'benchmark cache retains the once-scaled result')
+-- A canonical fixed-stack prior cannot overwrite contradictory distributions
+-- in either a fused summary or any positively weighted source record.
+local distribution
+for i=1,100 do
+    local name,value=debug.getupvalue(LL.ApplyDisenchantBaseline,i)
+    if name=='deDistribution' then distribution=value;break end
+    if not name then break end
+end
+check(type(distribution)=='function','distribution boundary is exercised directly')
+local variable={expectedQuantity=.5,chance=.3,minQuantity=1,maxQuantity=3}
+local changed=distribution(variable,{expectedQuantity=.4,confidence=20},true,1)
+check(changed.chance==nil and changed.minQuantity==nil and changed.maxQuantity==nil,
+    'a variable stack cannot acquire a fixed-stack occurrence prior')
+local mixed={expectedQuantity=.5,sourceContributions={legacy=1},sourceEstimates={legacy={records={{
+    expectedQuantity=.5,dropChance=.3,minQuantity=1,maxQuantity=3,inputCount=1}}}}}
+changed=distribution(mixed,{expectedQuantity=.4,confidence=20},true,1)
+check(changed.chance==nil,'one contradictory contributor blocks canonical occurrence inference')
+mixed.sourceEstimates.legacy={expectedQuantity=.5,dropChance=.3,minQuantity=1,maxQuantity=3,inputCount=1}
+changed=distribution(mixed,{expectedQuantity=.4,confidence=20},true,1)
+check(changed.chance==nil,'a summary without records retains the same contradiction guard')
+mixed.sourceEstimates.legacy.records={{expectedQuantity=.5,inputCount=1}}
+changed=distribution(mixed,{expectedQuantity=.4,confidence=20},true,1)
+check(changed.chance==nil,'mean-only records cannot override a contradictory provider summary')
+changed=distribution({expectedQuantity=.5},{expectedQuantity=.4,confidence=20},true,1)
+near(changed.chance,.4,'an unidentified mean may use an explicit compatible canonical prior')
+check(changed.probabilityVerified==false and changed.chanceConfidence<=20 and changed.probabilityAssumption,
+    'canonical inference stays modeled and capped without additional observations')
 print('DISENCHANT BASELINE RUNTIME: '..checks..' checks passed')

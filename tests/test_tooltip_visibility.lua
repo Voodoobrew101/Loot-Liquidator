@@ -67,7 +67,8 @@ for _,case in ipairs(cases) do
                     'Insufficient Data: no researched yield model'}) do
                     contains(text,note,level==3 and research)
                 end
-                contains(text,'20% Material 10 [1-2]',level==3)
+                contains(text,'20% Material 10 [avg 0.300 per 5 inputs]',level==3)
+                contains(text,'20% Material 10 [1-2]',false) -- inconsistent source bounds are research detail only
                 contains(text,'5 copper',level>=2) -- per-input material and vendor prices
                 contains(text,'Material 12 (chance unavailable) [yield unavailable]',level==3)
                 contains(text,'Insufficient Data',level>=2)
@@ -155,7 +156,7 @@ local text=previewText()
 contains(text,'Disenchant — Simulated (Confidence 20%)',true)
 contains(text,'(unavailable)',false)
 contains(text,'Confidence 20%, unavailable',false)
-contains(text,'Material 10 (chance unavailable)',true)
+contains(text,'Material 10 [avg 1.000 per 1 input]',true)
 contains(text,'50 copper',true)
 assert(preview.available==false and preview.value==50 and previewModel.confidence==20,
     'preview presentation preserves access and its numeric model')

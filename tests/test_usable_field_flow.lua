@@ -41,7 +41,7 @@ local tip={lines={}};function tip:AddLine(t)self.lines[#self.lines+1]=t end
 function tip:AddDoubleLine(a,b)self.lines[#self.lines+1]=a..' | '..b end
 LL:AppendRecommendationTooltip(tip,{action='P',count=5,facts={id=1,classID=7},conversionOptions={{name='Prospect',letter='P',value=40,yieldModel=model}}})
 local text=table.concat(tip.lines,'\n')
-assert(text:find('chance unavailable',1,true) and not text:find('yield unavailable',1,true) and text:find('40',1,true),text)
+assert(not text:find('chance unavailable',1,true) and not text:find('yield unavailable',1,true) and text:find('40',1,true),text)
 assert(not text:find('range ?',1,true),'field unknowns have explicit labels')
 
 local independent=record(2,.5,2,6)

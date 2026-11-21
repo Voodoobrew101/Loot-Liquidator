@@ -346,7 +346,7 @@ local function projectReviewedQuality(self,result,params)
     if not groups then return nil,why end
     local progress,error=qualityProgress(params)
     if not progress then return nil,error end
-    local used=false
+    local used,changed=false,false
     for familyID,anchor in pairs(anchors.families) do
         local group=groups[familyID] or groups[tonumber(familyID)]
         local ids=anchor.rankItemIDs or {}
@@ -370,7 +370,9 @@ local function projectReviewedQuality(self,result,params)
                 end
                 local material=group.items[id]
                 local value=group.total*share
-                if math.abs(material.expectedQuantity-value)>1e-12 then reviewedQualityChanged(material) end
+                if math.abs(material.expectedQuantity-value)>1e-12 then
+                    reviewedQualityChanged(material);changed=true
+                end
                 material.expectedQuantity=value
             end
             used=true
@@ -378,7 +380,7 @@ local function projectReviewedQuality(self,result,params)
     end
     if used then
         result.reviewedQualityProjected=true
-        result.confidence=0;result.ruleConfidence=0
+        if changed then result.confidence=0;result.ruleConfidence=0 end
     end
     return result
 end
@@ -925,7 +927,8 @@ function LL:ApplyGeneralProfessionModel(f,option,model,context)
     projected.projectedContext.effectiveSkill=target.skill
     for _,m in ipairs(projected.materials or {}) do m.appliedProfessionRule='profession-profile-rules/1' end
     projected.sourceProfileAssumed=assumed
-    if model.reviewedPublishedPriorModel or model.reviewedPublishedPrior or target.statReferenceUncertaintyApplied then
+    if model.reviewedPublishedPriorModel or model.reviewedPublishedPrior or model.reviewedBacklogModel
+        or target.statReferenceUncertaintyApplied then
         for _,material in ipairs(projected.materials or {})do
             material.transformConfidence=math.min(number(material.transformConfidence,100),target.confidence)
         end
@@ -1103,8 +1106,10 @@ function LL:ApplyGeneralProfessionQuality(f,option,model,context)
         end
     end
     local result=copy(model);local additions={};local changed=false
-    for _,group in pairs(groups) do
+    for familyID,group in pairs(groups) do
         if not (group.aggregate and group.exact) then
+            local qualityConfidence=math.min(number(params.confidence),
+                lookup(model.familyQualityConfidence,familyID) or 100)
             local quantities,valid={},true
             for _,entry in ipairs(group.entries) do
                 local m=entry.material
@@ -1183,17 +1188,18 @@ function LL:ApplyGeneralProfessionQuality(f,option,model,context)
                     if quantity>0 then
                         local m=result.materials[entry.index]
                         m.expectedQuantity=math.max(0,m.expectedQuantity-quantity)
+                        if m.expectedQuantity<1e-12 then m.expectedQuantity=0 end
                         m.chance=nil;m.minQuantity=nil;m.maxQuantity=nil;m.probabilityVerified=false
                         m.quantityCounts=nil;m.personalHistogram=nil;m.fieldEvidence=nil
-                        m.confidence=math.min(number(m.confidence),params.confidence)
+                        m.confidence=math.min(number(m.confidence),qualityConfidence)
                     end
                 end
                 if upgraded>0 and targetIndex then
                     local material=result.materials[targetIndex]
                     material.expectedQuantity=material.expectedQuantity+upgraded
-                    qualityMaterialChanged(material,params.confidence)
+                    qualityMaterialChanged(material,qualityConfidence)
                 elseif upgraded>0 then additions[#additions+1]={id=targetID,expectedQuantity=upgraded,
-                    confidence=math.min(number(model.confidence),params.confidence),projectedQualityRank=rank,
+                    confidence=math.min(number(model.confidence),qualityConfidence),projectedQualityRank=rank,
                     sourceContributions={itemdb=1}} end
                 changed=changed or upgraded>0
             end

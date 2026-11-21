@@ -1082,8 +1082,33 @@ end
 -- occurrence. The one supported exception is quality-only redistribution of
 -- a source primary that always has the same positive stack size: E=P*stack.
 -- This remains a confidence-capped model and adds no observed casts/hits.
-local function deDistribution(source,result,fixedPrimaryStack)
+local function deCompatibleStack(source,stack)
+    local function compatible(row,probability)
+        if row.inputCount and row.inputCount~=1 then return false end
+        if row.minQuantity~=nil and row.minQuantity~=stack or row.maxQuantity~=nil and row.maxQuantity~=stack then return false end
+        if row.expectedQuantity~=nil and (not finite(row.expectedQuantity) or row.expectedQuantity>stack) then return false end
+        if probability~=nil and (not finite(probability) or probability>1
+            or finite(row.expectedQuantity) and math.abs(row.expectedQuantity-probability*stack)>1e-6) then return false end
+        return true
+    end
+    if not compatible(source,source.chance) then return false end
+    for key,weight in pairs(source.sourceContributions or {}) do
+        if finite(weight) and weight>0 then
+            local estimate=source.sourceEstimates and source.sourceEstimates[key]
+            if not estimate then return false end
+            if not compatible(estimate,estimate.dropChance or estimate.chance) then return false end
+            if estimate.records and #estimate.records>0 then
+                for _,record in ipairs(estimate.records) do
+                    if not compatible(record,record.dropChance) then return false end
+                end
+            end
+        end
+    end
+    return true
+end
+local function deDistribution(source,result,fixedPrimaryStack,modelStack)
     if type(source)~='table' then return result end
+    local stack=modelStack or (source.minQuantity==source.maxQuantity and source.minQuantity)
     if finite(source.expectedQuantity) and math.abs(result.expectedQuantity-source.expectedQuantity)<1e-10 then
         result.minQuantity=source.minQuantity;result.maxQuantity=source.maxQuantity
         if not finite(source.chance) or source.chance>1 then return result end
@@ -1091,17 +1116,18 @@ local function deDistribution(source,result,fixedPrimaryStack)
         result.chanceConfidence=math.min(result.confidence or 100,source.chanceConfidence or source.confidence or 0)
         result.probabilityBasis=source.probabilityBasis or 'unchanged-source-occurrence'
         result.probabilityVerified=source.probabilityVerified
-    elseif fixedPrimaryStack and finite(source.chance) and source.chance<=1
-        and finite(source.minQuantity) and source.minQuantity>0
-        and source.minQuantity==source.maxQuantity and source.minQuantity%1==0
-        and finite(source.expectedQuantity)
-        and math.abs(source.expectedQuantity-source.chance*source.minQuantity)<1e-6
-        and result.expectedQuantity<=source.minQuantity then
-        result.chance=result.expectedQuantity/source.minQuantity
-        result.minQuantity=source.minQuantity;result.maxQuantity=source.maxQuantity
+    elseif fixedPrimaryStack and finite(stack) and stack>0 and stack%1==0
+        and deCompatibleStack(source,stack)
+        and (modelStack~=nil or finite(source.chance) and source.chance<=1
+            and finite(source.expectedQuantity) and math.abs(source.expectedQuantity-source.chance*stack)<1e-6)
+        and result.expectedQuantity<=stack then
+        result.chance=result.expectedQuantity/stack
+        result.minQuantity=stack;result.maxQuantity=stack
         result.chanceConfidence=math.min(result.confidence or 100,source.chanceConfidence or source.confidence or 0)
         result.probabilityBasis='modeled-fixed-stack-primary-quality'
-        result.probabilityAssumption='Primary quality redistribution preserves the source fixed positive stack; no target observations added'
+        result.probabilityAssumption=modelStack and
+            'Canonical primary fixed-stack prior applied to compatible source terms; unknown distributions remain an assumption, no target observations added'
+            or 'Primary quality redistribution preserves the source fixed positive stack; no target observations added'
         result.probabilityVerified=false
     end
     return result
@@ -1411,9 +1437,14 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
     -- the ItemDB term when compatible legacy/reference means also contributed.
     local mixed=false
     for key,weight in pairs(model and model.sources or {}) do if key~='itemdb' and weight>0 then mixed=true end end
-    local reviewedPrimary,sourcePrimaryTotal,unprojectedPrimaryTotal=false,0,0
+    local reviewedPrimary=false
     local primary={}
     for _,id in ipairs(selected.rule.primaryRankIDs or {}) do primary[id]=true end
+    local modelStacks={}
+    for _,material in ipairs(selected.materials or {}) do
+        if primary[material.id] and finite(material.minQuantity) and material.minQuantity>0
+            and material.minQuantity==material.maxQuantity then modelStacks[material.id]=material.minQuantity end
+    end
     for _,original in ipairs(model and model.materials or {}) do
         local source=original.sourceEstimates and original.sourceEstimates.itemdb
         if primary[original.id] and source and finite(source.expectedQuantity)
@@ -1423,24 +1454,20 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
                 if not finite(unprojected) or unprojected>source.expectedQuantity+1e-9 then return model end
                 reviewedPrimary=true
             else unprojected=source.expectedQuantity end
-            sourcePrimaryTotal=sourcePrimaryTotal+source.expectedQuantity/source.inputCount
-            unprojectedPrimaryTotal=unprojectedPrimaryTotal+unprojected/source.inputCount
         end
     end
-    -- Scale the ordinary quantity term against the canonical ZERO pool, not
-    -- against a mixed pool that includes differently sized reviewed priors.
-    -- The latter would change an otherwise identical zero-profile fusion.
+    -- Use the canonical curve's relative quantity and quality changes on the
+    -- actual weighted ordinary pool. Keep already projected reviewed terms.
     local canonicalBase=deAmounts(selected.materials)
     local canonicalPrimaryTotal=canonicalBase and ((canonicalBase[selected.rule.primaryRankIDs[1]] or 0)
         +(canonicalBase[selected.rule.primaryRankIDs[2]] or 0)) or 0
-    local ordinaryShare=canonicalPrimaryTotal>0 and unprojectedPrimaryTotal/canonicalPrimaryTotal or 0
     if mixed or reviewedPrimary then
         local byID={}
         for _,material in ipairs(materials) do byID[material.id]=material end
         -- A newly introduced rank or bonus has no per-material contribution
         -- row yet. Give it only the selected ItemDB primary family's share,
         -- rather than a full-strength bonus beside mostly legacy evidence.
-        local originalIDs,primarySum,weightedPrimary={},0,0
+        local originalIDs,primarySum,weightedPrimary,ordinary={},0,0,{}
         for _,original in ipairs(model.materials or {}) do
             originalIDs[original.id]=true
             local weight=original.sourceContributions and original.sourceContributions.itemdb
@@ -1450,11 +1477,37 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
                 and finite(source.inputCount) and source.inputCount>0 then
                 local quantity=source.expectedQuantity/source.inputCount
                 primarySum=primarySum+quantity;weightedPrimary=weightedPrimary+quantity*weight
+                local units=source.unprojectedDisenchantExpectedQuantity
+                if units==nil then units=source.expectedQuantity end
+                ordinary[original.id]=units/source.inputCount*weight
+                if not finite(ordinary[original.id]) or not finite(original.expectedQuantity)
+                    or ordinary[original.id]>original.expectedQuantity+1e-9 then return model end
             end
         end
         local familyWeight=primarySum>0 and weightedPrimary/primarySum or 0
+        local low,high=selected.rule.primaryRankIDs[1],selected.rule.primaryRankIDs[2]
+        local targetTotal=byID[low].expectedQuantity+byID[high].expectedQuantity
+        if canonicalPrimaryTotal<=0 or targetTotal<=0 then return model end
+        local factor=targetTotal/canonicalPrimaryTotal
+        local lowUnits,highUnits=(ordinary[low] or 0)*factor,(ordinary[high] or 0)*factor
+        local shift=byID[high].expectedQuantity/targetTotal-canonicalBase[high]/canonicalPrimaryTotal
+        local moved=math.max(-highUnits,math.min(lowUnits,(lowUnits+highUnits)*shift))
+        local ordinaryTarget={[low]=lowUnits-moved,[high]=highUnits+moved}
         for id,projected in pairs(byID) do
-            if not originalIDs[id] then projected.expectedQuantity=projected.expectedQuantity*familyWeight end
+            if not originalIDs[id] then
+                local canonicalQuantity=projected.expectedQuantity
+                if primary[id] then
+                    projected.expectedQuantity=ordinaryTarget[id] or 0
+                else projected.expectedQuantity=projected.expectedQuantity*familyWeight end
+                if math.abs(projected.expectedQuantity-canonicalQuantity)>1e-10 then
+                    projected.chance=nil;projected.minQuantity=nil;projected.maxQuantity=nil
+                    projected.chanceConfidence=nil;projected.probabilityBasis=nil;projected.probabilityVerified=false
+                    projected.probabilityAssumption=nil;projected.quantityCounts=nil;projected.personalHistogram=nil
+                    projected.fieldEvidence=nil;projected.samples=nil;projected.effectiveSamples=nil
+                    deDistribution({expectedQuantity=0,confidence=projected.confidence},projected,
+                        primary[id] and (selected.rule.preservePrimaryTotal or progress.quantity==0),modelStacks[id])
+                end
+            end
         end
         for _,original in ipairs(model.materials or {}) do
             if type(original.rankIDs)=='table' then
@@ -1464,15 +1517,19 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
             if projected then
                 local weight=original.sourceContributions and original.sourceContributions.itemdb or 0
                 local source=original.sourceEstimates and original.sourceEstimates.itemdb
-                if finite(original.expectedQuantity) and finite(weight) and weight>0 and weight<=1
-                    and source and finite(source.expectedQuantity) and finite(source.inputCount) and source.inputCount>0 then
-                    local replacement=projected.expectedQuantity
-                    if reviewedPrimary and primary[original.id] then
-                        local unprojected=source.unprojectedDisenchantExpectedQuantity
-                        if unprojected==nil then unprojected=source.expectedQuantity end
-                        replacement=(source.expectedQuantity-unprojected)/source.inputCount+replacement*ordinaryShare
+                local weightedSource=finite(weight) and weight>0 and weight<=1
+                    and source and finite(source.expectedQuantity) and finite(source.inputCount) and source.inputCount>0
+                if finite(original.expectedQuantity) and (primary[original.id] or weightedSource) then
+                    if primary[original.id] then
+                        -- Both ranks use the same conservative family move,
+                        -- including a destination with no original ItemDB
+                        -- weight. Never spend another source's donor units.
+                        local delta=(ordinaryTarget[original.id] or 0)-(ordinary[original.id] or 0)
+                        projected.expectedQuantity=original.expectedQuantity+delta
+                    else
+                        projected.expectedQuantity=original.expectedQuantity
+                            +weight*(projected.expectedQuantity-source.expectedQuantity/source.inputCount)
                     end
-                    projected.expectedQuantity=original.expectedQuantity+weight*(replacement-source.expectedQuantity/source.inputCount)
                     if projected.expectedQuantity<0 and projected.expectedQuantity>-1e-9 then projected.expectedQuantity=0 end
                     if not finite(projected.expectedQuantity) then return model end
                     projected.confidence=math.min(projected.confidence or confidence,original.confidence or confidence)
@@ -1480,7 +1537,8 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
                     projected.chanceConfidence=nil;projected.probabilityBasis=nil;projected.probabilityVerified=nil
                     projected.probabilityAssumption=nil
                     deDistribution(original,projected,(selected.rule.preservePrimaryTotal or progress.quantity==0)
-                        and primary[original.id] and deFixedStackContributors(original))
+                        and primary[original.id] and (deFixedStackContributors(original) or modelStacks[original.id]~=nil),
+                        modelStacks[original.id])
                     projected.sourceEstimates=copy(original.sourceEstimates)
                     projected.sourceContributions=copy(original.sourceContributions)
                 else

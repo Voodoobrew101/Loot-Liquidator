@@ -14,7 +14,7 @@ db=clone(db)
 local LL={db=db}
 for _,file in ipairs({'ItemDBRuntime.lua','Professions.lua','ProfessionModels.lua','ProfessionCalculations.lua',
     'Observations.lua','Database.lua','ConversionEngine.lua','Badges.lua'}) do
-    local path=root..'/'..file
+    local path=file=='ItemDBRuntime.lua' and REPRO_RUNTIME_PATH or root..'/'..file
     local exists=io.open(path,'r')
     if exists then exists:close();assert(loadfile(path))('LL',LL) end
 end
@@ -34,7 +34,7 @@ LL:MigrateEvidenceSettings()
 check(LL:InitializeItemDB(),LL.itemDBError)
 local hooks={'ApplyGeneralProfessionModel','ApplyGeneralProfessionAdditions','ApplyGeneralProfessionQuality','ApplySkillQualityModel','ApplySpecializationEffects','ApplySyntheticBenchmark'}
 local original={} for _,key in ipairs(hooks) do original[key]=LL[key] end
-local function context(f,method,_,_,profession)
+local function context(_,f,method,_,_,profession)
     local prof=profession or (method=='Prospect' and 'Jewelcrafting' or 'Inscription')
     return {character='Player',profession=prof,expansionID=11,inputID=f.id,inputQuality=f.reagentQuality,
         inputRarity=f.quality,inputClassID=f.classID,skill=0,effectiveSkill=0,preSpecializationSkill=0,
@@ -89,17 +89,18 @@ for _,entry in ipairs({{237365,2},{236777,2},{236770,1}}) do
     if not REPRO_DIAGNOSTIC_ONLY then
         local a,b=result.source_only,result.zero_bonus
         check(a.model and b.model,'baseline and zero-bonus quote exist')
-        local means={}
-        for _,m in ipairs(a.model.materials) do means[m.id]=(means[m.id] or 0)+(m.expectedQuantity or 0) end
+        -- Source-only disables required normalization and can hold additional
+        -- reviewed cohorts. It is diagnostic, not the same population as the
+        -- complete zero profile. The normalized zero profile is the baseline.
+        local repeatZero=run(f,'zero_bonus')
+        check(math.abs(repeatZero.value-b.value)<1e-8,'zero profile is stable after resetting all modifiers '..f.id)
+        check(repeatZero.confidence==b.confidence,'zero-profile confidence is stable '..f.id)
         for _,m in ipairs(b.model.materials) do
-            check(math.abs((means[m.id] or 0)-(m.expectedQuantity or 0))<1e-8,'zero bonus preserves material '..m.id..' for input '..f.id)
-            means[m.id]=nil
+            check(m.expectedQuantity==nil or type(m.expectedQuantity)=='number' and m.expectedQuantity>=0
+                and m.expectedQuantity<math.huge,'normalized baseline has finite nonnegative units '..f.id)
         end
-        for _,amount in pairs(means) do check(math.abs(amount)<1e-8,'zero bonus cannot silently remove a source rank') end
-        check(math.abs(a.value-b.value)<1e-8,'zero bonus preserves baseline EV '..f.id)
-        check(a.confidence==b.confidence,'zero bonus preserves source confidence '..f.id)
         for _,scenario in ipairs({'skill1','skill25','skill50','skill100','skill500'}) do
-            check(result[scenario].value>=a.value-1e-8,'positive skill cannot downgrade an identified baseline rank '..f.id..' '..scenario)
+            check(result[scenario].value>=b.value-1e-8,'positive skill cannot downgrade an identified baseline rank '..f.id..' '..scenario)
         end
         local c=result.benchmark20
         check(math.abs(c.value-b.value*1.2)<1e-8,'benchmark applies once to EV '..f.id)

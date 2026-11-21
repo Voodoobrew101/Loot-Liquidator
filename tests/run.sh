@@ -17,6 +17,7 @@ python3 tools/evidence_to_baselines.py --check  # D1b: generated baselines are c
 python3 tools/disenchant_categories.py --check
 python3 tools/capture_observations.py --check
 python3 tools/recycling_capture_baselines.py --check
+python3 tests/test_recycling_zero_prior.py
 python3 tests/test_build_info.py
 python3 tests/test_capture_observations.py
 python3 tests/test_skill82_cohort_audit.py
@@ -174,6 +175,7 @@ python3 tests/test_legacy_cohort_admission.py
 "$lua_bin" tests/test_crystal_collector_extras.lua
 "$lua_bin" tests/test_profession_calculations.lua
 "$lua_bin" tests/test_processing_zero_bonus_regression.lua
+"$lua_bin" tests/test_numerical_pipeline_stages.lua
 "$lua_bin" tests/test_processing_inverse_edge_cases.lua
 "$lua_bin" tests/test_gem_replacement_milestones.lua
 "$lua_bin" tests/test_profession_baseline_pipeline.lua
@@ -190,5 +192,6 @@ python3 tests/test_scoped_disenchant_restrictions.py
 "$lua_bin" tests/test_reviewed_use_container.lua
 python3 tests/test_rank_families.py
 python3 tests/test_input_ranks.py
+python3 tests/test_build_info.py
 python3 tests/test_package_addon.py
 python3 tools/audit_usable_data.py --validate --output "$compiled_dir/usable-data-audit"

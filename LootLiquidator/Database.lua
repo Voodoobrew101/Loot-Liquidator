@@ -564,6 +564,7 @@ end
 -- of its patch window) still counts, at STALE_FACTOR weight and lower confidence.
 local function contextEligible(record,ctx,build,model,rules)
     if model and model.projectionIncomplete then return false end
+    if record.clientVersion and (not GetBuildInfo or GetBuildInfo()~=record.clientVersion) then return false end
     if record.mechanicsSourceBuild and tostring(record.mechanicsSourceBuild)~=tostring(build) and not (model and model.mechanicsApplied) then return false end
     if record.targetBuild and tostring(record.targetBuild)~=tostring(build) then return false end
     if record.patchStartBuild and (not tonumber(build) or tonumber(build)<record.patchStartBuild) then return false end
@@ -618,6 +619,9 @@ local function sourceModel(self,f,option,r)
         duration=r.duration,expectedInputCount=r.expectedInputCount,materials={},source=r.source,
         referenceApplicability=r.referenceApplicability,
         operationUnverified=r.operationUnverified,
+        sourceReferenceOnly=r.sourceReferenceOnly,observedSourceOperations=r.observedSourceOperations,
+        currentPatchApplicabilityConfidence=r.currentPatchApplicabilityConfidence,
+        normalizationAssumptions=r.normalizationAssumptions,
         adjustment=(r.baselineStatus or r.referenceApplicability=='unverified-reference')
             and 'provisional source estimate / baseline not normalized' or nil}
     for _,m in ipairs(r.materials) do
@@ -968,6 +972,13 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         gearKey=anchor.gearKey,isDisenchantCategory=anchor.isDisenchantCategory,
         referenceContextID=anchor.referenceContextID,
         categorySourceStudyIDs=anchor.categorySourceStudyIDs,memberInputItemIDs=anchor.memberInputItemIDs}
+    if anchor.sourceReferenceOnly then
+        result.sourceReferenceOnly=true
+        result.sourceReference={recordID=anchor.recordID,sourcePatchBuild=anchor.patchBuild,
+            observedSourceOperations=anchor.observedSourceOperations,observedTargetOperations=0,
+            currentPatchApplicabilityConfidence=anchor.currentPatchApplicabilityConfidence,
+            normalizationAssumptions=copyReference(anchor.normalizationAssumptions)}
+    end
     if anchor.sourceKey=='personal' and personal and personal.observationContext then
         result.observationContext=copyReference(personal.observationContext)
         result.context=copyReference(personal.projectedContext or personal.observationContext)
@@ -994,6 +1005,30 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             and r.inputRarity==anchor.inputRarity and r.inputClassID==anchor.inputClassID
             and r.patchBuild==anchor.patchBuild and same(r.referenceConditions,anchor.referenceConditions)
     end
+    local nativeItems=self.ItemDB.professionProfiles and self.ItemDB.professionProfiles.items or {}
+    local function outputFamily(material)
+        local item=nativeItems[material.id] or nativeItems[tostring(material.id)]
+        return item and item.qualityFamilyID
+    end
+    local measuredFamilies={}
+    if option.name=='Mill' or option.name=='Prospect' then
+        for _,record in ipairs(eligible) do
+            if sameContext(record) or record.fixedReference then
+                local model=transformed[record] or sourceModel(self,f,option,record)
+                for index,material in ipairs(model.materials or {}) do
+                    local original=record.materials[index]
+                    local field=original and original.expectedQuantity or {}
+                    local family=outputFamily(material)
+                    if family and finite(material.expectedQuantity) and material.expectedQuantity>0
+                        and (field.status=='measured' or field.status=='observed' or field.status=='verified')
+                        and finite(field.samples or record.samples) and (field.samples or record.samples)>0 then
+                        measuredFamilies[family]=measuredFamilies[family] or {}
+                        measuredFamilies[family][material.id]=true
+                    end
+                end
+            end
+        end
+    end
     for _,r in ipairs(eligible) do
         local compatible=sameContext(r)
         if anchor.isDisenchantCategory and r.sourceKey==anchor.sourceKey and r.inputItemID
@@ -1017,11 +1052,20 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                 result.generalProfessionApplied=true;result.professionProjected=true
                 result.projectedContext=model.projectedContext
                 result.context=model.projectedContext
-                result.generalProfessionParameters=model.professionParameters
+                -- Source normalization/calibration belongs to that source.
+                -- The final quality pass uses the selected target, not whichever
+                -- source happened to be visited last (possibly a confidence-zero prior).
+                if not result.generalProfessionParameters then
+                    local parameters=model.professionParameters or {}
+                    result.generalProfessionParameters=self:ProfessionProfileParameters(
+                        parameters.profession or ctx.profession,parameters.expansionID or f.expansionID,
+                        ctx,option,f)
+                end
                 result.generalProjectionInputCount=model.inputCount
                 result.generalProjectedSources=result.generalProjectedSources or {}
                 result.generalProjectedSources[r.sourceKey]=true
-                result.ruleConfidence=math.min(result.ruleConfidence or 100,model.ruleConfidence or 100)
+                -- Its uncertainty is already attached to the contributing
+                -- fields. A weak source must not cap every other source at zero.
             end
             if r==anchor and model.adjustment then result.adjustment=model.adjustment end
             if model.referenceApplicability=='unverified-reference' then result.unverifiedReference=true end
@@ -1041,6 +1085,22 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                 -- A known rank-family expectation already includes its rank
                 -- alternatives. Do not add exact-rank fallback rows on top.
                 local familyCovered=false
+                local family=outputFamily(m)
+                -- An unknown-profile, nominal-budget quality reference is a
+                -- fallback for the whole family. Adding its reported grade
+                -- beside another cohort's measured grade invents cooutputs.
+                local unknownProfilePrior=r.reviewedBacklogModel and r.baselineProfileAssumed
+                    and not r.sampleSizeKnown and (r.samples==nil or r.samples==0)
+                local reported=r.referenceConditions or {}
+                local reportedProfile=reported.skill~=nil or reported.effectiveSkill~=nil
+                    or reported.specialization~=nil or reported.stats~=nil
+                local unidentifiedReference=(r.sourceKey=='reference' or r.sourceKey=='legacy')
+                    and not reportedProfile and (r.baselineProfile==nil or r.baselineProfileAssumed)
+                if family and measuredFamilies[family] and (unknownProfilePrior or unidentifiedReference)
+                    and (m.rankIDs or not measuredFamilies[family][m.id] or m.expectedQuantity==0) then
+                    familyCovered=true
+                    result.excludedSources[#result.excludedSources+1]=r.recordID..': measured family baseline already available'
+                end
                 local unpricedOverlaps={}
                 local rankReferences={}
                 if r.fallbackOnly then
@@ -1128,6 +1188,11 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                             c=math.min(c,metadata.modelConfidenceCap)
                         end
                         if field=='expectedQuantity' then
+                            if v>0 and model.generalProfessionApplied and family then
+                                result.familyQualityConfidence=result.familyQualityConfidence or {}
+                                local cap=model.professionParameters and model.professionParameters.confidence or 100
+                                result.familyQualityConfidence[family]=math.min(result.familyQualityConfidence[family] or 100,cap)
+                            end
                             if r.reviewedPublishedPrior then b.reviewedPriorQuantity=true
                             else b.otherQuantityContribution=true end
                         end
