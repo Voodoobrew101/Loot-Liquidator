@@ -1,3 +1,12 @@
+# Loot Liquidator 0.12.46
+
+- Restore numerical baseline and skill/stat tooltip quantities across professions. Show known average units when occurrence chance or a current yield range is unavailable.
+- Keep weak source confidence local to its contributing fields. Preserve measured disenchant evidence and derive fixed-stack epic rank chances through the baseline model.
+- Use unidentified milling/prospecting rank references as family fallbacks instead of extra measured outputs. Conserve material units when skill changes their quality.
+- Preserve Recycling input eligibility in simulated profiles. Keep its 200 captured operations separate from a zero-observation, zero-confidence source-normalized quantity prior.
+- Verify release provenance after generated research is compiled, while rejecting unrelated dirty code.
+- Add zero-profile and isolated skill/stat regression coverage for all 13 professions and every compiled modern numerical processing baseline.
+
 # Loot Liquidator 0.12.45
 
 - Show only material-affecting specialization controls for disenchanting.

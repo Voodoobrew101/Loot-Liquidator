@@ -17,6 +17,7 @@ function LL:BuildDetails()
     local lines={"Loot Liquidator "..tostring(self.version or "?"),source,prs,
         "Branch: "..tostring(b.branch or "unknown"),"Source commit: "..tostring(b.commit or "unknown")}
     if b.headCommit then lines[#lines+1]="PR head: "..b.headCommit end
+    if b.releaseTag then lines[#lines+1]="Release tag: "..b.releaseTag end
     if b.dirty then lines[#lines+1]="Includes local file changes" end
     for _,pr in ipairs(b.prs or {}) do
         lines[#lines+1]="#"..pr.number.." "..(pr.title or "")

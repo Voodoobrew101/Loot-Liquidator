@@ -1,11 +1,62 @@
 import sys
 import unittest
+import hashlib
+import json
+import tempfile
+from unittest.mock import patch
 from pathlib import Path
 sys.path.insert(0, str(Path('tools').resolve()))
-from stamp_build_info import collect
+from stamp_build_info import collect, verified_release
 
 
 class BuildInfoTests(unittest.TestCase):
+    def test_verified_tag_accepts_only_generated_research_and_version_changes(self):
+        env = {'GITHUB_ACTIONS': 'true', 'GITHUB_REF': 'refs/tags/v0.12.46', 'GITHUB_REF_NAME': 'v0.12.46'}
+        changed = ['database/research/build-research-manifest.json', 'LootLiquidator/ItemDBRuntime.lua',
+                   'LootLiquidator/Core.lua', 'LootLiquidator/LootLiquidator.toc']
+        originals = {'LootLiquidator/Core.lua': 'LA.version = "0.12.45"\nlocal unchanged=true\n',
+                     'LootLiquidator/LootLiquidator.toc': '## Version: 0.12.45\nCore.lua\n'}
+        def git(*args):
+            if args[0] == 'merge-base': return 'main-sha'
+            if args[0] == 'show': return originals[args[1].removeprefix('HEAD:')]
+            return ''
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / 'LootLiquidator').mkdir()
+            (root / 'database/research').mkdir(parents=True)
+            runtime = root / 'LootLiquidator/ItemDBRuntime.lua'
+            runtime.write_bytes(b'-- compiled fixture, no game rates\n')
+            receipt = {'generatedInBuildWorkspace': True, 'sourceEvidencePreserved': True,
+                       'runtimeSHA256': hashlib.sha256(runtime.read_bytes()).hexdigest()}
+            (root / 'database/research/build-research-manifest.json').write_text(json.dumps(receipt))
+            for name, text in originals.items():
+                (root / name).write_text(text.replace('0.12.45', '0.12.46'))
+            self.assertTrue(verified_release(env, 'main-sha', changed, git, root))
+            self.assertFalse(verified_release(env, 'feature-sha', changed, git, root))
+            self.assertFalse(verified_release({}, 'main-sha', changed, git, root))
+            self.assertFalse(verified_release(env, 'main-sha', changed + ['LootLiquidator/Badges.lua'], git, root))
+            self.assertFalse(verified_release(env, 'main-sha', changed + ['database/sources/ReferenceData.lua'], git, root))
+            self.assertFalse(verified_release(env, 'main-sha', changed + ['database/research/unreviewed-source.json'], git, root))
+            generated = root / 'database/research/build-study-review.json'
+            generated.write_text('{"reviewedRows": 1}\n')
+            generated_path = generated.relative_to(root).as_posix()
+            self.assertFalse(verified_release(env, 'main-sha', changed + [generated_path], git, root))
+            receipt['generatedFileSHA256'] = {generated_path: hashlib.sha256(generated.read_bytes()).hexdigest()}
+            (root / 'database/research/build-research-manifest.json').write_text(json.dumps(receipt))
+            self.assertTrue(verified_release(env, 'main-sha', changed + [generated_path], git, root))
+            generated.write_text('{"reviewedRows": 2}\n')
+            self.assertFalse(verified_release(env, 'main-sha', changed + [generated_path], git, root))
+            runtime.write_bytes(b'-- unverified replacement\n')
+            self.assertFalse(verified_release(env, 'main-sha', changed, git, root))
+            runtime.write_bytes(b'-- compiled fixture, no game rates\n')
+            (root / 'LootLiquidator/Core.lua').write_text('LA.version = "0.12.46"\nlocal changed=true\n')
+            self.assertFalse(verified_release(env, 'main-sha', changed, git, root))
+        with patch('stamp_build_info.verified_release', return_value=True):
+            info = collect(env, {}, self.git, lambda *_: [])
+        self.assertEqual((info['kind'], info['prStatus'], info['prs']), ('main', 'main-only', []))
+        self.assertEqual(info['releaseTag'], 'v0.12.46')
+        self.assertTrue(info['verifiedGeneratedResearch'])
+
     def git(self, *args):
         if args == ('rev-parse', 'HEAD'): return 'merge-sha'
         if args == ('branch', '--show-current'): return 'feature'

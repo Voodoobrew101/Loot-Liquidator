@@ -155,7 +155,7 @@ local text=previewText()
 contains(text,'Disenchant — Simulated (Confidence 20%)',true)
 contains(text,'(unavailable)',false)
 contains(text,'Confidence 20%, unavailable',false)
-contains(text,'Material 10 (chance unavailable)',true)
+contains(text,'Material 10 [avg 1.000 per 1 input]',true)
 contains(text,'50 copper',true)
 assert(preview.available==false and preview.value==50 and previewModel.confidence==20,
     'preview presentation preserves access and its numeric model')

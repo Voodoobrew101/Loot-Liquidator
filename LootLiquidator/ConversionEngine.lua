@@ -88,7 +88,11 @@ function LL:TooltipConversionOptions(f,options)
                     -- No scanned skill, equipment or live operation bonuses are
                     -- silently substituted for an unset hypothetical profile.
                     db.characters[key or "Current character"]={professions={},recipes={},
-                        skillQualityOperations=record and record.skillQualityOperations}
+                        skillQualityOperations=record and record.skillQualityOperations,
+                        -- Input eligibility is recipe identity, not a character
+                        -- bonus. Keep the complete scanned salvage list when
+                        -- simulating skill/stat changes for those inputs.
+                        salvageRecipes=record and record.salvageRecipes}
                     proxy.GetResearchProfessionSnapshot=function() return nil end
                     proxy.GetCachedOperationInfo=function() return nil end
                 end

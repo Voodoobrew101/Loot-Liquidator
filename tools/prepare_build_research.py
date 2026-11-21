@@ -108,6 +108,8 @@ def prepare(research_ref=None, lua=None, run=subprocess.run, root=ROOT):
                 'policy': world_review['policy'],
                 'rowCountsAreNotIndependentOperations': True,
             }
+        from stamp_build_info import generated_research_hashes
+        manifest['generatedFileSHA256'] = generated_research_hashes()
         path = Path('database/research/build-research-manifest.json')
         path.write_text(json.dumps(manifest, sort_keys=True, ensure_ascii=False, indent=2) + '\n',
                         encoding='utf-8', newline='\n')

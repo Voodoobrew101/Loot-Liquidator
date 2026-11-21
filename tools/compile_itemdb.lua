@@ -734,6 +734,25 @@ LL.ItemDB=db
 assert(loadfile('LootLiquidator/ProfessionModels.lua'))('LootLiquidator',LL)
 db.professionProfiles=assert(loadfile('database/profession-profile-rules.lua'))()
 assert(db.professionProfiles.schemaVersion==1,'Unsupported profession profile schema')
+for _,record in ipairs(recycling.modeledBaselines or {}) do
+    local binding=record.nativeBinding
+    local recipe=db.professionProfiles.recipes[record.recipeID]
+    local items=db.professionProfiles.items
+    local family=binding and db.professionProfiles.qualityFamilies[binding.familyID]
+    assert(binding and binding.clientVersion==db.professionProfiles.clientVersion
+        and binding.build<=db.professionProfiles.build and recipe and recipe.profession==record.profession
+        and recipe.salvage==true and recipe.inputCount==record.inputCount
+        and items[record.inputItemID].qualityRank==record.inputQualityRank
+        and family and #family.rankItemIDs==#binding.rankItemIDs,'Recycling prior native scope changed; review required')
+    for rank,id in ipairs(binding.rankItemIDs) do
+        assert(family.rankItemIDs[rank]==id and items[id].qualityFamilyID==binding.familyID,
+            'Recycling prior native rank binding changed; review required')
+    end
+    assert(record.samples==0 and record.observedOperations==0 and record.observedSourceOperations==200,
+        'A normalized source prior must never acquire target observations')
+    db.processing[#db.processing+1]=record
+end
+db.buildReport.normalizedCapturePriors=#(recycling.modeledBaselines or {})
 db.gatheringStudyBaselines=assert(loadfile('database/gathering-study-baselines.lua'))()
 assert(db.gatheringStudyBaselines.schemaVersion==1 and type(db.gatheringStudyBaselines.gatheringTargets)=='table',
     'Unsupported native gathering study schema')

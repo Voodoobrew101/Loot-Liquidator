@@ -715,7 +715,8 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     -- including DE endpoint identities without an extra tag.
                     -- Preserve explicit ordinary source zeroes and unknowns.
                     if not (material.expectedQuantity==0 and
-                        (material.additionalOutput or model.disenchantBaselineApplied)) then
+                        (material.additionalOutput or model.disenchantBaselineApplied
+                            or model.generalQualityApplied or model.skillQualityApplied or model.sourceReferenceOnly)) then
                         visible[#visible+1]=material
                     end
                 end
@@ -740,17 +741,21 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     end
                     left=left..MaterialDisplay(m.id)
                     if type(m.rankIDs)=="table" and #m.rankIDs>1 then left=left.." (rank unknown)" end
-                    if type(m.chance)~='number' then left=left..' (chance unavailable)' end
-                    if m.minQuantity and m.maxQuantity then
+                    if type(m.chance)~='number' and type(m.expectedQuantity)~='number' then left=left..' (chance unavailable)' end
+                    if not m.inconsistentFields and m.minQuantity and m.maxQuantity then
                         left=left..(m.minQuantity==m.maxQuantity
                             and (" [%d]"):format(m.minQuantity)
                             or (" [%d-%d]"):format(m.minQuantity,m.maxQuantity))
-                     elseif m.minQuantity then left=left..(" [min seen: %d]"):format(m.minQuantity)
-                     elseif m.maxQuantity then left=left..(" [max seen: %d]"):format(m.maxQuantity)
+                     elseif not m.inconsistentFields and m.minQuantity then left=left..(" [min seen: %d]"):format(m.minQuantity)
+                     elseif not m.inconsistentFields and m.maxQuantity then left=left..(" [max seen: %d]"):format(m.maxQuantity)
                     elseif type(m.expectedQuantity)~='number' then
                         left=left.." [yield unavailable]"
                     end
-                    if LA.db.showAverageQuantity==true then
+                    local needsAverage=type(m.expectedQuantity)=='number' and (type(m.chance)~='number'
+                        or m.inconsistentFields or not m.minQuantity and not m.maxQuantity)
+                    if LA.db.showAverageQuantity~=true and needsAverage then
+                        left=left..(' [avg %s per %d %s]'):format(UnitsText(m.expectedQuantity),batch,batch==1 and 'input' or 'inputs')
+                    elseif LA.db.showAverageQuantity==true then
                         left=left.."  "..(type(m.expectedQuantity)=='number' and UnitsText(m.expectedQuantity)
                             or type(m.conditionalExpectedQuantity)=='number' and (UnitsText(m.conditionalExpectedQuantity)..' conditional') or 'average unavailable')
                     end
