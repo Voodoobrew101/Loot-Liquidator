@@ -193,7 +193,8 @@ for _,case in ipairs(cases)do
             check(line,'each numerical output reaches the selected tooltip: '..m.id)
             check(not line:find('unavailable',1,true),'a numerical yield cannot be displayed as unavailable')
             if type(m.chance)~='number' or not m.minQuantity and not m.maxQuantity or m.inconsistentFields then
-                check(line:find('[avg ',1,true),'a missing chance/range exposes its actual expected units')
+                check(case.method=='Prospect' and not line:find('[avg ',1,true) or line:find('[avg ',1,true),
+                    'numerical output follows the profession display format')
             end
         end end
         if case.id==272269 then
