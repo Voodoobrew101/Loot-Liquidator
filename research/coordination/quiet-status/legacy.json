@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-21T21:46:32.006Z",
-  "status": "Read current v3 README, evidence schema, mechanics, worker role, legacy queue and owned status on current research branch; searched for post-cutoff/original Retail Warmaul 24995, Cobalt 36909 and Fel Iron 23424 operation logs. No new independently measured Retail cohort or item-specific zero-inclusive disenchants/prospects found. Reviewed a 2021 original TBC Classic video lead, a 2006 pre-2.1 first-person qualitative Fel Iron source, and current 12.1.7 PTR Fel Iron tooltip context; all are held/non-empirical for current Retail numeric admission. No new evidence JSONL warranted.",
+  "updated_at": "2026-11-21T22:44:22.503Z",
+  "status": "Required research v3 rules/schema/mechanics/worker queue read on current branch. Searched fresh original primary data for Warmaul 24995 and Retail 12.x Cobalt 36909/Fel Iron 23424 prospecting, including source-bearing community results and public SavedVariables leads. No new qualifying independently measured Retail cohort, actual completed operations, measured zeros or conditional histograms. Newly located original Feb 13 2007 Burning Crusade forum guide provides historical prospecting model context only; not raw measured casts, Retail eligibility or output quantity evidence. No JSONL evidence file justified.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -16,10 +16,9 @@
     "Legacy TBC armor-vs-weapon group source identity/level build, Runecloth Headband 13866 patch-sensitive dust identity and output-event distributions; avoid already-reviewed 45661 token mapping"
   ],
   "newly_verified_fields_cohorts": [
-    "New independent Retail measured casts, hits, zeros, material totals, conditional stack histograms or drop rates: NONE. Do not add an empty evidence JSONL.",
-    "New source-context only, not a Retail observation: Wowhead 12.1.7 PTR Fel Iron Ore 23424 item tooltip displays Requires Outland Jewelcrafting (1); distinct from the 2016 ProspectMe historical 275 ore-skill lookup. Neither is a recorded character skill nor source proof of successful Retail prospecting.",
-    "New source lead, held by client flavor and unreadable results: GuideMMO video dated 2021-03-14 advertises prospecting 1,000 Fel Iron Ore (23424) in TBC Classic and showing final results at ~2:27; this is NOT 200 verified completed Retail operations and the video description supplies no exact output item IDs, totals, hits, zeros, patch or export.",
-    "Independent pre-TBC original commentary dated 2006-10-30 describes five Fel Iron ore per attempt and sometimes receiving no gem, but gives no counted attempts/zero events, exact gems or measurable probability; qualitative, pre-2.1 historical prior only."
+    "New independent Retail input 24995/36909/23424 operations, per-output hit counts, measured zero outcomes, unit totals, source-based histograms, player skill/spec/build/hotfix: NONE.",
+    "New original published historical mechanics context only (Raawr, 2007-02-13, preserved at BlueTracker): the author describes 5 ore per prospect, 1 powder per attempt, and a possible 0–4 gems. Fel Iron Ore (23424) is explicitly named in the eligible ore list. These 0 and 4 are broad guide-level asserted range, NOT observed minimum/maximum, a zero-inclusive histogram, a count of zero-result casts, or quantified odds. This pre-2.1.0 source cannot establish current Retail 12.x yields or recipe eligibility.",
+    "Existing documented chronology cross-check: patch 2.1.0 (2007-05-22) guarantees a gem, and patch 3.0.2 (2008-10-14) removes Fel Iron Powder 24242 from prospecting; both were already in repository Master analysis and are NOT new independent measurements or new rate-change evidence."
   ],
   "source_urls": [
     "https://thewowdb.com/guides/disenchant-roi-trap/",
@@ -82,15 +81,16 @@
     "https://repos.curseforge.com/wow/prospect-me/rev/f9b6c0305908",
     "https://www.curseforge.com/wow/addons/quick-de",
     "https://www.youtube.com/watch?v=1Aqx6cnvj_w",
-    "https://gamesfacebook-usa.blogspot.com/2006/10/bc-journal-30-october-2006.html"
+    "https://gamesfacebook-usa.blogspot.com/2006/10/bc-journal-30-october-2006.html",
+    "https://www.bluetracker.gg/wow/topic/us-en/75313095-jewelcrafting-gem-and-socket-guide/"
   ],
-  "numeric_summary": "This run new independent Retail 12.x target measured cohorts=0; newly verified Retail 24995/36909/23424 completed casts, per-output hits, zero operations, total quantities, per-cast conditional histograms=0. A 2021 TBC Classic video headline's 1,000 ores are intended input, not verified completed Retail casts. 2006 anecdote gives no measured N. Current 12.1.7 PTR Fel Iron tooltip states Outland Jewelcrafting (1), which is source-profile/tooltip context only, not observed skill/cast denominator.",
+  "numeric_summary": "New independent Retail 12.x numerical data this run: 0 studies, 0 verified actual operations, 0 verified per-output hit/zero counts, 0 new measured output totals/histograms. Original 2007 forum GUIDE gives five ore per prospect, one generic dust, possible 0–4 gems as descriptive mechanics, without counted casts, exact output IDs or sample denominators; never enter these as observed minSeen/maxSeen, measured chance, or present-day Retail output.",
   "evidence_file": "research/v3/evidence/legacy/2026-11-21T1445-retail-prospect-spell-identity.jsonl",
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "a70cbaea6a29ffe4604d48c2bd31c52aa3d4d875",
+  "verified_parent_sha": "343def480711b5920272ff8fd26292630d53927a",
   "verified_commit_sha": "0afbd7f7ab0df1649f0503423ca5db30f275b779",
-  "commit_note": "One status-only GitHub contents-API commit, preserving evidence and other worker files. verified_commit_sha in this JSON points to the prior already verified commit because the commit cannot contain itself. External read-back verifies resulting new SHA.",
+  "commit_note": "Status-only GitHub Contents API commit; self-referential current SHA cannot be embedded in a commit, so verified_commit_sha records previous verified legacy commit. Commit receipt and separate branch/file read-back establish the new revision.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -151,6 +151,12 @@
       "source": "https://github.com/ClassicWoWCommunity/forever-bugs/issues/351",
       "disposition": "held-client-flavor-not-Retail",
       "reason": "Independent source with 13+9 original disenchant operations and some material outcomes/zeros but client is WoW Forever 1.60.1 rather than Retail; no exact named input IDs; not eligible for Retail 12.x v3 empirical admission, no record written."
+    },
+    {
+      "task": "T0044/T0022/T0042",
+      "source": "Raawr original 2007 Jewelcrafting guide",
+      "disposition": "held-source-supported-pre-2.1-model-not-measured",
+      "reason": "Feb 13 2007 first-person author guide is new source link; five ore / one powder / possible 0–4 gems are broad guidance not sample measurements. It predates gem-guarantee patch 2.1 and powder-removal 3.0.2 and has no exact output IDs/hit/zero observations."
     }
   ],
   "blockers": [
@@ -224,37 +230,35 @@
     {
       "source": "https://www.wowhead.com/mop-classic/it/item=23425/adamantite-ore",
       "reason": "Gary13579 original 35-stack six-rare/powder report is already in existing legacy study and task T0051; commenter 17911 cumulative archive also previously transcribed; MoP Classic mirror is not new client observation."
+    },
+    {
+      "source": "https://www.bluetracker.gg/wow/topic/us-en/75313095-jewelcrafting-gem-and-socket-guide/",
+      "reason": "Newly acquired dated 2007 BC author guide, pre-2.1; describes theoretical 0–4 gem possibility and 1 dust per 5 ore but no tracked casts, actual zero outcomes, exact gem IDs or present-day Retail bridge. Do not revisit for measured rates unless original event logs appear."
     }
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Seek a separately published Retail 12.x original zero-inclusive per-operation export for Warmaul 24995 exact itemLink/bonus and CanDisenchant receipt or completed prospects of Cobalt 36909/Fel Iron 23424 with output IDs, input consumption/refunds, skill/spec/build and real casts. Only if an original complete video dataset is obtainable, inspect GuideMMO end-frame/output tally and mark TBC Classic historical rather than Retail; do not infer operations from the stated 1000 input units. Do not touch Codex's closed 731-source catalogue or old duplicated cohorts.",
+  "next_concrete_step": "Prioritize a newly released, original Retail 12.x per-operation SavedVariables/export with exact Warmaul Legplates 24995 itemLink/bonus and CanDisenchant client receipt OR Cobalt 36909/Fel Iron 23424 prospects with actual completed cast N, consumed/refunded input counts, named output IDs/qualities and 0-inclusive per-output stacks plus skill/spec/build. Do not re-catalogue closed Codex corpus, claim the 2007 guide's broad 0–4 as a measured histogram, or duplicate Enchantrix/ReagentMaker priors.",
   "coordination_cutoff": "Cutoff 0cd0bad8867e7a8d909b4ecae74f6136a3e23d42. Current branch manifest status CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources (713 original + 12 addendum + 6 recovered) and enabled catalogue registry. Codex/direct reviewers own source decisions and implementation; no duplicate assignment.",
   "sources_reviewed_this_run": [
     {
-      "url": "https://www.youtube.com/watch?v=1Aqx6cnvj_w",
-      "type": "original-video-TBC-Classic-2021-03-14",
-      "disposition": "held-historical-client-and-unreadable-on-screen-output-results",
-      "detail": "GuideMMO description announces 1000 Fel Iron Ore and completed-result sequence at 2:27, but automated source exposes no numbered gem outcomes or per-event records. Do not infer 200 successful Retail prospects, gem distribution, zero count, refunds, skill or game build."
+      "url": "https://www.bluetracker.gg/wow/topic/us-en/75313095-jewelcrafting-gem-and-socket-guide/",
+      "type": "new original 2007-02-13 player guide on Blizzard forums, preserved BlueTracker",
+      "disposition": "held-historical-source-supported-model-prior-only",
+      "detail": "Author Raawr states 5 ore consumed, one ore powder and 0–4 possible gems; explicitly includes Fel Iron. These are descriptive pre-2.1.0 mechanics, not a measured event log, actual zero/cast denominator, gem identities, build-specific current outcome or independent 2026 Retail operation. Source is not duplicated into a new data JSONL."
     },
     {
-      "url": "https://gamesfacebook-usa.blogspot.com/2006/10/bc-journal-30-october-2006.html",
-      "type": "first-person-historical-2006-10-30-pre-TBC-journal",
-      "disposition": "historical-mechanics-prior-only-no-measured-counts",
-      "detail": "Describes Fel Iron batch 5 and possible no-gem result, using qualitative approximate language; N, hits, zeros, named output IDs and build not given. Do not treat estimate as measured rate or apply post-2.1/Retail."
+      "url": "https://warcraft.wiki.gg/wiki/Prospecting",
+      "type": "preexisting era chronology cross-check",
+      "disposition": "already-reviewed-reference-not-a-new-cohort",
+      "detail": "2007-05-22 patch 2.1.0 gem guarantee and 2008-10-14 patch 3.0.2 powder removal. Already covered in Master source-context and legacy notes; no re-recording."
     },
     {
-      "url": "https://www.wowhead.com/ptr/item=23424/fel-iron-ore",
-      "type": "current-12.1.7-PTR-item-tooltip",
-      "disposition": "profile-identity-context-only-not-completed-operation",
-      "detail": "Tooltip explicitly displays Fel Iron Ore 23424 item level 11 Requires Outland Jewelcrafting (1). Does not prove successful retail prospect, player skill, output ranks, refund or drop rates. Separate from historical 275 hardcoded lookup."
-    },
-    {
-      "url": "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
-      "type": "historical-comment-cohort-check",
-      "disposition": "duplicate-known-originals-no-new-record",
-      "detail": "Known Thottbot 100-ore and 565-ore original outputs surfaced unchanged; already recorded, no new cast/hit/zero provenance."
+      "url": "https://repos.wowace.com/wow/reagentmaker/file/default/ProspectingData.lua?style=paper",
+      "type": "historical 2015 compiled Enchantrix-derived numerical prior",
+      "disposition": "duplicate-existing-reviewed-prior-not-empirical",
+      "detail": "Source openly attributes tables to Enchantrix; same ReagentMaker source has already been audited in 2026-11-15 legacy/master documents. Do not re-transcribe model rates as an independent cohort."
     }
   ],
   "latest_run_source_date": "2026-11-21",
-  "latest_run": "Checked new original/public source opportunities after catalogue cutoff: one TBC Classic first-person video output lead and 2006 pre-2.1 zero-possibility anecdote are historical, not current Retail empirical cohorts; 12.1.7 PTR Fel Iron skill-display profile documented. Numeric output fields unchanged."
+  "latest_run": "Found a dated 2007 original Blizzard-forum historical guide specifying ore batch/dust and possible gem outcome range, held as non-measured pre-2.1 guide context. Confirmed ReagentMaker Enchantrix reference data and Fel Iron 24242 removal were already reviewed; no duplicated evidence. New Retail numeric fields unchanged."
 }
