@@ -1,8 +1,8 @@
 {
   "role": "research-manager",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-21T15:02:28.768Z",
-  "status": "Reviewed owner charter/three-pass boundaries, current v3 instructions/schema/mechanics/queue/strategy, exact heads, GitHub Actions, PR #22/#23, and all four fresh worker checkpoints. Independently confirmed newly committed Retail legacy Prospecting spell and 5-ore batch identities 382979 Northrend and 382980 Outland with Cobalt 36909 and Fel Iron 23424 item context; no new measured outcome cohort, rates or gold decision. No manager addon/tooltip tests, PRs, merges, schedules or production edits.",
+  "updated_at": "2026-11-21T15:59:20.660Z",
+  "status": "Read adopted charter, three-pass scope, current v3 schema/mechanics/queue/strategy, current repository heads, PR #22/#23, exact-head GitHub Actions and the four fresh worker reports. Independently checked current TWW Khaz Algar Milling spell/Method recipe 10-herb batch against an inconsistent Wowhead leveling shopping list 35 crafts/175 herbs; source discrepancy is not measured yield. No new independent Retail completed-operation cohort/probability/gold decision, addon changes, manager-run valuation/tooltip tests, game operations, PRs, merges, releases or schedules.",
   "task_ids": [
     "T0003",
     "T0005",
@@ -68,19 +68,30 @@
     "new_supported_retail_gold_decisions": 0,
     "new_eligible_probabilities": 0,
     "manager_latest_checkpoint": {
-      "as_of": "2026-11-21T15:02:28.768Z",
+      "as_of": "2026-11-21T15:59:20.660Z",
+      "source_check": "Current TWW Khaz Algar Milling 444181 and Method agree 10 herbs/craft; Wowhead 35 crafts/175 herb shopping list implies 5 and cannot be treated as real 10-herb operation denominator. Method confirms herb rank affects quality rather than amount, but no controlled skill/rank/output logs for formula.",
+      "primary_sources": [
+        "https://www.wowhead.com/spell=444181/khaz-algar-milling",
+        "https://www.method.gg/guides/the-war-within-inscription-profession-leveling-guide",
+        "https://www.wowhead.com/guide/the-war-within/professions/inscription-leveling",
+        "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide"
+      ],
       "new_independently_measured_cohorts": 0,
-      "new_gold_decisions": 0,
-      "new_probability_denominators": 0,
-      "new_verified_context": "Two Retail legacy prospecting spell/batch facts sourced; current live spell IDs 382979/382980, 5 ore per operation, Cobalt 36909 and Fel Iron 23424. Actual skill/availability, outcome quantities, input refunds and tooltip usage unknown.",
-      "new_runtime_or_tooltip_validation_by_manager": false,
-      "codex_catalogue_status": "CLOSED_VERIFIED_CURRENT_PIPELINE",
-      "codex_reviewed_source_count": 731,
+      "new_eligible_gold_decisions": 0,
+      "new_verified_probability_denominators": 0,
+      "original_craft_ledger_obtained": false,
+      "operator": "source-comparison only; not in-game, Lua, engine or tooltip validation",
+      "latest_workers": {
+        "midnight": "2026-11-21T15:07:04.023Z",
+        "war-within": "2026-11-21T15:20:54.588Z",
+        "dragonflight": "2026-11-21T15:34:34.427Z",
+        "legacy": "2026-11-21T15:42:00.000Z"
+      },
       "main_head_checked": "0ac387e903946230ea661918275765643a6c4288",
-      "main_ci": "Exact-main-head addon validation 44900570565 passed, run by others.",
-      "research_precheck_head": "38c9406bd21635625e76deb533c346419b41ae58",
-      "research_ci": "Exact prewrite source-head five-agent completion 44915610117 passed, run by others; manager dashboard-only commit CI 44916987412 running on check, and status commit pending.",
-      "other_engineering": "Owner three-pass branch unchanged; #22/#23 closed unmerged. No runtime edits."
+      "prewrite_research_head": "b6c202a6b37e313ed311457476373ac453116f21",
+      "exact_main_ci": "44900570565 success",
+      "exact_research_prewrite_ci": "44920622165 success",
+      "owner_catalogue": "731 reviewed source decisions Codex-owned; not reopened"
     },
     "tww_mycobloom_tool_quality_context": {
       "kind": "source-reported profile/equipment and output quality context; not a controlled production coefficient",
@@ -292,7 +303,11 @@
     "legacy_retail_outland_spell": "https://www.wowhead.com/spell=382980/outland-prospecting",
     "legacy_retail_cobalt": "https://warcraft.wiki.gg/wiki/Cobalt_Ore",
     "legacy_retail_feliron": "https://www.wowhead.com/item=23424/fel-iron-ore",
-    "legacy_retail_evidence": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/38c9406bd21635625e76deb533c346419b41ae58/research/v3/evidence/legacy/2026-11-21T1445-retail-prospect-spell-identity.jsonl"
+    "legacy_retail_evidence": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/38c9406bd21635625e76deb533c346419b41ae58/research/v3/evidence/legacy/2026-11-21T1445-retail-prospect-spell-identity.jsonl",
+    "current_tww_mill_recipe": "https://www.wowhead.com/spell=444181/khaz-algar-milling",
+    "current_tww_method_inscription": "https://www.method.gg/guides/the-war-within-inscription-profession-leveling-guide",
+    "tww_wowhead_leveling_mismatch": "https://www.wowhead.com/guide/the-war-within/professions/inscription-leveling",
+    "tww_method_mill_qualities": "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide"
   },
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-21T0336-new-draconium-r1r2-firsthand-range-held.jsonl",
@@ -300,22 +315,22 @@
     "research/v3/evidence/legacy/2026-11-21T1445-retail-prospect-spell-identity.jsonl"
   ],
   "verified_worker_source_shas": {
-    "midnight": "feff7dcd8ce54d2513e8167a9f13be0660c40930",
-    "war-within": "8cb1c2815d04391423eda95242c7aec50112cfa8",
-    "dragonflight": "d677e4aa1ed63b9d87c889c29e20826fa1d2fa91",
-    "legacy": "38c9406bd21635625e76deb533c346419b41ae58"
+    "midnight": "8ea4f1288145985bed9d2273e931940c5620f681",
+    "war-within": "b019affe482d1857ed58d2f642843418f01fad2d",
+    "dragonflight": "1f29057f11c821a2bd580ff6029f2d0aa137c22d",
+    "legacy": "7a938e2feff7352393c1fc6db68d0f3ea9042077"
   },
-  "verified_commit_sha": "38c9406bd21635625e76deb533c346419b41ae58",
-  "dashboard_commit_sha": "6f90c5b1a663827f36c65e769fcd982bc02df3e8",
-  "checked_research_branch_head_before_status_write": "6f90c5b1a663827f36c65e769fcd982bc02df3e8",
+  "verified_commit_sha": "7a938e2feff7352393c1fc6db68d0f3ea9042077",
+  "dashboard_commit_sha": "b6c202a6b37e313ed311457476373ac453116f21",
+  "checked_research_branch_head_before_status_write": "b6c202a6b37e313ed311457476373ac453116f21",
   "main_head_checked": "0ac387e903946230ea661918275765643a6c4288",
   "owner_three_pass_head_checked": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "owner_catalogue_manifest_revision_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
   "owner_catalogue_pipeline_branch_checked": "a23e65d784f0c36833df0ad903d817d10d2f2ae3",
   "worker_reports_verified": {
     "midnight": {
-      "updated_at": "2026-11-21T14:11:34.996Z",
-      "verified_report_blob_sha": "03fc55405f814ba30dae277a4358eb1b81ed5b53",
+      "updated_at": "2026-11-21T15:07:04.023Z",
+      "verified_report_blob_sha": "524142762eda0d1a9098fca77bc342ab059450bb",
       "reported_new_numeric_cohorts": [],
       "task_ids": [
         "T0026",
@@ -328,8 +343,9 @@
       ]
     },
     "war-within": {
-      "updated_at": "2026-11-21T14:25:00.419Z",
-      "verified_report_blob_sha": "f26d1c4661d5ad93a0815e5c4466432f08e1ac9c",
+      "updated_at": "2026-11-21T15:20:54.588Z",
+      "verified_report_blob_sha": "4c19183601d1951ab2ecf9a94e785a435318ef7b",
+      "source_commit": "8ea4f1288145985bed9d2273e931940c5620f681",
       "reported_new_numeric_cohorts": [],
       "task_ids": [
         "T0048",
@@ -343,8 +359,8 @@
       ]
     },
     "dragonflight": {
-      "updated_at": "2026-11-21T14:36:56.827Z",
-      "verified_report_blob_sha": "22ea49c7d897943eefa6468eb2e670a5a158101d",
+      "updated_at": "2026-11-21T15:34:34.427Z",
+      "verified_report_blob_sha": "e04657678a36cdbce6adf62989d24f6fd9401f8b",
       "reported_new_numeric_cohorts": [],
       "task_ids": [
         "T0020",
@@ -356,10 +372,10 @@
       ]
     },
     "legacy": {
-      "updated_at": "2026-11-21T14:45:44.270Z",
-      "verified_report_blob_sha": "18b77787f6835b45f29d46452b6a02d47eeae24d",
-      "source_commit": "38c9406bd21635625e76deb533c346419b41ae58",
-      "new_recipe_context_records": 2,
+      "updated_at": "2026-11-21T15:42:00.000Z",
+      "verified_report_blob_sha": "ab71dd9d5888b1ceabb7673c926a82c7584fc6cd",
+      "source_commit": "7a938e2feff7352393c1fc6db68d0f3ea9042077",
+      "new_recipe_context_records": 0,
       "reported_new_numeric_cohorts": 0,
       "task_ids": [
         "T0047",
@@ -371,20 +387,20 @@
     }
   },
   "validation_this_run": {
-    "method": "Repo file/source comparison and public page checks; not manager-run addon tests",
-    "main_ci": "44900570565 success at 0ac387e903946230ea661918275765643a6c4288 (performed by other workflow)",
-    "research_ci": "44915610117 success at 38c9406bd21635625e76deb533c346419b41ae58 (performed by other workflow)",
-    "dashboard_commit_ci": "44916987412 was in progress at checkpoint",
+    "method": "Original published guide and spell cross-check; current source/worker checkpoint/CI reading; no manager-run local build",
+    "main_ci": "44900570565 success for exact main 0ac387e903946230ea661918275765643a6c4288, run by others",
+    "research_ci": "44920622165 success for exact prewrite worker head 7a938e2feff7352393c1fc6db68d0f3ea9042077, run by others",
+    "dashboard_readback": true,
     "addon_build_run_by_manager": false,
     "tooltip_render_run_by_manager": false,
     "live_wow": false,
-    "original_links_verified": [
-      "https://www.wowhead.com/spell=382979/northrend-prospecting",
-      "https://www.wowhead.com/spell=382980/outland-prospecting",
-      "https://warcraft.wiki.gg/wiki/Cobalt_Ore",
-      "https://www.wowhead.com/item=23424/fel-iron-ore"
+    "source_urls": [
+      "https://www.wowhead.com/spell=444181/khaz-algar-milling",
+      "https://www.method.gg/guides/the-war-within-inscription-profession-leveling-guide",
+      "https://www.wowhead.com/guide/the-war-within/professions/inscription-leveling",
+      "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide"
     ],
-    "repo_pulls": "PR #22 and #23 closed, unmerged"
+    "repo_pulls": "PR #22 and PR #23 closed unmerged"
   },
   "blockers": [
     "No new original, current-build, zero-inclusive successful-operation output event ledger for Midnight/TWW/Dragonflight/legacy; cannot promote hit probability, model new coefficients or gold decisions",
@@ -398,7 +414,8 @@
     "Current main recognizes Crush as a generic operation, but exact source identity/profile/recipe/input batch and verified source values absent for Algari lead; do not misstate as code-wide unsupported, or assume generated-ItemDB/tooltip success.",
     "TWW Gleaming Shatter post-cutoff first-person skill/quality anecdote has no verified named item IDs or per-output quantities/operations; distinct Shatter semantics remain unresolved.",
     "2026-06-15 Midnight effective-skill/Concentration UI anomaly: only same-author cross-post and anecdotal replies, no on-cast skill snapshots, raw finished outputs, comparable samples or verified cause. Do not encode a rate/skill threshold.",
-    "New Retail legacy spell/5-ore batch evidence does not contain a completed-operation yield or eligibility receipt; existing build pipeline's handling of recipe/context rows and final ItemDB/tooltip field propagation were not independently exercised this run."
+    "New Retail legacy spell/5-ore batch evidence does not contain a completed-operation yield or eligibility receipt; existing build pipeline's handling of recipe/context rows and final ItemDB/tooltip field propagation were not independently exercised this run.",
+    "TWW 444181 uses 10 herbs per operation per current spell and Method guide; a Wowhead shopping-list 35-craft/175-herb accounting conflicts and must not be used as completed cast N. No rank/skill/refund-controlled original log to calibrate quantity or quality effects."
   ],
   "exhausted_sources": [
     "Reddit 1rteoqr Tranquility Bloom 1473: already in pre-cutoff Codex ownership manifest and duplicated in existing research; do not re-transcribe",
@@ -415,15 +432,15 @@
     "Wowhead 153669 Kidneph/Baadkitty per-input milling totals already archived/reviewed in current main; exclude as duplicate source.",
     "Public ProspectMate/PocketCFO addon descriptions contain logging functionality, not an independently released zero-inclusive processing event export."
   ],
-  "next_concrete_step": "Validate the exact recipe/context consumer adapter only in scoped code/CI workflow (no competing branch edits), and seek genuinely new Retail rank-isolated zero-inclusive successful-operation logs for Midnight Refulgent Copper 237359, Umbral Tin 237362 or Cobalt 36909/Fel Iron 23424 if independently available; leave closed 731-source catalogue, unknown probabilities, and addon runtime untouched.",
+  "next_concrete_step": "Seek newly published/acquired actual Retail successful 0–N operation exports with item/rank/recipe/character skill/build, consumed/refunded inputs and zeros for Midnight 237359/237362 and TWW 210796–210798. Treat 10-herb TWW recipe as a source-unit guard, not a source-measured output yield. For historical gear 24995/272246 require at-dis-enchant itemLink/bonus and client eligibility. Preserve 731-source Codex catalogue ownership and research-only quiet reporting.",
   "production_main_changes": false,
   "addon_changes": false,
   "routine_research_prs": false,
   "merge_or_release": false,
   "new_schedules": false,
   "role_schedules_unchanged": true,
-  "prior_status_blob_sha": "3e1d1a8d4ccaa5560d8821d9a80331b1f72be892",
+  "prior_status_blob_sha": "dd9122db8eac1c47036eaa679ffa2a3c181321a1",
   "owner_catalogue_manifest_branch_head_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
   "owner_catalogue_manifest_blob_checked": "1bb9a4100c2be45282532f6205d722946f3b3e44",
-  "next": "Validate the exact recipe/context consumer adapter only in scoped code/CI workflow (no competing branch edits), and seek genuinely new Retail rank-isolated zero-inclusive successful-operation logs for Midnight Refulgent Copper 237359, Umbral Tin 237362 or Cobalt 36909/Fel Iron 23424 if independently available; leave closed 731-source catalogue, unknown probabilities, and addon runtime untouched."
+  "next": "Seek newly published/acquired actual Retail successful 0–N operation exports with item/rank/recipe/character skill/build, consumed/refunded inputs and zeros for Midnight 237359/237362 and TWW 210796–210798. Treat 10-herb TWW recipe as a source-unit guard, not a source-measured output yield. For historical gear 24995/272246 require at-dis-enchant itemLink/bonus and client eligibility. Preserve 731-source Codex catalogue ownership and research-only quiet reporting."
 }
