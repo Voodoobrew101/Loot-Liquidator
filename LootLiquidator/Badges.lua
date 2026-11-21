@@ -700,6 +700,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         end
         local function ShowMaterials(option,model)
             if detail<3 then return end
+            local compactMethod=option.name=='Prospect' or option.name=='Mill'
             local simulated=professionSimulation(model)
             for _,named in ipairs(model and model.namedOutputs or {}) do
                 local amount=type(named.expectedQuantity)=='number' and ('Average '..UnitsText(named.expectedQuantity))
@@ -716,9 +717,9 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     -- Preserve explicit ordinary source zeroes and unknowns.
                     local nativeItem=LA.ItemDB and LA.ItemDB.professionProfiles and LA.ItemDB.professionProfiles.items
                         and LA.ItemDB.professionProfiles.items[material.id]
-                    local distinctProspectingQuality=option.name=='Prospect' and not material.rankIDs
+                    local distinctProcessingQuality=compactMethod and not material.rankIDs
                         and nativeItem and nativeItem.qualityRank
-                    if not (material.expectedQuantity==0 and not material.structuralZero and not distinctProspectingQuality and
+                    if not (material.expectedQuantity==0 and not material.structuralZero and not distinctProcessingQuality and
                         (material.additionalOutput or model.disenchantBaselineApplied
                             or model.generalQualityApplied or model.skillQualityApplied or model.sourceReferenceOnly)) then
                         visible[#visible+1]=material
@@ -734,16 +735,16 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 if showProcessing then
                     tooltip:AddLine(explanation,.70,.75,.82,true)
                 end
-                local limit=(showResearch or option.name=='Prospect') and #list or math.min(#list,12)
+                local limit=(showResearch or compactMethod) and #list or math.min(#list,12)
                 for i=1,limit do
                     local m=list[i]
                     local left="  "
-                    local compactProspect=option.name=='Prospect' and not model.operationUnverified and not option.operationUnverified
+                    local compactProcessing=compactMethod and not model.operationUnverified and not option.operationUnverified
                     if type(m.chance)=="number" then
                         -- Keep probabilities readable; uncertainty is summarized
                         -- once on the method row instead of prefixing each material.
                         left=left..ChanceText(m.chance).." "
-                    elseif compactProspect and type(m.expectedQuantity)=='number' then
+                    elseif compactProcessing and type(m.expectedQuantity)=='number' then
                         -- Owner-requested presentation of the average yield.
                         -- This never changes chance evidence or valuation.
                         if m.expectedQuantity<=1 then left=left..ChanceText(m.expectedQuantity)..' '
@@ -763,14 +764,10 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     end
                     local needsAverage=type(m.expectedQuantity)=='number' and (type(m.chance)~='number'
                         or m.inconsistentFields or not m.minQuantity and not m.maxQuantity)
-                    if compactProspect then
+                    if compactProcessing then
                         -- Rate/count is already at the start of the row.
                     elseif LA.db.showAverageQuantity~=true and needsAverage then
-                        if option.name=='Prospect' and not model.operationUnverified and not option.operationUnverified then
-                            left=left..(' [avg %s per prospect]'):format(UnitsText(m.expectedQuantity))
-                        else
-                            left=left..(' [avg %s per %d %s]'):format(UnitsText(m.expectedQuantity),batch,batch==1 and 'input' or 'inputs')
-                        end
+                        left=left..(' [avg %s per %d %s]'):format(UnitsText(m.expectedQuantity),batch,batch==1 and 'input' or 'inputs')
                     elseif LA.db.showAverageQuantity==true then
                         left=left.."  "..(type(m.expectedQuantity)=='number' and UnitsText(m.expectedQuantity)
                             or type(m.conditionalExpectedQuantity)=='number' and (UnitsText(m.conditionalExpectedQuantity)..' conditional') or 'average unavailable')
@@ -793,8 +790,9 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     if net==nil and m.conditionalExpectedValue~=nil then amount=LA:Money(m.conditionalExpectedValue/batch)..' conditional' end
                     two(left,amount,option.letter or "D")
                     if showResearch then
-                        if compactProspect and m.chance==nil and type(m.expectedQuantity)=='number' then
-                            tooltip:AddLine(('    Displayed yield rate uses %.3f average units per prospect; no measured occurrence inferred.'):format(m.expectedQuantity),.70,.75,.82,true)
+                        if compactProcessing and m.chance==nil and type(m.expectedQuantity)=='number' then
+                            tooltip:AddLine(('    Displayed yield rate uses %.3f average units per %s; no measured occurrence inferred.'):format(
+                                m.expectedQuantity,option.name=='Mill' and 'milling operation' or 'prospect'),.70,.75,.82,true)
                         end
                         if m.unavailableReason then tooltip:AddLine('    '..m.unavailableReason,.90,.72,.45,true) end
                         if m.derivedMean and not simulated then tooltip:AddLine('    Estimated average: probability times conditional yield midpoint',.70,.75,.82,true) end
