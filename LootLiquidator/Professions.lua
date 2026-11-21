@@ -261,6 +261,20 @@ end
 function LL:KnownProfessionAuraIDs(profession,expansion,method)
     local ids,visited={},{}
     local db=self.ItemDB or {}
+    -- Reviewed native aura IDs, not recipe/activation spells. Their totals
+    -- already come from native operation stats: capture identity only here.
+    -- Sources and exact native rows: docs/disenchant-modifier-isolation-20261121.md.
+    local gathering=profession=='Herbalism' or profession=='Mining' or profession=='Skinning'
+    local crafting=profession=='Alchemy' or profession=='Blacksmithing' or profession=='Enchanting'
+        or profession=='Engineering' or profession=='Inscription' or profession=='Jewelcrafting'
+        or profession=='Leatherworking' or profession=='Tailoring'
+    if gathering and (method==nil or method=='Gather' or method=='Skin') then
+        for _,id in ipairs({185562,432265,1236763,1236767,1269152,1269170,1269171}) do ids[tostring(id)]=true end
+    end
+    if crafting and (expansion==nil or expansion==11) and (method==nil or method=='Craft') then
+        ids['1239755']=true -- Haranir Phial of Ingenuity
+        if profession=='Enchanting' then ids['1235733']=true end -- Shattered Essence
+    end
     local function visit(value)
         if type(value)~='table' or visited[value] then return end
         visited[value]=true

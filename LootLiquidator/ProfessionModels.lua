@@ -206,6 +206,7 @@ end
 -- Recipe-label bonuses for permanent enchants are not disenchant bonuses.
 function LL:ProfessionEffectAffectsTooltip(effect,profession,expansion,method)
     local s=effect.scope or {}
+    if effect.metric=='nonOutput' then return false end
     if s.profession and s.profession~=profession or s.expansionID and expansion and s.expansionID~=expansion then return false end
     if method=='Disenchant' then
         if s.method and s.method~='Disenchant' or s.recipeID and s.recipeID~=13262
@@ -214,7 +215,8 @@ function LL:ProfessionEffectAffectsTooltip(effect,profession,expansion,method)
             or effect.metric=='extraOutput' or effect.metric=='dropChance'
     end
     if method and s.method and s.method~=method and not (s.method=='Gather' and
-        (method=='Herbalism' or method=='Mining' or method=='Skinning' or method=='Fishing')) then return false end
+        (method=='Skin' or method=='Fish' or method=='Herbalism' or method=='Mining'
+            or method=='Skinning' or method=='Fishing')) then return false end
     return not s.scopeUnknown
 end
 function LL:DisenchantModelAuraSet(context)
@@ -284,7 +286,8 @@ function LL:DisenchantObservationProfileKey(context)
             local relevant=false
             local function effects(list)
                 for _,effect in ipairs(list or {}) do
-                    if self:ProfessionEffectAffectsTooltip(effect,'Enchanting',expansion,'Disenchant') then relevant=true end
+                    if (effect.scope or {}).scopeUnknown
+                        or self:ProfessionEffectAffectsTooltip(effect,'Enchanting',expansion,'Disenchant') then relevant=true end
                 end
             end
             if key=='Enchanting:'..tostring(expansion) or expansion==nil and key:match('^Enchanting:') then
@@ -1936,7 +1939,7 @@ function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
         local function includeBuffs(effects)
             local relevant=false
             for _,effect in ipairs(effects or {}) do
-                if profession~='Enchanting' or self:ProfessionEffectAffectsTooltip(effect,profession,expansion,'Disenchant') then
+                if self:ProfessionEffectAffectsTooltip(effect,profession,expansion,profession=='Enchanting' and 'Disenchant' or nil) then
                     for _,id in ipairs(effect.condition and effect.condition.spellIDs or {}) do support.buffs[tostring(id)]=true end
                     relevant=true
                 end
