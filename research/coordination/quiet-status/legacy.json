@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-21T15:42:00.000Z",
-  "status": "Refreshed current v3 rules, evidence schema, checked mechanics, Legacy role and 53-task queue on the live research branch. Searched current original/firsthand Warmaul Legplates 24995, five TBC gear Looter comparators, Cobalt Ore 36909, Fel Iron Ore 23424, Runecloth Headband 13866, as well as newly indexed operation/export repositories. No newly source-verified independent Retail operation cohort, material hit/zero histogram, measured output total or class reward identity beyond retained evidence. No data-only JSONL produced; 731-source scoped catalogue left with Codex reviewers, no runtime or worker files changed.",
+  "updated_at": "2026-11-21T16:46:26.689Z",
+  "status": "Read live research/v3/README.md, evidence-format.md, mechanics.md, roles/worker.md and queue.json; confirmed Codex's 731-source cutoff catalogue is CLOSED_VERIFIED_CURRENT_PIPELINE. Investigated newly surfaced public Retail recording addon Gold Forever (Nov 2026) and GatherValue as potential original post-cutoff sample sources, plus current Warmaul item-level displays. No independent published target-operation receipts, cast denominators, per-output hit/zero histogram or newly verified material quantity found; no new evidence file; no catalogue duplication, code/runtime edits, PRs, schedules, game operations, or price observations.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -74,13 +74,13 @@
     "https://www.wowhead.com/item=23424/fel-iron-ore",
     "https://warcraft.wiki.gg/wiki/Cobalt_Ore"
   ],
-  "numeric_summary": "2 NEW source-backed recipe/skill-context identities (382979/36909,382980/23424), each 5 ore per displayed recipe operation; 0 new empirical prospect/disenchant casts, 0 new material hits, 0 new material total quantities, no zero-inclusive histogram. Existing Warmaul 24995 22445/22446/22447/22449 historical and arithmetic references unchanged; no 2026 Retail empirical DE eligibility. Prices never frozen.",
+  "numeric_summary": "This run: 0 NEW independently measured operations, material hits, material totals, cast/zero histograms, or exact output identities for Warmaul Legplates 24995 (candidate 22445/22446/22447/22449), Cobalt Ore 36909, or Fel Iron Ore 23424. Previously sourced Cobalt 36909→382979 and Fel Iron 23424→382980 (5 ore/recipe) remain unchanged. Historical Warmaul Looter 2068 operations are not verified as 2026 Retail. No frozen prices.",
   "evidence_file": "research/v3/evidence/legacy/2026-11-21T1445-retail-prospect-spell-identity.jsonl",
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "1f29057f11c821a2bd580ff6029f2d0aa137c22d",
+  "verified_parent_sha": "5eb15665dbfff9b66001a755ecd2a330a1faddf2",
   "verified_commit_sha": "0afbd7f7ab0df1649f0503423ca5db30f275b779",
-  "commit_note": "Status-only update of owned legacy.json; commit SHA will be read back separately because a commit cannot embed its own SHA atomically.",
+  "commit_note": "Status-only update. verified_commit_sha remains the last previously verified commit; new commit SHA cannot be embedded into the same commit atomically and must be read back separately.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -149,7 +149,8 @@
     "New source search shows no downloadable original Looter raw per-event event table for 24995 despite Wowhead displaying a dynamic disenchant section; static page cannot independently substantiate historical 2068 event detail.",
     "TBC pre/post Patch 2.1 gem guarantee is patch-sensitive, but no primary individual Fel Iron or Cobalt operation ledger with observed zero/nonzero and output stack is available; avoid inferring samples from published percentages or generic 2000-record comments.",
     "Public addon descriptions show possible future original session recordings but do not constitute downloadable, independently measured processing evidence or establish Retail input identity, game build, casts, zero outcomes or refund semantics.",
-    "12 original Warmaul record IDs legacy-20261101-201..212 collide with different Netherweave evidence; original audit requires file-qualified adjudication before data promotion, and compiler histogram support is a separate Master-owned implementation concern."
+    "12 original Warmaul record IDs legacy-20261101-201..212 collide with different Netherweave evidence; original audit requires file-qualified adjudication before data promotion, and compiler histogram support is a separate Master-owned implementation concern.",
+    "Gold Forever (Nov 2026) may provide new Retail disenchant original-source logs but no publicly released target 24995 corpus; its loot tracker attributes by base item ID and source code's predicted DE tables are reference/model only, not actual operation denominators or current eligibility."
   ],
   "exhausted_sources": [
     {
@@ -206,38 +207,44 @@
     }
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Acquire version-specific live Retail successful 24995 itemLink/bonus CanDisenchant receipt plus full per-operation 0..N 22445/22446/22447/22449 materials and skill/build; for 36909 and 23424 request actual 382979/382980 prospect log with consumed/refunded ore, 5-ore operation count, output IDs/quality/hits/zeros. Separately Master/client QA should confirm spell 382979/382980 availability and precise item/skill eligibility rather than interpreting Jewelcrafting(1) tooltip as universal access. Do not duplicate existing historical or 731-source catalogue cohorts.",
+  "next_concrete_step": "Seek new public original anonymized Retail 12.x Gold Forever or other session exports containing item-variant-qualified 24995 successes and output 22445/22446/22447/22449 per-event 0..N, or 36909/23424 explicit 5-ore prospect logs with refunds and actual operations; inspect source/data lineage and game build before admitting. Else keep numerics unknown and do not manufacture evidence.",
   "coordination_cutoff": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42; 713+12 existing backlog sources owned by active Codex review team; no rerun of that catalogue",
   "sources_reviewed_this_run": [
     {
-      "url": "https://www.wowhead.com/spell=382979/northrend-prospecting",
-      "type": "current-live-recipe",
-      "disposition": "NEW-source-backed-spell-input-batch",
-      "detail": "Northrend Prospecting spell382979; Cobalt36909 from wiki; 5 ore, no measured outcomes."
+      "url": "https://www.curseforge.com/wow/addons/gold-forever/files/9719862",
+      "type": "newly-published-retail-addon-lead",
+      "disposition": "reviewable-original-export-channel-not-empirical-cohort",
+      "detail": "Nov 20 2026 Retail 12.1.5 release; public project states loot from disenchant is attributed to the disenchanted item, potentially offering fresh post-cutoff player data. No publicly accessible named 24995 or other target input processing observations, no actual per-operation 0..N receipts or source ranks in release notes."
     },
     {
-      "url": "https://www.wowhead.com/spell=382980/outland-prospecting",
-      "type": "current-live-recipe",
-      "disposition": "NEW-source-backed-spell-input-batch",
-      "detail": "Outland Prospecting spell382980; FelIron23424 from live item; 5 ore, no measured outcomes."
+      "url": "https://github.com/gold-forever/addon/blob/main/GoldForever/Recording/Loot.lua",
+      "type": "original-recorder-source-implementation",
+      "disposition": "instruments-item-id-not-proof-of-zero-inclusive-results",
+      "detail": "UNIT_SPELLCAST_SUCCEEDED for spell 13262 sets a two-second target association and five-second loot-window label d<itemId>; attribution is item ID only, not a verified exact itemLink/bonus/ilvl or skill/specialization. A successful-cast tag is not itself a published cast/outcome table; no target-case public dataset found. Do not treat Classic-table Disenchant.lua's model rates as observed Retail counts."
     },
     {
-      "url": "https://www.wowhead.com/wotlk/item=24979/reaver-legplates",
-      "type": "historical-original",
-      "disposition": "duplicate-existing-legacy-20261101-12004-and-20261114-0149001",
-      "detail": "One 5 Arcane Dust outcome from the Allakhazam source, already transcribed; no new count."
+      "url": "https://www.curseforge.com/wow/addons/gathervalue",
+      "type": "retail-session-logger-lead",
+      "disposition": "no-public-original-target-cohort",
+      "detail": "September 2026 Retail 12.1.0 addon describes milling, prospecting, disenchanting session yield and consumed-input accounting, but its public page contains no downloadable target per-operation measured results."
     },
     {
-      "url": "https://www.wowhead.com/ptr/item=22445/arcane-dust",
-      "type": "historical-original",
-      "disposition": "duplicate-existing-legacy-20261114-2246",
-      "detail": "Jakebees 9 unidentified greens and 11 Netherweave bracers sources already archived; not new."
+      "url": "https://www.wowhead.com/item=24995/warmaul-legplates",
+      "type": "retail-item-metadata",
+      "disposition": "known-conflicting-variant-display-not-eligibility-receipt",
+      "detail": "Live/PTR pages show scaled versions with level 14 or 74; Warcraft Wiki and BootyBayBroker list 31. No in-client exact variant/bonus plus CanDisenchant and real receipt; historical TBC level108 should remain segregated."
+    },
+    {
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/coordination/backlog-catalogue-20261120.json",
+      "type": "owner-coordination-receipt",
+      "disposition": "closed-verified-current-pipeline-no-recatalogue",
+      "detail": "Current research branch declares 731 sources scoped; reviewer team owns catalogue, workers only find new evidence."
     }
   ],
   "latest_run_source_date": "2026-11-21",
   "latest_run": {
-    "at_utc": "2026-11-21T15:42:00.000Z",
-    "branch_head_at_read": "1f29057f11c821a2bd580ff6029f2d0aa137c22d",
+    "at_utc": "2026-11-21T16:46:26.689Z",
+    "branch_head_at_read": "5eb15665dbfff9b66001a755ecd2a330a1faddf2",
     "task_ids": [
       "T0047",
       "T0042",
@@ -248,6 +255,8 @@
     ],
     "verified_new_independent_cohorts": 0,
     "numeric_fields_advanced": [],
+    "evidence_written": false,
+    "quiet_status_only": true,
     "known_input_output_ids_rechecked": {
       "Warmaul_Legplates_24995": [
         22445,
@@ -276,50 +285,46 @@
         23096,
         23107
       ],
-      "Runecloth_Headband_13866": [
-        156930,
-        14344,
-        16203
-      ],
-      "token_45661": "seven class reward IDs already resolved in approved research; no new class mapping asserted"
+      "token_45661": "seven verified class rewards already resolved; no new mapping"
     },
     "source_rechecks": [
       {
+        "url": "https://www.curseforge.com/wow/addons/gold-forever/files/9719862",
+        "type": "newly-published-retail-addon-lead",
+        "disposition": "reviewable-original-export-channel-not-empirical-cohort",
+        "detail": "Nov 20 2026 Retail 12.1.5 release; public project states loot from disenchant is attributed to the disenchanted item, potentially offering fresh post-cutoff player data. No publicly accessible named 24995 or other target input processing observations, no actual per-operation 0..N receipts or source ranks in release notes."
+      },
+      {
+        "url": "https://github.com/gold-forever/addon/blob/main/GoldForever/Recording/Loot.lua",
+        "type": "original-recorder-source-implementation",
+        "disposition": "instruments-item-id-not-proof-of-zero-inclusive-results",
+        "detail": "UNIT_SPELLCAST_SUCCEEDED for spell 13262 sets a two-second target association and five-second loot-window label d<itemId>; attribution is item ID only, not a verified exact itemLink/bonus/ilvl or skill/specialization. A successful-cast tag is not itself a published cast/outcome table; no target-case public dataset found. Do not treat Classic-table Disenchant.lua's model rates as observed Retail counts."
+      },
+      {
+        "url": "https://www.curseforge.com/wow/addons/gathervalue",
+        "type": "retail-session-logger-lead",
+        "disposition": "no-public-original-target-cohort",
+        "detail": "September 2026 Retail 12.1.0 addon describes milling, prospecting, disenchanting session yield and consumed-input accounting, but its public page contains no downloadable target per-operation measured results."
+      },
+      {
         "url": "https://www.wowhead.com/item=24995/warmaul-legplates",
-        "finding": "Current live web item lists level 14; no actual Looter DE table or client CanDisenchant response visible in the public page. Not a usable 2026 operation cohort."
+        "type": "retail-item-metadata",
+        "disposition": "known-conflicting-variant-display-not-eligibility-receipt",
+        "detail": "Live/PTR pages show scaled versions with level 14 or 74; Warcraft Wiki and BootyBayBroker list 31. No in-client exact variant/bonus plus CanDisenchant and real receipt; historical TBC level108 should remain segregated."
       },
       {
-        "url": "https://www.wowdb.com/items/24995-warmaul-legplates",
-        "finding": "Live database lists item level 31 and Cannot be disenchanted. Historical 108-level 2068-operation source cannot establish current Retail eligibility."
-      },
-      {
-        "url": "https://www.wowhead.com/item=36909/cobalt-ore",
-        "finding": "Strikk3r 180-ore/9-stack source remains the already-catalogued original; same comment has nine output totals but neither completed operation count nor 0..N histograms."
-      },
-      {
-        "url": "https://www.wowhead.com/item=23424/fel-iron-ore",
-        "finding": "Primary page offers ambiguous eight-stack rare-gem comment and old guide/model percentages, not a new independent per-operation ledger."
-      },
-      {
-        "url": "https://www.wowhead.com/item=16204/light-illusion-dust",
-        "finding": "1115352 five-headband 4/1 hit split already recorded twice; regional mirrors same primary commenter, no new cohort."
-      },
-      {
-        "url": "https://github.com/ExcEssIv3/profit/blob/main/export/recorded.json",
-        "finding": "Direct primary SavedVariables aggregate checked: one 5207 item cohort with two reported WoW Forever build 70245 disenchants, outside target and not Retail; no Warmaul/Cobalt/Fel Iron rows. No dataset import."
-      },
-      {
-        "url": "https://www.curseforge.com/wow/addons/craft-resume",
-        "finding": "Retail per-session CSV export tool documented, but publicly available listing supplies no individual 24995/36909/23424 log; no observed evidence to add."
+        "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/coordination/backlog-catalogue-20261120.json",
+        "type": "owner-coordination-receipt",
+        "disposition": "closed-verified-current-pipeline-no-recatalogue",
+        "detail": "Current research branch declares 731 sources scoped; reviewer team owns catalogue, workers only find new evidence."
       }
     ],
     "blockers": [
-      "Exact Retail 24995 itemLink/bonus/build and CanDisenchant receipt are missing; do not apply historical TBC Looter outputs to live UI.",
-      "No new independently published zero-inclusive Retail cast/output logs with refunded-input separation for 36909 or 23424; avoid dividing nominal ore counts into assumed completed casts.",
-      "2026 Forever/Classic Anniversary addons are separate game profiles and cannot supply Retail probabilities without corroboration."
+      "Warmaul 24995 historical Looter 2068 operations do not establish current 12.x Retail eligibility. No exact Retail variant itemLink/bonus, original zero-inclusive joint DE event ledger, build or skill/spec receipt.",
+      "No independently downloadable post-cutoff 36909/23424 successful-prospect 382979/382980 event log with consumed/refunded inputs, actual casts, per-output counts/hit/zero bins and rank/skill/spec.",
+      "New Gold Forever source code records a successful disenchant item-id tag linked to ensuing loot, but no public target export or reliable confirmed 0-output operation history; metadata lacks exact itemLink variants and skill context. Its predictive Disenchant.lua table is not empirical evidence.",
+      "731-source catalogue fully reviewed by Codex/direct reviewers; do not re-review it or duplicate source cohorts."
     ],
-    "next_concrete_step": "Search for a publicly shared original Retail12.x CSV/SavedVariables event export from a logger with exact itemLink and 0..N receipts for 24995 or first-hand five-ore 36909/23424 operations. Capture real successes, refunds, variant IDs, profession/build, and per-output zeros; leave historical originals as source-profile priors.",
-    "evidence_written": false,
-    "quiet_status_only": true
+    "next_concrete_step": "Seek new public original anonymized Retail 12.x Gold Forever or other session exports containing item-variant-qualified 24995 successes and output 22445/22446/22447/22449 per-event 0..N, or 36909/23424 explicit 5-ore prospect logs with refunds and actual operations; inspect source/data lineage and game build before admitting. Else keep numerics unknown and do not manufacture evidence."
   }
 }
