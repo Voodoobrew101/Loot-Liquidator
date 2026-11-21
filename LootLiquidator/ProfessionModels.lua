@@ -1495,9 +1495,18 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
         local ordinaryTarget={[low]=lowUnits-moved,[high]=highUnits+moved}
         for id,projected in pairs(byID) do
             if not originalIDs[id] then
+                local canonicalQuantity=projected.expectedQuantity
                 if primary[id] then
                     projected.expectedQuantity=ordinaryTarget[id] or 0
                 else projected.expectedQuantity=projected.expectedQuantity*familyWeight end
+                if math.abs(projected.expectedQuantity-canonicalQuantity)>1e-10 then
+                    projected.chance=nil;projected.minQuantity=nil;projected.maxQuantity=nil
+                    projected.chanceConfidence=nil;projected.probabilityBasis=nil;projected.probabilityVerified=false
+                    projected.probabilityAssumption=nil;projected.quantityCounts=nil;projected.personalHistogram=nil
+                    projected.fieldEvidence=nil;projected.samples=nil;projected.effectiveSamples=nil
+                    deDistribution({expectedQuantity=0,confidence=projected.confidence},projected,
+                        primary[id] and (selected.rule.preservePrimaryTotal or progress.quantity==0),modelStacks[id])
+                end
             end
         end
         for _,original in ipairs(model.materials or {}) do

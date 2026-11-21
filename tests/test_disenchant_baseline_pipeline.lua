@@ -215,6 +215,14 @@ for _,case in ipairs({{rarity=2,node=107648,low=243599,high=243600,total=2.9},
                 'a newly introduced primary rank conserves the actual accepted pool')
             check(missingMeans[case.high]>=0 and missingMeans[case.high]<=alpha*2*quantityFactor+1e-9,
                 'new high-rank units never exceed the accepted ItemDB donor pool')
+            for _,material in ipairs(withNewRank.materials) do
+                if material.id==case.high and material.chance then
+                    near(material.chance*material.minQuantity,material.expectedQuantity,
+                        'new weighted fixed-stack rank recomputes occurrence from its actual projected units')
+                    check(material.probabilityVerified==false and material.samples==nil,
+                        'new weighted occurrence is modeled and carries no target observations')
+                end
+            end
             local missingBonus=0
             for _,id in ipairs({236949,236950,236951,236952}) do missingBonus=missingBonus+(missingMeans[id] or 0) end
             near(missingBonus,.289*alpha,'a missing original high-rank row does not amplify Crystal extras')
