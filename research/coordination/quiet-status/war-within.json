@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-21T08:24:53.881Z",
-  "status": "research-active; new-original-source search completed; no new admissible War Within numeric cohorts or provenance-corrected yields",
+  "updated_at": "2026-11-21T09:20:02.987Z",
+  "status": "research-active; one newly acquired 2025 original author correction on crushing averages (held outside supported drop-method schema); no new admissible TWW prospect/mill/disenchant cohorts",
   "task_ids": [
     "T0048",
     "T0009",
@@ -19,7 +19,7 @@
     "Historical shatter 219950/219951 into 219946/219947/219948: verify independent ~10k-shard original cohort versus comments, denominator/refund basis and distinct method schema",
     "T0048 219474 Tracker's Chitin Cuffs: historical firsthand successful disenchant vs current WoWDB cannot-disenchant item metadata, linked output ranks/bonus/build, measured operation count and cast-level material log"
   ],
-  "source_branch_head_reviewed": "85792b3f70635851afc79ced50a400516c7fa026",
+  "source_branch_head_reviewed": "bb63565543add1cd121f65bfca3df5b963cf910a",
   "source_policy": "READ current research/v3 README/evidence-format/mechanics/worker/queue before search. Source cutoff catalogue CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources incl six recovered; reuse 12,222 scoped decisions; do not recatalogue Codex backlog. Review/admission merged to main in PR #82 but worker branch remains evidence-only; no release asserted.",
   "study_backlog_triage": [
     {
@@ -273,15 +273,46 @@
       "exact_inputs": "One commenter says nominal 1,000 ore selection queues 200 five-ore prospects; ore type/rank and itemID unspecified. Several commenters report early interruption when a partial stack is selected internally, but disagree about root cause.",
       "outputs": null,
       "reason": "The UI's 200 queued crafts are planned operations, NOT an independently verified completed-operation denominator. Resourcefulness leaves ore remainder, and partial bag/bank stack selection may stop the sequence early; some commenters distinguish exhaustion of planned queue from a separate wrong-stack bug. No original measured finished cast count, material item IDs, total outputs, hits/zeros, output-quality ranks, histogram, skill/spec, build ID or refund ledger. Historical pre-Oct-25-2024 only. Do not equate 1,000 starting ore, 200 displayed queue count, completed casts or refunded/reused ore; treat as source-context pending first-person craft logs."
+    },
+    {
+      "status": "held",
+      "original_cohort": "2025-10-18 original firsthand Jewelcrafting guide (1oa7vn1) plus 2025-10-19 same-author Resourcefulness correction on Algari Crushing means",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1oa7vn1",
+      "existing_ids": null,
+      "exact_inputs": "Raw Khaz Algar gems versus crafted R2 gems; exact input item IDs and output ranks of those gems unknown; Algari Crushing spell 434020 consumes 3 gems plus 10 Bismuth; Bismuth quality not given",
+      "outputs": "Author claims ~8.9 R2 Crushed Gemstones units/craft (10.3 per start craft with Resourcefulness) for raw gems and ~27.5 R3 units/craft (33.7 per start craft with Resourcefulness) for crushing finished R2 gems; independently confirmed material identities 213220 R2 / 213221 R3",
+      "reason": "Newly checked original author statements distinguish returned-input recycling from actual output. However no raw completed casts, input IDs, output units, zeros, histograms, per-craft refund ledger, character skill/spec/patch details, or sample study are provided. Most importantly, current worker evidence supports Prospect/Mill/Disenchant/Smelt but NOT Crush. Do not shoehorn these into Prospect or reinterpret as empirical chance, multiplier or current live EV. Master/owner must review a separate method schema before admission."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 5,
-    "held": 14,
+    "held": 15,
     "duplicate": 3
   },
-  "newly_verified_fields": [],
+  "newly_verified_fields": [
+    {
+      "method": "Algari Crushing (outside current drop.method enum)",
+      "context": "Source author explicitly separates crushing reagent output per executed craft versus per starting craft with Resourcefulness recycling; numeric figures are author-reported approximate averages, not independent counted hits, casts, or histogram.",
+      "reported_values_not_admitted": {
+        "R2-finished-gem-to-R3-crushed-gem": {
+          "per_craft": 27.5,
+          "per_start_craft": 33.7
+        },
+        "raw-gem-to-R2-crushed-gem": {
+          "per_craft": 8.9,
+          "per_start_craft": 10.3
+        }
+      },
+      "output_item_IDs_reference_only": {
+        "quality2": 213220,
+        "quality3": 213221
+      },
+      "recipe_spell_ID": 434020,
+      "source": "https://www.reddit.com/r/woweconomy/comments/1oa7vn1",
+      "verified_context": "2025-10-18 original poster revised values after a distinct commenter noted Resourcefulness, not a raw spreadsheet; N/skill/spec/build, Bismuth rank, input gems and refunds unknown"
+    }
+  ],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
   "new_reference_only_numeric_records": 0,
@@ -291,16 +322,14 @@
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1k78h4v",
-    "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
-    "https://www.reddit.com/r/woweconomy/comments/1nmnuc2",
-    "https://www.curseforge.com/wow/addons/queenbaex",
-    "https://www.wowhead.com/item=222618/nacreous-pigment",
-    "https://www.reddit.com/r/woweconomy/comments/1nqwdhf"
+    "https://www.reddit.com/r/woweconomy/comments/1oa7vn1",
+    "https://www.wowhead.com/spell=434020/algari-crushing",
+    "https://goldcap.gg/retail/us/items/213220",
+    "https://goldcap.gg/retail/us/items/213221"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-20T0521-algari-pvp-item-metadata.jsonl",
   "verified_commit_sha": null,
-  "verification": "2026-11-21 read current README, mechanics, evidence-format, worker, queue and status on implementation/five-agent-completion; checked 731-source catalogue receipt CLOSED_VERIFIED_CURRENT_PIPELINE, main tools exist, and independently revisited current discovery queries. No new measured cohorts; status-only update of owned war-within JSON, read-back and SHA verification to follow.",
+  "verification": "2026-11-21 reviewed current 5 v3 role/policy files, queue and current status; cross-checked original author source and recipe/output item-ID sources; checked GitHub repository index for duplicate 1oa7vn1 (no matches; not proof of absent catalogue scope). Preserved prior evidence, skipped unsupported JSONL. Status-only commit pending read-back.",
   "blockers": [
     "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
     "Cumulative PTR Looter display rows contain repeated material names with linked rank IDs unavailable; no per-row independent study and no safe current-Retail rank-specific mapping.",
@@ -322,7 +351,8 @@
     "Focused provenance flag: Elfshinobi1 450 Ironclaw ore / 10 Radiant Ruby original is duplicated across war-within-20261031-132410 and war-within-20261101-021724 with distinct studyKeys. Codex owner catalogue/build reviewer must admit once; do not independently rewrite original evidence or inflate operations.",
     "Mycobloom 210796 author observed pigment-quality change after removing Silver Tongue's Quill 222574 (+18 skill); no exact before/after character skill, specialization, comparable raw casts/quantities, output item hyperlinks, or refund ledger. Preserve as historical source context only; require source logs before inferring a threshold or quality-dependent yield.",
     "New 227659 Wowhead Looter table claims disenchant samples of a knowledge consumable with cross-era outputs; input/loot direction and eligibility uncertain; held pending original client logs or Master source parser review.",
-    "2026-11-21 verify: tools/research_build_review.py and tools/prepare_build_research.py exist on main, while still absent on research branch (expected separation); owner catalogue receipt says MERGED_MAIN at 3f7323db, local regression PASS, CI PASS, publication workflow pending. Do not mistake research branch 404 for pipeline deployment failure or independently edit implementation."
+    "2026-11-21 verify: tools/research_build_review.py and tools/prepare_build_research.py exist on main, while still absent on research branch (expected separation); owner catalogue receipt says MERGED_MAIN at 3f7323db, local regression PASS, CI PASS, publication workflow pending. Do not mistake research branch 404 for pipeline deployment failure or independently edit implementation.",
+    "Algari Crushing (spell 434020) original author per-craft output vs resourcefulness-rolled per-start-craft means (2025-10-18, reddit 1oa7vn1) are held: worker evidence-format drop.method lacks Crush; exact raw gems, study N, observed output units, skill/spec, batch/refund ledgers unavailable. Ask Master to decide separate method modeling; do not change schema/runtime independently."
   ],
   "exhausted_sources": [
     "Previously indexed 1f83cnd, 1g350pq, PeaEsk/434018, 1fdmzwy and 1f3qf96 already provide historical studies; source duplicates not re-imported.",
@@ -334,50 +364,45 @@
     "2026-11-20 follow-up: 1g9s48p repeats the already indexed 400 R1 Bismuth source; 1k78h4v and 1l91chl are 2025 financial/value comparisons without source output ledgers; 1nmnuc2 describes workflows only. Do not revisit these unless author publishes actual completed-operation exports.",
     "2026-11-21 focused scan: 1fisfkn and 1f9qado are owner-catalogued cutoff sources; their old cohorts were not repeated. Wowhead 227659 has only contradictory site-reported Looter data, not a trustworthy original cast ledger."
   ],
-  "next_concrete_step": "Seek NEW original TWW post-2024-10-25 full completed-operation logs from addon exports for item-specific gear -> ranked 219946-219955, Bismuth/Aqirite/Ironclaw 210930-210938 and Mycobloom 210796-210798 with raw 0..N, quality IDs, actual crafts, skill/spec/build and Resourcefulness basis. Leave all unsupported hit rates/nulls unknown; avoid exhausted finance-only sources and Codex's verified 731-source catalogue.",
-  "previous_status_updated_at": "2026-11-21T07:19:29.953Z",
+  "next_concrete_step": "Prioritize original post-2024-10-25 TWW prospecting/milling/gear disenchant addon exports with exact rank 210930..210938 / 210796..210798 / 219946..219955, counted completed casts, input refunds, linked output-quality IDs, 0..N and skill/spec/patch. Separately ask Master whether out-of-schema Algari Crushing 434020 average-per-execution vs average-per-start author correction merits a supported Crush evidence type; no worker schema change. Exclude 1oa7vn1 from any current estimator until independently validated.",
+  "previous_status_updated_at": "2026-11-21T08:24:53.881Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "timestamp_utc": "2026-11-21T08:24:53.881Z",
+    "timestamp_utc": "2026-11-21T09:20:02.987Z",
     "focus": [
-      "TWW ranked 210930-210938 Bismuth/Ironclaw/Aqirite prospecting",
-      "TWW 210796-210798 Mycobloom quality-correct milling",
-      "TWW gear DE 219946-219955 Storm Dust/Shards"
+      "T0048 item-gear 219946..219955 original disenchant logs",
+      "T0040 Bismuth/Ironclaw/Aqirite 210930..210938 actual completed prospecting",
+      "T0010/T0011/T0012 Mycobloom 210796..210798 per-rank mill logs"
     ],
     "checks": [
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1k78h4v",
-        "result": "Existing 2025 R2 Aqirite/Ironclaw economics post gives approximate expected 100k-ore to 13,500-gem forecast, not actual independently logged operations; previously exhausted and no original material output ledger",
-        "classification": "duplicate/exhausted lead"
+        "source": "https://www.wowhead.com/item=232446/boreal-rifle",
+        "classification": "previously recorded",
+        "result": "Same cumulative 48 item-level Looter operations, no newly available skill/build/refund or independent zero-inclusive histograms."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
-        "result": "Previously held March-2025 600 R1 Ironclaw purchase/prospects financial anecdote, no material outputs, zero/hits or refunds; not new cohort",
-        "classification": "duplicate/exhausted lead"
+        "source": "https://www.wowhead.com/item=223548/algari-rifle",
+        "classification": "previously recorded duplicate source view",
+        "result": "Live-indexed 63 operations are already recorded twice in worker files from Nov 15/16; do not add a third study."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1nmnuc2",
-        "result": "Existing 2025 advice and pricing with no independent per-output mill/prospect production log; gold values not suitable for research EV",
-        "classification": "existing non-yield source"
+        "source": "https://www.wowhead.com/spell=434018/algari-prospecting",
+        "classification": "previously indexed",
+        "result": "PeaEsk rank-2 ore examples and DobberSH Null Stone anecdote are already indexed; no new completed-denominator/hit log."
       },
       {
-        "source": "https://www.curseforge.com/wow/addons/queenbaex",
-        "result": "QueenBaeX is profession/stat export addon for already inspected Kalimdor Hold Em model workbook, not evidence of completed processing casts or material drop histograms",
-        "classification": "source context, not independent measured cohort"
+        "source": "https://www.reddit.com/r/woweconomy/comments/1oa7vn1",
+        "classification": "newly checked original; held out-of-schema",
+        "result": "2025-10-18 author gives approximate 27.5 vs 33.7 and 8.9 vs 10.3 Crushed Gemstones units per craft vs per-start-with-Resourcefulness; Oct 19 correction confirms distinction. No raw study N, zero/hits, input IDs or refund audit, and Crush method unavailable. Not a new prospecting cohort."
       },
       {
-        "source": "https://www.wowhead.com/item=222618/nacreous-pigment",
-        "result": "LotzBoi general Mycobloom skill/yield ranges and 10-herb recipe already indexed; does not give per-rank N, output-item quality receipts or zeros",
-        "classification": "existing reference only"
-      },
-      {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1nqwdhf",
-        "result": "September-2025 economic advice for Ironclaw/Aqirite, no original casts/outputs",
-        "classification": "existing non-yield source"
+        "source": "https://www.wowhead.com/spell=434020/algari-crushing",
+        "classification": "reference identity",
+        "result": "Algari Crushing spell ID 434020, 10 Bismuth and 3 eligible gems, distinct from prospecting spell 434018."
       }
     ],
     "new_independent_cohorts": 0,
