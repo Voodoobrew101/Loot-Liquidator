@@ -1,3 +1,11 @@
+## 2026-11-21 00:03 UTC — scott_b historical positive-counter identity independently verified
+
+**Source integrity, not a new current Retail gold decision.** Opened original pinned `scott_b.lua` and `item_names.csv` and independently verified **85/85** newly transcribed `EnchantedLocal` variant/material/counter tuples and **170/170** original input/output name cells. The 85 source rows span **79 variants**, **76 inputs**, **8 output IDs**, **90 positive material sightings** and **213 material units**, with no tuple/name mismatch; 35 `EnchantedItemTypes` rollups are not independent cast cohorts. Source-native positive counters cannot recover completed disenchants, genuine zero events, current Retail eligibility or unbiased P(hit)/per-cast EV. All remain `sourceKind=reference` and original worker evidence unchanged. [Independent review](../v3/evidence/master/20261121T0002-scott-b-native-positive-counter-identity-review.md) and [coordinator checkpoint](quiet-status/coordinator.json) at [4e5cf5c](https://github.com/Voodoobrew101/Loot-Liquidator/commit/4e5cf5cc3042ec9bfa6f624053f556ebe2fd88ec).
+
+**Validation:** Native source/transcription/CSV check passed; main automatic-build pipeline inspected statically, **no exact-SHA build review, ItemDB, Lua, actual resolver/tooltip synthetic-price test or WoW client test executed**. Exact prior research head `2acb6ae5` had [successful five-agent CI](https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/44839148227) before these manager writes. Main `4190fe93`, owner's separate implementation `3d667d05`, PR Director scope, worker files/schedules untouched; no PR/merge/release. **Next:** genuine complete, rank/context-scoped Retail operation ledgers (Midnight/TWW first), then exact-source-revision build admission and actual engine validation. Do not recycle exhausted positive-only Classic source audits.
+
+---
+
 ## 2026-11-20 21:57 UTC — Draconium historical legacy duplicate/admission guard
 
 ## 2026-11-20 22:59 UTC — original dmitry 104 source-positive rows independently verified
