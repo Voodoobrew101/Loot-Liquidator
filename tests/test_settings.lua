@@ -787,7 +787,7 @@ do
         if fields.percent then expectedSliders=expectedSliders+1 end
     end
     assert(#slidersAfter(before)==expectedSliders and expectedSliders>=5,
-        'Enchanting exposes every compiled node, base skill and applicable profession stat')
+        'Enchanting exposes its material-affecting nodes and base skill')
     assert(#labelsAfter(before,'Skill before specialization')==1,'known skill remains available as simulated tooltip context')
     local previousTooltip=GameTooltip
     local hoverLines={}
@@ -801,8 +801,8 @@ do
             'the connected baseline model describes its material effect without a second uncertainty label')
     end
     GameTooltip=previousTooltip
-    assert(#labelsAfter(before,'Resourcefulness rating')>=1 and #labelsAfter(before,'Crafting speed')>=1,
-        'generic profession calculations expose the applicable crafting stat controls')
+    assert(#labelsAfter(before,'Resourcefulness rating')==0 and #labelsAfter(before,'Crafting speed')==0,
+        'crafting-only stats cannot appear as disenchant material controls')
     assert(LL.db.professionTooltipProfiles.Enchanting=='@hypothetical','opening Advanced does not change the tooltip profile')
     slider:SetValue(7)
     assert(selector.initializer.setting:GetValue()==-1,'editing a specialization switches to Simulated')
