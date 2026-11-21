@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-21T14:45:44.270Z",
-  "status": "Recovered and independently checked TWO live Retail prospecting spell-to-ore recipe identities absent from prior research search: Northrend Prospecting 382979 -> Cobalt Ore 36909, and Outland Prospecting 382980 -> Fel Iron Ore 23424, each 5 ore per cast as stated in the live spell metadata. These are source-backed recipe/batch context only, NOT new empirical operation cohorts or drop rates. Primary historical TBC Reaver 24979 and Jakebees Netherweave comments were rechecked and excluded as previously duplicated; 725+ Codex-owned catalogue not re-reviewed. No new Warmaul 24995 raw zero-inclusive original ledger or current live disenchant eligibility evidence found. Other workers and code untouched.",
+  "updated_at": "2026-11-21T15:42:00.000Z",
+  "status": "Refreshed current v3 rules, evidence schema, checked mechanics, Legacy role and 53-task queue on the live research branch. Searched current original/firsthand Warmaul Legplates 24995, five TBC gear Looter comparators, Cobalt Ore 36909, Fel Iron Ore 23424, Runecloth Headband 13866, as well as newly indexed operation/export repositories. No newly source-verified independent Retail operation cohort, material hit/zero histogram, measured output total or class reward identity beyond retained evidence. No data-only JSONL produced; 731-source scoped catalogue left with Codex reviewers, no runtime or worker files changed.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -78,9 +78,9 @@
   "evidence_file": "research/v3/evidence/legacy/2026-11-21T1445-retail-prospect-spell-identity.jsonl",
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "0afbd7f7ab0df1649f0503423ca5db30f275b779",
+  "verified_parent_sha": "1f29057f11c821a2bd580ff6029f2d0aa137c22d",
   "verified_commit_sha": "0afbd7f7ab0df1649f0503423ca5db30f275b779",
-  "commit_note": "Atomic, single research commit prepared against exact fetched parent/tree. Contains one new 2-line legacy recipe JSONL and the owned legacy quiet status only; final published SHA must be verified externally by commit and branch/file read-back; this status cannot store its own yet-unknown commit SHA.",
+  "commit_note": "Status-only update of owned legacy.json; commit SHA will be read back separately because a commit cannot embed its own SHA atomically.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -234,5 +234,92 @@
       "detail": "Jakebees 9 unidentified greens and 11 Netherweave bracers sources already archived; not new."
     }
   ],
-  "latest_run_source_date": "2026-11-21"
+  "latest_run_source_date": "2026-11-21",
+  "latest_run": {
+    "at_utc": "2026-11-21T15:42:00.000Z",
+    "branch_head_at_read": "1f29057f11c821a2bd580ff6029f2d0aa137c22d",
+    "task_ids": [
+      "T0047",
+      "T0042",
+      "T0022",
+      "T0044",
+      "T0050",
+      "T0053"
+    ],
+    "verified_new_independent_cohorts": 0,
+    "numeric_fields_advanced": [],
+    "known_input_output_ids_rechecked": {
+      "Warmaul_Legplates_24995": [
+        22445,
+        22446,
+        22447,
+        22449
+      ],
+      "Cobalt_Ore_36909": [
+        36917,
+        36918,
+        36920,
+        36921,
+        36923,
+        36924,
+        36926,
+        36927,
+        36929,
+        36932,
+        36933
+      ],
+      "Fel_Iron_Ore_23424": [
+        23077,
+        23079,
+        23094,
+        23095,
+        23096,
+        23107
+      ],
+      "Runecloth_Headband_13866": [
+        156930,
+        14344,
+        16203
+      ],
+      "token_45661": "seven class reward IDs already resolved in approved research; no new class mapping asserted"
+    },
+    "source_rechecks": [
+      {
+        "url": "https://www.wowhead.com/item=24995/warmaul-legplates",
+        "finding": "Current live web item lists level 14; no actual Looter DE table or client CanDisenchant response visible in the public page. Not a usable 2026 operation cohort."
+      },
+      {
+        "url": "https://www.wowdb.com/items/24995-warmaul-legplates",
+        "finding": "Live database lists item level 31 and Cannot be disenchanted. Historical 108-level 2068-operation source cannot establish current Retail eligibility."
+      },
+      {
+        "url": "https://www.wowhead.com/item=36909/cobalt-ore",
+        "finding": "Strikk3r 180-ore/9-stack source remains the already-catalogued original; same comment has nine output totals but neither completed operation count nor 0..N histograms."
+      },
+      {
+        "url": "https://www.wowhead.com/item=23424/fel-iron-ore",
+        "finding": "Primary page offers ambiguous eight-stack rare-gem comment and old guide/model percentages, not a new independent per-operation ledger."
+      },
+      {
+        "url": "https://www.wowhead.com/item=16204/light-illusion-dust",
+        "finding": "1115352 five-headband 4/1 hit split already recorded twice; regional mirrors same primary commenter, no new cohort."
+      },
+      {
+        "url": "https://github.com/ExcEssIv3/profit/blob/main/export/recorded.json",
+        "finding": "Direct primary SavedVariables aggregate checked: one 5207 item cohort with two reported WoW Forever build 70245 disenchants, outside target and not Retail; no Warmaul/Cobalt/Fel Iron rows. No dataset import."
+      },
+      {
+        "url": "https://www.curseforge.com/wow/addons/craft-resume",
+        "finding": "Retail per-session CSV export tool documented, but publicly available listing supplies no individual 24995/36909/23424 log; no observed evidence to add."
+      }
+    ],
+    "blockers": [
+      "Exact Retail 24995 itemLink/bonus/build and CanDisenchant receipt are missing; do not apply historical TBC Looter outputs to live UI.",
+      "No new independently published zero-inclusive Retail cast/output logs with refunded-input separation for 36909 or 23424; avoid dividing nominal ore counts into assumed completed casts.",
+      "2026 Forever/Classic Anniversary addons are separate game profiles and cannot supply Retail probabilities without corroboration."
+    ],
+    "next_concrete_step": "Search for a publicly shared original Retail12.x CSV/SavedVariables event export from a logger with exact itemLink and 0..N receipts for 24995 or first-hand five-ore 36909/23424 operations. Capture real successes, refunds, variant IDs, profession/build, and per-output zeros; leave historical originals as source-profile priors.",
+    "evidence_written": false,
+    "quiet_status_only": true
+  }
 }
