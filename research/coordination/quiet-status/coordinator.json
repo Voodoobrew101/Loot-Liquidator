@@ -1,8 +1,8 @@
 {
   "role": "research-manager",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-21T15:59:20.660Z",
-  "status": "Read adopted charter, three-pass scope, current v3 schema/mechanics/queue/strategy, current repository heads, PR #22/#23, exact-head GitHub Actions and the four fresh worker reports. Independently checked current TWW Khaz Algar Milling spell/Method recipe 10-herb batch against an inconsistent Wowhead leveling shopping list 35 crafts/175 herbs; source discrepancy is not measured yield. No new independent Retail completed-operation cohort/probability/gold decision, addon changes, manager-run valuation/tooltip tests, game operations, PRs, merges, releases or schedules.",
+  "updated_at": "2026-11-21T16:05:24.081Z",
+  "status": "Refreshed charter/v3 schema/mechanics/queue/strategy, repository branch heads, existing PR and exact-head GitHub Actions, four completed worker reports and live schedule states. Independently checked a published Retail disenchant observation logger as a possible source of original data; logging/statistics capability is verified from its release description, but there is no publicly supplied original numeric cohort/export to admit. No measured Retail yields, confidence denominators, gold decisions, addon changes, manager-run build/tooltips, merges/releases/PRs or schedule changes.",
   "task_ids": [
     "T0003",
     "T0005",
@@ -68,19 +68,22 @@
     "new_supported_retail_gold_decisions": 0,
     "new_eligible_probabilities": 0,
     "manager_latest_checkpoint": {
-      "as_of": "2026-11-21T15:59:20.660Z",
-      "source_check": "Current TWW Khaz Algar Milling 444181 and Method agree 10 herbs/craft; Wowhead 35 crafts/175 herb shopping list implies 5 and cannot be treated as real 10-herb operation denominator. Method confirms herb rank affects quality rather than amount, but no controlled skill/rank/output logs for formula.",
+      "as_of": "2026-11-21T16:05:24.081Z",
+      "source_check": "Independently inspected EnchantLens Retail 12.0.7 published CurseForge release and its dev changelog: it advertises a local disenchant-learning mode with per-item real-observation sample counts, confidence and material distribution display. Public listing did not provide a downloadable original per-operation event ledger, shared SavedVariables cohort, exact item/rank/profession profile, zero/hit histogram or reproducible numeric export. Existing TWW worker already identified the logger; this is validation of acquisition lead only, not independent new study or admission.",
       "primary_sources": [
-        "https://www.wowhead.com/spell=444181/khaz-algar-milling",
-        "https://www.method.gg/guides/the-war-within-inscription-profession-leveling-guide",
-        "https://www.wowhead.com/guide/the-war-within/professions/inscription-leveling",
-        "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide"
+        "https://www.curseforge.com/wow/addons/enchantlens",
+        "https://www.curseforge.com/wow/addons/enchantlens/files/8427398/additional-files"
+      ],
+      "source_item_examples": [
+        "TWW Boreal Rifle 232446",
+        "TWW Lamplighter 229150"
       ],
       "new_independently_measured_cohorts": 0,
       "new_eligible_gold_decisions": 0,
       "new_verified_probability_denominators": 0,
       "original_craft_ledger_obtained": false,
-      "operator": "source-comparison only; not in-game, Lua, engine or tooltip validation",
+      "logger_export_obtained": false,
+      "operator": "original published tool description and changelog check only; no client, experimental disenchant, exact data extraction, local compiler or tooltip execution",
       "latest_workers": {
         "midnight": "2026-11-21T15:07:04.023Z",
         "war-within": "2026-11-21T15:20:54.588Z",
@@ -88,10 +91,17 @@
         "legacy": "2026-11-21T15:42:00.000Z"
       },
       "main_head_checked": "0ac387e903946230ea661918275765643a6c4288",
-      "prewrite_research_head": "b6c202a6b37e313ed311457476373ac453116f21",
-      "exact_main_ci": "44900570565 success",
-      "exact_research_prewrite_ci": "44920622165 success",
-      "owner_catalogue": "731 reviewed source decisions Codex-owned; not reopened"
+      "prewrite_research_head": "49dbed3b3d88f5255f736f1570177ac85680483f",
+      "exact_main_ci": "44900570565 success (external GitHub Actions)",
+      "exact_research_prewrite_ci": "44922065617 success (external GitHub Actions)",
+      "owner_catalogue": "731 reviewed source decisions Codex-owned; not reopened",
+      "reserved_integration_heads": {
+        "implementation/usable-data-tooltips": "3d667d053db587c91401cfed7ecc56862b8340c9",
+        "research/catalogue-backlog-20261120": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
+        "implementation/catalogue-backlog-pipeline-20261120": "a23e65d784f0c36833df0ad903d817d10d2f2ae3"
+      },
+      "existing_validation_prs": "#22/#23 closed unmerged, no edits",
+      "schedules": "all five existing enabled; no changes"
     },
     "tww_mycobloom_tool_quality_context": {
       "kind": "source-reported profile/equipment and output quality context; not a controlled production coefficient",
@@ -264,7 +274,35 @@
       "profSkillEligibilityProvenInClient": false,
       "compilerAddonTooltipPropagationTestedByManager": false,
       "new_gold_decisions": 0
-    }
+    },
+    "manager_recent_source_checks": [
+      {
+        "as_of": "2026-11-21T15:59:20.660Z",
+        "source_check": "Current TWW Khaz Algar Milling 444181 and Method agree 10 herbs/craft; Wowhead 35 crafts/175 herb shopping list implies 5 and cannot be treated as real 10-herb operation denominator. Method confirms herb rank affects quality rather than amount, but no controlled skill/rank/output logs for formula.",
+        "primary_sources": [
+          "https://www.wowhead.com/spell=444181/khaz-algar-milling",
+          "https://www.method.gg/guides/the-war-within-inscription-profession-leveling-guide",
+          "https://www.wowhead.com/guide/the-war-within/professions/inscription-leveling",
+          "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide"
+        ],
+        "new_independently_measured_cohorts": 0,
+        "new_eligible_gold_decisions": 0,
+        "new_verified_probability_denominators": 0,
+        "original_craft_ledger_obtained": false,
+        "operator": "source-comparison only; not in-game, Lua, engine or tooltip validation",
+        "latest_workers": {
+          "midnight": "2026-11-21T15:07:04.023Z",
+          "war-within": "2026-11-21T15:20:54.588Z",
+          "dragonflight": "2026-11-21T15:34:34.427Z",
+          "legacy": "2026-11-21T15:42:00.000Z"
+        },
+        "main_head_checked": "0ac387e903946230ea661918275765643a6c4288",
+        "prewrite_research_head": "b6c202a6b37e313ed311457476373ac453116f21",
+        "exact_main_ci": "44900570565 success",
+        "exact_research_prewrite_ci": "44920622165 success",
+        "owner_catalogue": "731 reviewed source decisions Codex-owned; not reopened"
+      }
+    ]
   },
   "source_links": {
     "0": "https://www.wowhead.com/item=222618/nacreous-pigment",
@@ -307,7 +345,9 @@
     "current_tww_mill_recipe": "https://www.wowhead.com/spell=444181/khaz-algar-milling",
     "current_tww_method_inscription": "https://www.method.gg/guides/the-war-within-inscription-profession-leveling-guide",
     "tww_wowhead_leveling_mismatch": "https://www.wowhead.com/guide/the-war-within/professions/inscription-leveling",
-    "tww_method_mill_qualities": "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide"
+    "tww_method_mill_qualities": "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide",
+    "manager_verified_enchantlens_home": "https://www.curseforge.com/wow/addons/enchantlens",
+    "manager_verified_enchantlens_changelog": "https://www.curseforge.com/wow/addons/enchantlens/files/8427398/additional-files"
   },
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-21T0336-new-draconium-r1r2-firsthand-range-held.jsonl",
@@ -320,9 +360,9 @@
     "dragonflight": "1f29057f11c821a2bd580ff6029f2d0aa137c22d",
     "legacy": "7a938e2feff7352393c1fc6db68d0f3ea9042077"
   },
-  "verified_commit_sha": "7a938e2feff7352393c1fc6db68d0f3ea9042077",
+  "verified_commit_sha": "49dbed3b3d88f5255f736f1570177ac85680483f",
   "dashboard_commit_sha": "b6c202a6b37e313ed311457476373ac453116f21",
-  "checked_research_branch_head_before_status_write": "b6c202a6b37e313ed311457476373ac453116f21",
+  "checked_research_branch_head_before_status_write": "49dbed3b3d88f5255f736f1570177ac85680483f",
   "main_head_checked": "0ac387e903946230ea661918275765643a6c4288",
   "owner_three_pass_head_checked": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "owner_catalogue_manifest_revision_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
@@ -387,20 +427,18 @@
     }
   },
   "validation_this_run": {
-    "method": "Original published guide and spell cross-check; current source/worker checkpoint/CI reading; no manager-run local build",
-    "main_ci": "44900570565 success for exact main 0ac387e903946230ea661918275765643a6c4288, run by others",
-    "research_ci": "44920622165 success for exact prewrite worker head 7a938e2feff7352393c1fc6db68d0f3ea9042077, run by others",
-    "dashboard_readback": true,
+    "method": "Direct read of original published logger description and release changelog; GitHub/worker/schedule verification, no local execution",
+    "source_urls": [
+      "https://www.curseforge.com/wow/addons/enchantlens",
+      "https://www.curseforge.com/wow/addons/enchantlens/files/8427398/additional-files"
+    ],
+    "main_ci": "44900570565 success (external GitHub Actions)",
+    "research_ci": "44922065617 success (external GitHub Actions)",
     "addon_build_run_by_manager": false,
     "tooltip_render_run_by_manager": false,
     "live_wow": false,
-    "source_urls": [
-      "https://www.wowhead.com/spell=444181/khaz-algar-milling",
-      "https://www.method.gg/guides/the-war-within-inscription-profession-leveling-guide",
-      "https://www.wowhead.com/guide/the-war-within/professions/inscription-leveling",
-      "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide"
-    ],
-    "repo_pulls": "PR #22 and PR #23 closed unmerged"
+    "repo_pulls": "#22/#23 closed unmerged",
+    "dashboard_updated": false
   },
   "blockers": [
     "No new original, current-build, zero-inclusive successful-operation output event ledger for Midnight/TWW/Dragonflight/legacy; cannot promote hit probability, model new coefficients or gold decisions",
@@ -432,15 +470,15 @@
     "Wowhead 153669 Kidneph/Baadkitty per-input milling totals already archived/reviewed in current main; exclude as duplicate source.",
     "Public ProspectMate/PocketCFO addon descriptions contain logging functionality, not an independently released zero-inclusive processing event export."
   ],
-  "next_concrete_step": "Seek newly published/acquired actual Retail successful 0–N operation exports with item/rank/recipe/character skill/build, consumed/refunded inputs and zeros for Midnight 237359/237362 and TWW 210796–210798. Treat 10-herb TWW recipe as a source-unit guard, not a source-measured output yield. For historical gear 24995/272246 require at-dis-enchant itemLink/bonus and client eligibility. Preserve 731-source Codex catalogue ownership and research-only quiet reporting.",
+  "next_concrete_step": "Seek an already published original Retail (not Classic/Forever) saved disenchant/prospect/mill event dataset with per-successful-operation source itemLink/bonus/quality, recipient output IDs/ranks, explicit 0..N outcomes, real N, skill/build and input refunds; inspect a genuinely shared EnchantLens export only if one becomes available. Prioritize Midnight 237359/237362 and TWW 210796-210798 without reopening Codex's 731 reviewed sources.",
   "production_main_changes": false,
   "addon_changes": false,
   "routine_research_prs": false,
   "merge_or_release": false,
   "new_schedules": false,
   "role_schedules_unchanged": true,
-  "prior_status_blob_sha": "dd9122db8eac1c47036eaa679ffa2a3c181321a1",
+  "prior_status_blob_sha": "0373345993f9bae6accfe0b84726362d720e11a9",
   "owner_catalogue_manifest_branch_head_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
   "owner_catalogue_manifest_blob_checked": "1bb9a4100c2be45282532f6205d722946f3b3e44",
-  "next": "Seek newly published/acquired actual Retail successful 0–N operation exports with item/rank/recipe/character skill/build, consumed/refunded inputs and zeros for Midnight 237359/237362 and TWW 210796–210798. Treat 10-herb TWW recipe as a source-unit guard, not a source-measured output yield. For historical gear 24995/272246 require at-dis-enchant itemLink/bonus and client eligibility. Preserve 731-source Codex catalogue ownership and research-only quiet reporting."
+  "next": "Seek an already published original Retail (not Classic/Forever) saved disenchant/prospect/mill event dataset with per-successful-operation source itemLink/bonus/quality, recipient output IDs/ranks, explicit 0..N outcomes, real N, skill/build and input refunds; inspect a genuinely shared EnchantLens export only if one becomes available. Prioritize Midnight 237359/237362 and TWW 210796-210798 without reopening Codex's 731 reviewed sources."
 }
