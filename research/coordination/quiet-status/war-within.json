@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-21T16:19:50.226Z",
-  "status": "research-active; checked new original 2025 Retail DE shard quality/profession context, held without operation denominators; no new estimator-eligible numeric yield cohort",
+  "updated_at": "2026-11-21T17:28:19.137Z",
+  "status": "research-active; one new independent historical first-person unranked green-DE per-item mean preserved for review; no complete cast cohort or current item/rank-specific estimate",
   "task_ids": [
     "T0048",
     "T0009",
@@ -20,7 +20,7 @@
     "T0048 219474 Tracker's Chitin Cuffs: historical firsthand successful disenchant vs current WoWDB cannot-disenchant item metadata, linked output ranks/bonus/build, measured operation count and cast-level material log",
     "T0048/TWW blue gear disenchant into Gleaming Shard 219949/219950/219951 family: source-linked item IDs, per-quality counts, completed casts, item bonus/build, skill/specialization and 0..N outcome distributions"
   ],
-  "source_branch_head_reviewed": "7a0c6e2fffdb0df1e468a0ca74afedd8931bba0f",
+  "source_branch_head_reviewed": "73e47fe00f290a2c3f44c64ea51967d96ba8931b",
   "source_policy": "READ current research/v3 README/evidence-format/mechanics/worker/queue before search. Source cutoff catalogue CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources incl six recovered; reuse 12,222 scoped decisions; do not recatalogue Codex backlog. Review/admission merged to main in PR #82 but worker branch remains evidence-only; no release asserted.",
   "study_backlog_triage": [
     {
@@ -317,31 +317,45 @@
       "exact_inputs": "Unspecified highest-quality crafted blue TWW gear sent from alts to main; item IDs, bonuses, equipment ilvl, armor/weapon category and completed disenchant count unknown",
       "outputs": "Gleaming Shard rank family 219949/219950/219951 by cross-reference only, NOT directly linked in report; author says over half received lowest quality, but no actual count or quality breakdown. Later shattering can return lower-grade Storm Dust by anecdote; separate method.",
       "reason": "Original forum observation is outside the Codex cutoff source keys but gives no cohort size, completed operations, per-cast outcomes/histogram, exact output item IDs, character's actual skill including profession equipment/racial, item version, or build. 'Over half' is a qualitative bound, NOT a measured percentage. Do not assign any drop probability, quality ratio or direct-gear dust yield."
+    },
+    {
+      "status": "reviewable",
+      "scope": "independent original historical unranked DE per-operation mean; not a measured chance/cohort",
+      "original_cohort": "Aendri firsthand 2024-09-03 forum green-gear disenchanting mean; cast count unspecified",
+      "source": "https://us.forums.blizzard.com/en/wow/t/disenchanting-greens/1942112",
+      "existing_ids": "war-within-20261121-1728-001",
+      "exact_inputs": "unspecified TWW-era green/uncommon gear; input item ID, kind, item level, casts and spec unknown",
+      "outputs": "Storm Dust (thread context, rank-specific output ID unknown), original stated mean of 1 dust per green item (not per hit, 1 cast); no actual totals/0..N/hit histogram",
+      "reason": "Original first-person wording supports averageShown=1 per cast only, with unknown N. No ranked Storm Dust ID, individual input ID, armor/weapon, skill/spec, per-cast outcomes, build or zero counts; not safe for current item/rank-specific baseline. Historical Sep 2024 epoch. Absent from the 731-source cutoff manifest; retain as independently sourced reference for conditional review rather than guessing rates."
     }
   ],
   "triage_counts": {
     "admitted": 5,
-    "reviewable": 6,
+    "reviewable": 7,
     "held": 18,
     "duplicate": 3
   },
   "newly_verified_fields": [
-    "New non-cutoff original Retail 2025-03-12 first-person report (Nkara): highest-quality crafted blue gear still often disenchanted into lowest-quality Gleaming Shards despite a maxed Designated Enchanter/Rare Resourcing specialization. Firsthand narrative has no exact item/rank IDs, operation denominator, histogram or measured grade ratio. Independent 2025-03-23 reply argues actual Enchanting skill/profession equipment matters and shattering output is bounded by input shard quality; this is explanatory opinion, not measured test. Both held pending per-item raw logs."
+    "Original 2024-09-03 first-person source, Aendri reply #7, reports 1 'dust' on average per green item disenchanted, per operation (NOT P(hit)). Thread context identifies Storm Dust, but no linked rank output ID. Source does not provide input item ID, armor/weapon, N, quantities by output rank, hits, zero outcomes, histogram, effective skill/spec or patch/build; 1 is preserved strictly as the reported unranked mean, not imputed chance."
   ],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
-  "new_reference_only_numeric_records": 0,
+  "new_reference_only_numeric_records": 1,
   "new_no_disenchant_records": 0,
   "new_condition_records": 0,
-  "numeric_fields_advanced": [],
-  "evidence_file": null,
-  "evidence_files": [],
+  "numeric_fields_advanced": [
+    "New source-only war-within unranked green-gear group: outputName Storm Dust (outputItemID/outputRank null), averageShown 1, averagePer cast, casts null, totalQuantity null, castsWithDrop null, histogram null. Original firsthand observation is pre-2024-10-25; do not merge into modern ranked TWW DE baselines."
+  ],
+  "evidence_file": "research/v3/evidence/war-within/2026-11-21T1728-unranked-green-de-firsthand-mean.jsonl",
+  "evidence_files": [
+    "research/v3/evidence/war-within/2026-11-21T1728-unranked-green-de-firsthand-mean.jsonl"
+  ],
   "evidence_source_links": [
-    "https://eu.forums.blizzard.com/en/wow/t/disenchanting-shard-quality/565405"
+    "https://us.forums.blizzard.com/en/wow/t/disenchanting-greens/1942112"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-20T0521-algari-pvp-item-metadata.jsonl",
-  "verified_commit_sha": "7a0c6e2fffdb0df1e468a0ca74afedd8931bba0f",
-  "verification": "Original source checked on forum; pre-write branch head captured. This owned status update must be read back at returned commit; zero evidence rows admitted.",
+  "verified_commit_sha": "73e47fe00f290a2c3f44c64ea51967d96ba8931b",
+  "verification": "Original Aendri forum 1942112 reply #7 directly read; source missing from cutoff manifest; base SHA 73e47fe00f290a2c3f44c64ea51967d96ba8931b. Commit/read-back confirmation is externally checked after atomic branch ref update.",
   "blockers": [
     "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
     "Cumulative PTR Looter display rows contain repeated material names with linked rank IDs unavailable; no per-row independent study and no safe current-Retail rank-specific mapping.",
@@ -366,7 +380,8 @@
     "2026-11-21 verify: tools/research_build_review.py and tools/prepare_build_research.py exist on main, while still absent on research branch (expected separation); owner catalogue receipt says MERGED_MAIN at 3f7323db, local regression PASS, CI PASS, publication workflow pending. Do not mistake research branch 404 for pipeline deployment failure or independently edit implementation.",
     "Algari Crushing (spell 434020) original author per-craft output vs resourcefulness-rolled per-start-craft means (2025-10-18, reddit 1oa7vn1) are held: worker evidence-format drop.method lacks Crush; exact raw gems, study N, observed output units, skill/spec, batch/refund ledgers unavailable. Ask Master to decide separate method modeling; do not change schema/runtime independently.",
     "2026-11-21 new DE logging lead: EnchantLens Retail screenshots/description expose observation-statistics capability, but no independently shared existing SavedVariables/export or original TWW-specific item+bonus, output IDs, cast totals, 0..N event ledger, build or skill; cannot use demo claims as a numeric cohort.",
-    "2026-11-21 guide conflict: Method claims mill herb rank affects pigment quality rather than amount, whereas LotzBoi rank/skill nominal range and Sept 2024 quill removal imply profile-dependent output behavior. Contradiction requires original controlled current-Retail 10-herb completion logs; Master owns mechanics/schema decisions."
+    "2026-11-21 guide conflict: Method claims mill herb rank affects pigment quality rather than amount, whereas LotzBoi rank/skill nominal range and Sept 2024 quill removal imply profile-dependent output behavior. Contradiction requires original controlled current-Retail 10-herb completion logs; Master owns mechanics/schema decisions.",
+    "New Aendri 2024 mean has no original cast denominator, rank-linked dust ID, input-item identity, gear type or skill/spec: cannot be treated as a current ranked TWW disenchant baseline or measured hit rate."
   ],
   "exhausted_sources": [
     "Previously indexed 1f83cnd, 1g350pq, PeaEsk/434018, 1fdmzwy and 1f3qf96 already provide historical studies; source duplicates not re-imported.",
@@ -378,52 +393,51 @@
     "2026-11-20 follow-up: 1g9s48p repeats the already indexed 400 R1 Bismuth source; 1k78h4v and 1l91chl are 2025 financial/value comparisons without source output ledgers; 1nmnuc2 describes workflows only. Do not revisit these unless author publishes actual completed-operation exports.",
     "2026-11-21 focused scan: 1fisfkn and 1f9qado are owner-catalogued cutoff sources; their old cohorts were not repeated. Wowhead 227659 has only contradictory site-reported Looter data, not a trustworthy original cast ledger.",
     "2026-11-21: Firestorm-servers.com/us/changelog/tww is a private-server TWW bugfix log, not original Retail processing data. Exclude its Specular Rainbowfish→222618 description from empirical material rank/output estimates unless separately verified in Retail.",
-    "2026-11-21: TWW forum thread eu/565405 provides only original qualitative shard-quality and profession-skill context (no casts/IDs); do not revisit until author supplies raw log. Reddit 1fpswuz, 1fdqzep, 1fvhzy0 are Codex-cutoff reviewed cohorts, not new worker evidence."
+    "2026-11-21: TWW forum thread eu/565405 provides only original qualitative shard-quality and profession-skill context (no casts/IDs); do not revisit until author supplies raw log. Reddit 1fpswuz, 1fdqzep, 1fvhzy0 are Codex-cutoff reviewed cohorts, not new worker evidence.",
+    "2026-11-21: Aendri forum 1942112 contributes only the original unranked 1-dust-per-green historical per-item mean; do not reread without raw logs. Reddit 1f117id repeats the existing 1f3qf96 exact 100-green 119/97/55 cohort (not independent); Wowhead 213399 and Reddit 1fdmzwy remain Codex-catalogued."
   ],
-  "next_concrete_step": "Seek voluntarily published direct Retail disenchant logs for identified TWW gear and blue-crafted item variants with original linked itemID/bonus, material-quality IDs, completed disenchant N and 0..N histograms at recorded effective Enchanting skill. Then seek post-2024-10-25 ore-rank and 10-herb mill output logs. Do not recatalogue Codex 731-source backlog or admit anecdotal grade ratios; code/schema and shattering outside worker method remain Master concerns.",
-  "previous_status_updated_at": "2026-11-21T15:20:54.588Z",
+  "next_concrete_step": "Prioritize newly published post-2024-10-25 item-linked TWW original green/rare gear disenchant logs with exact itemId/bonus, linked Storm Dust/Shard quality IDs, effective skill/spec/build and actual completed N, raw 0..N histograms/zero outcomes. Separately seek ore/herb rank cast logs with refund basis; do not re-catalogue 731 cutoff sources.",
+  "previous_status_updated_at": "2026-11-21T16:19:50.226Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "timestamp_utc": "2026-11-21T16:19:50.226Z",
+    "timestamp_utc": "2026-11-21T17:28:19.137Z",
     "focus": [
-      "T0048: independently measured TWW disenchant shard-quality cohorts by gear/bonus, rarity and character skill",
-      "T0009/T0040: independent post-Oct-2024 prospecting rank-specific cast logs",
-      "T0010/T0011/T0012: controlled Khaz Algar milling rank, output quality, skill and refund logs"
+      "T0048 new independent reported DE means and exact-ranked gear drop cohorts",
+      "T0040/T0009 per-rank Ironclaw/Aqirite/Bismuth independent originals",
+      "T0010/T0011/T0012 new 10-herb milling originals"
     ],
     "checks": [
       {
-        "source": "https://eu.forums.blizzard.com/en/wow/t/disenchanting-shard-quality/565405",
-        "source_date": "2025-03-12 (original), 2025-03-23 (reply)",
-        "classification": "new original first-person Retail quality observation, held; no quantitative cohort",
-        "result": "Claim of mostly R1 Gleaming Shards from highest-quality crafted blues despite full DE tree; no N, item IDs, rank distributions or skill. Separate author argues full effective skill matters; do not calculate or admit."
+        "source": "https://us.forums.blizzard.com/en/wow/t/disenchanting-greens/1942112",
+        "source_date": "2024-09-03",
+        "classification": "new outside 731-source cutoff; reviewable first-person mean, historically dated, no measured casts",
+        "result": "Aendri said 1 dust per green on average; unranked output and gear class; record only per-cast mean, all unknown fields null."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1fpswuz",
-        "source_date": "2024-09-26",
-        "classification": "already assigned to Codex 731-source cutoff (reddit:1fpswuz); no worker recatalogue",
-        "result": "4000/3000 DE comparison and 145 skill already catalogued by the owner team; not re-recorded."
+        "source": "https://www.reddit.com/r/woweconomy/comments/1f117id",
+        "source_date": "2024-08",
+        "classification": "duplicate cohort, no new record",
+        "result": "100 greens 119 R1/97 R2/55 R3 repeats the identical original participant study in reddit:1f3qf96 (already admitted/cutoff), not 100 additional operations."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1fdqzep",
-        "source_date": "2024-09-10",
-        "classification": "already assigned to Codex cutoff (reddit:1fdqzep); no worker recatalogue",
-        "result": "Shard shattering examples are separate method/refund context, not direct Disenchant baseline."
+        "source": "https://www.wowhead.com/item=213399/glittering-glass",
+        "classification": "already Codex-owned cutoff wowhead:item=213399",
+        "result": "50k-ore approximate efficiency Adreymar is on owner-catalogued source; no recatalogue, rank/casts unspecified."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1fvhzy0",
-        "source_date": "2024-10-04",
-        "classification": "already assigned to Codex cutoff (reddit:1fvhzy0); no worker recatalogue",
-        "result": "Milling operations pooled across herbs, not item/rank-specific measured N/histograms."
+        "source": "https://www.reddit.com/r/woweconomy/comments/1fdmzwy",
+        "classification": "already Codex-owned cutoff reddit:1fdmzwy",
+        "result": "Historical Mycobloom mean remains an earlier cohort with unknown per-rank actual cast logs; not repeated."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1fuy8gl",
-        "source_date": "2024-10-03",
-        "classification": "new to cutoff check but no usable cohort; excluded",
-        "result": "Price/supply commentary and unsupported generic R3-drop percentage; no item-specific processing log or denominators."
+        "source": "https://us.forums.blizzard.com/en/wow/t/storm-dust-and-enchanting/1934498",
+        "source_date": "2024-08-29/2024-09-02",
+        "classification": "outside cutoff but unrelated method/unsupported denominator",
+        "result": "400 Mycobloom -> Storm Dust via Alchemy Thaumaturgy, not Milling; no worker drop record. Other remarks on crafting/profession greens give no exact item ID/cast log."
       }
     ]
   },
