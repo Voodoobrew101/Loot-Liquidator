@@ -1,3 +1,8 @@
+# Loot Liquidator 0.12.49
+
+- Apply the same compact leading-rate/count format to milling, with no trailing average annotation.
+- Keep separate milling quality rows, including zero grades and rows beyond twelve. Preserve baseline quantities, evidence, valuation and unverified per-input denominators.
+
 # Loot Liquidator 0.12.48
 
 - Display prospecting yield rates at the beginning of material rows, such as `20% Flawless Amani Lapis`, without trailing average text. Keep underlying probability evidence and valuation separate from this presentation.

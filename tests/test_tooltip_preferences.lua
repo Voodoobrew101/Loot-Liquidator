@@ -33,7 +33,7 @@ local function render(show,method)
     function tip:AddLine(s)self.lines[#self.lines+1]=s end
     function tip:AddDoubleLine(l,r)self.lines[#self.lines+1]=l..' | '..r end
     LL:AppendRecommendationTooltip(tip,{action='P',facts={id=1,classID=7,count=5},count=5,
-        conversionOptions={{name=method or 'Mill',letter='P',available=true,value=12,yieldModel=model}}})
+        conversionOptions={{name=method or 'Smelt',letter='P',available=true,value=12,yieldModel=model}}})
     return table.concat(tip.lines,'\n')
 end
 local hidden=render(nil)
