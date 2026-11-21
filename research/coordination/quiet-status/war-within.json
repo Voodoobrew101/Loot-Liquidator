@@ -1,16 +1,16 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-21T07:19:29.953Z",
-  "status": "research-active; held newly identified Wowhead Looter item-type/direction anomaly (227659), no new empirical TWW yield",
+  "updated_at": "2026-11-21T08:24:53.881Z",
+  "status": "research-active; new-original-source search completed; no new admissible War Within numeric cohorts or provenance-corrected yields",
   "task_ids": [
+    "T0048",
+    "T0009",
+    "T0040",
     "T0010",
     "T0011",
-    "T0012",
-    "T0040",
-    "T0009",
     "T0008",
     "T0007",
-    "T0048"
+    "T0012"
   ],
   "exact_gaps_targeted": [
     "T0048 232446/229150 and related 233264/233265/229143/229162: original live Retail Looter pctstack, nonoverlap, source build/skill, material IDs and zero-inclusive stack histograms",
@@ -19,8 +19,8 @@
     "Historical shatter 219950/219951 into 219946/219947/219948: verify independent ~10k-shard original cohort versus comments, denominator/refund basis and distinct method schema",
     "T0048 219474 Tracker's Chitin Cuffs: historical firsthand successful disenchant vs current WoWDB cannot-disenchant item metadata, linked output ranks/bonus/build, measured operation count and cast-level material log"
   ],
-  "source_branch_head_reviewed": "53c9ab94f26517dc9acecb36e620c29801cff6fc",
-  "source_policy": "2026-11-20 owner coordination: active Codex/reviewer team owns cutoff 0cd0bad 713+12 existing sources; worker only new original evidence or focused identity/confidence verification and own quiet status. No duplicate catalogue, routine PR, empty evidence or build/runtime modifications.",
+  "source_branch_head_reviewed": "85792b3f70635851afc79ced50a400516c7fa026",
+  "source_policy": "READ current research/v3 README/evidence-format/mechanics/worker/queue before search. Source cutoff catalogue CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources incl six recovered; reuse 12,222 scoped decisions; do not recatalogue Codex backlog. Review/admission merged to main in PR #82 but worker branch remains evidence-only; no release asserted.",
   "study_backlog_triage": [
     {
       "status": "admitted",
@@ -281,16 +281,7 @@
     "held": 14,
     "duplicate": 3
   },
-  "newly_verified_fields": [
-    {
-      "field": "Wowhead Looter source semantics/eligibility hold",
-      "input": "Fleeting Arcane Manifestation, itemID 227659; consumable and disenchant-derived weekly knowledge item, not identified gear",
-      "source": "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation",
-      "observed_site_statistic": "Indexed table claims 14 disenchants of item 227659 with TWW and Dragonflight outputs",
-      "eligibility": "unverified; do not assert cannotDisenchant from contradictory site metadata",
-      "limitation": "Site table could invert process direction or mix client eras; cannot infer any material yield rates, cast count, drop probabilities, noDisenchant or source gear identity"
-    }
-  ],
+  "newly_verified_fields": [],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
   "new_reference_only_numeric_records": 0,
@@ -300,15 +291,18 @@
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation",
-    "https://warcraft.wiki.gg/wiki/Disenchant"
+    "https://www.reddit.com/r/woweconomy/comments/1k78h4v",
+    "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
+    "https://www.reddit.com/r/woweconomy/comments/1nmnuc2",
+    "https://www.curseforge.com/wow/addons/queenbaex",
+    "https://www.wowhead.com/item=222618/nacreous-pigment",
+    "https://www.reddit.com/r/woweconomy/comments/1nqwdhf"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-20T0521-algari-pvp-item-metadata.jsonl",
-  "verified_commit_sha": "53c9ab94f26517dc9acecb36e620c29801cff6fc",
-  "verification": "Fetched current repository guidance, queue and owned status; source checked against primary Wowhead item metadata and indexed Looter block; item 227659 absent from owner cutoff manifest. No new evidence JSONL without trustworthy eligible raw outcomes. Status-only update via GitHub contents API with original blob SHA, readback pending.",
+  "verified_commit_sha": null,
+  "verification": "2026-11-21 read current README, mechanics, evidence-format, worker, queue and status on implementation/five-agent-completion; checked 731-source catalogue receipt CLOSED_VERIFIED_CURRENT_PIPELINE, main tools exist, and independently revisited current discovery queries. No new measured cohorts; status-only update of owned war-within JSON, read-back and SHA verification to follow.",
   "blockers": [
     "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
-    "On this research branch tools/research_build_review.py and tools/prepare_build_research.py returned GitHub 404; build-time admission/generation remains implementation review work, not deployed or worker-owned.",
     "Cumulative PTR Looter display rows contain repeated material names with linked rank IDs unavailable; no per-row independent study and no safe current-Retail rank-specific mapping.",
     "No independently verified post-2024-10-25 original TWW cast logs with completed operations, output-quality IDs, 0..N histograms, skill/spec/build and resourcefulness basis. Kaychak May-2025 named original XLSX is Patreon-locked; Jan-2026 advertised free workbook not retrieved, and neither is presently verified as an original measured yield study.",
     "2025-06-21 'Prospecting Shattering Cheat Sheet.xlsx' is shown as a Patreon attachment but access is join/login-gated; no original workbook bytes or raw cast rows to audit.",
@@ -327,7 +321,8 @@
     "Four separate studyKey rows for the same Golgoth Specular Rainbowfish original three-unit anecdote could inflate totals under studyKey-only admission; output 222618 is link identity, not independently verified receipt quality. Codex owner reviewers must dedupe by original author/source before any build-time ingestion.",
     "Focused provenance flag: Elfshinobi1 450 Ironclaw ore / 10 Radiant Ruby original is duplicated across war-within-20261031-132410 and war-within-20261101-021724 with distinct studyKeys. Codex owner catalogue/build reviewer must admit once; do not independently rewrite original evidence or inflate operations.",
     "Mycobloom 210796 author observed pigment-quality change after removing Silver Tongue's Quill 222574 (+18 skill); no exact before/after character skill, specialization, comparable raw casts/quantities, output item hyperlinks, or refund ledger. Preserve as historical source context only; require source logs before inferring a threshold or quality-dependent yield.",
-    "New 227659 Wowhead Looter table claims disenchant samples of a knowledge consumable with cross-era outputs; input/loot direction and eligibility uncertain; held pending original client logs or Master source parser review."
+    "New 227659 Wowhead Looter table claims disenchant samples of a knowledge consumable with cross-era outputs; input/loot direction and eligibility uncertain; held pending original client logs or Master source parser review.",
+    "2026-11-21 verify: tools/research_build_review.py and tools/prepare_build_research.py exist on main, while still absent on research branch (expected separation); owner catalogue receipt says MERGED_MAIN at 3f7323db, local regression PASS, CI PASS, publication workflow pending. Do not mistake research branch 404 for pipeline deployment failure or independently edit implementation."
   ],
   "exhausted_sources": [
     "Previously indexed 1f83cnd, 1g350pq, PeaEsk/434018, 1fdmzwy and 1f3qf96 already provide historical studies; source duplicates not re-imported.",
@@ -339,53 +334,56 @@
     "2026-11-20 follow-up: 1g9s48p repeats the already indexed 400 R1 Bismuth source; 1k78h4v and 1l91chl are 2025 financial/value comparisons without source output ledgers; 1nmnuc2 describes workflows only. Do not revisit these unless author publishes actual completed-operation exports.",
     "2026-11-21 focused scan: 1fisfkn and 1f9qado are owner-catalogued cutoff sources; their old cohorts were not repeated. Wowhead 227659 has only contradictory site-reported Looter data, not a trustworthy original cast ledger."
   ],
-  "next_concrete_step": "Continue seeking independent Retail post-hotfix named gear TWW disenchant logs (actual completed casts, 0..N, rank-linked 219946..219955, skill/spec/build), Mycobloom 210796..210798 10-herb quality-correct mill ledgers and Bismuth/Ironclaw/Aqirite 210930..210938 rank-specific prospecting export. Refer 227659 source direction/eligibility to Master for source-parser triage only if candidate for admission; do not contaminate known gear yields. No changes to Codex 731-source catalogue or runtime.",
-  "previous_status_updated_at": "2026-11-21T06:23:15.884Z",
+  "next_concrete_step": "Seek NEW original TWW post-2024-10-25 full completed-operation logs from addon exports for item-specific gear -> ranked 219946-219955, Bismuth/Aqirite/Ironclaw 210930-210938 and Mycobloom 210796-210798 with raw 0..N, quality IDs, actual crafts, skill/spec/build and Resourcefulness basis. Leave all unsupported hit rates/nulls unknown; avoid exhausted finance-only sources and Codex's verified 731-source catalogue.",
+  "previous_status_updated_at": "2026-11-21T07:19:29.953Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "scan_at_utc": "2026-11-21T07:19:29.953Z",
-    "task_ids": [
-      "T0048",
-      "T0040",
-      "T0010",
-      "T0011",
-      "T0012",
-      "T0009",
-      "T0008",
-      "T0007"
+    "timestamp_utc": "2026-11-21T08:24:53.881Z",
+    "focus": [
+      "TWW ranked 210930-210938 Bismuth/Ironclaw/Aqirite prospecting",
+      "TWW 210796-210798 Mycobloom quality-correct milling",
+      "TWW gear DE 219946-219955 Storm Dust/Shards"
     ],
-    "results": [
+    "checks": [
       {
-        "source": "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation",
-        "status": "new-held-looter-source-direction-and-item-type-anomaly-not-numeric-drop",
-        "finding": "Consumable knowledge token 227659 flagged as disenchant input with 14 site-reported operations and TWW+Dragonflight material lines; not a valid empirically matched gear yield cohort."
+        "source": "https://www.reddit.com/r/woweconomy/comments/1k78h4v",
+        "result": "Existing 2025 R2 Aqirite/Ironclaw economics post gives approximate expected 100k-ore to 13,500-gem forecast, not actual independently logged operations; previously exhausted and no original material output ledger",
+        "classification": "duplicate/exhausted lead"
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1fisfkn",
-        "status": "already-owned-cutoff",
-        "finding": "Historic 2024 Ironclaw/Aqirite pooled and beta samples already in 731-source owner catalogue; not re-ingested."
+        "source": "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
+        "result": "Previously held March-2025 600 R1 Ironclaw purchase/prospects financial anecdote, no material outputs, zero/hits or refunds; not new cohort",
+        "classification": "duplicate/exhausted lead"
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1f9qado",
-        "status": "already-owned-cutoff",
-        "finding": "Historical original storm-dust shuffle worksheet/comment cohorts already catalogued; not re-ingested."
+        "source": "https://www.reddit.com/r/woweconomy/comments/1nmnuc2",
+        "result": "Existing 2025 advice and pricing with no independent per-output mill/prospect production log; gold values not suitable for research EV",
+        "classification": "existing non-yield source"
       },
       {
-        "source": "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide",
-        "status": "guide-reference-not-raw-operations",
-        "finding": "Rank/skill milling guide provides no independent completed-cast 0..N data; no new empirical records."
+        "source": "https://www.curseforge.com/wow/addons/queenbaex",
+        "result": "QueenBaeX is profession/stat export addon for already inspected Kalimdor Hold Em model workbook, not evidence of completed processing casts or material drop histograms",
+        "classification": "source context, not independent measured cohort"
+      },
+      {
+        "source": "https://www.wowhead.com/item=222618/nacreous-pigment",
+        "result": "LotzBoi general Mycobloom skill/yield ranges and 10-herb recipe already indexed; does not give per-rank N, output-item quality receipts or zeros",
+        "classification": "existing reference only"
+      },
+      {
+        "source": "https://www.reddit.com/r/woweconomy/comments/1nqwdhf",
+        "result": "September-2025 economic advice for Ironclaw/Aqirite, no original casts/outputs",
+        "classification": "existing non-yield source"
       }
     ],
     "new_independent_cohorts": 0,
-    "new_output_fields": 0,
-    "new_source_identity_flags": 1,
-    "new_source_profile_contexts": 0,
-    "evidence_created": false,
-    "owner_catalogue_note": "Cutoff 731-source catalogue belongs to active Codex team and was not modified."
+    "raw_cast_logs_retrieved": 0,
+    "unverified_probabilities_introduced": 0,
+    "identities_invented": 0
   },
   "source_integrity_findings": [
     {
