@@ -1,3 +1,9 @@
+# Loot Liquidator 0.12.47
+
+- Resolve Eversong Diamond eligibility against the selected profile's exact ore specialization. Known locked profiles show 0% and zero yield, including all quality variants.
+- Activate the existing conditional quantity reference when its ore-specific one-point unlock is present. Keep unknown allocations distinct from locked ones and preserve source observations.
+- Bind these gates to the compiled native milestone, ore identity and diamond quality family; verify all seven ore variants through real profile routing and tooltip rendering.
+
 # Loot Liquidator 0.12.46
 
 - Restore numerical baseline and skill/stat tooltip quantities across professions. Show known average units when occurrence chance or a current yield range is unavailable.

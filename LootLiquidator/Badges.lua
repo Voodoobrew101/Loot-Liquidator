@@ -714,7 +714,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     -- A zero modeled unlock has no output at this allocation,
                     -- including DE endpoint identities without an extra tag.
                     -- Preserve explicit ordinary source zeroes and unknowns.
-                    if not (material.expectedQuantity==0 and
+                    if not (material.expectedQuantity==0 and not material.structuralZero and
                         (material.additionalOutput or model.disenchantBaselineApplied
                             or model.generalQualityApplied or model.skillQualityApplied or model.sourceReferenceOnly)) then
                         visible[#visible+1]=material
