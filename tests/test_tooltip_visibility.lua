@@ -67,7 +67,7 @@ for _,case in ipairs(cases) do
                     'Insufficient Data: no researched yield model'}) do
                     contains(text,note,level==3 and research)
                 end
-                contains(text,'20% Material 10 [avg 0.300 per 5 inputs]',level==3)
+                contains(text,'20% Material 10 [avg 0.300 per '..(case[2]=='Prospect' and 'prospect]' or '5 inputs]'),level==3)
                 contains(text,'20% Material 10 [1-2]',false) -- inconsistent source bounds are research detail only
                 contains(text,'5 copper',level>=2) -- per-input material and vendor prices
                 contains(text,'Material 12 (chance unavailable) [yield unavailable]',level==3)

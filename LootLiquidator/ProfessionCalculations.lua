@@ -16,6 +16,79 @@ end
 local function intersect(a,b)
     for _,x in ipairs(a or {}) do if contains(b,x) then return true end end return false
 end
+function LL:ProfessionOutputGate(f,option,context)
+    local gates=self.ItemDB and self.ItemDB.professionOutputGates
+    local version,build
+    if GetBuildInfo then version,build=GetBuildInfo() end
+    if not gates or version~=gates.clientVersion or tostring(build)~=tostring(gates.build)
+        or f.expansionID~=gates.expansionID or option.name~=gates.method or option.recipeID~=gates.recipeID then return end
+    for _,rule in ipairs(gates.rules) do if contains(rule.inputItemIDs,f.id) then
+        if not context or context.profession~=gates.profession or context.stale
+            or context.expansionID and context.expansionID~=gates.expansionID
+            or context.specializationKnown~=true or context.specializationEncoding~='invested-points'
+            or type(context.specializationPoints)~='table' then return rule,nil,gates end
+        local points=lookup(context.specializationPoints,rule.nodeID) or 0
+        if type(points)~='number' or points<0 or points~=points or points%1~=0 then return rule,nil,gates end
+        return rule,points>=rule.minimumPoints,gates
+    end end
+end
+
+-- Resolve a typed native eligibility gate after source fusion and quantity
+-- projection, before synthetic scaling and valuation. Source records stay raw.
+function LL:ApplyProfessionOutputGates(f,option,model,context)
+    if not model or model.professionOutputGateApplied then return model end
+    local rule,eligible,gates=self:ProfessionOutputGate(f,option,context)
+    if not rule or eligible==nil then return model end
+    local result=copy(model)
+    local function gated(m)
+        if contains(gates.outputItemIDs,m.id) then return true end
+        return intersect(gates.outputItemIDs,m.rankIDs)
+    end
+    local fallback,anchored,found
+    for _,m in ipairs(result.materials or {}) do if gated(m) then
+        found=true
+        if m.conditionalRequirement=='Proficient Processor per-ore unlock'
+            and type(m.conditionalExpectedQuantity)=='number' then fallback=m end
+        if type(m.expectedQuantity)=='number' and m.expectedQuantity>0 and not m.additionalOutput then anchored=true end
+    end end
+    local materials={}
+    for _,m in ipairs(result.materials or {}) do
+        local omit=false
+        if gated(m) then
+            if not eligible then
+                m.expectedQuantity=0;m.chance=0;m.chanceConfidence=gates.confidence
+                m.structuralZero=true;m.probabilityBasis='specialization-eligibility-zero';m.probabilityVerified=false
+                m.minQuantity=nil;m.maxQuantity=nil;m.unavailableReason=nil;m.conditionalExpectedQuantity=nil
+                m.conditionalRequirement=nil;m.quantityCounts=nil;m.personalHistogram=nil;m.histogram=nil
+                m.samples=nil;m.effectiveSamples=nil;m.personalSamples=nil;m.fieldEvidence=nil
+            elseif fallback and not anchored then
+                if m==fallback then
+                    m.expectedQuantity=m.conditionalExpectedQuantity
+                    m.confidence=m.conditionalConfidence or 0
+                    m.rankIDs=copy(gates.outputItemIDs) -- the calculator did not identify an output quality
+                    m.conditionalExpectedQuantity=nil;m.conditionalRequirement=nil;m.unavailableReason=nil
+                    m.chance=nil;m.minQuantity=nil;m.maxQuantity=nil;m.probabilityVerified=false
+                    m.gateReferenceActivated=true
+                elseif m.additionalOutput then omit=true end -- do not add the weak native unlock prior twice
+            end
+        end
+        if not omit then materials[#materials+1]=m end
+    end
+    if not eligible and not found then materials[#materials+1]={id=gates.outputItemIDs[1],
+        rankIDs=copy(gates.outputItemIDs),expectedQuantity=0,chance=0,chanceConfidence=gates.confidence,
+        structuralZero=true,probabilityBasis='specialization-eligibility-zero',probabilityVerified=false} end
+    result.materials=materials;result.professionOutputGateApplied=true
+    result.outputGate={nodeID=rule.nodeID,minimumPoints=rule.minimumPoints,eligible=eligible,confidence=gates.confidence}
+    result.unknownOutputs=#(result.namedOutputs or {})>0
+        or model.unknownOutputs and (not model.outputQuantityCompletenessTracked or model.unknownOutputIdentities) or nil
+    result.hasConditionalReferences=nil
+    for _,m in ipairs(materials) do
+        if m.expectedQuantity==nil then result.unknownOutputs=true end
+        if m.conditionalExpectedQuantity~=nil then result.hasConditionalReferences=true end
+    end
+    if not result.unknownOutputs and result.warning=='Partial: some output quantities unknown' then result.warning=nil end
+    return result
+end
 -- A reviewed calibration changes one declared confidence-zero coefficient;
 -- the native effect identity, node gate, scope, unit and operator still apply.
 local function reviewedEffectAmount(effect,option)

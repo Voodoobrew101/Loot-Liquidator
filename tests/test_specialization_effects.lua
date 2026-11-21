@@ -93,7 +93,7 @@ local text=render(full)
 check(text:find('1.400',1,true) and text:find('1.600',1,true),'changed node-point quantities reach actual material tooltip rows')
 LL.db.showAverageQuantity=false
 text=render(full)
-check(text:find('[avg 1.400 per 5 inputs]',1,true) and text:find('[avg 1.600 per 5 inputs]',1,true),
+check(text:find('[avg 1.400 per prospect]',1,true) and text:find('[avg 1.600 per prospect]',1,true),
     'changed specialization quantities stay numerical when current chance/range is unavailable')
 near(full.value,31.2,'hiding averages does not change the specialization valuation')
 LL.db.showAverageQuantity=true

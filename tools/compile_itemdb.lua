@@ -753,6 +753,43 @@ for _,record in ipairs(recycling.modeledBaselines or {}) do
     db.processing[#db.processing+1]=record
 end
 db.buildReport.normalizedCapturePriors=#(recycling.modeledBaselines or {})
+db.professionOutputGates=assert(loadfile('database/prospecting-output-gates.lua'))()
+do
+    local gates=db.professionOutputGates
+    local profiles=db.professionProfiles
+    local profile=profiles.profiles[gates.profession..':'..gates.expansionID]
+    assert(gates.schemaVersion==1 and gates.clientVersion==profiles.clientVersion and gates.build==profiles.build,
+        'Prospecting output gate build changed; review required')
+    assert(profiles.recipes[gates.recipeID].profession==gates.profession,'Prospecting gate recipe mismatch')
+    for _,rule in ipairs(gates.rules) do
+        local node=profile.nodes[rule.nodeID] or profile.nodes[tostring(rule.nodeID)]
+        local found=false
+        for _,milestone in ipairs(node and node.milestones or {}) do
+            for _,effect in ipairs(milestone.effects or {}) do
+                if milestone.rank==rule.minimumPoints and effect.entryID==rule.entryID
+                    and effect.metric=='extraOutput' and effect.scope.method==gates.method
+                    and effect.scope.labelIDs and effect.scope.labelIDs[1]==rule.labelID then
+                    assert(#effect.outputItemIDs==#gates.outputItemIDs,'Prospecting gate output family changed')
+                    for index,id in ipairs(gates.outputItemIDs) do
+                        assert(effect.outputItemIDs[index]==id,'Prospecting gate output identity mismatch')
+                    end
+                    found=true
+                end
+            end
+        end
+        assert(found,'Prospecting one-point native milestone changed; review required')
+        for _,id in ipairs(rule.inputItemIDs) do
+            local item=profiles.items[id]
+            assert(item and item.name==rule.inputName and item.expansionID==gates.expansionID
+                and item.classID==7 and item.subclassID==7,'Prospecting ore-family native identity mismatch')
+        end
+    end
+    for rank,id in ipairs(gates.outputItemIDs) do
+        local item=profiles.items[id]
+        assert(item and item.name=='Eversong Diamond' and item.qualityFamilyID==586 and item.qualityRank==rank,
+            'Prospecting diamond native quality identity changed; review required')
+    end
+end
 db.gatheringStudyBaselines=assert(loadfile('database/gathering-study-baselines.lua'))()
 assert(db.gatheringStudyBaselines.schemaVersion==1 and type(db.gatheringStudyBaselines.gatheringTargets)=='table',
     'Unsupported native gathering study schema')

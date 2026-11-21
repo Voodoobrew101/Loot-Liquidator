@@ -176,6 +176,7 @@ python3 tests/test_legacy_cohort_admission.py
 "$lua_bin" tests/test_profession_calculations.lua
 "$lua_bin" tests/test_processing_zero_bonus_regression.lua
 "$lua_bin" tests/test_numerical_pipeline_stages.lua
+"$lua_bin" tests/test_prospecting_output_gates.lua
 "$lua_bin" tests/test_processing_inverse_edge_cases.lua
 "$lua_bin" tests/test_gem_replacement_milestones.lua
 "$lua_bin" tests/test_profession_baseline_pipeline.lua

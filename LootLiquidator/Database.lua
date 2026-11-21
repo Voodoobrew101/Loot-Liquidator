@@ -631,6 +631,7 @@ local function sourceModel(self,f,option,r)
             minQuantity=m.minQuantity.value,maxQuantity=m.maxQuantity.value}
         if m.conditionalReference then
             material.conditionalExpectedQuantity=material.expectedQuantity
+            material.conditionalConfidence=m.expectedQuantity.confidence
             material.conditionalRequirement=m.conditionalReference
             material.expectedQuantity=nil
         end
@@ -968,7 +969,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
     local batch=option.inputCount or anchor.inputCount
     local result={kind='weighted-evidence',inputCount=batch,materials={},sources={},
         source='Weighted evidence',context=ctx,adjustment='baseline / unadjusted',
-        provisional=false,confidence=0,excludedSources={},unknownOutputs=false,
+        provisional=false,confidence=0,excludedSources={},unknownOutputs=false,outputQuantityCompletenessTracked=true,
         gearKey=anchor.gearKey,isDisenchantCategory=anchor.isDisenchantCategory,
         referenceContextID=anchor.referenceContextID,
         categorySourceStudyIDs=anchor.categorySourceStudyIDs,memberInputItemIDs=anchor.memberInputItemIDs}
@@ -1041,6 +1042,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             local model=transformed[r] or sourceModel(self,f,option,r)
             if model.unknownOutputs or #(model.namedOutputs or {})>0 then
                 result.unknownOutputs=true
+                result.unknownOutputIdentities=true
                 result.namedOutputs=result.namedOutputs or {}
                 for _,named in ipairs(model.namedOutputs or {}) do
                     local found=false
@@ -1138,6 +1140,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                 if original.samplingVariation and r.inputCount==batch and not m.expectationTransformed then b.samplingEvidence=original end
                 if m.conditionalExpectedQuantity~=nil then
                     b.conditionalExpectedQuantity=m.conditionalExpectedQuantity*batch/r.inputCount
+                    b.conditionalConfidence=m.conditionalConfidence
                     b.conditionalRequirement=m.conditionalRequirement
                     result.hasConditionalReferences=true
                 end
@@ -1459,6 +1462,7 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
         if self.ApplySkillQualityModel then model=self:ApplySkillQualityModel(f,option,model,ctx) end
         if self.ApplySpecializationEffects then model=self:ApplySpecializationEffects(f,option,model,ctx) end
     end
+    if model and self.ApplyProfessionOutputGates then model=self:ApplyProfessionOutputGates(f,option,model,ctx) end
     if model and self.ApplySyntheticBenchmark then model=self:ApplySyntheticBenchmark(f,option,model,ctx) end
     if retry then return model,reason end -- C2: an item name is loading; try again later
     self._processingModelCache[key]={model=model,reason=reason}

@@ -714,7 +714,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     -- A zero modeled unlock has no output at this allocation,
                     -- including DE endpoint identities without an extra tag.
                     -- Preserve explicit ordinary source zeroes and unknowns.
-                    if not (material.expectedQuantity==0 and
+                    if not (material.expectedQuantity==0 and not material.structuralZero and
                         (material.additionalOutput or model.disenchantBaselineApplied
                             or model.generalQualityApplied or model.skillQualityApplied or model.sourceReferenceOnly)) then
                         visible[#visible+1]=material
@@ -754,7 +754,11 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     local needsAverage=type(m.expectedQuantity)=='number' and (type(m.chance)~='number'
                         or m.inconsistentFields or not m.minQuantity and not m.maxQuantity)
                     if LA.db.showAverageQuantity~=true and needsAverage then
-                        left=left..(' [avg %s per %d %s]'):format(UnitsText(m.expectedQuantity),batch,batch==1 and 'input' or 'inputs')
+                        if option.name=='Prospect' and not model.operationUnverified and not option.operationUnverified then
+                            left=left..(' [avg %s per prospect]'):format(UnitsText(m.expectedQuantity))
+                        else
+                            left=left..(' [avg %s per %d %s]'):format(UnitsText(m.expectedQuantity),batch,batch==1 and 'input' or 'inputs')
+                        end
                     elseif LA.db.showAverageQuantity==true then
                         left=left.."  "..(type(m.expectedQuantity)=='number' and UnitsText(m.expectedQuantity)
                             or type(m.conditionalExpectedQuantity)=='number' and (UnitsText(m.conditionalExpectedQuantity)..' conditional') or 'average unavailable')
