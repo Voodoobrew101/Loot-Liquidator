@@ -65,7 +65,36 @@ check(LL:ProjectPersonalEstimate(f,{name='Disenchant',recipeID=13262},estimate,m
 manual.skill=104;manual.preSpecializationSkill=104;manual.effectiveSkill=104
 manual.specializationPoints[107648]=10
 check(LL:ProjectPersonalEstimate(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')==nil,'source zero-spec evidence not silently reused at nonzero allocation')
-manual.specializationPoints={};manual.buffs={[12345]=true}
+manual.specializationPoints={}
+for _,id in ipairs({1126,5487,22812,22842,61336,192081,1251877,1261872,1271910}) do
+    manual.buffs={[id]=true};manual.buffStacks={[id]=3}
+    local matched=LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')
+    check(matched~=nil and matched.samples==200,'reviewed non-output aura '..id..' does not reject the measured skill/spec profile')
+    check(matched.sourcePatchBuild=='70783' and same(matched.observationContext.buffs,source.buffs),
+        'ignored combat aura does not rewrite the original source context/build')
+end
+manual.buffs={[5487]=true,[12345]=true};manual.buffStacks=nil
+check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')==nil,
+    'an unknown aura remains a constraint beside a reviewed combat aura')
+manual.buffs={};manual.activeBuffs={['12345']=true}
+check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')==nil,
+    'an empty primary buff map does not hide unknown activeBuffs')
+manual.activeBuffs=nil;manual.buffs={[5487]=true};currentBuild='70962'
+check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')==nil,
+    'the reviewed aura set is not silently transferred to another native build')
+currentBuild='70961'
+local originalDB=LL.ItemDB
+local knownEffect={metric='skill',condition={requiresActiveBuff=true,spellIDs={5487}}}
+LL.ItemDB={professionProfiles={profiles={}}}
+LL.ItemDB.professionProfiles.profiles['Enchanting:11']={nodes={fixture={pointEffects={knownEffect}}}}
+check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')==nil,
+    'an explicit native profession condition overrides the non-output exclusion')
+LL.ItemDB={mechanicRules={{method='Disenchant',profession='Enchanting',expansionID=11,
+    conditions={buffs={['5487']=true}}}}}
+check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')==nil,
+    'an explicit rule buff map also overrides the non-output exclusion')
+LL.ItemDB=originalDB
+manual.buffs={[12345]=true}
 check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')==nil,'different active buff context does not match')
 manual.buffs={};manual.character='Other-Fixture-Character'
 check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')==nil,'other-character access not granted by source captures')

@@ -50,6 +50,25 @@ assert(project('Alt')[1].available==false,'explicit alt exclusion still applies'
 assert(original[1].value==20 and original[1].available and original[1].yieldModel==baseModel)
 assert(baseModel.context.character=='Player' and LL.db.rateProfile==1,'global rates and cached original model unchanged')
 assert(f.currentCanDisenchant==nil,'projected evaluation does not modify original facts')
+-- An explicit scanned-character selection also overrides the old per-method
+-- manual-rate setting. Access still follows that setting; the selected profile
+-- must not secretly become its saved zero-skill simulation.
+local previousMode,previousAlt=LL.ProcessingMethodMode,LL.AltMethodEnabled
+local previousAltMethods=LL.db.characters.Alt.altMethods
+LL.ProcessingMethodMode=function()return 4 end
+LL.AltMethodEnabled=function()return true end
+LL.db.characters.Alt.altMethods={M=true}
+LL.db.manualProfessionProfiles.Alt={['Inscription:9']={enabled=true,skill=0,specialization='none'}}
+assert(project('Alt')[1].value==80 and not project('Alt')[1].yieldModel.context.simulated,
+    'named alt uses scanned40 rather than legacy manual0')
+LL.db.characters.Player.altMethods={M=true}
+assert(project('Player')[1].value==20 and not project('Player')[1].yieldModel.context.simulated,
+    'named current character uses scanned10 rather than legacy manual90')
+assert(project('@hypothetical')[1].value==180 and project('@hypothetical')[1].yieldModel.context.simulated,
+    'explicit simulation retains its saved manual rates')
+LL.ProcessingMethodMode=previousMode;LL.AltMethodEnabled=previousAlt
+LL.db.characters.Player.altMethods=nil;LL.db.characters.Alt.altMethods=previousAltMethods
+LL.db.manualProfessionProfiles.Alt=nil
 local function render(selection)
     LL.db.professionTooltipProfiles.Inscription=selection
     local tip={lines={}}

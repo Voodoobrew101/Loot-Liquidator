@@ -1003,7 +1003,16 @@ function LL:SetManualProfessionProfile(character,profession,expansion,values)
     end
     local buffs
     if values.buffs and next(values.buffs) then
-        buffs={} for id,enabled in pairs(values.buffs) do buffs[id]=enabled end
+        buffs={} for id,enabled in pairs(values.buffs) do buffs[tostring(id)]=enabled end
+    end
+    local buffStacks
+    if values.buffStacks~=nil then
+        if type(values.buffStacks)~='table' then return false end
+        buffStacks={}
+        for id,count in pairs(values.buffStacks) do
+            if not PositiveInt(tonumber(id)) or not PositiveInt(count) then return false end
+            if buffs and (buffs[id] or buffs[tostring(id)]) then buffStacks[tostring(id)]=count end
+        end
     end
     local stats
     if values.stats~=nil then
@@ -1033,18 +1042,27 @@ function LL:SetManualProfessionProfile(character,profession,expansion,values)
     local scanned=char and char.researchProfiles and char.researchProfiles[profileKey]
     local operation=scanned and char.professionOperationProfiles and char.professionOperationProfiles[tostring(scanned.lineID)]
     local calibration=operation and operation.statCalibration or {}
+    if values.statAnchors~=nil then
+        if type(values.statAnchors)~='table' then return false end
+        for _,anchor in pairs(values.statAnchors) do
+            if type(anchor)~='table' or type(anchor.rating)~='number' or type(anchor.percent)~='number'
+                or not finiteStat(anchor.rating) or not finiteStat(anchor.percent) then return false end
+        end
+    end
     local anchors={}
     for _,stat in ipairs(self.ProfessionSimulationStats) do
-        local anchor=previous and previous.statAnchors and previous.statAnchors[stat.key]
+        local anchor
+        if values.statAnchors then anchor=values.statAnchors[stat.key]
+        else anchor=previous and previous.statAnchors and previous.statAnchors[stat.key] end
         if type(anchor)~='table' or type(anchor.rating)~='number' or type(anchor.percent)~='number'
             or not finiteStat(anchor.rating) or not finiteStat(anchor.percent) then anchor=nil end
         local supplied=stats and stats[stat.key]
         if not anchor then
-            local prior=previous and previous.stats and previous.stats[stat.key]
+            local prior=not values.statAnchors and previous and previous.stats and previous.stats[stat.key]
             if type(prior)=='table' and type(prior.rating)=='number' and type(prior.percent)=='number'
                 and finiteStat(prior.rating) and finiteStat(prior.percent) then anchor=prior
             elseif supplied and supplied.rating~=nil and supplied.percent~=nil then anchor=supplied
-            else anchor=calibration[stat.key] end
+            elseif not values.statAnchors then anchor=calibration[stat.key] end
         end
         anchors[stat.key]={rating=anchor and anchor.rating or 0,percent=anchor and anchor.percent or 0}
     end
@@ -1061,10 +1079,40 @@ function LL:SetManualProfessionProfile(character,profession,expansion,values)
             effectStates[tostring(entryID)]={active=state.active,stacks=state.stacks or 1}
         end
     end
+    local statGrantReference
+    if values.statGrantReference~=nil then
+        if type(values.statGrantReference)~='table' then return false end
+        local function copyReference(value)
+            if type(value)~='table' then return value end
+            local result={} for key,entry in pairs(value) do result[key]=copyReference(entry) end return result
+        end
+        statGrantReference={}
+        local policy=values.statGrantReference.policy
+        if policy~='SOURCE_OPERATION' and policy~='ZERO_SOURCE' and policy~='TARGET_SCOPED_TRANSFER_PRIOR' then return false end
+        statGrantReference.policy=policy
+        statGrantReference.buffsKnown=values.statGrantReference.buffsKnown==true
+        for _,key in ipairs({'capturedWithOperation','recipeID','build','skillLineID','profession'}) do
+            local value=values.statGrantReference[key]
+            if type(value)=='string' or type(value)=='number' or type(value)=='boolean' then statGrantReference[key]=value end
+        end
+        if policy=='TARGET_SCOPED_TRANSFER_PRIOR' then
+            statGrantReference.confidence=0
+            statGrantReference.assumption='Native total stats transferred to an unidentified source scope; only target-scoped allocation deltas are modeled'
+        end
+        for _,key in ipairs({'specializationPoints','learnedSpecializations','buffs','buffStacks',
+            'activeBuffs','events','contextFlags','effectStates','option','facts'}) do
+            local value=values.statGrantReference[key]
+            if value~=nil then
+                if type(value)~='table' then return false end
+                statGrantReference[key]=copyReference(value)
+            end
+        end
+    end
     local profile={enabled=values.enabled==true,skill=values.skill,specialization=values.specialization,stats=stats,
+        statGrantReference=statGrantReference,
         effectStates=effectStates,
         learnedSpecializations=learned,statAnchors=anchors,
-        buffs=buffs,benchmark=benchmark,
+        buffs=buffs,buffStacks=buffStacks,benchmark=benchmark,
         character=character,profession=profession,expansionID=expansion,simulated=true}
     chars[character][profileKey]=profile
     if self.Invalidate then self:Invalidate() end
@@ -1258,6 +1306,17 @@ function LL:CaptureProfessionOperation(recipeID,info)
                 bonusStatValue=number(stat.bonusStatValue),ratingPct=number(stat.ratingPct),
                 bonusRatingPct=number(stat.bonusRatingPct),statKey=stat.statKey}
         end
+    end
+    -- Pair this operation's total native stats with the allocation/aura read
+    -- taken during the same capture. Later talent or buff scans are separate.
+    local _,allocation=ReadSpec(profession.professionID)
+    if allocation and allocation.known==true then
+        local buffs,stacks,buffsKnown=self:ProfessionAuraState()
+        saved.statGrantReference={policy='SOURCE_OPERATION',capturedWithOperation=true,
+            recipeID=recipeID,build=saved.operationBuild,skillLineID=profession.professionID,
+            profession=saved.profession,specializationPoints=qualityCopy(allocation.points),
+            learnedSpecializations=qualityCopy(allocation.learned),
+            buffs=qualityCopy(buffs),buffStacks=qualityCopy(stacks),buffsKnown=buffsKnown==true}
     end
     char.professionOperationProfiles=char.professionOperationProfiles or {}
     char.professionOperationProfiles[tostring(profession.professionID)]=saved

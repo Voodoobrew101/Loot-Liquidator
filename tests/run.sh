@@ -69,6 +69,7 @@ python3 tests/validate_package.py
 "$lua_bin" research/tests/test_verified_mechanics_adapter.lua
 "$lua_bin" tests/test_modernization.lua
 "$lua_bin" tests/test_settings.lua
+"$lua_bin" tests/test_native_stat_reference_receipt.lua
 "$lua_bin" tests/test_profession_opportunity_preview.lua
 "$lua_bin" tests/test_profession_opportunity_settings.lua
 "$lua_bin" tests/test_published_milling_runtime.lua
@@ -110,6 +111,7 @@ python3 tests/test_compact_transfer.py
 "$lua_bin" tests/test_disenchant_recording_categories.lua
 "$lua_bin" tests/test_personal_disenchant_source_reference.lua
 "$lua_bin" tests/test_personal_disenchant_quote.lua
+python3 tests/test_disenchant_aura_scope.py
 "$lua_bin" tests/test_craft_operations.lua
 "$lua_bin" tests/test_imported_results.lua
 "$lua_bin" tests/test_salvage_imports.lua

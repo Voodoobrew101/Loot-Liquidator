@@ -106,9 +106,18 @@ for _,case in ipairs(cases) do for _,classID in ipairs({2,4}) do
     end
     for _,material in ipairs(full.materials) do
         check(material.expectedQuantity>=0,'projected means remain nonnegative')
-        check(material.chance==nil and material.samples==nil and material.quantityCounts==nil
-            and material.minQuantity==nil and material.maxQuantity==nil,
-            'projection invents neither hit probabilities, sample counts nor stack distributions')
+        check(material.samples==nil and material.quantityCounts==nil,
+            'projection invents neither sample counts nor stack histograms')
+        if material.chance~=nil then
+            check(material.chance>=0 and material.chance<=1 and material.chanceConfidence<=material.confidence,
+                'retained or fixed-stack modeled probabilities carry the full confidence cap')
+            if material.probabilityBasis=='modeled-fixed-stack-primary-quality' then
+                near(material.chance*material.minQuantity,material.expectedQuantity,
+                    'quality-only fixed-stack model satisfies E=P*stack')
+                check(material.minQuantity==material.maxQuantity and material.probabilityVerified==false,
+                    'modeled quality does not claim newly verified occurrence')
+            end
+        end
         if essenceIDs[material.id] then near(material.confidence,5,'native essence uncertainty cap')
         else near(material.confidence,expectedConfidence,'per-material confidence respects the model cap') end
     end
@@ -146,7 +155,93 @@ for _,case in ipairs(cases) do for _,classID in ipairs({2,4}) do
     LL.db.rateProfile=3
 end end
 
+-- The reported epic item IDs use the actual shipped armor baseline. Skill0
+-- must preserve its measured occurrence, and quality-only changes may project
+-- a chance only because these source ranks have a verified one-unit stack.
+local collector=cases[3]
+for _,id in ipairs({272225,250462}) do
+    local epic={id=id,classID=4,quality=4,expansionID=11,itemLevel=253,count=1}
+    for _,skill in ipairs({0,64,104,290}) do
+        set(collector,0,0,skill)
+        local model=assert(resolve(epic));valued(model,epic)
+        check(model.context.preSpecializationSkill==skill,'selected simulation skill is never replaced by scanned gear')
+        for _,rankID in ipairs({243605,243606}) do
+            local material=assert(output(model,rankID))
+            near(material.chance,material.expectedQuantity,'single-crystal modeled occurrence survives the full quote')
+            check(material.chanceConfidence<=20 and material.samples==nil,
+                'retained/projected chance keeps model uncertainty without invented observations')
+        end
+        if skill==0 then
+            near(output(model,243605).chance,.597484,'zero-profile R1 occurrence retains the source baseline')
+            near(output(model,243606).chance,.367925,'zero-profile R2 occurrence retains the source baseline')
+        end
+        local text=rendered(epic,model)
+        check(not text:find('Item 243605 (chance unavailable)',1,true)
+            and not text:find('Item 243606 (chance unavailable)',1,true),
+            'both actual epic item tooltips display their supported rank chances')
+    end
+end
+-- A variable-stack output must not acquire a probability from its mean alone.
+local uncertain=copy(LL.ItemDB.modeledDisenchantBaselines[1])
+uncertain.rule.preservePrimaryTotal=true
+for _,m in ipairs(uncertain.materials) do m.minQuantity=nil;m.maxQuantity=nil end
+local shifted=assert(LL:DisenchantCurveQuantities(uncertain,{effectiveSkill=290,childPoints=0}))
+for _,m in ipairs(shifted) do
+    if m.id==uncertain.rule.primaryRankIDs[1] or m.id==uncertain.rule.primaryRankIDs[2] then
+        check(m.chance==nil,'changed quantity without a supported conditional stack cannot invent occurrence')
+    end
+end
+local inconsistent=copy(uncertain)
+for _,m in ipairs(inconsistent.materials) do m.minQuantity=1;m.maxQuantity=1;m.chance=.01 end
+local mismatch=assert(LL:DisenchantCurveQuantities(inconsistent,{effectiveSkill=290,childPoints=0}))
+for _,m in ipairs(mismatch) do
+    if m.id==inconsistent.rule.primaryRankIDs[1] or m.id==inconsistent.rule.primaryRankIDs[2] then
+        check(m.chance==nil,'a fixed range with inconsistent source E/P cannot justify a projected chance')
+    end
+end
+local independentBounds=copy(uncertain)
+for _,m in ipairs(independentBounds.materials) do m.minQuantity=1;m.maxQuantity=2;m.chance=nil end
+for _,m in ipairs(assert(LL:DisenchantCurveQuantities(independentBounds,{effectiveSkill=0,childPoints=0}))) do
+    check(m.chance==nil and m.minQuantity==1 and m.maxQuantity==2,
+        'unchanged independent bounds survive even when source occurrence is unknown')
+end
+
 local supplier=cases[2];local rare=facts(supplier,4)
+set(supplier,0,0,104)
+local rareSourceOnly=assert(resolve({id=244752,classID=4,quality=3,expansionID=11,count=1}))
+for _,m in ipairs(rareSourceOnly.materials) do
+    if m.expectedQuantity>0 then check(m.chance~=nil,
+        'uninvested real rare-item prior preserves occurrence through quality-only skill redistribution') end
+end
+-- Actual rare gear acquires endpoint-only material identities while its
+-- modeled allocation still gives those materials zero units. They stay in the
+-- numeric vector for the curve, but must not appear as tooltip outcomes.
+local displayGear={id=264527,classID=4,quality=3,expansionID=11,itemLevel=266,count=1}
+local supplierExtras={236761,236963,237359,238511,238513}
+for _,rank in ipairs({0,19,20,30}) do
+    set(supplier,0,rank,100)
+    local model=assert(resolve(displayGear));valued(model,displayGear)
+    local text=rendered(displayGear,model)
+    for _,id in ipairs(supplierExtras) do
+        local material=assert(output(model,id),'compiled Supplier endpoint material retained')
+        local present=text:find('Item '..id,1,true)~=nil
+        if rank<20 then
+            near(material.expectedQuantity,0,'before-unlock extra has zero units')
+            check(not present,'zero endpoint-only material is absent from the rendered tooltip')
+        else
+            check(material.expectedQuantity>0 and present,'positive milestone extra remains visible')
+        end
+    end
+end
+set(supplier,0,0,0)
+local unresolved=copy(assert(resolve(displayGear)))
+unresolved.materials[#unresolved.materials+1]={id=999991,additionalOutput=true}
+unresolved.materials[#unresolved.materials+1]={id=999992,expectedQuantity=.25,additionalOutput=true}
+local unresolvedText=rendered(displayGear,unresolved)
+check(unresolvedText:find('Item 999991',1,true) and unresolvedText:find('[yield unavailable]',1,true),
+    'unknown quantity remains visible instead of being mistaken for zero')
+check(unresolvedText:find('Item 999992',1,true),'positive additional output remains visible')
+
 set(supplier,0,9,100)
 local nine=assert(resolve(rare));local nineValue=valued(nine,rare)
 set(supplier,0,10,100)

@@ -114,7 +114,8 @@ for _,case in ipairs({{'Disenchant','D','Enchanting',4},{'Mill','M','Inscription
             'Estimated average','Source range retained','different sets of casts','Source fields disagree','Conflicting source'}) do
             contains(text,word,false)
         end
-        contains(text,'unavailable',true)
+        contains(text,'(unavailable)',false)
+        contains(text,'Confidence 33%, partial, unavailable',false)
         contains(text,'partial',true)
         contains(text,'50 copper',true)
         if level>=2 then
@@ -135,6 +136,34 @@ for _,case in ipairs({{'Disenchant','D','Enchanting',4},{'Mill','M','Inscription
 end
 LL.ProfessionSimulationEffectNotes=nil
 print('PASS: profession simulations retain confidence, identity and missing-data notices without estimate labels')
+-- A valued simulated profile has no character that can perform the action.
+-- That access flag remains false, but does not make its numeric preview unavailable.
+LL.db={tooltipDetail=3}
+local previewModel={confidence=20,materials={{id=10,expectedQuantity=1,netExpectedValue=50}},
+    context={simulated=true,profileKind='manual-simulation',profession='Enchanting'}}
+local preview={name='Disenchant',letter='D',eligibleInput=true,available=false,value=50,yieldModel=previewModel,
+    tooltipProfileLabel='Simulated'}
+local function previewText()
+    local tip={lines={}}
+    function tip:AddLine(s)self.lines[#self.lines+1]=s end
+    function tip:AddDoubleLine(l,r)self.lines[#self.lines+1]=l..' | '..r end
+    LL:AppendRecommendationTooltip(tip,{action='D',converted=50,facts={id=272225,classID=4},
+        disenchantEligible=true,conversionOptions={preview}})
+    return table.concat(tip.lines,'\n')
+end
+local text=previewText()
+contains(text,'Disenchant — Simulated (Confidence 20%)',true)
+contains(text,'(unavailable)',false)
+contains(text,'Confidence 20%, unavailable',false)
+contains(text,'Material 10 (chance unavailable)',true)
+contains(text,'50 copper',true)
+assert(preview.available==false and preview.value==50 and previewModel.confidence==20,
+    'preview presentation preserves access and its numeric model')
+preview.tooltipProfileLabel=nil;previewModel.context.simulated=false
+contains(previewText(),'Disenchant (Confidence 20%, unavailable)',true)
+preview.tooltipProfileLabel='Simulated';previewModel.context.simulated=true;preview.value=nil
+contains(previewText(),'Disenchant — Simulated (Confidence 20%, unavailable)',true)
+print('PASS: valued simulated preview header excludes action-access status; actual/unpriced options retain it')
 -- Also use the current shipped evidence for the exact reported item IDs.
 LL={}
 GetBuildInfo=function()return '12.1.5','123456','',120105 end
