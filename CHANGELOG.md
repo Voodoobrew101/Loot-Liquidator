@@ -1,3 +1,8 @@
+# Loot Liquidator 0.12.48
+
+- Display prospecting yield rates at the beginning of material rows, such as `20% Flawless Amani Lapis`, without trailing average text. Keep underlying probability evidence and valuation separate from this presentation.
+- Preserve positive references for distinct prospecting quality IDs, retain numerical zero quality rows, and show all prospecting rows beyond the old twelve-row cutoff.
+
 # Loot Liquidator 0.12.47
 
 - Label prospecting averages per prospect, retaining the same per-five-ore quantity and valuation.

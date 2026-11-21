@@ -714,7 +714,11 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     -- A zero modeled unlock has no output at this allocation,
                     -- including DE endpoint identities without an extra tag.
                     -- Preserve explicit ordinary source zeroes and unknowns.
-                    if not (material.expectedQuantity==0 and not material.structuralZero and
+                    local nativeItem=LA.ItemDB and LA.ItemDB.professionProfiles and LA.ItemDB.professionProfiles.items
+                        and LA.ItemDB.professionProfiles.items[material.id]
+                    local distinctProspectingQuality=option.name=='Prospect' and not material.rankIDs
+                        and nativeItem and nativeItem.qualityRank
+                    if not (material.expectedQuantity==0 and not material.structuralZero and not distinctProspectingQuality and
                         (material.additionalOutput or model.disenchantBaselineApplied
                             or model.generalQualityApplied or model.skillQualityApplied or model.sourceReferenceOnly)) then
                         visible[#visible+1]=material
@@ -730,14 +734,20 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 if showProcessing then
                     tooltip:AddLine(explanation,.70,.75,.82,true)
                 end
-                local limit=showResearch and #list or math.min(#list,12)
+                local limit=(showResearch or option.name=='Prospect') and #list or math.min(#list,12)
                 for i=1,limit do
                     local m=list[i]
                     local left="  "
+                    local compactProspect=option.name=='Prospect' and not model.operationUnverified and not option.operationUnverified
                     if type(m.chance)=="number" then
                         -- Keep probabilities readable; uncertainty is summarized
                         -- once on the method row instead of prefixing each material.
                         left=left..ChanceText(m.chance).." "
+                    elseif compactProspect and type(m.expectedQuantity)=='number' then
+                        -- Owner-requested presentation of the average yield.
+                        -- This never changes chance evidence or valuation.
+                        if m.expectedQuantity<=1 then left=left..ChanceText(m.expectedQuantity)..' '
+                        else left=left..UnitsText(m.expectedQuantity)..'x ' end
                     end
                     left=left..MaterialDisplay(m.id)
                     if type(m.rankIDs)=="table" and #m.rankIDs>1 then left=left.." (rank unknown)" end
@@ -753,7 +763,9 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     end
                     local needsAverage=type(m.expectedQuantity)=='number' and (type(m.chance)~='number'
                         or m.inconsistentFields or not m.minQuantity and not m.maxQuantity)
-                    if LA.db.showAverageQuantity~=true and needsAverage then
+                    if compactProspect then
+                        -- Rate/count is already at the start of the row.
+                    elseif LA.db.showAverageQuantity~=true and needsAverage then
                         if option.name=='Prospect' and not model.operationUnverified and not option.operationUnverified then
                             left=left..(' [avg %s per prospect]'):format(UnitsText(m.expectedQuantity))
                         else
@@ -781,6 +793,9 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     if net==nil and m.conditionalExpectedValue~=nil then amount=LA:Money(m.conditionalExpectedValue/batch)..' conditional' end
                     two(left,amount,option.letter or "D")
                     if showResearch then
+                        if compactProspect and m.chance==nil and type(m.expectedQuantity)=='number' then
+                            tooltip:AddLine(('    Displayed yield rate uses %.3f average units per prospect; no measured occurrence inferred.'):format(m.expectedQuantity),.70,.75,.82,true)
+                        end
                         if m.unavailableReason then tooltip:AddLine('    '..m.unavailableReason,.90,.72,.45,true) end
                         if m.derivedMean and not simulated then tooltip:AddLine('    Estimated average: probability times conditional yield midpoint',.70,.75,.82,true) end
                         if m.inconsistentFields and not simulated then tooltip:AddLine('    Source range retained; selected average and chance disagree with it',.90,.72,.45,true) end

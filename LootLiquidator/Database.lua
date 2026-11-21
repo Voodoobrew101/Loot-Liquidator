@@ -1088,9 +1088,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                 -- alternatives. Do not add exact-rank fallback rows on top.
                 local familyCovered=false
                 local family=outputFamily(m)
-                -- An unknown-profile, nominal-budget quality reference is a
-                -- fallback for the whole family. Adding its reported grade
-                -- beside another cohort's measured grade invents cooutputs.
+                -- Pooled references are family fallbacks. A positive exact
+                -- prospecting quality remains a distinct output even when
+                -- another quality in that family already has measurements.
                 local unknownProfilePrior=r.reviewedBacklogModel and r.baselineProfileAssumed
                     and not r.sampleSizeKnown and (r.samples==nil or r.samples==0)
                 local reported=r.referenceConditions or {}
@@ -1099,7 +1099,8 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                 local unidentifiedReference=(r.sourceKey=='reference' or r.sourceKey=='legacy')
                     and not reportedProfile and (r.baselineProfile==nil or r.baselineProfileAssumed)
                 if family and measuredFamilies[family] and (unknownProfilePrior or unidentifiedReference)
-                    and (m.rankIDs or not measuredFamilies[family][m.id] or m.expectedQuantity==0) then
+                    and (m.rankIDs or m.expectedQuantity==0
+                        or option.name~='Prospect' and not measuredFamilies[family][m.id]) then
                     familyCovered=true
                     result.excludedSources[#result.excludedSources+1]=r.recordID..': measured family baseline already available'
                 end
