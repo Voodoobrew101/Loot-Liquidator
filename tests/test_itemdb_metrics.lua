@@ -108,22 +108,22 @@ near(chosen.yieldModel.materials[1].expectedQuantity,8)
 near(chosen.value,40) -- 8 units * 100 copper / 20 inputs, without another P factor
 LL.db.showAverageQuantity=true
 local text=render(f,chosen)
-assert(text:find('50%',1,true) and text:find('[10-20]',1,true) and not text:find('[avg',1,true))
+assert(text:find('50%',1,true) and text:find('[10-20]',1,true) and text:find('  8.000',1,true))
 material.dropChance.status='provisional'
 assert(render(f,option()):find('50%',1,true) and not render(f,option()):find('~50%',1,true),'probabilities omit tilde prefixes')
 material.dropChance=field(nil,'unknown');material.minQuantity=field(nil,'unknown');material.maxQuantity=field(nil,'unknown')
-text=render(f,option());assert(not text:find('[yield unavailable]',1,true) and text:find('8.000x ',1,true) and not text:find('50%',1,true))
+text=render(f,option());assert(not text:find('[yield unavailable]',1,true) and text:find('  8.000',1,true) and not text:find('50%',1,true))
 material.dropChance=field(1e-7);material.expectedQuantity=field(1e-7)
 material.minQuantity=field(1);material.maxQuantity=field(1)
 text=render(f,option())
-assert(text:find('<0.1%',1,true) and not text:find('[avg',1,true),'positive values must not display as zero')
+assert(text:find('<0.1%',1,true) and text:find('  <0.001',1,true),'positive values must not display as zero')
 material.dropChance.value=.999999;material.expectedQuantity.value=.999999
 assert(render(f,option()):find('>99.9%',1,true),'near-certain is not 100%')
 material.dropChance.value=1;material.expectedQuantity.value=1
 assert(render(f,option()):find('100%',1,true))
 material.dropChance.value=0;material.expectedQuantity.value=0
 chosen=option();near(chosen.value,0)
-text=render(f,chosen);assert(text:find('0%',1,true) and not text:find('[avg',1,true))
+text=render(f,chosen);assert(text:find('0%',1,true) and text:find('  0.000',1,true))
 -- Operation discovery does not admit disabled evidence or bypass recipe access.
 LL.db.source_itemdb_enabled=false
 local disabled=option();assert(disabled.value==nil)
