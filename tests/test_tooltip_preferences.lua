@@ -55,9 +55,15 @@ assert(model.value==12 and a.netExpectedValue==3 and b.netExpectedValue==9,'pres
 local lo,hi=a.minQuantity,a.maxQuantity
 a.minQuantity=nil;a.maxQuantity=nil
 local meanOnly=render(false)
-assert(not meanOnly:find('yield unavailable',1,true) and meanOnly:find('[avg 0.375 per 5 inputs]',1,true),
+assert(not meanOnly:find('yield unavailable',1,true) and meanOnly:find('[avg 0.375 per prospect]',1,true),
     'known mean remains numerical when the conditional range is unavailable')
 assert(render(true):find('0.375',1,true),'known mean remains visible when averages are enabled')
+a.chance=nil;a.expectedQuantity=.2
+local perProspect=render(false)
+assert(perProspect:find('[avg 0.200 per prospect]',1,true) and not perProspect:find('20%',1,true),
+    'a five-ore prospect average is not divided again or converted into occurrence probability')
+assert(model.value==12 and a.netExpectedValue==3,'per-prospect labels leave valuation unchanged')
+a.chance=.2;a.expectedQuantity=.375
 a.minQuantity=lo;a.maxQuantity=hi
 -- Technical details are independent opt-ins; core values remain visible.
 model.sources={legacy=100};LL.SourceOrder={'legacy'}

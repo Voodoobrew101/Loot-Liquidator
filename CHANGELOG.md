@@ -1,5 +1,6 @@
 # Loot Liquidator 0.12.47
 
+- Label prospecting averages per prospect, retaining the same per-five-ore quantity and valuation.
 - Resolve Eversong Diamond eligibility against the selected profile's exact ore specialization. Known locked profiles show 0% and zero yield, including all quality variants.
 - Activate the existing conditional quantity reference when its ore-specific one-point unlock is present. Keep unknown allocations distinct from locked ones and preserve source observations.
 - Bind these gates to the compiled native milestone, ore identity and diamond quality family; verify all seven ore variants through real profile routing and tooltip rendering.

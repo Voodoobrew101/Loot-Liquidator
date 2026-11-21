@@ -754,7 +754,11 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     local needsAverage=type(m.expectedQuantity)=='number' and (type(m.chance)~='number'
                         or m.inconsistentFields or not m.minQuantity and not m.maxQuantity)
                     if LA.db.showAverageQuantity~=true and needsAverage then
-                        left=left..(' [avg %s per %d %s]'):format(UnitsText(m.expectedQuantity),batch,batch==1 and 'input' or 'inputs')
+                        if option.name=='Prospect' then
+                            left=left..(' [avg %s per prospect]'):format(UnitsText(m.expectedQuantity))
+                        else
+                            left=left..(' [avg %s per %d %s]'):format(UnitsText(m.expectedQuantity),batch,batch==1 and 'input' or 'inputs')
+                        end
                     elseif LA.db.showAverageQuantity==true then
                         left=left.."  "..(type(m.expectedQuantity)=='number' and UnitsText(m.expectedQuantity)
                             or type(m.conditionalExpectedQuantity)=='number' and (UnitsText(m.conditionalExpectedQuantity)..' conditional') or 'average unavailable')
