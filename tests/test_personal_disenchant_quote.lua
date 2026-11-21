@@ -166,3 +166,96 @@ for _,simulated in ipairs({false,true})do
 end
 LL.ProjectPersonalEstimate=originalProjection
 print('PASS: matching personal DE quote and same-build mismatched live/manual profile isolation')
+
+-- Crafting-only and foreign-profession allocations cannot change the DE cohort.
+for _,record in ipairs(fixture.craftResearch.records)do record.build='70783' end
+for _,study in pairs(fixture.craftResearch.studies)do study.build='70783' end
+activeBuffs={}
+local originalSupport=LL:GetProfessionSimulationControlSupport('Enchanting',11)
+assert(not LL:ProfessionEffectAffectsTooltip({metric='nonOutput',scope={}},'Alchemy',11,'Craft'),
+    'cosmetic/non-output nodes do not create inert controls in any profession')
+for _,id in ipairs({107769,107764,107762,107761,107763}) do
+    assert(not originalSupport.nodes[tostring(id)],'crafting-only node must stay out of DE controls')
+end
+for _,id in ipairs({107649,107648,107647,107646}) do
+    assert(originalSupport.nodes[tostring(id)],'material-affecting DE node remains editable')
+end
+for _,signature in ipairs({'107769=30,107764=20,107762=20,107761=20,107763=20','106982=30'}) do
+    LL.ProcessingPlayerConditions=function()
+        local target=context();target.specialization=signature
+        target.specializationPoints=LL:ProfessionSpecializationPoints(signature)
+        target.learnedSpecializations={}
+        for id in pairs(target.specializationPoints) do target.learnedSpecializations[id]=true end
+        return target
+    end
+    LL.db.disenchantDataMode=1;LL._processingModelCache=nil
+    local quote=assert(LL:EvaluateDisenchant({id=244752,classID=4,quality=3,expansionID=11,itemLevel=168,count=1}))
+    assert(quote.confidence==85 and #quote.yieldModel.materials==2,'unrelated allocations retain measured goggles baseline and confidence')
+    assert(quote.yieldModel.personalStats.total==200,'unrelated allocations do not replace actual 200-cast evidence')
+end
+local relevant=context();relevant.specialization='107647=10';relevant.specializationPoints={['107647']=10}
+assert(not LL:DisenchantObservationProfileKey(relevant),'actual DE milestone must retain its normal transform boundary')
+relevant.specialization='999999999=1';relevant.specializationPoints={['999999999']=1}
+assert(not LL:DisenchantObservationProfileKey(relevant),'unknown specialization is not silently classified as irrelevant')
+-- Replay actual profile routing for every profession, with a foreign talent injected.
+for _,profession in ipairs({'Alchemy','Blacksmithing','Enchanting','Engineering','Herbalism','Inscription',
+ 'Jewelcrafting','Leatherworking','Mining','Skinning','Tailoring','Cooking','Fishing'}) do
+ local foreign=profession=='Enchanting' and 106982 or 107649
+ local method=({Enchanting='Disenchant',Inscription='Mill',Jewelcrafting='Prospect',
+  Herbalism='Gather',Mining='Gather',Skinning='Skin',Fishing='Fish'})[profession] or 'Craft'
+ local target=context();target.profession=profession;target.simulated=true
+ target.specializationPoints={};target.learnedSpecializations={}
+ local option={name=method,recipeID=0};local facts={id=244752,expansionID=11,quality=3,classID=4}
+ local before=LL:ProfessionProfileParameters(profession,11,target,option,facts)
+ target.specializationPoints={[tostring(foreign)]=30};target.learnedSpecializations={[tostring(foreign)]=true}
+ local after=LL:ProfessionProfileParameters(profession,11,target,option,facts)
+ assert(before.skill==after.skill and before.outputFactor==after.outputFactor
+  and before.inputFactor==after.inputFactor and #before.appliedEffects==#after.appliedEffects,
+  'foreign talents cannot alter '..profession..' calculations')
+end
+-- Synthetic condition IDs test scanner routing without adding game observations.
+local oldDB=LL.ItemDB
+LL.ItemDB={professionProfiles={profiles={
+ ['Enchanting:11']={nodes={[1]={learningEffects={
+  {metric='skill',scope={method='Disenchant'},condition={spellIDs={101}}},
+  {metric='multicraft',scope={method='Craft'},condition={spellIDs={102}}},
+  {metric='skill',scope={labelIDs={5022}},condition={spellIDs={103}}}}}}},
+ ['Alchemy:11']={nodes={[2]={learningEffects={{metric='resourcefulness',scope={method='Craft'},condition={spellIDs={201}}}}}}}}}}
+local requested={}
+C_UnitAuras={GetPlayerAuraBySpellID=function(id)
+ requested[id]=true;return {spellId=id,applications=2}
+end,GetAuraDataByIndex=function()error('direct known-ID reads must not enumerate combat buffs')end}
+local buffs,stacks,known=LL:ProfessionAuraState('Enchanting',11,'Disenchant')
+assert(known and buffs['101'] and stacks['101']==2 and not buffs['102'] and not buffs['201'])
+assert(requested[101] and not requested[102] and not requested[103] and not requested[201] and not requested[1235733])
+requested={}
+buffs=LL:ProfessionAuraState('Alchemy',11,'Craft')
+assert(buffs['201'] and not requested[101] and not requested[102],'other professions have separate aura scopes')
+C_UnitAuras={GetAuraDataByIndex=function(_,index)
+ if index==1 then return {spellId=999999,applications=20} end
+ if index==2 then return {spellId=101,applications=3} end
+end}
+buffs,stacks,known=LL:ProfessionAuraState('Enchanting',11,'Disenchant')
+assert(known and buffs['101'] and stacks['101']==3 and not buffs['999999'],'fallback also excludes unrelated auras')
+assert(LL:ProfessionEffectAffectsTooltip({metric='perception',scope={method='Gather'}},'Skinning',11,'Skin'))
+assert(LL:ProfessionEffectAffectsTooltip({metric='perception',scope={method='Gather'}},'Fishing',11,'Fish'))
+LL.ItemDB.professionProfiles.profiles['Enchanting:11'].nodes[3]={pointEffects={{metric='skill',scope={scopeUnknown=true}}}}
+local unresolved=context();unresolved.specialization='3=1';unresolved.specializationPoints={['3']=1}
+assert(not LL:DisenchantObservationProfileKey(unresolved),'unknown native scope cannot prove a node irrelevant')
+for _,profession in ipairs({'Alchemy','Blacksmithing','Enchanting','Engineering','Herbalism','Inscription',
+ 'Jewelcrafting','Leatherworking','Mining','Skinning','Tailoring','Cooking','Fishing'}) do
+ local gather=profession=='Herbalism' or profession=='Mining' or profession=='Skinning'
+ local craft=not gather and profession~='Cooking' and profession~='Fishing'
+ local ids=LL:KnownProfessionAuraIDs(profession,11,gather and 'Gather' or 'Craft')
+ assert((ids['1239755']==true)==craft,'ingenuity phial scope: '..profession)
+ assert((ids['185562']==true)==gather,'firewater scope: '..profession)
+ assert((ids['1235733']==true)==(profession=='Enchanting'),'Shattered Essence scope: '..profession)
+ if profession=='Inscription' or profession=='Jewelcrafting' then
+  assert(LL:KnownProfessionAuraIDs(profession,11,profession=='Inscription' and 'Mill' or 'Prospect')['1239755'],
+   'crafting-speed phial identity is relevant to processing duration')
+ end
+ local de=LL:KnownProfessionAuraIDs(profession,11,'Disenchant')
+ assert(not de['185562'] and not de['1239755'] and not de['1235733'],'consumables do not become disenchant boosts: '..profession)
+end
+LL.ItemDB=oldDB;C_UnitAuras=nil
+print('PASS: crafting/foreign talent isolation, measured confidence, scoped known-ID and fallback aura reads')

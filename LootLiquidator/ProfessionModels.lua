@@ -202,6 +202,23 @@ end
 -- Material baselines depend on skill, specialization and modeled outcome
 -- modifiers. Full aura maps remain observation metadata; an unrelated or
 -- unmodeled aura must not replace a measured baseline with a category prior.
+-- The editor and aura reader use the same operation boundary as the quote.
+-- Recipe-label bonuses for permanent enchants are not disenchant bonuses.
+function LL:ProfessionEffectAffectsTooltip(effect,profession,expansion,method)
+    local s=effect.scope or {}
+    if effect.metric=='nonOutput' then return false end
+    if s.profession and s.profession~=profession or s.expansionID and expansion and s.expansionID~=expansion then return false end
+    if method=='Disenchant' then
+        if s.method and s.method~='Disenchant' or s.recipeID and s.recipeID~=13262
+            or s.scopeUnknown or #(s.labelIDs or {})>0 and s.labelContext~='disenchant-input' then return false end
+        return effect.metric=='skill' or effect.metric=='yieldMultiplier'
+            or effect.metric=='extraOutput' or effect.metric=='dropChance'
+    end
+    if method and s.method and s.method~=method and not (s.method=='Gather' and
+        (method=='Skin' or method=='Fish' or method=='Herbalism' or method=='Mining'
+            or method=='Skinning' or method=='Fishing')) then return false end
+    return not s.scopeUnknown
+end
 function LL:DisenchantModelAuraSet(context)
     local database=self.ItemDB
     local db=database or {}
@@ -224,8 +241,7 @@ function LL:DisenchantModelAuraSet(context)
         if type(value)~='table' or visited[value] then return end
         visited[value]=true
         if value.metric~=nil then
-            materialEffect=value.metric=='skill' or value.metric=='yieldMultiplier'
-                or value.metric=='extraOutput' or value.metric=='dropChance'
+            materialEffect=self:ProfessionEffectAffectsTooltip(value,'Enchanting',expansion,'Disenchant')
         end
         local scope=value.scope or {}
         if scope.method and scope.method~='Disenchant' then materialEffect=false end
@@ -262,13 +278,38 @@ function LL:DisenchantObservationProfileKey(context)
     if not finite(skill) then return nil end
     if context.maxSkill~=nil and (not finite(context.maxSkill) or context.maxSkill<=0) then return nil end
     local zero=context.specialization=='none'
+    local profiles=self.ItemDB and self.ItemDB.professionProfiles and self.ItemDB.professionProfiles.profiles or {}
+    local expansion=context.expansionID or context.inputExpansionID
+    local irrelevant={}
+    for key,profile in pairs(profiles) do
+        for id,node in pairs(profile.nodes or {}) do
+            local relevant=false
+            local function effects(list)
+                for _,effect in ipairs(list or {}) do
+                    if (effect.scope or {}).scopeUnknown
+                        or self:ProfessionEffectAffectsTooltip(effect,'Enchanting',expansion,'Disenchant') then relevant=true end
+                end
+            end
+            if key=='Enchanting:'..tostring(expansion) or expansion==nil and key:match('^Enchanting:') then
+                effects(node.pointEffects);effects(node.learningEffects)
+                for _,milestone in ipairs(node.milestones or {}) do effects(milestone.effects) end
+            end
+            if not relevant then irrelevant[tostring(id)]=true end
+        end
+    end
+    local parsed=context.specialization~='none' and self.ProfessionSpecializationPoints
+        and self:ProfessionSpecializationPoints(context.specialization)
+    if parsed then
+        zero=true
+        for id,value in pairs(parsed) do if value~=0 and not irrelevant[tostring(id)] then return nil end end
+    end
     for _,points in ipairs({context.specializationPoints or {},context.disenchantSpecializationPoints or {}}) do
-        for _,value in pairs(points) do
-            if not finite(value) or value~=0 then return nil end
+        for id,value in pairs(points) do
+            if not irrelevant[tostring(id)] and (not finite(value) or value~=0) then return nil end
         end
     end
     for _,learned in ipairs({context.learnedSpecializations or {},context.disenchantLearnedSpecializations or {}}) do
-        for _,value in pairs(learned) do if value then return nil end end
+        for id,value in pairs(learned) do if value and not irrelevant[tostring(id)] then return nil end end
     end
     if (context.specializationKnown==true or context.disenchantSpecializationKnown==true
         or context.simulated and context.profileKind=='manual-simulation')
@@ -1895,21 +1936,24 @@ function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
     local genericProfile=generic and generic.profiles and generic.profiles[profession..':'..tostring(expansion)]
     if genericProfile and self:ProfessionRuleMatchesBuild(generic) then
         support.skill=true
-        for id in pairs(genericProfile.nodes or {}) do
-            support.nodes[tostring(id)]=true
-            support.unquantifiedNodes[tostring(id)]=nil
+        local function includeBuffs(effects)
+            local relevant=false
+            for _,effect in ipairs(effects or {}) do
+                if self:ProfessionEffectAffectsTooltip(effect,profession,expansion,profession=='Enchanting' and 'Disenchant' or nil) then
+                    for _,id in ipairs(effect.condition and effect.condition.spellIDs or {}) do support.buffs[tostring(id)]=true end
+                    relevant=true
+                end
+            end
+            return relevant
+        end
+        for id,node in pairs(genericProfile.nodes or {}) do
+            local relevant=includeBuffs(node.pointEffects)
+            relevant=includeBuffs(node.learningEffects) or relevant
+            for _,milestone in ipairs(node.milestones or {}) do relevant=includeBuffs(milestone.effects) or relevant end
+            if relevant then support.nodes[tostring(id)]=true;support.unquantifiedNodes[tostring(id)]=nil end
         end
         for _,key in ipairs(genericProfile.statKeys or {}) do
-            if key~='skill' then support.stats[key]={rating=true,percent=true} end
-        end
-        local function includeBuffs(effects)
-            for _,effect in ipairs(effects or {}) do
-                for _,id in ipairs(effect.condition and effect.condition.spellIDs or {}) do support.buffs[tostring(id)]=true end
-            end
-        end
-        for _,node in pairs(genericProfile.nodes or {}) do
-            includeBuffs(node.pointEffects);includeBuffs(node.learningEffects)
-            for _,milestone in ipairs(node.milestones or {}) do includeBuffs(milestone.effects) end
+            if key~='skill' and profession~='Enchanting' then support.stats[key]={rating=true,percent=true} end
         end
     end
     return support

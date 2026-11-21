@@ -88,7 +88,7 @@ C_Spell={GetSpellName=function()return 'Designated Disenchanter' end}
 C_UnitAuras={GetAuraDataByIndex=function(_,index)if index==1 then return {spellId=2000,name='Artisan Tea'} end end}
 local catalog=LL:GetProfessionUIOptions('Tester - Realm','Enchanting',11)
 assert(catalog.nodes[1].name=='Designated Disenchanter' and catalog.nodes[1].maxRank==30)
-assert(catalog.buffs[1].id==2000 and not char.researchProfiles,'catalog metadata must not invent a measured snapshot')
+assert(#catalog.buffs==0 and not char.researchProfiles,'unmodeled active auras cannot enter the profession catalog or invent a snapshot')
 LL.db.characters['Alt - Realm']={professionOptions={['Enchanting:11']=catalog}}
 C_ProfSpecs.GetConfigIDForSkillLine=function()error('offline alt must not read live traits')end
 assert(LL:GetProfessionUIOptions('Alt - Realm','Enchanting',11)==catalog)

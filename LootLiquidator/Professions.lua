@@ -258,20 +258,78 @@ end
 -- Returns (skill, spec, skillLine) for THIS character and expansion.
 -- A previously verified spec can be reused when Blizzard temporarily hides
 -- trait data. 'Unknown' data is not silently upgraded or merged with verified.
-function LL:ProfessionAuraState()
-    local api=C_UnitAuras and C_UnitAuras.GetAuraDataByIndex
-    if type(api)~='function' then return nil,nil,false end
+function LL:KnownProfessionAuraIDs(profession,expansion,method)
+    local ids,visited={},{}
+    local db=self.ItemDB or {}
+    -- Reviewed native aura IDs, not recipe/activation spells. Their totals
+    -- already come from native operation stats: capture identity only here.
+    -- Sources and exact native rows: docs/disenchant-modifier-isolation-20261121.md.
+    local gathering=profession=='Herbalism' or profession=='Mining' or profession=='Skinning'
+    local crafting=profession=='Alchemy' or profession=='Blacksmithing' or profession=='Enchanting'
+        or profession=='Engineering' or profession=='Inscription' or profession=='Jewelcrafting'
+        or profession=='Leatherworking' or profession=='Tailoring'
+    if gathering and (method==nil or method=='Gather' or method=='Skin') then
+        for _,id in ipairs({185562,432265,1236763,1236767,1269152,1269170,1269171}) do ids[tostring(id)]=true end
+    end
+    if crafting and (expansion==nil or expansion==11)
+        and (method==nil or method=='Craft' or method=='Mill' or method=='Prospect') then
+        ids['1239755']=true -- Haranir Phial of Ingenuity
+        if profession=='Enchanting' and (method==nil or method=='Craft') then ids['1235733']=true end -- Shattered Essence
+    end
+    local function visit(value)
+        if type(value)~='table' or visited[value] then return end
+        visited[value]=true
+        if value.metric and self.ProfessionEffectAffectsTooltip
+            and not self:ProfessionEffectAffectsTooltip(value,profession,expansion,method) then return end
+        for _,id in ipairs(type(value.condition)=='table' and value.condition.spellIDs or {}) do
+            if PositiveInt(id) then ids[tostring(id)]=true end
+        end
+        for id,on in pairs(type(value.buffs)=='table' and value.buffs or {}) do
+            local spell=tonumber(type(on)=='number' and on or id)
+            if on and PositiveInt(spell) then ids[tostring(spell)]=true end
+        end
+        for _,child in pairs(value) do if type(child)=='table' then visit(child) end end
+    end
+    for key,profile in pairs(db.professionProfiles and db.professionProfiles.profiles or {}) do
+        if type(profession)=='string' and (key==profession..':'..tostring(expansion)
+            or expansion==nil and key:sub(1,#profession+1)==profession..':') then visit(profile) end
+    end
+    for _,name in ipairs({'professionRules','personalPatchRules','mechanicRules'}) do
+        for _,rule in ipairs(db[name] or {}) do
+            if (rule.profession or self:ProfessionForMethod(rule.method))==profession
+                and (expansion==nil or rule.expansionID==nil or rule.expansionID==expansion)
+                and (method==nil or rule.method==nil or rule.method==method) then visit(rule) end
+        end
+    end
+    return ids
+end
+function LL:ProfessionAuraState(profession,expansion,method)
+    local known=self:KnownProfessionAuraIDs(profession,expansion,method)
+    local direct=C_UnitAuras and C_UnitAuras.GetPlayerAuraBySpellID
     local buffs,stacks={},{}
-    for index=1,255 do
-        local ok,aura=pcall(api,'player',index,'HELPFUL')
-        if not ok then return nil,nil,false end
-        if not aura then return buffs,stacks,true end
-        local id=aura.spellId
-        if not (issecretvalue and issecretvalue(id)) and PositiveInt(id) then
+    local function capture(aura)
+        local id=aura and aura.spellId
+        if not (issecretvalue and issecretvalue(id)) and PositiveInt(id) and known[tostring(id)] then
             buffs[tostring(id)]=true
             local applications=aura.applications
             if not (issecretvalue and issecretvalue(applications)) and PositiveInt(applications) then stacks[tostring(id)]=applications end
         end
+    end
+    if type(direct)=='function' then
+        for id in pairs(known) do
+            local ok,aura=pcall(direct,tonumber(id))
+            if not ok then return nil,nil,false end
+            capture(aura)
+        end
+        return buffs,stacks,true
+    end
+    local api=C_UnitAuras and C_UnitAuras.GetAuraDataByIndex
+    if type(api)~='function' then return nil,nil,false end
+    for index=1,255 do
+        local ok,aura=pcall(api,'player',index,'HELPFUL')
+        if not ok then return nil,nil,false end
+        if not aura then return buffs,stacks,true end
+        capture(aura)
     end
     return nil,nil,false
 end
@@ -316,7 +374,7 @@ function LL:GetResearchProfessionSnapshot(f,profession)
                 specialization=cached.specialization,observed=cached.observed} or nil}
     end
     local snapshot=char.researchProfiles[profileKey]
-    snapshot.buffs,snapshot.buffStacks,snapshot.buffsKnown=self:ProfessionAuraState()
+    snapshot.buffs,snapshot.buffStacks,snapshot.buffsKnown=self:ProfessionAuraState(profession,exp)
     if type(skill)=="number" and skill==skill and skill>=0 and skill<math.huge
         and type(detail.skillModifier)=="number" and detail.skillModifier==detail.skillModifier
         and detail.skillModifier>=0 and detail.skillModifier<math.huge then
@@ -387,7 +445,7 @@ function LL:CaptureCraftContext(recipeID,f,method,allocation,applyConcentration,
     context.specializationEncoding=context.specializationKnown and 'invested-points' or nil
     context.specializationPoints=context.specializationKnown and specAllocation.points or nil
     context.learnedSpecializations=context.specializationKnown and specAllocation.learned or nil
-    context.buffs,context.buffStacks,context.buffsKnown=self:ProfessionAuraState()
+    context.buffs,context.buffStacks,context.buffsKnown=self:ProfessionAuraState(context.profession,context.inputExpansionID,method)
     if type(context.baseSkill)=="number" and type(context.bonusSkill)=="number" then
         context.preSpecializationSkill=context.baseSkill+context.bonusSkill
         context.effectiveSkill=context.baseSkill+context.bonusSkill
@@ -661,6 +719,8 @@ function LL:GetProfessionConditionalEffects(profession,expansion,nodes)
     local entries={}
     local function visit(value,nodeID,name,rank)
         if type(value)~='table' then return end
+        if profession=='Enchanting' and value.metric and self.ProfessionEffectAffectsTooltip
+            and not self:ProfessionEffectAffectsTooltip(value,profession,expansion,'Disenchant') then return end
         local condition=value.condition or {}
         local manualCondition=condition.event~=nil or next(condition.contextFlags or {})~=nil
             or next(value.requiredContextFlags or {})~=nil
@@ -776,19 +836,11 @@ function LL:GetProfessionUIOptions(character,profession,expansion)
         if #tabs>0 and #options.nodes==0 then options.nodes=previous.nodes or {} end
     else options.nodes=previous.nodes or {} end
     table.sort(options.nodes,function(a,b) return a.tab==b.tab and a.name<b.name or a.tab<b.tab end)
-    -- Retain actual helpful aura identities for explicit simulations. No
-    -- profession relevance, rating conversion or yield bonus is inferred.
+    -- Only declared profession modifiers belong in the simulation catalog.
     local buffs={}
-    for _,buff in ipairs(options.buffs) do buffs[buff.id]=buff end
-    if C_UnitAuras and C_UnitAuras.GetAuraDataByIndex then
-        for i=1,255 do
-            local aura=read(C_UnitAuras.GetAuraDataByIndex,'player',i,'HELPFUL')
-            if not aura then break end
-            if type(aura.spellId)=='number' and type(aura.name)=='string'
-                and not (issecretvalue and (issecretvalue(aura.spellId) or issecretvalue(aura.name))) then
-                buffs[aura.spellId]={id=aura.spellId,name=aura.name}
-            end
-        end
+    local known=self:KnownProfessionAuraIDs(profession,expansion)
+    for _,buff in ipairs(options.buffs) do
+        if known[tostring(buff.id)] then buffs[buff.id]=buff end
     end
     options.buffs={} for _,buff in pairs(buffs) do options.buffs[#options.buffs+1]=buff end
     table.sort(options.buffs,function(a,b) return a.name<b.name end)
@@ -1311,7 +1363,7 @@ function LL:CaptureProfessionOperation(recipeID,info)
     -- taken during the same capture. Later talent or buff scans are separate.
     local _,allocation=ReadSpec(profession.professionID)
     if allocation and allocation.known==true then
-        local buffs,stacks,buffsKnown=self:ProfessionAuraState()
+        local buffs,stacks,buffsKnown=self:ProfessionAuraState(saved.profession)
         saved.statGrantReference={policy='SOURCE_OPERATION',capturedWithOperation=true,
             recipeID=recipeID,build=saved.operationBuild,skillLineID=profession.professionID,
             profession=saved.profession,specializationPoints=qualityCopy(allocation.points),

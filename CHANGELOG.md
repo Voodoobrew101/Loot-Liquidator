@@ -1,3 +1,10 @@
+# Loot Liquidator 0.12.45
+
+- Show only material-affecting specialization controls for disenchanting.
+- Keep measured disenchant confidence and rates when unrelated crafting or other-profession specializations change.
+- Read only known profession modifier aura IDs, scoped to the profession and conversion; filter the legacy aura API fallback too.
+- Keep actual disenchant specializations and unknown allocations subject to their existing model and evidence checks.
+
 # Loot Liquidator 0.12.44
 
 - Restore measured disenchant baselines when mount, reputation, cosmetic, or other unmodeled aura metadata changes.
