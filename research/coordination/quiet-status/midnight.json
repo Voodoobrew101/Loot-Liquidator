@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-21T16:15:27.003Z",
-  "status": "Read refreshed Midnight README, evidence schema, mechanics, worker role and active queue. Searched current sources for original Retail 272246 disenchant eligibility, 237362/237363 rank-specific prospecting, 237359/237361 Copper and Midnight milling numeric yields. Two plausible milling leads were checked against the actual branch and are already captured: David111's 10 pigments/10 herbs anecdote is original record midnight-20261115-1719-001 (reference only, exact herb/pigment IDs and observed N unknown), and March 28 split-stack milling interruption is midnight-20261113-0624-006 with Master source audit. Neither can create a new cohort. No new confirmed cast-level Retail output IDs, completed operations, material hit counts, zeros, histograms, profession/build-identified yields or 272246 at-cast eligibility; no evidence file made. Preserved the reviewed 731-source catalogue and current pipeline, no game operations, PRs, merges, runtime or schema changes.",
+  "updated_at": "2026-11-21T17:14:12.615Z",
+  "status": "Refreshed implementation/five-agent-completion and read current README, evidence format, mechanics, worker role and active queue. Searched for NEW Retail Midnight original per-event studies across WoW forum, Reddit, GitHub, Wowhead, guides and addon publication pages by named gear/ore/herbs. Five additional links screened: prospective loot-capture addons, a derivative milling mapping, PTR 272246 base-template eligibility and March mixed-expansion disenchant bug. None provides a fresh, independent cast-linked Retail outcome cohort; no evidence JSONL created. Preserved the verified 731-source catalogue and original study ownership; no data PR, schema/runtime change, import, in-game experiment or release.",
   "task_ids": [
     "T0026",
     "T0039",
@@ -1367,7 +1367,7 @@
     "at_cast_ilvl_272246": null,
     "at_cast_bonus_272246": null,
     "actual_casts_237359": null,
-    "notes": "No new measured original operations or identified source-ranked outputs this run. David111 10:10 generic herb/pigment observation was already held in midnight-20261115-1719-001, and March 28 reported split-stack queue interruptions were already documented in midnight-20261113-0624-006. Nominal 10-herb/5-ore batches are not actual completed operation logs; 272246 live DE eligibility remains unknown."
+    "notes": "No new independent measured Retail 272246 disenchanting eligibility or gear-at-cast variant; no actual 237362/237363 prospecting operations or hit/zero histograms, no 237359/237361 Copper or 237364/237365 Silver live output vector, and no 10-herb per-cast milling result. All screened guide/addon references held as non-quantitative; March old-season odd-material bug not extrapolated."
   },
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
@@ -1392,7 +1392,12 @@
     "https://wow.gg/professions/midnight/enchanting",
     "https://github.com/ProfessionsForever/Professions_Forever/blob/main/Core/DisenchantRecord.lua",
     "https://www.wowhead.com/guide/midnight/professions/inscription-leveling-1-100",
-    "https://us.forums.blizzard.com/en/wow/t/milling-tranquility-bloom-bug/2281630"
+    "https://us.forums.blizzard.com/en/wow/t/milling-tranquility-bloom-bug/2281630",
+    "https://www.curseforge.com/wow/addons/farm-counter-value",
+    "https://www.curseforge.com/wow/addons/wowtility/files/9174698/dependencies",
+    "https://totimes.ca/inscription-in-world-of-warcraft-how-scribes-turn-herbs-into-gold/",
+    "https://ptr.wowdb.com/items/272246-miststalkers-wristbands",
+    "https://us.forums.blizzard.com/en/wow/t/getting-vanilla-dust-off-midnight-gear/2271802"
   ],
   "blockers": [
     "272246: WoWDB labels base-206 item not disenchantable, whereas 305 tooltip selection and Armory levels 292/305/321 only show item variants. Need a source-linked Retail actual DE event including full bonus strings, skill/build and output, or official eligibility table verified by implementation reviewer.",
@@ -1438,11 +1443,11 @@
       "reason": "Cutoff source already in reviewed 731-source catalogue; historical/ref main fetches are identical blob sha 3ff65667115779af04bc504764e28996334cacf9. Not independently new source; no redelivery."
     }
   ],
-  "next_concrete_step": "Seek post-cutoff newly released Retail anonymized per-event CSV/SavedVariables exports, not previously recorded guide anecdotes or split-stack bug reports. Prioritize 272246 completed disenchant with full at-cast itemLink/bonus/ilvl, eligibility, skill, specialization and exact material output; then quality-rank 237362/237363 prospecting events with actual completed casts, output 242608/242606/242607/242610/242611/242787/242788 IDs and quantities/zeros, refunds and unlock state. Then 237359/237361 Copper, 237364/237365 Silver and 10-herb milling original event ledgers. Preserve original study keys and only add a JSONL file if independently new reviewed measurements exist.",
-  "verified_base_commit_sha": "5756167b9ae28b1793d40aa97e6006a4897fc12c",
+  "next_concrete_step": "Prioritize independently published Retail Midnight per-event export or source-linked actual Disenchant on item 272246 with exact itemLink, bonus/ilvl, skill/build and outputs (resolve base-206 vs 305 eligibility). Next obtain actual completed operation ledger, rank-specific source/output links 237362/237363 with Eversong Diamond 242608, zeros, counts and Resourcefulness refunds, then 237359/237361 Copper, 237364/237365 Silver and 10-herb milling original output events. Do not recatalogue the owner-assigned 731-source corpus or retranscribe historical aggregate estimates.",
+  "verified_base_commit_sha": "21ff3fbce5081876bbbfc87d339e901ec0297db7",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Status-only source-lineage/deduplication audit; one commit. Its own new commit SHA cannot be embedded without another commit; verify the returned commit SHA by fetching the status at that immutable SHA.",
+  "commit_note": "Status-only source search/triage. Git commit verified separately via immutable SHA after write; writing commit's own SHA inside its file would require an additional commit, contrary to one-commit cadence.",
   "new_leads_screened": [
     {
       "source": "https://www.reddit.com/r/woweconomy/comments/1s20lq4/mass_prospecting_issues/",
@@ -1496,6 +1501,33 @@
         "zero_outcomes": null
       },
       "detail": "Multiple original March 28 accounts of repeated milling queue stopping when herb stacks are split; previously recorded, not an independently new sample, and does not change 10 herbs per successful cast or establish measured interruption probability."
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/farm-counter-value",
+      "classification": "held_software_capability_no_published_original_numeric_cohorts",
+      "detail": "Retail Midnight addon describes counting disenchanting/prospecting/gathering materials and session/global histories; the public page does not supply any anonymized owner export, at-cast item link/bonus, completed operation log, per-output zero counts, profession profile or independent measured yield. Loot totals alone cannot establish per-cast hit counts."
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/wowtility/files/9174698/dependencies",
+      "classification": "held_software_changelog_not_numeric_study",
+      "detail": "October 2026 WoWtility release text reports handling 'You create' chat events from disenchanting/milling/prospecting; no published source event log, operation denominator, zeros, ranks or character context. Do not treat addon event support as a measured cohort."
+    },
+    {
+      "source": "https://totimes.ca/inscription-in-world-of-warcraft-how-scribes-turn-herbs-into-gold/",
+      "published": "2026-11-15",
+      "classification": "held_derivative_guide_identity_not_numeric_evidence",
+      "detail": "Published guide attributes Tranquility Bloom→Powder, Mana Lily→Mana Lily Pigment, Argentleaf→Argentleaf Pigment, Sanguithorn→Sanguithorn Pigment to Icy Veins; no input/output IDs, measured outputs, completed cast count, zeros, ranks, stat profile or original experiment. All these pairings were already present in worker context; no independent sample."
+    },
+    {
+      "source": "https://ptr.wowdb.com/items/272246-miststalkers-wristbands",
+      "classification": "held_secondary_item_template_preexisting_eligibility_conflict",
+      "detail": "PTR WoWDB same 206 base template says cannot be disenchanted, alongside live WoWDB; does not resolve 305 selected tooltip or source-linked at-cast instance. Same underlying site/database may not be independent confirmation."
+    },
+    {
+      "source": "https://us.forums.blizzard.com/en/wow/t/getting-vanilla-dust-off-midnight-gear/2271802",
+      "published": "2026-03-14",
+      "classification": "held_historical_retail_build_confounded_qualitative_evidence",
+      "detail": "March firsthand reports mention unexpected vanilla/TWW enchanting materials from nominal Midnight gear at ilvl 159-192. Does not name exact 272246 item, at-cast links, operation counts or output vectors and is not a new Retail present-build disenchant rate; no admission."
     }
   ],
   "catalogue_checkpoint": {
