@@ -34,6 +34,22 @@ end
 local sources,runtime={},{}
 assert(loadfile('database/sources/ReferenceData.lua'))('LootLiquidator',sources)
 assert(loadfile(arg[3] or 'LootLiquidator/ItemDBRuntime.lua'))('LootLiquidator',runtime)
+if arg[2]=='--catalogue' then
+    assert(loadfile('LootLiquidator/Database.lua'))('LootLiquidator',runtime)
+    runtime.db={};runtime:MigrateEvidenceSettings()
+    assert(runtime:InitializeItemDB(),runtime.itemDBError)
+    assert(loadfile('LootLiquidator/ReviewedSourceFacts.lua'))('LootLiquidator',runtime)
+    runtime.db.source_itemdb_enabled=true
+    local factValidation=assert(loadfile('tools/reviewed_source_fact_audit.lua'))()(runtime)
+    local file=assert(io.open(assert(arg[1],'Output JSON path required'),'w'))
+    file:write(json({models=runtime.ItemDB.processing,
+        facts=runtime.ItemDB.reviewedSourceFacts and runtime.ItemDB.reviewedSourceFacts.facts or {},
+        factRuntimeValidation=factValidation}),'\n')
+    file:close()
+    assert(#factValidation.failures==0,'Reviewed source facts failed public query/render validation: '
+        ..#factValidation.failures..'; first: '..tostring(factValidation.failures[1] and factValidation.failures[1].factID))
+    return
+end
 local data={reference=sources.ReferenceData,
     research=assert(loadfile('database/research/itemdb.lua'))(),
     evidence=assert(loadfile('database/evidence-baselines.lua'))(),

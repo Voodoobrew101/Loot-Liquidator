@@ -1,8 +1,8 @@
-"""D1c4: research v3 "noDisenchant" records -> ItemDB.restrictions (add only).
+"""Research no-DE source facts remain scoped; native hard flags stay intact.
 
 Unit checks on a small temporary snapshot, then checks on the pinned snapshot and the
 shipped ItemDBRuntime.lua: authoritative restrictions are intact and research-only
-claims either ship or have a logged conflict with actual disenchant evidence.
+claims ship as provenance-bearing observations, with conflicts retained.
 """
 import json
 import re
@@ -83,8 +83,16 @@ held = set(map(int, re.findall(r'\["disenchantRecordID"\]="[^"]+",\["itemID"\]=(
 block = src[src.index('for _,itemID in ipairs({') + len('for _,itemID in ipairs({'):]
 game_source = {int(x) for x in re.findall(r'\d+', block[:block.index('})')])}
 ok(game_source and game == game_source, 'every game-file no-disenchant entry ships unchanged')
-ok(added and not (added & game), 'research adds only items the game-file list lacks')
-ok(held and not (held & added) and not (held & game), 'conflicting research claims are recorded without enabling a hard denial')
-ok(added | held == {r['itemID'] for r in real} - game, 'every research item is either added or held')
+ok(not (added & game), 'verified research flags never duplicate or remove native flags')
+proven = {r['itemID'] for r in real if r.get('globalRestriction')}
+ok(added == proven - game, 'only explicit native all-variant proofs become global research flags')
+ok(held <= {r['itemID'] for r in real}, 'positive-output conflicts retain their source item identities')
+observed = set(map(int, re.findall(r'\["itemID"\]=(\d+)', line)))
+ok(observed == {r['itemID'] for r in real}, 'every source item ships as an observation, including native overlap and conflicts')
+ok('researchNoDisenchantPolicy' in line and 'native-proof-only' in line, 'compiled native-only hard restriction policy explicit')
+trinket = next((r for r in real if r['itemID'] == 251786), None)
+if trinket:
+    ok(251786 not in added and not trinket['globalRestriction'], 'base197 trinket catalog cannot globally block292 bonus item')
+    ok(any(o['scope'].get('itemLevel') == 197 for o in trinket['observations']), 'trinket source scope and provenance preserved')
 print(f'RESEARCH V3 NO-DISENCHANT TESTS: {passed} passed, 0 failed; {len(added)} added, '
       f'{len({r["itemID"] for r in real} & game)} already in the game-file list')

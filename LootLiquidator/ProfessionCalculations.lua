@@ -16,6 +16,58 @@ end
 local function intersect(a,b)
     for _,x in ipairs(a or {}) do if contains(b,x) then return true end end return false
 end
+-- A reviewed calibration changes one declared confidence-zero coefficient;
+-- the native effect identity, node gate, scope, unit and operator still apply.
+local function reviewedEffectAmount(effect,option)
+    local overrides=option and option.reviewedEffectOverrides
+    local value=type(overrides)=='table' and lookup(overrides,effect.effectID)
+    if type(value)~='table' or effect.mechanism~='qualitative-extra-output-prior'
+        or effect.confidence~=0 or effect.metric~='extraOutput'
+        or value.confidence~=0 or value.entryID~=effect.entryID or value.metric~=effect.metric
+        or value.mechanism~=effect.mechanism or value.unit~=effect.unit
+        or value.operator~=(effect.operator or 'add')
+        or type(value.inputCount)~='number' or value.inputCount<=0
+        or value.inputCount~=option.inputCount
+        or type(value.amount)~='number' or value.amount~=value.amount or value.amount<0 or value.amount==math.huge then
+        return effect.amount,false
+    end
+    return value.amount,true
+end
+local function materialIDs(material)
+    return type(material.rankIDs)=='table' and #material.rankIDs>0 and material.rankIDs or {material.id}
+end
+local function materialPolicy(self,material)
+    if material.economicPolicy=='nontradable' then return 'nontradable' end
+    local items=self.ItemDB and self.ItemDB.professionProfiles and self.ItemDB.professionProfiles.items
+    local allBound=true
+    for _,id in ipairs(materialIDs(material)) do
+        local item=lookup(items,id)
+        if not item or (item.bindType~=1 and item.bonding~=1 and item.itemBinding~=1) then allBound=false;break end
+    end
+    if allBound then material.economicPolicy='nontradable';return 'nontradable' end
+    return material.economicPolicy
+end
+-- A pooled row is one quantity over alternatives. Additive units are summed
+-- over its members once; a relative multiplier is identifiable only when all
+-- alternatives have the same coefficient. Missing rank shares stay unknown.
+local function materialUnits(self,material,params)
+    local policy=materialPolicy(self,material)
+    local extras=policy=='nontradable' and params.nontradableExtraOutputs or params.extraOutputs
+    local relative,extra,minimum=nil,0,0
+    for _,id in ipairs(materialIDs(material)) do
+        local r=number(lookup(params.relativeExtraOutputs,id))
+        if relative~=nil and math.abs(relative-r)>1e-12 then
+            return nil,'Pooled output has unequal rank multipliers without a verified rank allocation'
+        end
+        relative=r;extra=extra+number(lookup(extras,id))
+        local floor=number(lookup(params.minimumOutputs,id))
+        if material.rankIDs and floor>0 then return nil,'Pooled output floors require exact rank quantities' end
+        minimum=minimum+floor
+    end
+    local factor=1+(relative or 0)
+    if factor<=0 then return nil,'Output multiplier must be positive for an identifiable inverse' end
+    return {relativeFactor=factor,extra=extra,minimum=minimum,policy=policy}
+end
 local statKeys={'resourcefulness','multicraft','ingenuity','finesse','perception','deftness','craftingSpeed','inspiration'}
 local nativeNames={resourcefulness='Resourcefulness',multicraft='Multicraft',ingenuity='Ingenuity',
     finesse='Finesse',perception='Perception',deftness='Deftness',craftingSpeed='Crafting Speed',inspiration='Inspiration'}
@@ -58,6 +110,7 @@ local function scopeMatches(effect,profession,expansion,context,option,facts,rec
     if s.method and s.method~=option.name and not alternate and not (s.method=='Gather' and methodIsGather(option.name)) then return false end
     if s.inputRarity and s.inputRarity~=facts.quality and not alternate then return false end
     if s.inputClassID and s.inputClassID~=facts.classID then return false end
+    if #(s.inputItemIDs or {})>0 and not contains(s.inputItemIDs,facts.id) then return false end
     if s.scopeUnknown then return false end
     if #(s.labelIDs or {})>0 and s.labelContext~='disenchant-input'
         and not intersect(s.labelIDs,option.labels or context.recipeLabels or (recipe and recipe.labels)) then return false end
@@ -123,6 +176,211 @@ local function qualityMaterialChanged(material,confidence)
     material.histogram=nil;material.quantityCounts=nil;material.personalHistogram=nil;material.fieldEvidence=nil
     material.expectationTransformed=true;material.transformConfidence=confidence
     material.confidence=math.min(number(material.confidence,100),confidence)
+end
+
+-- A reviewed source endpoint is a quality anchor, not a minimum-profile
+-- observation. These curves are declared confidence-zero quantity priors;
+-- neither their shares nor their skill progress describes P(drop) or casts.
+local function reviewedQualityMode(model,params)
+    return model.reviewedBacklogModel==true
+        and model.reviewedQualityProjection=='source-anchored'
+        and ((params.method=='Disenchant' and params.expansionID~=11)
+            or ((params.method=='Mill' or params.method=='Prospect') and params.expansionID>=9))
+end
+local function validUnits(value)
+    return type(value)=='number' and value==value and value>=0 and value<math.huge
+end
+local function qualityGroups(model,data,params)
+    local groups={}
+    for _,material in ipairs(model.materials or {}) do
+        local item=lookup(data.items,material.id)
+        local familyID=item and item.qualityFamilyID
+        local eligibleClass=item and (params.method~='Disenchant' or item.subclassID==12)
+        local family=eligibleClass and lookup(data.qualityFamilies,familyID)
+        if not family and material.rankIDs then
+            for _,id in ipairs(material.rankIDs) do
+                local pooled=lookup(data.items,id)
+                local candidate=pooled and (params.method~='Disenchant' or pooled.subclassID==12)
+                    and lookup(data.qualityFamilies,pooled.qualityFamilyID)
+                if candidate and #(candidate.rankItemIDs or {})>1 then
+                    return nil,'Reviewed quality anchor requires exact native ranks, not a pooled rank placeholder'
+                end
+            end
+        end
+        if family and #(family.rankItemIDs or {})>1 and material.economicPolicy~='nontradable' then
+            local group=groups[familyID]
+            if not group then group={familyID=familyID,family=family,items={},sourceValues={}};groups[familyID]=group end
+            if material.rankIDs or group.items[material.id] or not validUnits(material.expectedQuantity)
+                or not contains(family.rankItemIDs,material.id) then
+                return nil,'Reviewed quality anchor requires one finite exact mean per native rank'
+            end
+            group.items[material.id]=material
+            group.sourceValues[material.id]=material.expectedQuantity
+        end
+    end
+    for _,group in pairs(groups) do
+        group.total=0
+        for _,id in ipairs(group.family.rankItemIDs) do
+            if not group.items[id] then
+                return nil,'Reviewed quality anchor is missing an explicit native family rank'
+            end
+            group.total=group.total+group.items[id].expectedQuantity
+        end
+        if not validUnits(group.total) then return nil,'Reviewed quality family total is not finite' end
+    end
+    return groups
+end
+local function validShares(shares,n)
+    if type(shares)~='table' or #shares~=n then return false end
+    local total=0
+    for rank=1,n do
+        if not validUnits(shares[rank]) then return false end
+        total=total+shares[rank]
+    end
+    return math.abs(total-1)<=1e-8
+end
+local function dominatingQualityShares(reference,source)
+    local result,referenceCDF,sourceCDF,previous={},0,0,0
+    for rank=1,#reference-1 do
+        referenceCDF=referenceCDF+reference[rank]
+        sourceCDF=sourceCDF+source[rank]
+        local current=math.min(referenceCDF,sourceCDF)
+        result[rank]=current-previous;previous=current
+    end
+    result[#reference]=1-previous
+    return result
+end
+local function reviewedQualityChanged(material)
+    qualityMaterialChanged(material,0)
+    -- Source counts remain in immutable evidence records, not on a moved
+    -- target-rank quantity. No transformed amount gets a synthetic count.
+    for _,key in ipairs({'casts','castsWithDrop','totalQuantity','samples','personalSamples',
+        'chanceSamples','quantitySamples','minSeen','maxSeen','sourceCounts','quantityHistogram'}) do
+        material[key]=nil
+    end
+    material.reviewedQualityProjected=true
+end
+local function qualityProgress(params)
+    if not validUnits(params.skill) or not validUnits(params.skillMaximum) or params.skillMaximum<=0 then
+        return nil,'Reviewed quality projection requires a finite source skill and scoped maximum'
+    end
+    return clamp(params.skill/params.skillMaximum,0,1)
+end
+local function sourceQuantityTotal(total,shares,group,params)
+    local projected=0
+    for rank,id in ipairs(group.family.rankItemIDs) do
+        local factor=params.outputFactor*(1+number(lookup(params.relativeExtraOutputs,id)))
+        local value=total*shares[rank]*factor+number(lookup(params.extraOutputs,id))
+        projected=projected+math.max(value,number(lookup(params.minimumOutputs,id)))
+    end
+    return projected
+end
+local function normalizeReviewedQuality(raw,params,groups)
+    local progress,why=qualityProgress(params)
+    if not progress then return nil,why end
+    local anchors={schemaVersion=1,families={}}
+    for familyID,group in pairs(groups) do
+        if group.total>0 then
+            local ids=group.family.rankItemIDs
+            local shares,zero,high={},{},{}
+            local override=lookup(raw.reviewedQualityZeroShares,familyID)
+            if override~=nil and not validShares(override,#ids) then
+                return nil,'Declared zero-skill quality shares must explicitly cover the complete native family and sum to one'
+            end
+            local total=0
+            for rank,id in ipairs(ids) do
+                shares[rank]=group.sourceValues[id]/group.total
+                zero[rank]=override and override[rank] or (rank==1 and 1 or 0)
+                if params.method=='Disenchant' then
+                    high[rank]=rank==#ids and .66 or rank==#ids-1 and .34 or 0
+                else
+                    -- Processing's highest-quality endpoint is a separate
+                    -- declared prior, not the disenchanting rank mix.
+                    high[rank]=rank==#ids and 1 or 0
+                end
+                total=total+group.items[id].expectedQuantity
+            end
+            -- An inferred endpoint cannot make a reported higher-quality
+            -- baseline worse. This remains a confidence-zero quality prior.
+            high=dominatingQualityShares(high,shares)
+            if progress==0 then
+                if override then
+                    for rank=1,#ids do if math.abs(zero[rank]-shares[rank])>1e-8 then
+                        return nil,'Declared zero-skill quality prior conflicts with the observed zero-skill source anchor'
+                    end end
+                end
+                zero=copy(shares)
+            end
+            if not validUnits(total) or total<=0 then return nil,'Reviewed quality source has no positive normalized family units' end
+            -- Rank-dependent multipliers/floors can change a family total when
+            -- its zero-profile shares change. Such a source is unidentified
+            -- under this quality-only model; fail closed rather than rescale it.
+            local roundTrip=sourceQuantityTotal(total,zero,group,params)
+            if math.abs(roundTrip-group.total)>1e-8*math.max(1,group.total) then
+                return nil,'Source quantity transforms do not reproduce the source quality-family total under the declared zero prior'
+            end
+            anchors.families[familyID]={familyID=familyID,rankItemIDs=copy(ids),sourceProgress=progress,
+                sourceSkill=params.skill,sourceSkillMaximum=params.skillMaximum,sourceShares=shares,
+                zeroShares=zero,highShares=high,sourceFamilyTotal=group.total,normalizedFamilyTotal=total,
+                confidence=0,zeroPrior=override and 'explicit-declared-quality-prior'
+                    or progress==0 and 'observed-zero-profile-source' or 'all-family-units-at-lowest-native-quality'}
+            for rank,id in ipairs(ids) do
+                local material=group.items[id]
+                local value=total*zero[rank]
+                if math.abs(material.expectedQuantity-value)>1e-12 then reviewedQualityChanged(material) end
+                material.expectedQuantity=value
+            end
+        end
+    end
+    raw.reviewedQualityAnchors=anchors
+    raw.normalizationConfidence=0
+    return raw
+end
+local function projectReviewedQuality(self,result,params)
+    local anchors=result.reviewedQualityAnchors
+    if type(anchors)~='table' or anchors.schemaVersion~=1 or type(anchors.families)~='table' then
+        return nil,'Reviewed quality projection is missing its normalized source anchors'
+    end
+    local data=self.ItemDB and self.ItemDB.professionProfiles or {}
+    local groups,why=qualityGroups(result,data,params)
+    if not groups then return nil,why end
+    local progress,error=qualityProgress(params)
+    if not progress then return nil,error end
+    local used=false
+    for familyID,anchor in pairs(anchors.families) do
+        local group=groups[familyID] or groups[tonumber(familyID)]
+        local ids=anchor.rankItemIDs or {}
+        local sourceProgress=anchor.sourceProgress
+        if not group or #ids~=#group.family.rankItemIDs or not validUnits(sourceProgress) or sourceProgress>1
+            or not validShares(anchor.sourceShares,#ids) or not validShares(anchor.zeroShares,#ids)
+            or not validShares(anchor.highShares,#ids) then return nil,'Invalid reviewed quality source anchor' end
+        for rank,id in ipairs(ids) do if id~=group.family.rankItemIDs[rank] then
+            return nil,'Reviewed quality anchor differs from the verified native family order'
+        end end
+        if group.total>0 then
+            for rank,id in ipairs(ids) do
+                local share
+                if progress==sourceProgress then share=anchor.sourceShares[rank]
+                elseif progress<sourceProgress then
+                    local t=progress/sourceProgress
+                    share=anchor.zeroShares[rank]*(1-t)+anchor.sourceShares[rank]*t
+                else
+                    local t=(progress-sourceProgress)/(1-sourceProgress)
+                    share=anchor.sourceShares[rank]*(1-t)+anchor.highShares[rank]*t
+                end
+                local material=group.items[id]
+                local value=group.total*share
+                if math.abs(material.expectedQuantity-value)>1e-12 then reviewedQualityChanged(material) end
+                material.expectedQuantity=value
+            end
+            used=true
+        end
+    end
+    if used then
+        result.reviewedQualityProjected=true
+        result.confidence=0;result.ruleConfidence=0
+    end
+    return result
 end
 
 local function modelRecipeQuality(self,model,params,option,inverse)
@@ -193,7 +451,8 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
         -- Native operations already contain skill and talent stat grants.
         if live and (metric=='difficulty' or metric=='concentrationCost'
             or metric=='concentrationRefund' or ratings[metric]~=nil) then return end
-        local amount=number(effect.amount)*multiplier*(effect.operator=='subtract' and -1 or 1)
+        local declaredAmount,calibrated=reviewedEffectAmount(effect,option)
+        local amount=number(declaredAmount)*multiplier*(effect.operator=='subtract' and -1 or 1)
         local selected=lookup(context.effectStates,effect.entryID)
         if effect.condition and effect.condition.maxStacks and type(selected)=='table' and selected.active then
             amount=amount*clamp(number(selected.stacks,1),1,effect.condition.maxStacks)
@@ -203,7 +462,7 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
             amount=amount*clamp(stacks,1,effect.condition.maxStacks)
         end
         params.appliedEffects[#params.appliedEffects+1]={entryID=effect.entryID,metric=metric,amount=amount,
-            mechanism=effect.mechanism,confidence=effect.confidence}
+            mechanism=effect.mechanism,confidence=effect.confidence,reviewedCalibration=calibrated or nil}
         if metric~='nonOutput' then params.confidence=math.min(params.confidence,number(effect.confidence)) end
         if metric=='skill' then params.skillBonus=params.skillBonus+amount
         elseif metric=='difficulty' then params.difficulty=params.difficulty+amount
@@ -373,29 +632,52 @@ function LL:NormalizeProfessionBaseline(model,params,option)
     if model.rawProfessionBaseline then return copy(model.rawProfessionBaseline) end
     local raw=copy(model)
     raw.rawProfessionBaseline=nil
+    -- A reported net-stock yield already includes reprocessing saved inputs.
+    -- Convert its quantity to one gross input before inverse output/profile
+    -- transforms. The target profile then receives its input savings once.
+    if raw.sourceQuantityBasis=='net-input' then
+        for _,material in ipairs(raw.materials or {}) do
+            if type(material.expectedQuantity)=='number' then
+                material.expectedQuantity=material.expectedQuantity*params.inputFactor
+            end
+        end
+        raw.reportedNetInputFactor=params.inputFactor
+        raw.expectedInputCount=number(raw.inputCount,number(option and option.inputCount,1))*params.inputFactor
+        raw.sourceQuantityBasis='gross-input'
+    end
     local data=self.ItemDB and self.ItemDB.professionProfiles
+    local reviewedGroups
+    if reviewedQualityMode(raw,params) then
+        local why
+        reviewedGroups,why=qualityGroups(raw,data or {},params)
+        if not reviewedGroups then return nil,why end
+    end
     if lookup(data and data.recipeQualityModels,params.recipeID) then
         local adjusted,why=modelRecipeQuality(self,raw,params,option,true)
         if not adjusted then return nil,why end
     end
     for _,m in ipairs(raw.materials or {}) do
         if type(m.expectedQuantity)=='number' then
-            local extras=m.economicPolicy=='nontradable' and params.nontradableExtraOutputs or params.extraOutputs
-            if (params.minimumOutputs[m.id] or 0)>0 and m.expectedQuantity<=params.minimumOutputs[m.id] then
+            local units,why=materialUnits(self,m,params)
+            if not units then return nil,why end
+            if units.minimum>0 and m.expectedQuantity<=units.minimum then
                 return nil,'Guaranteed floor does not identify an invertible source mean'
             end
-            m.expectedQuantity=m.expectedQuantity-(extras and extras[m.id] or 0)
+            m.expectedQuantity=m.expectedQuantity-units.extra
             if params.sameOutputExtra>0 and #(raw.materials or {})==1 then m.expectedQuantity=m.expectedQuantity-params.sameOutputExtra end
             local factor=params.outputFactor
             if methodIsGather(params.method) and option then
                 if m.rareDiscovery or contains(option.rareOutputIDs,m.id) then factor=params.rareDiscoveryFactor or 1
                 elseif option.primaryOutputIDs and not contains(option.primaryOutputIDs,m.id) then factor=1 end
             end
-            m.expectedQuantity=m.expectedQuantity/(factor*(1+number(lookup(params.relativeExtraOutputs,m.id))))
+            m.expectedQuantity=m.expectedQuantity/(factor*units.relativeFactor)
             if m.expectedQuantity<0 then return nil,'Source cannot be inverted under declared profile' end
         end
     end
-    if params.method=='Disenchant' and params.expansionID~=11 and params.skill>0 then
+    if reviewedGroups then
+        local normalized,why=normalizeReviewedQuality(raw,params,reviewedGroups)
+        if not normalized then return nil,why end
+    elseif params.method=='Disenchant' and params.expansionID~=11 and params.skill>0 then
         local data=self.ItemDB and self.ItemDB.professionProfiles or {}
         local groups={}
         for _,m in ipairs(raw.materials or {}) do
@@ -438,16 +720,20 @@ function LL:ProjectProfessionBaseline(baseline,params,option)
     local result=copy(raw);result.rawProfessionBaseline=copy(raw)
     local seen,nontradableSeen={},{}
     for _,m in ipairs(result.materials or {}) do
-        if m.economicPolicy=='nontradable' then nontradableSeen[m.id]=true else seen[m.id]=true end
+        local policy=materialPolicy(self,m)
+        for _,id in ipairs(materialIDs(m)) do
+            if policy=='nontradable' then nontradableSeen[id]=true else seen[id]=true end
+        end
         if type(m.expectedQuantity)=='number' then
-            local extras=m.economicPolicy=='nontradable' and params.nontradableExtraOutputs or params.extraOutputs
+            local units,why=materialUnits(self,m,params)
+            if not units then return nil,why end
             local factor=params.outputFactor
             if methodIsGather(params.method) and option then
                 if m.rareDiscovery or contains(option.rareOutputIDs,m.id) then factor=params.rareDiscoveryFactor or 1
                 elseif option.primaryOutputIDs and not contains(option.primaryOutputIDs,m.id) then factor=1 end
             end
-            local value=m.expectedQuantity*factor*(1+number(lookup(params.relativeExtraOutputs,m.id)))+(extras and extras[m.id] or 0)
-            value=math.max(value,params.minimumOutputs[m.id] or 0)
+            local value=m.expectedQuantity*factor*units.relativeFactor+units.extra
+            value=math.max(value,units.minimum)
             if params.sameOutputExtra>0 and #(result.materials or {})==1 then value=value+params.sameOutputExtra end
             if value~=m.expectedQuantity then
                 m.chance=nil;m.minQuantity=nil;m.maxQuantity=nil;m.probabilityVerified=false
@@ -481,8 +767,19 @@ function LL:ProjectProfessionBaseline(baseline,params,option)
     result.qualityRank=params.recipe.supportsQuality and self:ProfessionQualityRank(params,params.recipe) or nil
     result.confidence=math.min(number(raw.confidence,100),params.confidence)
     result.ruleConfidence=math.min(number(raw.ruleConfidence,100),params.confidence)
+    if reviewedQualityMode(raw,params) then
+        local projected,why=projectReviewedQuality(self,result,params)
+        if not projected then return nil,why end
+    end
     result.professionParameters=copy(params)
-    result.namedOutputs=copy(params.namedOutputs or {})
+    result.namedOutputs=copy(raw.namedOutputs or {})
+    for _,named in ipairs(params.namedOutputs or {}) do
+        local found=false
+        for _,old in ipairs(result.namedOutputs) do
+            if old.name==named.name and old.entryID==named.entryID then found=true;break end
+        end
+        if not found then result.namedOutputs[#result.namedOutputs+1]=copy(named) end
+    end
     if #result.namedOutputs>0 then result.unknownOutputs=true end
     result.generalProfessionApplied=true;result.professionProjected=true
     result.mechanicsApplied=true
@@ -496,6 +793,11 @@ function LL:ApplyGeneralProfessionModel(f,option,model,context)
     local profession=option.profession or (recipe and recipe.profession) or (self.ProfessionForMethod and self:ProfessionForMethod(option.name))
     local expansion=option.expansionID or (recipe and recipe.expansionID) or f.expansionID
     if not data or not data.profiles or not profession or not expansion or not data.profiles[profession..':'..expansion] then return model end
+    -- Calibration belongs to this evidence model, never the caller's shared
+    -- operation or character profile. Source and target use the same units.
+    if model.reviewedEffectOverrides then
+        option=copy(option);option.reviewedEffectOverrides=copy(model.reviewedEffectOverrides)
+    end
     local contextFacts=copy(f);contextFacts.expansionID=expansion
     context=context or (self.ProcessingPlayerConditions and self:ProcessingPlayerConditions(contextFacts,option.name,option.recipeID,option.character,profession)) or {}
     local source=copy(model.baselineProfile or {})
@@ -512,9 +814,15 @@ function LL:ApplyGeneralProfessionModel(f,option,model,context)
         for index,material in ipairs(merged.materials or {}) do
             local normalized=baseline.materials[index]
             if not normalized or normalized.id~=material.id then return model end
-            material.expectedQuantity=normalized.expectedQuantity
+            -- Compilation cannot restore a field excluded by the runtime
+            -- unlock/source policy (for example an unlearned diamond bonus).
+            if material.expectedQuantity~=nil then material.expectedQuantity=normalized.expectedQuantity end
         end
         merged.expectedInputCount=baseline.expectedInputCount;merged.duration=baseline.duration
+        merged.reviewedQualityAnchors=copy(baseline.reviewedQualityAnchors)
+        merged.reviewedQualityProjection=baseline.reviewedQualityProjection or merged.reviewedQualityProjection
+        merged.reviewedQualityZeroShares=copy(baseline.reviewedQualityZeroShares or merged.reviewedQualityZeroShares)
+        if baseline.reviewedBacklogModel~=nil then merged.reviewedBacklogModel=baseline.reviewedBacklogModel end
         target.confidence=math.min(target.confidence,number(baseline.baselineConfidence,100),number(baseline.normalizationConfidence,100))
         baseline=merged
     else
@@ -522,13 +830,56 @@ function LL:ApplyGeneralProfessionModel(f,option,model,context)
         baseline=self:NormalizeProfessionBaseline(model,sourceParams,option)
         target.confidence=math.min(target.confidence,sourceParams.confidence,number(baseline and baseline.normalizationConfidence,100))
     end
-    if not baseline then return model end
+    if not baseline then
+        if model.requiresSourceNormalization then
+            local blocked=copy(model);blocked.projectionIncomplete=true
+            blocked.normalizationFailure='Reviewed source profile cannot be inverted under the declared rules'
+            return blocked
+        end
+        return model
+    end
     local settings=copy(option);settings.preserveMaterialIdentity=true;settings.deferRecipeQuality=true
     local projected=self:ProjectProfessionBaseline(baseline,target,settings)
+    if not projected then
+        if model.requiresSourceNormalization then
+            local blocked=copy(model);blocked.projectionIncomplete=true
+            blocked.normalizationFailure='Reviewed source quality anchor cannot be projected under the declared rules'
+            return blocked
+        end
+        return model
+    end
     projected.projectedContext=copy(context)
     projected.projectedContext.effectiveSkill=target.skill
     for _,m in ipairs(projected.materials or {}) do m.appliedProfessionRule='profession-profile-rules/1' end
     projected.sourceProfileAssumed=assumed
+    if model.reviewedPublishedPriorModel or model.reviewedPublishedPrior then
+        for _,material in ipairs(projected.materials or {})do
+            material.transformConfidence=math.min(number(material.transformConfidence,100),target.confidence)
+        end
+    end
+    if target.outputFactor==1 and target.inputFactor==1
+        and number(target.sameOutputExtra)==0 and not next(target.extraOutputs or {})
+        and not next(target.relativeExtraOutputs or {}) and not next(target.minimumOutputs or {})
+        and not next(target.nontradableExtraOutputs or {}) and #(target.namedOutputs or {})==0 then
+        local identical=#(projected.materials or {})==#(model.materials or {})
+            and projected.expectedInputCount==number(model.expectedInputCount,number(model.inputCount,1))
+        for i,material in ipairs(projected.materials or {}) do
+            local original=model.materials and model.materials[i]
+            if not original or material.id~=original.id or material.expectedQuantity~=original.expectedQuantity then identical=false;break end
+        end
+        if identical and not model.reviewedPublishedPriorModel and not model.reviewedPublishedPrior then
+            -- An identity operation introduces no new modeled uncertainty.
+            -- Keep confidence in the original evidence, even when its source
+            -- profile was unspecified. An explicit published-model cap remains
+            -- authoritative even when its numerical projection is unchanged.
+            projected.ruleConfidence=model.ruleConfidence
+            projected.confidence=model.confidence
+            for i,material in ipairs(projected.materials or {}) do
+                material.confidence=model.materials[i].confidence
+                material.transformConfidence=model.materials[i].transformConfidence
+            end
+        end
+    end
     return projected
 end
 
@@ -649,6 +1000,9 @@ function LL:ApplyGeneralProfessionQuality(f,option,model,context)
     if lookup(data.recipeQualityModels,option.recipeID) then
         return self:ApplyRecipeProfessionQuality(f,option,model,params)
     end
+    -- A zero profile is the ordinary baseline itself. Dedicated, verified
+    -- recipe models above retain their own source/target calibration.
+    if params.skill==0 then return model end
     context=model.projectedContext or context or {}
     local recipe=lookup(data.recipes,option.recipeID)
     local disenchant=option.name=='Disenchant' and f.expansionID~=11
@@ -686,7 +1040,13 @@ function LL:ApplyGeneralProfessionQuality(f,option,model,context)
                     if alpha>0 then
                         if not source or type(source.expectedQuantity)~='number' or not source.inputCount or source.inputCount<=0
                             or type(m.expectedQuantity)~='number' then valid=false;break end
-                        local quantity=alpha*source.expectedQuantity*model.inputCount/source.inputCount
+                        -- Reviewed source-anchored terms were already routed
+                        -- before blending. Route only the remaining accepted
+                        -- quantity, even when ItemDB also contributes ordinary
+                        -- baselines for this same output/source key.
+                        local unrouted=source.unprojectedQualityExpectedQuantity
+                        if unrouted==nil then unrouted=source.expectedQuantity end
+                        local quantity=alpha*unrouted*model.inputCount/source.inputCount
                         quantities[entry.index]=(quantities[entry.index] or 0)+quantity;group.total=group.total+quantity
                     end
                 end
@@ -700,6 +1060,16 @@ function LL:ApplyGeneralProfessionQuality(f,option,model,context)
                 local progress=clamp(params.skill/math.max(1,params.skillMaximum),0,1)
                 local n=#group.family.rankItemIDs
                 if valid and group.total>0 and progress>0 then
+                    local shares,endpoint={},{}
+                    for r=1,n do shares[r]=0;endpoint[r]=r==n and .66 or r==n-1 and .34 or 0 end
+                    for _,entry in ipairs(group.entries) do
+                        local rankIndex=1
+                        if not entry.material.rankIDs then
+                            for r,id in ipairs(group.family.rankItemIDs) do if entry.material.id==id then rankIndex=r;break end end
+                        end
+                        shares[rankIndex]=shares[rankIndex]+(quantities[entry.index] or 0)/group.total
+                    end
+                    endpoint=dominatingQualityShares(endpoint,shares)
                     local byID={}
                     for _,entry in ipairs(group.entries) do
                         local m=result.materials[entry.index]
@@ -711,17 +1081,29 @@ function LL:ApplyGeneralProfessionQuality(f,option,model,context)
                         end
                         if not m.rankIDs then byID[m.id]=m end
                     end
-                    for _,allocation in ipairs({{n,.66},{n-1,.34}}) do
-                        local id=group.family.rankItemIDs[allocation[1]]
-                        local amount=group.total*progress*allocation[2]
+                    for r,share in ipairs(endpoint) do
+                        local id=group.family.rankItemIDs[r]
+                        local amount=group.total*progress*share
                         if byID[id] then byID[id].expectedQuantity=byID[id].expectedQuantity+amount
-                        else additions[#additions+1]={id=id,expectedQuantity=amount,confidence=0,sourceContributions={itemdb=1}} end
+                        elseif amount>0 then additions[#additions+1]={id=id,expectedQuantity=amount,confidence=0,sourceContributions={itemdb=1}} end
                     end
                     result.ruleConfidence=0;result.confidence=0;changed=true
                 end
             elseif valid and targetID and group.total>0 then
-                local targetIndex
-                for _,entry in ipairs(group.entries) do if entry.material.id==targetID and not entry.material.rankIDs then targetIndex=entry.index end end
+                local targetIndex,upgraded= nil,0
+                for _,entry in ipairs(group.entries) do
+                    local material=entry.material
+                    if material.id==targetID and not material.rankIDs then targetIndex=entry.index end
+                    local sourceRank
+                    for r,id in ipairs(group.family.rankItemIDs) do if material.id==id then sourceRank=r;break end end
+                    -- The ordinary baseline already identifies these units.
+                    -- A bonus may upgrade them, never downgrade a known higher
+                    -- rank merely because a lower threshold was selected.
+                    if not material.rankIDs and (not sourceRank or sourceRank>=rank) then
+                        quantities[entry.index]=0
+                    end
+                    upgraded=upgraded+(quantities[entry.index] or 0)
+                end
                 for _,entry in ipairs(group.entries) do
                     local quantity=quantities[entry.index] or 0
                     if quantity>0 then
@@ -732,11 +1114,14 @@ function LL:ApplyGeneralProfessionQuality(f,option,model,context)
                         m.confidence=math.min(number(m.confidence),params.confidence)
                     end
                 end
-                if targetIndex then result.materials[targetIndex].expectedQuantity=result.materials[targetIndex].expectedQuantity+group.total
-                else additions[#additions+1]={id=targetID,expectedQuantity=group.total,
+                if upgraded>0 and targetIndex then
+                    local material=result.materials[targetIndex]
+                    material.expectedQuantity=material.expectedQuantity+upgraded
+                    qualityMaterialChanged(material,params.confidence)
+                elseif upgraded>0 then additions[#additions+1]={id=targetID,expectedQuantity=upgraded,
                     confidence=math.min(number(model.confidence),params.confidence),projectedQualityRank=rank,
                     sourceContributions={itemdb=1}} end
-                changed=true
+                changed=changed or upgraded>0
             end
         end
     end
@@ -748,6 +1133,7 @@ function LL:ApplyGeneralProfessionQuality(f,option,model,context)
         if not (m.rankIDs and m.expectedQuantity==0) then materials[#materials+1]=m end
     end
     result.materials=materials;result.generalQualityApplied=true;result.skillQualityApplied=true
+    result.ruleConfidence=math.min(number(result.ruleConfidence,100),number(params.confidence,100))
     result.qualityRank=rank;result.skillQualityRank=rank
     return result
 end

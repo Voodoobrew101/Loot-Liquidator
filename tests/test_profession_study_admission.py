@@ -7,6 +7,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 import warnings
 
 sys.path.insert(0, 'tools')
@@ -89,6 +90,35 @@ class ProfessionStudyAdmission(unittest.TestCase):
         self.assertEqual(malformed, before)
         self.assertTrue(any('native-target' in reason for reason in notes))
         self.assertFalse(processing_reasons(base))
+
+    def test_build_review_keeps_disjoint_compiled_fields_in_either_record_order(self):
+        rows = [self.source(id='quantity-source', cohortKey='quantity-source'),
+                self.source(id='chance-source', cohortKey='chance-source', totalQuantity=None, castsWithDrop=3)]
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            snapshot = self.make_snapshot(root, rows)
+            records, notes, total, counted, unplaced = v3.build(snapshot)
+            self.assertEqual(len(records), 1)
+            original = copy.deepcopy(records)
+            quantity, chance = copy.deepcopy(records[0]), copy.deepcopy(records[0])
+            quantity['recordID'] += ':quantity-only'
+            chance['recordID'] += ':chance-only'
+            unknown = {'status': 'unknown', 'confidence': 0}
+            for record, kept in ((quantity, 'expectedQuantity'), (chance, 'dropChance')):
+                for field in ('expectedQuantity', 'dropChance', 'minQuantity', 'maxQuantity'):
+                    if field != kept:
+                        record['materials'][0][field] = copy.deepcopy(unknown)
+                self.assertIn('value', record['materials'][0][kept])
+            for order in ([quantity, chance], [chance, quantity]):
+                with self.subTest(first=order[0]['recordID']), patch.object(
+                        v3, 'build', return_value=(order, notes, total, counted, unplaced)):
+                    report = review.build_review(snapshot, root / 'no-local')
+                reviewed = {row['recordID']: row for row in report['rows']}
+                self.assertEqual(reviewed['quantity-source']['disposition'], 'ADMITTED_TO_BASELINE_PIPELINE')
+                self.assertEqual(reviewed['quantity-source']['supportedFields'], ['expectedQuantity'])
+                self.assertEqual(reviewed['chance-source']['disposition'], 'ADMITTED_TO_BASELINE_PIPELINE')
+                self.assertEqual(reviewed['chance-source']['supportedFields'], ['dropChance'])
+            self.assertEqual(records, original)
 
     def local_source(self, **updates):
         row = {'method': 'Craft', 'profession': 'Cooking', 'recipeID': 999301, 'expansionID': 11,

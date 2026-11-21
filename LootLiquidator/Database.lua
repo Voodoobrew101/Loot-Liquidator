@@ -13,11 +13,15 @@ LL.SourceDefaults=defaults
 local order={'itemdb','personal','imported','legacy','reference'}
 local sourcePriority={itemdb=1,personal=2,imported=3,legacy=4,reference=5}
 local methods={Mill=true,Prospect=true,Disenchant=true,Smelt=true,Recycle=true,
-    Craft=true,Research=true,Unravel=true,Crush=true,Thaumaturgy=true,Refine=true}
+    Craft=true,Research=true,Unravel=true,Crush=true,Thaumaturgy=true,Refine=true,Use=true}
 local statuses={unknown=true,contradictory=true,verified=true,measured=true,observed=true,provisional=true,historical=true,modeled=true}
 LL.SourceOrder=order
 local function finite(n) return type(n)=='number' and n==n and n>=0 and n<math.huge end
 local function copy(t) local out={} for k,v in pairs(t or {}) do out[k]=v end return out end
+local function copyReference(value)
+    if type(value)~='table' then return value end
+    local result={} for key,child in pairs(value) do result[key]=copyReference(child) end return result
+end
 local function same(a,b)
     if type(a)~=type(b) then return false end
     if type(a)~='table' then return a==b end
@@ -362,8 +366,15 @@ function LL:UnpackItemDBTables()
     if type(r)=='table' then
         self.ItemRestrictions=self.ItemRestrictions or {}
         for _,id in ipairs(r.noDisenchant or {}) do self.ItemRestrictions[id]=true end
-        -- D1c4: research flags only add to the game-file list.
-        for _,id in ipairs(r.researchNoDisenchant or {}) do self.ItemRestrictions[id]=true end
+        -- Older builds flattened catalog observations into item-wide flags.
+        -- Retire only those research additions; never remove a native DB2 flag.
+        local native={} for _,id in ipairs(r.noDisenchant or {}) do native[id]=true end
+        for _,id in ipairs(r.researchNoDisenchant or {}) do
+            if r.researchNoDisenchantPolicy=='native-proof-only' then self.ItemRestrictions[id]=true
+            elseif not native[id] then self.ItemRestrictions[id]=nil end
+        end
+        self.ResearchNoDisenchantObservations=r.researchNoDisenchantObservations or {}
+        self.ResearchNoDisenchantGlobalProofs=r.researchNoDisenchantGlobalProofs or {}
         self.ItemRestrictionsBuild=r.build
         self.DB2Processable=self.DB2Processable or {}
         for id,method in pairs(r.processable or {}) do self.DB2Processable[id]=method end
@@ -594,8 +605,16 @@ end
 -- Informational source references obey the same observation policy as yields.
 function LL:EvidenceSourceWeight(key,mode) return userWeight(self,key,mode) end
 local function sourceModel(self,f,option,r)
-    local model={recordID=r.recordID,inputCount=r.inputCount,patchBuild=r.patchBuild,referenceContextID=r.referenceContextID,
+    local model={recordID=r.recordID,inputItemID=r.inputItemID,inputCount=r.inputCount,patchBuild=r.patchBuild,referenceContextID=r.referenceContextID,
         sourceKey=r.sourceKey,baselineProfile=r.baselineProfile,baselineStatus=r.baselineStatus,
+        baselineProfileAssumed=r.baselineProfileAssumed,
+        sourceQuantityBasis=r.sourceQuantityBasis,requiresSourceNormalization=r.requiresSourceNormalization,
+        reviewedQualityProjection=r.reviewedQualityProjection,reviewedBacklogModel=r.reviewedBacklogModel,
+          reviewedPublishedPriorModel=r.reviewedPublishedPrior~=nil,
+        reviewedQualityZeroShares=r.reviewedQualityZeroShares,
+        reviewedEffectOverrides=r.reviewedEffectOverrides,
+        reviewedDisenchantProjection=r.reviewedDisenchantProjection,
+        namedOutputs=r.namedOutputs,unknownOutputs=r.unknownOutputs,
         duration=r.duration,expectedInputCount=r.expectedInputCount,materials={},source=r.source,
         referenceApplicability=r.referenceApplicability,
         operationUnverified=r.operationUnverified,
@@ -603,6 +622,7 @@ local function sourceModel(self,f,option,r)
             and 'provisional source estimate / baseline not normalized' or nil}
     for _,m in ipairs(r.materials) do
         local material={id=m.id,expectedQuantity=m.expectedQuantity.value,
+            rankIDs=m.rankIDs,economicPolicy=m.economicPolicy,
             chance=m.dropChance.value,probabilityVerified=m.dropChance.status=='verified' or m.dropChance.status=='measured',
             minQuantity=m.minQuantity.value,maxQuantity=m.maxQuantity.value}
         if m.conditionalReference then
@@ -634,6 +654,13 @@ local function sourceModel(self,f,option,r)
     if r.reviewedPublishedPrior and r.operationUnverified and r.quantityBasis=='per-input' then
         model.adjustment='Published per-input reference'
     end
+    if self.ProjectReviewedDisenchantPrior and r.reviewedDisenchantProjection then
+        model=self:ProjectReviewedDisenchantPrior(f,option,model)
+    end
+    if r.reviewedDisenchantProjection and r.requiresSourceNormalization and not model.reviewedDisenchantProjected then
+        model=copy(model);model.projectionIncomplete=true
+        model.normalizationFailure=model.normalizationFailure or 'Reviewed disenchant source projection is unavailable'
+    end
     if self.ApplyGeneralProfessionModel and r.sourceKey~='personal' and r.sourceKey~='imported' then
         model=self:ApplyGeneralProfessionModel(f,option,model)
     end
@@ -647,7 +674,13 @@ end
 local function modelMetadata(original,material,field,modelField)
     local meta=copy((field=='expectedQuantity' and material.derivedExpected) or original[field])
     meta.value=material[modelField]
-    if material.transformConfidence then meta.confidence=math.min(meta.confidence,material.transformConfidence) end
+    if material.transformConfidence then
+        -- Retain the source's ordinal support weight; target-model uncertainty
+        -- caps the displayed confidence rather than reweighting source units.
+        meta.evidenceScore=evidenceScore(meta)
+        meta.confidence=math.min(meta.confidence,material.transformConfidence)
+        meta.modelConfidenceCap=math.min(meta.modelConfidenceCap or 100,material.transformConfidence)
+    end
     return meta
 end
 local function unavailableReason(record,material)
@@ -794,6 +827,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         or ctx.character~=personal.observationContext.character) then
         personal=nil
     end
+    local measuredReferencePreferred=false
     if personal and userWeight(self,'personal',mode)>0 and (personal.effectiveSamples or 0)>0 then
         local r={recordID='personal',sourceKey='personal',studyID=personal.studyID or ('personal:'..tostring(ctx.character)),
             source='Personal recorded results',inputCount=personal.inputCount or option.inputCount or 1,
@@ -801,6 +835,13 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             referenceContextID=personal.referenceContextID,patchBuild=personal.patchBuild,expectedInputCount=personal.expectedInputCount,
             materials={},fixedReference=personal.professionProjected,
             provisional=personal.professionProjected or (personal.effectiveSamples or 0)<(self.ProcessingMinimum and self:ProcessingMinimum() or 30)}
+        r.personalReference={}
+        for _,key in ipairs({'sourcePatchBuild','targetPatchBuild','sourceReferenceOnly',
+            'currentPatchApplicabilityConfidence','sourceApplicabilityConfidence','observationBuildPolicy',
+            'personalSourceProfileMatched','numericTransformApplied','studyCoverageCensored','coverageCensored',
+            'excludedUnresolvedOperations','excludedUnresolvedRecordIDs','studyCoverageGaps'}) do
+            r.personalReference[key]=copyReference(personal[key])
+        end
         for _,m in ipairs(personal.materials or {}) do
             r.materials[#r.materials+1]={id=m.id,quality=m.quality,rarity=m.rarity,
                 expectedQuantity={value=m.expectedQuantity,confidence=math.min(85,m.confidence or 85,personal.ruleConfidence or 100),
@@ -812,6 +853,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         end
         if #r.materials>0 then
             eligible[#eligible+1]=r
+            measuredReferencePreferred=option.name=='Disenchant' and personal.personalSourceProfileMatched==true
+                and personal.numericTransformApplied==false and personal.coverageCensored==false
+                and personal.effectiveSamples>=(self.ProcessingMinimum and self:ProcessingMinimum() or 30)
             for _,material in ipairs(r.materials) do
                 if self:EvidenceReliability(material.expectedQuantity,r)>0 then hasExpected[r]=true;break end
             end
@@ -822,6 +866,20 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                     professionParameters=personal.professionParameters,ruleConfidence=personal.ruleConfidence}
             end
         end
+    end
+    if measuredReferencePreferred then
+        local scoped={}
+        for _,record in ipairs(eligible) do
+            -- A matching measured category is a better reference than a
+            -- source whose invested profile was never identified. Such rows
+            -- remain fallbacks for other profiles; they cannot import a maxed
+            -- character's extras into this known zero-specialization cohort.
+            local unknownProfile=record.baselineProfile==nil or record.baselineProfileAssumed==true
+            if record.sourceKey=='personal' or record.sourceKey=='imported' or not unknownProfile then
+                scoped[#scoped+1]=record
+            end
+        end
+        eligible=scoped
     end
     -- Primary database first, then an independent measured personal context.
     -- Incompatible/unknown historical contexts are never silently pooled.
@@ -911,10 +969,17 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         referenceContextID=anchor.referenceContextID,
         categorySourceStudyIDs=anchor.categorySourceStudyIDs,memberInputItemIDs=anchor.memberInputItemIDs}
     if anchor.sourceKey=='personal' and personal and personal.observationContext then
-        result.context=copy(personal.observationContext)
+        result.observationContext=copyReference(personal.observationContext)
+        result.context=copyReference(personal.projectedContext or personal.observationContext)
+        result.projectedContext=personal.projectedContext and copyReference(personal.projectedContext) or nil
         result.provisional=true
-        result.confidenceUnscored=true -- capture quality weights are not scientific review
-        result.adjustment='measured character context / unadjusted'
+        -- The scoped reader supplies actual retained observation counts and
+        -- distributions. Keep its source support score, independently from
+        -- current-build applicability; arbitrary capture-quality weights are
+        -- still unscored on other personal paths.
+        result.confidenceUnscored=not (personal.personalSourceProfileMatched
+            and personal.numericTransformApplied==false and personal.coverageCensored==false) or nil
+        result.adjustment=personal.adjustment or 'measured character context / unadjusted'
     end
     local bins,studySeen,outputReasons={},{},{}
     local consumptionSum,consumptionWeight,consumptionIncomplete=0,0,false
@@ -939,6 +1004,15 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         else
             -- Build a model, then apply the preserved PR #4 adapter exactly once.
             local model=transformed[r] or sourceModel(self,f,option,r)
+            if model.unknownOutputs or #(model.namedOutputs or {})>0 then
+                result.unknownOutputs=true
+                result.namedOutputs=result.namedOutputs or {}
+                for _,named in ipairs(model.namedOutputs or {}) do
+                    local found=false
+                    for _,old in ipairs(result.namedOutputs) do if same(old,named) then found=true;break end end
+                    if not found then result.namedOutputs[#result.namedOutputs+1]=copy(named) end
+                end
+            end
             if model.generalProfessionApplied then
                 result.generalProfessionApplied=true;result.professionProjected=true
                 result.projectedContext=model.projectedContext
@@ -994,6 +1068,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                     for _,overlapID in ipairs(unpricedOverlaps) do bins[overlapID]=nil end
                 end
                 local b=bins[id] or {id=id,quality=original.quality,rarity=original.rarity,
+                    economicPolicy=original.economicPolicy,
                     rankIDs=original.rankIDs, -- D1c2: rank unknown, priced at the cheapest rank
                     fields={},contributions={},sourceEstimates={}};bins[id]=b
                 if #rankReferences>0 then b.rankReferences=rankReferences end
@@ -1010,7 +1085,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                 local sourceRecords=previousSource and previousSource.records or {}
                 sourceRecords[#sourceRecords+1]={recordID=r.recordID,studyID=r.studyID,inputCount=r.inputCount,
                     expectedQuantity=m.expectedQuantity,originalExpectedQuantity=original.expectedQuantity.value,
-                    dropChance=m.chance,minQuantity=m.minQuantity,maxQuantity=m.maxQuantity}
+                    dropChance=m.chance,minQuantity=m.minQuantity,maxQuantity=m.maxQuantity,
+                    reviewedQualityProjected=model.reviewedQualityProjected,
+                    reviewedDisenchantProjected=model.reviewedDisenchantProjected,
+                    personalReference=copyReference(r.personalReference)}
                 b.sourceEstimates[r.sourceKey]={expectedQuantity=m.expectedQuantity,dropChance=m.chance,
                     minQuantity=m.minQuantity,maxQuantity=m.maxQuantity,sourceConflict=original.sourceConflict,
                     heldDropChance=original.heldDropChance,heldExpectedQuantity=original.heldExpectedQuantity,
@@ -1043,14 +1121,15 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                         acc.sum=acc.sum+v*weight;acc.weight=acc.weight+weight
                         local score=evidenceScore(metadata)
                         local c=(score or 0)>0 and score or UNKNOWN_CONFIDENCE
-                        -- Reviewed per-input references retain their original
-                        -- support weight separately from modeled applicability.
-                        -- Cap only this accepted field's confidence contribution.
-                        if field=='expectedQuantity' and r.reviewedPublishedPrior and finite(metadata.modelConfidenceCap) then
+                        -- Source support keeps its weighting independently of
+                        -- an explicit model/transform applicability cap.
+                        if finite(metadata.modelConfidenceCap)
+                            and (field=='expectedQuantity' or r.reviewedBacklogModel) then
                             c=math.min(c,metadata.modelConfidenceCap)
-                            b.reviewedPriorQuantity=true
-                        elseif field=='expectedQuantity' then
-                            b.otherQuantityContribution=true
+                        end
+                        if field=='expectedQuantity' then
+                            if r.reviewedPublishedPrior then b.reviewedPriorQuantity=true
+                            else b.otherQuantityContribution=true end
                         end
                         acc.confidence=(acc.confidence or 0)+c*weight
                         if field=='expectedQuantity' then
@@ -1058,6 +1137,14 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                             local sourceMean=b.sourceMeanAccumulators[r.sourceKey] or {sum=0,weight=0}
                             b.sourceMeanAccumulators[r.sourceKey]=sourceMean
                             sourceMean.sum=sourceMean.sum+v*weight;sourceMean.weight=sourceMean.weight+weight
+                            if model.reviewedQualityProjected then
+                                sourceMean.reviewedQualitySum=(sourceMean.reviewedQualitySum or 0)+v*weight
+                                sourceMean.reviewedQualityWeight=(sourceMean.reviewedQualityWeight or 0)+weight
+                            end
+                            if model.reviewedDisenchantProjected then
+                                sourceMean.reviewedDisenchantSum=(sourceMean.reviewedDisenchantSum or 0)+v*weight
+                                sourceMean.reviewedDisenchantWeight=(sourceMean.reviewedDisenchantWeight or 0)+weight
+                            end
                             b.independentQuantityConfidence=b.independentQuantityConfidence or metadata.independentConfidence
                             if hasEligibleSalvage then acceptedMeanWeight=math.max(acceptedMeanWeight,weight) end
                             if model.operationUnverified then result.operationUnverified=true end
@@ -1078,7 +1165,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                                 if original.referenceCorrection then result.referenceCorrection=true end
                             end
                             result.provisional=result.provisional or r.provisional==true
-                            if mode==2 and r.sourceKey=='personal' and r.provisional then result.insufficientSamples=true end
+                            if mode==2 and r.sourceKey=='personal'
+                                and personal.effectiveSamples<(self.ProcessingMinimum and self:ProcessingMinimum() or 30) then
+                                result.insufficientSamples=true
+                            end
                         elseif field=='dropChance' then
                             b.chanceProvisional=b.chanceProvisional or metadata.status=='provisional'
                                 or metadata.status=='modeled' or metadata.status=='historical'
@@ -1203,6 +1293,14 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             local estimate=b.sourceEstimates[source]
             estimate.expectedQuantity=accumulator.sum/accumulator.weight
             estimate.inputCount=batch
+            if accumulator.reviewedQualitySum~=nil then
+                estimate.unprojectedQualityExpectedQuantity=(accumulator.sum-accumulator.reviewedQualitySum)/accumulator.weight
+                estimate.reviewedQualityProjected=accumulator.reviewedQualityWeight>=accumulator.weight-1e-12
+            end
+            if accumulator.reviewedDisenchantSum~=nil then
+                estimate.unprojectedDisenchantExpectedQuantity=(accumulator.sum-accumulator.reviewedDisenchantSum)/accumulator.weight
+                estimate.reviewedDisenchantProjected=accumulator.reviewedDisenchantWeight>=accumulator.weight-1e-12
+            end
             if #(estimate.records or {})>1 then
                 estimate.recordID=nil;estimate.studyID=nil;estimate.aggregate=true
                 estimate.dropChance=nil -- Individual occurrence evidence stays in records.
@@ -1226,6 +1324,13 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
     result.reviewedPublishedPriorOnly=acceptedReviewedPrior and not acceptedOtherQuantity or nil
     if personal and (result.sources.personal or 0)>0 then
         result.personalStats={total=personal.samples or 0,effectiveSamples=personal.effectiveSamples or personal.samples or 0}
+        result.personalReference={}
+        for _,key in ipairs({'sourcePatchBuild','targetPatchBuild','sourceReferenceOnly',
+            'currentPatchApplicabilityConfidence','sourceApplicabilityConfidence','observationBuildPolicy',
+            'personalSourceProfileMatched','numericTransformApplied','studyCoverageCensored','coverageCensored',
+            'excludedUnresolvedOperations','excludedUnresolvedRecordIDs','studyCoverageGaps'}) do
+            result.personalReference[key]=copyReference(personal[key])
+        end
     end
     table.sort(result.materials,function(a,b) return a.id<b.id end)
     if totalContribution==0 then

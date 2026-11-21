@@ -19,18 +19,7 @@ if arg and arg[1] then
     equal(before.ItemDB,LL.ItemDB)
     print(('PASS: pre-change ItemDB preserved: %d tables, %d scalar values, all types and lengths'):format(tables,values))
 end
-local function keyed(value)
-    if type(value)=='number' then return string.format('%.17g',value) end
-    if type(value)=='string' then return string.format('%q',value) end
-    if type(value)=='boolean' then return tostring(value) end
-    local keys={} for key in pairs(value) do keys[#keys+1]=key end
-    table.sort(keys,function(a,b) if type(a)==type(b) then return a<b end return type(a)<type(b) end)
-    local entries={'{'}
-    for _,key in ipairs(keys) do entries[#entries+1]='['..keyed(key)..']='..keyed(value[key])..',' end
-    entries[#entries+1]='}'
-    return table.concat(entries)
-end
-local oldConstructor=assert(loadstring('return '..keyed(LL.ItemDB)))
+local oldConstructor=assert(loadfile('tests/keyed_database_constructor.lua'))()(LL.ItemDB)
 collectgarbage('collect')
 local before=collectgarbage('count')
 local old=oldConstructor()

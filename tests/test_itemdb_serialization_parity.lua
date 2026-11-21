@@ -7,15 +7,6 @@ local function same(a,b,path)
     for k,v in pairs(a)do same(v,b[k],path..'.'..tostring(k))end
     for k in pairs(b)do assert(a[k]~=nil,path..': key added '..tostring(k))end
 end
-local function keyed(v)
-    if type(v)=='number'then return string.format('%.17g',v)end
-    if type(v)=='string'then return string.format('%q',v)end
-    if type(v)=='boolean'then return tostring(v)end
-    local keys={}for k in pairs(v)do keys[#keys+1]=k end
-    table.sort(keys,function(a,b)if type(a)==type(b)then return a<b end return type(a)<type(b)end)
-    local s={'{'}for _,k in ipairs(keys)do s[#s+1]='['..keyed(k)..']='..keyed(v[k])..','end
-    s[#s+1]='}';return table.concat(s)
-end
 GetBuildInfo=function()return'12.1.5','70961'end
 GetTime=function()return 100 end;time=function()return 100 end
 CreateFrame=function()return{RegisterEvent=function()end,SetScript=function()end}end
@@ -24,7 +15,7 @@ GetItemCount=function()return 100000 end
 local current={};assert(loadfile('LootLiquidator/ItemDBRuntime.lua'))('LL',current)
 local previous={}
 if arg and arg[1]then assert(loadfile(arg[1]))('LL',previous)
-else previous.ItemDB=assert(loadstring('return '..keyed(current.ItemDB)))()end
+else previous.ItemDB=assert(loadfile('tests/keyed_database_constructor.lua'))()(current.ItemDB)()end
 local function setup(data)
     local LL={ItemDB=data,db={characters={Player={professions={}}},rateProfile=3,rateProfileCharacter='Player',
         source_itemdb_enabled=true,source_legacy_enabled=true,source_reference_enabled=true,

@@ -195,8 +195,87 @@ function LL:ApplyProfessionModel(f,option,baseline,target)
 end
 -- Derive afresh from raw samples. Never persist a rewritten empirical mean.
 -- Explicit patch edges also represent reviewed "no change" (factor=1).
+-- Disenchant quantity/quality does not depend on an equipment GUID, armor
+-- subclass, UI allocation-table format, or a Crafting Speed rating. At known
+-- zero specialization, the measured effective skill already includes actual
+-- gear/enchant skill once. Other talent states still need their normal model.
+function LL:DisenchantObservationProfileKey(context)
+    if type(context)~='table' or context.profession~='Enchanting' then return nil end
+    local skill=context.effectiveSkill or context.preSpecializationSkill or context.skill
+    if not finite(skill) then return nil end
+    if context.maxSkill~=nil and (not finite(context.maxSkill) or context.maxSkill<=0) then return nil end
+    local zero=context.specialization=='none'
+    for _,points in ipairs({context.specializationPoints or {},context.disenchantSpecializationPoints or {}}) do
+        for _,value in pairs(points) do
+            if not finite(value) or value~=0 then return nil end
+        end
+    end
+    for _,learned in ipairs({context.learnedSpecializations or {},context.disenchantLearnedSpecializations or {}}) do
+        for _,value in pairs(learned) do if value then return nil end end
+    end
+    if (context.specializationKnown==true or context.disenchantSpecializationKnown==true
+        or context.simulated and context.profileKind=='manual-simulation')
+        and type(context.specializationPoints or context.disenchantSpecializationPoints)=='table' then zero=true end
+    if not zero then return nil end
+    if context.fieldStatus and context.fieldStatus.effectiveSkill=='unknown' then return nil end
+    -- A measured active buff cannot disappear merely because an older recorder
+    -- did not record auras. Empty/nil are the legacy no-buff-context signature.
+    local buffs={}
+    for id,active in pairs(context.buffs or context.activeBuffs or {}) do
+        if active then buffs[#buffs+1]=tostring(id)..'='..tostring((context.buffStacks or {})[id] or active) end
+    end
+    table.sort(buffs)
+    return ('effective:%g;specialization:none;buffs:%s'):format(skill,table.concat(buffs,','))
+end
+
+function LL:ReuseDisenchantSourceProfile(f,option,raw,target,targetBuild)
+    if type(option)~='table' or option.name~='Disenchant' or option.recipeID~=13262 or type(f)~='table'
+        or (f.classID~=2 and f.classID~=4) or not raw or not raw.observationContext
+        or type(target)~='table' or target.character~=raw.observationContext.character then return nil end
+    local source=raw.observationContext
+    -- A manual target may match a recorded profile; a manual source is never
+    -- evidence. Legacy measured contexts have no profileKind marker.
+    if source.simulated==true or (source.profileKind~=nil and source.profileKind~='measured') then return nil end
+    if source.fieldStatus and source.fieldStatus.specialization=='unknown' then return nil end
+    local sourceKey=self:DisenchantObservationProfileKey(source)
+    if not sourceKey or sourceKey~=self:DisenchantObservationProfileKey(target) then return nil end
+    local category=('gear:%s:%s:%s'):format(tostring(f.expansionID),tostring(f.quality),f.classID==2 and 'weapon' or 'armor')
+    if raw.gearKey~=category then return nil end
+    local sourceBuild=tostring(raw.sourcePatchBuild or raw.patchBuild)
+    targetBuild=tostring(targetBuild or (GetBuildInfo and select(2,GetBuildInfo())))
+    local version=GetBuildInfo and GetBuildInfo()
+    local historical=sourceBuild~=targetBuild
+    if historical then
+        local before,after=tonumber(sourceBuild),tonumber(targetBuild)
+        if not before or not after or before>=after or type(version)~='string'
+            or not version:match('^%d+%.%d+%.%d+$') then return nil end
+        if raw.clientVersion and raw.clientVersion~=version then return nil end
+    end
+    local result=copy(raw)
+    result.rawEstimate=copy(raw.rawEstimate or raw)
+    result.projectedContext=copy(target)
+    result.targetPatchBuild=targetBuild;result.sourcePatchBuild=sourceBuild
+    -- This is an unscaled historical source reference, not a factor-one patch
+    -- bridge or a newly observed current-build study. Histograms/counts retain
+    -- their original source build/profile and are never relabeled as new casts.
+    result.patchBuild=sourceBuild
+    result.professionProjected=true
+    result.numericTransformApplied=false
+    result.personalSourceProfileMatched=true
+    result.sourceReferenceOnly=historical or raw.coverageCensored==true
+    result.sourceApplicabilityConfidence=historical and 0 or nil
+    result.currentPatchApplicabilityConfidence=historical and 0 or nil
+    result.observationBuildPolicy={policyID='personal-de-source-context/1',sourceBuild=sourceBuild,targetBuild=targetBuild,
+        currentClientVersion=version,sourceClientVersion=raw.clientVersion,sourceClientVersionKnown=raw.clientVersion~=nil,
+        unchangedRatesVerified=false,numericTransformApplied=false,retainedSourceSamples=raw.samples or raw.operations}
+    result.adjustment='Recorded disenchant source profile'
+    return result
+end
+
 function LL:ProjectPersonalEstimate(f,option,raw,target,targetBuild)
     if not raw or not raw.observationContext then return nil,'Missing recorded profile' end
+    local retained=self:ReuseDisenchantSourceProfile(f,option,raw.rawEstimate or raw,target,targetBuild)
+    if retained then return retained end
     if self.ProjectGeneralPersonalEstimate then
         local general=self:ProjectGeneralPersonalEstimate(f,option,raw,target,targetBuild)
         if general then return general end
@@ -1027,6 +1106,122 @@ function LL:DisenchantForwardProfile(f,option,context,rule)
     if not seen[rule.rootNodeID] or not seen[rule.childNodeID] or not finite(pre+bonus) then return nil end
     return {effectiveSkill=pre+bonus,preSpecializationSkill=pre,specializationSkillBonus=bonus,childPoints=child}
 end
+local function selectedDisenchantBaseline(self,f,option,context,mode)
+    local selected
+    for _,baseline in ipairs(self.ItemDB and self.ItemDB.modeledDisenchantBaselines or {}) do
+        local rule=baseline.rule
+        if usable(rule) and rule.applyPolicy=='EXECUTE' and rule.method==option.name
+            and rule.profession==context.profession and rule.expansionID==f.expansionID
+            and rule.inputRarity==f.quality and baseline.inputClassID==f.classID
+            and self:ProfessionRuleMatchesBuild(rule) and self:EvidenceSourceWeight(rule.sourceKey,mode)>0 then
+            if selected then return nil end
+            selected=baseline
+        end
+    end
+    return selected
+end
+
+-- An opt-in, exact-input source-table vector may supply the declared unknown-
+-- profile zero reference. It is not an observed minimum-skill cohort. Project
+-- only its own term before evidence fusion; the post-fusion adapter retains
+-- these weighted primary terms and adds native unlock outcomes once.
+function LL:ProjectReviewedDisenchantPrior(f,option,model,context,mode)
+    if type(model)~='table' or model.reviewedBacklogModel~=true
+        or model.reviewedDisenchantProjection~='source-anchored' or model.reviewedDisenchantProjected then return model end
+    local function blocked(reason)
+        if model.requiresSourceNormalization~=true then return model end
+        local result=copy(model)
+        result.projectionIncomplete=true;result.normalizationFailure=reason
+        result.reviewedDisenchantProjectionFailed=true
+        return result
+    end
+    context=context or (type(option)=='table' and self.ProcessingPlayerConditions
+        and self:ProcessingPlayerConditions(f,option.name,option.recipeID,option.character))
+    if type(f)~='table' or f.expansionID~=11 or type(option)~='table' or option.name~='Disenchant'
+        or option.recipeID~=13262 or type(model)~='table' or type(context)~='table'
+        or context.profession~='Enchanting'
+        or model.baselineProfileAssumed~=true or model.inputItemID~=f.id or model.inputCount~=1
+        or mode==2 or not self.EvidenceSourceWeight or self:EvidenceSourceWeight('itemdb',mode)<=0 then
+        return blocked('Reviewed disenchant prior requires its exact input, enabled source policy and a current profession profile')
+    end
+    local source=model.baselineProfile
+    if type(source)~='table' or source.skill~=0 or source.preSpecializationSkill~=0 then
+        return blocked('Reviewed disenchant prior has no declared unknown-profile zero reference')
+    end
+    for _,values in ipairs({source.stats or {},source.specializationPoints or {},source.learnedSpecializations or {}}) do
+        if type(values)~='table' or next(values) then return blocked('Known source stats or specialization need their own identified inverse') end
+    end
+    local reported=source.sourceReportedProfile
+    if type(reported)=='table' and (reported.skill~=nil or reported.specialization~=nil or reported.stats~=nil) then
+        return blocked('Known reported source profile cannot be substituted by an unknown zero reference')
+    end
+    local selected=selectedDisenchantBaseline(self,f,option,context,mode)
+    if not selected then return blocked('No unique enabled native disenchant rule matches this input category and build') end
+    local profile=self:DisenchantForwardProfile(f,option,context,selected.rule)
+    if not profile then return blocked('Target skill or normalized specialization points are unknown or stale') end
+    local actual=deAmounts(model.materials)
+    local low,high=selected.rule.primaryRankIDs[1],selected.rule.primaryRankIDs[2]
+    if not actual or not finite(actual[low]) or not finite(actual[high]) or actual[low]+actual[high]<=0 then
+        return blocked('Reviewed source must explicitly identify the complete native primary rank family with positive total units')
+    end
+    local baseline=copy(selected)
+    local base=deAmounts(baseline.materials)
+    if not base then return blocked('Native model baseline quantities are invalid') end
+    for id,quantity in pairs(actual) do
+        if id~=low and id~=high and (quantity~=0 or base[id]==nil) then
+            return blocked('Source extra outputs conflict with the declared before-unlock zero reference')
+        end
+    end
+    for _,material in ipairs(baseline.materials) do
+        if material.id==low or material.id==high then material.expectedQuantity=actual[material.id] end
+    end
+    if baseline.rule.preservePrimaryTotal then
+        local endpoint=deAmounts(baseline.endpointMaterials)
+        if not endpoint or not finite(endpoint[low]) or not finite(endpoint[high]) or endpoint[low]+endpoint[high]<=0 then
+            return blocked('Native primary quality endpoint is incomplete')
+        end
+        local total=actual[low]+actual[high]
+        local share=endpoint[high]/(endpoint[low]+endpoint[high])
+        for _,material in ipairs(baseline.endpointMaterials) do
+            if material.id==low then material.expectedQuantity=total*(1-share)
+            elseif material.id==high then material.expectedQuantity=total*share end
+        end
+    end
+    baseline.confidence=0
+    local projected,progress=self:DisenchantCurveQuantities(baseline,profile)
+    if not projected then return blocked('Native disenchant curve cannot project this declared source reference') end
+    local byID={} for _,material in ipairs(projected) do byID[material.id]=material end
+    local result=copy(model)
+    for _,material in ipairs(result.materials) do
+        local adjusted=byID[material.id]
+        if not adjusted then return blocked('Source output has no matching native model outcome') end
+        material.expectedQuantity=adjusted.expectedQuantity
+        material.confidence=0
+        material.chance=nil;material.probabilityVerified=false
+        material.minQuantity=nil;material.maxQuantity=nil
+        material.quantityCounts=nil;material.histogram=nil;material.personalHistogram=nil
+        material.fieldEvidence=nil;material.samples=nil;material.castsWithDrop=nil;material.totalQuantity=nil
+        material.boundsBasis=nil;material.boundsSource=nil;material.chanceConfidence=nil;material.chanceCasts=nil
+        material.netUnitPrice=nil;material.netExpectedValue=nil
+        material.reviewedDisenchantProjected=true
+    end
+    result.reviewedDisenchantProjected=true
+    result.projectionIncomplete=nil;result.normalizationFailure=nil;result.reviewedDisenchantProjectionFailed=nil
+    result.professionProjected=true;result.specializationEffectsApplied=true
+    result.projectedContext=copy(context)
+    result.projectedContext.effectiveSkill=profile.effectiveSkill
+    result.projectedContext.preSpecializationSkill=profile.preSpecializationSkill
+    result.projectedContext.specializationSkillBonus=profile.specializationSkillBonus
+    result.disenchantProgress=progress
+    result.reviewedDisenchantSourceReference={recordID=model.recordID,
+        sourceProfileAssumed=true,referenceKind='declared-unknown-profile-zero-reference',
+        observedZeroProfileClaim=false,observedSamplesAdded=0,
+        currentVariantEqualityVerified=false,
+        sourcePrimaryMaterials=copy(model.materials),ruleID=selected.rule.ruleID}
+    result.confidence=0;result.ruleConfidence=0;result.numericTransformApplied=true
+    result.value=nil;result.partialValue=nil;result.valueConfidence=nil
+    return result
+end
 -- Consume only the compiler's model baseline, not an arbitrary selected source
 -- mean. Source observations/counts remain immutable and are never projected twice.
 function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
@@ -1035,17 +1230,7 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
         or context.profession~='Enchanting' or mode==2 or model and model.disenchantBaselineApplied then return model end
     if not self.EvidenceSourceWeight or self:EvidenceSourceWeight('itemdb',mode)<=0 then return model end
     if model and model.sources and ((model.sources.personal or 0)>0 or (model.sources.imported or 0)>0) then return model end
-    local selected
-    for _,baseline in ipairs(self.ItemDB and self.ItemDB.modeledDisenchantBaselines or {}) do
-        local rule=baseline.rule
-        if usable(rule) and rule.applyPolicy=='EXECUTE' and rule.method==option.name
-            and rule.profession==context.profession and rule.expansionID==f.expansionID
-            and rule.inputRarity==f.quality and baseline.inputClassID==f.classID
-            and self:ProfessionRuleMatchesBuild(rule) and self:EvidenceSourceWeight(rule.sourceKey,mode)>0 then
-            if selected then return model end
-            selected=baseline
-        end
-    end
+    local selected=selectedDisenchantBaseline(self,f,option,context,mode)
     if not selected then return model end
     local profile=self:DisenchantForwardProfile(f,option,context,selected.rule)
     local materials,progress
@@ -1060,14 +1245,35 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
     -- the ItemDB term when compatible legacy/reference means also contributed.
     local mixed=false
     for key,weight in pairs(model and model.sources or {}) do if key~='itemdb' and weight>0 then mixed=true end end
-    if mixed then
+    local reviewedPrimary,sourcePrimaryTotal,unprojectedPrimaryTotal=false,0,0
+    local primary={}
+    for _,id in ipairs(selected.rule.primaryRankIDs or {}) do primary[id]=true end
+    for _,original in ipairs(model and model.materials or {}) do
+        local source=original.sourceEstimates and original.sourceEstimates.itemdb
+        if primary[original.id] and source and finite(source.expectedQuantity)
+            and finite(source.inputCount) and source.inputCount>0 then
+            local unprojected=source.unprojectedDisenchantExpectedQuantity
+            if unprojected~=nil then
+                if not finite(unprojected) or unprojected>source.expectedQuantity+1e-9 then return model end
+                reviewedPrimary=true
+            else unprojected=source.expectedQuantity end
+            sourcePrimaryTotal=sourcePrimaryTotal+source.expectedQuantity/source.inputCount
+            unprojectedPrimaryTotal=unprojectedPrimaryTotal+unprojected/source.inputCount
+        end
+    end
+    -- Scale the ordinary quantity term against the canonical ZERO pool, not
+    -- against a mixed pool that includes differently sized reviewed priors.
+    -- The latter would change an otherwise identical zero-profile fusion.
+    local canonicalBase=deAmounts(selected.materials)
+    local canonicalPrimaryTotal=canonicalBase and ((canonicalBase[selected.rule.primaryRankIDs[1]] or 0)
+        +(canonicalBase[selected.rule.primaryRankIDs[2]] or 0)) or 0
+    local ordinaryShare=canonicalPrimaryTotal>0 and unprojectedPrimaryTotal/canonicalPrimaryTotal or 0
+    if mixed or reviewedPrimary then
         local byID={}
         for _,material in ipairs(materials) do byID[material.id]=material end
         -- A newly introduced rank or bonus has no per-material contribution
         -- row yet. Give it only the selected ItemDB primary family's share,
         -- rather than a full-strength bonus beside mostly legacy evidence.
-        local primary={}
-        for _,id in ipairs(selected.rule.primaryRankIDs or {}) do primary[id]=true end
         local originalIDs,primarySum,weightedPrimary={},0,0
         for _,original in ipairs(model.materials or {}) do
             originalIDs[original.id]=true
@@ -1094,7 +1300,13 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
                 local source=original.sourceEstimates and original.sourceEstimates.itemdb
                 if finite(original.expectedQuantity) and finite(weight) and weight>0 and weight<=1
                     and source and finite(source.expectedQuantity) and finite(source.inputCount) and source.inputCount>0 then
-                    projected.expectedQuantity=original.expectedQuantity+weight*(projected.expectedQuantity-source.expectedQuantity/source.inputCount)
+                    local replacement=projected.expectedQuantity
+                    if reviewedPrimary and primary[original.id] then
+                        local unprojected=source.unprojectedDisenchantExpectedQuantity
+                        if unprojected==nil then unprojected=source.expectedQuantity end
+                        replacement=(source.expectedQuantity-unprojected)/source.inputCount+replacement*ordinaryShare
+                    end
+                    projected.expectedQuantity=original.expectedQuantity+weight*(replacement-source.expectedQuantity/source.inputCount)
                     if projected.expectedQuantity<0 and projected.expectedQuantity>-1e-9 then projected.expectedQuantity=0 end
                     if not finite(projected.expectedQuantity) then return model end
                     projected.confidence=math.min(projected.confidence or confidence,original.confidence or confidence)
@@ -1120,6 +1332,7 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
         result.sources=copy(model.sources);result.source=model.source
         result.unknownOutputs=result.unknownOutputs or model.unknownOutputs
     end
+    if reviewedPrimary then result.reviewedDisenchantProjected=true end
     return result
 end
 

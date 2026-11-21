@@ -57,6 +57,40 @@ def raw_rows(snapshot):
     return rows, files
 
 
+def catalogue_scope_receipts(snapshot, folder):
+    """Link terminal reviewed fields back to the older per-row triage view."""
+    from source_catalogue_review import _definitions
+    base = Path(snapshot) / folder
+    manifest = json.loads((base / 'manifest.json').read_text(encoding='utf-8'))
+    proposals = {}
+    for name in manifest['proposalFiles']:
+        for proposal in _definitions(json.loads((base/name).read_text(encoding='utf-8'))):
+            proposals[proposal['proposalID']] = proposal
+    decisions = json.loads((base/manifest['decisionsFile']).read_text(encoding='utf-8'))
+    assigned = json.loads((base/manifest['assignedSourcesFile']).read_text(encoding='utf-8'))
+    locators = {(source['sourceKey'], scope['scopeID']): scope.get('locator')
+                for source in assigned['sources'] for scope in source['scopes']}
+    result = defaultdict(list)
+    for source in decisions['sources']:
+        for scope in source['scopes']:
+            targets = set()
+            locator = locators.get((source['sourceKey'], scope['scopeID']))
+            if locator:
+                targets.add(locator)
+            for field in scope['fieldDecisions']:
+                for identity in field.get('proposalIDs', []):
+                    proposal = proposals[identity]
+                    locator = proposal.get('locator') or proposal.get('sourceLocator')
+                    if isinstance(locator, str) and locator.startswith('research/v3/') and locator.rsplit(':',1)[-1].isdigit():
+                        targets.add(locator)
+            receipt = {'catalogueID': manifest['catalogueID'], 'cataloguePath': folder.as_posix(),
+                       'sourceKey': source['sourceKey'], 'scopeID': scope['scopeID'],
+                       'fieldDecisions': scope['fieldDecisions']}
+            for locator in targets:
+                result[locator].append(receipt)
+    return result
+
+
 def scope_keys(module, row, names, families):
     identity = module.key_of(row, names)
     if not identity:
@@ -109,7 +143,7 @@ def build_review(snapshot, evidence_folder=Path('research/evidence/v3')):
         if prior:
             for source_prior in prior.get('sourceRows', [prior]):
                 reviewed_priors[(source_prior['sourceFile'], source_prior['sourceRecordID'])] = source_prior
-            prior_scopes.update((record['method'], str(record['inputItemID']), material['id']) for material in record['materials'])
+            prior_scopes.update((record['method'], str(record.get('inputItemID', record.get('gearKey'))), material['id']) for material in record['materials'])
     source_conditions = module.load_conditions(effective)
     built_fields = defaultdict(dict)
     for record in records:
@@ -119,7 +153,10 @@ def build_review(snapshot, evidence_folder=Path('research/evidence/v3')):
             key = (record['method'], item, material['id'])
             if record.get('sourceOperationScope'):
                 key += (canonical(record['sourceOperationScope']),)
-            built_fields[key][record['inputCount']] = fields
+            # Different records can supply disjoint fields for this operation.
+            # Keep their union so a later probability-only record cannot hide
+            # an already compiled mean (or the reverse) in the row receipt.
+            built_fields[key].setdefault(record['inputCount'], set()).update(fields)
     counted_rows = [row for row in effective if v3.is_counted(row, module)]
     vectors, _, pooled = module.study_vectors(counted_rows)
     copies = module.misplaced_copies(counted_rows, names, vectors, pooled)
@@ -157,14 +194,14 @@ def build_review(snapshot, evidence_folder=Path('research/evidence/v3')):
                 entry.update(disposition='ADMITTED_AS_REVIEWED_PUBLISHED_PRIOR', supportedFields=['expectedQuantity'],
                              observedSamplesAdded=0, modeledSourceProfileConfidence=0,
                              reasons=['Exact reviewed source mean; unknown source profile uses a zero-confidence modeling prior, with no empirical conditional-gate bypass'])
-            elif (identity in prior_scopes and module.condition_for(source_conditions, *identity) is not None
-                  and module.unlock_state(row) is not True):
-                entry.update(disposition='PRESERVED_UNRESOLVED_CONDITIONAL_SCOPE',
-                             reasons=['The reviewed published-prior exception does not admit other conditional source cohorts'])
             elif not module.is_study_row(row):
                 entry.update(disposition='PRESERVED_METADATA', reasons=['Separate metadata/token/restriction adapter; no processing cast samples'])
             elif not v3.is_counted(row, module):
                 entry.update(disposition='PRESERVED_REFERENCE', reasons=['Reference or existing addon copy; not additional independent observed casts'])
+            elif (identity in prior_scopes and module.condition_for(source_conditions, *identity) is not None
+                  and module.unlock_state(row) is not True):
+                entry.update(disposition='PRESERVED_UNRESOLVED_CONDITIONAL_SCOPE',
+                             reasons=['The reviewed published-prior exception does not admit other conditional source cohorts'])
             elif id(row) in copies:
                 entry.update(disposition='MERGED_SOURCE_COPY', reasons=['Existing cohort/pooled-source deduplication'])
             else:
@@ -194,7 +231,7 @@ def build_review(snapshot, evidence_folder=Path('research/evidence/v3')):
     for entry in legacy['setAside']:
         local_reviews.append(dict(entry, disposition='HELD_BY_EXISTING_CHECKER'))
     dispositions = Counter(entry['disposition'] for entry in reviews + local_reviews)
-    return {'schemaVersion': 1, 'policy': POLICY, 'reviewType': 'AUTOMATIC_BUILD_REVIEW',
+    report = {'schemaVersion': 1, 'policy': POLICY, 'reviewType': 'AUTOMATIC_BUILD_REVIEW',
             'independentScientificApproval': False, 'sourceSnapshot': source,
             'sourceFileSHA256': source_hashes, 'reviewedRows': len(reviews) + len(local_reviews),
             'reviewedStudyIdentities': len(study_identities),
@@ -204,6 +241,41 @@ def build_review(snapshot, evidence_folder=Path('research/evidence/v3')):
             'generatorInputRows': total, 'generatorCandidateRows': counted, 'unplacedRows': unplaced,
             'generatorNotes': dict(sorted(notes.items())),
             'rows': reviews, 'localEvidenceRows': sorted(local_reviews, key=lambda entry: entry['recordID'])}
+    from source_catalogue_review import review_source_catalogue
+    from source_catalogue_registry import catalogue_paths
+    folders = [folder for folder in catalogue_paths(snapshot) if (snapshot / folder / 'manifest.json').exists()]
+    if folders:
+        from reviewed_source_catalogue import canonical_hash, reviewed_context_facts
+        current = {}
+        proof_by_id = {(row.get('_file'), row.get('id')): row for row in module.load_reviewed_source_rows()}
+        for file, line, row in raw:
+            if not isinstance(row, dict):
+                continue
+            corrected = proof_by_id.get((file, row.get('id')))
+            current[f'{file}:{line}'] = {'rawSHA256': canonical_hash(row),
+                'effectiveSHA256': canonical_hash(corrected) if corrected is not None else None}
+        facts = reviewed_context_facts(snapshot)['facts']
+        catalogues = []
+        for folder in folders:
+            catalogue = review_source_catalogue(snapshot, consumer_model_ids=records,
+                consumer_fact_ids=facts, current_rows=current, catalogue_path=folder)
+            catalogue['consumerValidation'] = 'generated-producer'
+            catalogue['cataloguePath'] = folder.as_posix()
+            catalogues.append(catalogue)
+            if not catalogue['complete']:
+                raise ValueError('Source catalogue is incomplete: ' + json.dumps(catalogue['errors'][:12]))
+            scoped_receipts = catalogue_scope_receipts(snapshot, folder)
+            for entry in reviews:
+                receipts = scoped_receipts.get(entry['locator'])
+                if receipts:
+                    entry.setdefault('automaticDispositionBeforeCatalogue', entry['disposition'])
+                    entry['disposition'] = 'CATALOGUED_CURRENT_PIPELINE_FIELDS'
+                    entry.setdefault('sourceCatalogueReceipts', []).extend(receipts)
+        report['sourceCatalogues'] = catalogues
+        if len(catalogues)==1:
+            report['sourceCatalogue'] = catalogues[0]
+        report['dispositions'] = dict(sorted(Counter(entry['disposition'] for entry in reviews + local_reviews).items()))
+    return report
 
 
 def write_review(snapshot, output=Path('database/research/build-study-review.json'), evidence_folder=Path('research/evidence/v3'), check=False):
@@ -215,6 +287,10 @@ def write_review(snapshot, output=Path('database/research/build-study-review.jso
                                           'reviewedRows', 'reviewedStudyIdentities', 'dispositions',
                                           'baselineRecords', 'baselineMaterials')}
     summary.update(sourceRevision=report['sourceSnapshot']['commit'], reviewSHA256=sha256(text.encode()).hexdigest())
+    if 'sourceCatalogue' in report:
+        summary['sourceCatalogue'] = report['sourceCatalogue']
+    if 'sourceCatalogues' in report:
+        summary['sourceCatalogues'] = report['sourceCatalogues']
     compact = '-- Generated automatic build review; source evidence remains immutable.\nreturn ' + lua(summary) + '\n'
     if check:
         if not output.with_suffix('.lua').exists() or output.with_suffix('.lua').read_text(encoding='utf-8') != compact:

@@ -111,6 +111,15 @@ end
 
 function LL:ProcessingPlayerConditions(f,method,recipeID,character,professionHint)
     local current=self.CharacterKey and self:CharacterKey()
+    if method=='Use' and not professionHint then
+        -- An already-owned container is not a profession recipe or an alt's
+        -- simulated operation. Native item-use requirements are checked apart
+        -- from this source-model context; no manual profession is fabricated.
+        return {character=current,profileKind='live',inputID=f and f.id,
+            inputQuality=f and f.reagentQuality,inputRarity=f and f.quality,
+            inputClassID=f and f.classID,expansionID=f and f.expansionID,
+            itemUse=true,assumedMinimum=false}
+    end
     local key,whatIf=self:RateProfileTarget(character)
     local profession=professionHint or (self.ProfessionForRecipe and self:ProfessionForRecipe(recipeID,key))
         or (self.ProfessionForMethod and self:ProfessionForMethod(method))
@@ -544,7 +553,8 @@ function LL:EvaluateDisenchant(f,character)
     local current=self.CharacterKey and self:CharacterKey()
     local personal
     if (not character or character=='Current character' or character==current) and self.GetLearnedDisenchantEstimate then
-        personal=self:GetLearnedDisenchantEstimate(f,family)
+        local target=self.ProcessingPlayerConditions and self:ProcessingPlayerConditions(f,'Disenchant',13262,character)
+        personal=self:GetLearnedDisenchantEstimate(f,family,target)
     end
     local model,reason=self:ResolveEvidenceModel(f,{name='Disenchant',inputCount=1,
         recipeID=13262,character=character},personal,mode)
@@ -642,7 +652,7 @@ function LL:ConversionOptions(f)
             elseif c.method=="Prospect" then processingRecipe=({[9]=374627,[10]=434018,[11]=1231127})[f.expansionID] or 31252 end
         end
         local identity=table.concat({c.method,tostring(processingRecipe),tostring(inputCount)},':')
-        if kind=='research-operation' and knownOperations[identity] then return true end
+        if (kind=='research-operation' or kind=='reviewed-use') and knownOperations[identity] then return true end
         knownOperations[identity]=true
         local insufficientCount=type(f.count)=="number" and f.count<inputCount
         if insufficientCount then
@@ -692,11 +702,11 @@ function LL:ConversionOptions(f)
         local salvage=c.salvage and self.SalvageRecipeDefinition and self:SalvageRecipeDefinition(processingRecipe)
         local verifiedSalvage=salvage and salvage.method==c.method and salvage.inputCount==inputCount
         local fixedProfession=c.outputID and c.outputCount and c.inputCount
-            and c.method~='Exchange' and c.method~='Combine' and c.method~='Split' and self.ProfessionCraftModel
+            and c.method~='Exchange' and c.method~='Combine' and c.method~='Split' and c.method~='Use' and self.ProfessionCraftModel
         if fixedProfession then
             yieldModel,modelIssue=self:ProfessionCraftModel(f,c,character)
             if yieldModel then value,source=self:ValueProcessingModel(yieldModel,suppliesCost,suppliesKnown,f) end
-        elseif c.method=="Mill" or c.method=="Prospect" or c.method=="Smelt" or c.method=="Recycle" or c.method=="Craft"
+        elseif c.method=="Mill" or c.method=="Prospect" or c.method=="Smelt" or c.method=="Recycle" or c.method=="Craft" or c.reviewedUse
             or verifiedSalvage or (research and dataMode~=3) then
             local displayOption={name=c.method,inputCount=inputCount,
                 recipeID=processingRecipe,character=character,profession=c.profession,
@@ -725,6 +735,9 @@ function LL:ConversionOptions(f)
                  c.method=="Exchange" or c.method=="Combine" or c.method=="Split")
         if not yieldModel and dataMode==2 and not isFixed then
             value=nil;source="Personal results only"
+        end
+        if c.reviewedUse and not yieldModel then
+            available=false;why=modelIssue or 'No enabled item-use yield source'
         end
         local reviewedInputReference=yieldModel and yieldModel.reviewedPublishedPriorOnly and yieldModel.operationUnverified
         if reviewedInputReference then
@@ -774,6 +787,17 @@ function LL:ConversionOptions(f)
     local researchMethods={}
     for _,operation in ipairs(self.ResearchProcessingOperations and self:ResearchProcessingOperations(f) or {}) do
         if add(operation,'research-operation') then researchMethods[operation.method]=true end
+    end
+    -- Reviewed container vectors carry no profession/recipe identity. Keep the
+    -- source-model discovery narrow and let native instance checks decide use.
+    for _,r in ipairs(self._evidenceIndex and self._evidenceIndex['Use:'..tostring(f.id)] or {}) do
+        if r.reviewedBacklogModel==true and r.useReferenceOnly==true and r.recipeID==nil
+            and r.profession==nil and r.inputCount==1
+            and (not r.expansionID or r.expansionID==f.expansionID)
+            and (not r.inputQualityRank or r.inputQualityRank==f.reagentQuality) then
+            add({method='Use',inputCount=1,reviewedUse=true,source=r.source,
+                expansionID=r.expansionID,requiredLevel=r.requiredLevel},'reviewed-use')
+        end
     end
     local modern=self.ResearchProcessingInput and self:ResearchProcessingInput(f.id)
     local destroy=(modern and modern.method) or

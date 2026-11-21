@@ -12,7 +12,7 @@ local db={schemaVersion=1,version='1.2.0',processing={},mechanicRules={},
         ResearchTokenCandidates=LL.ResearchTokenCandidates,ResearchProcessingInputs=LL.ResearchProcessingInputs}}
 local methods={Mill='Inscription',Prospect='Jewelcrafting',Disenchant='Enchanting',Smelt='Mining',
     Recycle='Engineering',Unravel='Tailoring',Crush='Jewelcrafting',Thaumaturgy='Alchemy',
-    Craft=true,Research=true,Refine=true}
+    Craft=true,Research=true,Refine=true,Use=true}
 local professions={Alchemy=true,Blacksmithing=true,Enchanting=true,Engineering=true,Herbalism=true,
     Inscription=true,Jewelcrafting=true,Leatherworking=true,Mining=true,Skinning=true,Tailoring=true,Cooking=true,Fishing=true}
 local function researchProfession(record)
@@ -584,6 +584,7 @@ end
 local v3=assert(loadfile(arg[3] or 'database/research-v3-baselines.lua'))()
 assert(v3.schemaVersion==1 and type(v3.processing)=='table','Unsupported research v3 baseline schema')
 db.researchV3Manifest={revision=v3.sourceRevision,branch=v3.sourceBranch}
+db.reviewedSourceFacts=v3.reviewedSourceFacts or {schemaVersion=1,facts={}}
 local studyReview=assert(loadfile('database/research/build-study-review.lua'))()
 assert(studyReview.schemaVersion==1 and studyReview.reviewType=='AUTOMATIC_BUILD_REVIEW',
     'A generated study-review manifest is required')
@@ -606,7 +607,14 @@ end
 local measuredResearch={measured=true,observed=true,verified=true}
 local superseding={}
 for _,r in ipairs(v3.processing) do
-    assert(r.recordID:match('^evidence:v3:'),'Research v3 baselines must use evidence:v3: record IDs')
+    local reviewed=r.recordID:match('^evidence:reviewed%-backlog:')
+        and r.reviewedBacklogModel==true and type(r.reviewedPublishedPrior)=='table'
+        and r.reviewedPublishedPrior.kind=='REVIEWED_BACKLOG_FIELDS'
+        and r.reviewedPublishedPrior.observedSamplesAdded==0
+        and type(r.reviewedPublishedPrior.sourceRows)=='table'
+        and #r.reviewedPublishedPrior.sourceRows>0
+    assert(r.recordID:match('^evidence:v3:') or reviewed,
+        'Research baselines require v3 identities or validated reviewed-source provenance')
     if r.supersedesResearch then
         for _,m in ipairs(r.materials) do
             superseding[researchOutputKey(r,m)]={recordID=r.recordID,material=m}
@@ -794,29 +802,54 @@ for _,r in ipairs(primary) do
     end
 end
 restrictions.researchNoDisenchant={}
+restrictions.researchNoDisenchantPolicy='native-proof-only'
+restrictions.researchNoDisenchantObservations={}
+restrictions.researchNoDisenchantGlobalProofs={}
 db.buildReport.researchNoDisenchantConflicts={}
 local researchNoDESeen={}
+local function globalNativeNoDEProofs(r)
+    local proofs={}
+    if r.globalRestriction~=true then return proofs end
+    for _,observation in ipairs(r.observations or {}) do
+        local p=observation.nativeRestrictionProof
+        if observation.globalRestriction==true and type(p)=='table'
+            and p.kind=='ItemSparseNO_DISENCHANT' and p.scope=='all-item-variants' and p.verified==true
+            and p.itemID==r.itemID and type(p.flags0)=='number' and p.flags0>=0 and p.flags0%1==0
+            and math.floor(p.flags0/32768)%2==1 and type(p.build)=='number' and p.build>0 and p.build%1==0
+            and type(p.sourceSHA256)=='string' and #p.sourceSHA256==64 and p.sourceSHA256:match('^%x+$') then
+            proofs[#proofs+1]=p
+        end
+    end
+    return proofs
+end
 for _,r in ipairs(type(v3.noDisenchant)=='table' and v3.noDisenchant or {}) do
     local id=r.itemID
     assert(type(id)=='number' and id>0 and id%1==0,'research no-disenchant record needs an item ID')
     local sourced=false
     for _,url in ipairs(r.sourceURLs or {}) do if type(url)=='string' and url:match('^https://%S+$') then sourced=true end end
     assert(sourced,'research no-disenchant record '..id..' needs an https source')
+    -- Preserve catalog, base-variant and historical claims as source-scoped
+    -- observations. A page saying "cannot" is not a native all-variant flag.
+    restrictions.researchNoDisenchantObservations[#restrictions.researchNoDisenchantObservations+1]=r
     if not gameNoDE[id] and not researchNoDESeen[id] then
         researchNoDESeen[id]=true
+        local proofs=globalNativeNoDEProofs(r)
         if observedDisenchant[id] then
             local conflicts=db.buildReport.researchNoDisenchantConflicts
             conflicts[#conflicts+1]={itemID=id,sourceURLs=r.sourceURLs,disenchantRecordID=observedDisenchant[id]}
-        else
+        end
+        if #proofs>0 then
             restrictions.researchNoDisenchant[#restrictions.researchNoDisenchant+1]=id
+            restrictions.researchNoDisenchantGlobalProofs[id]=proofs
         end
     end
 end
 table.sort(restrictions.researchNoDisenchant)
 table.sort(db.buildReport.researchNoDisenchantConflicts,function(a,b) return a.itemID<b.itemID end)
 if #restrictions.researchNoDisenchant>0 then
-    print(('Research v3 added %d no-disenchant item(s) the game-file list lacks'):format(#restrictions.researchNoDisenchant))
+    print(('Research v3 added %d verified native no-disenchant flag(s) the game-file list lacks'):format(#restrictions.researchNoDisenchant))
 end
+print(('Retained %d source-scoped no-disenchant observations without flattening catalog variants'):format(#restrictions.researchNoDisenchantObservations))
 local file=assert(io.open(output,'w'))
 file:write('-- Generated by tools/compile_itemdb.lua. Unknown fields are absent, not zero.\nlocal _, LL = ...\nLL.ItemDB=',(encode(db):gsub('},%[','},\n[')),'\n')
 file:write('-- Old disenchant estimates (weak "legacy" source).\nLL.ItemDB.legacy=',encode(legacy,true),'\n')

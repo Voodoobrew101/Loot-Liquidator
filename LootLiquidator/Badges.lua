@@ -451,10 +451,15 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
     -- Bound/vendor-only loot remains quiet unless there are research results
     -- or a detailed external reference model worth showing transparently.
     local f=decision.facts
+    local reviewedSourceLines={}
+    if detail>=3 and showResearch and f and LA.ReviewedProcessingSourceFactLines then
+        reviewedSourceLines=LA:ReviewedProcessingSourceFactLines(f,decision.conversionOptions)
+    end
     -- Old imported reference-rates toggle retired: compiled Game Data
     -- supplies rates with explicit per-output confidence instead.
     if not decision.action and (detail<3 or #(decision.conversionOptions or {})==0)
         and #progress==0 and not (LA.db.showProcessingSamples and decision.deStats)
+        and #reviewedSourceLines==0
         then return end
     local function two(left,right,letter)
         local color=LA:MarkupColor(letter)
@@ -542,7 +547,8 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             if option.letter==decision.action then
                 local model=option.yieldModel
                 if option.available==false then suffix=suffix.." (unavailable)" end
-                if model and model.provisional and not professionSimulation(model) and not model.reviewedPublishedPriorOnly then suffix=suffix.." (estimate)" end
+                if model and model.provisional and not professionSimulation(model) and not model.reviewedPublishedPriorOnly
+                    and not (model.personalReference and model.personalReference.personalSourceProfileMatched) then suffix=suffix.." (estimate)" end
                 if model and (model.partial or model.partialPrice) then suffix=suffix.." (partial)" end
                 break
             end
@@ -730,7 +736,9 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                             or (" [%d-%d]"):format(m.minQuantity,m.maxQuantity))
                      elseif m.minQuantity then left=left..(" [min seen: %d]"):format(m.minQuantity)
                      elseif m.maxQuantity then left=left..(" [max seen: %d]"):format(m.maxQuantity)
-                    else left=left.." [yield unavailable]" end
+                    elseif type(m.expectedQuantity)~='number' then
+                        left=left.." [yield unavailable]"
+                    end
                     if LA.db.showAverageQuantity==true then
                         left=left.."  "..(type(m.expectedQuantity)=='number' and UnitsText(m.expectedQuantity)
                             or type(m.conditionalExpectedQuantity)=='number' and (UnitsText(m.conditionalExpectedQuantity)..' conditional') or 'average unavailable')
@@ -885,7 +893,8 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     if model and (model.partial or model.partialPrice) then
                         status[#status+1]="partial"
                     end
-                    if model and (model.provisional or model.estimatedFrom) and not simulated and not model.reviewedPublishedPriorOnly then
+                    if model and (model.provisional or model.estimatedFrom) and not simulated and not model.reviewedPublishedPriorOnly
+                        and not (model.personalReference and model.personalReference.personalSourceProfileMatched) then
                         status[#status+1]="estimate"
                     end
                     if option.available==false then
@@ -962,6 +971,9 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             and decision.vendor>0 and not compactToken then
             valued("Vendor",decision.vendor,"V")
         end
+    end
+    for _,line in ipairs(reviewedSourceLines) do
+        tooltip:AddLine(line,.66,.78,.91,true)
     end
     if detail>=3 and showResearch
         and LA.db.showProcessingSamples~=false and decision.deStats

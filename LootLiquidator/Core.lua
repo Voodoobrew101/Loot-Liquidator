@@ -1,6 +1,6 @@
 local ADDON, LA = ...
 LA = LA or {}
-LA.version = "0.12.41"
+LA.version = "0.12.42"
 LA.targetInterface = 120105  -- Current Retail 12.1.5 compatibility target; NOT in-game QA
 
 local COPPER_PER_GOLD = 10000
@@ -211,25 +211,30 @@ function LA:NativeDisenchantRestriction(f)
     if previous and now-previous.at < (previous.blocked and 60 or 5) then
         return previous.blocked
     end
-    local function ContainsRestriction(data)
+    local instanceTooltipSeen=false
+    local function ContainsRestriction(data,instance)
         if type(data) ~= "table" or (issecretvalue and issecretvalue(data)) then return false end
         -- A bag slot can be rebound while its tooltip is being evaluated.
         if type(data.id) == "number" and not (issecretvalue and issecretvalue(data.id))
             and data.id ~= f.id then return false end
+        if instance and type(data.lines)=='table' then instanceTooltipSeen=true end
         return self:TooltipDataSaysNoDisenchant(data)
     end
     local blocked=false
     if type(context.bagID)=="number" and type(context.slotID)=="number"
         and type(C_TooltipInfo.GetBagItem)=="function" then
         local ok,data=pcall(C_TooltipInfo.GetBagItem,context.bagID,context.slotID)
-        if ok and ContainsRestriction(data) then blocked=true end
+        if ok and ContainsRestriction(data,true) then blocked=true end
     end
     -- Also works on ordinary item links and items outside the character bags.
     if not blocked and type(C_TooltipInfo.GetHyperlink)=="function" then
         local ok,data=pcall(C_TooltipInfo.GetHyperlink,f.link)
-        if ok and ContainsRestriction(data) then blocked=true end
+        if ok and ContainsRestriction(data,true) then blocked=true end
     end
-    if not blocked and type(C_TooltipInfo.GetItemByID)=="function" then
+    -- A base-ID tooltip is not the scaled/bonus item currently being inspected.
+    -- Never replace a valid exact-instance result with a base-only warning.
+    if not blocked and not instanceTooltipSeen and f.link==('item:'..tostring(f.id))
+        and type(C_TooltipInfo.GetItemByID)=="function" then
         local ok,data=pcall(C_TooltipInfo.GetItemByID,f.id)
         if ok and ContainsRestriction(data) then blocked=true end
     end
@@ -275,8 +280,10 @@ function LA:DisenchantEligibility(f)
         or f.equipLoc == "INVTYPE_TABARD" then
         return Verdict(false, "Not ordinary equippable gear")
     end
-    if self.ExternalDisenchantRestriction and self:ExternalDisenchantRestriction(f.id) then
-        return Verdict(false, "Item database: Cannot be disenchanted")
+    if self.ExternalDisenchantRestriction then
+        local restriction,warnings=self:ExternalDisenchantRestriction(f)
+        f.researchDisenchantWarnings=warnings
+        if restriction then return Verdict(false, "Item database: Cannot be disenchanted") end
     end
     if self._observedNoDisenchantLinks and self._observedNoDisenchantLinks[f.link] then
         return Verdict(false, "Displayed tooltip: Cannot be disenchanted")
@@ -1230,14 +1237,88 @@ function LL:SetIgnoreEntry(item, flags, name)
     if self.Invalidate then self:Invalidate() end
     return true
 end
--- DB2 no-disenchant flags take priority over estimates, regardless of price.
+local function restrictionContains(ids,id)
+    for _,value in ipairs(ids or {}) do if value==id then return true end end
+    return false
+end
+local function restrictionItemString(link)
+    return not (issecretvalue and issecretvalue(link)) and type(link)=='string' and link:match('item:[^|]+') or nil
+end
+local function restrictionBonuses(link)
+    local payload=restrictionItemString(link)
+    if not payload then return nil end
+    local fields={} for value in (payload:sub(6)..':'):gmatch('(.-):') do fields[#fields+1]=value end
+    local count=tonumber(fields[13])
+    if not count or count<0 or count>64 or count%1~=0 then return nil end
+    local bonuses={}
+    for i=14,13+count do
+        local id=tonumber(fields[i])
+        if not id or id<=0 or id%1~=0 then return nil end
+        bonuses[id]=true
+    end
+    return bonuses
+end
+local function restrictionScopeMatches(scope,f)
+    scope=type(scope)=='table' and scope or {}
+    for _,key in ipairs({'itemLevel','expansionID','quality'}) do
+        if issecretvalue and issecretvalue(f[key]) then return false end
+    end
+    if scope.itemLevel~=nil and scope.itemLevel~=f.itemLevel then return false end
+    if scope.minItemLevel and (type(scope.minItemLevel)~='number' or type(f.itemLevel)~='number' or f.itemLevel<scope.minItemLevel) then return false end
+    if scope.maxItemLevel and (type(scope.maxItemLevel)~='number' or type(f.itemLevel)~='number' or f.itemLevel>scope.maxItemLevel) then return false end
+    if scope.expansionID~=nil and scope.expansionID~=f.expansionID then return false end
+    if scope.quality~=nil and scope.quality~=f.quality then return false end
+    if scope.itemLink then
+        local expected,actual=restrictionItemString(scope.itemLink),restrictionItemString(f.link)
+        if not expected or not actual or expected~=actual then return false end
+    end
+    if scope.build then
+        local build=GetBuildInfo and tonumber(select(2,GetBuildInfo()))
+        if build~=scope.build then return false end
+    end
+    if type(scope.bonusIDs)=='table' then
+        local actual=restrictionBonuses(f.link)
+        if not actual then return false end
+        local expected={}
+        for _,id in ipairs(scope.bonusIDs) do if type(id)~='number' then return false end expected[id]=true end
+        for id in pairs(expected) do if not actual[id] then return false end end
+        for id in pairs(actual) do if not expected[id] then return false end end
+    end
+    return true
+end
+function LL:ResearchDisenchantRestrictionWarnings(f)
+    if type(f)~='table' or not f.id then return nil end
+    local warnings={}
+    for _,record in ipairs(self.ResearchNoDisenchantObservations or {}) do
+        if record.itemID==f.id then
+            for _,observation in ipairs(record.observations or {}) do
+                if restrictionScopeMatches(observation.scope,f) then
+                    warnings[#warnings+1]=observation
+                end
+            end
+        end
+    end
+    return #warnings>0 and warnings or nil
+end
+-- Native DB2 flags take priority over estimates. A source catalog or scoped
+-- historical observation is retained as a warning, never an item-wide denial.
 function LL:ExternalDisenchantRestriction(item)
-    local id=Id(item)
+    local facts=type(item)=='table' and item or nil
+    local id=facts and facts.id or Id(item)
     if not id then return nil end
-    if self.ItemRestrictions and self.ItemRestrictions[id] then
+    local data=self.ItemDB and self.ItemDB.restrictions
+    local legacyCatalogOnly=data and data.researchNoDisenchantPolicy~='native-proof-only'
+        and restrictionContains(data.researchNoDisenchant,id) and not restrictionContains(data.noDisenchant,id)
+    local proofs=self.ResearchNoDisenchantGlobalProofs and self.ResearchNoDisenchantGlobalProofs[id]
+    local proofMatches=not proofs or data and restrictionContains(data.noDisenchant,id)
+    if proofs then
+        local build=GetBuildInfo and tonumber(select(2,GetBuildInfo()))
+        for _,proof in ipairs(proofs) do if proof.build==build then proofMatches=true;break end end
+    end
+    if self.ItemRestrictions and self.ItemRestrictions[id] and not legacyCatalogOnly and proofMatches then
         return "Item database: Cannot be disenchanted"
     end
-    return nil
+    return nil,facts and self:ResearchDisenchantRestrictionWarnings(facts) or nil
 end
 
 end

@@ -12,6 +12,7 @@ from unittest.mock import patch
 sys.dont_write_bytecode = True
 sys.path.insert(0, 'tools')
 import research_v3_to_baselines as v3
+import source_catalogue_registry as catalogue_registry
 SNAPSHOT = Path('database/research/v3-snapshot')
 FIXTURE = Path('tests/fixtures/dragonflight-admission')
 IDS = ['dragonflight-20261108-840011', 'dragonflight-20261109-204001']
@@ -29,6 +30,7 @@ def rows(all_rows=False):
 def build(data, bypass=False, observe=None):
     module = v3.load_calculator(SNAPSHOT)
     with (patch.object(module, 'load', return_value=data),
+          patch.object(catalogue_registry, 'catalogue_paths', return_value=[]),
           patch.object(v3, 'load_calculator', return_value=module),
           patch.object(v3, 'reference_ranges', wraps=v3.reference_ranges) as ranges,
           patch.object(v3, 'build_field_support', wraps=v3.build_field_support) as supports):

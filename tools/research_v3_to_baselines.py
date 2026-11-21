@@ -244,7 +244,7 @@ def load_calculator(snapshot):
     module.apply_corrections = portable_corrections
     module.evidence_load_notes = Counter()
 
-    def scoped_load():
+    def scoped_load(reviewed_source_proof=False):
         rows = []
         notes = Counter()
         for evidence_path in sorted((snapshot / 'research' / 'v3' / 'evidence').rglob('*.jsonl')):
@@ -265,9 +265,12 @@ def load_calculator(snapshot):
                         notes['malformed evidence row'] += 1
         scoped = resolve_replacements(rows, module, notes)
         module.evidence_load_notes = notes
-        return module.apply_corrections(apply_reviewed_operation_aliases(scoped))
+        return module.apply_corrections(scoped if reviewed_source_proof else apply_reviewed_operation_aliases(scoped))
 
     module.load = scoped_load
+    # Catalogue fingerprints stop at the authoritative source correction layer.
+    # Numeric operation aliases/native identity inference are a later stage.
+    module.load_reviewed_source_rows = lambda: scoped_load(reviewed_source_proof=True)
     if hasattr(module, 'study_vectors') and hasattr(module, 'study_identity'):
         original_vectors = module.study_vectors
         original_identity = module.study_identity
@@ -352,6 +355,8 @@ def reference_ranges(rows, module, names):
             continue
         bounds = ranges[(*key, int(batch))]
         for raw, field_name, select in (('minSeen', 'minQuantity', min), ('maxSeen', 'maxQuantity', max)):
+            if field_name in r.get('_reviewedSupersededFields', []):
+                continue
             value = r.get(raw)
             if supported_bound(value):
                 bounds[field_name] = select(bounds.get(field_name, value), value)
@@ -400,9 +405,13 @@ def build(snapshot):
     from research_build_review import automatic_admission
     module = load_calculator(snapshot)
     rows = resolve_ranked_outputs(preserve_reference_range(module.load()))
+    from source_catalogue_registry import catalogue_paths
+    proof_rows = module.load_reviewed_source_rows() if catalogue_paths(snapshot) else None
     total = len(rows)
     rows, automatic_notes = automatic_admission(rows)
     rows, admission_notes = retail_admission(rows)
+    from reviewed_source_catalogue import apply_reviewed_field_replacements
+    rows = apply_reviewed_field_replacements(rows, snapshot, admission_notes, proof_rows=proof_rows)
     names = module.name_maps(rows)
     counted = [r for r in rows if is_counted(r, module)]
     families = load_families()
@@ -514,6 +523,8 @@ def build(snapshot):
             row['inputItemID'] = int(key)
         records.append(row)
     preserve_published_priors(rows, records, notes, snapshot=snapshot)
+    from reviewed_source_catalogue import preserve_reviewed_backlog
+    preserve_reviewed_backlog(rows, records, notes, snapshot, proof_rows=proof_rows)
     return records, notes, total, len(counted), unplaced
 
 
@@ -656,7 +667,8 @@ def render(records, snapshot, tokens=(), no_disenchant=()):
     lines += [lua(t) + ',' for t in tokens]
     lines.append('},noDisenchant={')
     lines += [lua(n) + ',' for n in no_disenchant]
-    lines.append('}}')
+    from reviewed_source_catalogue import reviewed_context_facts
+    lines.append('},reviewedSourceFacts=' + lua(reviewed_context_facts(snapshot)) + '}')
     return '\n'.join(lines) + '\n'
 
 
