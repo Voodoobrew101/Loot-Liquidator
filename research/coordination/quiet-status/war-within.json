@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-21T04:21:53.529Z",
-  "status": "research-active; no new independently grounded War Within yield cohort; focused source search and duplicate-source safeguards",
+  "updated_at": "2026-11-21T05:24:22.432Z",
+  "status": "research-active; source-cohort duplicate identified for Codex owner review; no new independent numerical yield",
   "task_ids": [
     "T0010",
     "T0011",
@@ -19,7 +19,7 @@
     "Historical shatter 219950/219951 into 219946/219947/219948: verify independent ~10k-shard original cohort versus comments, denominator/refund basis and distinct method schema",
     "T0048 219474 Tracker's Chitin Cuffs: historical firsthand successful disenchant vs current WoWDB cannot-disenchant item metadata, linked output ranks/bonus/build, measured operation count and cast-level material log"
   ],
-  "source_branch_head_reviewed": "60ff9ce6647d4a33490895bf7bad40a41e800850",
+  "source_branch_head_reviewed": "c18bec1a6aba37fdb8d97b75aa777b051e9fec23",
   "source_policy": "2026-11-20 owner coordination: active Codex/reviewer team owns cutoff 0cd0bad 713+12 existing sources; worker only new original evidence or focused identity/confidence verification and own quiet status. No duplicate catalogue, routine PR, empty evidence or build/runtime modifications.",
   "study_backlog_triage": [
     {
@@ -281,7 +281,18 @@
     "held": 14,
     "duplicate": 3
   },
-  "newly_verified_fields": [],
+  "newly_verified_fields": [
+    {
+      "field": "cohort-provenance / material-link identity",
+      "input": "Ironclaw Ore (unresolved quality, ID null)",
+      "output": "Radiant Ruby (page itemID 212495; received output rank unknown)",
+      "existing_record_ids": [
+        "war-within-20261031-132410",
+        "war-within-20261101-021724"
+      ],
+      "value": "same original 450-ore / 10-Ruby author observation represented twice; dedupe by author/source, not studyKey"
+    }
+  ],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
   "new_reference_only_numeric_records": 0,
@@ -292,8 +303,8 @@
   "evidence_files": [],
   "evidence_source_links": [],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-20T0521-algari-pvp-item-metadata.jsonl",
-  "verified_commit_sha": "60ff9ce6647d4a33490895bf7bad40a41e800850",
-  "verification": "Current README, evidence format, mechanics, worker role, queue and prior status read at head 60ff9ce6647d4a33490895bf7bad40a41e800850. This checkpoint records only negative/duplicate-original checks. New status-file commit will be verified by read-back separately; self-referential commit SHA cannot be embedded in its own commit. No new evidence, PR, merge, release, or build output.",
+  "verified_commit_sha": "c18bec1a6aba37fdb8d97b75aa777b051e9fec23",
+  "verification": "Read README, evidence-format, mechanics, worker and queue on current research branch; verified same Elfshinobi1 author/quote/output in the two named original worker JSONLs. This write is status-only; GitHub commit SHA from update_file requires subsequent independent read-back. No new yield JSONL, PR, merge, release, build or validation changes.",
   "blockers": [
     "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
     "On this research branch tools/research_build_review.py and tools/prepare_build_research.py returned GitHub 404; build-time admission/generation remains implementation review work, not deployed or worker-owned.",
@@ -312,7 +323,8 @@
     "2026-08-02 scaling-gear wrong-expansion-mats report lacks original item IDs/bonus, loot-family and observed output IDs/counts. Obtain firsthand exact IDs and link current retail patch before any TWW disenchant estimate.",
     "2026-11-20: Source https://www.wowhead.com/item=224759/pirates-bracers (patch 11.0.5) reports 23 item-side Looter disenchants, including both Large Brilliant Shard and rank-unknown Storm Dust, without item bonus/run context or linked material rank IDs in indexed output; output occurrence rows sum above denominator. Hold any numerical admission and request individual item-version/quality/output hyperlinks. Companion legacy item 7230 similarly mixes eras in Looter tables (https://www.wowhead.com/item=7230/smites-mighty-hammer).",
     "219474 Tracker's Chitin Cuffs: Jan 2025 firsthand cuff disenchants and Sept 2025 macro/1,428 planned inputs conflict with current WoWDB 'Cannot be disenchanted'; do not infer successful casts from intended count, attribute the author's >120 total to cuffs, infer ordinary material zeros from gated Shimmering Dust, or seed live Retail DE without exact item version/bonus and per-cast material output IDs.",
-    "Four separate studyKey rows for the same Golgoth Specular Rainbowfish original three-unit anecdote could inflate totals under studyKey-only admission; output 222618 is link identity, not independently verified receipt quality. Codex owner reviewers must dedupe by original author/source before any build-time ingestion."
+    "Four separate studyKey rows for the same Golgoth Specular Rainbowfish original three-unit anecdote could inflate totals under studyKey-only admission; output 222618 is link identity, not independently verified receipt quality. Codex owner reviewers must dedupe by original author/source before any build-time ingestion.",
+    "Focused provenance flag: Elfshinobi1 450 Ironclaw ore / 10 Radiant Ruby original is duplicated across war-within-20261031-132410 and war-within-20261101-021724 with distinct studyKeys. Codex owner catalogue/build reviewer must admit once; do not independently rewrite original evidence or inflate operations."
   ],
   "exhausted_sources": [
     "Previously indexed 1f83cnd, 1g350pq, PeaEsk/434018, 1fdmzwy and 1f3qf96 already provide historical studies; source duplicates not re-imported.",
@@ -323,76 +335,52 @@
     "2026-11-20 11:22Z follow-up: April-2025 gem production economics, September-2024 Mycobloom Create-All bug, November-2025 housing dyes and previously indexed LotzBoi/Aqirite studies offer no new eligible post-hotfix 0..N material-yield cohorts. Revisit only on original per-operation logs.",
     "2026-11-20 follow-up: 1g9s48p repeats the already indexed 400 R1 Bismuth source; 1k78h4v and 1l91chl are 2025 financial/value comparisons without source output ledgers; 1nmnuc2 describes workflows only. Do not revisit these unless author publishes actual completed-operation exports."
   ],
-  "next_concrete_step": "Seek truly new post-cutoff original author craft logs or publicly downloadable SavedVariables/XLSX with completed War Within 5-ore prospect or 10-herb mill operations by exact rank and dated build, plus materials by quality, zero-inclusive per-cast counts, skill/spec and Resourcefulness/refunds. Recheck access to originally held Kaychak/Tomasz raw logs only if a new public link appears; avoid re-cataloguing the Codex-owned 725 sources. For DE seek original item+bonus+build data and per-cast histograms, not cumulative Looter resnapshots.",
-  "previous_status_updated_at": "2026-11-21T03:23:14.269Z",
+  "next_concrete_step": "Acquire genuinely new rank-specific post-hotfix completed-craft exports/SavedVariables for Ironclaw 210936-210938, Bismuth 210930-210932, Aqirite 210933-210935, and 10-herb Mycobloom 210796-210798 including source item IDs, output quality IDs, zero-inclusive 0..N histograms, skill/spec/build and refund basis. Inform owner catalogue via this quiet status of Elfshinobi1 duplicate, without modifying their 725-source handoff or runtime.",
+  "previous_status_updated_at": "2026-11-21T04:21:53.529Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "scan_at_utc": "2026-11-21T04:21:53.529Z",
+    "scan_at_utc": "2026-11-21T05:24:22.432Z",
     "task_ids": [
-      "T0040",
       "T0009",
-      "T0008",
+      "T0040",
       "T0010",
       "T0011",
       "T0012",
+      "T0007",
+      "T0008",
       "T0048"
     ],
     "results": [
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1fdmzwy",
-        "status": "preexisting-original-already-represented",
-        "finding": "Rechecked author-reported 20k+ pooled Mycobloom processing and 1.15/1.35 per-input means. The source does not split completed operations/refunds by rank or provide zero-inclusive cast outcomes; earlier evidence and queue already preserve these means. No new study."
+        "source": "https://www.wowhead.com/item=212495/radiant-ruby",
+        "status": "confirmed-cross-file-duplicate",
+        "finding": "Elfshinobi1 first-person 450 Ironclaw ore /10 Rubies appears twice in owned evidence as record IDs war-within-20261031-132410 and war-within-20261101-021724; exact source and numbers agree, all cast/hit/zero/skill/rank fields remain unknown."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1g350pq",
-        "status": "preexisting-original-already-represented",
-        "finding": "Ore rank comparisons and refunded-ore non-reprocessing are already represented; cannot promote 11,000/10,000 input counts to independently logged completed casts or infer hits."
+        "source": "https://www.reddit.com/r/woweconomy/comments/1fvhzy0",
+        "status": "preexisting-pooled-milling-source",
+        "finding": "Original 30k- and 100k-herb pooled pigment multipliers already represented by 2026-11-01T2123; not independent Mycobloom-by-rank data."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
-        "status": "preexisting-source-held",
-        "finding": "The March 2025 R1 Ironclaw 600-ore/117-prospect discussion gives no per-output units, item-rank-qualified log, 0..N histogram, or independently verified completed operations. No eligible new cohort."
+        "source": "https://www.wowhead.com/item=212495/radiant-ruby",
+        "status": "existing-ironclaw-anecdote-only",
+        "finding": "Also indexed: Raven11 20 rank-1 Ironclaw successful attempts and exact zero-emerald observation; already has historical owned evidence. PTR search indexing is not proof of new Retail cast outcomes."
       },
       {
-        "source": "https://www.wowhead.com/item=232446/boreal-rifle",
-        "status": "preexisting-cumulative-looter-cohort-not-independent",
-        "finding": "48 reported disenchants; source-side 27/10/9 rank-unlinked Storm Dust rows and 1/1 shard rows. Matches the older recorded cohort, not fresh independent casts; current indexed response still lacks quality hyperlink resolution and cast-level zeros."
-      },
-      {
-        "source": "https://goldcap.gg/retail/us/items/224802",
-        "status": "identity-already-recorded-not-new",
-        "finding": "Orbinid Pigment Q1 item 224802, Q2 224801, Q3 224800. Existing worker 2026-11-07T0129 original identity rows had all three; no re-transcription."
-      },
-      {
-        "source": "https://goldcap.gg/retail/us/items/222612",
-        "status": "identity-already-recorded-not-new",
-        "finding": "Luredrop Pigment Q1 222612, Q2 222613, Q3 222614. Existing 2026-11-07T0129 worker reference identities already cover these; no duplicate evidence."
-      },
-      {
-        "source": "https://goldcap.gg/retail/us/items/224804",
-        "status": "identity-already-recorded-not-new",
-        "finding": "Blossom Pigment Q1 224805, Q2 224804, Q3 224803 (IDs reverse quality). Existing 2026-11-07T0129 worker reference identities already cover these; no duplicate evidence."
-      },
-      {
-        "source": "https://us.forums.blizzard.com/en/wow/t/thaumaturgy-2555-proc-replaces-everything-with-lone-gem/2072020",
-        "status": "cross-method-original-not-admitted",
-        "finding": "2025-03-07 first-person TWW Thaumaturgy report describes receiving gems instead of baseline transformation reagents, but this is Alchemy Thaumaturgy, not Prospect/Mill/Disenchant, and gives no input/output operation ledger. Do not count gem occurrences as prospecting casts."
-      },
-      {
-        "source": "https://www.wowhead.com/blue-tracker/news/eu/hotfixes-october-16-2024-24134803",
-        "status": "official-rate-history-already-represented",
-        "finding": "Official Renown quartermaster disenchantability restriction is dated October 7, 2024 in the running hotfix list and already recorded in worker 2026-10-31T1822; do not duplicate or incorrectly date it October 16."
+        "source": "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide",
+        "status": "guide-not-empirical",
+        "finding": "Herb-rank and profession skill affect quality; no first-person rank-qualified completed mill runs, 0..N histogram or independent sample."
       }
     ],
     "new_independent_cohorts": 0,
     "new_output_fields": 0,
-    "new_source_identity_flags": 0,
+    "new_source_identity_flags": 1,
     "evidence_created": false,
-    "original_spreadsheet_check": "Original Liqourice5 XLSM and locked Kaychak/Tomasz leads already evaluated; no newly accessible original rank-qualified completed-operation workbook found on searched sources. Owner's 725-source catalogue and implementation branches left untouched."
+    "original_spreadsheet_check": "No newly accessible original completed-cast spreadsheets or SavedVariables found in targeted searches; historical originals and locked workbooks not re-catalogued. No owner 725-source catalogue branches touched."
   },
   "source_integrity_findings": [
     {
@@ -490,6 +478,12 @@
       "date": "2026-11-21",
       "status": "verified-independent-nacreous-pigment-output-quality-catalog-identity-not-measured-milling-yield",
       "detail": "Original LotzBoi milling comment links three distinct Nacreous Pigment outputs (clicked): https://www.wowhead.com/item=222618 (quality 1), https://www.wowhead.com/item=222619 (quality 2), https://www.wowhead.com/item=222620 (quality 3). Independent current Retail item listings https://goldcap.gg/retail/us/items/222618 , /222619 , /222620 corroborate Q1/Q2/Q3. Comment says output quality depends on skill, whereas Mycobloom input rank changes nominal yield/skill. The comment's 0-252/253-504/505+ skill thresholds and x4-6/x5-7/x6-8 ranges are unverified as current-build universal mechanics and are NOT observational trial statistics. Do not attribute any recorded rank-unspecified pigment units to a named quality, add empirical casts/hits, or map Mycobloom R1/R2/R3 rigidly onto Nacreous output Q1/Q2/Q3. Exact herb-rank and skill-controlled operation samples are still missing."
+    },
+    {
+      "source": "https://www.wowhead.com/item=212495/radiant-ruby",
+      "date": "2026-11-21",
+      "status": "verified-source-cohort-duplicate-held-for-owner-catalogue",
+      "detail": "Independent read-back of worker evidence confirmed war-within-20261031-132410 (file 2026-10-31T1324-ironclaw-nullstone-firsthand.jsonl, outputItemID null) and war-within-20261101-021724 (file 2026-11-01T0217-rank2-prospecting-and-wowhead-cohorts.jsonl, outputItemID 212495) repeat one exact Elfshinobi1 original Wowhead comment: 450 Ironclaw ore and 10 Radiant Rubies. Different studyKeys do NOT identify independent 450-ore cohorts; only one 10-unit outcome should be admitted after Codex/reviewer provenance dedup. Ore quality/item ID, completed casts, Resourcefulness/refunds, ruby output quality, zeros/hit distributions, skill/spec/build remain unknown. No measured P(hit) can be inferred."
     }
   ]
 }
