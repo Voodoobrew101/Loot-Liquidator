@@ -95,4 +95,3 @@ check(#both.materials==2,'tradable primary and separate bound extra remain separ
 close(both.materials[1].expectedQuantity,.2,'normal primary quantity unchanged')
 check(both.materials[2].economicPolicy=='nontradable','bound extra keeps policy')
 print('PROCESSING INVERSE EDGE CASES: '..checks..' checks passed')
-

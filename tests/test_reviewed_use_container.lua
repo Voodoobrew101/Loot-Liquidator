@@ -110,4 +110,3 @@ local fixed=assert(LL:BestConversion(facts))
 near(fixed.value,20,'documented fixed Use keeps direct output ratio')
 check(fixed.available and fixed.recipeID==nil and fixed.yieldModel==nil,'fixed Use not forced into profession model')
 print('REVIEWED USE CONTAINER: '..checks..' checks passed')
-

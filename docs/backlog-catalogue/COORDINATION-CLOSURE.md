@@ -1,6 +1,6 @@
 # Catalogue closure and future research coordination
 
-Status at preparation: the finite source review has terminal receipts; final compiled-runtime verification and integration remain pending. This document does not certify a build, installation, release, or completed runtime behavior. The integrating owner must attach the exact successful build receipt before updating coordination to completed.
+The finite source catalogue and its compiled consumers are verified in [COMPILED-RECEIPT.json](COMPILED-RECEIPT.json). The local full regression suite passed. Integration, native CI and artifact delivery are tracked in [PR #82](https://github.com/Voodoobrew101/Loot-Liquidator/pull/82); this receipt does not claim new in-game tests or a completed installation.
 
 ## Scope and authority
 
@@ -76,4 +76,4 @@ The integrating owner may perform the following after the exact final receipt pa
 3. Link the catalogue from source-review memory or a supported coordination index without replacing historical events. If any old queue entry is reconciled, cite its exact covered scope and keep a narrower unresolved confidence task only where concrete work remains.
 4. Preserve `scopeCutoffResearchCommit`, the 713 pending + 12 cutoff additions + 6 recovered source split, `noNewInGameTests: true`, `automaticResearchPullRequests: false`, and the existing scheduled new-data priority. Make no schedule or automation changes.
 
-Until that verified receipt is attached, the runtime completion and delivery portions of this handoff remain pending.
+Use the compiled receipt for the verified source/consumer counts and the PR for integration status. The durable research coordination record receives the final scoped closure and artifact references after integration; source review completion and delivery remain separate claims.

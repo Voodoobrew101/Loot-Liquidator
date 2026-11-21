@@ -48,4 +48,3 @@ if matches:
     check(not matches[0]['globalRestriction'],'real trinket catalog row is not a native hard prohibition')
     check(any(o['scope'].get('itemLevel')==197 for o in matches[0]['observations']),'real trinket197 source scope retained')
 print(f'SCOPED DISENCHANT SOURCE: {checks} checks passed')
-

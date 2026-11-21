@@ -535,4 +535,3 @@ def main():
         else:dump(path,obj)
     print(json.dumps(admitted['summary'],sort_keys=True))
 if __name__=='__main__':main()
-

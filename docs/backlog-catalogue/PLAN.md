@@ -57,3 +57,7 @@ The owner confirmed installed v0.12.41, main commit `96df9772b9fc93cca9621d5788d
 The saved manual Enchanting simulation is explicitly enabled at skill 0 with no initialization/edit provenance. It cannot be distinguished safely from an intentional zero-profile choice, so raw settings have not been overwritten. Current-character or explicitly matched 104-skill calculations are tested separately. Actual gear/enchant skill is included once in the captured effective skill.
 
 Source originals and live SavedVariables remain unchanged. Canonical catalogue assembly, exact compiled-consumer validation, final integration/release checks, and delivery are still required; these findings are not a completion claim.
+
+## Verified integration candidate
+
+Research pin `858b6c1bda7994c0d29f6f3d93df30f0a9b9674f` compiles with zero unresolved rows, catalogue errors, reopened scopes or unreachable facts. All 11,434 facts passed literal public queries/rendering and 22,868 source-policy exclusions. The local strict suite passed, including keyed/native storage parity across 1,553 real profile receipts and 377,833 scalar fields. Independent implementation review approved `04fe3d6386f23581185407218969099ba10b9a10`. PR #82 tracks final native CI, integration and artifact delivery. No live SavedVariables were edited and no new game operations were performed.

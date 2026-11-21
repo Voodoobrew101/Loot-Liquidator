@@ -76,4 +76,3 @@ build=70962
 check(eligible(facts(292,111,251799)),'different-build research flag does not become timeless proof')
 check(not eligible(facts(292,111,38)),'genuine native DB2 prohibition survives research build mismatch')
 print('SCOPED DISENCHANT RUNTIME: '..checks..' checks passed')
-
