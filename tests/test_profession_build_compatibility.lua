@@ -48,6 +48,10 @@ local expected={
     {'Jewelcrafting',11,true,{'106982','106983'}},
     {'Jewelcrafting',10,false,{'98659','98660','98661','98662'}},
 }
+-- Exact shipped control counts after excluding crafting-only Enchanting and
+-- non-output-only nodes; a new source capability requires an explicit update.
+local compiledControlCounts={['Enchanting:11']=4,['Enchanting:10']=4,['Inscription:9']=28,
+ ['Inscription:10']=26,['Inscription:11']=35,['Jewelcrafting:11']=35,['Jewelcrafting:10']=29}
 for _,clientBuild in ipairs({'70783','70961'}) do
     build=clientBuild
     for _,row in ipairs(expected) do
@@ -56,7 +60,7 @@ for _,clientBuild in ipairs({'70783','70961'}) do
         check(capability.skill==(generic and true or row[3]),row[1]..' base skill capability on '..build)
         local count=0 for _ in pairs(capability.nodes) do count=count+1 end
         local expectedCount=#row[4]
-        if generic then expectedCount=0 for _ in pairs(generic.nodes) do expectedCount=expectedCount+1 end end
+        if generic then expectedCount=assert(compiledControlCounts[row[1]..':'..row[2]]) end
         check(count==expectedCount,row[1]..' exact compiled node coverage on '..build)
         for _,id in ipairs(row[4]) do check(capability.nodes[id],row[1]..' node '..id..' on '..build) end
         if not generic then check(not next(capability.stats) and not next(capability.buffs),
