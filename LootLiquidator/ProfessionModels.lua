@@ -1437,7 +1437,7 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
     -- the ItemDB term when compatible legacy/reference means also contributed.
     local mixed=false
     for key,weight in pairs(model and model.sources or {}) do if key~='itemdb' and weight>0 then mixed=true end end
-    local reviewedPrimary,sourcePrimaryTotal,unprojectedPrimaryTotal=false,0,0
+    local reviewedPrimary=false
     local primary={}
     for _,id in ipairs(selected.rule.primaryRankIDs or {}) do primary[id]=true end
     local modelStacks={}
@@ -1454,24 +1454,20 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
                 if not finite(unprojected) or unprojected>source.expectedQuantity+1e-9 then return model end
                 reviewedPrimary=true
             else unprojected=source.expectedQuantity end
-            sourcePrimaryTotal=sourcePrimaryTotal+source.expectedQuantity/source.inputCount
-            unprojectedPrimaryTotal=unprojectedPrimaryTotal+unprojected/source.inputCount
         end
     end
-    -- Scale the ordinary quantity term against the canonical ZERO pool, not
-    -- against a mixed pool that includes differently sized reviewed priors.
-    -- The latter would change an otherwise identical zero-profile fusion.
+    -- Use the canonical curve's relative quantity and quality changes on the
+    -- actual weighted ordinary pool. Keep already projected reviewed terms.
     local canonicalBase=deAmounts(selected.materials)
     local canonicalPrimaryTotal=canonicalBase and ((canonicalBase[selected.rule.primaryRankIDs[1]] or 0)
         +(canonicalBase[selected.rule.primaryRankIDs[2]] or 0)) or 0
-    local ordinaryShare=canonicalPrimaryTotal>0 and unprojectedPrimaryTotal/canonicalPrimaryTotal or 0
     if mixed or reviewedPrimary then
         local byID={}
         for _,material in ipairs(materials) do byID[material.id]=material end
         -- A newly introduced rank or bonus has no per-material contribution
         -- row yet. Give it only the selected ItemDB primary family's share,
         -- rather than a full-strength bonus beside mostly legacy evidence.
-        local originalIDs,primarySum,weightedPrimary={},0,0
+        local originalIDs,primarySum,weightedPrimary,ordinary={},0,0,{}
         for _,original in ipairs(model.materials or {}) do
             originalIDs[original.id]=true
             local weight=original.sourceContributions and original.sourceContributions.itemdb
@@ -1481,13 +1477,26 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
                 and finite(source.inputCount) and source.inputCount>0 then
                 local quantity=source.expectedQuantity/source.inputCount
                 primarySum=primarySum+quantity;weightedPrimary=weightedPrimary+quantity*weight
+                local units=source.unprojectedDisenchantExpectedQuantity
+                if units==nil then units=source.expectedQuantity end
+                ordinary[original.id]=units/source.inputCount*weight
+                if not finite(ordinary[original.id]) or not finite(original.expectedQuantity)
+                    or ordinary[original.id]>original.expectedQuantity+1e-9 then return model end
             end
         end
         local familyWeight=primarySum>0 and weightedPrimary/primarySum or 0
+        local low,high=selected.rule.primaryRankIDs[1],selected.rule.primaryRankIDs[2]
+        local targetTotal=byID[low].expectedQuantity+byID[high].expectedQuantity
+        if canonicalPrimaryTotal<=0 or targetTotal<=0 then return model end
+        local factor=targetTotal/canonicalPrimaryTotal
+        local lowUnits,highUnits=(ordinary[low] or 0)*factor,(ordinary[high] or 0)*factor
+        local shift=byID[high].expectedQuantity/targetTotal-canonicalBase[high]/canonicalPrimaryTotal
+        local moved=math.max(-highUnits,math.min(lowUnits,(lowUnits+highUnits)*shift))
+        local ordinaryTarget={[low]=lowUnits-moved,[high]=highUnits+moved}
         for id,projected in pairs(byID) do
             if not originalIDs[id] then
                 if primary[id] then
-                    projected.expectedQuantity=math.max(0,projected.expectedQuantity-(canonicalBase[id] or 0))*ordinaryShare*familyWeight
+                    projected.expectedQuantity=ordinaryTarget[id] or 0
                 else projected.expectedQuantity=projected.expectedQuantity*familyWeight end
             end
         end
@@ -1499,15 +1508,15 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
             if projected then
                 local weight=original.sourceContributions and original.sourceContributions.itemdb or 0
                 local source=original.sourceEstimates and original.sourceEstimates.itemdb
-                if finite(original.expectedQuantity) and finite(weight) and weight>0 and weight<=1
-                    and source and finite(source.expectedQuantity) and finite(source.inputCount) and source.inputCount>0 then
+                local weightedSource=finite(weight) and weight>0 and weight<=1
+                    and source and finite(source.expectedQuantity) and finite(source.inputCount) and source.inputCount>0
+                if finite(original.expectedQuantity) and (primary[original.id] or weightedSource) then
                     if primary[original.id] then
-                        -- Keep the fused zero profile and apply one common
-                        -- family-weighted delta. Different per-rank weights
-                        -- would create/destroy primary units during quality-only
-                        -- redistribution, and can reapply a reviewed source.
-                        local delta=(projected.expectedQuantity-(canonicalBase[original.id] or 0))*ordinaryShare
-                        projected.expectedQuantity=original.expectedQuantity+familyWeight*delta
+                        -- Both ranks use the same conservative family move,
+                        -- including a destination with no original ItemDB
+                        -- weight. Never spend another source's donor units.
+                        local delta=(ordinaryTarget[original.id] or 0)-(ordinary[original.id] or 0)
+                        projected.expectedQuantity=original.expectedQuantity+delta
                     else
                         projected.expectedQuantity=original.expectedQuantity
                             +weight*(projected.expectedQuantity-source.expectedQuantity/source.inputCount)

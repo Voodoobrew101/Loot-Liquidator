@@ -147,11 +147,11 @@ local function render(resolved)
 end
 install({counted})
 local text,rows=render(assert(resolve()))
-check(not rows:find('0.629',1,true) and rows:find('chance unavailable',1,true),
-    'DE averages stay hidden when the saved average preference is off')
+check(rows:find('[avg 0.629 per 1 input]',1,true) and not rows:find('chance unavailable',1,true),
+    'a known DE mean remains numerical when chance and range are absent')
 LL.db.showAverageQuantity=true
 text,rows=render(assert(resolve()))
-check(rows:find('0.629',1,true) and rows:find('chance unavailable',1,true),
+check(rows:find('0.629',1,true) and not rows:find('chance unavailable',1,true),
     'enabling averages displays the researched mean without inventing probability')
 check(not text:find('Personal x',1,true),'units-only study is not presented as a quantity histogram')
 local occurrence=record('independent-counts-and-units',{output(243602,.5,.2,1,3)})

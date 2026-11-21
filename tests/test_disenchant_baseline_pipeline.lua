@@ -157,6 +157,12 @@ for _,case in ipairs({{rarity=2,node=107648,low=243599,high=243600,total=2.9},
     check(model.samples==nil and model.effectiveSamples==nil,'runtime model reports no fabricated sample denominator')
     near(model.context.effectiveSkill,290,'runtime profile includes specialization skill once')
     local means=amounts(model.materials)
+    local canonical
+    for _,baseline in ipairs(LL.ItemDB.modeledDisenchantBaselines) do
+        if baseline.recordID==model.disenchantBaselineID then canonical=amounts(baseline.materials) end
+    end
+    check(canonical,'selected baseline retains its quantity reference')
+    local quantityFactor=(means[case.low]+means[case.high])/(canonical[case.low]+canonical[case.high])
     if case.total then near(means[case.low]+means[case.high],case.total,'older full-reference path adds no second yield bonus') end
     check(LL:ApplyDisenchantBaseline(facts,option,model,model.context,1)==model,'an already projected baseline is not reapplied')
     for _,source in ipairs({'personal','imported'}) do
@@ -174,11 +180,26 @@ for _,case in ipairs({{rarity=2,node=107648,low=243599,high=243600,total=2.9},
                 sourceEstimates={itemdb={expectedQuantity=3,inputCount=1}}},
             {id=999999,expectedQuantity=7,confidence=80,sourceContributions={legacy=1}}}}
         local beforeCombined=copy(combined)
+        local zeroContext=copy(model.context)
+        zeroContext.skill=0;zeroContext.effectiveSkill=0;zeroContext.preSpecializationSkill=0
+        zeroContext.specialization='none';zeroContext.specializationPoints={};zeroContext.learnedSpecializations={}
+        zeroContext.disenchantSpecializationPoints={};zeroContext.disenchantLearnedSpecializations={}
+        local neutral=LL:ApplyDisenchantBaseline(facts,option,combined,zeroContext,1)
+        local neutralMeans=amounts(neutral.materials)
+        near(neutralMeans[case.low],combined.materials[1].expectedQuantity,'mixed zero-bonus low-rank identity')
+        near(neutralMeans[case.high],combined.materials[2].expectedQuantity,'mixed zero-bonus high-rank identity')
+        local invalidPool=copy(combined);invalidPool.materials[1].expectedQuantity=0
+        check(LL:ApplyDisenchantBaseline(facts,option,invalidPool,model.context,1)==invalidPool,
+            'a declared source term larger than the fused pool cannot be projected')
         local mixed=LL:ApplyDisenchantBaseline(facts,option,combined,model.context,1)
         check(mixed.disenchantBaselineApplied,'mixed source model receives only an ItemDB-term projection')
         local mixedMeans=amounts(mixed.materials)
-        near(mixedMeans[case.low],alpha*means[case.low]+(1-alpha)*10,'relative source weight preserves the other low-rank mean')
-        near(mixedMeans[case.high],alpha*means[case.high]+(1-alpha)*12,'relative source weight preserves the other high-rank mean')
+        near(mixedMeans[case.low]+mixedMeans[case.high],alpha*5*quantityFactor+(1-alpha)*22,
+            'only the contributing ordinary pool receives the canonical quantity multiplier')
+        check(mixedMeans[case.low]>=(1-alpha)*10-1e-9 and mixedMeans[case.high]>=(1-alpha)*12-1e-9,
+            'quality redistribution never spends the other source primary units')
+        check(mixedMeans[case.high]>=alpha*3*quantityFactor+(1-alpha)*12-1e-9,
+            'positive quality progress cannot downgrade the ordinary high-rank pool')
         near(mixedMeans[999999],7,'a non-ItemDB-only material stays unchanged')
         if case.rarity==4 then
             local bonus=0
@@ -190,7 +211,10 @@ for _,case in ipairs({{rarity=2,node=107648,low=243599,high=243600,total=2.9},
             local missingHigh=copy(combined);table.remove(missingHigh.materials,2)
             local withNewRank=LL:ApplyDisenchantBaseline(facts,option,missingHigh,model.context,1)
             local missingMeans=amounts(withNewRank.materials)
-            near(missingMeans[case.high],means[case.high]*alpha,'a newly introduced primary rank receives only its ItemDB family share')
+            near(missingMeans[case.low]+missingMeans[case.high],alpha*2*quantityFactor+(1-alpha)*10,
+                'a newly introduced primary rank conserves the actual accepted pool')
+            check(missingMeans[case.high]>=0 and missingMeans[case.high]<=alpha*2*quantityFactor+1e-9,
+                'new high-rank units never exceed the accepted ItemDB donor pool')
             local missingBonus=0
             for _,id in ipairs({236949,236950,236951,236952}) do missingBonus=missingBonus+(missingMeans[id] or 0) end
             near(missingBonus,.289*alpha,'a missing original high-rank row does not amplify Crystal extras')
@@ -212,7 +236,9 @@ for _,case in ipairs({{rarity=2,node=107648,low=243599,high=243600,total=2.9},
         local bonus=0
         for _,id in ipairs({236949,236950,236951,236952}) do bonus=bonus+(unevenMeans[id] or 0) end
         near(bonus,.289*2/5,'uneven primary weights use quantity-weighted ItemDB family share')
-        near(unevenMeans[case.high],12,'a legacy-only original primary rank remains unchanged')
+        near(unevenMeans[case.low]+unevenMeans[case.high],2*quantityFactor+12,
+            'unequal rank weights conserve the ordinary pool and the legacy-only term')
+        check(unevenMeans[case.high]>=12,'quality progress may add a modeled rank without spending the legacy-only term')
         check(same(uneven,unevenBefore),'family-share projection preserves its weighted source inputs')
         local noItemDB=copy(uneven);noItemDB.sources={legacy=1}
         for _,material in ipairs(noItemDB.materials) do material.sourceContributions={legacy=1} end

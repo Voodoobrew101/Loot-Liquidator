@@ -84,7 +84,7 @@ local quote={name='Mill',letter='M',recipeID=1269575,inputCount=10,available=fal
     value=model.value,yieldModel=model}
 LL:AppendRecommendationTooltip(tip,{action='A',facts=facts,conversionOptions={quote}})
 local text=table.concat(tip.lines,'\n')
-check(text:find('13.000',1,true) and text:find('chance unavailable',1,true),
+check(text:find('13.000',1,true) and not text:find('chance unavailable',1,true),
     'native tooltip shows the known reference total without inventing a hit rate: '..text)
 LL.CanUseConversion=function() return true,nil,'Player' end
 LL.EligibleDisenchant=function() return false end

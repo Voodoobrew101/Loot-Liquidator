@@ -1108,7 +1108,7 @@ function LL:ApplyGeneralProfessionQuality(f,option,model,context)
     local result=copy(model);local additions={};local changed=false
     for familyID,group in pairs(groups) do
         if not (group.aggregate and group.exact) then
-            local qualityConfidence=math.min(params.confidence,
+            local qualityConfidence=math.min(number(params.confidence),
                 lookup(model.familyQualityConfidence,familyID) or 100)
             local quantities,valid={},true
             for _,entry in ipairs(group.entries) do
