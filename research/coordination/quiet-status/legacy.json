@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-21T19:45:55.844Z",
-  "status": "Current v3 rules, queue and role refreshed. New published Retail-compatible recording/export capabilities identified, but their descriptions are not original processing studies. Retail disenchant loot-event source-item attribution is explicitly unreliable in one documented exporter. No new independently qualified current-Retail Warmaul 24995, Cobalt 36909 or Fel Iron 23424 per-input operation logs, material hit/zero histograms or live eligibility receipts; no evidence file created.",
+  "updated_at": "2026-11-21T20:39:47.388Z",
+  "status": "Reviewed all current v3 rules/mechanics, legacy queue and owned status. Independently inspected dated 2016 ProspectMe original capture implementation and ore-ID skill table, identifying historical counter/stack caveats relevant to any newly recovered export. No new independent measured Retail Warmaul 24995, Cobalt 36909 or Fel Iron 23424 cohorts, zeros, operation denominators, per-material hit counts, or build-qualified eligibility. No new evidence JSONL warranted.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -16,9 +16,10 @@
     "Legacy TBC armor-vs-weapon group source identity/level build, Runecloth Headband 13866 patch-sensitive dust identity and output-event distributions; avoid already-reviewed 45661 token mapping"
   ],
   "newly_verified_fields_cohorts": [
-    "New independent Retail measured cohorts: 0; new observed casts/hit counts/zero outcomes/total quantities/stack histograms/skill-spec-build profiles: none. No new evidence file.",
-    "Verified scope/coordination metadata (not an empirical measurement): research/coordination/backlog-catalogue-20261120.json status CLOSED_VERIFIED_CURRENT_PIPELINE, sourceCount 731, enabled source-catalogues.json registry; six recovered beyond original 713+12. Do not redo the Codex source catalogue.",
-    "2026-11-21T19:45 UTC documentation lead only: Craft Resume Retail exporter captures DE operation output item links/quantities but not dependable destroyed source-item; EzDisenchant Retail supports per-character CSV/TXT history; Forever Stats Retail professions exports. No sample cohort or source-qualified measured numeric field advanced."
+    "New Retail source-qualified measured casts/hit counts/zeros/stack histograms/total quantities: none; no evidence file.",
+    "New original source-code context (not empirical): 2016 ProspectMe AddEntry increments TimesProspected by BatchSize; normal prospecting sets MassMultiplier=1, historical mass Felslate/Leystone/YSERALLINE processing sets 4, so mass counts are four nominal equivalents per single capture and must not be relabeled four observed operations without checking cohort semantics.",
+    "2016 ProspectMe GetResults saves each loot item ID as Results[ItemID]=Quantity (not additive within one capture); same-material multiple loot messages/slots could overwrite earlier quantities. Source-specific historical import/reconstruction requires raw event or export confirmation. This does not establish that the old tool produced any target data.",
+    "2016 ProspectMe hardcoded ore gating lookup has Fel Iron 23424=>275, Cobalt 36909=>350; historical addon table only, not measured caster skill or modern Retail skill requirement."
   ],
   "source_urls": [
     "https://thewowdb.com/guides/disenchant-roi-trap/",
@@ -76,15 +77,18 @@
     "https://github.com/ClassicWoWCommunity/forever-bugs/issues/351",
     "https://github.com/R4s0n3/craft-resume-wow",
     "https://www.curseforge.com/wow/addons/ezdisenchant/files/9635154/dependencies",
-    "https://www.curseforge.com/wow/addons/forever-stats/files/9377899"
+    "https://www.curseforge.com/wow/addons/forever-stats/files/9377899",
+    "https://repos.curseforge.com/wow/prospect-me/file/f9b6c0305908/ProspectMe.lua",
+    "https://repos.curseforge.com/wow/prospect-me/rev/f9b6c0305908",
+    "https://www.curseforge.com/wow/addons/quick-de"
   ],
-  "numeric_summary": "This run new source-qualified numeric fields=0, newly verified independent cohorts=0. Retain historical 24995 candidate 22445/22446/22447/22449, 36909 and 23424 prior-reviewed output IDs/ranks without treating historical priors as modern Retail yields. No invented denominators, zeros, chances, rank identities, gold EV or live eligibility.",
+  "numeric_summary": "New independent Retail measured cohorts=0; newly verified target casts/hits/zeros/output totals/histograms=0. Primary 2016 recorder implementation records ordinary successful prospect/mill events as multiplier 1 and 2016 Legion mass operations as 4 nominal equivalents, and source table marks Fel Iron Ore 23424=275 and Cobalt Ore 36909=350 historical ore-skill gates; these are code constants, NOT actual player skill, current Retail eligibility, measured yields or live rates.",
   "evidence_file": "research/v3/evidence/legacy/2026-11-21T1445-retail-prospect-spell-identity.jsonl",
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "1be31419204cd4dc7a8f67fcad318c208718f614",
+  "verified_parent_sha": "66aa116c2d0aabc5f9cfe820cb49c70d3d363605",
   "verified_commit_sha": "0afbd7f7ab0df1649f0503423ca5db30f275b779",
-  "commit_note": "Status-only GitHub update; no empty evidence file warranted. verified_commit_sha is prior completed write because the resulting commit cannot self-reference in its own contents. New commit and remote read-back must be verified externally.",
+  "commit_note": "Status-only durable write; preserve existing evidence and other workers. verified_commit_sha remains the last known completed write in file because a commit cannot contain its own SHA. Verify resulting commit and remote file by subsequent API read.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -161,7 +165,8 @@
     "Public addon descriptions show possible future original session recordings but do not constitute downloadable, independently measured processing evidence or establish Retail input identity, game build, casts, zero outcomes or refund semantics.",
     "12 original Warmaul record IDs legacy-20261101-201..212 collide with different Netherweave evidence; original audit requires file-qualified adjudication before data promotion, and compiler histogram support is a separate Master-owned implementation concern.",
     "Gold Forever (Nov 2026) may provide new Retail disenchant original-source logs but no publicly released target 24995 corpus; its loot tracker attributes by base item ID and source code's predicted DE tables are reference/model only, not actual operation denominators or current eligibility.",
-    "Existing legacy status had cut gem item IDs 23094/23095/23096 mistaken for direct Fel Iron prospect outputs; this run corrected status listing only using previously audited 12 uncut output IDs. Verify final compiled schema/consumer with Master rather than changing code."
+    "Existing legacy status had cut gem item IDs 23094/23095/23096 mistaken for direct Fel Iron prospect outputs; this run corrected status listing only using previously audited 12 uncut output IDs. Verify final compiled schema/consumer with Master rather than changing code.",
+    "2016 ProspectMe raw data caveat: normal TimesProspected increments 1 per capture while 2016 mass operations increment 4 nominal equivalents; code also overwrites duplicate same-material results within an event. Do not equate saved counter with original physical 5-ore operations or trust totals without source-version/operation reconciliation. This is not evidence of an existing target corpus."
   ],
   "exhausted_sources": [
     {
@@ -218,49 +223,34 @@
     }
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Search for publicly published original Retail 12.x anonymized EzDisenchant/Craft Resume/Forever Stats exports with verified itemLink and successful operation context for 24995 or prospecting 36909/23424. Check exact output IDs/ranks, skill/spec/build, operation denominators and observed zeros before any schema admission. The exporter source-item attribution gap belongs to Master/implementation; do not modify client code or request in-game experiments.",
+  "next_concrete_step": "Only if a NEW ORIGINAL published or newly discovered (post-cutoff) ProspectMe/EzDisenchant/ProspectMate/Forever Stats export appears: obtain its exact addon version and raw per-event source item links, outputs and completed successful operations, and resolve 2016 ProspectMe's mass-equivalent counter and same-material overwrite before any 24995/36909/23424 empirical admission. Continue seeking independently published Retail 12.x source-attributed zero-inclusive operation logs; do not duplicate Codex's closed source catalogue.",
   "coordination_cutoff": "Cutoff 0cd0bad8867e7a8d909b4ecae74f6136a3e23d42. Current branch manifest status CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources (713 original + 12 addendum + 6 recovered) and enabled catalogue registry. Codex/direct reviewers own source decisions and implementation; no duplicate assignment.",
   "sources_reviewed_this_run": [
     {
-      "url": "https://github.com/R4s0n3/craft-resume-wow",
-      "type": "Retail-12.1.5-session-exporter-code-README",
-      "disposition": "new-source-lead-not-empirical",
-      "detail": "README documents per-operation DE loot-window outputs, material item links and quantities, CSV and SavedVariables, but explicitly says Retail loot events lack dependable destroyed source-item link. No published Warmaul 24995 cohort/output ledger; no per-input attribution inferred."
+      "url": "https://repos.curseforge.com/wow/prospect-me/file/f9b6c0305908/ProspectMe.lua",
+      "type": "original-historical-Lua-implementation-2016-11-28",
+      "disposition": "source-methodology-confirmed-no-empirical-cohort",
+      "detail": "Read spell event flow and Set Multiplier lines 33-35/113-149, AddEntry lines 154-179 and GetResults lines 185-210. TimesProspected increments by 1 normal or 4 mass; potential repeated-item quantity overwrite; no published SavedVariables or target samples."
     },
     {
-      "url": "https://www.curseforge.com/wow/addons/ezdisenchant/files/9635154/dependencies",
-      "type": "Retail-12.1.5-DE-exporter-release-Nov15",
-      "disposition": "new-source-lead-not-empirical",
-      "detail": "Version 1.1.7 description says per-character disenchant history up to 500 entries, CSV/TXT export, and Retail+Forever clients; no openly published logs, and any export needs Retail flavor, source item link and actual operations validated."
+      "url": "https://repos.curseforge.com/wow/prospect-me/rev/f9b6c0305908",
+      "type": "source-control-changeset-historical-ore-skill-reference",
+      "disposition": "dated-2016-reference-only-not-current-Retail",
+      "detail": "Changeset dated Nov 28 2016 includes Ore lookup Fel Iron 23424=275, Cobalt 36909=350. These are programmer table values, not data from actual character skill or operation count."
     },
     {
-      "url": "https://www.curseforge.com/wow/addons/forever-stats/files/9377899",
-      "type": "Retail-12.1.7-and-Forever-professions-exporter",
-      "disposition": "new-source-lead-not-empirical",
-      "detail": "October 30 2026 0.63.0 release states Gathering counts disenchanting, prospecting and milling and Professions has Export. Does not establish exact material outputs/casts, per-input linkage or observed data; separate client flavors."
+      "url": "https://www.curseforge.com/wow/addons/quick-de",
+      "type": "Retail-12.1.5-addon-description",
+      "disposition": "not-numerical-source",
+      "detail": "Filter/action addon describes disenchanting selection, not a publicly accessible original Warmaul per-event dataset with source linkage and outputs."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/prospectmate",
+      "type": "Retail-conversion-tracker-already-audited",
+      "disposition": "previously-reviewed-not-new-cohort",
+      "detail": "Shows material tracking but no publicly archived 36909 or 23424 source-qualified zero-inclusive session export in accessible listing."
     }
   ],
   "latest_run_source_date": "2026-11-21",
-  "latest_run": {
-    "at_utc": "2026-11-21T19:45:55.844Z",
-    "branch_head_at_read": "1be31419204cd4dc7a8f67fcad318c208718f614",
-    "task_ids": [
-      "T0047",
-      "T0042",
-      "T0022",
-      "T0044",
-      "T0050"
-    ],
-    "verified_new_independent_cohorts": 0,
-    "numeric_fields_advanced": [],
-    "evidence_written": false,
-    "quiet_status_only": true,
-    "source_disposition": "New addon recording/export documentation, no public target operation dataset. No cross-flavor or historical data promoted.",
-    "blockers": [
-      "Missing original current Retail 12.x operation-level source-item identification and results for 24995",
-      "Missing recorded completed casts, consumed/refunded ore, output ranks/hits/zeros for 36909 and 23424",
-      "Craft Resume's author documents no reliable source-item link from Retail DE loot event; require independent input-link validation",
-      "No source numbers warrant v3 new evidence JSONL"
-    ]
-  }
+  "latest_run": "Primary code provenance: ProspectMe 2016 historical spell/loot counter and original output parsing reviewed; source counts are mechanics of software, not a measured target dataset."
 }
