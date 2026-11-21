@@ -197,6 +197,22 @@ local relevant=context();relevant.specialization='107647=10';relevant.specializa
 assert(not LL:DisenchantObservationProfileKey(relevant),'actual DE milestone must retain its normal transform boundary')
 relevant.specialization='999999999=1';relevant.specializationPoints={['999999999']=1}
 assert(not LL:DisenchantObservationProfileKey(relevant),'unknown specialization is not silently classified as irrelevant')
+-- Replay actual profile routing for every profession, with a foreign talent injected.
+for _,profession in ipairs({'Alchemy','Blacksmithing','Enchanting','Engineering','Herbalism','Inscription',
+ 'Jewelcrafting','Leatherworking','Mining','Skinning','Tailoring','Cooking','Fishing'}) do
+ local foreign=profession=='Enchanting' and 106982 or 107649
+ local method=({Enchanting='Disenchant',Inscription='Mill',Jewelcrafting='Prospect',
+  Herbalism='Gather',Mining='Gather',Skinning='Skin',Fishing='Fish'})[profession] or 'Craft'
+ local target=context();target.profession=profession;target.simulated=true
+ target.specializationPoints={};target.learnedSpecializations={}
+ local option={name=method,recipeID=0};local facts={id=244752,expansionID=11,quality=3,classID=4}
+ local before=LL:ProfessionProfileParameters(profession,11,target,option,facts)
+ target.specializationPoints={[tostring(foreign)]=30};target.learnedSpecializations={[tostring(foreign)]=true}
+ local after=LL:ProfessionProfileParameters(profession,11,target,option,facts)
+ assert(before.skill==after.skill and before.outputFactor==after.outputFactor
+  and before.inputFactor==after.inputFactor and #before.appliedEffects==#after.appliedEffects,
+  'foreign talents cannot alter '..profession..' calculations')
+end
 -- Synthetic condition IDs test scanner routing without adding game observations.
 local oldDB=LL.ItemDB
 LL.ItemDB={professionProfiles={profiles={
@@ -234,6 +250,10 @@ for _,profession in ipairs({'Alchemy','Blacksmithing','Enchanting','Engineering'
  assert((ids['1239755']==true)==craft,'ingenuity phial scope: '..profession)
  assert((ids['185562']==true)==gather,'firewater scope: '..profession)
  assert((ids['1235733']==true)==(profession=='Enchanting'),'Shattered Essence scope: '..profession)
+ if profession=='Inscription' or profession=='Jewelcrafting' then
+  assert(LL:KnownProfessionAuraIDs(profession,11,profession=='Inscription' and 'Mill' or 'Prospect')['1239755'],
+   'crafting-speed phial identity is relevant to processing duration')
+ end
  local de=LL:KnownProfessionAuraIDs(profession,11,'Disenchant')
  assert(not de['185562'] and not de['1239755'] and not de['1235733'],'consumables do not become disenchant boosts: '..profession)
 end

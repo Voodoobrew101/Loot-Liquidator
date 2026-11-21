@@ -271,9 +271,10 @@ function LL:KnownProfessionAuraIDs(profession,expansion,method)
     if gathering and (method==nil or method=='Gather' or method=='Skin') then
         for _,id in ipairs({185562,432265,1236763,1236767,1269152,1269170,1269171}) do ids[tostring(id)]=true end
     end
-    if crafting and (expansion==nil or expansion==11) and (method==nil or method=='Craft') then
+    if crafting and (expansion==nil or expansion==11)
+        and (method==nil or method=='Craft' or method=='Mill' or method=='Prospect') then
         ids['1239755']=true -- Haranir Phial of Ingenuity
-        if profession=='Enchanting' then ids['1235733']=true end -- Shattered Essence
+        if profession=='Enchanting' and (method==nil or method=='Craft') then ids['1235733']=true end -- Shattered Essence
     end
     local function visit(value)
         if type(value)~='table' or visited[value] then return end
