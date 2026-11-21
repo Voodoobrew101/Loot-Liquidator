@@ -199,6 +199,65 @@ end
 -- subclass, UI allocation-table format, or a Crafting Speed rating. At known
 -- zero specialization, the measured effective skill already includes actual
 -- gear/enchant skill once. Other talent states still need their normal model.
+-- Exact reviewed combat/form auras, not a general aura-type allowlist. The
+-- pinned native rows and closed trigger graph are retained in
+-- database/research/disenchant-nonoutput-auras-70961.json. Unknown IDs remain
+-- profile constraints; a known profession condition always takes precedence.
+local disenchantNonOutputAuras70961={
+    ['1126']=true,   -- Mark of the Wild: combat Versatility and its highlight.
+    ['5487']=true,   -- Bear Form: form/combat modifiers and maximum health.
+    ['22812']=true,  -- Barkskin: damage/healing/health and pushback protection.
+    ['22842']=true,  -- Frenzied Regeneration: health recovery.
+    ['61336']=true,  -- Survival Instincts: combat defensive configuration.
+    ['192081']=true, -- Ironfur: armor and its combat Mastery effect.
+    ['1251877']=true,-- Gift of an Ancient Guardian: combat Mastery.
+    ['1261872']=true,-- Heart of the Wild: maximum health.
+    ['1271910']=true,-- Mark of the Wild Highlight: its zero-valued UI marker.
+}
+function LL:DisenchantModelAuraSet(context)
+    local database=self.ItemDB
+    local db=database or {}
+    local profiles=db.professionProfiles and db.professionProfiles.profiles
+    local expansion=context and (context.expansionID or context.inputExpansionID)
+    local revision=db.modelRevision or db.revision
+    local cached=self._disenchantAuraScopeCache
+    if not cached or cached.database~=database or cached.revision~=revision
+        or cached.profiles~=db.professionProfiles or cached.professionRules~=db.professionRules
+        or cached.personalPatchRules~=db.personalPatchRules or cached.mechanicRules~=db.mechanicRules then
+        cached={database=database,revision=revision,profiles=db.professionProfiles,
+            professionRules=db.professionRules,personalPatchRules=db.personalPatchRules,
+            mechanicRules=db.mechanicRules,scopes={}}
+        self._disenchantAuraScopeCache=cached
+    end
+    local scope=expansion==nil and '*' or tostring(expansion)
+    if cached.scopes[scope] then return cached.scopes[scope] end
+    local ids,visited={},{}
+    local function visit(value)
+        if type(value)~='table' or visited[value] then return end
+        visited[value]=true
+        for _,id in ipairs(type(value.condition)=='table' and value.condition.spellIDs or {}) do ids[tostring(id)]=true end
+        for id,active in pairs(type(value.buffs)=='table' and value.buffs or {}) do
+            if active then ids[tostring(type(active)=='number' and active or id)]=true end
+        end
+        for _,entry in pairs(value) do if type(entry)=='table' then visit(entry) end end
+    end
+    if expansion~=nil then visit(profiles and profiles['Enchanting:'..tostring(expansion)])
+    else
+        -- Old source contexts may omit expansion. Absence of that field must
+        -- not hide a known condition from another Enchanting profile.
+        for key,profile in pairs(profiles or {}) do
+            if type(key)=='string' and key:match('^Enchanting:') then visit(profile) end
+        end
+    end
+    for _,name in ipairs({'professionRules','personalPatchRules','mechanicRules'}) do
+        for _,rule in ipairs(db[name] or {}) do
+            if (rule.profession=='Enchanting' or rule.method=='Disenchant')
+                and (expansion==nil or rule.expansionID==nil or rule.expansionID==expansion) then visit(rule) end
+        end
+    end
+    cached.scopes[scope]=ids
+    return ids
+end
 function LL:DisenchantObservationProfileKey(context)
     if type(context)~='table' or context.profession~='Enchanting' then return nil end
     local skill=context.effectiveSkill or context.preSpecializationSkill or context.skill
@@ -218,12 +277,26 @@ function LL:DisenchantObservationProfileKey(context)
         and type(context.specializationPoints or context.disenchantSpecializationPoints)=='table' then zero=true end
     if not zero then return nil end
     if context.fieldStatus and context.fieldStatus.effectiveSkill=='unknown' then return nil end
-    -- A measured active buff cannot disappear merely because an older recorder
-    -- did not record auras. Empty/nil are the legacy no-buff-context signature.
-    local buffs={}
-    for id,active in pairs(context.buffs or context.activeBuffs or {}) do
-        if active then buffs[#buffs+1]=tostring(id)..'='..tostring((context.buffStacks or {})[id] or active) end
+    -- Only reviewed non-output IDs may disappear from this comparison. A
+    -- missing native condition is not proof that an unknown aura is harmless.
+    -- Keep full aura capture unchanged for recordings and all other recipes.
+    local relevant=self:DisenchantModelAuraSet(context)
+    local version,build
+    if type(GetBuildInfo)=='function' then version,build=GetBuildInfo() end
+    local reviewedBuild=version=='12.1.5' and tostring(build)=='70961'
+    local buffs,values={},{}
+    for _,auraMap in ipairs({context.buffs or {},context.activeBuffs or {}}) do
+        for id,active in pairs(auraMap) do
+            local key=tostring(id)
+            if active and (not reviewedBuild or not disenchantNonOutputAuras70961[key] or relevant[key]) then
+                local stacks=context.buffStacks or {}
+                local value=tostring(stacks[id] or stacks[key] or stacks[tonumber(key)] or active)
+                if values[key] and values[key]~=value then return nil end
+                values[key]=value
+            end
+        end
     end
+    for id,value in pairs(values) do buffs[#buffs+1]=id..'='..value end
     table.sort(buffs)
     return ('effective:%g;specialization:none;buffs:%s'):format(skill,table.concat(buffs,','))
 end
@@ -968,6 +1041,52 @@ local function deAmounts(materials)
     end
     return result
 end
+-- Retain an unchanged distribution. A changed mean alone does not determine
+-- occurrence. The one supported exception is quality-only redistribution of
+-- a source primary that always has the same positive stack size: E=P*stack.
+-- This remains a confidence-capped model and adds no observed casts/hits.
+local function deDistribution(source,result,fixedPrimaryStack)
+    if type(source)~='table' then return result end
+    if finite(source.expectedQuantity) and math.abs(result.expectedQuantity-source.expectedQuantity)<1e-10 then
+        result.minQuantity=source.minQuantity;result.maxQuantity=source.maxQuantity
+        if not finite(source.chance) or source.chance>1 then return result end
+        result.chance=source.chance
+        result.chanceConfidence=math.min(result.confidence or 100,source.chanceConfidence or source.confidence or 0)
+        result.probabilityBasis=source.probabilityBasis or 'unchanged-source-occurrence'
+        result.probabilityVerified=source.probabilityVerified
+    elseif fixedPrimaryStack and finite(source.chance) and source.chance<=1
+        and finite(source.minQuantity) and source.minQuantity>0
+        and source.minQuantity==source.maxQuantity and source.minQuantity%1==0
+        and finite(source.expectedQuantity)
+        and math.abs(source.expectedQuantity-source.chance*source.minQuantity)<1e-6
+        and result.expectedQuantity<=source.minQuantity then
+        result.chance=result.expectedQuantity/source.minQuantity
+        result.minQuantity=source.minQuantity;result.maxQuantity=source.maxQuantity
+        result.chanceConfidence=math.min(result.confidence or 100,source.chanceConfidence or source.confidence or 0)
+        result.probabilityBasis='modeled-fixed-stack-primary-quality'
+        result.probabilityAssumption='Primary quality redistribution preserves the source fixed positive stack; no target observations added'
+        result.probabilityVerified=false
+    end
+    return result
+end
+local function deFixedStackContributors(material)
+    local stack=material.minQuantity
+    if not finite(stack) or stack<=0 or stack~=material.maxQuantity or stack%1~=0 then return false end
+    local any=false
+    for key,weight in pairs(material.sourceContributions or {}) do
+        if finite(weight) and weight>0 then
+            local source=material.sourceEstimates and material.sourceEstimates[key]
+            if not source or not source.records or #source.records==0 then return false end
+            for _,record in ipairs(source.records) do
+                if record.inputCount~=1 or record.minQuantity~=stack or record.maxQuantity~=stack
+                    or not finite(record.expectedQuantity) or not finite(record.dropChance) or record.dropChance>1
+                    or math.abs(record.expectedQuantity-record.dropChance*stack)>1e-6 then return false end
+            end
+            any=true
+        end
+    end
+    return any
+end
 local function deCurveState(baseline,profile)
     local rule=type(baseline)=='table' and baseline.rule
     if type(rule)~='table' or type(profile)~='table' or not finite(profile.effectiveSkill)
@@ -1026,12 +1145,15 @@ function LL:DisenchantCurveQuantities(baseline,profile)
     end
     for id in pairs(state.extraIDs) do means[id]=state.base[id]+(state.target[id]-state.base[id])*state.extraProgress end
     means[state.low]=q*(1-share);means[state.high]=q*share
+    local sourceByID={}
+    for _,material in ipairs(baseline.materials or {}) do sourceByID[material.id]=material end
     local result={}
     for id,value in pairs(means) do
         if not finite(value) then return nil end
-        result[#result+1]={id=id,expectedQuantity=value,
+        result[#result+1]=deDistribution(sourceByID[id],{id=id,expectedQuantity=value,
             confidence=math.min(baseline.confidence or state.rule.confidence0to100,state.extraConfidence[id] or 100),
-            additionalOutput=state.extraIDs[id] or nil}
+            additionalOutput=state.extraIDs[id] or nil},
+            (state.rule.preservePrimaryTotal or state.quantity==0) and (id==state.low or id==state.high))
     end
     table.sort(result,function(a,b) return a.id<b.id end)
     return result,{skill=state.skill,quantity=state.quantity,additional=state.extraProgress}
@@ -1074,10 +1196,13 @@ function LL:NormalizeDisenchantQuantities(baseline,observed,sourceProfile)
         means[id]=math.max(0,value)
     end
     means[state.low]=q0*(1-r0);means[state.high]=q0*r0
+    local observedByID={}
+    for _,material in ipairs(observed) do observedByID[material.id]=material end
     local result={}
-    for id,value in pairs(means) do result[#result+1]={id=id,expectedQuantity=value,
+    for id,value in pairs(means) do result[#result+1]=deDistribution(observedByID[id],{id=id,expectedQuantity=value,
         confidence=math.min(baseline.confidence or state.rule.confidence0to100,state.extraConfidence[id] or 100),
-        additionalOutput=state.extraIDs[id] or nil} end
+        additionalOutput=state.extraIDs[id] or nil},
+        (state.rule.preservePrimaryTotal or state.quantity==0) and (id==state.low or id==state.high)) end
     table.sort(result,function(a,b) return a.id<b.id end)
     return result
 end
@@ -1195,13 +1320,17 @@ function LL:ProjectReviewedDisenchantPrior(f,option,model,context,mode)
     for _,material in ipairs(result.materials) do
         local adjusted=byID[material.id]
         if not adjusted then return blocked('Source output has no matching native model outcome') end
+        local distribution=deDistribution(material,{expectedQuantity=adjusted.expectedQuantity,confidence=0},
+            (baseline.rule.preservePrimaryTotal or progress.quantity==0) and (material.id==low or material.id==high))
         material.expectedQuantity=adjusted.expectedQuantity
         material.confidence=0
-        material.chance=nil;material.probabilityVerified=false
-        material.minQuantity=nil;material.maxQuantity=nil
+        material.chance=distribution.chance;material.probabilityVerified=distribution.probabilityVerified
+        material.minQuantity=distribution.minQuantity;material.maxQuantity=distribution.maxQuantity
         material.quantityCounts=nil;material.histogram=nil;material.personalHistogram=nil
         material.fieldEvidence=nil;material.samples=nil;material.castsWithDrop=nil;material.totalQuantity=nil
-        material.boundsBasis=nil;material.boundsSource=nil;material.chanceConfidence=nil;material.chanceCasts=nil
+        material.boundsBasis=nil;material.boundsSource=nil;material.chanceConfidence=distribution.chanceConfidence;material.chanceCasts=nil
+        material.probabilityBasis=distribution.probabilityBasis
+        material.probabilityAssumption=distribution.probabilityAssumption
         material.netUnitPrice=nil;material.netExpectedValue=nil
         material.reviewedDisenchantProjected=true
     end
@@ -1310,6 +1439,13 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
                     if projected.expectedQuantity<0 and projected.expectedQuantity>-1e-9 then projected.expectedQuantity=0 end
                     if not finite(projected.expectedQuantity) then return model end
                     projected.confidence=math.min(projected.confidence or confidence,original.confidence or confidence)
+                    projected.chance=nil;projected.minQuantity=nil;projected.maxQuantity=nil
+                    projected.chanceConfidence=nil;projected.probabilityBasis=nil;projected.probabilityVerified=nil
+                    projected.probabilityAssumption=nil
+                    deDistribution(original,projected,(selected.rule.preservePrimaryTotal or progress.quantity==0)
+                        and primary[original.id] and deFixedStackContributors(original))
+                    projected.sourceEstimates=copy(original.sourceEstimates)
+                    projected.sourceContributions=copy(original.sourceContributions)
                 else
                     byID[original.id]=copy(original)
                 end

@@ -36,8 +36,22 @@ local function quantities(record,cap)
         local field=material.expectedQuantity
         if type(field)=='table' and finite(field.value) and field.status~='unknown'
             and field.status~='contradictory' and not material.conditionalReference then
-            materials[#materials+1]={id=material.id,expectedQuantity=field.value,
+            local value={id=material.id,expectedQuantity=field.value,
                 confidence=math.min(cap,confidence(field.confidence))}
+            -- A modeled mean is not a reason to erase independent source
+            -- occurrence/range fields. Keep their values, never their cast
+            -- counters, so the identity profile can reproduce the baseline.
+            for _,pair in ipairs({{'dropChance','chance'},{'minQuantity','minQuantity'},
+                {'maxQuantity','maxQuantity'}}) do
+                local source=material[pair[1]]
+                if type(source)=='table' and finite(source.value) and source.status~='unknown'
+                    and source.status~='contradictory' and (pair[2]~='chance' or source.value<=1) then
+                    value[pair[2]]=source.value
+                    if pair[2]=='chance' then value.chanceConfidence=math.min(cap,confidence(source.confidence)) end
+                end
+            end
+            if value.chance~=nil then value.probabilityBasis='source-category-occurrence' end
+            materials[#materials+1]=value
         end
     end
     table.sort(materials,function(a,b) return a.id<b.id end)
@@ -65,6 +79,10 @@ local function endpointFromBaseline(materials,rule)
         elseif material.id==rule.primaryRankIDs[2] then
             material.expectedQuantity=total*rule.targetRank2Share
         end
+        -- An endpoint quantity is a separate model, not a copied observed
+        -- occurrence or positive stack distribution.
+        material.chance=nil;material.chanceConfidence=nil;material.probabilityBasis=nil
+        material.minQuantity=nil;material.maxQuantity=nil
     end
     return result
 end

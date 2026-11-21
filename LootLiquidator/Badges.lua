@@ -445,6 +445,11 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         return model and (model.disenchantBaselineApplied==true or model.generalProfessionApplied==true)
             or type(context)=='table' and context.simulated==true and context.profileKind=='manual-simulation'
     end
+    local function valuedSimulationPreview(option)
+        local context=option and option.yieldModel and option.yieldModel.context
+        return option and option.tooltipProfileLabel=='Simulated' and type(option.value)=='number'
+            and type(context)=='table' and context.simulated==true
+    end
     local printedSamples=false
     local progress=(detail>=3 and showProfession and LA.ProfessionProgression and decision.facts)
         and LA:ProfessionProgression(decision.facts,decision) or {}
@@ -546,7 +551,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         for _,option in ipairs(decision.conversionOptions or {}) do
             if option.letter==decision.action then
                 local model=option.yieldModel
-                if option.available==false then suffix=suffix.." (unavailable)" end
+                if option.available==false and not valuedSimulationPreview(option) then suffix=suffix.." (unavailable)" end
                 if model and model.provisional and not professionSimulation(model) and not model.reviewedPublishedPriorOnly
                     and not (model.personalReference and model.personalReference.personalSourceProfileMatched) then suffix=suffix.." (estimate)" end
                 if model and (model.partial or model.partialPrice) then suffix=suffix.." (partial)" end
@@ -706,7 +711,13 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             if type(list)=='table' then
                 local visible={}
                 for _,material in ipairs(list) do
-                    if not (material.additionalOutput and material.expectedQuantity==0) then visible[#visible+1]=material end
+                    -- A zero modeled unlock has no output at this allocation,
+                    -- including DE endpoint identities without an extra tag.
+                    -- Preserve explicit ordinary source zeroes and unknowns.
+                    if not (material.expectedQuantity==0 and
+                        (material.additionalOutput or model.disenchantBaselineApplied)) then
+                        visible[#visible+1]=material
+                    end
                 end
                 list=visible
             end
@@ -897,7 +908,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         and not (model.personalReference and model.personalReference.personalSourceProfileMatched) then
                         status[#status+1]="estimate"
                     end
-                    if option.available==false then
+                    if option.available==false and not valuedSimulationPreview(option) then
                         status[#status+1]="unavailable"
                     end
                     if #status>0 then

@@ -10,11 +10,12 @@ for _,name in ipairs({'ItemDBRuntime.lua','Professions.lua','ProfessionModels.lu
     'CraftRecording.lua','Observations.lua','Database.lua','ConversionEngine.lua','Badges.lua'})do
     assert(loadfile('LootLiquidator/'..name))('LootLiquidator',LL)
 end
+local activeBuffs={}
 local function context()
     return {character='Fixture-Character',profession='Enchanting',recipeID=13262,method='Disenchant',
         expansionID=11,baseSkill=64,bonusSkill=40,skill=104,preSpecializationSkill=104,effectiveSkill=104,
         maxSkill=100,specialization='none',specializationKnown=true,specializationPoints={},
-        learnedSpecializations={},buffs={},buffsKnown=true,stats={},profileKind='measured',simulated=false,
+        learnedSpecializations={},buffs=activeBuffs,buffsKnown=true,stats={},profileKind='measured',simulated=false,
         fieldStatus={effectiveSkill='measured',specialization='measured'}}
 end
 LL.CharacterKey=function()return 'Fixture-Character'end
@@ -73,6 +74,36 @@ for _,mode in ipairs({2,1})do
     assert(text:find('90%',1,true) and text:find('10%',1,true),'actual source probabilities reach the rendered material rows')
 end
 end
+-- Actual Guardian combat/form IDs must not hide the matching 200-observation
+-- source. These are synthetic target contexts, not new game observations.
+for _,simulated in ipairs({false,true}) do
+    LL.ProcessingPlayerConditions=function()
+        local target=context()
+        target.simulated=simulated;target.profileKind=simulated and 'manual-simulation' or 'live'
+        return target
+    end
+    for _,id in ipairs({1126,5487,22812,22842,61336,192081,1251877,1261872,1271910}) do
+        activeBuffs={[tostring(id)]=true}
+        for _,mode in ipairs({1,2}) do
+            LL.db.disenchantDataMode=mode;LL._processingModelCache=nil
+            local quote=assert(LL:EvaluateDisenchant({id=244752,classID=4,quality=3,expansionID=11,itemLevel=266,count=1}))
+            assert(quote.yieldModel.personalReference and quote.yieldModel.personalStats.total==200,
+                'reviewed aura '..id..' must preserve the matching personal source in live/manual quote')
+            local means,chances={},{}
+            for _,m in ipairs(quote.yieldModel.materials)do means[m.id]=m.expectedQuantity;chances[m.id]=m.chance end
+            assert(math.abs(means[243602]-.9)<1e-10 and math.abs(means[243603]-.1)<1e-10,
+                'combat auras cannot replace the measured90/10 distribution with a category model')
+            assert(chances[243602]==.9 and chances[243603]==.1,
+                'the actual aura-bearing quote keeps its measured90/10 occurrence probabilities')
+        end
+    end
+    activeBuffs={['5487']=true,['12345']=true}
+    LL.db.disenchantDataMode=2;LL._processingModelCache=nil
+    local quote=LL:EvaluateDisenchant({id=244752,classID=4,quality=3,expansionID=11,itemLevel=266,count=1})
+    assert(not quote or not quote.yieldModel or not quote.yieldModel.personalReference,
+        'unknown aura beside Bear Form must not borrow the unchanged personal profile')
+end
+activeBuffs={}
 -- A selected valuation context need not have recorder-only fieldStatus. Current-
 -- build captures with different skill/talents must reach the projection policy,
 -- rather than crash or borrow the unchanged measured cohort as an exact match.

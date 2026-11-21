@@ -433,10 +433,117 @@ function LL:CreateProfessionProfilePanel(profession)
         end)
         w:SetScript('OnLeave',function()if GameTooltip then GameTooltip:Hide() end end)
     end
-    local function profile() return LL:GetManualProfessionProfile(current,profession,expansion) or {} end
+    local displayedProfile={}
+    local scannedDisplay=false
+    local function clone(value)
+        if type(value)~='table' then return value end
+        local out={} for key,entry in pairs(value) do out[key]=clone(entry) end return out
+    end
+    local function known(value) return type(value)=='number' and value==value and value>=0 and value<math.huge end
+    local function readDisplayProfile()
+        scannedDisplay=selection~='@hypothetical'
+        if not scannedDisplay then return LL:GetManualProfessionProfile(current,profession,expansion) or {} end
+        local record=LL.db.characters and LL.db.characters[selected]
+        local saved=record and record.researchProfiles and record.researchProfiles[profession..':'..expansion]
+        local result={}
+        if saved and known(saved.skill) and known(saved.bonusSkill) then
+            result.skill=saved.skill+saved.bonusSkill
+        end
+        if not saved then
+            for _,detail in pairs(record and record.details or {}) do
+                if detail.parentName==profession and LL:ProfessionDetailMatchesExpansion(detail,expansion)
+                    and known(detail.skill) and known(detail.skillModifier) then
+                    result.skill=detail.skill+detail.skillModifier;break
+                end
+            end
+        end
+        local prefix=profession=='Enchanting' and 'disenchant' or ''
+        local points,learned
+        if saved then
+            if prefix=='disenchant' then points,learned=saved.disenchantSpecializationPoints,saved.disenchantLearnedSpecializations
+            else points,learned=saved.specializationPoints,saved.learnedSpecializations end
+        end
+        local verified=saved and saved.specializationVerified==true
+            and saved.specializationSignatureEncoding=='trait-node-current-rank'
+            and (prefix=='disenchant' and saved.disenchantSpecializationKnown==true
+                and saved.disenchantSpecializationEncoding=='invested-points'
+                or prefix=='' and saved.specializationKnown==true and saved.specializationEncoding=='invested-points')
+        if verified and type(points)=='table' and type(learned)=='table' then
+            local parts,valid={},true
+            for id,rank in pairs(points) do
+                local node=tonumber(id)
+                if not known(node) or node==0 or node%1~=0 or not known(rank) or rank%1~=0
+                    or rank>0 and learned[tostring(id)]~=true then valid=false;break end
+                parts[#parts+1]=tostring(id)..'='..rank
+            end
+            if valid then
+                table.sort(parts);result.specialization=#parts>0 and table.concat(parts,',') or 'none'
+                result.learnedSpecializations=clone(learned)
+            end
+        end
+        if saved and saved.buffsKnown==true then
+            result.buffs=clone(saved.buffs or {});result.buffStacks=clone(saved.buffStacks or {})
+        end
+        local operation=saved and record.professionOperationProfiles and record.professionOperationProfiles[tostring(saved.lineID)]
+        local snapshotStats=saved and saved.stats
+        result.stats=clone(snapshotStats or operation and operation.statCalibration)
+        if result.stats then
+            local reference={specializationPoints=LL:ProfessionSpecializationPoints(result.specialization or 'none'),
+                learnedSpecializations=clone(result.learnedSpecializations),buffs=clone(result.buffs),
+                buffsKnown=saved and saved.buffsKnown==true,
+                policy='TARGET_SCOPED_TRANSFER_PRIOR',confidence=0,
+                assumption='Native total stats transferred to an unidentified source scope; only target-scoped allocation deltas are modeled'}
+            for _,key in ipairs({'buffStacks','activeBuffs','events','contextFlags','effectStates'}) do
+                reference[key]=clone(saved and saved[key])
+            end
+            local receipt=not snapshotStats and operation and operation.statGrantReference
+            local build=GetBuildInfo and select(2,GetBuildInfo())
+            local paired=type(receipt)=='table' and receipt.capturedWithOperation==true
+                and build~=nil and receipt.build~=nil and operation.operationBuild~=nil
+                and receipt.recipeID==operation.recipeID and tostring(receipt.build)==tostring(operation.operationBuild)
+                and tostring(receipt.build)==tostring(build) and tostring(receipt.skillLineID)==tostring(saved.lineID)
+                and receipt.profession==profession and type(receipt.specializationPoints)=='table'
+                and type(receipt.learnedSpecializations)=='table'
+            if paired then
+                for _,key in ipairs({'specializationPoints','learnedSpecializations','buffs','buffStacks','buffsKnown',
+                    'activeBuffs','events','contextFlags','effectStates','capturedWithOperation','recipeID','build','skillLineID','profession'}) do
+                    reference[key]=clone(receipt[key])
+                end
+            end
+            local zero=paired or snapshotStats~=nil and result.specialization~=nil
+            for _,rank in pairs(reference.specializationPoints or {}) do if rank~=0 then zero=false end end
+            for _,learned in pairs(reference.learnedSpecializations or {}) do if learned then zero=false end end
+            if zero then
+                reference.policy='ZERO_SOURCE';reference.confidence=nil;reference.assumption=nil
+            elseif paired and operation and known(operation.recipeID) then
+                local method=operation.method
+                for _,candidate in ipairs(LL.ResearchProcessingRecipeOperations and LL:ResearchProcessingRecipeOperations(operation.recipeID) or {}) do
+                    if method and method~=candidate.method then method=false;break end
+                    method=candidate.method
+                end
+                if method==nil and not operation.isSalvageRecipe then method='Craft' end
+                if type(method)=='string' then
+                    reference.option={name=method,recipeID=operation.recipeID,labels=clone(operation.recipeLabels)}
+                    reference.facts=clone(operation.inputFacts or {})
+                    reference.facts.expansionID=expansion
+                    for _,pair in ipairs({{'inputItemID','id'},{'inputQualityRank','reagentQuality'},
+                        {'inputRarity','quality'},{'inputClassID','classID'}}) do
+                        if operation[pair[1]]~=nil then reference.facts[pair[2]]=operation[pair[1]] end
+                    end
+                    if LL.ProfessionStatGrants then
+                        local _,_,unknown=LL:ProfessionStatGrants(profession,expansion,reference,reference.option,reference.facts)
+                        if not unknown then reference.policy='SOURCE_OPERATION';reference.confidence=nil;reference.assumption=nil end
+                    end
+                end
+            end
+            result.statGrantReference=reference
+        end
+        return result
+    end
+    local function profile() return displayedProfile end
     local function minimum()
         LL:SetManualProfessionProfile(current,profession,expansion,
-            {enabled=true,skill=0,specialization='none',buffs={}})
+            {enabled=true,skill=0,specialization='none',buffs={},statAnchors={}})
     end
     local function useSimulation()
         selection='@hypothetical';selected=current
@@ -445,10 +552,20 @@ function LL:CreateProfessionProfilePanel(profession)
     end
     local function update(change)
         if refreshing then return end
+        -- Fork the values currently shown, before selecting the simulation.
+        -- Browsing a real character never writes either saved profile.
+        local p=clone(profile())
+        if scannedDisplay then
+            -- The copied percentages already include this allocation's native
+            -- grants. Pin both their rating anchors and source allocation once.
+            p.statAnchors={}
+            for key,stat in pairs(p.stats or {}) do
+                if known(stat.rating) and known(stat.percent) then p.statAnchors[key]=clone(stat) end
+            end
+        end
         useSimulation()
-        local p={} for k,v in pairs(profile()) do p[k]=v end
         p.enabled=true;p.skill=p.skill or 0;p.specialization=p.specialization or 'none'
-        p.buffs={} for k,v in pairs(profile().buffs or {}) do p.buffs[k]=v end
+        p.buffs=p.buffs or {}
         change(p)
         local points={} for id,n in (p.specialization or ''):gmatch('(%d+)=(%d+)') do points[id]=tonumber(n) end
         local adjusted=false
@@ -622,6 +739,7 @@ function LL:CreateProfessionProfilePanel(profession)
     refresh=function(reload)
         refreshing=true
         if reload then options=LL:GetProfessionUIOptions(selected,profession,expansion) end
+        displayedProfile=readDisplayProfile()
         controlSupport=LL.GetProfessionSimulationControlSupport
             and LL:GetProfessionSimulationControlSupport(profession,expansion,options.nodes)
             or {nodes={},stats={},buffs={}}
@@ -737,8 +855,12 @@ function LL:CreateProfessionProfilePanel(profession)
                 or 'Uses scanned character data. Advanced shows researched modifiers; editing switches to Simulated.')
             if advancedOpen then
             if controlSupport.skill then
-                skill:SetPreferenceValue(profile().skill or 0)
-                place(skillLabel,y+6);place(skill,y,270);y=y+44
+                skillLabel:SetText('Skill before specialization'..(scannedDisplay and not known(profile().skill) and ' — not captured' or ''))
+                place(skillLabel,y+6)
+                if not scannedDisplay or known(profile().skill) then
+                    skill:SetPreferenceValue(profile().skill or 0);place(skill,y,270)
+                end
+                y=y+44
             end
             local supportedNodes,displayNodes,byID={},{},{}
             for _,n in ipairs(options.nodes) do
@@ -786,7 +908,7 @@ function LL:CreateProfessionProfilePanel(profession)
                     nodeRows[key]={label=label(n.name,220)}
                 end
                 local row=nodeRows[key]
-                if supportedNodes[n.id] then
+                if supportedNodes[n.id] and (not scannedDisplay or profile().specialization~=nil) then
                     if not row.slider then
                         local id=n.id
                         row.slider=LL:CreateSettingsCanvasSlider(body,0,n.maxRank,1,0,function(v)setRank(id,v)end)
@@ -854,7 +976,7 @@ function LL:CreateProfessionProfilePanel(profession)
                         place(row.learned,y,270);place(row.learnedLabel,y+3,302);y=y+30
                     end
                 else
-                    row.label:SetText(n.name)
+                    row.label:SetText(n.name..(supportedNodes[n.id] and ' — points not captured' or ''))
                     place(row.label,y+5,28+math.min(depth,4)*12);y=y+32
                 end
                 local children={}
@@ -903,12 +1025,16 @@ function LL:CreateProfessionProfilePanel(profession)
                     end
                     local v=profile().stats and profile().stats[stat.key] or {}
                     if fields.rating then
-                        row.rating:SetPreferenceValue(v.rating or 0)
-                        place(row.label,y+5);place(row.rating,y,270);y=y+44
+                        row.label:SetText(stat.name..' rating'..(scannedDisplay and not known(v.rating) and ' — not captured' or ''))
+                        place(row.label,y+5)
+                        if not scannedDisplay or known(v.rating) then row.rating:SetPreferenceValue(v.rating or 0);place(row.rating,y,270) end
+                        y=y+44
                     end
                     if fields.percent then
-                        row.percent:SetPreferenceValue(v.percent or 0)
-                        place(row.percentLabel,y+5);place(row.percent,y,270);y=y+44
+                        row.percentLabel:SetText(stat.name..(chance and ' chance (%)' or ' bonus (%)')..(scannedDisplay and not known(v.percent) and ' — not captured' or ''))
+                        place(row.percentLabel,y+5)
+                        if not scannedDisplay or known(v.percent) then row.percent:SetPreferenceValue(v.percent or 0);place(row.percent,y,270) end
+                        y=y+44
                     end
                 end
             end
@@ -918,11 +1044,16 @@ function LL:CreateProfessionProfilePanel(profession)
                     if not buffRows[b.id] then
                         local id=b.id
                         local check=LL:CreateSettingsCheckbox(body)
-                        check:SetScript('OnClick',function(self)update(function(p)p.buffs[tostring(id)]=self:GetChecked() and true or nil end)end)
+                        check:SetScript('OnClick',function(self)update(function(p)
+                            p.buffs[tostring(id)]=self:GetChecked() and true or nil
+                            if not self:GetChecked() and p.buffStacks then p.buffStacks[tostring(id)]=nil end
+                        end)end)
                         buffRows[b.id]={check=check,label=label(b.name,535)}
                     end
                     local row=buffRows[b.id]
+                    row.label:SetText(b.name..(scannedDisplay and profile().buffs==nil and ' — not captured' or ''))
                     row.check:SetChecked(profile().buffs and profile().buffs[tostring(b.id)]==true or false)
+                    row.check:SetEnabled(not scannedDisplay or profile().buffs~=nil)
                     place(row.check,y,28);place(row.label,y+3,64);y=y+34
                 end
             end

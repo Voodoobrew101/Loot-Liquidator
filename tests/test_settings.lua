@@ -515,6 +515,7 @@ do
     LL.GetProfessionSimulationControlSupport=function()
         return {skill=false,nodes={['82']=true},stats={},buffs={},dependencyNodes={}}
     end
+    LL.db.professionTooltipProfiles.Inscription='@hypothetical'
     local first=#all
     local editor=LL:CreateProfessionProfilePanel('Inscription')
     editor.scripts.OnShow(editor)
@@ -576,10 +577,182 @@ do
             if w.parent.parent.point and w.parent.parent.point[5]==label.point[5]+5 then return w end
         end
     end
+    do
+        local previousScans=char.researchProfiles
+        char.researchProfiles={['Enchanting:11']={skill=31,bonusSkill=9}}
+        local snapshot={skill=64,bonusSkill=40,specialization='raw-current-rank-signature',
+            specializationVerified=true,specializationSignatureEncoding='trait-node-current-rank',
+            disenchantSpecializationKnown=true,disenchantSpecializationEncoding='invested-points',
+            disenchantSpecializationPoints={['107649']=10,['107647']=8,['107648']=3,['107646']=0},
+            disenchantLearnedSpecializations={['107649']=true,['107647']=true,['107648']=true},
+            buffsKnown=true,buffs={['123']=true},stats={craftingSpeed={rating=61,percent=12.2}}}
+        LL.db.characters['Scanned - Other Realm']={researchProfiles={['Enchanting:11']=snapshot}}
+        assert(LL:SetManualProfessionProfile('Tester - Realm','Enchanting',11,
+            {enabled=true,skill=0,specialization='none',buffs={}}))
+        local oldManual=LL:GetManualProfessionProfile('Tester - Realm','Enchanting',11)
+        LL.db.professionTooltipProfiles.Enchanting='Scanned - Other Realm'
+        local first=#all
+        local livePanel=LL:CreateProfessionProfilePanel('Enchanting')
+        livePanel.scripts.OnShow(livePanel)
+        local toggle,selector
+        for i=first+1,#all do
+            if all[i].kind=='Button' and all[i].text=='Advanced' then toggle=all[i] end
+            if all[i].template=='SettingsDropdownControlTemplate' and not selector then selector=all[i] end
+        end
+        toggle.scripts.OnClick(toggle)
+        local liveSkill=slidersAfter(first)[1]
+        assert(liveSkill.value==104,'selected live skill includes its scanned 64 + 40 once, without reading manual zero or the current character')
+        local delegateLabel=assert(labelsAfter(first,'Disenchanting Delegate (')[1])
+        local delegate=assert(sliderAt(delegateLabel,first))
+        assert(delegate.value==10 and sliderAt(assert(labelsAfter(first,'Shard Supplier (')[1]),first).value==8,
+            'live controls display verified invested points, not the raw signature or saved simulated allocation')
+        assert(LL:GetManualProfessionProfile('Tester - Realm','Enchanting',11)==oldManual and oldManual.skill==0,
+            'opening live Advanced never rewrites the saved simulation')
+        delegate:SetValue(11)
+        local fork=LL:GetManualProfessionProfile('Tester - Realm','Enchanting',11)
+        assert(selector.initializer.setting:GetValue()==-1 and fork.skill==104
+            and fork.specialization:find('107649=11',1,true) and fork.specialization:find('107647=8',1,true)
+            and fork.stats.craftingSpeed.rating==61 and fork.stats.craftingSpeed.percent==12.2
+            and fork.buffs['123'] and fork.learnedSpecializations['107647'],
+            'editing forks the displayed scanned skill, other points, learned state, stats and buffs into Simulated')
+        assert(fork.statAnchors.craftingSpeed.rating==61 and fork.statAnchors.craftingSpeed.percent==12.2,
+            'the first live fork replaces stale zero simulation anchors with the measured stat pair')
+        assert(fork.statGrantReference.policy=='TARGET_SCOPED_TRANSFER_PRIOR' and fork.statGrantReference.confidence==0,
+            'an unpaired source scope is explicitly modeled, never presented as a measured inverse')
+        local function speedParameters(saved,live)
+            local ctx={skill=104,preSpecializationSkill=104,effectiveSkill=104,
+                stats=saved.stats,statAnchors=saved.statAnchors,statGrantReference=saved.statGrantReference,
+                specializationPoints=live and snapshot.disenchantSpecializationPoints or LL:ProfessionSpecializationPoints(saved.specialization),
+                learnedSpecializations=live and snapshot.disenchantLearnedSpecializations or saved.learnedSpecializations,
+                buffs=saved.buffs,operationStatsIncludeSpecialization=live,skillFromAllocation=false,simulated=not live,duration=10}
+            return LL:ProfessionProfileParameters('Enchanting',11,ctx,{name='Disenchant',recipeID=13262},
+                {id=264527,classID=4,quality=3,expansionID=11})
+        end
+        local sourceParameters=speedParameters(snapshot,true)
+        local forkParameters=speedParameters(fork,false)
+        assert(math.abs(sourceParameters.stats.craftingSpeed-12.2)<1e-10
+            and math.abs(forkParameters.stats.craftingSpeed-sourceParameters.stats.craftingSpeed)<1e-10
+            and math.abs(forkParameters.speedFactor-sourceParameters.speedFactor)<1e-10,
+            'an unrelated point edit retains the measured speed and downstream duration factor, not 18.3%')
+        delegate:SetValue(12);fork=LL:GetManualProfessionProfile('Tester - Realm','Enchanting',11)
+        assert(fork.statGrantReference.specializationPoints['107649']==10
+            and fork.statAnchors.craftingSpeed.rating==61 and fork.statAnchors.craftingSpeed.percent==12.2,
+            'later manual edits preserve the original measured allocation and anchors without rebasing')
+        assert(snapshot.skill==64 and snapshot.bonusSkill==40 and snapshot.disenchantSpecializationPoints['107649']==10
+            and snapshot.specialization=='raw-current-rank-signature',
+            'editing never mutates the selected character snapshot or adds gear skill to it')
+        snapshot.disenchantSpecializationKnown=false
+        for index,key in ipairs(livePanel.characterKeys) do
+            if key=='Scanned - Other Realm' then selector.initializer.setting:SetValue(index);break end
+        end
+        assert(slidersAfter(first)[1].value==104 and not shown(delegate)
+            and #labelsAfter(first,'Disenchanting Delegate — points not captured')==1,
+            'an unverified live allocation is unknown, never the saved simulation or invented zero points')
+        snapshot.bonusSkill=nil
+        livePanel.scripts.OnShow(livePanel)
+        assert(#labelsAfter(first,'Skill before specialization — not captured')==1
+            and not shown(liveSkill),'missing equipment skill does not display an invented zero total')
+        assert(LL:GetManualProfessionProfile('Tester - Realm','Enchanting',11)==fork and fork.skill==104,
+            'returning to live/unknown views leaves the saved simulation intact')
+        LL.db.characters['Scanned - Other Realm']=nil;char.researchProfiles=previousScans
+    end
+    do
+        -- A native Alchemy operation includes 120 Multicraft rating from this
+        -- actual compiled node. Copying its total must not grant that twice.
+        assert(loadfile('LootLiquidator/ConversionEngine.lua'))('LL',LL)
+        local name='Tester - Realm'
+        local previous=LL:GetManualProfessionProfile(name,'Alchemy',11)
+        assert(LL:SetManualProfessionProfile(name,'Alchemy',11,{enabled=true,skill=0,specialization='none'}))
+        local measured={multicraft={rating=360,percent=18}}
+        local reference={specializationPoints={['107101']=20},learnedSpecializations={['107101']=true},buffs={},
+            policy='SOURCE_OPERATION',option={name='Craft',recipeID=1230867,inputCount=5},
+            facts={id=999999,classID=7,quality=2,expansionID=11}}
+        assert(LL:SetManualProfessionProfile(name,'Alchemy',11,{enabled=true,skill=100,specialization='107101=20',
+            learnedSpecializations=reference.learnedSpecializations,stats=measured,statAnchors=measured,
+            statGrantReference=reference,buffs={}}))
+        reference.specializationPoints['107101']=0
+        local saved=LL:GetManualProfessionProfile(name,'Alchemy',11)
+        assert(saved.statGrantReference.specializationPoints['107101']==20,'normalization pins an independent source allocation')
+        local f={id=999999,classID=7,quality=2,expansionID=11}
+        local option={name='Craft',recipeID=1230867,inputCount=5}
+        local source={profession='Alchemy',skill=100,preSpecializationSkill=100,effectiveSkill=100,
+            stats=measured,specializationPoints={['107101']=20},learnedSpecializations={['107101']=true},
+            operationStatsIncludeSpecialization=true,skillFromAllocation=false}
+        local native=LL:ProfessionProfileParameters('Alchemy',11,source,option,f)
+        local oldMode,oldCharacter=LL.db.rateProfile,LL.db.rateProfileCharacter
+        LL.db.rateProfile=3;LL.db.rateProfileCharacter=name
+        local function evaluated()
+            LL._processingContextCache=nil
+            local target=LL:ProcessingPlayerConditions(f,'Craft',1230867,name,'Alchemy')
+            return LL:ProfessionProfileParameters('Alchemy',11,target,option,f),target
+        end
+        local fork,context=evaluated()
+        assert(math.abs(native.stats.multicraft-.18)<1e-10 and math.abs(fork.stats.multicraft-.18)<1e-10
+            and math.abs(fork.outputFactor-native.outputFactor)<1e-10,
+            'full manual context preserves native Multicraft and downstream output factor after the fork')
+        saved.specialization='107101=19'
+        local changed=evaluated()
+        assert(math.abs(changed.stats.multicraft-.1785)<1e-10 and changed.outputFactor<fork.outputFactor,
+            'removing one native point applies its three-rating delta, without disabling future talent changes')
+        assert(saved.statAnchors.multicraft.rating==360 and saved.statAnchors.multicraft.percent==18
+            and saved.statGrantReference.specializationPoints['107101']==20 and measured.multicraft.rating==360,
+            'manual edits never rebase the source anchors/allocation or rewrite the native source')
+        context.statGrantReference=nil;context.specializationPoints={['107101']=20}
+        local ordinary=LL:ProfessionProfileParameters('Alchemy',11,context,option,f)
+        assert(math.abs(ordinary.stats.multicraft-.24)<1e-10,
+            'ordinary manual profiles without a native reference keep their original additive stat semantics')
+        -- Synthetic scoped grants isolate the cross-recipe inverse: the
+        -- measured 360 rating contains source-X 120, while target Y grants 80.
+        local nodes=LL.ItemDB.professionProfiles.profiles['Alchemy:11'].nodes
+        local nodeID=999993
+        local function effect(entry,metric,unit,amount,label)
+            return {entryID=entry,metric=metric,unit=unit,amount=amount,confidence=100,
+                scope={profession='Alchemy',method='Craft',labelIDs={label}}}
+        end
+        local effects={effect(9999931,'multicraft','rating',120,90001),effect(9999932,'multicraft','rating',80,90002),
+            effect(9999933,'resourcefulness','percent',5,90001),effect(9999934,'resourcefulness','percent',3,90002)}
+        nodes[nodeID]={maxRank=1,pointEffects=effects}
+        local scopedStats={multicraft={rating=360,percent=18},resourcefulness={rating=100,percent=10}}
+        local sourceOption={name='Craft',recipeID=1230867,inputCount=5,labels={90001}}
+        local targetOption={name='Craft',recipeID=1230854,inputCount=5,labels={90002}}
+        local scoped={skill=100,preSpecializationSkill=100,simulated=true,stats=scopedStats,statAnchors=scopedStats,
+            specializationPoints={[tostring(nodeID)]=1},learnedSpecializations={[tostring(nodeID)]=true},
+            statGrantReference={policy='SOURCE_OPERATION',specializationPoints={[tostring(nodeID)]=1},
+                learnedSpecializations={[tostring(nodeID)]=true},option=sourceOption,facts=f}}
+        local crossed=LL:ProfessionProfileParameters('Alchemy',11,scoped,targetOption,f)
+        assert(math.abs(crossed.stats.multicraft-.16)<1e-10 and math.abs(crossed.stats.resourcefulness-.08)<1e-10,
+            'known source X to target Y computes 360 - 120 + 80 = 320 rating and subtracts source percentage grants')
+        effects[1].scope.inputItemIDs={555555}
+        scoped.statGrantReference.facts={classID=7,quality=2,expansionID=11}
+        local transferred=LL:ProfessionProfileParameters('Alchemy',11,scoped,targetOption,f)
+        assert(transferred.confidence==0 and transferred.statReferenceAssumption=='TARGET_SCOPED_TRANSFER_PRIOR'
+            and math.abs(transferred.stats.multicraft-.18)<1e-10,
+            'missing source input scope becomes an explicit confidence-zero transfer prior, preserving allocation identity')
+        scoped.specializationPoints[tostring(nodeID)]=0;scoped.learnedSpecializations={}
+        local transferredChange=LL:ProfessionProfileParameters('Alchemy',11,scoped,targetOption,f)
+        assert(transferredChange.confidence==0 and math.abs(transferredChange.stats.multicraft-.14)<1e-10,
+            'the declared unknown-source transfer prior still applies only changed target-scoped grants')
+        local unrelated=LL:ProfessionProfileParameters('Alchemy',11,scoped,{name='Disenchant',recipeID=13262},f)
+        assert(unrelated.confidence>0 and not unrelated.statReferenceUncertaintyApplied,
+            'unknown Resourcefulness and Multicraft scope cannot cap an independent disenchant output model')
+        nodes[nodeID]=nil
+        assert(LL:SetManualProfessionProfile(name,'Alchemy',11,{enabled=true,skill=0,specialization='none',
+            stats={craftingSpeed={rating=61,percent=12.2}},statAnchors={craftingSpeed={rating=61,percent=12.2}}}))
+        local partial=LL:GetManualProfessionProfile(name,'Alchemy',11)
+        assert(partial.statAnchors.craftingSpeed.rating==61 and partial.statAnchors.multicraft.rating==0
+            and partial.statAnchors.multicraft.percent==0,
+            'an explicit partial first-fork anchor map replaces all old manual anchors, including uncaptured stat keys')
+        assert(LL:SetManualProfessionProfile(name,'Alchemy',11,{enabled=true,skill=0,specialization='none',statAnchors={}}))
+        local reset=LL:GetManualProfessionProfile(name,'Alchemy',11)
+        assert(reset.statAnchors.craftingSpeed.rating==0 and reset.statAnchors.craftingSpeed.percent==0,
+            'an explicit empty reset anchor map cannot inherit previous simulation or scanned calibration values')
+        LL.db.rateProfile=oldMode;LL.db.rateProfileCharacter=oldCharacter;LL._processingContextCache=nil
+        LL.db.manualProfessionProfiles[name]['Alchemy:11']=previous
+    end
     assert(LL:SetManualProfessionProfile('Tester - Realm','Enchanting',11,{enabled=true,skill=245,
         specialization='107646=12,107648=17,107649=9,107647=8',
         stats={resourcefulness={rating=250,percent=17}},buffs={['123']=true}}))
-    LL.db.professionTooltipProfiles.Enchanting=nil
+    LL.db.professionTooltipProfiles.Enchanting='@hypothetical'
     local before=#all
     local editor=LL:CreateProfessionProfilePanel('Enchanting')
     editor.scripts.OnShow(editor)
@@ -589,7 +762,7 @@ do
         if w.kind=='Button' and w.text=='Advanced' then toggle=w end
         if w.template=='SettingsDropdownControlTemplate' and not selector then selector=w end
     end
-    assert(selector.initializer.setting:GetValue()==-2)
+    assert(selector.initializer.setting:GetValue()==-1)
     toggle.scripts.OnClick(toggle)
     local delegate=assert(labelsAfter(before,'Disenchanting Delegate (')[1])
     local shard=assert(labelsAfter(before,'Shard Supplier')[1])
@@ -630,7 +803,7 @@ do
     GameTooltip=previousTooltip
     assert(#labelsAfter(before,'Resourcefulness rating')>=1 and #labelsAfter(before,'Crafting speed')>=1,
         'generic profession calculations expose the applicable crafting stat controls')
-    assert(LL.db.professionTooltipProfiles.Enchanting==nil,'opening Advanced does not change the tooltip profile')
+    assert(LL.db.professionTooltipProfiles.Enchanting=='@hypothetical','opening Advanced does not change the tooltip profile')
     slider:SetValue(7)
     assert(selector.initializer.setting:GetValue()==-1,'editing a specialization switches to Simulated')
     local saved=LL:GetManualProfessionProfile('Tester - Realm','Enchanting',11)
@@ -639,9 +812,10 @@ do
         and saved.skill==245 and saved.stats.resourcefulness.percent==17 and saved.buffs['123'],
         'editing a supported slider preserves the other points, skill, hidden stats and buffs')
     selector.initializer.setting:SetValue(1)
-    assert(slider.parent.parent.shown,'character view also exposes the specialization editor')
+    assert(not slider.parent.parent.shown,'uncaptured character allocations do not display saved simulated points')
     toggle.scripts.OnClick(toggle)
     assert(not slider.parent.parent.shown,'one Advanced toggle still collapses everything')
+    selector.initializer.setting:SetValue(-1)
     -- Numeric formulas may later augment an already known described effect.
     -- This coefficient is explicitly synthetic; it is never shipped research.
     local added={ruleID='synthetic-ui-only:crystal-output',kind='quantity-multiplier',
@@ -674,6 +848,7 @@ do
         assert(#dropdowns==2+(LL:IsGatheringProfession(profession) and 1 or 0)+(#opportunityTargets>0 and 1 or 0),
             'native gathering and opportunity contexts add relevant target selectors')
         if expansion~=11 then dropdowns[2].initializer.setting:SetValue(expansion) end
+        dropdowns[1].initializer.setting:SetValue(-1)
         assert(advanced);advanced.scripts.OnClick(advanced)
         return first,panel
     end

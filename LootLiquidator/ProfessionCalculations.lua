@@ -412,6 +412,16 @@ local function modelRecipeQuality(self,model,params,option,inverse)
     return model
 end
 
+-- Re-evaluate the copied allocation for this exact recipe/input scope. Raw
+-- grants must be subtracted before percentage conversion and chance clamping.
+function LL:ProfessionStatGrants(profession,expansion,context,option,facts)
+    local source=copy(context or {})
+    source.statGrantReference=nil;source.statGrantsOnly=true
+    source.statReferenceScope=true
+    source.operationStatsIncludeSpecialization=false
+    local result=self:ProfessionProfileParameters(profession,expansion,source,option,facts)
+    return result.ratings,result.percents,result.scopeUnknown
+end
 function LL:ProfessionProfileParameters(profession,expansion,context,option,facts)
     context=context or {};option=option or {};facts=facts or {}
     local data=self.ItemDB and self.ItemDB.professionProfiles or {}
@@ -441,10 +451,43 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
         for rank,id in ipairs(customQuality.inputRankItemIDs) do if id==facts.id then params.inputQuality=rank end end
     end
     local ratings,percents={},{}
+    local statScopeUnknown=false
     local pendingOutputs={}
     for _,key in ipairs(statKeys) do ratings[key]=0;percents[key]=0 end
     local function apply(effect,multiplier)
         if effect.dedicatedHandler then return end
+        if context.statReferenceScope and ratings[effect.metric]~=nil then
+            local s=effect.scope or {}
+            local probe,probeContext=copy(facts),copy(context)
+            local missing=false
+            local alternate=contains(s.alternateRecipeIDs,option.recipeID) and option.name==s.alternateMethod
+            for _,pair in ipairs({{'inputRarity','quality'},{'inputClassID','classID'}}) do
+                if (pair[1]~='inputRarity' or not alternate) and s[pair[1]]~=nil and facts[pair[2]]==nil then
+                    probe[pair[2]]=s[pair[1]];missing=true
+                end
+            end
+            if #(s.inputItemIDs or {})>0 and facts.id==nil then probe.id=s.inputItemIDs[1];missing=true end
+            local c=effect.condition or {}
+            if c.event and context.events==nil then probeContext.events={[c.event]=true};missing=true end
+            if c.requiresActiveBuff and (context.buffsKnown~=true or #(c.spellIDs or {})==0)
+                and not lookup(context.effectStates,effect.entryID) then
+                probeContext.effectStates=copy(context.effectStates or {})
+                probeContext.effectStates[effect.entryID]={active=true,stacks=1};missing=true
+            end
+            for flag,expected in pairs(c.contextFlags or {}) do
+                if type(flag)=='number' then flag=expected;expected=true end
+                if lookup(context.contextFlags,flag)==nil then
+                    probeContext.contextFlags=probeContext.contextFlags or {};probeContext.contextFlags[flag]=expected;missing=true
+                end
+            end
+            for flag,expected in pairs(effect.requiredContextFlags or {}) do
+                if type(flag)=='number' then flag=expected;expected=true end
+                if lookup(context.contextFlags,flag)==nil then
+                    probeContext.contextFlags=probeContext.contextFlags or {};probeContext.contextFlags[flag]=expected;missing=true
+                end
+            end
+            if missing and scopeMatches(effect,profession,expansion,probeContext,option,probe,recipe) then statScopeUnknown=true end
+        end
         if not scopeMatches(effect,profession,expansion,context,option,facts,recipe) then return end
         local metric=effect.metric
         if skillIncludes and metric=='skill' then return end
@@ -498,6 +541,24 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
                     for _,effect in ipairs(milestone.effects or {}) do apply(effect,1) end
                 end
             end
+        end
+    end
+    if context.statGrantsOnly then return {ratings=ratings,percents=percents,scopeUnknown=statScopeUnknown} end
+    if not live and type(context.statGrantReference)=='table' then
+        local reference=context.statGrantReference
+        local sourceRatings,sourcePercents,unknown
+        if reference.policy=='ZERO_SOURCE' then
+            sourceRatings,sourcePercents={},{}
+        elseif reference.policy=='SOURCE_OPERATION' and type(reference.option)=='table' and type(reference.facts)=='table' then
+            sourceRatings,sourcePercents,unknown=self:ProfessionStatGrants(profession,expansion,reference,reference.option,reference.facts)
+        else unknown=true end
+        if unknown then
+            sourceRatings,sourcePercents=self:ProfessionStatGrants(profession,expansion,reference,option,facts)
+            params.statReferenceAssumption='TARGET_SCOPED_TRANSFER_PRIOR'
+        end
+        for _,key in ipairs(statKeys) do
+            ratings[key]=ratings[key]-number(sourceRatings[key])
+            percents[key]=percents[key]-number(sourcePercents[key])
         end
     end
     params.skill=math.max(0,params.skill+params.skillBonus)
@@ -569,6 +630,12 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
             or key=='deftness' and math.max(0,percent/100) or clamp(percent/100,0,1)
         if profile and not contains(profile.statKeys,key) and ratings[key]==0 and percents[key]==0 then params.stats[key]=0 end
     end
+    local function useReferenceStat(key)
+        if params.statReferenceAssumption and (lookup(context.stats,key) or nativeStat(context,key)
+            or ratings[key]~=0 or percents[key]~=0) then
+            params.confidence=0;params.statReferenceUncertaintyApplied=true
+        end
+    end
     local method=option.name
     local gather=methodIsGather(method)
     local opportunity=method=='Loot' or method=='Use'
@@ -581,6 +648,7 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
     local extraFraction=(number(native.MinCraftExtraQtyPct,1)+number(native.MaxCraftExtraQtyPct,250))/200
     if not stochastic and not gather and not opportunity and not customQuality and supportsMC then
         params.outputFactor=1+params.stats.multicraft*extraFraction*(1+number(params.effectTotals.multicraftExtra)/100)
+        if params.outputFactor~=1 then useReferenceStat('multicraft') end
         if params.stats.multicraft>0 then params.confidence=math.min(params.confidence,15) end
         if not explicitNativeStats and recipe.capabilityConfidence then
             params.confidence=math.min(params.confidence,number(recipe.capabilityConfidence.multicraft,100))
@@ -589,11 +657,14 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
     if not de and not gather and not opportunity and option.supportsResourcefulness~=false and recipe.supportsResourcefulness~=false then
         local saved=(number(native.ResourcefulEffectLow,20)+number(native.ResourcefulEffectHigh,40))/200
         params.inputFactor=clamp(1-params.stats.resourcefulness*saved*(1+number(params.effectTotals.resourcefulnessSaved)/100),.01,1)
+        if params.inputFactor~=1 then useReferenceStat('resourcefulness') end
         if params.stats.resourcefulness>0 then params.confidence=math.min(params.confidence,15) end
     end
     if gather then
         params.outputFactor=1+params.stats.finesse*(1+number(params.effectTotals.finesseExtra)/100)
         params.rareDiscoveryFactor=1+params.stats.perception
+        if params.outputFactor~=1 then useReferenceStat('finesse') end
+        if params.rareDiscoveryFactor~=1 then useReferenceStat('perception') end
         if params.stats.finesse>0 or params.stats.perception>0 then params.confidence=math.min(params.confidence,5) end
     end
     params.outputFactor=params.outputFactor*(1+number(params.effectTotals.yieldMultiplier)/100)
@@ -608,10 +679,12 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
     end
     params.baseDuration=params.duration
     params.duration=params.duration/params.speedFactor
+    if params.baseDuration>0 and params.speedFactor~=1 then useReferenceStat(gather and 'deftness' or 'craftingSpeed') end
     params.concentrationCost=params.concentrationCost*math.max(0,1+number(params.effectTotals.concentrationCost)/100)
     local refund=number(context.ingenuityRefundFraction,.5)
     if type(context.ingenuityRefund)=='number' and params.concentrationCost>0 then refund=context.ingenuityRefund/params.concentrationCost end
     params.concentrationRefund=clamp(refund+number(params.effectTotals.concentrationRefund)/100,0,1)*params.stats.ingenuity
+    if params.concentrationCost>0 and params.concentrationRefund~=0 then useReferenceStat('ingenuity') end
     params.expectedConcentrationCost=params.concentrationCost*(1-params.concentrationRefund)
     if customQuality then params.confidence=math.min(params.confidence,customQuality.confidence) end
     return params
@@ -852,7 +925,7 @@ function LL:ApplyGeneralProfessionModel(f,option,model,context)
     projected.projectedContext.effectiveSkill=target.skill
     for _,m in ipairs(projected.materials or {}) do m.appliedProfessionRule='profession-profile-rules/1' end
     projected.sourceProfileAssumed=assumed
-    if model.reviewedPublishedPriorModel or model.reviewedPublishedPrior then
+    if model.reviewedPublishedPriorModel or model.reviewedPublishedPrior or target.statReferenceUncertaintyApplied then
         for _,material in ipairs(projected.materials or {})do
             material.transformConfidence=math.min(number(material.transformConfidence,100),target.confidence)
         end
@@ -867,7 +940,8 @@ function LL:ApplyGeneralProfessionModel(f,option,model,context)
             local original=model.materials and model.materials[i]
             if not original or material.id~=original.id or material.expectedQuantity~=original.expectedQuantity then identical=false;break end
         end
-        if identical and not model.reviewedPublishedPriorModel and not model.reviewedPublishedPrior then
+        if identical and not model.reviewedPublishedPriorModel and not model.reviewedPublishedPrior
+            and not target.statReferenceUncertaintyApplied then
             -- An identity operation introduces no new modeled uncertainty.
             -- Keep confidence in the original evidence, even when its source
             -- profile was unspecified. An explicit published-model cap remains

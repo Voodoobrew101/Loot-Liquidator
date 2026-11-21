@@ -78,7 +78,7 @@ function LL:TooltipConversionOptions(f,options)
                 db.rateProfile=hypothetical and 3 or 2
                 db.rateProfileCharacter=key
                 local proxy=setmetatable({db=db,_processingModelCache={count=0},_processingContextCache={},
-                    _professionOperationCache={}}, {__index=self})
+                    _professionOperationCache={},_tooltipScannedProfile=not hypothetical}, {__index=self})
                 if hypothetical or key~=current then
                     -- Live spellbook access belongs only to the current character.
                     proxy.HasCurrentProfession=function() return false end
@@ -180,7 +180,7 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character,professionHin
         end
     end
     if self.ProfessionRecipeDuration and key==current then self:ProfessionRecipeDuration(ctx,recipeID) end
-    local manual=modeKey and self.ProcessingMethodMode and self:ProcessingMethodMode(modeKey)==4
+    local manual=not self._tooltipScannedProfile and modeKey and self.ProcessingMethodMode and self:ProcessingMethodMode(modeKey)==4
         and self.AltMethodEnabled and self:AltMethodEnabled(key,modeKey)
         and record and record.altMethods and record.altMethods[modeKey]==true
     if not validNumber(ctx.effectiveSkill) and validNumber(skill) then ctx.effectiveSkill=skill end
@@ -251,7 +251,7 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character,professionHin
     if simulated and simulated.enabled then
         ctx.skill=simulated.skill;ctx.effectiveSkill=simulated.skill
         ctx.buffs=simulated.buffs
-        ctx.buffStacks=nil;ctx.buffsKnown=true
+        ctx.buffStacks=simulated.buffStacks;ctx.buffsKnown=true
         ctx.specialization=simulated.specialization
         ctx.learnedSpecializations=nil
         if type(simulated.learnedSpecializations)=='table' then
@@ -263,6 +263,7 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character,professionHin
         for stat,values in pairs(simulated.stats or {}) do ctx.stats[stat]={rating=values.rating,percent=values.percent} end
         ctx.statAnchors={}
         for stat,values in pairs(simulated.statAnchors or {}) do ctx.statAnchors[stat]={rating=values.rating,percent=values.percent} end
+        ctx.statGrantReference=simulated.statGrantReference
         ctx.effectStates={}
         for id,state in pairs(simulated.effectStates or {}) do ctx.effectStates[tostring(id)]={active=state.active,stacks=state.stacks} end
         ctx.baseSkill=nil;ctx.bonusSkill=nil
