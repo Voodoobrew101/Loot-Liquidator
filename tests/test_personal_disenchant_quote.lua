@@ -100,8 +100,33 @@ for _,simulated in ipairs({false,true}) do
     activeBuffs={['5487']=true,['12345']=true}
     LL.db.disenchantDataMode=2;LL._processingModelCache=nil
     local quote=LL:EvaluateDisenchant({id=244752,classID=4,quality=3,expansionID=11,itemLevel=266,count=1})
-    assert(not quote or not quote.yieldModel or not quote.yieldModel.personalReference,
-        'unknown aura beside Bear Form must not borrow the unchanged personal profile')
+    assert(quote and quote.yieldModel and quote.yieldModel.personalReference,
+        'unmodeled aura metadata preserves the unchanged material baseline')
+end
+-- Complete persisted aura set from the reported goggles profile. These are
+-- target metadata, not additional casts. Both UI profiles must retain N200.
+for _,simulated in ipairs({false,true}) do
+    activeBuffs={}
+    for _,id in ipairs({359082,455020,404464,1307881,1315101,1291581,1291723,122708,72968,97341,1126,400734}) do
+        activeBuffs[tostring(id)]=true
+    end
+    LL.ProcessingPlayerConditions=function()
+        local target=context();target.buffStacks={['1307881']=1,['400734']=26}
+        target.simulated=simulated;target.profileKind=simulated and 'manual-simulation' or 'live'
+        return target
+    end
+    LL.db.disenchantDataMode=1;LL._processingModelCache=nil
+    local q=assert(LL:EvaluateDisenchant({id=244752,classID=4,quality=3,expansionID=11,itemLevel=168,count=1}))
+    assert(q.confidence==85 and #q.yieldModel.materials==2 and q.yieldModel.personalStats.total==200,
+        'actual persisted aura set retains measured confidence, outcomes and denominator')
+    local expected={[243602]=.9,[243603]=.1}
+    for _,m in ipairs(q.yieldModel.materials) do
+        assert(m.expectedQuantity==expected[m.id] and m.chance==expected[m.id],
+            'actual goggles baseline keeps measured means and chances')
+    end
+    assert(q.yieldModel.context.buffs['122708']
+        and q.yieldModel.context.buffStacks['400734']==26,
+        'ignored matching dimensions are retained in the full target provenance')
 end
 activeBuffs={}
 -- A selected valuation context need not have recorder-only fieldStatus. Current-

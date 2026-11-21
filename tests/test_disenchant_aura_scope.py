@@ -25,11 +25,9 @@ class DisenchantAuraProof(unittest.TestCase):
         require_reviewed_proof(cls.proof)
         cls.auras = {row['spellID']: row for row in cls.proof['auras']}
 
-    def test_runtime_uses_only_reviewed_exact_ids(self):
-        source = (ROOT / 'LootLiquidator/ProfessionModels.lua').read_text(encoding='utf-8')
-        block = re.search(r'local disenchantNonOutputAuras70961=\{(.*?)\n\}', source, re.S).group(1)
-        actual = {int(value) for value in re.findall(r"\['(\d+)'\]=true", block)}
-        self.assertEqual(actual, set(self.proof['reviewedNonOutputAuraIDs']))
+    def test_archived_native_proof_retains_its_reviewed_scope(self):
+        # This is historical native proof, not a runtime aura whitelist.
+        actual = set(self.proof['reviewedNonOutputAuraIDs'])
         self.assertEqual(actual, {1126, 5487, 22812, 22842, 61336, 192081, 1251877, 1261872, 1271910})
         self.assertEqual(self.proof['build'], 70961)
         self.assertEqual(self.proof['clientVersion'], '12.1.5')

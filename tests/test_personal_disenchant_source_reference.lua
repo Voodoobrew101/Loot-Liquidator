@@ -74,14 +74,14 @@ for _,id in ipairs({1126,5487,22812,22842,61336,192081,1251877,1261872,1271910})
         'ignored combat aura does not rewrite the original source context/build')
 end
 manual.buffs={[5487]=true,[12345]=true};manual.buffStacks=nil
-check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')==nil,
-    'an unknown aura remains a constraint beside a reviewed combat aura')
+check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')~=nil,
+    'an unmodeled aura does not replace the measured material baseline')
 manual.buffs={};manual.activeBuffs={['12345']=true}
-check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')==nil,
-    'an empty primary buff map does not hide unknown activeBuffs')
+check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')~=nil,
+    'unmodeled activeBuffs preserve the baseline and remain target metadata')
 manual.activeBuffs=nil;manual.buffs={[5487]=true};currentBuild='70962'
-check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')==nil,
-    'the reviewed aura set is not silently transferred to another native build')
+check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')~=nil,
+    'material-dependency comparison does not expire for unrelated aura metadata at a hotfix')
 currentBuild='70961'
 local originalDB=LL.ItemDB
 local knownEffect={metric='skill',condition={requiresActiveBuff=true,spellIDs={5487}}}
@@ -93,9 +93,18 @@ LL.ItemDB={mechanicRules={{method='Disenchant',profession='Enchanting',expansion
     conditions={buffs={['5487']=true}}}}}
 check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')==nil,
     'an explicit rule buff map also overrides the non-output exclusion')
+LL.ItemDB={professionProfiles={profiles={}}}
+LL.ItemDB.professionProfiles.profiles['Enchanting:11']={nodes={fixture={pointEffects={
+    {metric='resourcefulness',condition={requiresActiveBuff=true,spellIDs={5487}}}}}}}
+check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')~=nil,
+    'a stat that does not affect disenchant materials cannot invalidate their measured baseline')
+LL.ItemDB={mechanicRules={{method='Craft',profession='Enchanting',recipeID=999,
+    conditions={buffs={['5487']=true}}}}}
+check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')~=nil,
+    'another operation cannot add a disenchant material dependency')
 LL.ItemDB=originalDB
 manual.buffs={[12345]=true}
-check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')==nil,'different active buff context does not match')
+check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')~=nil,'unmodeled active buffs do not replace the measured material baseline')
 manual.buffs={};manual.character='Other-Fixture-Character'
 check(LL:ReuseDisenchantSourceProfile(f,{name='Disenchant',recipeID=13262},estimate,manual,'70961')==nil,'other-character access not granted by source captures')
 manual.character='Fixture-Character'
