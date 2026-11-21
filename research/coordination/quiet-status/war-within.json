@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-21T18:21:57.542Z",
-  "status": "research-active; original March 2026 cross-era DE report identity and epoch screened; held as Midnight-item anomaly, no TWW numeric admission",
+  "updated_at": "2026-11-21T19:27:39.252Z",
+  "status": "research-active; raw live Wowhead disenchant Looter HTML independently cross-checked against existing rank-specific cohort evidence (7 inputs), no new independent yield cohorts",
   "task_ids": [
     "T0048",
     "T0009",
@@ -20,7 +20,7 @@
     "T0048 219474 Tracker's Chitin Cuffs: historical firsthand successful disenchant vs current WoWDB cannot-disenchant item metadata, linked output ranks/bonus/build, measured operation count and cast-level material log",
     "T0048/TWW blue gear disenchant into Gleaming Shard 219949/219950/219951 family: source-linked item IDs, per-quality counts, completed casts, item bonus/build, skill/specialization and 0..N outcome distributions"
   ],
-  "source_branch_head_reviewed": "211209dd60028490dec5c49b678662687fa9c618",
+  "source_branch_head_reviewed": "960b67cae6f7cfaff460a9b8d3e22d1b5781edc1",
   "source_policy": "READ current research/v3 README/evidence-format/mechanics/worker/queue before search. Source cutoff catalogue CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources incl six recovered; reuse 12,222 scoped decisions; do not recatalogue Codex backlog. Review/admission merged to main in PR #82 but worker branch remains evidence-only; no release asserted.",
   "study_backlog_triage": [
     {
@@ -346,7 +346,10 @@
     "duplicate": 3
   },
   "newly_verified_fields": [
-    "Independent original 2026-03-19 forum witness Hellequin identifies Blossoming Rootwarden's Focus (item 259349 by independent prior item identity) as disenchanted into an unranked Refulgent Crystal and Khaz Algar Enchanting knowledge item. Comment posted after Blizzard 2026-03-18 correction, but the actual disenchant operation date and output rank/ID are NOT given. This is an anomalous Midnight input, not TWW-gear baseline."
+    "Original item-side Wowhead source HTML on 2026-11-21 independently confirms Boreal Rifle 232446 _totalCount=48 and Storm Dust IDs 219946 27 hits pctstack {1:37.037,2:33.3333,3:29.6296}, 219947 9 hits {1:22.2222,2:44.4444,3:33.3333}, 219948 10 hits {1:20,2:20,3:60}; Gleaming Shard 219949 and 219950 one hit each, 1 unit. These agree with preexisting war-within-20261101-120017..120021, so no second study or fresh estimator counts.",
+    "Original source HTML confirms Lamplighter's Splitter 229150 _totalCount=37 and 219946 3 hits, conditional {1:33.3333,3:66.6667}; existing 7 total units and {0:34,1:1,3:2} are internally consistent; preexisting 219949/219950/219951 counts 22/9/3 are rank-linked in HTML.",
+    "Original source HTML confirms Boreal Greatsword 238249 _totalCount=112, output 219946 64 hits {1:34.375,2:31.25,3:34.375}, 219947 30 hits {1:40,2:26.6667,3:33.3333}, 219948 15 hits {1:20,2:33.3333,3:46.6667}; agrees with existing 120034..036 per-output histograms, not new casts.",
+    "Original raw item-side HTML for 233264,233265,229143,229162 confirms total operations 120/108/65/31 respectively, exact rank material IDs and stack=[1,1] for linked shard/crystal rows. 229162 also independently confirms Storm Dust R1 219946=4 hits with stack=[2,2] (8 units, histogram {0:27,2:4}), a preexisting hit-only row NOT replaced by the 17 single-stack records."
   ],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
@@ -357,18 +360,24 @@
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://us.forums.blizzard.com/en/wow/t/received-khaz-algar-reagent-and-knowledge-when-disenchanting-a-midnight-s1-veteran-equipment/2274188"
+    "https://www.wowhead.com/item=232446",
+    "https://www.wowhead.com/item=229150",
+    "https://www.wowhead.com/item=238249",
+    "https://www.wowhead.com/item=233264",
+    "https://www.wowhead.com/item=233265",
+    "https://www.wowhead.com/item=229143",
+    "https://www.wowhead.com/item=229162"
   ],
-  "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-20T0521-algari-pvp-item-metadata.jsonl",
-  "verified_commit_sha": "211209dd60028490dec5c49b678662687fa9c618",
-  "verification": "Current research/v3 README/evidence-format/mechanics/worker/queue read and 731-source owner cutoff manifest checked. First-person forum original independently read with dated replies March 17-19 2026. Before-write branch head 211209dd60028490dec5c49b678662687fa9c618. New commit/readback to be checked after single atomic branch ref update; no yield record admitted.",
+  "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-01T1621-wowhead-looter-single-stack-replacements.jsonl",
+  "verified_commit_sha": "960b67cae6f7cfaff460a9b8d3e22d1b5781edc1",
+  "verification": "Five required current research/v3 files read; source branch prewrite head 960b67cae6f7cfaff460a9b8d3e22d1b5781edc1; old status blob SHA c3ba1cfa47b87ccaccd3ad4c84b1cfeffcd1eda1. Original seven Wowhead source raw HTML checks completed. Post-write commit SHA and fetched status readback must be confirmed separately, since a Git commit cannot contain its own SHA without changing that SHA.",
   "blockers": [
     "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
     "Cumulative PTR Looter display rows contain repeated material names with linked rank IDs unavailable; no per-row independent study and no safe current-Retail rank-specific mapping.",
     "No independently verified post-2024-10-25 original TWW cast logs with completed operations, output-quality IDs, 0..N histograms, skill/spec/build and resourcefulness basis. Kaychak May-2025 named original XLSX is Patreon-locked; Jan-2026 advertised free workbook not retrieved, and neither is presently verified as an original measured yield study.",
     "2025-06-21 'Prospecting Shattering Cheat Sheet.xlsx' is shown as a Patreon attachment but access is join/login-gated; no original workbook bytes or raw cast rows to audit.",
     "2025-03-31 R1 Ironclaw anecdote has no output ledger and cannot support any drop-rate or totalQuantity field.",
-    "Direct Wowhead raw HTML and Reddit source fetch unavailable on available browsers; targeted Firecrawl scraping was rejected by exhausted app credits (transient). No independently verified original live-page pctstack/bonus/build detail obtained.",
+    "Direct Wowhead item-side raw HTML is now independently retrievable and rank-ID/stack distributions for seven preexisting cohorts were checked on 2026-11-21. STILL unresolved: original addon client builds, individual input bonus/ilvl variants, Looter sample dates, player skill/spec, and whether aggregated source rows reflect truly independent completed casts or post-hotfix eligible Retail source; Reddit source access is intermittent. Do not convert source histogram validation into a new cohort or live-current estimate.",
     "The research drop method enum lacks Shatter; shattering results must not be added as Disenchant. Master/reviewer decision required if original 2024 shatter output-quality shares become admissible.",
     "Cross-file duplicate original cohort: DobberSH one Null Stone 210939 prospect is recorded twice in 2026-11-02T0918 and 20261117T1130 (four material rows each); source studyKey strings differ. Admission deduplication belongs to Master/build reviewer.",
     "Several older queue/status descriptions incorrectly say the gem-rate buff occurred October 16, 2024; official Blizzard running-list section and shared rate-changes.jsonl date it August 29, 2024. Master owns queue text reconciliation; do not misclassify September cohorts as pre-buff.",
@@ -401,42 +410,57 @@
     "2026-11-21 focused scan: 1fisfkn and 1f9qado are owner-catalogued cutoff sources; their old cohorts were not repeated. Wowhead 227659 has only contradictory site-reported Looter data, not a trustworthy original cast ledger.",
     "2026-11-21: Firestorm-servers.com/us/changelog/tww is a private-server TWW bugfix log, not original Retail processing data. Exclude its Specular Rainbowfish→222618 description from empirical material rank/output estimates unless separately verified in Retail.",
     "2026-11-21: TWW forum thread eu/565405 provides only original qualitative shard-quality and profession-skill context (no casts/IDs); do not revisit until author supplies raw log. Reddit 1fpswuz, 1fdqzep, 1fvhzy0 are Codex-cutoff reviewed cohorts, not new worker evidence.",
-    "2026-11-21: Aendri forum 1942112 contributes only the original unranked 1-dust-per-green historical per-item mean; do not reread without raw logs. Reddit 1f117id repeats the existing 1f3qf96 exact 100-green 119/97/55 cohort (not independent); Wowhead 213399 and Reddit 1fdmzwy remain Codex-catalogued."
+    "2026-11-21: Aendri forum 1942112 contributes only the original unranked 1-dust-per-green historical per-item mean; do not reread without raw logs. Reddit 1f117id repeats the existing 1f3qf96 exact 100-green 119/97/55 cohort (not independent); Wowhead 213399 and Reddit 1fdmzwy remain Codex-catalogued.",
+    "2026-11-21: Seven original Wowhead Looter source raw HTML pages 232446,229150,238249,233264,233265,229143,229162 independently match archived Nov1 data; re-scraping unchanged cumulative snapshots cannot create independent evidence. Revisit only if an actual sourced table change or per-character original cast/bonus/build ledger appears."
   ],
-  "next_concrete_step": "Search NEW original TWW input gear/ore/herb processing logs (rather than Midnight-to-TWW anomaly or Codex 731-source corpus). Seek signed cast counts, per-output rank/item IDs, quantities, zero-inclusive 0..N histograms, effective skill/spec and Resourcefulness/refund ledger. For 259349, only independently verify exact pre/post Mar18 event time and restoration screenshot if public; hand patch classification to Master without new runtime changes.",
-  "previous_status_updated_at": "2026-11-21T17:28:19.137Z",
+  "next_concrete_step": "Seek genuinely new independent post-cutoff TWW firsthand prospecting/milling/disenchant craft logs with completed operations, output quality item IDs, per-output 0/1/2+ counts, skill/spec/build and refund ledger. If numeric Looter rows change from the Nov1 snapshots, identify exact cumulative overlap before proposing append-only corrections. Existing seven raw-source matches are verification only; hand source-mode eligibility/bonus issues to Master/Codex owner reviewers.",
+  "previous_status_updated_at": "2026-11-21T18:21:57.542Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "timestamp_utc": "2026-11-21T18:21:57.542Z",
+    "timestamp_utc": "2026-11-21T19:27:39.252Z",
     "focus": [
-      "T0048 TWW disenchant rare/weapon source identity and patch epoch",
-      "T0040 TWW R1/R2 ore prospect and herbs under actual completed-cast denominator"
+      "T0048 original source row integrity, exact IDs and conditional per-hit stacks",
+      "T0040/T0009/T0010 attempted new independent cast-level data (none confirmed)"
     ],
     "checks": [
       {
-        "source": "https://us.forums.blizzard.com/en/wow/t/received-khaz-algar-reagent-and-knowledge-when-disenchanting-a-midnight-s1-veteran-equipment/2274188",
-        "source_date": "2026-03-17/2026-03-19",
-        "classification": "new outside 731-source cutoff; held original Midnight input cross-era anomaly, no eligible TWW yield",
-        "result": "Hellequin explicitly names 259349 and Refulgent Crystal/KP, original operation date/output rank/bonus unknown; NBI independent unidentified wand. March19 post date does not prove failed March18 fix."
+        "source": "https://www.wowhead.com/item=232446",
+        "classification": "original raw HTML independently fetched; existing source cohort, deduped",
+        "result": "48 item-side operations; 5 linked material IDs; three Storm Dust pctstack maps exactly reproduce existing Nov1 52/19/24 dust totals and 0/1/2/3 histograms."
       },
       {
-        "source": "https://www.wowhead.com/ptr/item=237999/battered-matter-destabilizer",
-        "classification": "previously documented existing worker source; skip duplicate",
-        "result": "42 cumulative PTR input-side disenchant count and ranked-material links already appear in previous War Within evidence source records; no new independent cohort."
+        "source": "https://www.wowhead.com/item=229150",
+        "classification": "original raw HTML independently fetched; existing source cohort",
+        "result": "37 item-side operations; 219946 3 hits, conditional {1:33.3333,3:66.6667}; 7 dust units, no new casts."
       },
       {
-        "source": "https://www.wowhead.com/ptr-2/item=238002/wanderers-projectile-accelerator",
-        "classification": "previously documented existing worker source; skip duplicate",
-        "result": "37 source-count PTR table already has worker Nov18 evidence, cumulative snapshot not another cohort."
+        "source": "https://www.wowhead.com/item=238249",
+        "classification": "original raw HTML independently fetched; existing source cohort",
+        "result": "112 item-side operations, 219946/219947/219948 64/30/15 hits and exact original pctstack match preexisting histogram records."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
-        "classification": "previously reviewed held primary source in role status; skip duplicate",
-        "result": "600 R1 Ironclaw/117 prospects lacks linked outputs/Resourcefulness ledger and is already recorded held."
+        "source": "https://www.wowhead.com/item=233264",
+        "classification": "original raw HTML independently fetched; existing source cohort",
+        "result": "120 operations; 219949/219950/219951/219952/219954 52/38/26/1/2 stack1 events; no new independent cohort."
+      },
+      {
+        "source": "https://www.wowhead.com/item=233265",
+        "classification": "original raw HTML independently fetched; existing source cohort",
+        "result": "108 operations; 219949/219950/219951/219954 43/42/18/3 stack1 events; no new independent cohort."
+      },
+      {
+        "source": "https://www.wowhead.com/item=229143",
+        "classification": "original raw HTML independently fetched; existing source cohort",
+        "result": "65 operations; 219949/219950/219951/219952/219954 31/18/9/2/4 stack1 events; no new independent cohort."
+      },
+      {
+        "source": "https://www.wowhead.com/item=229162",
+        "classification": "original raw HTML independently fetched; existing source cohort",
+        "result": "31 operations; 219946=4 hits at 2 units; 219949/219950/219951 16/10/1 single-unit events; preserve distinct old Storm Dust row."
       }
     ]
   },
@@ -640,6 +664,18 @@
       "output_family": "Refulgent Crystal (TWW)",
       "output_rank": null,
       "detail": "Original NBI (March 17) reported Midnight cache wand yielded Refulgent Crystal plus Khaz Algar Enchanting KP; unnamed item, screenshot link in thread not independently assessed. Separate Hellequin (posted March 19) names Blossoming Rootwarden's Focus 259349 and likewise a Refulgent Crystal/KP item but no actual disenchant timestamp. Official March 18 Blizzard fix says this focus should now give Midnight materials; publication after fix does not establish later execution. Do not conflate participants, rank crystals, import as TWW-gear yield, or infer 0..N/probability. Requires original restore screenshot, item bonuses, operation date and hotfix rollout context."
+    },
+    {
+      "source": "https://www.wowhead.com/item=232446",
+      "date": "2026-11-21",
+      "status": "verified-original-raw-html-rank-hit-pctstack-crosscheck-no-new-study",
+      "detail": "Independently fetched full raw item-side page (not merely search-index excerpt). `_totalCount=48`; linked TWW output IDs 219946/219947/219948 with counts 27/9/10 and exact pctstack strings {1:37.037,2:33.3333,3:29.6296}/{1:22.2222,2:44.4444,3:33.3333}/{1:20,2:20,3:60}. Rank-linked shard IDs 219949/219950 have one single-stack hit each. Conditional counts match Nov1 histograms, meaning 232446->219946 10/9/8 and {0:21}, ->219947 2/4/3 and {0:39}, ->219948 2/2/6 and {0:38}. This corroborates the preexisting snapshot, not a new cohort; original client build, item bonus, skill and Looter submission date remain unknown."
+    },
+    {
+      "source": "https://www.wowhead.com/item=229162",
+      "date": "2026-11-21",
+      "status": "verified-original-raw-html-retains-non-replaced-dust-output",
+      "detail": "Original HTML confirms `_totalCount=31` Lamplighter's Sword disenchants, Storm Dust 219946 count=4 stack=[2,2], and Gleaming Shard rank IDs 219949/219950/219951 count=16/10/1 stack=[1,1]. Existing 2026-11-01T1621 replacements cover shards only, so keep earlier 229162->219946 4 hits/8 dust units with {0:27,2:4}. Additional 233264/233265/229143 and 229150/238249 source-page row checks match preexisting reported counts and exact named output IDs. These are prior cumulative cohorts; neither replay them nor infer their operation independence, submission dates or current Retail skill eligibility."
     }
   ]
 }
