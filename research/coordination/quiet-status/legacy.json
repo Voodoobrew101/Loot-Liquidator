@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-21T20:39:47.388Z",
-  "status": "Reviewed all current v3 rules/mechanics, legacy queue and owned status. Independently inspected dated 2016 ProspectMe original capture implementation and ore-ID skill table, identifying historical counter/stack caveats relevant to any newly recovered export. No new independent measured Retail Warmaul 24995, Cobalt 36909 or Fel Iron 23424 cohorts, zeros, operation denominators, per-material hit counts, or build-qualified eligibility. No new evidence JSONL warranted.",
+  "updated_at": "2026-11-21T21:46:32.006Z",
+  "status": "Read current v3 README, evidence schema, mechanics, worker role, legacy queue and owned status on current research branch; searched for post-cutoff/original Retail Warmaul 24995, Cobalt 36909 and Fel Iron 23424 operation logs. No new independently measured Retail cohort or item-specific zero-inclusive disenchants/prospects found. Reviewed a 2021 original TBC Classic video lead, a 2006 pre-2.1 first-person qualitative Fel Iron source, and current 12.1.7 PTR Fel Iron tooltip context; all are held/non-empirical for current Retail numeric admission. No new evidence JSONL warranted.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -16,10 +16,10 @@
     "Legacy TBC armor-vs-weapon group source identity/level build, Runecloth Headband 13866 patch-sensitive dust identity and output-event distributions; avoid already-reviewed 45661 token mapping"
   ],
   "newly_verified_fields_cohorts": [
-    "New Retail source-qualified measured casts/hit counts/zeros/stack histograms/total quantities: none; no evidence file.",
-    "New original source-code context (not empirical): 2016 ProspectMe AddEntry increments TimesProspected by BatchSize; normal prospecting sets MassMultiplier=1, historical mass Felslate/Leystone/YSERALLINE processing sets 4, so mass counts are four nominal equivalents per single capture and must not be relabeled four observed operations without checking cohort semantics.",
-    "2016 ProspectMe GetResults saves each loot item ID as Results[ItemID]=Quantity (not additive within one capture); same-material multiple loot messages/slots could overwrite earlier quantities. Source-specific historical import/reconstruction requires raw event or export confirmation. This does not establish that the old tool produced any target data.",
-    "2016 ProspectMe hardcoded ore gating lookup has Fel Iron 23424=>275, Cobalt 36909=>350; historical addon table only, not measured caster skill or modern Retail skill requirement."
+    "New independent Retail measured casts, hits, zeros, material totals, conditional stack histograms or drop rates: NONE. Do not add an empty evidence JSONL.",
+    "New source-context only, not a Retail observation: Wowhead 12.1.7 PTR Fel Iron Ore 23424 item tooltip displays Requires Outland Jewelcrafting (1); distinct from the 2016 ProspectMe historical 275 ore-skill lookup. Neither is a recorded character skill nor source proof of successful Retail prospecting.",
+    "New source lead, held by client flavor and unreadable results: GuideMMO video dated 2021-03-14 advertises prospecting 1,000 Fel Iron Ore (23424) in TBC Classic and showing final results at ~2:27; this is NOT 200 verified completed Retail operations and the video description supplies no exact output item IDs, totals, hits, zeros, patch or export.",
+    "Independent pre-TBC original commentary dated 2006-10-30 describes five Fel Iron ore per attempt and sometimes receiving no gem, but gives no counted attempts/zero events, exact gems or measurable probability; qualitative, pre-2.1 historical prior only."
   ],
   "source_urls": [
     "https://thewowdb.com/guides/disenchant-roi-trap/",
@@ -80,15 +80,17 @@
     "https://www.curseforge.com/wow/addons/forever-stats/files/9377899",
     "https://repos.curseforge.com/wow/prospect-me/file/f9b6c0305908/ProspectMe.lua",
     "https://repos.curseforge.com/wow/prospect-me/rev/f9b6c0305908",
-    "https://www.curseforge.com/wow/addons/quick-de"
+    "https://www.curseforge.com/wow/addons/quick-de",
+    "https://www.youtube.com/watch?v=1Aqx6cnvj_w",
+    "https://gamesfacebook-usa.blogspot.com/2006/10/bc-journal-30-october-2006.html"
   ],
-  "numeric_summary": "New independent Retail measured cohorts=0; newly verified target casts/hits/zeros/output totals/histograms=0. Primary 2016 recorder implementation records ordinary successful prospect/mill events as multiplier 1 and 2016 Legion mass operations as 4 nominal equivalents, and source table marks Fel Iron Ore 23424=275 and Cobalt Ore 36909=350 historical ore-skill gates; these are code constants, NOT actual player skill, current Retail eligibility, measured yields or live rates.",
+  "numeric_summary": "This run new independent Retail 12.x target measured cohorts=0; newly verified Retail 24995/36909/23424 completed casts, per-output hits, zero operations, total quantities, per-cast conditional histograms=0. A 2021 TBC Classic video headline's 1,000 ores are intended input, not verified completed Retail casts. 2006 anecdote gives no measured N. Current 12.1.7 PTR Fel Iron tooltip states Outland Jewelcrafting (1), which is source-profile/tooltip context only, not observed skill/cast denominator.",
   "evidence_file": "research/v3/evidence/legacy/2026-11-21T1445-retail-prospect-spell-identity.jsonl",
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "66aa116c2d0aabc5f9cfe820cb49c70d3d363605",
+  "verified_parent_sha": "a70cbaea6a29ffe4604d48c2bd31c52aa3d4d875",
   "verified_commit_sha": "0afbd7f7ab0df1649f0503423ca5db30f275b779",
-  "commit_note": "Status-only durable write; preserve existing evidence and other workers. verified_commit_sha remains the last known completed write in file because a commit cannot contain its own SHA. Verify resulting commit and remote file by subsequent API read.",
+  "commit_note": "One status-only GitHub contents-API commit, preserving evidence and other worker files. verified_commit_sha in this JSON points to the prior already verified commit because the commit cannot contain itself. External read-back verifies resulting new SHA.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -166,7 +168,9 @@
     "12 original Warmaul record IDs legacy-20261101-201..212 collide with different Netherweave evidence; original audit requires file-qualified adjudication before data promotion, and compiler histogram support is a separate Master-owned implementation concern.",
     "Gold Forever (Nov 2026) may provide new Retail disenchant original-source logs but no publicly released target 24995 corpus; its loot tracker attributes by base item ID and source code's predicted DE tables are reference/model only, not actual operation denominators or current eligibility.",
     "Existing legacy status had cut gem item IDs 23094/23095/23096 mistaken for direct Fel Iron prospect outputs; this run corrected status listing only using previously audited 12 uncut output IDs. Verify final compiled schema/consumer with Master rather than changing code.",
-    "2016 ProspectMe raw data caveat: normal TimesProspected increments 1 per capture while 2016 mass operations increment 4 nominal equivalents; code also overwrites duplicate same-material results within an event. Do not equate saved counter with original physical 5-ore operations or trust totals without source-version/operation reconciliation. This is not evidence of an existing target corpus."
+    "2016 ProspectMe raw data caveat: normal TimesProspected increments 1 per capture while 2016 mass operations increment 4 nominal equivalents; code also overwrites duplicate same-material results within an event. Do not equate saved counter with original physical 5-ore operations or trust totals without source-version/operation reconciliation. This is not evidence of an existing target corpus.",
+    "GuideMMO's 2021 TBC Classic Fel Iron 1000-ore video is not a Retail 12.x measurement; publicly indexed description does not expose actual item-specific gem totals, completed successful casts, zero outcomes or player profile. Video observation/extraction and cohort uniqueness would be required before any historical-only evidence.",
+    "12.1.7 PTR Fel Iron tooltip Outland Jewelcrafting (1) is not a verified live skill/operation gate and must not be mixed with historical 275-skill lookup."
   ],
   "exhausted_sources": [
     {
@@ -223,34 +227,34 @@
     }
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Only if a NEW ORIGINAL published or newly discovered (post-cutoff) ProspectMe/EzDisenchant/ProspectMate/Forever Stats export appears: obtain its exact addon version and raw per-event source item links, outputs and completed successful operations, and resolve 2016 ProspectMe's mass-equivalent counter and same-material overwrite before any 24995/36909/23424 empirical admission. Continue seeking independently published Retail 12.x source-attributed zero-inclusive operation logs; do not duplicate Codex's closed source catalogue.",
+  "next_concrete_step": "Seek a separately published Retail 12.x original zero-inclusive per-operation export for Warmaul 24995 exact itemLink/bonus and CanDisenchant receipt or completed prospects of Cobalt 36909/Fel Iron 23424 with output IDs, input consumption/refunds, skill/spec/build and real casts. Only if an original complete video dataset is obtainable, inspect GuideMMO end-frame/output tally and mark TBC Classic historical rather than Retail; do not infer operations from the stated 1000 input units. Do not touch Codex's closed 731-source catalogue or old duplicated cohorts.",
   "coordination_cutoff": "Cutoff 0cd0bad8867e7a8d909b4ecae74f6136a3e23d42. Current branch manifest status CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources (713 original + 12 addendum + 6 recovered) and enabled catalogue registry. Codex/direct reviewers own source decisions and implementation; no duplicate assignment.",
   "sources_reviewed_this_run": [
     {
-      "url": "https://repos.curseforge.com/wow/prospect-me/file/f9b6c0305908/ProspectMe.lua",
-      "type": "original-historical-Lua-implementation-2016-11-28",
-      "disposition": "source-methodology-confirmed-no-empirical-cohort",
-      "detail": "Read spell event flow and Set Multiplier lines 33-35/113-149, AddEntry lines 154-179 and GetResults lines 185-210. TimesProspected increments by 1 normal or 4 mass; potential repeated-item quantity overwrite; no published SavedVariables or target samples."
+      "url": "https://www.youtube.com/watch?v=1Aqx6cnvj_w",
+      "type": "original-video-TBC-Classic-2021-03-14",
+      "disposition": "held-historical-client-and-unreadable-on-screen-output-results",
+      "detail": "GuideMMO description announces 1000 Fel Iron Ore and completed-result sequence at 2:27, but automated source exposes no numbered gem outcomes or per-event records. Do not infer 200 successful Retail prospects, gem distribution, zero count, refunds, skill or game build."
     },
     {
-      "url": "https://repos.curseforge.com/wow/prospect-me/rev/f9b6c0305908",
-      "type": "source-control-changeset-historical-ore-skill-reference",
-      "disposition": "dated-2016-reference-only-not-current-Retail",
-      "detail": "Changeset dated Nov 28 2016 includes Ore lookup Fel Iron 23424=275, Cobalt 36909=350. These are programmer table values, not data from actual character skill or operation count."
+      "url": "https://gamesfacebook-usa.blogspot.com/2006/10/bc-journal-30-october-2006.html",
+      "type": "first-person-historical-2006-10-30-pre-TBC-journal",
+      "disposition": "historical-mechanics-prior-only-no-measured-counts",
+      "detail": "Describes Fel Iron batch 5 and possible no-gem result, using qualitative approximate language; N, hits, zeros, named output IDs and build not given. Do not treat estimate as measured rate or apply post-2.1/Retail."
     },
     {
-      "url": "https://www.curseforge.com/wow/addons/quick-de",
-      "type": "Retail-12.1.5-addon-description",
-      "disposition": "not-numerical-source",
-      "detail": "Filter/action addon describes disenchanting selection, not a publicly accessible original Warmaul per-event dataset with source linkage and outputs."
+      "url": "https://www.wowhead.com/ptr/item=23424/fel-iron-ore",
+      "type": "current-12.1.7-PTR-item-tooltip",
+      "disposition": "profile-identity-context-only-not-completed-operation",
+      "detail": "Tooltip explicitly displays Fel Iron Ore 23424 item level 11 Requires Outland Jewelcrafting (1). Does not prove successful retail prospect, player skill, output ranks, refund or drop rates. Separate from historical 275 hardcoded lookup."
     },
     {
-      "url": "https://www.curseforge.com/wow/addons/prospectmate",
-      "type": "Retail-conversion-tracker-already-audited",
-      "disposition": "previously-reviewed-not-new-cohort",
-      "detail": "Shows material tracking but no publicly archived 36909 or 23424 source-qualified zero-inclusive session export in accessible listing."
+      "url": "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
+      "type": "historical-comment-cohort-check",
+      "disposition": "duplicate-known-originals-no-new-record",
+      "detail": "Known Thottbot 100-ore and 565-ore original outputs surfaced unchanged; already recorded, no new cast/hit/zero provenance."
     }
   ],
   "latest_run_source_date": "2026-11-21",
-  "latest_run": "Primary code provenance: ProspectMe 2016 historical spell/loot counter and original output parsing reviewed; source counts are mechanics of software, not a measured target dataset."
+  "latest_run": "Checked new original/public source opportunities after catalogue cutoff: one TBC Classic first-person video output lead and 2006 pre-2.1 zero-possibility anecdote are historical, not current Retail empirical cohorts; 12.1.7 PTR Fel Iron skill-display profile documented. Numeric output fields unchanged."
 }
