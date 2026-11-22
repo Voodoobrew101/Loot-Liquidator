@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-22T02:39:01.585Z",
-  "status": "Reviewed all five required v3 research documents and current legacy queue. Audited the branch's 12.1.7.70493 Retail ItemSparse DB2-derived eligibility source against live WoWDB labels for target Burning Crusade gear. This exposes an important negative-flag coverage discrepancy, not positive proof of Retail disenchant eligibility. Searched additional Warmaul 24995/Fel Iron 23424/Cobalt 36909 source leads and deduplicated a concrete historical Brown Linen Robe 6238 firsthand cohort against existing legacy evidence. No independently new Retail event-level source, actual processing operations, per-output hits, zeros, output totals or conditional histograms qualified. No new JSONL or catalogue changes; only owned status updated.",
+  "updated_at": "2026-11-22T03:41:41.763Z",
+  "status": "Required README, evidence format, mechanics, worker role and current queue reviewed. New by-name Warmaul 24995, Cobalt Ore 36909, Fel Iron Ore 23424, and adjacent TBC disenchant searches across Wowhead, web archives, add-on sources and community results uncovered no independently new Retail completed-operation sample. The first-person Reaver Legplates 24979 -> five Arcane Dust 22445 report is historical, source-date/patch ambiguous, and already within the Codex-owned reviewed catalogue; rejected as a new cohort. Retail addon leads expose recap/locally stored outcomes but no accessible original raw casts, zeros, item-variant/skill/build and refund ledger. Existing no-disenchant eligibility conflict for 24995 remains unresolved. Only owned quiet status updated; no evidence/production/schema/PR changes.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -16,11 +16,11 @@
     "Legacy TBC armor-vs-weapon group source identity/level build, Runecloth Headband 13866 patch-sensitive dust identity and output-event distributions; avoid already-reviewed 45661 token mapping"
   ],
   "newly_verified_fields_cohorts": [
-    "Retail DB2 source build 12.1.7.70493 (176,747 source rows; 21,061 NO_DISENCHANT flag records) lists no NO_DISENCHANT flag for 24995 Warmaul Legplates or nearby 24988/25000/25019; indeed zero IDs in range 24900..25199 are flagged. This is ONLY absence of a flag, NOT verification that any can be disenchanted.",
-    "WoWDB LIVE explicitly labels item 24995 (item level 31) and 25000 (item level 32) 'Cannot be disenchanted'. The discrepancy between WoWDB eligibility display and absence from the compiled DB2 bit-based negative list must be reviewed by Master/implementation with version-specific ItemSparse and live API checks. Historical 24995 (item level 108) material records remain separate.",
-    "The SAME source explicitly lists Cobalt Ore 36909 and Fel Iron Ore 23424 among prospective DB2 processable hints, but that establishes neither real completed prospecting casts nor yield, refunds, skill gates or quality ranks.",
-    "Deduplication: biocyte's 2,086 Brown Linen Robe 6238 disenchants (Strange Dust 10940 total 2,464; Lesser Magic Essence 10938 total 647) were already recorded in legacy/2026-11-02T0835-brown-linen-and-netherweave-de-cohorts.jsonl as a single shared cohort; no duplicate records created.",
-    "Target observed numerical advancements: none. 24995 -> 22445/22446/22447/22449 hits, total material units, zero histograms and actual Retail N remain unknown; 36909 and 23424 prospecting output hit/zero counts and operation denominators remain unknown."
+    "Exact adjacent TBC armor historical first-person observation: Reaver Legplates 24979 -> Arcane Dust 22445 x5 in an Allakhazam comment mirrored on Wowhead TBC. Original date, client flavor, item-link bonus, skill and other full-operation metadata unavailable; NOT a 2026 Retail sample.",
+    "Deduplication checked against current owner catalogue 731-source manifest: sourceKey wowhead:item=24979@tbc, owner disenchant_b_and_leads, scope original-713, 2 assigned scopes, already REVIEWED_VERIFIED_CURRENT_PIPELINE. No new record or second cohort weight.",
+    "Disenchantum 1.3 Retail addon published 2026-10-18 advertises session recap (items disenchanted and reagent chips) but published description has no downloadable unfiltered per-cast/zero/reagent input-output log. Source tool, not measurement.",
+    "ProspectMate v2.0.3 Retail 2026-06-17 advertises per-source-item local conversion tracking and old-recipe opt-in, but says it does not account for profession attributes. Existing tool lead does not establish any actual 24995/36909/23424 original results.",
+    "No newly verified target output IDs, measured completed casts, castsWithDrop, zeros, quantity histograms, output totals, or Retail sample profile. Existing known IDs remain 24995 -> 22445/22446/22447/22449; 36909; 23424; output quantities/chances unknown in this run."
   ],
   "source_urls": [
     "https://thewowdb.com/guides/disenchant-roi-trap/",
@@ -97,15 +97,17 @@
     "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/database/sources/DB2Restrictions.lua",
     "https://www.wowdb.com/items/25000-bloodfist-breastplate",
     "https://www.wowhead.com/classic/item=6238/brown-linen-robe",
-    "https://www.wowhead.com/ptr-2/object=181555/fel-iron-deposit"
+    "https://www.wowhead.com/ptr-2/object=181555/fel-iron-deposit",
+    "https://www.wowhead.com/tbc/item=24979/reaver-legplates",
+    "https://www.curseforge.com/wow/addons/disenchantum"
   ],
-  "numeric_summary": "NEW verified source-context: 12.1.7.70493 ItemSparse-derived NO_DISENCHANT records 21,061 / 176,747 source rows, with zero flagged IDs across 24900..25199, while LIVE WoWDB marks 24995 and 25000 non-disenchantable. These are database-source counts, NOT completed disenchants or measured drop rates. NEW independently qualifying 24995/36909/23424 Retail operations: 0; output hits: 0; zero-inclusive histograms: 0; new output totals: 0. All prior counts preserved and no gold EV/estimated rates created.",
+  "numeric_summary": "New qualifying target Retail observations this run: 0 completed casts, 0 measured output hits, 0 measured zeros, 0 material quantity totals, 0 per-cast histograms. Adjacent Reaver 24979 historical comment reports Arcane Dust 22445 x5 for one DE event, but is already represented by Codex-owned sourceKey wowhead:item=24979@tbc in 731-source reviewed catalogue and NOT new evidence; no cohort duplicated. Previous historical/source/context values remain preserved, not promoted to current Retail measurements. No gold values or estimated coefficients.",
   "evidence_file": "research/v3/evidence/legacy/2026-11-21T1445-retail-prospect-spell-identity.jsonl",
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "1c93410b034149751f0f6a9de12cea60b3a909f0",
-  "verified_commit_sha": "1c93410b034149751f0f6a9de12cea60b3a909f0",
-  "commit_note": "One owned status file only. verified_parent_sha / verified_commit_sha are the fetched pre-write branch head; the new status commit SHA cannot be embedded self-referentially in its own file. Verify the new commit and file read-back separately. No evidence JSONL, PR, build, runtime, schema, manager dashboard or schedule edits.",
+  "verified_parent_sha": "48e99f06906989c6c1735cd197b9d260afafe849",
+  "verified_commit_sha": "48e99f06906989c6c1735cd197b9d260afafe849",
+  "commit_note": "One owned quiet-status file only. verified_parent_sha / verified_commit_sha refer to verified prewrite branch head, since commit cannot self-reference. Validate resulting commit and file at exact commit SHA via read-back. No evidence file, PR, production, runtime, schema, shared dashboard, schedule or catalogue changed.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -178,6 +180,18 @@
       "source": "DB2Restrictions.lua 12.1.7.70493 versus WoWDB LIVE item 24995 and 25000",
       "disposition": "held-verified-conflicting-source-context-requires-master-runtime-check",
       "reason": "NO_DISENCHANT bit list omits 24995 and all 24900..25199; WoWDB LIVE says 24995 and 25000 cannot disenchant. The absence of an explicit bit is not a positive client spell permission. No source supports new measured casts or output rates."
+    },
+    {
+      "task": "T0047/T0042 analogous TBC armor",
+      "source": "Reaver Legplates 24979 Allakhazam Wowhead TBC mirror",
+      "disposition": "duplicate-Codex-reviewed-cutoff-source-no-new-evidence",
+      "reason": "Single reported outcome 22445 Arcane Dust x5, but sourceKey wowhead:item=24979@tbc is already assigned 2 scopes in 731-source cutoff catalogue. Historical-era mirrored comment with no Retail 12.x version/eligibility, full operation ledger or independent new sample. Do not import twice."
+    },
+    {
+      "task": "T0047/T0042 prospective original source discovery",
+      "source": "Disenchantum Retail addon 1.3",
+      "disposition": "held-local-tracking-tool-no-public-target-event-record",
+      "reason": "Published 2026-10-18 addon says session recap of disenchanted items and reagent chips, not a published usable cast ledger. No observable 24995/36909/23424 input-output receipts or denominators; do not invent yields."
     }
   ],
   "blockers": [
@@ -267,40 +281,41 @@
     }
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Escalate to Master through owned status: reconcile 12.1.7.70493 ItemSparse NO_DISENCHANT bit omission for 24995/25000 with WoWDB LIVE negative item flags and existing compiled DE fixtures; require exact Retail itemLink/bonus/client-build and actual safe eligibility/API check, with no in-game item destruction authorized. Continue searching for post-cutoff 24995/36909/23424 primary event-level successful operation logs with item/output IDs, completed denominator, zero outcomes, refunds and skill/spec. No repeated biocyte/Thottbot/catalogue transcriptions.",
+  "next_concrete_step": "Find an independently public post-cutoff Retail 12.x ORIGINAL recording for 24995/36909/23424 (exact base item+bonus link, actual completed count, output IDs/counts, zero-event distribution, refund/consumed-input distinction and skill/spec/build). Prioritize raw SavedVariables exports or fully annotated recorder receipts, not addon feature descriptions or mirrored Wowhead comments. Master owns reconciling WoWDB 24995 cannot-disenchant display against DB2 negative-only flag absence and implementing live eligibility/tooltip gate; no live destruction authorized.",
   "coordination_cutoff": "Cutoff 0cd0bad8867e7a8d909b4ecae74f6136a3e23d42. Current branch manifest status CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources (713 original + 12 addendum + 6 recovered) and enabled catalogue registry. Codex/direct reviewers own source decisions and implementation; no duplicate assignment.",
   "sources_reviewed_this_run": [
     {
-      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/database/sources/DB2Restrictions.lua",
-      "type": "Existing original user-supplied Retail ItemSparse DB2-derived negative/processable flags, build 12.1.7.70493",
-      "disposition": "verified-context-conflict-master-review",
-      "detail": "Parsed all 21,061 negative IDs: target 24995, nearby 24988/25000/25019, and entire 24900..25199 range absent; prospectable hints include 36909 and 23424. Absence does not prove Disenchant eligibility."
+      "url": "https://www.wowhead.com/tbc/item=24979/reaver-legplates",
+      "type": "Original historical Allakhazam report carried on TBC mirror",
+      "disposition": "dedupe-verified-in-owned-731-source-catalogue",
+      "detail": "One reported DE of item 24979 yielding exactly 5 Arcane Dust 22445. SourceKey wowhead:item=24979@tbc already assigned in verified cutoff catalogue with 2 scopes; no new Retail evidence or record."
     },
     {
-      "url": "https://www.wowdb.com/items/24995-warmaul-legplates",
-      "type": "WoWDB LIVE item-side eligibility display",
-      "disposition": "conflicts-with-absence-of-DB2-negative-bit-not-a-live-client-receipt",
-      "detail": "Warmaul Legplates 24995 current item level 31 explicitly 'Cannot be disenchanted'. Historical 108 item-level cohorts cannot establish Retail eligibility."
+      "url": "https://www.curseforge.com/wow/addons/disenchantum",
+      "type": "2026 Retail disenchant session recap",
+      "disposition": "held-no-public-sample",
+      "detail": "v1.3 Oct 18 2026 advertises per-session items/reagent chips; no accessible original target event sample, skill/bonus, zero distribution or provenance."
     },
     {
-      "url": "https://www.wowdb.com/items/25000-bloodfist-breastplate",
-      "type": "WoWDB LIVE comparable BC item display",
-      "disposition": "same-negative-flag-coverage-gap",
-      "detail": "Item 25000 item level 32 explicitly 'Cannot be disenchanted', yet 25000 absent from DB2Restrictions NO_DISENCHANT list."
+      "url": "https://www.curseforge.com/wow/addons/prospectmate",
+      "type": "2026 Retail local conversion tracker",
+      "disposition": "held-tool-not-study",
+      "detail": "v2.0.3 Jun 17 2026 supports opt-in legacy conversion tracking; does not account for profession stats, no public original per-cast source and no player-provided sample."
     },
     {
-      "url": "https://www.wowhead.com/classic/item=6238/brown-linen-robe",
-      "type": "Historical firsthand 2,086-operation Brown Linen Robe 6238 disenchant cohort",
-      "disposition": "duplicate-not-admitted",
-      "detail": "biocyte exact 10940=2464 and 10938=647 already recorded in legacy evidence file dated 2026-11-02; not new Retail evidence or second sample."
+      "url": "https://www.wowhead.com/item=24995/warmaul-legplates",
+      "type": "Current Retail item-version and Looter aggregate check",
+      "disposition": "existing-historical-source-unresolved-eligibility",
+      "detail": "Current tooltips display multiple scaled item-level variants, not a live Retail enchanting permission receipt. No newly independent sample; do not reuse historical 2068 record as Retail 12.x."
     },
     {
-      "url": "https://www.wowhead.com/ptr-2/object=181555/fel-iron-deposit",
-      "type": "Fel Iron Deposit mined-object Looter table",
-      "disposition": "excluded-method-mismatch",
-      "detail": "1,156,196 mined node interactions, with gems, are mined loot, not 23424 prospecting casts; do not infer 23424 outcomes, zeros or rates."
+      "url": "https://www.wowhead.com/tbc/item=23424/fel-iron-ore",
+      "type": "TBC original prospecting comments",
+      "disposition": "previously-catalogued-not-new",
+      "detail": "100-ore and 565-ore originals already studied; item totals cannot provide new per-cast hits/zeros or modern Retail model."
     }
   ],
-  "latest_run_source_date": "2026-11-21",
-  "latest_run": "2026-11-22T02:39:01.585Z: Checked required branch docs/queue and discovered DB2-negative-list versus LIVE WoWDB 24995 conflict; 24900..25199 entirely unflagged in DB2 source. Audited existing 6238 biocyte 2086-operation study as duplicate and excluded Fel Iron Deposit mining Looter counts. No new eligible Retail casts/hits/zeros or JSONL; only owned quiet status updated."
+  "latest_run_source_date": "2026-11-22",
+  "latest_run": "2026-11-22T03:41:41.763Z: Required research branch docs/queue refreshed. Checked named Warmaul/Cobalt/Fel Iron original-source searches. Reaver 24979 1-event/5-Arcane-Dust historical source confirmed as already assigned in 731-source Codex catalogue, not re-recorded. Retail Disenchantum/ProspectMate are local tracking leads without public original target measurements. No new qualifying Retail operations, hits, zeros, totals, histogram, JSONL; owned status only.",
+  "new_evidence_file_this_run": null
 }
