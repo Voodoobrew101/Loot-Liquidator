@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-22T03:16:17.015Z",
-  "status": "Refreshed implementation/five-agent-completion, read current research/v3/README.md, evidence-format.md, mechanics.md, roles/worker.md and queue.json. Ran targeted searches of new original Midnight disenchant/prospect/milling casts, item-instance 272246 at-disenchant ilvl/bonus eligibility, 237362 rank-specific actual successful operations, conditional Diamond 242608 and output IDs, and ten-herb milling source logs. Confirmed indexed JD3K and Bue results are preexisting independent leads (2026-11-01 and 2026-11-18 evidence); did not duplicate their cohorts or owner/Codex 731-source catalogue. Two additional independent-source checks are held as unmeasured reference, not studies: WoWGoldFarms October 8 enchant guide explicitly disclaims measuring gear-DE yields, while Warcraft Wiki Dawn Crystal mentions rare/epic inputs but no measured rate. No new player operation ledger, at-cast item link or completed cast/hit/zero histogram. No new evidence JSONL, production decisions, PR, runtime edit, gold EV, merge, release or schedule edit.",
+  "updated_at": "2026-11-22T04:13:30.622Z",
+  "status": "Refreshed implementation/five-agent-completion and read README/evidence-format/mechanics/worker/queue. Targeted new original Retail Midnight DE, Umbral Tin/Copper/Silver prospecting and milling sources after the cutoff; no independent source with actual new cast-level trial, per-output event hit/zero histogram, or 272246 at-cast gear link. New methodological crosscheck: the Wowhead PTR item 157915 comment reports the same presentation conflict (a no-disenchant claim alongside a Looter disenchant-count tab); this is historical cross-expansion reference only, NOT a new Midnight yield cohort or proof of 272246 eligibility. Established Blizzard crate-hotfix, JD3K/Bue, Cardinalai, Aurn and Goblinomics references were already recorded; no duplicate record, empty JSONL, PR, runtime/build change, merge, release or scheduling action.",
   "task_ids": [
     "T0026",
     "T0049",
@@ -1440,7 +1440,8 @@
     "https://github.com/oxedtv/OxedHub/blob/main/Modules/Shattersight/Data.lua",
     "https://www.youtube.com/watch?v=1gGwR51s1RE",
     "https://wowgoldfarms.com/guides/retail/enchanting-gold-midnight/",
-    "https://warcraft.wiki.gg/wiki/Dawn_Crystal"
+    "https://warcraft.wiki.gg/wiki/Dawn_Crystal",
+    "https://www.wowhead.com/ptr/item=157915/gonk-outrunner-shoulderguards"
   ],
   "blockers": [
     "272246: actual disenchantable item bonus/at-cast ilvl 305 itemLink and correlated original DE output are not published; generic 206 cannot-be-disenchanted catalog conflicts with aggregate 140-row Looter display.",
@@ -1557,13 +1558,17 @@
     {
       "url": "https://warcraft.wiki.gg/wiki/Dawn_Crystal",
       "reason": "secondary_family_mechanic_reference_no_firsthand_sample; secondary/derived source, no independently reported completed original sample, 0-inclusive histogram or profession profile."
+    },
+    {
+      "url": "https://www.wowhead.com/ptr/item=157915/gonk-outrunner-shoulderguards",
+      "reason": "Historical BFA item, only commenter-reported Looter/eligibility presentation mismatch; no original Retail Midnight 272246 event, no cast-level dataset, no current-client validation. Do not revisit absent raw evidence."
     }
   ],
-  "next_concrete_step": "Find independently published original Retail Midnight character- or event-level logs/CSV with exact 272246 itemLink/bonus/actual ilvl and correlated successful disenchant (or explicit ineligible tooltip), or rank2 Umbral Tin 237363/prospecting 237362 and Copper 237359 with actual five-ore successful operation denominators and output item/rank hit/zero per-cast events plus refunds and Diamond unlock status. Do not repeat JD3K, Bue, Cardinalai or other fully catalogued pre-cutoff source transcriptions; owner Codex catalogue/build controls remain separate.",
-  "verified_base_commit_sha": "f0df4d7c33cda50c7c8e14db5992a1e4841162d6",
+  "next_concrete_step": "Prioritize newly published independent event/character-linked Retail Midnight exports: 272246 successful DE with raw bonus-string and at-operation ilvl, profession skill/build, item rarity and material IDs; or 237362/237363 Umbral Tin and 237359 Copper prospect logs with actual five-ore operations, refunded inputs, rank-specific outputs and per-cast zeros/hits plus ore Diamond unlock. Seek 10-herb mills with per-operation pigment rank/itemId stack histograms. Do not revisit already catalogued 731 cutoff sources or use Wowhead Looter aggregates as conclusive live DE eligibility.",
+  "verified_base_commit_sha": "2bb71d341360812a180e91935efa3887c37ea58f",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Quiet status-only checkpoint with source-level negative triage. Status file does not self-encode commit SHA; branch commit and content must be independently read back. No source-based numeric field passed review; avoid empty evidence files.",
+  "commit_note": "One quiet-status-only checkpoint; no evidence JSONL because no genuinely new independent numerical cohort. The status file cannot self-reference the generated commit SHA; verify post-write commit and exact file read-back separately.",
   "new_leads_screened": [
     {
       "source": "https://github.com/ErorNya/ForeverFlip/blob/main/ForeverFlip/Modules/Disenchant.lua",
@@ -1692,6 +1697,24 @@
         "at_cast_bonus_or_ilvl": null
       },
       "detail": "Warcraft Wiki describes Dawn Crystal as obtainable from disenchanting epic and rare Midnight gear; consistent with existing source-level rare-weapon low-frequency Crystal indications. Does not establish any rare-gear crystal probability or either output rank; static reference only."
+    },
+    {
+      "source": "https://www.wowhead.com/ptr/item=157915/gonk-outrunner-shoulderguards",
+      "classification": "held_methodological_cross_expansion_item_page_comment_not_original_Retail_Midnight_study",
+      "exact_ids": [
+        157915,
+        272246
+      ],
+      "source_original": {
+        "comment_author": "Azaram",
+        "reported_historical_item_nodisenchant_flag": true,
+        "reported_item_page_disenchant_tab_count": 883,
+        "original_event_log": null,
+        "current_midnight_event_trials": null,
+        "at_cast_item_link": null,
+        "verified_current_client_eligibility": null
+      },
+      "detail": "Wowhead commenter flags a 157915 Azerite gear page claiming Cannot be disenchanted while also displaying Disenchanted 883 times. Comment report, not independently verified raw events; supports treating Wowhead item-side Looter aggregates as insufficient to settle the existing 272246 eligibility conflict. No cross-expansion material yield inference or measured casts admitted."
     }
   ],
   "catalogue_checkpoint": {
