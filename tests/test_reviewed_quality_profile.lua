@@ -260,7 +260,11 @@ local maxText,maxValue,maxModel=rendered(30)
 check(lowText~=maxText and maxValue>lowValue,'skill/milestones change actual displayed quantities and fixture value')
 check(maxText:find('Confidence 0%',1,true),'rendered source-anchor model uses confidence zero')
 for _,material in ipairs(maxModel.materials)do
-    check(maxText:find(('%.3f'):format(material.expectedQuantity),1,true),'actual rank mean visible in tooltip')
+    local rate=material.chance or material.expectedQuantity
+    local prefix=rate>1 and ('%.3fx'):format(rate) or rate==0 and '0%' or rate==1 and '100%'
+        or rate<.001 and '<0.1%' or rate>.999 and '>99.9%'
+        or ('%.1f'):format(rate*100):gsub('%.0$','')..'%'
+    check(maxText:find(prefix..' ',1,true),'actual rank rate/count visible at the start of the tooltip row')
 end
 check(not maxText:find('estimate',1,true) and not maxText:find('provisional',1,true),'no extra tooltip uncertainty labels for source-anchor model')
 print('PASS: '..checks..' source-anchored reviewed quality inverse/forward, conservation and runtime-merge checks')
