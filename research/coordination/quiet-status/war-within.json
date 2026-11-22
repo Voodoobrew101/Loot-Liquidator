@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-22T13:23:31.379Z",
-  "status": "active: evaluated new original disenchant-recording code, excluded WoW Forever-only data from Retail TWW baselines; no new measured yield cohort",
+  "updated_at": "2026-11-22T14:20:15.881Z",
+  "status": "active: exact-source provenance QA found six preexisting Adreymar mixed-ore rows with distinct studyKeys; zero new independent cohorts or measured yield fields admitted",
   "task_ids": [
     "T0009",
     "T0008",
@@ -19,7 +19,7 @@
     "Bismuth 210930/210931/210932 post-Oct-25-2024 verified prospect yields remain missing.",
     "T0048 TWW DE rarity/armor/weapon: exact item+bonus and player skill/spec, source-era independent 0..N outcomes and 219946..219955 output quality IDs remain missing; cumulative Looter overlap held."
   ],
-  "source_branch_head_reviewed": "2307f1fb2f0ba6c78d58e3173226b520bdb06336",
+  "source_branch_head_reviewed": "a51e2ef40f48bbef30f90a201416ef963ea192c3",
   "source_policy": "READ current research/v3 README/evidence-format/mechanics/worker/queue before search. Source cutoff catalogue CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources incl six recovered; reuse 12,222 scoped decisions; do not recatalogue Codex backlog. Review/admission merged to main in PR #82 but worker branch remains evidence-only; no release asserted.",
   "study_backlog_triage": [
     {
@@ -477,13 +477,17 @@
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://github.com/ProfessionsForever/Professions_Forever/blob/94e0dac68c61dd56d67bcbec4ea5e2ce04068caa/Core/DisenchantRecord.lua",
-    "https://github.com/ProfessionsForever/Professions_Forever/blob/94e0dac68c61dd56d67bcbec4ea5e2ce04068caa/Data/Disenchant.lua",
-    "https://github.com/ProfessionsForever/Professions_Forever/blob/94e0dac68c61dd56d67bcbec4ea5e2ce04068caa/README.md"
+    "https://www.wowhead.com/item=213399/glittering-glass",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-10-30T1818-rank2-prospect-studies-hotfixes.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-10-31T0322-rank2-ore-prospecting-peaesk.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-01T0217-rank2-prospecting-and-wowhead-cohorts.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-01T2020-september-r1-prospecting-cohorts.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-02T0824-lamplighter-epic-de-and-pooled-glass.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/20261117T1130-original-de-rank-cohorts-nullstone-prospect.jsonl"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-01T1621-wowhead-looter-single-stack-replacements.jsonl",
   "verified_commit_sha": "f867e2c5eaa90cddde372c42363db68d49317951",
-  "verification": "Current README/evidence-format/mechanics/worker/queue read; official source code read at pinned SHA 94e0dac68c61dd56d67bcbec4ea5e2ce04068caa. No measured TWW Retail yield cohorts or new JSONL justified. Status-only write (own quiet path), no estimator/PR/merge/release.",
+  "verification": "Current branch README, evidence-format, mechanics, worker and queue read. Independently compared six exact worker evidence row IDs/keys and original-source URLs; one source-only provenance overlap, not newly admitted evidence. Existing Codex source-catalogue remains owner/reviewer controlled. No work outside this worker's quiet-status path, no new evidence JSONL, PR, merge, release, or production changes. Branch head before status-only write a51e2ef40f48bbef30f90a201416ef963ea192c3.",
   "blockers": [
     "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
     "Cumulative PTR Looter display rows contain repeated material names with linked rank IDs unavailable; no per-row independent study and no safe current-Retail rank-specific mapping.",
@@ -547,34 +551,41 @@
     "2026-11-22: OxedHub 2.4.75 (Nov 21) TWW Disenchant Info Data.lua/Tracking.lua inspected as a NEW public collector reference. Its hardcoded odds and pooled positive-event counts are not empirical source data; revisit only for original per-operation player export or proof of provenance. Historical PeaEsk, Golgoth and LotzBoi are prior cohorts, no re-transcription.",
     "2026-11-22: ProfessionsForever 94e0dac68c61dd56d67bcbec4ea5e2ce04068caa inspected: historical/custom WoW Forever client and Classic-based generated tables, no actual Retail TWW deObserved sample exports; don't revisit unless independently linked Retail-source observations are published."
   ],
-  "next_concrete_step": "Seek actual post-2024-10-25 Retail TWW original saved-variable exports or per-operation logs, not model tables or private-server collectors: include gear ID/bonus/class/quality/skill/spec/build, n completed disenchant operations, output 219946..219955 per-event quantity/zero histogram, and independently rank/quality-scoped 210930..210938 prospects plus 210796..210798 10-herb mills with refund ledger. Reuse reviewed 731-source catalogue; no re-catalogue.",
-  "previous_status_updated_at": "2026-11-22T12:27:02.269Z",
+  "next_concrete_step": "Seek NEW post-2024-10-25 independent original Retail TWW 5-ore prospect and 10-herb milling per-operation logs (ore 210930..210938; Mycobloom 210796..210798) and gear DE event histograms by bonus/skill/build; verify resourcefulness input refunds. If build reviewer does not already canonicalize Adreymar by original URL/author, ask Master to assess six raw studyKey aliases without modifying Codex catalogue or source rows.",
+  "previous_status_updated_at": "2026-11-22T13:23:31.379Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "timestamp_utc": "2026-11-22T13:23:31.379Z",
+    "timestamp_utc": "2026-11-22T14:20:15.881Z",
     "focus": [
-      "T0048 new independently published collector and measured TWW disenchant operations",
-      "T0007/T0008/T0009/T0040 post-hotfix per-rank prospect casts and refunds",
-      "T0010/T0011/T0012 Khaz Algar rank-specific milling logs"
+      "T0040/T0008/T0009 source-identity preservation and ranked post-hotfix ore denominators",
+      "T0010/T0011 original Mycobloom milling operations",
+      "T0048 disenchant original samples and output-rank identity"
     ],
     "checks": [
       {
-        "source": "https://github.com/ProfessionsForever/Professions_Forever/blob/94e0dac68c61dd56d67bcbec4ea5e2ce04068caa/Core/DisenchantRecord.lua",
-        "disposition": "Newly inspected 2026-11-13-and-later first-party WoW Forever collector records per-key n, per-output drops/qty/min/max, first/last build using item GUID and LOOT_READY; no publicly shared actual deObserved observations, skill/spec/input bonus, full 0..N histograms, or verified current Retail operations. Private/custom Forever client is not current Retail."
-      },
-      {
-        "source": "https://github.com/ProfessionsForever/Professions_Forever/blob/94e0dac68c61dd56d67bcbec4ea5e2ce04068caa/Data/Disenchant.lua",
-        "disposition": "Published static disenchant tables are generated from cmangos/classic-db and wago.tools wowf build 1.60.1.70938, with bracket item levels only through 99 and classic output IDs; not TWW Retail 219946..219955 observations or correct gear drop eligibility."
-      },
-      {
-        "source": "https://github.com/ProfessionsForever/Professions_Forever/blob/94e0dac68c61dd56d67bcbec4ea5e2ce04068caa/README.md",
-        "disposition": "Author explicitly identifies the addon as replacement professions UI for WoW: Forever. Exclude from Retail quantitative admission and do not treat the 100-disenchant display threshold as an observed sample."
+        "source": "https://www.wowhead.com/item=213399/glittering-glass",
+        "disposition": "One original pooled author claim, not a rank-specific post-hotfix cast study. Six copies found with different studyKeys across worker evidence; require canonical source identity in admission but leave Codex-owned catalogue unchanged.",
+        "record_ids": [
+          "war-within-20261030-027",
+          "war-within-20261031-3314",
+          "war-within-20261101-021725",
+          "war-within-20261101-2020-014",
+          "war-within-20261102-0824-011",
+          "war-within-20261117-113014"
+        ],
+        "reported_mean_per_1000_ore_inputs": 80,
+        "output_item_id": 213399,
+        "completed_operations": null,
+        "ore_rank": null,
+        "skill_spec_build": null,
+        "resourcefulness_basis": "max Resourcefulness claimed; actual refunds/reuse not known"
       }
-    ]
+    ],
+    "independently_new_numeric_cohorts": 0
   },
   "source_integrity_findings": [
     {
@@ -1053,6 +1064,12 @@
       "date": "2026-11-22",
       "status": "excluded-incompatible-game-original-code-no-retail-study",
       "detail": "ProfessionsForever at 94e0dac68c61dd56d67bcbec4ea5e2ce04068caa implements a potentially useful per-material positive-event counter keyed class/quality/ilvl with n operations, drops, qty, min/max, build and GUID linkage. However README states WoW: Forever; generator data source is cmangos/classic-db plus wago.tools wowf build 1.60.1.70938, item-level brackets 5–99, and no shared original deObserved saved-variable exports. Not Retail TWW numerical evidence. Collector lacks skill/spec/bonus and full zero-inclusive stack histograms; do not import model probabilities or mistake 100-minimum warning threshold for actual observations."
+    },
+    {
+      "source": "https://www.wowhead.com/item=213399/glittering-glass",
+      "date": "2026-11-22",
+      "status": "existing-source-identity-overlap-for-master-check-not-new-yield",
+      "detail": "six existing worker JSONL rows cite the same original Adreymar report (IDs war-within-20261030-027, war-within-20261031-3314, war-within-20261101-021725, war-within-20261101-2020-014, war-within-20261102-0824-011, war-within-20261117-113014). Six existing worker JSONL rows cite the same original Adreymar mixed-ore report but use six different studyKeys (five study/unspecified sourceKinds and one reference). All quote roughly 50,000 mixed TWW ore and 80 Glittering Glass item 213399 per 1,000 nominal ore inputs. These are a single original source, NOT six independent cohorts or 50,000 completed prospects. No ore rank/ID allocation, completed operations, hit/zero histograms, refunds or collection build confirmed. Raw source identity cross-checked; build-time catalogue/admission may already normalize/deduplicate these cutoff rows, so do not declare a pipeline defect absent its exact scoped decision."
     }
   ],
   "last_source_commit_pending": false
