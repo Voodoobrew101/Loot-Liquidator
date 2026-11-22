@@ -1,8 +1,8 @@
 {
   "role": "research-manager",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-22T05:03:24.190Z",
-  "status": "New independent manager QA: read original Wowhead recipe-comment 282402 and 194390 item-side Looter index, checked 11/11 bounded arithmetic guards; exact worker source records confirmed. 40959 Dust positive-bin total 272 versus author's 278 (six-unit unresolved contradiction); 194390 Looter 5/7 Dust and 2/7 Shard hits share one pooled 7-report cohort, not proven mutually exclusive or per-output mean. Manager review preserved and dashboard updated. No new independent cohorts, current Retail supported gold decisions, addon changes, PRs, releases, schedules, main edits or client/build tests. Checked current main/research/three-pass/Codex heads, CI and build policy; did not recatalogue cutoff or touch other owned branches.",
+  "updated_at": "2026-11-22T06:01:05.850Z",
+  "status": "Independently verified the TWW Jeweler's Purse (222867)/spell 454803 is an equipped, profession-qualified +1 *maximum* Crushed Gemstones from Algari Crushing, not +1 observed mean or guaranteed quantity. Corroborated worker's PTR test-bag 224032/224035 source exclusions; no new operation cohort, per-cast rates, gold decision or addon test. Read four newer worker checkpoints and exact-head GitHub Actions, created manager-only source-scope review, appended and read-back verified the research dashboard. Left cutoff catalogue, runtime, other workers, PRs, merges, main, releases and schedules unchanged.",
   "task_ids": [
     "T0003",
     "T0005",
@@ -20,7 +20,8 @@
     "T0047",
     "T0050",
     "T0052",
-    "T0048"
+    "T0048",
+    "T0040"
   ],
   "exact_gaps_targeted": [
     "T0003/T0039 Midnight Refulgent Copper 237359 and Umbral Tin 237362: completed operations distinct from nominal ore/refunds; source-recognized input rank, per-output 0/1/2+ events, skill/spec and November Retail build",
@@ -39,7 +40,8 @@
     "New Dragonflight item 200353 Lost Landcaller's Claws: site-reported N=74, material hits 47 (200113) and 40 (194124); source itemLink/bonus at event time, actual disenchants across builds, skill/spec/patch, per-material positive quantities and 0..N event ledger needed before gold EV or current Retail claim.",
     "Legacy Warmaul 24992/24995/24996: LIVE WoWDB says Cannot be disenchanted, but current main ItemSparse 12.1.7.70493 native negative list contains zero IDs 24900..25199; exact itemLink/bonus/current client-native tooltip and restriction semantics not independently verified; do not infer affirmative eligibility from absent flag.",
     "New legacy 40959 source: source's Infinite Dust positive bins =272 units but author later prices 278; no legitimate correction of missing six units, actual operations, zeros or 3.0.8 patch version",
-    "New Dragonflight 194390 item-side seven-report Looter source: one pooled cohort, unknown joint material outcomes, positive dust stack histogram and source at-cast variant; do not equate 5+2=7 with exclusive outcomes"
+    "New Dragonflight 194390 item-side seven-report Looter source: one pooled cohort, unknown joint material outcomes, positive dust stack histogram and source at-cast variant; do not equate 5+2=7 with exclusive outcomes",
+    "TWW Algari Crushing: whether equipped Jeweler's Purse (222867) raises only output maximum vs actual per-operation Crushed Gemstones mean, exact rank/output and equipped character profile unknown; verify paired original bag-on/bag-off logs only, no added EV coefficient."
   ],
   "newly_verified_fields_cohorts": {
     "tww_nacreous_output_identity": {
@@ -536,6 +538,43 @@
       "arithmetic_assertions_executed": 11,
       "arithmetic_assertions_passed": 11,
       "actual_addon_build_or_client_tests_by_manager": false
+    },
+    "manager_20261122_0600_tww_equipped_crushing_bag_maximum": {
+      "classification": "new_unassessed_equipment_maximum_source_field_not_measured_yield",
+      "item_id": 222867,
+      "effect_spell_id": 454803,
+      "method": "Algari Crushing",
+      "output_family": "Crushed Gemstones",
+      "requires": "Equipped Jeweler's Purse and Khaz Algar Jewelcrafting (1)",
+      "source_stated_max_yield_delta": 1,
+      "is_expected_quantity_delta": false,
+      "empirical_yield_mean": null,
+      "empirical_probability": null,
+      "observed_casts": null,
+      "output_quality_rank": null,
+      "gold_decisions_supported": 0,
+      "sources": [
+        "https://www.wowhead.com/item=222867/jewelers-purse",
+        "https://www.wowhead.com/spell=454803/jewelcrafting-bag",
+        "https://warcraft.wiki.gg/wiki/Jeweler%27s_Purse",
+        "https://www.wowhead.com/news/new-crafted-profession-bags-available-in-the-war-within-344470"
+      ],
+      "test_supply_exclusion_confirmed": {
+        "item_ids": [
+          224032,
+          224035
+        ],
+        "source_type": "PTR test supply containers opened, not processing",
+        "original": "https://warcraft.wiki.gg/wiki/Bottomless_Bag_of_Khaz_Algar_Enchanting_Goods",
+        "other": "https://warcraft.wiki.gg/wiki/Bottomless_Bag_of_Khaz_Algar_Jewelcrafting_Goods",
+        "new_independent_cohort": false
+      },
+      "review_path": "research/v3/evidence/master/20261122T0559-tww-crushing-bag-maximum-vs-mean-and-test-supplies.md",
+      "review_commit": "d075800f92369c8574f35dbfd031e0df2619e267",
+      "dashboard_commit": "94e6189ecdc000b9262362648665677cc2b5502b",
+      "source_index_checks": "No literal 222867/454803/Jeweler's Purse in indexed default-branch code, current v3 queue/mechanics or 731-source catalogue manifest; not a full build inventory.",
+      "manager_run_new_qualifying_cohorts": 0,
+      "manager_run_new_gold_decisions": 0
     }
   },
   "source_links": {
@@ -610,7 +649,12 @@
     "manager_qa_dashboard": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/dfb69d5a4a39a3f56da5b9ceeca951bf6502605a/research/coordination/RESEARCH-DASHBOARD.md",
     "catalogue_overlap_sunglass": "https://us.forums.blizzard.com/en/wow/t/sunglass-vial-1-hour-material-test/2323248",
     "manager_new_tww_original": "https://www.reddit.com/r/woweconomy/comments/1fprthm/is_there_a_difference_in_disenchanting_an_r2_item/",
-    "manager_new_tww_review": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261122T0106-tww-rank-skill-disenchant-source-review.md"
+    "manager_new_tww_review": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261122T0106-tww-rank-skill-disenchant-source-review.md",
+    "tww_jewelers_purse_original": "https://www.wowhead.com/item=222867/jewelers-purse",
+    "tww_jc_bag_effect": "https://www.wowhead.com/spell=454803/jewelcrafting-bag",
+    "tww_jc_bag_secondary": "https://warcraft.wiki.gg/wiki/Jeweler%27s_Purse",
+    "tww_beta_enchanting_test_container": "https://warcraft.wiki.gg/wiki/Bottomless_Bag_of_Khaz_Algar_Enchanting_Goods",
+    "tww_beta_jewelcrafting_test_container": "https://warcraft.wiki.gg/wiki/Bottomless_Bag_of_Khaz_Algar_Jewelcrafting_Goods"
   },
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-21T0336-new-draconium-r1r2-firsthand-range-held.jsonl",
@@ -623,55 +667,70 @@
     "research/v3/evidence/master/20261122T0158-dragonflight-landcallers-looter-source-review.md",
     "research/v3/evidence/dragonflight/2026-11-22T0132-lost-landcallers-claws-original-looter-hits.jsonl",
     "research/v3/evidence/master/20261122T0305-warmaul-native-negative-list-scope-review.md",
-    "research/v3/evidence/dragonflight/2026-11-22T0336-200353-shard-source-stack-range-correction.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-22T0336-200353-shard-source-stack-range-correction.jsonl",
+    "research/v3/evidence/master/20261122T0559-tww-crushing-bag-maximum-vs-mean-and-test-supplies.md"
   ],
   "verified_worker_source_shas": {
-    "midnight": "285620ef54838e35800e733930b3cc1bcdc5f435",
-    "war-within": "541d6cd42c2ae85d8ec630739633b54be4e636e5",
-    "dragonflight": "0842b3c45259ab5a91cc32b6bf6783726da699b6",
-    "legacy": "8b23b01cee04b3a5430f045239e5ac1bc5ea67fe"
+    "midnight": "c4d1475325a9cb0344cff2dbec698fe0b12a32d9",
+    "war-within": "027c1b9837a7b78adbfdd2b31f2b37af7893da1a",
+    "dragonflight": "ee18164638aea41dddf8e949edadbf78d9ceba10",
+    "legacy": "8de3498a0f0cc7972a66778d1f22fcfa4186de95"
   },
-  "verified_commit_sha": "5285e83a6efb9306613009c779c484e6136329e1",
-  "dashboard_commit_sha": "f90f49c366dd57dcbad04ec062138aaa159bbc19",
-  "checked_research_branch_head_before_status_write": "f90f49c366dd57dcbad04ec062138aaa159bbc19",
+  "verified_commit_sha": "94e6189ecdc000b9262362648665677cc2b5502b",
+  "dashboard_commit_sha": "94e6189ecdc000b9262362648665677cc2b5502b",
+  "checked_research_branch_head_before_status_write": "94e6189ecdc000b9262362648665677cc2b5502b",
   "main_head_checked": "bd38a158ea79309ae3be34adaf2c31ad95bce159",
   "owner_three_pass_head_checked": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "owner_catalogue_manifest_revision_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
   "owner_catalogue_pipeline_branch_checked": "a23e65d784f0c36833df0ad903d817d10d2f2ae3",
   "worker_reports_verified": {
     "midnight": {
-      "blob_sha": "285620ef54838e35800e733930b3cc1bcdc5f435",
-      "actual_status_read": true
+      "blob_sha": "c4d1475325a9cb0344cff2dbec698fe0b12a32d9",
+      "actual_status_read": true,
+      "stamp": "2026-11-22T05:10:26.720Z"
     },
     "war-within": {
-      "blob_sha": "541d6cd42c2ae85d8ec630739633b54be4e636e5",
-      "actual_status_read": true
+      "blob_sha": "027c1b9837a7b78adbfdd2b31f2b37af7893da1a",
+      "actual_status_read": true,
+      "stamp": "2026-11-22T05:24:22.129Z"
     },
     "dragonflight": {
-      "blob_sha": "0842b3c45259ab5a91cc32b6bf6783726da699b6",
-      "actual_status_read": true
+      "blob_sha": "ee18164638aea41dddf8e949edadbf78d9ceba10",
+      "actual_status_read": true,
+      "stamp": "2026-11-22T05:35:19.185Z"
     },
     "legacy": {
-      "blob_sha": "8b23b01cee04b3a5430f045239e5ac1bc5ea67fe",
-      "actual_status_read": true
+      "blob_sha": "8de3498a0f0cc7972a66778d1f22fcfa4186de95",
+      "actual_status_read": true,
+      "stamp": "2026-11-22T05:38:39.902Z"
     }
   },
   "validation_this_run": {
     "source_original_independently_checked": true,
-    "worker_evidence_file_read": true,
     "worker_reports_read": [
       "midnight",
       "war-within",
       "dragonflight",
       "legacy"
     ],
-    "recent_automation_results_completed": true,
+    "worker_blob_shas_verified": true,
+    "new_source_scope_checks": [
+      "original retail item and spell",
+      "retail profession bag secondary corroboration",
+      "PTR supply bag reference check",
+      "current catalogue literal search",
+      "main code index literal search"
+    ],
+    "review_source_readback_verified": true,
+    "dashboard_readback_verified": true,
+    "repo_heads_read": true,
+    "current_main_ci_44972080103": "success, as reported by GitHub Actions (not locally run)",
+    "current_research_ci_44990295481": "success on prewrite head a7e449af9d8e309c52da2dff2c05dfc6999e3905 (not on coordinator commit)",
+    "direct_automation_get": "unavailable: connector action returned 404; worker status files and GitHub Actions consulted separately",
     "local_addon_test_executed": false,
     "live_wow_test_executed": false,
-    "exact_current_commit_ci_status": "not established; PR-triggered workflow lookup returned no runs",
-    "new_numeric_gold_decisions": 0,
-    "dashboard_readback_pending": false,
-    "dashboard_readback_verified": true
+    "research_pipeline_build_executed": false,
+    "new_numeric_gold_decisions": 0
   },
   "blockers": [
     "No new original, current-build, zero-inclusive successful-operation output event ledger for Midnight/TWW/Dragonflight/legacy; cannot promote hit probability, model new coefficients or gold decisions",
@@ -692,7 +751,8 @@
     "New 229154 listing variants 80/86 and separate 229159 base catalogue ilvl 545 demonstrate a version/profile matching gap, not observed conversion outputs; original source Looter lacks event-level historical itemLink/bonus, at-cast item level and event independence.",
     "New TWW Sep2024 1fprthm source has no original workbook link, item IDs or observed per-output totals; theoretical tables contain ambiguous >100% units and a duplicated R3 label; nothing to price.",
     "Dragonflight 200353 Wowhead reports 74 aggregated disenchant entries and 47/40 output-specific hit counts, but lacks actual item-instance/bonus/ilvl, time/build, skill/spec, complete stack/zero event distributions and current Retail eligibility. Source-only chance cannot establish EV without output quantities; exact-SHA build applicability still unverified by manager.",
-    "Warmaul family 24992/24995/24996 LIVE WoWDB displays no-DE, while pinned ItemSparse 12.1.7.70493 negative list has no 24900..25199 IDs; exact-instance eligibility unverified. Restrict only on verified source-native or displayed-instance denial; do not assume no native bit means eligible or hard-code global catalog flags."
+    "Warmaul family 24992/24995/24996 LIVE WoWDB displays no-DE, while pinned ItemSparse 12.1.7.70493 negative list has no 24900..25199 IDs; exact-instance eligibility unverified. Restrict only on verified source-native or displayed-instance denial; do not assume no native bit means eligible or hard-code global catalog flags.",
+    "TWW Jeweler's Purse equipped +1 *maximum* Crushed Gemstones lacks original paired outcome counts, conditional quantity distribution, exact output ranks and runtime equip-state validation; do NOT add +1 to mean or gold EV."
   ],
   "exhausted_sources": [
     "Reddit 1rteoqr Tranquility Bloom 1473: already in pre-cutoff Codex ownership manifest and duplicated in existing research; do not re-transcribe",
@@ -714,21 +774,21 @@
     "2026-11-22 TWW 1fprthm indexed original: only author-reported aggregate N and theoretical comparative percentages; no linked raw spreadsheet/event samples in visible post. Further numeric work requires a new primary artifact.",
     "Lost Landcaller's Claws Looter item 200353 independently source-checked on 2026-11-22: 74 site reports with 47/40 material hits; no linked per-operation item versions, zero/stack histograms, skill/spec, time/build or original client receipts. Treat as source-reported occurrence context, not current-Retail gold evidence; do not re-search this page without changed source/event logs."
   ],
-  "next_concrete_step": "Preserve and seek only genuinely new source-original Retail completed-operation/zero/refund and at-cast identity evidence for Midnight 237359/237362/272246 and TWW Mycobloom rank-specific ten-herb mills; manager's 40959 original has six-unit dust contradiction and no DE denominator, while DF 194390 requires original joint stacks and item variant before suitable EV. No Codex 731-source recatalogue, no unverified baseline admissions.",
+  "next_concrete_step": "Seek already-published original paired bag-on/off Algari Crushing logs (source item/link, recipe, equipment, skill, gem/output rank, actual completed N, 0..N stacks, saved inputs/refunds); preserve item 222867 max-yield effect only as scoped source metadata until supported value/eligibility integration. Continue new Midnight 237359/237362 and TWW 210796 input/zero/skill gaps; no 731-source Codex re-catalogue or duplicate worker studies.",
   "production_main_changes": false,
   "addon_changes": false,
   "routine_research_prs": false,
   "merge_or_release": false,
   "new_schedules": false,
   "role_schedules_unchanged": true,
-  "prior_status_blob_sha": "2f7eed98338a81f6691c704b38d2b04782e96a71",
+  "prior_status_blob_sha": "a31a53364a331bf87c827ef37dbd445b8973c33a",
   "owner_catalogue_manifest_branch_head_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
   "owner_catalogue_manifest_blob_checked": "1bb9a4100c2be45282532f6205d722946f3b3e44",
-  "next": "Find original ranked Midnight 237359/237362 completed-operation, 0/1/2+ output-event and Resourcefulness refund logs, or TWW Mycobloom 210796 rank/profile-specific 10-herb mill receipts. For DF 200353 pursue source-original Vibrant Shard 1-vs-2 stack frequencies and exact at-cast item variant; do not infer expected quantity from range or source occurrence count. Respect Codex's closed catalogue and all worker ownership.",
+  "next": "Seek already-published original paired bag-on/off Algari Crushing logs (source item/link, recipe, equipment, skill, gem/output rank, actual completed N, 0..N stacks, saved inputs/refunds); preserve item 222867 max-yield effect only as scoped source metadata until supported value/eligibility integration. Continue new Midnight 237359/237362 and TWW 210796 input/zero/skill gaps; no 731-source Codex re-catalogue or duplicate worker studies.",
   "manager_latest_checkpoint": {
-    "as_of": "2026-11-22T03:06:29.787Z",
-    "prewrite_research_commit": "e79e7d539199402084017e19d79bcbff5a5744a0",
-    "dashboard_commit_sha": "e79e7d539199402084017e19d79bcbff5a5744a0",
+    "as_of": "2026-11-22T06:01:05.850Z",
+    "prewrite_research_commit": "94e6189ecdc000b9262362648665677cc2b5502b",
+    "dashboard_commit_sha": "94e6189ecdc000b9262362648665677cc2b5502b",
     "main_commit": "bd38a158ea79309ae3be34adaf2c31ad95bce159",
     "three_pass_commit": "3d667d053db587c91401cfed7ecc56862b8340c9",
     "owner_catalogue_branch_commit": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
@@ -736,32 +796,35 @@
     "workers": [
       {
         "role": "midnight",
-        "stamp": "2026-11-22T02:16:26.129Z",
-        "source_blob_sha": "a72f956ad28e95531a71f7fe7a0c7986467a9ae1",
-        "status": "No independently qualified new ranked-cast source; recorded next prospective source target."
+        "stamp": "2026-11-22T05:10:26.720Z",
+        "source_blob_sha": "c4d1475325a9cb0344cff2dbec698fe0b12a32d9",
+        "status": "Refreshed research branch and all five required v3 instructions/queue sources. Searched new published Retail Midnight disenchant, Umbral Tin/Copper/Silver prospect, and milling cohorts; no source produced new original measured input/output operation "
       },
       {
         "role": "war-within",
-        "stamp": "2026-11-22T02:20:29.250Z",
-        "source_blob_sha": "13cda5fe28fd693161d4a8d04b5aa062f3222f63",
-        "status": "No new numeric cohort or corrected identity this run."
+        "stamp": "2026-11-22T05:24:22.129Z",
+        "source_blob_sha": "027c1b9837a7b78adbfdd2b31f2b37af7893da1a",
+        "status": "active: discovered and source-verified Khaz Algar testing-only profession supply bags whose Wowhead Looter opening tables must NOT be treated as disenchant/prospect/mill yields; no new independent processing cohort"
       },
       {
         "role": "dragonflight",
-        "stamp": "2026-11-22T02:34:54.503Z",
-        "source_blob_sha": "810fab701ae877ac11ae76b0899ce7dde961247e",
-        "status": "No newly qualified independent operation cohort this run."
+        "stamp": "2026-11-22T05:35:19.185Z",
+        "source_blob_sha": "ee18164638aea41dddf8e949edadbf78d9ceba10",
+        "status": "research-active; targeted original Dragonflight source search completed; no new independent numeric cohort, correction or rank-resolved event ledger qualified; source deduped and held"
       },
       {
         "role": "legacy",
-        "stamp": "2026-11-22T02:39:01.585Z",
-        "source_blob_sha": "167d9cf6eedab26d41a4df0a8704dd7e33086a9d",
-        "status": "New DB2 absent-negative-list discrepancy with current WoWDB no-DE labels; no new yields."
+        "stamp": "2026-11-22T05:38:39.902Z",
+        "source_blob_sha": "8de3498a0f0cc7972a66778d1f22fcfa4186de95",
+        "status": "Refreshed the current branch and all required research rules, mechanics, worker instructions and queue. Found original 2007 Fel Iron prospecting skill context: Kaliope's listed 290 Jewelcrafting and a first-person successful prospect at skill 290 est"
       }
     ],
     "new_verified_source_scope_items": [
-      24992,
-      24996
+      222867
+    ],
+    "corroborated_test_supply_bag_exclusions": [
+      224032,
+      224035
     ],
     "new_independent_retail_operation_cohorts": 0,
     "new_gold_decisions": 0,
@@ -772,14 +835,15 @@
       "conclusion": "success"
     },
     "research_ci": {
-      "id": 44977075328,
-      "head": "2534ab03c09b75de4c03fa220f3674424d069e02",
+      "id": 44990295481,
+      "head": "a7e449af9d8e309c52da2dff2c05dfc6999e3905",
       "status": "completed",
       "conclusion": "success"
     },
-    "no_local_build_or_client_qa": true
+    "no_local_build_or_client_qa": true,
+    "direct_automation_get": "404 unavailable"
   },
-  "verified_base_commit_sha": "5285e83a6efb9306613009c779c484e6136329e1",
+  "verified_base_commit_sha": "94e6189ecdc000b9262362648665677cc2b5502b",
   "commit_sha": null,
-  "commit_note": "review + dashboard commit read back before status write; status's own generated SHA must be verified separately and cannot be self-referential"
+  "commit_note": "review and dashboard were committed/read back; status's own commit cannot be included self-referentially, verify after write"
 }
