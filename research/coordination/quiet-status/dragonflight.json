@@ -2,8 +2,8 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-22T15:31:27.567Z",
-  "status": "research-active; 1 new PTR-hosted Looter source with 3 source-count rows HELD/reference only; no new admissible Retail prospecting or milling ledger",
+  "updated_at": "2026-11-22T16:27:00.484Z",
+  "status": "research-active; no independent new Retail Dragonflight numeric cohort this run; 194401 PTR-only Looter provenance hold independently checked against live item page",
   "task_ids": [
     "T0020",
     "T0018",
@@ -13,22 +13,17 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore rank 1 (189143): independent completed operations, output-specific 192837–192844/diamond family, true refunds, 0..N stack histograms and rank identities",
-    "Bubble Poppy rank 1 (191467) -> Serene Pigment 198412/198413/198414: separate measured ranks, genuine mill operations and non-hits",
-    "Saxifrage rank 1 (191464) -> Blazing Pigment 198418/198419/198420: complete original rank-specific mill logs, Resourcefulness and source profile",
-    "Serevite and Khaz'gorite ores/Prismatic Ore (194545): distinguish actual completed first-stage operations from second-stage reprocessing and source-reported means",
-    "Dragonflight disenchanting: new item-specific independent cast/output histograms, rather than previously indexed cumulative Looter copies"
+    "Draconium Ore rank-one 189143 exact-input per-output castsWithDrop/zero-inclusive stack histograms and refunded completed casts",
+    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466 rank-specific actual milling operations and zero-inclusive pigment histograms",
+    "Khaz'gorite, Serevite and Prismatic Ore true completed casts, source-separated ranks/profiles, secondary reprospect stage and Resourcefulness refunds",
+    "194401 Expedition Guard's Chestguard: Retail client provenance, bonus/ilvl, disenchant epoch, collector profiles and output-event histograms for PTR-only 191/173/13/5 count table"
   ],
   "newly_verified_fields": [
-    "PTR-2 source reports input item 194401, reported total 191 disenchants and named outcome occurrences 194123=173, 194124=13, 200113=5; displayed percentages 91/7/3. Original Retail collection patch/profile and 0-inclusive histograms remain unverified."
+    "Source-provenance cross-check: live https://www.wowhead.com/item=194401/expedition-guards-chestguard currently exposes an item entry but no indexable disenchanting Looter table, whereas PTR-2 https://www.wowhead.com/ptr-2/item=194401/expedition-guards-chestguard?ilvl=118 lists 191 pooled disenchants (173 Chromatic Dust, 13 Vibrant Shard, 5 Resonant Crystal). These are the SAME previously recorded held cohort, not new Retail observations. The live/PTR displayed item levels are current page variants and do not establish collection-era ilvl."
   ],
-  "newly_verified_cohorts": [
-    "New PTR-indexed cumulative Looter page for Expedition Guard's Chestguard 194401, 191 reported disenchants; sourceKind reference, held for Retail/source-context confirmation; not an admitted measured cohort."
-  ],
-  "new_numerical_measurements": [],
-  "numerical_fields_improved": [
-    "Source-reported one-item denominator (191) and three material occurrence counts (173,13,5), kept as HELD source-only reference with exact item IDs; no measured baseline confidence or admitted P(hit)."
-  ],
+  "newly_verified_cohorts": [],
+  "new_numerical_measurements": false,
+  "numerical_fields_improved": [],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-19T0334-prismatic-selected-batch-and-rank-gap.jsonl",
     "research/v3/evidence/dragonflight/2026-11-19T0435-five-new-epic-gear-looter-hits.jsonl",
@@ -73,7 +68,7 @@
     "research/v3/evidence/dragonflight/2026-11-22T0731-bramble-chain-pauldrons-looter.jsonl",
     "research/v3/evidence/dragonflight/2026-11-22T1531-expedition-guards-chestguard-ptr-looter-held.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-22T1531-expedition-guards-chestguard-ptr-looter-held.jsonl",
+  "current_run_evidence_file": null,
   "evidence_file": "research/v3/evidence/dragonflight/2026-11-22T1531-expedition-guards-chestguard-ptr-looter-held.jsonl",
   "source_links": [
     "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
@@ -120,11 +115,14 @@
     "https://www.wowhead.com/ptr/item=200353/lost-landcallers-claws?bonus=6652%3A8817%3A8822%3A9130%3A7977%3A8829%3A1498&ilvl=421",
     "https://www.wowhead.com/item=194390/obsidian-spellsplitter",
     "https://www.wowhead.com/item=198019/bramble-chain-pauldrons",
-    "https://www.wowhead.com/ptr-2/item=194401/expedition-guards-chestguard?ilvl=118"
+    "https://www.wowhead.com/ptr-2/item=194401/expedition-guards-chestguard?ilvl=118",
+    "https://www.wowhead.com/item=194401/expedition-guards-chestguard",
+    "https://www.wowhead.com/item=198418/blazing-pigment",
+    "https://www.reddit.com/r/woweconomy/comments/10h6ccx"
   ],
-  "verified_parent_sha": "6e11fe1b8d3cd0a1df3adce38787041d7e3d01de",
+  "verified_parent_sha": "fbd93383389faaaab5515e543254831440ecc4cc",
   "verified_commit_sha": null,
-  "commit_sha_scope": "Current-run commit SHA cannot be embedded in its own contents; verify via resulting Git commit and branch read-back.",
+  "commit_sha_scope": "Current-run commit SHA cannot be embedded in its own contents; verify from Git commit and branch ref read-back.",
   "blockers": [
     "Master documented Bugy held archive's four Neltharite/Ysemerald swapped outputFamilyAnchorID values and held affected rows. The builder/importer remediation decision and an exact-SHA build-review fixture are still outstanding. Do not modify the source archive or infer production valuation impact.",
     "No independent exact-input R1 Draconium 189143 numeric per-cast study; Bugy's nominal ore total and 5-ore equivalent cannot be used as observed cast denominator.",
@@ -696,25 +694,28 @@
       ]
     }
   ],
-  "next_concrete_step": "Seek an original Retail Dragonflight rank-1 Draconium 189143 or Bubble Poppy 191467 per-operation export (input/output rank, refund-adjusted completed casts, positive-hit and zero histogram). Separately verify a live, dated Wowhead 194401 Looter source with item bonus/patch/skill before Master considers the three held PTR-indexed count rows.",
+  "next_concrete_step": "Seek a genuinely new independently published original Retail Dragonflight 189143 Draconium or 191467 Bubble Poppy saved-variables/event export with true completed operations, refund ledger, rank IDs, skill/spec, per-output hits and 0..N counts. Do not revisit exhausted source families absent new raw data. Leave 194401 held until a dated authenticated Retail Looter/table is available.",
   "validation": {
-    "repo_read": "Read current README, evidence-format, mechanics, worker role, queue and owned status on authorized branch; checked published 731-source closed catalogue receipt.",
-    "source_dedupe": "Name-first searches at Reddit, Wowhead, Blizzard forums, wiki and guides; queried connected GitHub code index for 194401 and checked owner status and catalogue manifest: no prior owned exact-item cohort indexed. Old Bugy/Jallfo/Xenastro/Aary/Prismatic and sibling gear studies excluded.",
-    "new_jsonl": "3 JSONL rows parse, unique IDs, shared studyKey, 191>=173/13/5; exact material names/IDs, source displayed percents; sourceKind reference held, not current Retail live.",
-    "paths": "Only research/v3/evidence/dragonflight/2026-11-22T1531-expedition-guards-chestguard-ptr-looter-held.jsonl (new) and research/coordination/quiet-status/dragonflight.json (owned)",
-    "commit": "One atomic Git tree commit from fresh branch parent, conditional non-forced ref update, followed by branch read-back and comparison.",
-    "production": "No addon, schemas, queue, other worker files, pipeline, PR, merge or release changes."
+    "repository_read": "Read 2026-11-22 branch version of research/v3/README.md, evidence-format.md, mechanics.md, roles/worker.md, queue.json and owned quiet status.",
+    "source_dedupe": "Checked existing 412 Dragonflight evidence filenames, recent status history, 731-source owner receipt and source-first known studies; no fresh numeric source admission.",
+    "numeric_integrity": "No invented or reinterpreted measured denominators, probabilities, exact item quantities, histograms or confidence. Held PTR 194401 numbers not counted as new studies.",
+    "paths": [
+      "research/coordination/quiet-status/dragonflight.json"
+    ],
+    "evidence": "No new JSONL file (owner Nov 19 rule: no empty/duplicate files).",
+    "commit": "One leased atomic Git tree commit; read-back verify resulting file and changed paths.",
+    "production": "No addon, schema, generated ItemDB, queue, other worker, pipeline, PR, merge, release or cadence changes."
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "new_source_reported_numeric_rows": 3,
+  "new_source_reported_numeric_rows": 0,
   "identity_corrections": [],
-  "backlog_triage": "No new admitted/reviewable/held source identity; new search results already in approved Codex cutoff catalogue or existing worker records. Do not duplicate the owner team's corpus.",
+  "backlog_triage": "No new source-original admissible or reviewable numeric cohort. Known original Draconium Bugy/Jallfo, Aary Saxifrage, first-person Khaz'gorite, Prismatic Ore and PTR 194401 references were not re-catalogued or double-counted. Existing 194401 sourceKind reference remains held for Retail admission.",
   "current_run_context_checks": {
     "branch": "implementation/five-agent-completion",
-    "checked_at_utc": "2026-11-22T15:31:27.567Z",
-    "verified_head_before_write": "6e11fe1b8d3cd0a1df3adce38787041d7e3d01de",
+    "checked_at_utc": "2026-11-22T16:27:00.484Z",
+    "verified_head_before_write": "fbd93383389faaaab5515e543254831440ecc4cc",
     "queue_tasks_prioritized": [
       "T0020",
       "T0018",
@@ -723,9 +724,15 @@
       "T0019",
       "T0046"
     ],
-    "searches": "Named ore/herb searches across Reddit, Wowhead, Blizzard forums, GitHub exporter sources and wiki yielded pre-catalogued prospect/mill studies without new 0..N logs. Secondary gear search identified one previously unindexed 194401 PTR Looter source with three counts; verified other candidates 198025, 200354, 202438, 194347, 194386, 198028, 202512, 202511 were previously indexed and excluded.",
-    "no_cutoff_catalogue_duplication": true,
-    "no_numeric_admission": "New 194401 rows reference-only due to PTR mirror/provenance gap; other cohorts excluded."
+    "evidence_result": "No new JSONL: no independent original numeric cohort or correction verified; preserved prior evidence unchanged.",
+    "searched_source_families": [
+      "Source-original priority by-name searches: Draconium Ore prospective results; Bubble Poppy/Saxifrage milling outcomes; Khaz'gorite and Prismatic Ore cast logs across indexed Reddit, Wowhead, wiki/guide and GitHub leads. Returned original known cohorts or source mappings, no new 0-N event ledger.",
+      "Original Wowhead Looter 194401 live-versus-PTR pages inspected separately: current indexed live page omits Looter table, PTR-2 shows the already recorded 191/173/13/5, so no independent current Retail sample.",
+      "Wowhead Pigment Aary R2/R3 100-herb comment and 1.7k Saxifrage author, Reddit Khaz'gorite 100 R2/20 prospects, and Bugy six 2000/100 per-ore historical tables checked as already-indexed cohorts without new denominator support."
+    ],
+    "original_duplicate_prevention": true,
+    "owner_cutoff_catalogue_reused": true,
+    "no_claim_of_source_client_patch": true
   },
   "pipeline_catalogue_receipt": {
     "path": "research/coordination/backlog-catalogue-20261120.json",
