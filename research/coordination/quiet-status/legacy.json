@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-22T19:45:29.090Z",
-  "status": "Rechecked current LIVE Warmaul 24995 against separate Retail and historical pages: Wowhead live shows item level 14 but no independently accessible raw Looter event/stack table; WoWDB LIVE flags cannot disenchant at item level 31. No safe Retail eligibility adjudication. Confirmed source-backed processing-log failure semantics from a firsthand WotLK prospecting comment: a missing loot window with ore not destroyed is a failed attempt, NOT a completed zero-output prospect; vendor/raw batches must not be used as valid cast denominators. Original Wowhead spell 31252 and original item 23424 pages are assigned to Codex's reviewed cutoff catalogue: no duplicated source records, no new post-cutoff measured target cohorts, no evidence file, no EV or PR/build/runtime changes.",
+  "updated_at": "2026-11-22T20:43:22.017Z",
+  "status": "Independently checked a dated Nov 17 2026 third-party Retail AH scan for Warmaul Legplates 24995: item level 31, BoE, required level 26. This corroborates the live-style scaled item-level context previously seen at WoWDB (31) and contradicts naive reuse of the historical TBC/WotLK item-level-108 profile, but is NOT a witnessed disenchant cast, client itemLink/bonus ID or a current disenchant-eligibility check. Earlier conflicting Retail tooltip presentations and WoWDB's Cannot be disenchanted flag remain unresolved. New numerical cast/output/zero/histogram data: none. Old Fel Iron 565-ore Thottbot and Cobalt Enchantrix reports remain previously imported, no duplicated cohorts. Existing Codex-owned 731-source cutoff catalogue and implementation were not modified; no evidence file or pricing.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -24,15 +24,16 @@
     "https://www.wowhead.com/item=24995/warmaul-legplates",
     "https://www.wowdb.com/items/24995-warmaul-legplates",
     "https://www.wowhead.com/wotlk/spell=31252/prospecting",
-    "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore"
+    "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
+    "https://bootybaybroker.com/item/24995/warmaul-legplates/us/alleria"
   ],
-  "numeric_summary": "This pass: zero additional independently verified input/output IDs, measured casts, output hits, zero outcomes, total quantities or histograms for 24995, 36909 or 23424. Finko's first-person failed Mithril prospecting attempt (ore NOT destroyed) supports only failed-operation exclusion, not a target measured zero row. An unlabeled 10-stack Fel Iron, one unnamed blue gem report at JC skill 361 in the same historically mirrored 31252 thread cannot yield exact output ID, actual operation count or Retail rates; held under Codex-owned sourceKey.",
+  "numeric_summary": "No new independent measured processing cohorts, actual successful casts, output hit counts, zero outcomes, material totals, 1..N histograms or skill/build/bonus IDs for 24995, 36909 or 23424. Newly checked 2026-11-17 Retail AH feed shows 24995 item level 31, binds when equipped, required level 26, but does not establish DE eligibility, source patch, operation count or output identity; source-based context corroboration only, not new yield numbers or frozen gold evidence.",
   "evidence_file": "research/v3/evidence/legacy/2026-11-22T1746-outland-northrend-recipe-spell-identity.jsonl",
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "767705770c8c8353bf4bc7bce81379d38c86a33b",
-  "verified_commit_sha": "767705770c8c8353bf4bc7bce81379d38c86a33b",
-  "commit_note": "verified_parent_sha and verified_commit_sha are pre-write HEAD only; commit object SHA cannot be self-referenced from the file it hashes. Final commit must be fetched separately.",
+  "verified_parent_sha": "a649ac2902a58669e2365dc88de958a3e137f1c4",
+  "verified_commit_sha": "a649ac2902a58669e2365dc88de958a3e137f1c4",
+  "commit_note": "verified_parent_sha and verified_commit_sha are pre-write branch HEAD; commit SHA cannot appear inside the file it hashes. Verify resulting commit independently after write.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -225,6 +226,12 @@
       "source": "https://www.wowhead.com/wotlk/spell=31252/prospecting original Finko and unnamed 10-stack Fel Iron first-person comments",
       "disposition": "duplicate-Codex-owned-cutoff-source-held-qualitative",
       "reason": "SourceKey wowhead:spell=31252@wotlk assigned 13 scopes in current verified 731-source catalogue. A prospecting UI failure with the ore not destroyed is not a completed cast/zero. A 10-stack Fel Iron report at JC361 mentions 1 unnamed blue gem, but provides no exact output ID/verified cast denominator, no Retail client context. No second catalogue or JSONL made."
+    },
+    {
+      "task": "T0047 current Retail item-level and variant context",
+      "source": "https://bootybaybroker.com/item/24995/warmaul-legplates/us/alleria",
+      "disposition": "new-time-stamped-third-party-retail-item-level-corroboration-not-cast-eligible",
+      "reason": "Last Blizzard-linked AH scan 2026-11-17 06:00 UTC lists exact 24995 Warmaul Legplates at item level 31, BoE, required level 26. Source lacks full itemLink, bonusIDs, actual DE attempt/API gate, material outcome and patch. Independently corroborates scaled level 31 context of WoWDB, without overriding current WoWDB no-DE flag or treating historical TBC item level 108 as live eligibility. Market price deliberately excluded."
     }
   ],
   "blockers": [
@@ -391,26 +398,26 @@
     }
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Find newly released independent current Retail original processing recorder exports keyed to exact itemLink and client build, successful operations, full per-output zeros/positive 1/2+ stack histograms, inputs consumed and refunds for Fel Iron 23424 and Cobalt 36909; separately seek a safe verified supported live inventory eligibility path and actual 24995 item variant before any addon claim. Do not reuse the 2006 qualitative beta narrative as quantitative rates or duplicate the Codex-owned cutoff catalogue.",
+  "next_concrete_step": "Find publicly accessible independent, current Retail 12.x zero-inclusive disenchant/prospect operation log with successful consumption and complete per-output 0/1/2+ material quantities, exact itemLink/bonus/build, skill and refund accounting; for 24995 first obtain actual live client disenchant eligibility/API proof. AH listing/gear level is not sufficient for a DE recommendation. Skip previously catalogued 565-Fel-Iron study, OZZIEEM/EVIAN/HASKINA copies and empty Enchantrix exports.",
   "coordination_cutoff": "Cutoff 0cd0bad8867e7a8d909b4ecae74f6136a3e23d42. Repository README and manifest now report CLOSED_VERIFIED_CURRENT_PIPELINE: 731 sources (713 original + 12 addendum + six recovered); Codex/direct reviewers own source decisions, build/database/tooltip verification. No recataloguing/branch changes.",
   "sources_reviewed_this_run": [
-    "https://gamesfacebook-usa.blogspot.com/2006/10/world-of-warcraft-gemcutting.html",
-    "https://gamesfacebook-usa.blogspot.com/2006/10/bc-journal-30-october-2006.html",
-    "https://github.com/amdam/wow_retail_wtf/blob/981c4755d0541737b3e09effe0e87cc5bfad8526/Account/DOOMAGE/SavedVariables/Enchantrix.lua",
-    "https://github.com/mmathias01/WoWza/blob/b209e3f8faae341d99b9c007d28365935fff1f62/WTF/Account/SWEETDOC/SavedVariables/Enchantrix.lua",
-    "https://github.com/gordon-to/wow-ui/blob/a379400d142ca423ddd34b6c0c1b845c7765045d/WTF/Account/9INCHTOENAILS/SavedVariables/Enchantrix.lua",
-    "https://github.com/rbutera/modernclassicmac/blob/b8871f80894a3df52467b0306d209db2dc0794a5/WTF/Account/ZEROPOSITIVE/SavedVariables/Enchantrix.lua"
+    "https://bootybaybroker.com/item/24995/warmaul-legplates/us/alleria",
+    "https://www.wowhead.com/wotlk/item=24995/warmaul-legplates",
+    "https://www.wowhead.com/tbc/item=23424/fel-iron-ore",
+    "https://www.wowhead.com/it/item=36909/minerale-di-cobalto",
+    "https://www.wowhead.com/tbc/forums/topic/inks-bulk-profession-macros-193012"
   ],
   "latest_run_source_date": "2026-11-22",
   "latest_run": {
-    "at_utc": "2026-11-22T18:44:37.838Z",
-    "branch_head_reviewed": "704922196b9d7940ec244fb01fe21c19d3d5a4fd",
-    "source_count": 6,
+    "at_utc": "2026-11-22T20:43:22.017Z",
+    "branch_head_reviewed": "a649ac2902a58669e2365dc88de958a3e137f1c4",
+    "source_count": 5,
     "new_measured_studies": 0,
     "new_recipe_identity_records": 0,
     "new_evidence_jsonl": null,
-    "source_scope": "New original 2006 beta firsthand qualitative prospect note plus 4 pinned archived SavedVariables; held historical anecdote, 3 empty ledgers and 1 already-researched unrelated cohort."
+    "new_retitled_item_level_corroborations": 1,
+    "scope": "New dated Retail AH third-party current 24995 item-level context contrasted with historical WotLK; TBC Fel Iron historical source and shared list macro checked only for previous-cohort/ambiguous-source exclusion; no current operation ledger and no v3 admission."
   },
   "new_evidence_file_this_run": null,
-  "next": "Prioritize a genuinely NEW independent published post-cutoff Retail 12.x session log (successful input consumption, exact item links, output IDs/quality, zeros and refund accounting) for 24995, 36909 or 23424. Do not recatalogue the already reviewed Wowhead spell=31252/item=23424 mirror or count failed loot-window attempts as zero; request Master to resolve 24995 Retail eligibility with verified client item variant/API path. Keep cutoff catalogue and implementation under Codex ownership."
+  "next": "Need primary live character/client eligibility and exact bonus-tagged operation data for 24995, and original actual 0..N processing counters for Cobalt 36909 or Fel Iron 23424. New 2026 Retail AH current item-level 31 listing is not evidence of DE eligibility."
 }
