@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-22T07:38:02.639Z",
-  "status": "Refreshed current v3 instructions, mechanics, worker queue, existing legacy evidence and closed/verified 731-source catalogue. Rechecked Warmaul Legplates 24995 historical disenchant profile against distinct current Retail and WotLK Classic items: WotLK Classic item level 108, explicit disenchantable skill 275; Retail page shows level-14 base and level-74 variant without proving actual current live disenchantability. Historical 3.3.5 server loot table gives Arcane Dust 22445, Greater Planar Essence 22446 and Large Prismatic Shard 22449 weights 7500/2200/300, but they are reference-template weights, not empirical casts/hits/rates or a Retail gate. Cobalt 36909 and Fel Iron 23424 old public numbers remain the previously recorded identical studies. Cross-checked Runecloth Belt 13856 50/70-cast leads and Saronite 30-stack study against existing source-cohort evidence; they are duplicates, not new independent observations. No independently new zero-inclusive target ledger, no qualified new records, no evidence file, database/tooling/PR/schedule changes.",
+  "updated_at": "2026-11-22T08:39:23.624Z",
+  "status": "Reviewed current legacy queue and authoritative v3 instructions at branch head; targeted first-person Retail Warmaul 24995/BC disenchant receipts and Cobalt 36909/Fel Iron 23424 zero-inclusive prospecting originals. Public sources yielded only version-specific reference data and two contemporary addon collection/eligibility implementation leads (TheWoWDB Companion; ProfitProphet), no new independent processing cohort or actual 24995 Retail eligibility receipt. No numeric measured fields, schema/tooling, generated data, catalogue or PR changes; older originals and previous held study preserved.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -12,14 +12,15 @@
     "T0050"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995: current Retail client variant/build and eligibility, original completed DE events and per-output zero-inclusive units/histograms for 22445/22446/22447/22449",
-    "Fel Iron Ore 23424 and Cobalt Ore 36909: independent Retail per-operation processing ledger, named output IDs/rank/quality, actual casts and event histograms, refund and profile context",
-    "Original data capture lead: whether publicly released Retail ProspectMate saved data could support legacy sample denominators (ruled out for current source)"
+    "Warmaul Legplates 24995: Retail 12.x exact itemLink/bonus/ilvl and actual client disenchant eligibility plus complete independent cast/zero-inclusive output ledger for 22445/22446/22447/22449",
+    "Cobalt Ore 36909 / Fel Iron Ore 23424: original documented successful prospect operation count separate from ore-pile equivalents/refunds; named ranked output IDs, per-output hits, zero yields, conditional quantities, profile and build",
+    "New source-acquisition check: whether 2026 Retail collector addons publish any real session export rather than only estimates or saved local mappings"
   ],
   "newly_verified_fields_cohorts": [
-    "Newly independently cross-checked historical eligibility context only: Warmaul Legplates input 24995 WotLK Classic itemLevel=108, Disenchantable (275). Live Retail page displays itemLevel=14 and variant=74; neither proves actual in-game Retail disenchantability or current required skill.",
-    "Historical 3.3.5 reference loot template for 24995 shows output IDs 22445 Arcane Dust weight 7500, 22446 Greater Planar Essence weight 2200, 22449 Large Prismatic Shard weight 300; identical template shown for Bloodfist Legplates 25003. These are source model/reference weights only, NOT measurements, measured chances, event hits, total quantities or 2026 Retail probabilities.",
-    "0 new genuine source cohorts, 0 completed measured Retail DE or prospect casts, 0 new source-supported per-output material hits/zeros/histograms/quantities; existing held 40959 source observations and all prior evidence remain intact."
+    "0 new independent measured operations, output hit counts, zero-outcome records, total quantities, conditional histograms or exact Retail 24995 current-eligibility receipts. Numeric fields advanced: none. Existing source-recorded 24995/36909/23424 figures remain unchanged.",
+    "NEW source-context-only lead: TheWoWDB Companion v0.13.0 changelog (published in later 2026 release history) explicitly describes recording observed disenchants locally and capping recorded disenchant sources at 600, with sharing opt-in. No public original session-level 24995 operation ledger, valid N or item-output data available from the inspected page; not empirical cohort evidence.",
+    "NEW source-context-only lead: ProfitProphet v2.10.1 (2026-08-21 changelog) says Retail deal list excludes gear the game won't permit disenchanting but shows gear when eligibility remains unknown pending data load. This does NOT establish the API used, whether item 24995 qualifies, or a measured outcome; source code/exact 24995 itemLink receipt required.",
+    "Historical original 141-stack/564-prospect Titanium claim remains a repeated warcraftecon.com secondary quote (output family totals 130 epic, 148 rare, 846 uncommon, 417 powder) with original page, named output IDs and denominator provenance unavailable; no additional evidence or new independent cohort."
   ],
   "source_urls": [
     "https://thewowdb.com/guides/disenchant-roi-trap/",
@@ -113,15 +114,16 @@
     "https://wotlk.evowow.com/?item=24995",
     "https://wotlk.evowow.com/?item=25003",
     "https://www.wowhead.com/item=13856/runecloth-belt",
-    "https://www.wowhead.com/cata/spell=31252/prospecting"
+    "https://www.wowhead.com/cata/spell=31252/prospecting",
+    "https://www.curseforge.com/wow/addons/profitprophet/files/8736365/dependencies"
   ],
-  "numeric_summary": "0 new independently measured Retail input operations, 0 additional output hit-count/zero bins or quantity tallies, no new empirical Cobalt 36909 / Fel Iron 23424 / Warmaul 24995 cohorts; historical Warmaul 24995 item level 108 and 275 disenchanting skill are version context only. 7500/2200/300 for 22445/22446/22449 are historical template weights, not an observed frequency or current Retail chance. 0 new JSONL; no gold prices.",
+  "numeric_summary": "New measured cohort count 0; new actual Retail disenchant/prospect operation counts, per-output hits, zero observations, total units and positive conditional histogram bins: none. 24995 -> 22445/22446/22447/22449 and 36909/23424 remain existing evidence only. No purported 2026 addon collection table is mistaken for a measured cohort. No empirical chances or gold EV introduced.",
   "evidence_file": "research/v3/evidence/legacy/2026-11-22T0437-reinforced-cobalt-positive-bins-held.jsonl",
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "78827f68a4922f162e2aff4c75d00bb94cfffb9b",
-  "verified_commit_sha": "78827f68a4922f162e2aff4c75d00bb94cfffb9b",
-  "commit_note": "Status-only update. SHA fields are checked pre-commit branch head since a commit cannot self-reference. Post-write fetch verifies committed content and branch tip; preserve prior evidence, own file only. No new JSONL because no qualifying independent cohort.",
+  "verified_parent_sha": "044ab462b42c46dc9b12b7878546a213c678421a",
+  "verified_commit_sha": "044ab462b42c46dc9b12b7878546a213c678421a",
+  "commit_note": "Status-only update; verified_parent_sha and verified_commit_sha are pre-write branch tip by design (self-referential commit SHA cannot be embedded). Verify resulting branch head, committed paths and status content after write. No new evidence file because no independent source-qualified cohort.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -230,6 +232,18 @@
       "source": "Urutseg/ProspectMate v2.0.3 source code, ProspectMate.lua",
       "disposition": "held-tool-not-target-dataset",
       "reason": "Original current addon code tracks Dragonflight and Midnight ore IDs and not Fel Iron 23424 or Cobalt 36909; DB stores consumed and result aggregates, no successful N, zeros/hit histograms, player attributes or builds. Source contains no published empirical samples; not v3 evidence."
+    },
+    {
+      "task": "T0047 current client evidence",
+      "source": "ProfitProphet v2.10.1 release notes",
+      "disposition": "reviewable-eligibility-implementation-lead-not-24995-measurement",
+      "reason": "Unspecified client eligibility check disclosed in addon changelog; not specific to 24995, no live itemLink or API receipt. Master-owned client/runtime QA."
+    },
+    {
+      "task": "T0047 original event capture",
+      "source": "TheWoWDB Companion v0.13.0 / v0.19.2 release history",
+      "disposition": "held-future-primary-export-lead-no-observed-cohort",
+      "reason": "Client addon claims local disenchant capture, not an accessible public independent operation ledger; 600-source cap cannot be equated with 600 disenchants."
     }
   ],
   "blockers": [
@@ -251,7 +265,8 @@
     "2016 ProspectMe raw data caveat: normal TimesProspected increments 1 per capture while 2016 mass operations increment 4 nominal equivalents; code also overwrites duplicate same-material results within an event. Do not equate saved counter with original physical 5-ore operations or trust totals without source-version/operation reconciliation. This is not evidence of an existing target corpus.",
     "GuideMMO's 2021 TBC Classic Fel Iron 1000-ore video is not a Retail 12.x measurement; publicly indexed description does not expose actual item-specific gem totals, completed successful casts, zero outcomes or player profile. Video observation/extraction and cohort uniqueness would be required before any historical-only evidence.",
     "12.1.7 PTR Fel Iron tooltip Outland Jewelcrafting (1) is not a verified live skill/operation gate and must not be mixed with historical 275-skill lookup.",
-    "NEW 40959 historical original source (item 41122 Wowhead comment 282402): explicitly claimed 278 Infinite Dust conflicts with 272 units from positive stack frequency bins 25×2+21×3+21×4+15×5; correct source from original commenter or archived context before compiler admission. 22 purchased bar stacks are not proven 110 completed disenchant casts. 2 Dream Shards are quantity-only, not proven two hits. Historical WotLK provenance must never be treated as current Retail without version/eligibility check."
+    "NEW 40959 historical original source (item 41122 Wowhead comment 282402): explicitly claimed 278 Infinite Dust conflicts with 272 units from positive stack frequency bins 25×2+21×3+21×4+15×5; correct source from original commenter or archived context before compiler admission. 22 purchased bar stacks are not proven 110 completed disenchant casts. 2 Dream Shards are quantity-only, not proven two hits. Historical WotLK provenance must never be treated as current Retail without version/eligibility check.",
+    "2026 published Retail recorder addons (TheWoWDB Companion and ProfitProphet) provide capability/eligibility changelog descriptions but no downloadable independent 24995/36909/23424 session ledger, exact observed item/output ID per event, successful N, zeros, client build, skill/spec or refund accounting. Do not turn 600 source cap or template percentages into observed casts."
   ],
   "exhausted_sources": [
     {
@@ -328,47 +343,35 @@
     }
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Seek genuinely NEW independent original Retail 12.x Warmaul 24995 itemLink/bonus/build and actual success/eligibility receipt with completed disenchants, per-output 22445/22446/22447/22449 event hits/zeros and conditional-unit histograms; if unavailable pursue original zero-inclusive Fel Iron 23424 and Cobalt 36909 processing logs with real operation count (refunds distinct) and skill/rank profile. Avoid exhausted WotLK model clones and existing 731-source catalogue; Master owns runtime matching.",
+  "next_concrete_step": "Seek *new original* Retail 12.x 24995 itemLink/bonus/build and read-only recorded eligibility plus an actually completed disenchant event export with named 22445/22446/22447/22449 output IDs/stack-unit bins/zeros; inspect any released 2026 companion source/export if published. Otherwise prioritize independent per-operation Fel Iron 23424/Cobalt 36909 Retail prospecting logs with output identities, refund accounting, skill and build. Do not repeat existing 731-source catalogue or copied warcraftecon historical claims.",
   "coordination_cutoff": "Cutoff 0cd0bad8867e7a8d909b4ecae74f6136a3e23d42. Current branch manifest status CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources (713 original + 12 addendum + 6 recovered) and enabled catalogue registry. Codex/direct reviewers own source decisions and implementation; no duplicate assignment.",
   "sources_reviewed_this_run": [
     {
-      "url": "https://www.wowhead.com/wotlk/item=24995/warmaul-legplates",
-      "type": "Original historical WotLK Classic item profile",
-      "disposition": "historical-version-context-not-Retail-evidence",
-      "detail": "Explicit Disenchantable (275), item level 108, random enchantments. Current Retail is a different item version."
+      "url": "https://www.curseforge.com/wow/addons/thewowdb-companion/files/9640779",
+      "type": "Current Retail collection-addon changelog (v0.13.0 in Nov 16 v0.19.2 release history)",
+      "disposition": "reviewable-future-export-lead-no-public-original-operations",
+      "detail": "Addon states observed disenchants locally recorded, limited to 600 source mappings, shared only by opt-in. Public page supplies no per-event target corpus, cast denominator, zero inclusive material ledger or exact item 24995 receipt."
     },
     {
-      "url": "https://www.wowhead.com/item=24995/warmaul-legplates",
-      "type": "Retail item-version comparison",
-      "disposition": "retail-item-variants-unresolved-live-eligibility",
-      "detail": "Displayed base item level 14 and alternate variant 74; no dated actual character/itemLink disenchant cast or live API permission."
-    },
-    {
-      "url": "https://wotlk.evowow.com/?item=24995",
-      "type": "Historical 3.3.5 server-side reference weights",
-      "disposition": "held-prior-model-not-empirical",
-      "detail": "Lists 22445 Arcane Dust 7500, 22446 Greater Planar Essence 2200, 22449 Large Prismatic Shard 300; values are game-data model weights, not observed player trials or Retail probabilities."
-    },
-    {
-      "url": "https://wotlk.evowow.com/?item=25003",
-      "type": "Matching Bloodfist Legplates historical group",
-      "disposition": "same-profile-model-corollary-not-independent-cohort",
-      "detail": "Same three historical material weights. No original per-cast source operations or current client proof."
-    },
-    {
-      "url": "https://www.wowhead.com/item=13856/runecloth-belt",
-      "type": "Candidate original 50/70-belt disenchant tallies",
-      "disposition": "duplicate-already-in-legacy-evidence",
-      "detail": "Kefra 50-cast and separate 70-cast comments already transcribed in 2026-11-01 and 2026-11-02 legacy evidence; do not recopy."
+      "url": "https://www.curseforge.com/wow/addons/profitprophet/files/8736365/dependencies",
+      "type": "Retail eligibility UI changelog (v2.10.1, 2026-08-21)",
+      "disposition": "held-source-context-not-item-specific-evidence",
+      "detail": "Changelog describes suppressing DE quotes only for confirmed game-disallowed gear, preserving unknown-state gear while client item data loads. No callable API signature or Warmaul item-specific live test established."
     },
     {
       "url": "https://www.wowhead.com/cata/spell=31252/prospecting",
-      "type": "Historical 30-stack Saronite prospect tally",
-      "disposition": "duplicate-already-recorded-original",
-      "detail": "myrmideon original 30-stack tally already present in 2026-10-31 and 2026-11-07 evidence; nominal ore equivalents not a new cohort or zero histogram."
+      "type": "Historical 564 prospect/141 stack warcraftecon quote",
+      "disposition": "duplicate-secondary-copied-study-held",
+      "detail": "Only broad gem classes and powder totals reproduced; original warcraftecon page, named output IDs and event ledger absent. Does not create an independent sample or improve Cobalt/Fel Iron."
+    },
+    {
+      "url": "https://warcraft.wiki.gg/wiki/Cobalt_Ore",
+      "type": "Cobalt 36909 legacy reference table",
+      "disposition": "reference-percentages-not-new-measurement",
+      "detail": "Per-gem percentages are source-model priors; no stated original casts, event hits/zero histogram, skill or current Retail batch."
     }
   ],
   "latest_run_source_date": "2026-11-22",
-  "latest_run": "2026-11-22T07:38:02.639Z: historical 24995 WotLK Classic vs Retail profile and 3.3.5 reference weights cross-check; duplicate legacy 13856/30-stack Saronite sources excluded. 0 new numeric measurements or JSONL; status-only.",
+  "latest_run": "2026-11-22T08:39:23.624Z: source-first post-cutoff lead discovery, current 24995 Retail eligibility still unresolved; TheWoWDB Companion capture and ProfitProphet eligibility behavior are tool-context only; new measured cohorts 0, evidence file 0, status-only.",
   "new_evidence_file_this_run": null
 }
