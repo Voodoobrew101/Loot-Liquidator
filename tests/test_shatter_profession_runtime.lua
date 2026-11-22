@@ -29,7 +29,6 @@ LL.CanUseConversion=function()return false,'Informational fixture','Current char
 LL.EligibleDisenchant=function()return false end
 LL.MarkupColor=function()return ''end
 LL.Money=function(_,v)return tostring(v)..' copper'end
-LL.ProfessionProgression=function()return{}end
 LL.Invalidate=function(self)self._processingContextCache=nil;self._processingModelCache=nil end
 LL:MigrateEvidenceSettings()
 check(LL:InitializeItemDB(),LL.itemDBError)
@@ -138,17 +137,6 @@ for rank=2,3 do
     near(pool(stats),3,'Multicraft and Resourcefulness never inflate the three-dust completed-cast pool')
     check(stats.expectedInputCount<1,'Resourcefulness changes expected shard consumption independently')
 end
-set(133,30,30)
-local unscaled=assert(LL:ResolveEvidenceModel(facts(2),op,nil,1))
-check(LL:SetManualProfessionProfile('Player','Enchanting',10,{enabled=true,skill=133,
-    specialization='99890=30,99889=30',buffs={},benchmark={outputLevel=150,specializationBonus=20}}),
-    'Shatter benchmark profile saves')
-local benchmark=assert(LL:ResolveEvidenceModel(facts(2),op,nil,1))
-check(benchmark.recipeQualityApplied and benchmark.syntheticBenchmark,'synthetic benchmark follows the source-aware quality projection')
-for _,id in ipairs(rule.rankItemIDs)do near(amount(benchmark,id),amount(unscaled,id)*1.8,'benchmark scales final ranked dust exactly once')end
-check(LL:ApplySyntheticBenchmark(facts(2),op,benchmark,benchmark.context)==benchmark,'benchmark replay is idempotent')
-check(LL:ResolveEvidenceModel(facts(2),op,nil,1)==benchmark,'benchmark cache retains its once-scaled result')
-check(same(LL.ItemDB.processing,sourceBefore),'all compiled empirical unit totals, casts and original source fields remain unchanged')
 LL.db.source_itemdb_enabled=false;LL:Invalidate()
 check(LL:ResolveEvidenceModel(facts(2),op,nil,1)==nil,'the quality model cannot bypass disabled source evidence')
 check(LL:ResolveEvidenceModel(facts(2),op,nil,2)==nil,'personal-only mode does not import published endpoint evidence')

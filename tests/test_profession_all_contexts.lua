@@ -7,11 +7,11 @@ time=function() return 100 end
 GetBuildInfo=function() return '12.1.5','70961' end
 CreateFrame=function() return {RegisterEvent=function()end,SetScript=function()end} end
 local LL={db={characters={Player={professions={},recipes={},researchProfiles={}},Alt={professions={},recipes={},researchProfiles={}}}}}
-for _,file in ipairs({'Professions.lua','ConversionEngine.lua'}) do assert(loadfile('LootLiquidator/'..file))('LL',LL) end
+for _,file in ipairs({'ProfessionModels.lua','Professions.lua','ConversionEngine.lua'}) do assert(loadfile('LootLiquidator/'..file))('LL',LL) end
 LL.CharacterKey=function() return 'Player' end
 local realOutputPrice=LL.GetOutputPrice
-local professions={'Alchemy','Blacksmithing','Enchanting','Engineering','Herbalism','Inscription','Jewelcrafting',
-    'Leatherworking','Mining','Skinning','Tailoring','Cooking','Fishing'}
+local professions={'Alchemy','Blacksmithing','Enchanting','Engineering','Inscription','Jewelcrafting',
+    'Leatherworking','Mining','Herbalism','Skinning','Tailoring','Cooking'}
 local native={baseSkill=100,bonusSkill=55,craftingQuality=2,baseDifficulty=200,bonusDifficulty=10,
     ingenuityRefund=17,expectedConcentrationCost=22,
     concentrationCost=37,craftingTimeMilliseconds=4500,supportsConcentration=true,
@@ -47,14 +47,17 @@ for i,profession in ipairs(professions) do
     near(live.statCalibration.resourcefulness.percent,17,'native percentage calibration')
     check(live.concentrationCost==37 and live.craftingTimeMilliseconds==4500 and live.baseDifficulty==200,
         'operation difficulty, concentration and duration retain native units')
-    check(LL:SetManualProfessionProfile('Player',profession,11,{enabled=true,skill=80,specialization=node..'=5',
-        stats={resourcefulness={rating=250,percent=17}}}),'manual profile saves for '..profession)
+    local accepted=LL:SetManualProfessionProfile('Player',profession,11,{enabled=true,skill=80,specialization=node..'=5',
+        stats={resourcefulness={rating=250,percent=17}}})
+    if LL:ProfessionTooltipMethods(profession) then
+    check(accepted,'manual profile saves for '..profession)
     LL.db.rateProfile=3;LL.db.rateProfileCharacter='Player';clear()
     local manual=LL:ProcessingPlayerConditions(facts,'Craft',8000+i,'Current character',profession)
     check(manual.simulated and manual.profession==profession and manual.specializationPoints[tostring(node)]==5,
         profession..' selects its own manual profile')
     near(manual.preSpecializationSkill,80,'manual pre-specialization skill')
     check(not manual.operationStatsIncludeSpecialization,'manual stats are independent of live specialization')
+    if profession~='Enchanting' then
     near(manual.statAnchors.resourcefulness.rating,250,'initial rating/percentage pair sets one immutable anchor')
     check(LL:SetManualProfessionProfile('Player',profession,11,{enabled=true,skill=80,specialization=node..'=5',
         stats={resourcefulness={rating=260,percent=17}}}),'edited rating saves')
@@ -64,6 +67,8 @@ for i,profession in ipairs(professions) do
     manual.statAnchors.resourcefulness.rating=999
     near(LL:GetManualProfessionProfile('Player',profession,11).statAnchors.resourcefulness.rating,250,
         'context anchors cannot rewrite saved anchors')
+    else check(not next(manual.stats or {}) and not next(manual.statAnchors or {}),'DE manual context has no unrelated resourcefulness controls') end
+    else check(not accepted,'unsupported gathering manual profiles are rejected while raw context remains captured') end
     LL.db.rateProfile=2;LL.db.rateProfileCharacter='Alt';clear()
     local before=operationReads
     local offline=LL:ProcessingPlayerConditions(facts,'Craft',8000+i,'Current character',profession)
@@ -179,7 +184,7 @@ for i,profession in ipairs(professions) do
         inputCount=2,outputID=2000,outputCount=2,verifiedOutput=true}
 end
 bridged={};LL:ConversionOptions(facts)
-check(#bridged==13,'every profession fixed craft reaches the shared model hook')
+check(#bridged==#professions,'every retained item-processing profession reaches the shared model hook')
 for i,c in ipairs(bridged) do check(c.profession==professions[i],c.profession..' retains its profession hint') end
 local display
 LL.Conversions={[1001]={{method='Craft',profession='Blacksmithing',recipeID=9002,inputCount=2,outputID=2000}}}
@@ -200,38 +205,22 @@ local suppliesModel={inputCount=2,materials={{id=2000,expectedQuantity=2}},confi
 near(LL:ValueProcessingModel(suppliesModel,30,true,facts),92.5,'modeled resourcefulness affects every consumable extra input once')
 near(LL:ValueProcessingModel(suppliesModel,30,true,facts),92.5,'revaluation does not compound extra-input savings')
 
--- Gathering is a separate target preview. A native general ability has no
--- invented output baseline; explicit source-scoped targets can supply one.
 assert(loadfile('LootLiquidator/ProfessionModels.lua'))('LL',LL)
 assert(loadfile('LootLiquidator/ProfessionCalculations.lua'))('LL',LL)
 LL.ItemDB.professionProfiles=assert(loadfile('database/profession-profile-rules.lua'))()
-C_Spell={GetSpellName=function(id) return ({[2366]='Herbalism',[2575]='Mining',[8613]='Skinning',[131474]='Fishing'})[id] end}
-for _,profession in ipairs({'Herbalism','Mining','Skinning','Fishing'}) do
-    local targets=LL:GetGatheringSimulationTargets(profession,11)
-    check(#targets>=1 and targets[1].nativeAbility and targets[1].label:find(profession,1,true),
-        'native general ability identifies '..profession..' without a bag item')
-    check(#targets[1].baseline.materials==0,'general '..profession..' preview invents no yield baseline')
-    local general=LL:GatheringSimulationPreview(profession,11,nil,'Player',true)
-    check(general and general.actionable==false and #general.materials==0,'general preview is separate from liquidation actions')
+C_Spell={GetSpellName=function(id) return 'Spell '..id end}
+check(LL.GatheringSimulationModel==nil and LL.GatheringSimulationPreview==nil
+    and LL.GetGatheringSimulationTargets==nil and LL.RegisterGatheringSimulationTarget==nil,
+    'gathering projection APIs are removed')
+check(LL.IsGatheringProfession==nil,'gathering-only profession classifier is removed')
+for _,stat in ipairs(LL.ProfessionSimulationStats)do
+    check(stat.key~='finesse' and stat.key~='perception' and stat.key~='deftness',
+        'gathering-only simulation stats are removed')
 end
-local target={targetID='fixture:Mana-Lily-node',nativeTargetID='GameObject-fixture-observed-source',label='Mana Lily — observed node',
-    method='Gather',profession='Herbalism',expansionID=11,recipeID=2366,
-    sourceURL='https://example.test/recorded-node-fixture',sourceProfile={preSpecializationSkill=0,skill=0,stats={},specializationPoints={}},
-    baseline={inputCount=1,materials={{id=236761,expectedQuantity=2,confidence=60}},confidence=60}}
-check(LL:RegisterGatheringSimulationTarget(target),'explicit source-scoped target registers its native identity and baseline')
-target.baseline.materials[1].expectedQuantity=999
-local targets=LL:GetGatheringSimulationTargets('Herbalism',11)
-local registered
-for _,candidate in ipairs(targets) do if candidate.targetID==target.targetID then registered=candidate end end
-near(registered.baseline.materials[1].expectedQuantity,2,'registered target copies its source baseline')
-local wrongExpansion=false
-for _,candidate in ipairs(LL:GetGatheringSimulationTargets('Herbalism',10)) do if candidate.targetID==target.targetID then wrongExpansion=true end end
-check(not wrongExpansion,'target output evidence stays scoped to its expansion')
-local previousRate=LL.db.rateProfile
-local preview=LL:GatheringSimulationPreview('Herbalism',11,'fixture:Mana-Lily-node','Player',true)
-check(preview and preview.actionable==false and #preview.materials==1 and preview.materials[1].expectedQuantity>0,
-    'known target projects actual material outputs without becoming a bag conversion')
-check(LL.db.rateProfile==previousRate,'gathering preview leaves recommendation profile settings unchanged')
+local miningAuras=LL:KnownProfessionAuraIDs('Mining',11)
+for _,id in ipairs({185562,432265,1236763,1236767,1269152,1269170,1269171})do
+    check(not miningAuras[tostring(id)],'gathering-only aura is no longer scanned: '..id)
+end
 
 local widgets={}
 local function widget()
@@ -264,22 +253,15 @@ LL.GetProfessionUIOptions=function() return {nodes={},buffs={}} end
 LL.UpdateAllAppearance=function() end
 GetExpansionLevel=function() return 11 end
 assert(loadfile('LootLiquidator/Settings.lua'))('LL',LL)
-LL.db.professionTooltipProfiles={Herbalism='@hypothetical'}
-LL.db.gatheringSimulationSelections={['Herbalism:11']='fixture:Mana-Lily-node'}
-local panel=LL:CreateProfessionProfilePanel('Herbalism')
-panel.scripts.OnShow()
-check(panel.gatheringPreview and panel.gatheringPreview.actionable==false and #panel.gatheringPreview.materials==1,
-    'profession Settings renders its selected known gathering target result card')
-local card=false
-for _,w in ipairs(widgets) do
-    if w.shown and type(w.text)=='string' and w.text:find('Yield factor:',1,true) and w.text:find('Item 236761:',1,true) then card=true end
-end
-check(card,'target card shows confidence, dimensionless metrics and known material quantities')
+LL.db.professionTooltipProfiles={}
 local originalAlchemy=LL.ItemDB.professionProfiles.profiles['Alchemy:11']
 LL.ItemDB.professionProfiles.profiles['Alchemy:11']={nodes={[777]={name='Conditional Alchemy',maxRank=30,
     learningEffects={{entryID=122285,metric='resourcefulness',amount=12,unit='rating',condition={requiresActiveBuff=true,spellIDs={433230}}}},
-    milestones={{rank=5,effects={{entryID=125480,metric='craftingSpeed',amount=2,unit='percent',
+    milestones={{rank=5,effects={{entryID=125480,metric='resourcefulness',amount=2,unit='percent',scope={method='Craft'},
         condition={requiresActiveBuff=true,spellIDs={},maxStacks=15}}}}}}}}
+LL.ItemDB.professionProfiles.recipes[9001]={profession='Alchemy',expansionID=11,labels={},outputCount=2,supportsMulticraft=true}
+LL.db.characters.Player.recipes[9001]={learned=true,profession='Alchemy',outputID=2000,outputCount=2,
+    reagentSlots={{quantityRequired=1,alternatives={{itemID=1001}}}}}
 local spellName=C_Spell.GetSpellName
 C_Spell.GetSpellName=function(id) if id==433230 then return 'Native Alchemy Bonus' end return spellName(id) end
 local buffOptions=LL:AddProfessionConditionBuffs({nodes={},buffs={}},'Alchemy',11)

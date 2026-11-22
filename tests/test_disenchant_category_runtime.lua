@@ -151,31 +151,52 @@ assert(loadfile('LootLiquidator/ItemDBRuntime.lua'))('LL',shipped)
 LL.ItemDB=shipped.ItemDB;LL.LegacyDB=nil
 check(LL:InitializeItemDB(),LL.itemDBError)
 local native,ordinary,maxReference={},{},nil
+local migrated=0
 for _,r in ipairs(LL.ItemDB.processing) do
-    if r.isDisenchantCategory and r.expansionID==11 then
+    if r.categorySourceInputItemID then
+        check(r.method=='Disenchant' and r.isDisenchantCategory and r.inputItemID==nil,
+            'ordinary source item identity is provenance, never an exact eligibility override')
+        migrated=migrated+1
+    end
+    -- These six pooled/counting receipts remain verbatim. Additional ordinary
+    -- studies now join their shared categories instead of staying exact items.
+    if r.isDisenchantCategory and r.expansionID==11 and r.recordID:match('^evidence:category:') then
         native[#native+1]=r
         if r.categoryReferenceOnly then maxReference=r else ordinary[r.gearKey]=r end
     end
 end
-check(#native==6,'native ItemDB ships five ordinary categories plus a separate max-specialization context')
+check(#native==6,'native ItemDB preserves five original category receipts plus a separate max-specialization receipt')
+check(migrated>0,'native ItemDB also contains independent studies migrated to shared categories')
 local probes={
     {'gear:11:2:armor',2,4,278884,243599,.837915,.406635,527.5},
     {'gear:11:3:armor',3,4,239671,243602,.465373,.465373,4252.5},
     {'gear:11:3:weapon',3,2,244178,243602,.781290,.781290,791},
-    {'gear:11:4:armor',4,4,250456,243605,.597484,.597484,159},
+    {'gear:11:4:armor',4,4,250456,243605,.597484,.597484,159,.5812970837510016},
     {'gear:11:4:weapon',4,2,250451,243605,.631148,.631148,61}}
 for index,probe in ipairs(probes) do
-    local key,rarity,classID,member,output,mean,chance,casts=unpack(probe)
+    local key,rarity,classID,member,output,mean,chance,casts,fusedMean=unpack(probe)
     check(ordinary[key] and #ordinary[key].categorySourceStudyIDs>0,'native category has source studies: '..key)
     check(contains(ordinary[key].memberInputItemIDs,member),'native category names its sampled member: '..key)
+    local receipt=assert(byID(ordinary[key],output),'canonical material receipt missing')
+    near(receipt.expectedQuantity.value,mean,'migration preserves the original category mean verbatim')
+    near(receipt.dropChance.value,chance,'migration preserves the original measured occurrence verbatim')
+    near(receipt.dropChance.samples,casts,'migration preserves original occurrence samples verbatim')
     for _,id in ipairs({999100+index,member}) do
         local f={id=id,expansionID=11,quality=rarity,classID=classID,count=1}
         local resolved=assert(resolve(f))
         check(resolved.isDisenchantCategory and resolved.gearKey==key,'native dimensions select '..key)
         local m=assert(byID(resolved,output),'native material missing: '..output)
-        near(m.expectedQuantity,mean,'native category mean survives preserved exact studies')
+        -- Epic armor now admits additional independent mean providers from
+        -- ordinary items; occurrence still has its own measured denominator.
+        near(m.expectedQuantity,fusedMean or mean,'all independent category means are fused once')
         near(m.chance,chance,'native category probability survives preserved exact studies')
         near(m.chanceCasts,casts,'native category denominator is counted once')
+        local seen={}
+        for _,source in ipairs(m.sourceEstimates.itemdb.records or {})do
+            check(not seen[source.recordID],'one independent source receipt cannot contribute twice')
+            seen[source.recordID]=true
+        end
+        check(seen[ordinary[key].recordID],'original category receipt still contributes to shared estimate')
     end
 end
 check(maxReference and maxReference.categoryReferenceOnly and maxReference.referenceContextID,

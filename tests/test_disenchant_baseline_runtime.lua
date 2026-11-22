@@ -33,7 +33,6 @@ LL.GetOutputPrice=function(_,id)
 end
 LL.MarkupColor=function() return '' end
 LL.Money=function(_,value) return tostring(value)..' copper' end
-LL.ProfessionProgression=function() return {} end
 LL.Invalidate=function(self) self._processingModelCache=nil;self._processingContextCache=nil end
 LL:MigrateEvidenceSettings()
 check(LL:InitializeItemDB(),LL.itemDBError)
@@ -47,10 +46,10 @@ local cases={
 local function facts(case,classID)
     return {id=999900+case.rarity*10+classID,expansionID=11,quality=case.rarity,classID=classID,count=1}
 end
-local function set(case,root,child,native,benchmark)
+local function set(case,root,child,native)
     LL.db.rateProfile=3
     check(LL:SetManualProfessionProfile('Player','Enchanting',11,{enabled=true,skill=native,
-        specialization='107649='..root..','..case.child..'='..child,buffs={},benchmark=benchmark}),
+        specialization='107649='..root..','..case.child..'='..child,buffs={}}),
         'manual profile accepted')
 end
 local function resolve(f,mode)
@@ -100,9 +99,9 @@ for _,case in ipairs(cases) do for _,classID in ipairs({2,4}) do
     near(mean(full,case.high)/pool(full,case),case.share,'full endpoint rank mix')
     if case.rarity==4 then
         near(pool(full,case),pool(zero,case),'Crystal total is preserved')
-        local extras=0
-        for id in pairs(essenceIDs) do extras=extras+mean(full,id) end
-        near(extras,.289,'full Crystal allocation includes its additive essence budget')
+        for id in pairs(essenceIDs) do
+            check(output(full,id)==nil,'Crystal Collector does not manufacture a quantity for an unmeasured essence pool')
+        end
     end
     for _,material in ipairs(full.materials) do
         check(material.expectedQuantity>=0,'projected means remain nonnegative')
@@ -118,8 +117,7 @@ for _,case in ipairs(cases) do for _,classID in ipairs({2,4}) do
                     'modeled quality does not claim newly verified occurrence')
             end
         end
-        if essenceIDs[material.id] then near(material.confidence,5,'native essence uncertainty cap')
-        else near(material.confidence,expectedConfidence,'per-material confidence respects the model cap') end
+        near(material.confidence,expectedConfidence,'per-material confidence respects the model cap')
     end
     check(full.samples==nil and full.effectiveSamples==nil,'raw source sample counts are not model observations')
     local again=LL:ResolveEvidenceModel(f,de,nil,1)
@@ -159,6 +157,15 @@ end end
 -- must preserve its measured occurrence, and quality-only changes may project
 -- a chance only because these source ranks have a verified one-unit stack.
 local collector=cases[3]
+set(collector,30,29,140)
+local collector29=assert(resolve(facts(collector,4)))
+set(collector,30,30,140)
+local collector30=assert(resolve(facts(collector,4)))
+near(collector30.context.effectiveSkill-collector29.context.effectiveSkill,21,
+    'Collector rank30 retains its native +20 skill milestone plus one invested point')
+near(pool(collector30,collector),pool(collector29,collector),'native Collector skill changes crystal quality without an invented quantity bonus')
+check(mean(collector30,collector.high)>mean(collector29,collector.high),
+    'native Collector milestone continues changing sourced crystal rank output')
 for _,id in ipairs({272225,250462}) do
     local epic={id=id,classID=4,quality=4,expansionID=11,itemLevel=253,count=1}
     for _,skill in ipairs({0,64,104,290}) do
@@ -214,8 +221,8 @@ for _,m in ipairs(rareSourceOnly.materials) do
         'uninvested real rare-item prior preserves occurrence through quality-only skill redistribution') end
 end
 -- Actual rare gear acquires endpoint-only material identities while its
--- modeled allocation still gives those materials zero units. They stay in the
--- numeric vector for the curve, but must not appear as tooltip outcomes.
+-- modeled allocation still gives those materials zero units. The owner keeps
+-- every actual material row visible, including explicit zero outcomes.
 local displayGear={id=264527,classID=4,quality=3,expansionID=11,itemLevel=266,count=1}
 local supplierExtras={236761,236963,237359,238511,238513}
 for _,rank in ipairs({0,19,20,30}) do
@@ -227,7 +234,11 @@ for _,rank in ipairs({0,19,20,30}) do
         local present=text:find('Item '..id,1,true)~=nil
         if rank<20 then
             near(material.expectedQuantity,0,'before-unlock extra has zero units')
-            check(not present,'zero endpoint-only material is absent from the rendered tooltip')
+            check(present,'zero endpoint-only material remains visible under the all-rows contract')
+            local row,price=LL:FormatTooltipMaterialRow(material,model,de,displayGear)
+            check(row:find('0%',1,true) and row:find('[0]',1,true),
+                'known ineligible endpoint displays 0% and [0]')
+            check(price=='0 copper','known ineligible endpoint has zero gold contribution')
         else
             check(material.expectedQuantity>0 and present,'positive milestone extra remains visible')
         end
@@ -238,8 +249,9 @@ local unresolved=copy(assert(resolve(displayGear)))
 unresolved.materials[#unresolved.materials+1]={id=999991,additionalOutput=true}
 unresolved.materials[#unresolved.materials+1]={id=999992,expectedQuantity=.25,additionalOutput=true}
 local unresolvedText=rendered(displayGear,unresolved)
-check(unresolvedText:find('Item 999991',1,true) and unresolvedText:find('[yield unavailable]',1,true),
-    'unknown quantity remains visible instead of being mistaken for zero')
+check(unresolvedText:find('Item 999991',1,true) and not unresolvedText:find('[yield unavailable]',1,true)
+    and not unresolvedText:find('0.000x Item 999991',1,true),
+    'unknown quantity row remains visible without diagnostic suffix or fabricated zero')
 check(unresolvedText:find('Item 999992',1,true),'positive additional output remains visible')
 
 set(supplier,0,9,100)
@@ -280,16 +292,6 @@ for _,case in ipairs(cases) do
     check(not personalOnly or not personalOnly.disenchantBaselineApplied,'personal-only mode is protected')
 end
 
-set(supplier,30,30,140)
-local unscaled=assert(resolve(rare))
-set(supplier,30,30,140,{outputLevel=150,specializationBonus=20})
-local benchmark=assert(resolve(rare))
-check(benchmark.disenchantBaselineApplied and benchmark.syntheticBenchmark,'benchmark runs after profile projection')
-for _,material in ipairs(unscaled.materials) do
-    near(mean(benchmark,material.id),material.expectedQuantity*1.8,'benchmark scales projected output exactly once')
-end
-check(LL:ApplySyntheticBenchmark(rare,de,benchmark,benchmark.context)==benchmark,'benchmark replay is idempotent')
-check(LL:ResolveEvidenceModel(rare,de,nil,1)==benchmark,'benchmark cache retains the once-scaled result')
 -- A canonical fixed-stack prior cannot overwrite contradictory distributions
 -- in either a fused summary or any positively weighted source record.
 local distribution
@@ -317,4 +319,58 @@ changed=distribution({expectedQuantity=.5},{expectedQuantity=.4,confidence=20},t
 near(changed.chance,.4,'an unidentified mean may use an explicit compatible canonical prior')
 check(changed.probabilityVerified==false and changed.chanceConfidence<=20 and changed.probabilityAssumption,
     'canonical inference stays modeled and capped without additional observations')
+-- A mean-only legacy term participates in E, not in the measured hit-rate
+-- field. Comparing the independently fused summary E/P rejected these actual
+-- default-source tooltips even though no individual receipt contradicts [1].
+local independentlyWeighted={expectedQuantity=.5,chance=.6,minQuantity=1,maxQuantity=1,
+    sourceContributions={itemdb=.5,legacy=.5},sourceEstimates={
+        itemdb={expectedQuantity=.6,dropChance=.6,minQuantity=1,maxQuantity=1,inputCount=1,
+            records={{expectedQuantity=.6,dropChance=.6,minQuantity=1,maxQuantity=1,inputCount=1}}},
+        legacy={expectedQuantity=.4,inputCount=1,records={{expectedQuantity=.4,inputCount=1}}}}}
+for _,amount in ipairs({.5,.45}) do
+    local projected=distribution(independentlyWeighted,{expectedQuantity=amount,confidence=20},true,1)
+    near(projected.chance,amount,'compatible source terms use the explicit category fixed stack after independent weighting')
+    check(projected.minQuantity==1 and projected.maxQuantity==1 and projected.probabilityVerified==false,
+        'weighted occurrence retains modeled one-unit bounds without inventing observations')
+end
+independentlyWeighted.sourceEstimates.legacy.records[1].dropChance=.2
+changed=distribution(independentlyWeighted,{expectedQuantity=.45,confidence=20},true,1)
+check(changed.chance==nil,'an actual contradictory provider receipt still blocks fixed-stack inference')
+local independentRecords={expectedQuantity=.5,chance=.6,minQuantity=1,maxQuantity=1,
+    sourceContributions={itemdb=1},sourceEstimates={itemdb={expectedQuantity=.5,dropChance=.6,
+        inputCount=1,minQuantity=1,maxQuantity=1,records={
+            {expectedQuantity=.6,dropChance=.6,inputCount=1,minQuantity=1,maxQuantity=1},
+            {expectedQuantity=.4,dropChance=.4,inputCount=1,minQuantity=1,maxQuantity=1}}}}}
+changed=distribution(independentRecords,{expectedQuantity=.45,confidence=20},true,1)
+near(changed.chance,.45,'one provider with independently weighted receipts uses the compatible category distribution')
+independentRecords.sourceEstimates.itemdb.records[2].dropChance=.2
+changed=distribution(independentRecords,{expectedQuantity=.45,confidence=20},true,1)
+check(changed.chance==nil,'one contradictory actual receipt blocks inference inside an aggregated provider')
+LL.db.source_legacy_enabled=true;LL.db.source_reference_enabled=true
+for _,case in ipairs(cases) do for _,classID in ipairs({2,4}) do
+    for _,rank in ipairs({0,10,20,30}) do
+        set(case,30,rank,104)
+        local gear=facts(case,classID)
+        local model=assert(resolve(gear))
+        local value=valued(model,gear)
+        check(type(value)=='number','default blended source model remains priceable')
+        if case.rarity==4 or case.rarity==3 and rank<20 then
+            for _,id in ipairs({case.low,case.high}) do
+                local material=assert(output(model,id))
+                near(material.chance,material.expectedQuantity,'default weighted one-unit primary has a coherent percentage')
+                check(material.minQuantity==1 and material.maxQuantity==1
+                    and material.probabilityVerified==false and material.chanceConfidence<=material.confidence,
+                    'one-unit primary retains [1] and capped model confidence')
+                check(material.chanceCasts==nil and material.castsWithDrop==nil
+                    and material.samples==nil and material.quantityCounts==nil,
+                    'modeled blended occurrence does not acquire target casts, hits or a synthetic histogram')
+            end
+            if rank<20 then
+                local text=rendered(gear,model)
+                check(not text:find('x Item '..case.low,1,true) and not text:find('x Item '..case.high,1,true),
+                    'real default-source rare/epic primary tooltips never substitute quantity-x for percent')
+            end
+        end
+    end
+end end
 print('DISENCHANT BASELINE RUNTIME: '..checks..' checks passed')

@@ -25,10 +25,9 @@ python3 tools/research_v3_to_baselines.py --check  # D1c: research v3 baselines 
 python3 tools/research_build_review.py --check
 python3 tools/profession_effect_inventory.py --check
 python3 tools/profession_profile_rules.py --check
-python3 tools/gathering_study_baselines.py --check
 python3 tests/test_profession_effect_inventory.py
 python3 tests/test_profession_profile_rules.py
-python3 tests/test_gathering_study_baselines.py
+python3 tests/test_processing_profile_pruning.py
 python3 tools/reference_calculators.py --check
 python3 tools/skill_quality_to_rules.py --check
 python3 tools/import_profession_catalog.py --check
@@ -63,16 +62,31 @@ trap 'rm -rf "$compiled_dir"' EXIT
 "$lua_bin" tools/compile_itemdb.lua "$compiled"
 cmp "$compiled" LootLiquidator/ItemDBRuntime.lua
 "$lua_bin" tests/test_itemdb_memory.lua
+"$lua_bin" tests/test_decision_cache_memory.lua
+"$lua_bin" tests/test_processing_refresh_allocation.lua
+"$lua_bin" tests/test_profession_projection_memo.lua
+"$lua_bin" tests/test_category_source_projection_cache.lua
+"$lua_bin" tests/test_final_model_binding_cache.lua
+"$lua_bin" tests/test_badge_cache_capacity.lua
+"$lua_bin" tests/test_badge_next_frame_budget.lua
+"$lua_bin" tests/test_output_price_request_memo.lua
+"$lua_bin" tests/test_tooltip_render_allocation.lua
+"$lua_bin" tests/test_tooltip_sort_stability.lua
+"$lua_bin" tests/test_recorded_category_allocations.lua
+"$lua_bin" tests/test_recorded_processing_query_gates.lua
+"$lua_bin" tests/test_fixed_craft_personal_lookup.lua
+"$lua_bin" tests/test_compact_static_tables.lua
+"$lua_bin" tests/test_item_processing_scope.lua
 "$lua_bin" tests/test_itemdb_serialization_parity.lua
 test ! -e "$compiled_dir/itemTSM.lua"  # B2: frozen TSM table is no longer built
 test ! -e "$compiled_dir/GameData.lua"  # C3: old estimates live inside ItemDB now
 python3 tests/validate_package.py
 "$lua_bin" research/tests/test_verified_mechanics_adapter.lua
 "$lua_bin" tests/test_modernization.lua
+"$lua_bin" tests/test_guild_bank_budget.lua
+"$lua_bin" tests/test_native_visibility.lua
 "$lua_bin" tests/test_settings.lua
 "$lua_bin" tests/test_native_stat_reference_receipt.lua
-"$lua_bin" tests/test_profession_opportunity_preview.lua
-"$lua_bin" tests/test_profession_opportunity_settings.lua
 "$lua_bin" tests/test_published_milling_runtime.lua
 "$lua_bin" tests/test_published_per_input_runtime.lua
 "$lua_bin" tests/test_profession_catalog.lua
@@ -81,6 +95,8 @@ python3 tests/validate_package.py
 "$lua_bin" tests/test_client_regressions.lua
 "$lua_bin" tests/test_badge_decision.lua
 "$lua_bin" tests/test_badge_refresh.lua
+"$lua_bin" tests/test_badge_async_item_info.lua
+"$lua_bin" tests/test_pawn_private_tooltip.lua
 "$lua_bin" tests/test_cleanup_regressions.lua
 "$lua_bin" tests/test_itemdb_metrics.lua
 "$lua_bin" tests/test_capture_database.lua
@@ -112,6 +128,7 @@ python3 tests/test_compact_transfer.py
 "$lua_bin" tests/test_disenchant_recording_categories.lua
 "$lua_bin" tests/test_personal_disenchant_source_reference.lua
 "$lua_bin" tests/test_personal_disenchant_quote.lua
+"$lua_bin" tests/test_disenchant_profile_scope_cache.lua
 python3 tests/test_disenchant_aura_scope.py
 "$lua_bin" tests/test_craft_operations.lua
 "$lua_bin" tests/test_imported_results.lua
@@ -122,8 +139,13 @@ echo "e81277e142acca3f9a44e21146e5b1690b5adf1db584793f61cc1f279b7110b4  tests/fi
 "$lua_bin" tests/test_native_profile_precision.lua tests/fixtures/pr51/ImportedResults.lua
 "$lua_bin" tests/test_import_target_lookup.lua
 "$lua_bin" tests/test_counts_model.lua
+"$lua_bin" tests/test_output_price_vendor_zero.lua
+"$lua_bin" tests/test_midpoint_inference_recovery.lua
+"$lua_bin" tests/test_observed_bound_proof_validation.lua
 "$lua_bin" tests/test_transmog_alts.lua
 "$lua_bin" tests/test_appearance_collection.lua
+"$lua_bin" tests/test_appearance_positive_shortcut.lua
+"$lua_bin" tests/test_appearance_invalidation.lua
 "$lua_bin" tests/test_salvage_refund_blend.lua
 python3 tests/test_craft_export.py
 python3 tests/test_recipe_coverage.py
@@ -142,6 +164,8 @@ python3 tools/evidence_to_baselines.py tests/fixtures/evidence-v3 "$compiled_dir
 "$lua_bin" tools/compile_itemdb.lua "$compiled_dir/ItemDBFixture.lua" "$compiled_dir/fixture-baselines.lua" tests/fixtures/research-v3-empty.lua >/dev/null
 "$lua_bin" tests/test_evidence_baselines.lua "$compiled_dir/ItemDBFixture.lua"
 python3 tests/test_research_v3_baselines.py
+python3 tests/test_observed_bound_provenance.py
+python3 tests/test_observed_bound_guard_edges.py
 python3 tests/test_research_v3_precision.py
 python3 tests/test_research_v3_dedupe.py
 python3 tests/test_research_v3_reference_ranges.py
@@ -154,16 +178,23 @@ python3 tests/test_legacy_cohort_admission.py
 "$lua_bin" tests/test_numeric_refresh_tooltip.lua "$compiled_dir"
 "$lua_bin" tests/test_tooltip_preferences.lua
 "$lua_bin" tests/test_tooltip_visibility.lua
+"$lua_bin" tests/test_tooltip_material_contract.lua
+"$lua_bin" tests/test_tooltip_baseline_display_integration.lua
+"$lua_bin" tests/test_tooltip_gold_visibility.lua
 "$lua_bin" tests/reviewed_source_facts.lua
 "$lua_bin" tests/test_reviewed_net_input_basis.lua
 "$lua_bin" tests/test_reviewed_quality_profile.lua
 "$lua_bin" tests/test_profession_tooltip_visibility.lua
 "$lua_bin" tests/test_profession_tooltip_profiles.lua
-"$lua_bin" tests/test_synthetic_benchmark.lua
+"$lua_bin" tests/test_tooltip_projection_cache.lua
 "$lua_bin" tests/test_skill_quality_capture.lua
 "$lua_bin" tests/test_skill_quality_runtime.lua
+"$lua_bin" tests/test_native_quality_distribution.lua
 "$lua_bin" tests/test_midnight_research_runtime.lua
 "$lua_bin" tests/test_disenchant_category_runtime.lua
+python3 tests/test_disenchant_item_categories.py
+"$lua_bin" tests/test_disenchant_category_records.lua
+"$lua_bin" tests/test_disenchant_category_scoped_contract.lua
 "$lua_bin" tests/test_midnight_pigment_runtime.lua
 "$lua_bin" tests/test_profession_simulation.lua
 "$lua_bin" tests/test_specialization_effects.lua
@@ -174,10 +205,14 @@ python3 tests/test_legacy_cohort_admission.py
 "$lua_bin" tests/test_reviewed_disenchant_prior.lua
 "$lua_bin" tests/test_crystal_collector_extras.lua
 "$lua_bin" tests/test_profession_calculations.lua
+"$lua_bin" tests/test_profession_tooltip_metrics.lua
 "$lua_bin" tests/test_processing_zero_bonus_regression.lua
 "$lua_bin" tests/test_numerical_pipeline_stages.lua
 "$lua_bin" tests/test_prospecting_output_gates.lua
 "$lua_bin" tests/test_prospecting_quality_display.lua
+"$lua_bin" tests/test_prospect_group_identity.lua
+python3 tests/test_crushed_ore_quality_placeholders.py
+"$lua_bin" tests/test_crushed_ore_quality_runtime.lua
 "$lua_bin" tests/test_milling_rate_display.lua
 "$lua_bin" tests/test_disenchant_rate_display.lua
 "$lua_bin" tests/test_processing_inverse_edge_cases.lua
@@ -185,8 +220,12 @@ python3 tests/test_legacy_cohort_admission.py
 "$lua_bin" tests/test_profession_baseline_pipeline.lua
 "$lua_bin" tests/test_shatter_profession_runtime.lua
 "$lua_bin" tests/test_profession_all_contexts.lua
+"$lua_bin" tests/test_profession_buff_pipeline.lua
+"$lua_bin" tests/test_profession_aura_cache.lua
 "$lua_bin" tests/test_profession_study_operations.lua
 "$lua_bin" tests/test_profession_control_support.lua
+"$lua_bin" tests/test_profession_tooltip_scope.lua
+"$lua_bin" tests/test_runtime_catalog_pruning.lua
 "$lua_bin" tests/test_profession_build_compatibility.lua
 "$lua_bin" tests/test_reference_fallback.lua
 "$lua_bin" tests/test_usable_field_flow.lua

@@ -40,13 +40,9 @@ jobs:
         run: sudo apt-get update -qq && sudo apt-get install -y lua5.1
       - name: Review studies and compile the build database
         run: |
-          if [ "${{ github.event_name }}" = 'pull_request' ]; then
-            python3 tools/prepare_build_research.py
-          else
-            git fetch --no-tags origin implementation/five-agent-completion
-            research_commit=$(git rev-parse FETCH_HEAD)
-            python3 tools/prepare_build_research.py --research-ref "$research_commit"
-          fi
+          # Reproduce the research snapshot reviewed with this release commit.
+          # Publishing must not replace it with a moving branch's latest data.
+          python3 tools/prepare_build_research.py
       - name: Run all addon validation
         run: bash tests/run.sh
       - name: Prepare version and CurseForge metadata

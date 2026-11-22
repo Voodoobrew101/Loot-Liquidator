@@ -490,7 +490,7 @@ def execute_processing_lua(body, code_root):
 
 
 def verify_processing_fact_consumer(policy, code_root):
-    """Execute the shipped public Lua query/renderer for literal emitted facts.
+    """Execute the offline Lua audit query/renderer for literal emitted facts.
 
     This is a compatibility check, not independent scientific source approval.
     The native audit reads each fact's own actual scope; no item identity is
@@ -498,7 +498,7 @@ def verify_processing_fact_consumer(policy, code_root):
     """
     code_root = Path(code_root)
     import research_v3_to_baselines as bridge
-    module = code_root / 'LootLiquidator/ReviewedSourceFacts.lua'
+    module = code_root / 'tools/reviewed_source_facts.lua'
     body = ('local LL={ItemDB={reviewedSourceFacts={schemaVersion=1,facts=' + bridge.lua(policy.get('facts', [])) + '}},db={}}\n'
             'function LL:EvidenceSourceWeight(source,mode) '
             'return mode~=2 and self.db.source_itemdb_enabled~=false and 1 or 0 end\n'

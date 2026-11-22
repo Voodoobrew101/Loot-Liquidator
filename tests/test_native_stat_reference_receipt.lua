@@ -52,7 +52,7 @@ local nodes={
     [102]={maxRank=30,pointEffects={},learningEffects={effect('multicraft',20,'rating',yscope)}},
 }
 LL.ItemDB={professionProfiles={build=70961,clientVersion='12.1.5',profiles={['Alchemy:11']={lineID=1000,
-    statKeys={'multicraft','resourcefulness'},nodes=nodes}},professionParameters={Alchemy={}},recipes={
+    statKeys={'multicraft','resourcefulness'},nodes=nodes}},professionParameters={Alchemy={MinCraftExtraQtyPct=1,MaxCraftExtraQtyPct=250,ResourcefulEffectLow=20,ResourcefulEffectHigh=40}},recipes={
     [4001]={profession='Alchemy',expansionID=11,skillLineID=1000,labels={1001},outputCount=2,supportsMulticraft=true},
     [4002]={profession='Alchemy',expansionID=11,skillLineID=1000,labels={1002},outputCount=2,supportsMulticraft=true}}}}
 LL.GetProfessionUIOptions=function()return {nodes={{id=101,name='Receipt Root',tab='Fixture',maxRank=30},

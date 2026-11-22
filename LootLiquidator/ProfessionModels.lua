@@ -214,10 +214,97 @@ function LL:ProfessionEffectAffectsTooltip(effect,profession,expansion,method)
         return effect.metric=='skill' or effect.metric=='yieldMultiplier'
             or effect.metric=='extraOutput' or effect.metric=='dropChance'
     end
-    if method and s.method and s.method~=method and not (s.method=='Gather' and
-        (method=='Skin' or method=='Fish' or method=='Herbalism' or method=='Mining'
-            or method=='Skinning' or method=='Fishing')) then return false end
+    if method and s.method and s.method~=method then return false end
     return not s.scopeUnknown
+end
+-- Shared editor/build policy. These tables describe item-tooltip operations,
+-- never grant a profession, recipe, or quantity to a character.
+local tooltipMethods={Enchanting={Disenchant=true},Jewelcrafting={Prospect=true},
+    Inscription={Mill=true},Mining={Smelt=true},Engineering={Recycle=true,Craft=true},
+    Alchemy={Craft=true},Blacksmithing={Craft=true},Leatherworking={Craft=true},
+    Tailoring={Craft=true},Cooking={Craft=true}}
+local tooltipMetrics={}
+for _,method in ipairs({'Disenchant','Mill','Prospect','Smelt','Recycle','Craft'})do
+    local metrics={skill=true,difficulty=true,yieldMultiplier=true,extraOutput=true,dropChance=true}
+    if method~='Disenchant' then metrics.resourcefulness=true;metrics.resourcefulnessSaved=true end
+    if method=='Craft' then metrics.multicraft=true;metrics.multicraftExtra=true end
+    tooltipMetrics[method]=metrics
+end
+function LL:ProfessionTooltipMethods(profession)
+    if profession==nil then return tooltipMethods end
+    return tooltipMethods[profession]
+end
+function LL:ProfessionTooltipControlMetrics(method) return tooltipMetrics[method] end
+function LL:ProfessionTooltipOperations(profession,expansion)
+    local methods=self:ProfessionTooltipMethods(profession)
+    local data=self.ItemDB and self.ItemDB.professionProfiles or {}
+    local out,seen={},{}
+    if not methods then return out end
+    local function add(method,id,saved)
+        id=tonumber(id)
+        local native=data.recipes and data.recipes[id]
+        if not methods[method] or not native or native.profession~=profession or native.expansionID~=expansion then return end
+        local key=method..':'..id
+        if seen[key] then return end;seen[key]=true
+        out[#out+1]={method=method,recipeID=id,labels=native.labels or {},
+            supportsResourcefulness=native.supportsResourcefulness,
+            supportsMulticraft=native.supportsMulticraft,
+            outputCount=saved and saved.outputCount or native.outputCount}
+    end
+    if methods.Craft then
+        for _,character in pairs(self.db and self.db.characters or {})do
+            for id,recipe in pairs(character.recipes or {})do
+                if recipe.learned==true and not recipe.disabled and not recipe.isRecraft
+                    and not recipe.isSalvageRecipe and recipe.recipeType~=2
+                    and finite(recipe.outputID) and recipe.outputID>0 and type(recipe.reagentSlots)=='table' then
+                    add('Craft',id,recipe)
+                end
+            end
+        end
+    end
+    for _,dataset in ipairs({self.ItemDB or {},self.ItemDB and self.ItemDB.legacy or {}})do
+        for _,record in ipairs(dataset.processing or {})do
+            if record.method~='Craft' then add(record.method,record.recipeID) end
+        end
+    end
+    for _,rule in ipairs(self.ItemDB and self.ItemDB.skillQualityRules or {})do
+        if rule.method~='Craft' then add(rule.method,rule.recipeID) end
+    end
+    return out
+end
+function LL:ProfessionEffectSupportsTooltipControl(effect,profession,expansion,methods,operations)
+    methods=methods or self:ProfessionTooltipMethods(profession)
+    if not methods or type(effect)~='table' then return false end
+    local scope=effect.scope or {}
+    if scope.scopeUnknown or scope.profession and scope.profession~=profession
+        or scope.expansionID and expansion and scope.expansionID~=expansion then return false end
+    if effect.metric=='extraOutput' and effect.identityUnresolved then return false end
+    local function has(list,value)
+        for _,item in ipairs(list or {})do if item==value then return true end end
+        return false
+    end
+    operations=operations or self:ProfessionTooltipOperations(profession,expansion)
+    for method in pairs(methods)do
+        local metrics=tooltipMetrics[method]
+        if metrics and metrics[effect.metric] then
+            if method=='Disenchant' and self:ProfessionEffectAffectsTooltip(effect,profession,expansion,method) then return true end
+            for _,operation in ipairs(operations)do
+                local alternate=scope.alternateMethod==method and has(scope.alternateRecipeIDs,operation.recipeID)
+                if operation.method==method and (not scope.method or scope.method==method or alternate)
+                    and (not scope.recipeID or scope.recipeID==operation.recipeID)
+                    and (#(effect.recipeIDs or {})==0 or has(effect.recipeIDs,operation.recipeID))
+                    and (scope.method==method or alternate or #(scope.labelIDs or {})==0 or (function()
+                        for _,id in ipairs(scope.labelIDs)do if has(operation.labels,id)then return true end end
+                        return false
+                    end)())
+                    and (effect.metric~='multicraft' and effect.metric~='multicraftExtra'
+                        or operation.supportsMulticraft==true or operation.supportsMulticraft==nil and (operation.outputCount or 0)>1)
+                    and (effect.metric~='resourcefulness' and effect.metric~='resourcefulnessSaved'
+                        or operation.supportsResourcefulness~=false) then return true end
+            end
+        end
+    end
+    return false
 end
 function LL:DisenchantModelAuraSet(context)
     local database=self.ItemDB
@@ -272,16 +359,26 @@ function LL:DisenchantModelAuraSet(context)
     cached.scopes[scope]=ids
     return ids
 end
-function LL:DisenchantObservationProfileKey(context)
-    if type(context)~='table' or context.profession~='Enchanting' then return nil end
-    local skill=context.effectiveSkill or context.preSpecializationSkill or context.skill
-    if not finite(skill) then return nil end
-    if context.maxSkill~=nil and (not finite(context.maxSkill) or context.maxSkill<=0) then return nil end
-    local zero=context.specialization=='none'
-    local profiles=self.ItemDB and self.ItemDB.professionProfiles and self.ItemDB.professionProfiles.profiles or {}
-    local expansion=context.expansionID or context.inputExpansionID
+local function DisenchantIrrelevantNodes(self,expansion)
+    local database=self.ItemDB
+    local data=database and database.professionProfiles
+    local profiles=data and data.profiles
+    local cached=self._disenchantNodeScopeCache
+    if not cached or cached.database~=database or cached.version~=(database and database.version)
+        or cached.data~=data or cached.profiles~=profiles or cached.revision~=(data and data.revision)
+        or cached.dataVersion~=(data and data.version)
+        or cached.filter~=self.ProfessionEffectAffectsTooltip then
+        cached={database=database,version=database and database.version,data=data,profiles=profiles,
+            revision=data and data.revision,dataVersion=data and data.version,
+            filter=self.ProfessionEffectAffectsTooltip,scopes={}}
+        self._disenchantNodeScopeCache=cached
+    end
+    local scope=expansion==nil and '*' or tostring(expansion)
+    if cached.scopes[scope] then return cached.scopes[scope] end
+    -- Classification depends on immutable native nodes, not the captured
+    -- character. Observation matching must not rebuild it for every sample.
     local irrelevant={}
-    for key,profile in pairs(profiles) do
+    for key,profile in pairs(profiles or {}) do
         for id,node in pairs(profile.nodes or {}) do
             local relevant=false
             local function effects(list)
@@ -297,6 +394,16 @@ function LL:DisenchantObservationProfileKey(context)
             if not relevant then irrelevant[tostring(id)]=true end
         end
     end
+    cached.scopes[scope]=irrelevant
+    return irrelevant
+end
+function LL:DisenchantObservationProfileKey(context)
+    if type(context)~='table' or context.profession~='Enchanting' then return nil end
+    local skill=context.effectiveSkill or context.preSpecializationSkill or context.skill
+    if not finite(skill) then return nil end
+    if context.maxSkill~=nil and (not finite(context.maxSkill) or context.maxSkill<=0) then return nil end
+    local zero=context.specialization=='none'
+    local irrelevant=DisenchantIrrelevantNodes(self,context.expansionID or context.inputExpansionID)
     local parsed=context.specialization~='none' and self.ProfessionSpecializationPoints
         and self:ProfessionSpecializationPoints(context.specialization)
     if parsed then
@@ -339,7 +446,7 @@ end
 
 function LL:ReuseDisenchantSourceProfile(f,option,raw,target,targetBuild)
     if type(option)~='table' or option.name~='Disenchant' or option.recipeID~=13262 or type(f)~='table'
-        or (f.classID~=2 and f.classID~=4) or not raw or not raw.observationContext
+        or (f.classID~=2 and f.classID~=4 and f.classID~=19) or not raw or not raw.observationContext
         or type(target)~='table' or target.character~=raw.observationContext.character then return nil end
     local source=raw.observationContext
     -- A manual target may match a recorded profile; a manual source is never
@@ -348,7 +455,8 @@ function LL:ReuseDisenchantSourceProfile(f,option,raw,target,targetBuild)
     if source.fieldStatus and source.fieldStatus.specialization=='unknown' then return nil end
     local sourceKey=self:DisenchantObservationProfileKey(source)
     if not sourceKey or sourceKey~=self:DisenchantObservationProfileKey(target) then return nil end
-    local category=('gear:%s:%s:%s'):format(tostring(f.expansionID),tostring(f.quality),f.classID==2 and 'weapon' or 'armor')
+    local category=('gear:%s:%s:%s'):format(tostring(f.expansionID),tostring(f.quality),
+        f.classID==2 and 'weapon' or f.classID==19 and 'profession' or 'armor')
     if raw.gearKey~=category then return nil end
     local sourceBuild=tostring(raw.sourcePatchBuild or raw.patchBuild)
     targetBuild=tostring(targetBuild or (GetBuildInfo and select(2,GetBuildInfo())))
@@ -542,11 +650,17 @@ function LL:ApplySkillQualityModel(f,option,model,context)
                     material.baselineConfidence=material.confidence
                     material.confidence=math.min(material.confidence or 0,rule.confidence0to100)
                     material.transformConfidence=math.min(material.transformConfidence or 100,rule.confidence0to100)
-                    material.chance=nil;material.probabilityVerified=false
-                    material.minQuantity=nil;material.maxQuantity=nil
-                    material.quantityCounts=nil;material.personalHistogram=nil;material.fieldEvidence=nil
-                    material.boundsSource=nil;material.boundsBasis=nil;material.probabilityBasis=nil
-                    material.chanceConfidence=nil;material.chanceCasts=nil
+                    -- An actual exact-input operation assigns the entire family
+                    -- to one quality: its occurrence and positive stack range
+                    -- describe the same event. A simulated threshold alone does
+                    -- not verify that distribution for a different profile.
+                    if context.simulated then
+                        material.chance=nil;material.probabilityVerified=false
+                        material.minQuantity=nil;material.maxQuantity=nil
+                        material.quantityCounts=nil;material.personalHistogram=nil;material.fieldEvidence=nil
+                        material.boundsSource=nil;material.boundsBasis=nil;material.probabilityBasis=nil
+                        material.chanceConfidence=nil;material.chanceCasts=nil
+                    end
                     material.netUnitPrice=nil;material.netExpectedValue=nil
                     changed=true
                 end
@@ -563,75 +677,6 @@ function LL:ApplySkillQualityModel(f,option,model,context)
     result.provisional=true;result.baselineAdjustment=model.adjustment
     result.adjustment='Skill-based output quality; reference quantities unchanged'
     result.value=nil;result.partialValue=nil;result.valueConfidence=nil
-    return result
-end
-
--- A what-if scenario on the selected evidence estimate. These percentages are
--- supplied by the player; they are not learned skill/specialization curves.
--- Apply after source selection/blending, never to stored empirical records.
-function LL:ApplySyntheticBenchmark(f,option,model,context)
-    if not model or model.syntheticBenchmark or not context or not context.simulated
-        or context.profileKind~='manual-simulation' or not self.NormalizeSyntheticBenchmark then return model end
-    local benchmark=self:NormalizeSyntheticBenchmark(context.benchmark)
-    if not benchmark or (benchmark.outputLevel==100 and benchmark.specializationBonus==0
-        and benchmark.resourcefulnessChance==0 and benchmark.resourcefulnessSaved==0) then return model end
-    local factor=benchmark.outputLevel/100*(1+benchmark.specializationBonus/100)
-    -- A scenario never creates an expectation for an unknown/conditional drop.
-    for _,material in ipairs(model.materials or {}) do
-        if finite(material.expectedQuantity) and not finite(material.expectedQuantity*factor) then return model end
-    end
-    local result=copy(model)
-    result.syntheticBenchmark=true;result.simulated=true;result.provisional=true
-    result.benchmarkParameters=benchmark;result.benchmarkOutputFactor=factor
-    result.baselineConfidence=model.confidence
-    result.confidence=0;result.confidenceUnscored=true
-    result.baselineAdjustment=model.adjustment
-    result.adjustment=('Synthetic benchmark — assumed bonuses; baseline confidence %s%%'):format(
-        finite(model.confidence) and tostring(model.confidence) or 'unknown')
-    -- A previously valued model may be passed by a display caller. Revaluation
-    -- must use scenario quantities rather than retained baseline price totals.
-    result.value=nil;result.partialValue=nil;result.valueConfidence=nil
-    for _,material in ipairs(result.materials or {}) do
-        material.baselineConfidence=material.confidence;material.confidence=0
-        if finite(material.expectedQuantity) then
-            local original=material.expectedQuantity
-            material.expectedQuantity=original*factor
-            material.netExpectedValue=nil
-            if factor~=1 and original>0 then
-                -- A new mean establishes neither P(hit), bounds nor a histogram.
-                material.chance=nil;material.chanceConfidence=nil;material.chanceCasts=nil
-                material.probabilityVerified=false;material.minQuantity=nil;material.maxQuantity=nil
-                material.quantityCounts=nil;material.personalHistogram=nil;material.fieldEvidence=nil
-                material.boundsSource=nil;material.boundsBasis=nil;material.probabilityBasis=nil
-                material.conditionalExpectedQuantity=nil;material.conditionalExpectedValue=nil
-                material.conditionalRequirement=nil;material.filled=nil;material.derivedMean=nil
-                material.inconsistentFields=nil
-            end
-        end
-    end
-    for _,outcome in ipairs(result.namedOutputs or {}) do
-        if finite(outcome.expectedQuantity) then outcome.expectedQuantity=outcome.expectedQuantity*factor;outcome.confidence=0 end
-    end
-    local requested=benchmark.resourcefulnessChance>0 or benchmark.resourcefulnessSaved>0
-    if requested then
-        local method=option and option.name
-        local params=model.professionParameters or model.generalProfessionParameters
-        local craft=params and params.method~='Disenchant' and params.method~='Gather'
-            and params.method~='Loot' and params.method~='Use'
-            and params.method~='Skin' and params.method~='Fish' and params.recipe
-            and params.recipe.supportsResourcefulness~=false
-        local expansion=params and params.expansionID or f and f.expansionID
-        if (method=='Mill' or method=='Prospect' or craft) and finite(expansion) and expansion>=9
-            and finite(result.inputCount) and result.inputCount>0 then
-            result.baselineExpectedInputCount=model.expectedInputCount
-            result.expectedInputCount=result.inputCount*(1-benchmark.resourcefulnessChance/100*benchmark.resourcefulnessSaved/100)
-            result.supplyCostFactor=1-benchmark.resourcefulnessChance/100*benchmark.resourcefulnessSaved/100
-            result.syntheticResourcefulnessNote='Assumed Resourcefulness replaces any baseline input savings; output quantities remain per completed operation'
-        else
-            result.syntheticResourcefulnessNote='Resourcefulness scenario skipped for this operation'
-        end
-        result.warning=result.warning and (result.warning..'; '..result.syntheticResourcefulnessNote) or result.syntheticResourcefulnessNote
-    end
     return result
 end
 
@@ -1091,12 +1136,29 @@ local function deCompatibleStack(source,stack)
             or finite(row.expectedQuantity) and math.abs(row.expectedQuantity-probability*stack)>1e-6) then return false end
         return true
     end
-    if not compatible(source,source.chance) then return false end
+    local providers=0
+    for key,weight in pairs(source.sourceContributions or {}) do
+        if finite(weight) and weight>0 then
+            local estimate=source.sourceEstimates and source.sourceEstimates[key]
+            local records=estimate and estimate.records
+            providers=providers+math.max(1,type(records)=='table' and #records or 0)
+        end
+    end
+    -- Means and hit rates are fused independently. A blended mean can include
+    -- a mean-only provider while the summary hit rate still comes from one
+    -- measured provider. That summary is not a contradictory source receipt;
+    -- validate each contributing provider below before using the category's
+    -- fixed-stack model on the blended mean.
+    local probability=source.chance
+    if providers>1 then probability=nil end
+    if not compatible(source,probability) then return false end
     for key,weight in pairs(source.sourceContributions or {}) do
         if finite(weight) and weight>0 then
             local estimate=source.sourceEstimates and source.sourceEstimates[key]
             if not estimate then return false end
-            if not compatible(estimate,estimate.dropChance or estimate.chance) then return false end
+            local probability=estimate.dropChance or estimate.chance
+            if type(estimate.records)=='table' and #estimate.records>1 then probability=nil end
+            if not compatible(estimate,probability) then return false end
             if estimate.records and #estimate.records>0 then
                 for _,record in ipairs(estimate.records) do
                     if not compatible(record,record.dropChance) then return false end
@@ -1109,14 +1171,26 @@ end
 local function deDistribution(source,result,fixedPrimaryStack,modelStack)
     if type(source)~='table' then return result end
     local stack=modelStack or (source.minQuantity==source.maxQuantity and source.minQuantity)
-    if finite(source.expectedQuantity) and math.abs(result.expectedQuantity-source.expectedQuantity)<1e-10 then
+    local providers=0
+    for key,weight in pairs(source.sourceContributions or {}) do
+        if finite(weight) and weight>0 then
+            local estimate=source.sourceEstimates and source.sourceEstimates[key]
+            local records=estimate and estimate.records
+            providers=providers+math.max(1,type(records)=='table' and #records or 0)
+        end
+    end
+    local unchanged=finite(source.expectedQuantity) and math.abs(result.expectedQuantity-source.expectedQuantity)<1e-10
+    if unchanged then
         result.minQuantity=source.minQuantity;result.maxQuantity=source.maxQuantity
-        if not finite(source.chance) or source.chance>1 then return result end
-        result.chance=source.chance
-        result.chanceConfidence=math.min(result.confidence or 100,source.chanceConfidence or source.confidence or 0)
-        result.probabilityBasis=source.probabilityBasis or 'unchanged-source-occurrence'
-        result.probabilityVerified=source.probabilityVerified
-    elseif fixedPrimaryStack and finite(stack) and stack>0 and stack%1==0
+        if finite(source.chance) and source.chance<=1 then
+            result.chance=source.chance
+            result.chanceConfidence=math.min(result.confidence or 100,source.chanceConfidence or source.confidence or 0)
+            result.probabilityBasis=source.probabilityBasis or 'unchanged-source-occurrence'
+            result.probabilityVerified=source.probabilityVerified
+        end
+        if modelStack==nil or (providers<=1 and finite(source.chance)) then return result end
+    end
+    if fixedPrimaryStack and finite(stack) and stack>0 and stack%1==0
         and deCompatibleStack(source,stack)
         and (modelStack~=nil or finite(source.chance) and source.chance<=1
             and finite(source.expectedQuantity) and math.abs(source.expectedQuantity-source.chance*stack)<1e-6)
@@ -1575,7 +1649,17 @@ function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
         unquantifiedNodes={},nodeDescriptions={}}
     local db=self.ItemDB
     local build=GetBuildInfo and select(2,GetBuildInfo())
-    if type(db)~='table' or build==nil then return support end
+    local methods=self:ProfessionTooltipMethods(profession)
+    if type(db)~='table' or build==nil or not methods then return support end
+    local operations=self:ProfessionTooltipOperations(profession,expansion)
+    local function allowedMethod(method,recipeID)
+        if not methods[method] then return false end
+        if method~='Craft' then return true end
+        for _,operation in ipairs(operations)do
+            if operation.method=='Craft' and (not recipeID or operation.recipeID==recipeID) then return true end
+        end
+        return false
+    end
     local methodProfessions={Disenchant='Enchanting',Mill='Inscription',Prospect='Jewelcrafting',Smelt='Mining'}
     local function positive(value) return finite(value) and value>0 end
     local function identity(value) return positive(value) and value%1==0 end
@@ -1589,6 +1673,7 @@ function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
     end
     local function ruleScope(rule,strict)
         return usable(rule) and type(rule.ruleID)=='string' and rule.ruleID~=''
+            and allowedMethod(rule.method,rule.recipeID)
             and (not strict or rule.applyPolicy=='EXECUTE')
             and (rule.profession or methodProfessions[rule.method])==profession
             and rule.expansionID==expansion
@@ -1628,7 +1713,7 @@ function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
                 local era,rarity,kind
                 if type(record.gearKey)=='string' then era,rarity,kind=record.gearKey:match('^gear:(%d+):(%d+):(%a+)$') end
                 era=tonumber(era);rarity=tonumber(rarity)
-                local class=kind=='weapon' and 2 or kind=='armor' and 4 or nil
+                local class=kind=='weapon' and 2 or kind=='armor' and 4 or kind=='profession' and 19 or nil
                 consistent=era~=nil and rarity~=nil and class~=nil
                     and (record.expansionID==nil or record.expansionID==era)
                     and (record.inputRarity==nil or record.inputRarity==rarity)
@@ -1838,7 +1923,8 @@ function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
     end
     for _,effect in ipairs(db.specializationDescriptions or {}) do
         local node=catalog[effect.nodeID]
-        if describedEffectValid(self,effect) and effect.profession==profession and effect.expansionID==expansion
+        if describedEffectValid(self,effect) and allowedMethod(effect.method,effect.recipeID)
+            and effect.profession==profession and effect.expansionID==expansion
             and node and node.maxRank==effect.maxRank
             and baselineFor(effect,function(record) return anyMean(record) end) then
             showNode(effect.nodeID)
@@ -1866,9 +1952,10 @@ function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
     -- values. Mere captured stats or a fixed profession reference profile do
     -- not establish an effect and never reveal a control by themselves.
     local statKeys,statNames={},{ }
-    for _,stat in ipairs(self.ProfessionSimulationStats or {}) do statKeys[stat.key]=true;statNames[stat.name]=stat.key end
+    for _,stat in ipairs(self:ProfessionSimulationStatOptions(profession)) do statKeys[stat.key]=true;statNames[stat.name]=stat.key end
     local function showStat(key,field,value)
-        if statKeys[key] and (field=='rating' or field=='percent') and finite(value) then
+        if statKeys[key] and (key=='resourcefulness' and not methods.Disenchant or key=='multicraft' and methods.Craft)
+            and (field=='rating' or field=='percent') and finite(value) then
             support.stats[key]=support.stats[key] or {};support.stats[key][field]=true
         end
     end
@@ -1972,33 +2059,15 @@ function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
             end
         end
     end
-    -- A prerequisite is useful only when it unlocks an actual calculated
-    -- control. Catalog parent edges alone never reveal otherwise inert sliders.
-    local changed=true
-    while changed do
-        changed=false
-        for id in pairs(support.nodes) do
-            local node=catalog[tonumber(id)]
-            for _,requirement in ipairs(node and node.requirements or {}) do
-                if type(requirement)=='table' and requirement.kind=='node' and identity(requirement.nodeID) and positive(requirement.rank)
-                    and catalog[requirement.nodeID] and not support.nodes[tostring(requirement.nodeID)] then
-                    showNode(requirement.nodeID,nil,true);changed=true
-                elseif type(requirement)=='table' and requirement.kind=='skill' and positive(requirement.skill) then
-                    if not support.skill then support.skillDependency=true end
-                    support.skill=true
-                end
-            end
-        end
-    end
     local generic=db.professionProfiles
     local genericProfile=generic and generic.profiles and generic.profiles[profession..':'..tostring(expansion)]
     if genericProfile and self:ProfessionRuleMatchesBuild(generic) then
-        support.skill=true
         local function includeBuffs(effects)
             local relevant=false
             for _,effect in ipairs(effects or {}) do
-                if self:ProfessionEffectAffectsTooltip(effect,profession,expansion,profession=='Enchanting' and 'Disenchant' or nil) then
+                if self:ProfessionEffectSupportsTooltipControl(effect,profession,expansion,methods,operations) then
                     for _,id in ipairs(effect.condition and effect.condition.spellIDs or {}) do support.buffs[tostring(id)]=true end
+                    if effect.metric=='skill' then support.skill=true end
                     relevant=true
                 end
             end
@@ -2011,7 +2080,30 @@ function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
             if relevant then support.nodes[tostring(id)]=true;support.unquantifiedNodes[tostring(id)]=nil end
         end
         for _,key in ipairs(genericProfile.statKeys or {}) do
-            if key~='skill' and profession~='Enchanting' then support.stats[key]={rating=true,percent=true} end
+            for _,operation in ipairs(operations)do
+                if key=='resourcefulness' and operation.method~='Disenchant' and operation.supportsResourcefulness~=false
+                    or key=='multicraft' and operation.method=='Craft'
+                        and (operation.supportsMulticraft==true or operation.supportsMulticraft==nil and (operation.outputCount or 0)>1) then
+                    support.stats[key]={rating=true,percent=true};break
+                end
+            end
+        end
+    end
+    -- Include actual requirements after both researched and native controls;
+    -- a catalog parent edge alone is only a heading, never an active slider.
+    local changed=true
+    while changed do
+        changed=false
+        for id in pairs(support.nodes)do
+            for _,requirement in ipairs(catalog[tonumber(id)] and catalog[tonumber(id)].requirements or {})do
+                if type(requirement)=='table' and requirement.kind=='node' and identity(requirement.nodeID) and positive(requirement.rank)
+                    and catalog[requirement.nodeID] and not support.nodes[tostring(requirement.nodeID)] then
+                    showNode(requirement.nodeID,nil,true);changed=true
+                elseif type(requirement)=='table' and requirement.kind=='skill' and positive(requirement.skill) then
+                    if not support.skill then support.skillDependency=true end
+                    support.skill=true
+                end
+            end
         end
     end
     return support

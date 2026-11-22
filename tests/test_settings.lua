@@ -118,7 +118,7 @@ local LL={ItemDB={schemaVersion=1,processing={},mechanicRules={}},db={characters
 LL.CharacterKey=function() return 'Tester - Realm' end
 local invalidations=0
 LL.Invalidate=function() invalidations=invalidations+1 end
-for _,file in ipairs({'Database.lua','BuildInfo.lua','SettingsControls.lua','Settings.lua','Professions.lua'}) do
+for _,file in ipairs({'Database.lua','ProfessionModels.lua','SettingsControls.lua','Settings.lua','Professions.lua'}) do
     assert(loadfile('LootLiquidator/'..file))('LootLiquidator',LL)
 end
 LL:MigrateEvidenceSettings()
@@ -254,7 +254,7 @@ assert(find('Advanced').point[5]==-200,'Advanced stays directly below the status
 press('Advanced')
 local sliders={}
 for i=start+1,#all do if all[i].kind=='Slider' then sliders[#sliders+1]=all[i] end end
-assert(#sliders==10,'Advanced reveals skill, specialization and all eight stat sliders together')
+assert(#sliders==4,'Prospecting Advanced reveals skill, specialization and the two Resourcefulness fields')
 sliders[1]:SetValue(95)
 local holder=sliders[2].parent.parent
 local hidden=holder.hideCount or 0
@@ -309,17 +309,16 @@ sliders[2]:SetValue(9)
 saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
 assert(not saved.specialization:find('13=5',1,true) and not saved.specialization:find('14=4',1,true),
     'lowering parent clears dependent allocations through every branch level')
-local speedInput
-for i=start+1,#all do if all[i].kind=='Slider' and all[i].maximum==200 then speedInput=all[i] end end
-speedInput:SetValue(125.5)
+local ratingInput=sliders[3]
+ratingInput:SetValue(125.5)
 saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
-assert(saved.stats.craftingSpeed.percent==126,'speed bonus is whole-number and not capped at 100 percent')
+assert(saved.stats.resourcefulness.rating==126,'A useful rating uses whole numbers without a 100-point cap')
 press('Hide advanced')
-assert(not speedInput.parent.parent.shown,'single Advanced section hides stats')
+assert(not ratingInput.parent.parent.shown,'single Advanced section hides stats')
 assert(not holder.shown,'Advanced hides all specialization controls')
 assert(not sliders[1].parent.parent.shown,'Advanced also hides simulated skill')
 assert(find('Advanced').point[5]==-200,'collapsing keeps Advanced at the top')
-assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11).stats.craftingSpeed.percent==126)
+assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11).stats.resourcefulness.rating==126)
 for i=start+1,#all do
     local w=all[i]
     assert(not(w.kind=='Button' and w.text and (w.text:match('^Show .*branches') or w.text=='Show Gems')),'no nested disclosure buttons')
@@ -328,16 +327,16 @@ press('Reset to minimum')
 assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11).stats==nil)
 print('PASS: nested branches, prerequisite boundary and cascade, stat controls and collapse preservation')
 assert(LL:SetManualProfessionProfile('Tester - Realm','Jewelcrafting',11,
-    {enabled=true,skill=1250,specialization='none',stats={craftingSpeed={rating=12000,percent=275}}}))
+    {enabled=true,skill=1250,specialization='none',stats={resourcefulness={rating=12000,percent=75}}}))
 profile.scripts.OnShow(profile);press('Advanced')
 assert(sliders[1].value==1250 and sliders[1].maximum>=1250,'saved skill expands editing span')
-assert(speedInput.value==275 and speedInput.maximum>=275,'saved speed expands editing span')
+assert(ratingInput.value==12000 and ratingInput.maximum>=12000,'saved useful rating expands editing span')
 local largeRating=false
 for i=start+1,#all do
     if all[i].kind=='Slider' and all[i].value==12000 then largeRating=all[i].maximum>=12000 end
 end
 assert(largeRating,'saved ratings above the starting span remain available')
-print('PASS: high saved skill, rating and speed values survive whole-number slider layout')
+print('PASS: high saved skill and useful rating values survive whole-number slider layout')
 
 -- Pooled vertical controls must hide arrows for our settings after every
 -- rebuild, then restore normal behavior when reused by another category.
@@ -379,7 +378,9 @@ do
     Settings.RegisterVerticalLayoutSubcategory=function(_,name) local c={name=name};pages[name]=c;return c,layout(name) end
     Settings.RegisterCanvasLayoutCategory=function() return {} end
     local canvases={}
-    Settings.RegisterCanvasLayoutSubcategory=function(_,_,name) canvases[#canvases+1]=name;return {} end
+    Settings.RegisterCanvasLayoutSubcategory=function(_,_,name)
+        canvases[#canvases+1]=name;local category={name=name};pages[name]=category;return category
+    end
     Settings.RegisterAddOnCategory=function() end
     Settings.VarType=Settings.VarType or {Number='number',Boolean='boolean',String='string'}
     local created={}
@@ -409,12 +410,7 @@ do
         if item.title=='Rates' then rateSection=true end
         if item.name=='Build details' then details=item end
     end
-    assert(buildSection and details and not rateSection,'main page shows build provenance instead of global Rates')
-    local shownTitle,shownText
-    local originalCopy=LL.ShowCopy
-    LL.ShowCopy=function(_,title,text)shownTitle,shownText=title,text end
-    details.click();assert(shownTitle=='PRs & build' and shownText:find('Source commit:',1,true))
-    LL.ShowCopy=originalCopy
+    assert(not buildSection and not details and not rateSection,'main page has no developer build panel or global rate controls')
     local headingFrame={SetTooltipFunc=function(self,fn)self.tooltipFunc=fn end}
     local count=0
     for _,layout in pairs(layouts) do
@@ -437,30 +433,16 @@ do
     local function control(cat,variable)
         for _,i in ipairs(created) do if i.category==cat and i.setting==settings[variable] then return i end end
     end
-    local toggle
-    for _,i in ipairs(layouts.Tooltips.items) do if i.name=='Advanced' then toggle=i end end
-    assert(toggle and toggle.text()=='Show advanced options','Advanced is a real collapsed button')
-    local advanced={}
-    for _,key in ipairs({'showTooltipExplanations','showProfessionDetails','showResearchDetails'}) do
-        local i=assert(control(pages.Tooltips,'LootLiquidator_'..key))
-        assert(i.shownPredicate and not i.shownPredicate(),'advanced control starts hidden')
-        advanced[#advanced+1]=i
+    for _,i in ipairs(layouts.Tooltips.items) do assert(i.name~='Advanced','obsolete tooltip disclosure removed') end
+    for _,key in ipairs({'showTooltipExplanations','showProfessionDetails','showAverageQuantity',
+        'showMaterialConfidence','showProfessionThresholds'}) do
+        assert(not settings['LootLiquidator_'..key],'obsolete tooltip setting returned: '..key)
     end
-    local repairs=0
-    SettingsPanel.GetSettingsList=function() return {RepairDisplay=function(_,layout)
-        assert(layout==layouts.Tooltips);repairs=repairs+1
-    end} end
-    local button={SetText=function(self,text) self.text=text end}
-    toggle.click(button)
-    assert(button.text=='Hide advanced options' and toggle.text()==button.text)
-    for _,i in ipairs(advanced) do assert(i.shownPredicate());i.setting:SetValue(true) end
-    toggle.click(button)
-    for _,i in ipairs(advanced) do assert(not i.shownPredicate() and i.setting:GetValue()==true) end
-    toggle.click(button)
-    for _,i in ipairs(advanced) do assert(i.shownPredicate() and i.setting:GetValue()==true) end
-    assert(repairs==3,'each click repairs native layout without rebuilding settings')
-    assert(control(pages.Tooltips,'LootLiquidator_showMaterialConfidence').shownPredicate==nil,'Extras stay visible')
-    print('PASS: Advanced expands/collapses three controls, repairs native layout and preserves checkbox values')
+    local diagnostics=assert(control(pages.Tooltips,'LootLiquidator_showResearchDetails'))
+    assert(diagnostics.shownPredicate==nil,'actual token/pricing diagnostics remain directly accessible')
+    diagnostics.setting:SetValue(true)
+    assert(LL.db.showResearchDetails==true,'diagnostic preference still updates its active consumer')
+    print('PASS: stale tooltip controls removed while active token/pricing diagnostic preference remains')
     local alts=control(badges,'LootLiquidator_includeVerifiedAlts')
     assert(alts,'Include alts checkbox missing on the Badges page')
     assert(LL.db.includeVerifiedAlts==true,'Include alts defaults on')
@@ -490,7 +472,13 @@ do
     assert(colorButtons==#LL.BadgeColorOrder and reset,'one color button per badge and a reset')
     LL.db.appearance.colors.A={0,0,0};reset.click();assert(next(LL.db.appearance.colors)==nil)
     -- Only the hypothetical profession pages and Ignored Items stay as canvas pages.
-    for _,name in ipairs(canvases) do assert(name~='Badges & Colors' and name~='Database & Accuracy',name..' is still a canvas page') end
+    for _,name in ipairs(canvases) do
+        assert(name~='Badges & Colors' and name~='Database & Accuracy',name..' is still a canvas page')
+        assert(name~='Fishing','removed Fishing settings page must not be registered')
+    end
+    assert(LL.RecommendedTSMSetupText==nil and LL.CreateTSMRecommendedPanel==nil and LL.RecommendedTSMExport==nil,
+        'recommended TSM preset and interface must not ship')
+    assert(not settings.LootLiquidator_collectTokenResearch,'removed research collector control must not be registered')
     local accuracy=pages['Database & Accuracy']
     assert(accuracy and control(accuracy,'LootLiquidator_source_itemdb_enabled'),'Database & Accuracy is native')
     print('PASS: Badges & Colors and Database & Accuracy are native Settings pages (B8a/B8b)')
@@ -498,6 +486,11 @@ do
     assert(not settings.LootLiquidator_rateProfile and not settings.LootLiquidator_rateProfileCharacter,'global Rates controls are retired')
     assert(LL.db.rateProfileCharacter=='' or LL.db.rateProfileCharacter==nil)
     assert(pages['Professions (Simulated)'],'hypothetical profession pages need a parent page')
+    assert(not pages.Herbalism and not pages.Skinning and not pages.Fishing,
+        'Unsupported professions must not register settings pages')
+    for profession in pairs(LL:ProfessionTooltipMethods()) do assert(pages[profession],'Missing working conversion page: '..profession) end
+    assert(LL:CreateProfessionProfilePanel('Herbalism')==nil and LL:CreateProfessionProfilePanel('Skinning')==nil,
+        'Unsupported professions cannot recreate removed panels')
     local rows=LL:RateProfileCharacterChoices()
     assert(rows[1][1]=='' and rows[2][1]=='Tester - Realm','character choices list saved characters')
     print('PASS: Show rates for + Professions (Simulated) page (B5a/B5b)')
@@ -612,34 +605,18 @@ do
         local fork=LL:GetManualProfessionProfile('Tester - Realm','Enchanting',11)
         assert(selector.initializer.setting:GetValue()==-1 and fork.skill==104
             and fork.specialization:find('107649=11',1,true) and fork.specialization:find('107647=8',1,true)
-            and fork.stats.craftingSpeed.rating==61 and fork.stats.craftingSpeed.percent==12.2
-            and fork.buffs['123'] and fork.learnedSpecializations['107647'],
-            'editing forks the displayed scanned skill, other points, learned state, stats and buffs into Simulated')
-        assert(fork.statAnchors.craftingSpeed.rating==61 and fork.statAnchors.craftingSpeed.percent==12.2,
-            'the first live fork replaces stale zero simulation anchors with the measured stat pair')
-        assert(fork.statGrantReference.policy=='TARGET_SCOPED_TRANSFER_PRIOR' and fork.statGrantReference.confidence==0,
-            'an unpaired source scope is explicitly modeled, never presented as a measured inverse')
-        local function speedParameters(saved,live)
-            local ctx={skill=104,preSpecializationSkill=104,effectiveSkill=104,
-                stats=saved.stats,statAnchors=saved.statAnchors,statGrantReference=saved.statGrantReference,
-                specializationPoints=live and snapshot.disenchantSpecializationPoints or LL:ProfessionSpecializationPoints(saved.specialization),
-                learnedSpecializations=live and snapshot.disenchantLearnedSpecializations or saved.learnedSpecializations,
-                buffs=saved.buffs,operationStatsIncludeSpecialization=live,skillFromAllocation=false,simulated=not live,duration=10}
-            return LL:ProfessionProfileParameters('Enchanting',11,ctx,{name='Disenchant',recipeID=13262},
-                {id=264527,classID=4,quality=3,expansionID=11})
-        end
-        local sourceParameters=speedParameters(snapshot,true)
-        local forkParameters=speedParameters(fork,false)
-        assert(math.abs(sourceParameters.stats.craftingSpeed-12.2)<1e-10
-            and math.abs(forkParameters.stats.craftingSpeed-sourceParameters.stats.craftingSpeed)<1e-10
-            and math.abs(forkParameters.speedFactor-sourceParameters.speedFactor)<1e-10,
-            'an unrelated point edit retains the measured speed and downstream duration factor, not 18.3%')
+            and fork.learnedSpecializations['107647'],
+            'editing forks the displayed scanned skill, other relevant points and learned state into Simulated')
+        assert(not next(fork.buffs or {}) and snapshot.buffs['123'],
+            'An unrelated buff stays in the original scan and cannot become a simulation control')
+        assert((not fork.stats or not next(fork.stats)) and (not fork.statAnchors or not next(fork.statAnchors))
+            and not fork.statGrantReference,
+            'A disenchant fork cannot copy retired speed controls or their simulation anchors')
         delegate:SetValue(12);fork=LL:GetManualProfessionProfile('Tester - Realm','Enchanting',11)
-        assert(fork.statGrantReference.specializationPoints['107649']==10
-            and fork.statAnchors.craftingSpeed.rating==61 and fork.statAnchors.craftingSpeed.percent==12.2,
-            'later manual edits preserve the original measured allocation and anchors without rebasing')
+        assert(not fork.statGrantReference and (not fork.stats or not fork.stats.craftingSpeed),
+            'Later point edits cannot resurrect removed speed projection state')
         assert(snapshot.skill==64 and snapshot.bonusSkill==40 and snapshot.disenchantSpecializationPoints['107649']==10
-            and snapshot.specialization=='raw-current-rank-signature',
+            and snapshot.specialization=='raw-current-rank-signature' and snapshot.stats.craftingSpeed.rating==61,
             'editing never mutates the selected character snapshot or adds gear skill to it')
         snapshot.disenchantSpecializationKnown=false
         for index,key in ipairs(livePanel.characterKeys) do
@@ -661,6 +638,10 @@ do
         -- actual compiled node. Copying its total must not grant that twice.
         assert(loadfile('LootLiquidator/ConversionEngine.lua'))('LL',LL)
         local name='Tester - Realm'
+        local previousRecipes=char.recipes
+        char.recipes={[1230867]={learned=true,outputID=1,outputCount=2,
+            reagentSlots={{required=true,quantity=5,alternatives={{itemID=999999}}}}}}
+        LL:RestoreKnownProfessionRecipeMetadata()
         local previous=LL:GetManualProfessionProfile(name,'Alchemy',11)
         assert(LL:SetManualProfessionProfile(name,'Alchemy',11,{enabled=true,skill=0,specialization='none'}))
         local measured={multicraft={rating=360,percent=18}}
@@ -737,17 +718,18 @@ do
             'unknown Resourcefulness and Multicraft scope cannot cap an independent disenchant output model')
         nodes[nodeID]=nil
         assert(LL:SetManualProfessionProfile(name,'Alchemy',11,{enabled=true,skill=0,specialization='none',
-            stats={craftingSpeed={rating=61,percent=12.2}},statAnchors={craftingSpeed={rating=61,percent=12.2}}}))
+            stats={resourcefulness={rating=61,percent=12.2}},statAnchors={resourcefulness={rating=61,percent=12.2}}}))
         local partial=LL:GetManualProfessionProfile(name,'Alchemy',11)
-        assert(partial.statAnchors.craftingSpeed.rating==61 and partial.statAnchors.multicraft.rating==0
-            and partial.statAnchors.multicraft.percent==0,
-            'an explicit partial first-fork anchor map replaces all old manual anchors, including uncaptured stat keys')
+        assert(partial.statAnchors.resourcefulness.rating==61 and partial.statAnchors.multicraft==nil
+            and partial.stats.multicraft==nil,
+            'An explicit partial fork replaces old manual anchors without retaining unused stat keys')
         assert(LL:SetManualProfessionProfile(name,'Alchemy',11,{enabled=true,skill=0,specialization='none',statAnchors={}}))
         local reset=LL:GetManualProfessionProfile(name,'Alchemy',11)
-        assert(reset.statAnchors.craftingSpeed.rating==0 and reset.statAnchors.craftingSpeed.percent==0,
-            'an explicit empty reset anchor map cannot inherit previous simulation or scanned calibration values')
+        assert(reset.statAnchors==nil and reset.stats==nil,
+            'An explicit empty reset cannot inherit previous simulation or scanned calibration values')
         LL.db.rateProfile=oldMode;LL.db.rateProfileCharacter=oldCharacter;LL._processingContextCache=nil
         LL.db.manualProfessionProfiles[name]['Alchemy:11']=previous
+        char.recipes=previousRecipes
     end
     assert(LL:SetManualProfessionProfile('Tester - Realm','Enchanting',11,{enabled=true,skill=245,
         specialization='107646=12,107648=17,107649=9,107647=8',
@@ -809,8 +791,8 @@ do
     local saved=LL:GetManualProfessionProfile('Tester - Realm','Enchanting',11)
     assert(saved.specialization:find('107649=7',1,true))
     assert(saved.specialization:find('107646=12',1,true) and saved.specialization:find('107648=17',1,true)
-        and saved.skill==245 and saved.stats.resourcefulness.percent==17 and saved.buffs['123'],
-        'editing a supported slider preserves the other points, skill, hidden stats and buffs')
+        and saved.skill==245 and saved.stats==nil and not next(saved.buffs or {}),
+        'Editing a supported slider preserves relevant points and skill without obsolete stats or buffs')
     selector.initializer.setting:SetValue(1)
     assert(not slider.parent.parent.shown,'uncaptured character allocations do not display saved simulated points')
     toggle.scripts.OnClick(toggle)
@@ -844,16 +826,18 @@ do
             if w.template=='SettingsDropdownControlTemplate' then dropdowns[#dropdowns+1]=w end
             if w.kind=='Button' and w.text=='Advanced' then advanced=w end
         end
-        local opportunityTargets=LL.GetProfessionOpportunityTargets and LL:GetProfessionOpportunityTargets(profession,11) or {}
-        assert(#dropdowns==2+(LL:IsGatheringProfession(profession) and 1 or 0)+(#opportunityTargets>0 and 1 or 0),
-            'native gathering and opportunity contexts add relevant target selectors')
+        assert(#dropdowns==2,'only character and era selectors are created')
+        assert(panel.opportunityPreview==nil,'removed world-loot preview must not be created')
+        assert(panel.gatheringPreview==nil,'removed gathering panel must not create a preview')
+        for i=first+1,#all do
+            assert(all[i].text~='Gathering preview','removed gathering panel must not create its title')
+        end
         if expansion~=11 then dropdowns[2].initializer.setting:SetValue(expansion) end
         dropdowns[1].initializer.setting:SetValue(-1)
         assert(advanced);advanced.scripts.OnClick(advanced)
         return first,panel
     end
-    for _,profession in ipairs({'Alchemy','Blacksmithing','Enchanting','Engineering','Herbalism','Inscription',
-        'Jewelcrafting','Leatherworking','Mining','Skinning','Tailoring','Cooking','Fishing'}) do
+    for profession in pairs(LL:ProfessionTooltipMethods()) do
         for _,expansion in ipairs({9,10,11}) do
             local first=nativePanel(profession,expansion)
             local options=LL:GetProfessionUIOptions('Tester - Realm',profession,expansion)
@@ -867,10 +851,11 @@ do
                 if fields.rating then expected=expected+1 end
                 if fields.percent then expected=expected+1 end
             end
-            assert(expected>0 and #slidersAfter(first)==expected,
+            assert(#slidersAfter(first)==expected,
                 profession..' '..expansion..' exposes every compiled skill, stat and specialization control')
-            assert(#labelsAfter(first,'Skill before specialization')==1,'all compiled profession profiles expose skill')
-            if profession=='Cooking' or profession=='Fishing' then assert(#options.nodes==0,'native profiles without specializations retain no fabricated tree') end
+            assert(#labelsAfter(first,'Skill before specialization')==(support.skill and 1 or 0),
+                'Only a supported output/value model exposes the skill control')
+            if profession=='Cooking' then assert(#options.nodes==0,'native profiles without specializations retain no fabricated tree') end
         end
     end
     -- A native rank-zero perk is an actual learned state, rather than one
@@ -922,46 +907,35 @@ do
     assert(learningCheckbox.llNativeCheckbox.enabled and not learningCheckbox:GetChecked() and learnedSkill().skill==133,
         'returning to zero restores the explicit unchecked learning state')
     print('PASS: native learned-at-zero checkbox grants once, removes at zero and disables at positive investment')
-    -- The displayed opportunity result and its native hover must use the same
-    -- recalculated profile, with confidence carrying uncertainty.
-    assert(loadfile('LootLiquidator/ConversionEngine.lua'))('LL',LL)
-    LL.db.professionTooltipProfiles.Tailoring='@hypothetical'
-    assert(LL:SetManualProfessionProfile('Tester - Realm','Tailoring',11,{enabled=true,skill=100,specialization='none'}))
-    for _,target in ipairs(LL:GetProfessionOpportunityTargets('Tailoring',11)) do
-        if target.nodeID==104350 then
-            LL.db.professionOpportunitySelections=LL.db.professionOpportunitySelections or {}
-            LL.db.professionOpportunitySelections['Tailoring:11']=target.targetID
+    for _,w in ipairs(all) do
+        assert(w.text~='Loot and item-use preview','removed world-loot simulator must not create a settings panel')
+    end
+    print('PASS: profession processing profiles, removed gathering selectors, saved allocations and numeric-support refresh')
+end
+
+do
+    -- The early control-layout fixtures deliberately start with an empty DB.
+    -- Build the preview closure now against the actual compiled studies.
+    assert(loadfile('LootLiquidator/Settings.lua'))('LootLiquidator',LL)
+    local seen,items={}
+    local function find(fn)
+        if type(fn)~='function'or seen[fn]then return end;seen[fn]=true
+        for i=1,100 do
+            local name,value=debug.getupvalue(fn,i);if not name then break end
+            if name=='PREVIEW_ITEMS'then items=value end
+            if type(value)=='function'then find(value)end
         end
     end
-    local opportunityFirst,opportunityPanel=nativePanel('Tailoring',11)
-    local fabricLabel=assert(labelsAfter(opportunityFirst,'Fabric Specialist (')[1])
-    local fabricSlider=assert(sliderAt(fabricLabel,opportunityFirst))
-    fabricSlider:SetValue(10)
-    local resultLabel=assert(labelsAfter(opportunityFirst,'Loot — Fabric Specialist')[1])
-    local resultFrame=resultLabel.parent
-    local previousTooltip=GameTooltip
-    local tooltipLines,tooltipShown={},false
-    GameTooltip={SetOwner=function()end,ClearLines=function()tooltipLines={}end,
-        AddLine=function(_,line)tooltipLines[#tooltipLines+1]=line end,
-        Show=function()tooltipShown=true end,Hide=function()tooltipShown=false end}
-    resultFrame.scripts.OnEnter(resultFrame)
-    local firstResult=table.concat(tooltipLines,'\n')
-    assert(tooltipShown and firstResult:find('discovery:',1,true) and firstResult:find('Confidence 0%',1,true),
-        'native hover displays the actual normalized output and confidence')
-    assert(not firstResult:lower():find('estimate',1,true) and not firstResult:lower():find('provisional',1,true),
-        'confidence is the uncertainty presentation')
-    fabricSlider:SetValue(20)
-    assert(table.concat(tooltipLines,'\n')~=firstResult,'active hover refreshes immediately when a native slider changes')
-    local characterSelector
-    for i=opportunityFirst+1,#all do
-        local w=all[i]
-        if w.template=='SettingsDropdownControlTemplate' then characterSelector=w;break end
+    find(LootLiquidator_InitTooltipPreview)
+    assert(items and #items==5,'all five actual tooltip samples survive catalog/category pruning')
+    local found={}
+    for _,sample in ipairs(items)do
+        found[sample.itemID]=true
+        assert(#sample.outputs>0,'sample has actual material rows')
+        if sample.method=='Disenchant'then
+            assert(sample.source:match('^evidence:category:'),'ordinary gear preview uses its shared category study')
+        end
     end
-    characterSelector.initializer.setting:SetValue(0)
-    assert(opportunityPanel.opportunityPreview==nil and not tooltipShown,'hiding a profile clears its model and open tooltip')
-    resultFrame.scripts.OnEnter(resultFrame)
-    assert(not tooltipShown,'hidden preview retains no stale hover content')
-    GameTooltip=previousTooltip
-    print('PASS: native opportunity hover renders slider outputs, confidence and immediate refresh without stale hidden results')
-    print('PASS: all 39 profession profiles, native no-tree pages, gathering target selectors, saved allocations and numeric-support refresh')
+    for _,id in ipairs({2447,765,239671,239675,258920})do assert(found[id],'sample disappeared: '..id)end
+    print('PASS: five tooltip samples use retained real studies, including shared gear categories')
 end

@@ -13,7 +13,6 @@ LL.GetCachedOperationInfo=function()end
 LL.GetOutputPrice=function()return 100 end
 LL.AHFeeRate=function()return 0 end
 LL.EligibleDisenchant=function()return false end
-LL.ProfessionProgression=function()return {}end
 LL.Money=function(_,n)return tostring(n)..' copper'end
 LL.MarkupColor=function()return ''end
 local function field(v)return {value=v,status='measured',confidence=90}end
@@ -59,21 +58,20 @@ profile(0)
 LL:AppendRecommendationTooltip(tip,{action='A',rawAuction=1,netAuction=1,facts=f,conversionOptions=original})
 local text=table.concat(tip.lines,'\n')
 assert(text:find('Simulated',1,true) and text:find('40 copper',1,true))
-assert(text:find('Next researched skill breakpoint: 100 (+100 skill)',1,true))
-LL.db.showProfessionThresholds=false
-tip.lines={};LL:AppendRecommendationTooltip(tip,{action='A',rawAuction=1,netAuction=1,facts=f,conversionOptions=original})
-assert(not table.concat(tip.lines,'\n'):find('Next researched',1,true))
-local other={id=2,classID=7,expansionID=9}
-assert(not table.concat(LL:ProfessionThresholdNotes(other,option,{effectiveSkill=0}),';'):find('100',1,true),'no cross-item threshold leak')
+assert(not text:find('Next researched skill breakpoint:',1,true),'normal tooltip excludes progression notes')
+assert(LL.ProfessionThresholdNotes==nil,'unused profession planning API is removed')
 profile(100,{resourcefulness={rating=250,percent=12.5}})
 local ctx=LL:TooltipConversionOptions(f,original)[1].yieldModel.context
 assert(ctx.operationStats[1].bonusStatValue==250 and ctx.operationStats[1].ratingPct==12.5)
 assert(ctx.simulated and LL.db.characters.Player.researchProfiles==nil)
 assert(not LL:SetManualProfessionProfile('Player','Inscription',9,{stats={resourcefulness={percent=0/0}}}))
 assert(not LL:SetManualProfessionProfile('Player','Inscription',9,{stats={resourcefulness={percent=101}}}))
-assert(LL:SetManualProfessionProfile('Player','Inscription',9,{skill=1250,stats={craftingSpeed={rating=12000,percent=125.5}}}),
-    'effective skill, rating and speed bonus have no fabricated slider cap')
-assert(not LL:SetManualProfessionProfile('Player','Inscription',9,{stats={craftingSpeed={percent=math.huge}}}))
+assert(LL:SetManualProfessionProfile('Player','Inscription',9,{skill=1250,stats={resourcefulness={rating=12000,percent=75.5}}}),
+    'effective skill and useful ratings have no fabricated slider cap')
+assert(not LL:SetManualProfessionProfile('Player','Inscription',9,{stats={resourcefulness={percent=math.huge}}}))
+assert(LL:SetManualProfessionProfile('Player','Inscription',9,{stats={craftingSpeed={percent=math.huge}}})
+    and LL:GetManualProfessionProfile('Player','Inscription',9).stats==nil,
+    'Retired speed input has no simulation code or state')
 local n={id=2,name='Child',maxRank=30,requirements={{kind='node',nodeID=1,rank=10,name='Parent'}},
     milestones={{rank=15,description='A sourced milestone'}}}
 assert(LL:ProfessionNodeRequirements(n,{['1']=9},100)==false)

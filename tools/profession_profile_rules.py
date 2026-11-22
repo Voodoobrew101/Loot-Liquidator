@@ -1,7 +1,7 @@
 """Compile typed profession profile effects from the pinned client snapshot.
 
-Description interpretation happens here, never in the addon. Every source entry
-and effect has an explicit handler, including structural/non-economic effects.
+Description interpretation happens here, never in the addon. Retained item-processing
+entries have typed handlers; world-gathering entries are excluded.
 Qualitative numerical priors carry confidence zero and never invent item IDs or
 observed operations. Native labels and conditional state remain part of scope.
 """
@@ -40,10 +40,24 @@ ENUMS = {
     26: ("ingenuity", "rating"), 27: ("concentrationCost", "percent"),
     29: ("ingenuity", "percent"), 30: ("concentrationRefund", "percent"),
 }
-METRICS = sorted({metric for metric, _ in ENUMS.values()} | {"recipeUnlock", "extraOutput", "dropChance", "yieldMultiplier"})
+VALUE_METRICS = {"skill", "difficulty", "resourcefulness", "multicraft", "extraOutput", "dropChance",
+                 "yieldMultiplier", "resourcefulnessSaved", "multicraftExtra"}
+METRICS = sorted(VALUE_METRICS)
 UNITS = {"rating", "percent", "skill", "fraction", "quantity", "flag"}
 DE_PATHS = {107649: None, 107648: 2, 107647: 3, 107646: 4,
             99890: None, 99889: 2, 99888: 3, 99887: 4}
+
+
+def is_runtime_value_effect(effect):
+    scope = effect["scope"]
+    method = scope.get("method")
+    if effect["metric"] not in VALUE_METRICS or method in {"Gather", "Skin", "Fish", "Loot", "Use"}:
+        return False
+    # Learned item recipes dispatch Craft, not these historical source labels.
+    # No current curated/research operation dispatches either label. Preserve
+    # an explicit Craft alternate rather than discarding a real routed term.
+    return method not in {"Refine", "Unravel"} or (
+        scope.get("alternateMethod") == "Craft" and bool(scope.get("alternateRecipeIDs")))
 
 
 def load_source(path=SOURCE):
@@ -99,10 +113,12 @@ def build_recipes(source, items=None, families=None):
                   "minimumSkill": native["minimumSkill"], "requiredSkill": native["minimumSkill"],
                   "labels": native["labels"], "sourceAbilityIDs": [native["recordID"]],
                   "outputs": [], "outputIDs": [], "qualityOrderVerified": False}
-        if spell.get("baseDuration") is not None and not any(effect["Effect"] == 302 for effect in spell.get("effects", [])):
-            recipe["baseDuration"] = spell["baseDuration"]
-            recipe["baseDurationSource"] = spell["castTimeSource"]
         effects = spell.get("effects", [])
+        # World gathering abilities have no item-processing contract. Mixed
+        # spells with an actual item/crafting effect remain available.
+        if any(effect["Effect"] == 302 for effect in effects) and not any(
+                effect["Effect"] in (24, 157, 288, 296) or effect.get("craftingDataID") for effect in effects):
+            continue
         crafting_ids = sorted({effect["craftingDataID"] for effect in effects if effect.get("craftingDataID")})
         output_ids = set()
         for effect in effects:
@@ -163,12 +179,11 @@ def build_recipes(source, items=None, families=None):
                 recipe["supportsResourcefulness"] = True
                 recipe.setdefault("capabilityEvidence", {})["resourcefulness"] = "REGULAR_MODERN_CRAFT_MODEL"
                 recipe.setdefault("capabilityConfidence", {})["resourcefulness"] = 35
-            difficulty_row = craft.get("difficultyRow") or {}
-            if recipe["supportsQuality"] and difficulty_row.get("ConcentrationSkillCurveID") and difficulty_row.get("ConcentrationDifficultyCurveID"):
-                recipe["supportsIngenuity"] = True
-                recipe.setdefault("capabilityEvidence", {})["ingenuity"] = "NATIVE_CONCENTRATION_CURVES_MODEL"
-                recipe.setdefault("capabilityConfidence", {})["ingenuity"] = 60
         recipe["outputIDs"] = sorted(output_ids)
+        # Keep real Fishing consumable/lure crafts. Fishing abilities without
+        # an item output do not participate in hovered-item processing.
+        if native["profession"] == "Fishing" and not output_ids:
+            continue
         if not recipe["outputs"]:
             recipe["outputs"] = [{"itemID": item} for item in sorted(output_ids)]
         classes = {items[item]["classID"] for item in output_ids if item in items}
@@ -357,12 +372,12 @@ def compile_entry(node, entry, nodes, recipes):
         savings_term = "resourcefulness" in text and bool(re.search(r"sav|refund|recover|effectiveness|yield", text))
         if savings_term and "resourcefulnessSaved" not in numeric_metrics:
             percent = re.search(r"(\d+(?:\.\d+)?)%", text)
-            emit("resourcefulnessSaved", float(percent[1]) if percent else 5, "percent", 70 if percent else 0,
-                 mechanism="resourcefulness-input-savings", source_effects=custom_ids)
+            emit("resourcefulnessSaved", float(percent[1]) if percent else 0, "percent", 70 if percent else 0,
+                 numericUnsupported=not bool(percent), mechanism="resourcefulness-input-savings", source_effects=custom_ids)
         if ("refund" in text or "return" in text) and "concentration" in text and "concentrationRefund" not in numeric_metrics:
             percent = re.search(r"(\d+(?:\.\d+)?)%", text)
-            emit("concentrationRefund", float(percent[1]) if percent else 5, "percent", 70 if percent else 0,
-                 mechanism="concentration-refund", source_effects=custom_ids)
+            emit("concentrationRefund", float(percent[1]) if percent else 0, "percent", 70 if percent else 0,
+                 numericUnsupported=not bool(percent), mechanism="concentration-refund", source_effects=custom_ids)
 
         # These are per-operation quantity/occurrence opportunities, not a
         # universal interpretation of enum25. Unknown output identities are
@@ -387,18 +402,18 @@ def compile_entry(node, entry, nodes, recipes):
             explicit_percent = re.search(r"(\d+(?:\.\d+)?)%", output_text)
             finesse_conditional = "finesse" in text and "finesseExtra" not in numeric_metrics
             metric = "finesseExtra" if finesse_conditional else "dropChance" if explicit_percent else "extraOutput"
-            magnitude = float(explicit_percent[1]) if explicit_percent else 5 if finesse_conditional else float(amount[1]) if amount else .05
+            magnitude = float(explicit_percent[1]) if explicit_percent else float(amount[1]) if amount else 0
+            numeric_unsupported = not bool(explicit_percent or amount)
             unit = "percent" if finesse_conditional or explicit_percent else "quantity"
-            if amount is None and not explicit_percent and not finesse_conditional:
-                magnitude = .0001 if "extremely rare" in text else .001 if "very rare" in text or "diamond" in text else .05
             relative = bool(explicit_percent and ("increase" in output_text or "increased" in output_text) and not re.search(r"\+\d+(?:\.\d+)?%", output_text))
             # This exact native milestone promises a relative improvement,
-            # not .05 new units divided uniformly over every gem and rank.
-            # The coefficient remains a confidence-zero quantity prior.
+            # without supplying a numerical coefficient. Preserve the scope,
+            # but do not manufacture a five-percent improvement.
             if (node["nodeID"] == 28609 and entry["entryID"] == 36393
                     and node["catalogKey"] == "Jewelcrafting:9"
                     and text.strip() == "increases your chances of acquiring raw gems when prospecting."):
-                relative, magnitude, unit = True, .05, "fraction"
+                relative, magnitude, unit = True, 0, "fraction"
+                numeric_unsupported = True
             output_scope = dict(scope)
             if (node["nodeID"] == 28609 and entry["entryID"] == 36392
                     and node["catalogKey"] == "Jewelcrafting:9"):
@@ -409,6 +424,7 @@ def compile_entry(node, entry, nodes, recipes):
             emit(metric, magnitude, unit, 50 if amount or explicit_percent else 0,
                  mechanism="finesse-conditional-yield-prior" if finesse_conditional else "explicit-extra-output" if amount or explicit_percent else "qualitative-extra-output-prior", source_effects=custom_ids,
                  scope=output_scope, outputItemIDs=output_ids, recipeIDs=refs,
+                 numericUnsupported=numeric_unsupported,
                  legalOutputRefs={"kind": "native-recipe-or-selected-baseline", "recipeIDs": refs, "itemIDs": output_ids},
                  economicPolicy="nontradable" if "soulbound" in text else "normal",
                  identityUnresolved=not bool(output_ids),
@@ -417,14 +433,16 @@ def compile_entry(node, entry, nodes, recipes):
                  targetFamily="Darkmoon Cards" if "darkmoon cards" in text else "Mystic Items" if "mystic items" in text else None)
         if ("breakthrough" in text or "discover" in text) and "chance" in text:
             percent = re.search(r"(\d+(?:\.\d+)?)%", text)
-            emit("eligibility", float(percent[1]) if percent else 5, "percent", 50 if percent else 0,
-                 mechanism="recipe-discovery-chance", source_effects=custom_ids)
+            emit("eligibility", float(percent[1]) if percent else 0, "percent", 50 if percent else 0,
+                 numericUnsupported=not bool(percent), mechanism="recipe-discovery-chance", source_effects=custom_ids)
         if "chance to not consume" in text:
-            emit("resourcefulnessSaved", 5, "percent", 0, mechanism="consumable-refund-prior", source_effects=custom_ids)
+            emit("resourcefulnessSaved", 0, "percent", 0, numericUnsupported=True,
+                 mechanism="consumable-refund-prior", source_effects=custom_ids)
         if "see camoflauged herbs" in text or "lure the elite" in text or "ability to get useful herbs" in text:
             emit("eligibility", mechanism="gather-target-unlock", source_effects=custom_ids)
         if "shattered power lingers" in text and "skill" not in numeric_metrics:
-            emit("skill", 1, "skill", 0, mechanism="conditional-shatter-skill-prior", source_effects=custom_ids)
+            emit("skill", 0, "skill", 0, numericUnsupported=True,
+                 mechanism="conditional-shatter-skill-prior", source_effects=custom_ids)
         if "guarantee a rousing element" in text:
             compiled[:] = [effect for effect in compiled if effect["metric"] != "extraOutput"]
             emit("dropChance", 100, "percent", 0, mechanism="guaranteed-specific-output-occurrence",
@@ -438,7 +456,7 @@ def compile_entry(node, entry, nodes, recipes):
                 emit("recipeUnlock", mechanism="native-spell-unlock", source_effects=custom_ids,
                      recipeIDs=refs, outputItemIDs=output_ids)
             elif custom or entry["description"]:
-                emit("extraOutput", .01, "quantity", 0, mechanism="unresolved-qualitative-output-prior",
+                emit("extraOutput", 0, "quantity", 0, numericUnsupported=True, mechanism="unresolved-qualitative-output-prior",
                      source_effects=custom_ids, outputItemIDs=output_ids, recipeIDs=refs,
                      legalOutputRefs={"kind": "native-recipe-or-selected-baseline", "recipeIDs": refs, "itemIDs": output_ids},
                      identityUnresolved=not bool(output_ids), requiresSemanticReview=True)
@@ -449,91 +467,19 @@ def compile_entry(node, entry, nodes, recipes):
     assigned = {identity for effect in compiled for identity in effect["sourceEffectIDs"]}
     remaining = sorted(set(custom_ids) - assigned)
     if remaining:
-        emit("extraOutput", .01, "quantity", 0, mechanism="unresolved-client-modifier-prior", source_effects=remaining,
+        emit("extraOutput", 0, "quantity", 0, numericUnsupported=True, mechanism="unresolved-client-modifier-prior", source_effects=remaining,
              legalOutputRefs={"kind": "native-recipe-or-selected-baseline", "recipeIDs": refs, "itemIDs": output_ids},
              identityUnresolved=not bool(output_ids), requiresSemanticReview=True)
     return compiled
-
-
-def build_gathering_targets(recipes, spells, items, families):
-    by_name = defaultdict(list)
-    for identity, item in items.items():
-        if item.get("name") and item["classID"] == 7 and item["subclassID"] in (6, 7, 9):
-            name = item["name"].lower()
-            by_name[name].append(identity)
-            if name.endswith(" ore"):
-                by_name[name[:-4]].append(identity)
-    by_expansion = defaultdict(dict)
-    for name, identities in by_name.items():
-        for expansion in {items[identity].get("expansionID") for identity in identities}:
-            by_expansion[expansion][name] = [identity for identity in identities if items[identity].get("expansionID") == expansion]
-    alias_patterns = {expansion: [(re.compile(r"(?<!\w)" + re.escape(name) + r"(?!\w)"), identities)
-        for name, identities in sorted(names.items(), key=lambda pair: (-len(pair[0]), pair[0]))]
-        for expansion, names in by_expansion.items()}
-    result = {}
-    for spell_id, recipe in recipes.items():
-        if recipe["profession"] not in {"Herbalism", "Mining", "Skinning"} or recipe.get("expansionID") not in (9, 10, 11):
-            continue
-        spell = spells.get(spell_id, {})
-        effects = [effect for effect in spell.get("effects", []) if effect["Effect"] == 302]
-        name = spell.get("name", "").lower()
-        matches = by_expansion[recipe["expansionID"]].get(name, [])
-        exact_name = bool(matches) and all(items[identity]["name"].lower() == name for identity in matches)
-        if effects and not matches:
-            for pattern, candidates in alias_patterns[recipe["expansionID"]]:
-                if pattern.search(name):
-                    matches = candidates
-                    break
-        if not effects or not matches:
-            continue
-        ranked = sorted((items[identity].get("qualityRank") or 1, identity) for identity in matches)
-        if [rank for rank, _ in ranked] != list(range(1, len(ranked) + 1)):
-            continue
-        family_ids = {items[identity].get("qualityFamilyID") for _, identity in ranked}
-        if len(ranked) > 1 and (len(family_ids) != 1 or None in family_ids):
-            continue
-        maximum = len(ranked)
-        difficulty_parameter = max(effect["EffectBasePointsF"] for effect in effects)
-        thresholds = [{"rank": rank, "fraction": (rank - 1) / (maximum - 1) if maximum > 1 else 0,
-                       "confidence": 0, "model": "even-tier-gathering-threshold-prior"} for rank, _ in ranked]
-        generic_spell = {"Herbalism": 2366, "Mining": 2575, "Skinning": 8613}[recipe["profession"]]
-        generic_timing = spells.get(generic_spell, {})
-        duration = generic_timing.get("baseDuration")
-        target = {"spellID": spell_id, "recipeID": spell_id, "name": spell["name"],
-            "targetID": "native-gather-spell:" + str(spell_id), "nativeTargetID": "spell:" + str(spell_id),
-            "label": spell["name"], "method": "Gather", "qualityConfidence": 0,
-            "profession": recipe["profession"], "expansionID": recipe["expansionID"], "skillLineID": recipe["skillLineID"],
-            "minimumSkill": recipe["minimumSkill"], "requiredSkill": recipe["requiredSkill"], "labels": recipe["labels"],
-            "primaryOutputIDs": [identity for _, identity in ranked], "primaryFamilyID": next(iter(family_ids)),
-            "qualityOrderVerified": True, "identityConfidence": 90 if exact_name else 80,
-            "identitySource": "Native SkillLineAbility + gathering Effect302 + exact/ore-suffix/material-modifier native names + Item crafting quality",
-            "sourceAbilityIDs": recipe["sourceAbilityIDs"], "sourceEffectIDs": [effect["ID"] for effect in effects],
-            "difficulty": difficulty_parameter, "nativeDifficultyParameter": difficulty_parameter,
-            "difficultySourceField": "SpellEffect.EffectBasePointsF", "difficultyConfidence": 0,
-            "qualityThresholds": thresholds,
-            "baseline": {"inputCount": 1, "confidence": 0,
-                "baselineProfile": {"skill": recipe["minimumSkill"], "preSpecializationSkill": recipe["minimumSkill"],
-                                    "specializationPoints": {}, "stats": {}},
-                "materials": [{"id": ranked[0][1], "expectedQuantity": 1, "confidence": 0}],
-                "primaryOutputIDs": [identity for _, identity in ranked],
-                "model": "canonical-unit-minimum-profile-prior", "observedYield": False}}
-        if duration is not None and duration > 0:
-            target["baseDuration"] = duration
-            target["baseDurationSource"] = {"genericGatheringSpellID": generic_spell, **generic_timing["castTimeSource"]}
-            target["baseline"]["duration"] = duration
-            recipe["baseDuration"] = duration
-            recipe["baseDurationSource"] = target["baseDurationSource"]
-        result[spell_id] = target
-    return result
 
 
 def build(source):
     items = {int(identity): copy.deepcopy(item) for identity, item in source["recipeRouting"].get("items", {}).items()}
     families = {int(identity): copy.deepcopy(family) for identity, family in source["recipeRouting"].get("qualityFamilies", {}).items()}
     recipes, spells = build_recipes(source, items, families)
-    gathering_targets = build_gathering_targets(recipes, spells, items, families)
     nodes = {node["nodeID"]: node for node in source["nodes"]}
-    globals_by_name = {row["profession"]: {"parentSkillLineID": row["parentSkillLineID"], **row["professionRecord"]}
+    globals_by_name = {row["profession"]: {"parentSkillLineID": row["parentSkillLineID"],
+        **{key: value for key, value in row["professionRecord"].items() if key != "GatherTimeIncreasePct"}}
                        for row in source["professionParameters"]}
     profiles, statuses, clusters, entry_audit = {}, Counter(), {}, []
     unresolved_output, conditional_unknown, effect_summary = [], [], Counter()
@@ -541,6 +487,8 @@ def build(source):
     binding_document = json.loads(BINDINGS.read_text(encoding="utf-8")) if BINDINGS.exists() else {}
     output_bindings = {row["entryID"]: row for row in binding_document.get("bindings", [])}
     for source_node in source["nodes"]:
+        if source_node["profession"] in {"Herbalism", "Skinning"}:
+            continue  # No item-processing simulation tree; native recipes/items remain shared.
         key = source_node["catalogKey"]
         profile = profiles.setdefault(key, {"profession": source_node["profession"], "expansionID": source_node["expansionID"],
             "lineID": source_node["lineID"], "parentSkillLineID": globals_by_name[source_node["profession"]]["parentSkillLineID"],
@@ -549,21 +497,19 @@ def build(source):
                 "pointEffects": [], "learningEffects": [], "milestones": []}
 
         def convert(entry):
-            effects = compile_entry(source_node, entry, nodes, recipes)
+            classified = compile_entry(source_node, entry, nodes, recipes)
+            effects = [effect for effect in classified if is_runtime_value_effect(effect)]
+            if not effects:
+                return []
             for effect in effects:
                 shatter = recipes.get(470726)
                 if effect["metric"] == "skill" and effect["scope"].get("method") == "Disenchant" and shatter:
                     if set(effect["scope"].get("labelIDs", [])) & set(shatter.get("labels", [])):
                         effect["scope"]["alternateRecipeIDs"] = [470726]
                         effect["scope"]["alternateMethod"] = "Craft"
-                if effect["metric"] == "finesseExtra":
-                    effect["outputBinding"] = {"kind": "gather-target-primary", "itemIDs": []}
-                    effect["identityUnresolved"] = False
-                    effect["identityConfidence"] = 80
                 binding = output_bindings.get(entry["entryID"])
                 if binding and effect["metric"] in {"extraOutput", "dropChance"}:
                     kind = {"verified-recipe-primary": "recipe-primary",
-                            "verified-gather-target-primary": "gather-target-primary",
                             "fixed-family": "fixed-family", "named-family": "named-family"}.get(binding["kind"])
                     if kind:
                         effect["outputBinding"] = {"kind": kind, "itemIDs": binding.get("itemIDs", [])}
@@ -583,7 +529,7 @@ def build(source):
                         effect["economicPolicy"] = binding.get("economicPolicy", effect.get("economicPolicy", "normal"))
                         effect["bindingSourceEntryID"] = binding["entryID"]
             source_ids = {effect["effectID"] for effect in entry["effects"]}
-            covered = {identity for effect in effects for identity in effect["sourceEffectIDs"]}
+            covered = {identity for effect in classified for identity in effect["sourceEffectIDs"]}
             if not source_ids <= covered:
                 raise ValueError(f"Unmapped effect at entry {entry['entryID']}")
             for effect in effects:
@@ -652,7 +598,24 @@ def build(source):
             node["milestones"].append({"rank": milestone["investedPoints"], "perkNodeID": milestone["perkNodeID"],
                 "learning": milestone["investedPoints"] == 0, "effects": effects if milestone["investedPoints"] else []})
         profile["nodes"][source_node["nodeID"]] = node
-    for profession in ("Cooking", "Fishing"):
+    # Keep only processing effects and their prerequisite structure. A
+    # profession identity may still be used by Refine/Smelt/character contexts.
+    for profile in profiles.values():
+        available = profile["nodes"]
+        keep = {identity for identity, node in available.items()
+                if node["pointEffects"] or node["learningEffects"]
+                or any(milestone["effects"] for milestone in node["milestones"])}
+        pending = list(keep)
+        while pending:
+            parent = available[pending.pop()].get("parentID")
+            if parent in available and parent not in keep:
+                keep.add(parent)
+                pending.append(parent)
+        profile["nodes"] = {identity: node for identity, node in available.items() if identity in keep}
+        for node in profile["nodes"].values():
+            node["milestones"] = [milestone for milestone in node["milestones"]
+                                  if milestone["effects"] or milestone.get("learning")]
+    for profession in ("Cooking",):
         native = next(row for row in source["professionParameters"] if row["profession"] == profession)
         expansions = {row["ExpansionID"]: row for row in native["expansionRecords"]}
         for expansion in (9, 10, 11):
@@ -661,28 +624,19 @@ def build(source):
     for key, profile in profiles.items():
         name = profile["profession"]
         profile["professionParameters"] = globals_by_name[name]
-        profile["statKeys"] = (["skill", "perception"] if name == "Fishing" else
-            ["skill", "finesse", "perception", "deftness"] if name in {"Herbalism", "Mining", "Skinning"} else
-            ["skill", "resourcefulness", "multicraft", "craftingSpeed"] if name == "Cooking" else
-            ["skill", "resourcefulness", "multicraft", "ingenuity", "craftingSpeed"])
+        profile["statKeys"] = (["skill"] if name == "Mining" else
+            ["skill", "resourcefulness", "multicraft"])
     document = {"schemaVersion": 1, "revision": "profession-profile-rules/1", "build": 70961, "clientVersion": "12.1.5",
         "profiles": dict(sorted(profiles.items())), "professionParameters": globals_by_name,
-        "recipes": recipes, "items": items, "qualityFamilies": families, "gatheringTargets": gathering_targets, "metrics": METRICS,
+        "recipes": recipes, "items": items, "qualityFamilies": families, "metrics": METRICS,
         "sourceSnapshotSHA256": hashlib.sha256(SOURCE.read_bytes()).hexdigest(),
         "specializationRulesSHA256": hashlib.sha256(SPECIALIZATION.read_bytes()).hexdigest(),
         "outputBindingsSHA256": hashlib.sha256(BINDINGS.read_bytes()).hexdigest() if BINDINGS.exists() else None,
-        "modelPolicy": {"qualitativePriorConfidence": 0, "unknownExtraExpectedUnitsPrior": .05,
-                        "unclassifiedExpectedUnitsPrior": .01, "unobservedSampleCountsInvented": False,
-                        "ratingFallbackSlope": .1, "ratingFallbackUnit": "percentage-points-per-rating", "ratingFallbackConfidenceCap": 10,
-                        "resourcefulnessSavedMidpointFraction": .3, "resourcefulnessConfidenceCap": 15,
-                        "multicraftExtraMidpointFraction": 1.255, "multicraftConfidenceCap": 15,
-                        "finesseConditionalExtraPrimaryUnits": 1, "finesseConfidenceCap": 5,
-                        "perceptionRareDiscoveryModel": "1 + chance; not a universal primary quantity multiplier", "perceptionConfidenceCap": 5,
-                        "legacyDisenchantHighestRankShare": .66, "legacyDisenchantNextRankShare": .34,
-                        "legacyDisenchantBaseSkillMaximum": 140, "legacyDisenchantConfidenceCap": 0,
-                        "legacyDisenchantScope": "Native scoped maximum specialization skill; preserve primary pool; transferred prior, not an empirical legacy rank curve",
-                        "gatheringCanonicalPrimaryUnits": 1, "gatheringQualityDifficultyConfidenceCap": 0,
-                        "gatheringQualityModel": "Evenly spaced rank fractions across the native difficulty-like parameter; exact native operation overrides",
+        "modelPolicy": {"unobservedSampleCountsInvented": False,
+                        "unquantifiedEffects": "Preserve scope only; no invented numeric coefficient",
+                        "ratingCalibration": "Native operation or explicit source calibration only",
+                        "statYieldCoefficients": "Native numeric parameters or reviewed source values only",
+                        "legacyDisenchantScope": "Preserve observed category rank mix without an explicit calibrated response",
                         "inverseAmbiguityPolicy": "Fail closed; no fabricated identifiable inverse"}}
     if QUALITY_MODELS.exists():
         quality_document = json.loads(QUALITY_MODELS.read_text(encoding="utf-8"))
@@ -693,10 +647,11 @@ def build(source):
         name = (row.get("outputBinding") or {}).get("name") or "Unbound identity"
         unresolved_groups[name].append(row)
     audit = {"schemaVersion": 1, "revision": document["revision"], "sourceSnapshotSHA256": document["sourceSnapshotSHA256"], "summary": {
-        "profiles": len(profiles), "nodes": len(nodes), "milestones": sum(len(node["milestones"]) for node in nodes.values()),
+        "profiles": len(profiles), "nodes": sum(len(profile["nodes"]) for profile in profiles.values()),
+        "milestones": sum(len(node["milestones"]) for profile in profiles.values() for node in profile["nodes"].values()),
         "entries": len(entry_audit), "recipes": len(recipes), "typedHandlers": sum(statuses.values()),
         "mechanisms": dict(sorted(statuses.items())), "unmappedSourceEffects": 0,
-        "itemQualityFamilies": len(families), "itemMetadataRows": len(items), "gatheringTargets": len(gathering_targets),
+        "itemQualityFamilies": len(families), "itemMetadataRows": len(items),
         **dict(effect_summary)}, "unresolvedOutputIdentities": unresolved_output,
         "unresolvedOutputFamilies": dict(sorted(unresolved_groups.items())),
         "conditionalBuffIdentitiesWithoutNativeSpellID": conditional_unknown,
@@ -705,18 +660,17 @@ def build(source):
 
 
 def render(document):
-    return "-- Generated by tools/profession_profile_rules.py; typed client effects and explicit model priors.\nreturn " + lua(document) + "\n"
+    return "-- Generated by tools/profession_profile_rules.py; typed client effects and source-backed numeric terms.\nreturn " + lua(document) + "\n"
 
 
 def render_report(document, audit):
     summary = audit["summary"]
     lines = ["# Profession profile source and model coverage — November 19, 2026", "",
         "Generated from pinned public client tables and existing reviewed output bindings. No new in-game collection was performed.", "",
-        f"The compiler maps {summary['nodes']} paths and {summary['milestones']} actual milestones ({summary['entries']} client entries) into {summary['typedHandlers']} typed handlers across 39 modern profession profiles. Cooking and Fishing have stat profiles without invented specialization trees. Legacy recipe identities and minimum Skill remain separate from modern specialization catalogs.", "",
+        f"The compiler maps {summary['nodes']} paths and {summary['milestones']} processing milestones ({summary['entries']} client entries) into {summary['typedHandlers']} typed handlers across {summary['profiles']} profession identities. Gathering-only effects and world-node targets are excluded. Legacy recipe identities and minimum Skill remain separate from modern specialization catalogs.", "",
         f"This is semantic coverage, **not complete empirical calibration**. There are {summary.get('explicitNonOutputHandlers', 0)} explicit structural, timing, convenience or progression handlers; {summary.get('zeroConfidenceModelTerms', 0)} output/profile terms use declared zero-confidence models; and {summary.get('namedUnpricedOutputHandlers', 0)} output terms retain source-backed family names with unresolved item IDs. Those named outcomes carry no invented Auction House valuation.", "",
-        f"Primary Item → CraftingQuality joins establish {summary['itemQualityFamilies']} ordered families. Item IDs are never numerically sorted to infer quality. The dataset includes {summary['recipes']} native recipe identities, {summary['itemMetadataRows']} reduced item rows and {summary['gatheringTargets']} material-named native gathering targets.", "",
-        "Gathering targets use an explicit canonical one-unit rank-1 minimum-profile prior at confidence zero, without a fabricated sample count. Gathering Effect302 base points are retained as a difficulty-like parameter, never interpreted as material quantity. Evenly spaced quality thresholds are declared models unless a live native operation supplies exact thresholds.", "",
-        "Recipe timing comes from SpellMisc.CastingTimeIndex → SpellCastTimes.Base, converted from milliseconds to seconds. Equipment and conditional profession speed are applied afterward. Recipe stat capability models retain their evidence/confidence and defer to native operation stat eligibility.", "",
+        f"Primary Item → CraftingQuality joins establish {summary['itemQualityFamilies']} ordered families. Item IDs are never numerically sorted to infer quality. The dataset includes {summary['recipes']} native recipe identities, {summary['itemMetadataRows']} reduced item rows. World gathering spells are excluded unless they also have an item-processing contract.", "",
+        "Only item-value skill, quality, output quantity and input-savings effects are emitted. Native recipe/item identities remain shared; timing, concentration and convenience projections are excluded. Recipe stat capability models retain their evidence/confidence and defer to native operation stat eligibility.", "",
         "## Named outputs with unresolved item identity", "",
         "These are known semantic outcome families. Their proc magnitudes may also be provisional. Exact node/entry descriptions, native references, scopes and confidence remain in the machine-readable coverage JSON.", "",
         "| Source-backed family | Entries | Node names |", "| --- | ---: | --- |"]

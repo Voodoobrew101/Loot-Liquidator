@@ -18,7 +18,6 @@ ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / 'database/research/specialization-effects.json'
 CATALOG = ROOT / 'database/wago-professions-70783.json'
 OUTPUT = ROOT / 'database/specialization-effects.lua'
-CRYSTAL_EXTRAS = ROOT / 'database/research/crystal-collector-extra-materials.json'
 KINDS = {'skill-per-point', 'replace-family', 'reference-context'}
 PROFESSIONS = {'Disenchant': 'Enchanting', 'Mill': 'Inscription', 'Prospect': 'Jewelcrafting'}
 
@@ -252,67 +251,7 @@ def build_modeled_disenchant_rules(document, catalog, sources):
     return sorted(result, key=lambda rule: rule['ruleID'])
 
 
-def add_crystal_extras(compiled, extras):
-    if not isinstance(extras, dict) or extras.get('schemaVersion') != 1:
-        raise ValueError('Invalid Crystal extra-material source')
-    rules = [rule for rule in compiled['modeledDisenchantRules'] if rule['ruleID'] == extras.get('ruleID')]
-    if len(rules) != 1:
-        raise ValueError('Crystal extra-material target missing or ambiguous')
-    rule = rules[0]
-    for key in ('method', 'profession', 'expansionID', 'build', 'clientVersion', 'rootNodeID',
-                'childNodeID', 'inputRarity', 'inputClassIDs'):
-        if extras.get(key) != rule.get(key):
-            raise ValueError(f'Crystal extra-material scope mismatch: {key}')
-    if extras.get('additionalOutputBaselinePolicy') != 'ZERO_BEFORE_UNLOCK':
-        raise ValueError('Invalid Crystal extra-material baseline policy')
-    outputs, milestones = extras.get('additionalOutputs'), extras.get('additionalOutputMilestones')
-    if not isinstance(outputs, list) or not outputs or not isinstance(milestones, list) or not milestones:
-        raise ValueError('Crystal extra-material quantities and milestones required')
-    seen = set()
-    for output in outputs:
-        if (not isinstance(output, dict) or set(output) != {'id', 'expectedQuantity', 'confidence0to100'}
-                or not whole(output.get('id'), 1) or output['id'] in seen
-                or output['id'] in rule['primaryRankIDs'] or not finite(output.get('expectedQuantity'), .00000001)
-                or not finite(output.get('confidence0to100'), 0, 100)):
-            raise ValueError('Invalid Crystal extra-material output')
-        seen.add(output['id'])
-    previous, total = 0, 0
-    for milestone in milestones:
-        if (not isinstance(milestone, dict) or set(milestone) != {'rank', 'progress'}
-                or not whole(milestone.get('rank'), 1) or not previous < milestone['rank'] <= 30
-                or not finite(milestone.get('progress'), .00000001, 1)):
-            raise ValueError('Invalid Crystal extra-material milestone')
-        previous = milestone['rank']; total += milestone['progress']
-    if abs(total - 1) > 1e-12:
-        raise ValueError('Crystal extra-material milestone progress must total one')
-    claims = extras.get('sourceClaims')
-    refs = extras.get('sourceClaimIDs')
-    if not isinstance(claims, list) or not isinstance(refs, list) or not refs:
-        raise ValueError('Crystal extra-material source lineage required')
-    source_ids = set()
-    for claim in claims:
-        if (not isinstance(claim, dict) or not isinstance(claim.get('id'), str) or not claim['id']
-                or claim['id'] in source_ids or not isinstance(claim.get('url'), str)
-                or not re.fullmatch(r'https://\S+', claim['url']) or not claim.get('support')):
-            raise ValueError('Invalid Crystal extra-material source claim')
-        source_ids.add(claim['id'])
-    if len(set(refs)) != len(refs) or set(refs) - source_ids:
-        raise ValueError('Invalid Crystal extra-material source references')
-    if not isinstance(extras.get('assumptions'), list) or not extras['assumptions']:
-        raise ValueError('Crystal extra-material model assumptions required')
-    existing = {claim['id'] for claim in compiled['sourceClaims']}
-    if source_ids & existing:
-        raise ValueError('Duplicate Crystal extra-material source identity')
-    for key in ('additionalOutputs', 'additionalOutputMilestones', 'additionalOutputBaselinePolicy'):
-        rule[key] = copy.deepcopy(extras[key])
-    rule['sourceClaimIDs'].extend(refs)
-    rule['assumptions'].extend(extras['assumptions'])
-    compiled['sourceClaims'].extend(copy.deepcopy(claims))
-    compiled['crystalExtraRevision'] = extras['revision']
-    return compiled
-
-
-def build(document, catalog, extras=None):
+def build(document, catalog):
     if document.get('schemaVersion') != 1 or not whole(document.get('build'), 1):
         raise ValueError('Unsupported specialization effect schema/build')
     if not isinstance(document.get('revision'), str) or not document['revision']:
@@ -459,7 +398,7 @@ def build(document, catalog, extras=None):
             'publishedReferences': build_published_references(document, catalog, sources),
             'modeledDisenchantRules': build_modeled_disenchant_rules(document, catalog, sources),
             'sourceClaims': copy.deepcopy(claims), 'held': copy.deepcopy(document.get('held', []))}
-    return add_crystal_extras(compiled, extras) if extras is not None else compiled
+    return compiled
 
 
 def lua(value):
@@ -487,24 +426,23 @@ def main(argv=None):
     parser.add_argument('--source', type=Path, default=SOURCE)
     parser.add_argument('--catalog', type=Path, default=CATALOG)
     parser.add_argument('--output', type=Path, default=OUTPUT)
-    parser.add_argument('--crystal-extras', type=Path, default=CRYSTAL_EXTRAS)
     parser.add_argument('--check', action='store_true')
     args = parser.parse_args(argv)
     document = json.loads(args.source.read_text(), object_pairs_hook=no_duplicate_keys)
     catalog = json.loads(args.catalog.read_text(), object_pairs_hook=no_duplicate_keys)
     if document.get('catalogSourceSHA256') != hashlib.sha256(args.catalog.read_bytes()).hexdigest():
         raise ValueError('Reviewed catalog checksum changed')
-    extras = json.loads(args.crystal_extras.read_text(), object_pairs_hook=no_duplicate_keys)
-    compiled = build(document, catalog, extras)
+    # The archived Crystal extras file contains an unverified cross-rarity
+    # transfer, possible item identities and an equal-split guess. It is not
+    # admitted into numerical rules. Native Crystal skill effects stay above.
+    compiled = build(document, catalog)
     compiled['sourceSHA256'] = hashlib.sha256(args.source.read_bytes()).hexdigest()
-    compiled['crystalExtraSourceSHA256'] = hashlib.sha256(args.crystal_extras.read_bytes()).hexdigest()
-    compiled['revision'] += ':' + compiled['crystalExtraSourceSHA256']
     output = render(compiled)
     if args.check:
         if not args.output.exists() or args.output.read_text() != output:
             raise ValueError('Regenerate specialization effects')
     else:
-        args.output.write_text(output)
+        args.output.write_text(output, encoding='utf-8', newline='\n')
     counts = {kind: sum(rule['kind'] == kind for rule in compiled['specializationRules']) for kind in sorted(KINDS)}
     print(f'SPECIALIZATION EFFECTS: {len(compiled["specializationRules"])} rules; {counts}; {len(compiled["held"])} held claims')
 

@@ -193,6 +193,43 @@ local function validSamplingVariation(record,material,bound)
     local uncertainty=2*math.sqrt(p*(1-p)/chance.samples+q*(1-q)/mean.samples)
     return math.abs(p-q)<=math.min(.01,.1*math.max(p,q),uncertainty)+1e-9
 end
+local function validObservedBoundIndependence(record,material)
+    local proof=material.observedBoundIndependence
+    if not (type(proof)=='table' and proof.version==1 and material.samplingVariation==nil
+        and record.fieldSpecificEvidence==true and record.sourceKey=='itemdb'
+        and record.recordID:match('^evidence:v3:')) then return false end
+    for key in pairs(proof) do
+        if key~='version' and key~='field' and key~='meanCohorts' and key~='boundCohorts' then return false end
+    end
+    local chance,mean=material.dropChance,material.expectedQuantity
+    if not (chance.status=='measured' and mean.status=='measured'
+        and chance.sampleSizeKnown==true and mean.sampleSizeKnown==true
+        and finite(chance.samples) and chance.samples>0 and finite(mean.samples) and mean.samples>0
+        and finite(chance.value) and chance.value>0 and chance.value<=1
+        and finite(mean.value) and mean.value+1e-9>=chance.value) then return false end
+    local lo,hi=material.minQuantity.value,material.maxQuantity.value
+    local field=lo and mean.value+1e-9<chance.value*lo and 'minQuantity'
+        or hi and mean.value>chance.value*hi+1e-9 and 'maxQuantity'
+    if proof.field~=field then return false end
+    local bound=material[field]
+    if not (bound and bound.basis=='observed-sample' and bound.status=='measured' and bound.sampleSizeKnown==true
+        and finite(bound.samples) and bound.samples>0) then return false end
+    local function cohortSet(ids)
+        if type(ids)~='table' or #ids==0 or #ids>256 then return nil end
+        local seen,count={},0
+        for key,id in pairs(ids) do
+            if type(key)~='number' or key%1~=0 or key<1 or key>#ids
+                or type(id)~='string' or #id~=64 or id:find('[^0-9a-f]') or seen[id] then return nil end
+            seen[id]=true
+            count=count+1
+        end
+        return count==#ids and seen or nil
+    end
+    local means,bounds=cohortSet(proof.meanCohorts),cohortSet(proof.boundCohorts)
+    if not means or not bounds then return false end
+    for id in pairs(means) do if bounds[id] then return false end end
+    return true
+end
 function LL:ValidateItemDB(db)
     if type(db)~='table' or db.schemaVersion~=1 or type(db.processing)~='table' then
         return false,'Unsupported itemdb schema'
@@ -203,16 +240,21 @@ function LL:ValidateItemDB(db)
             or not (defaults[r.sourceKey] or r.sourceKey=='tsm') or not finite(r.inputCount) or r.inputCount<=0 or r.inputCount%1~=0
             or (not (finite(r.inputItemID) and r.inputItemID>0 and r.inputItemID%1==0)
                 and not (r.method=='Disenchant' and type(r.gearKey)=='string' and
-                    (r.gearKey:match('^gear:%d+:%d+:armor$') or r.gearKey:match('^gear:%d+:%d+:weapon$'))))
+                    (r.gearKey:match('^gear:%d+:%d+:armor$') or r.gearKey:match('^gear:%d+:%d+:weapon$')
+                        or r.gearKey:match('^gear:%d+:%d+:profession$'))))
             or (r.recipeID~=nil and (not finite(r.recipeID) or r.recipeID<1 or r.recipeID%1~=0))
             or (r.inputRarity~=nil and (not finite(r.inputRarity) or r.inputRarity>8 or r.inputRarity%1~=0))
             or (r.inputClassID~=nil and (not finite(r.inputClassID) or r.inputClassID>20 or r.inputClassID%1~=0))
             or (r.isDisenchantCategory~=nil and type(r.isDisenchantCategory)~='boolean')
             or (r.isDisenchantCategory and (r.method~='Disenchant' or r.inputItemID~=nil
                 or not finite(r.expansionID) or r.expansionID%1~=0 or not finite(r.inputRarity)
-                or (r.inputClassID~=2 and r.inputClassID~=4)
+                or (r.inputClassID~=2 and r.inputClassID~=4 and r.inputClassID~=19)
                 or r.gearKey~=('gear:'..tostring(r.expansionID)..':'..tostring(r.inputRarity)..':'..
-                    (r.inputClassID==2 and 'weapon' or 'armor'))))
+                    (r.inputClassID==2 and 'weapon' or r.inputClassID==19 and 'profession' or 'armor'))))
+            or (r.categoryItemLevelMin~=nil and (not finite(r.categoryItemLevelMin) or r.categoryItemLevelMin%1~=0))
+            or (r.categoryItemLevelMax~=nil and (not finite(r.categoryItemLevelMax) or r.categoryItemLevelMax%1~=0
+                or r.categoryItemLevelMin==nil or r.categoryItemLevelMax<r.categoryItemLevelMin))
+            or (r.categoryItemLevelMin~=nil and r.categoryItemLevelMax==nil)
             or (r.referenceConditions~=nil and type(r.referenceConditions)~='table')
             or (r.referenceContextID~=nil and type(r.referenceContextID)~='string')
             or (r.patchStartBuild~=nil and not finite(r.patchStartBuild))
@@ -240,7 +282,9 @@ function LL:ValidateItemDB(db)
             local bound
             if r.fieldSpecificEvidence then bound=violatedYieldBound(p,e,lo or 1,hi)
             elseif lo and hi then bound=violatedYieldBound(p,e,lo,hi) end
-            if (bound or m.samplingVariation~=nil) and not validSamplingVariation(r,m,bound) then
+            local independent=m.observedBoundIndependence~=nil and validObservedBoundIndependence(r,m)
+            if (m.observedBoundIndependence~=nil and not independent)
+                or ((bound or m.samplingVariation~=nil) and not independent and not validSamplingVariation(r,m,bound)) then
                 return false,'Contradictory probability/quantity fields'
             end
         end
@@ -373,7 +417,6 @@ function LL:UnpackItemDBTables()
             if r.researchNoDisenchantPolicy=='native-proof-only' then self.ItemRestrictions[id]=true
             elseif not native[id] then self.ItemRestrictions[id]=nil end
         end
-        self.ResearchNoDisenchantObservations=r.researchNoDisenchantObservations or {}
         self.ResearchNoDisenchantGlobalProofs=r.researchNoDisenchantGlobalProofs or {}
         self.ItemRestrictionsBuild=r.build
         self.DB2Processable=self.DB2Processable or {}
@@ -383,6 +426,7 @@ end
 LL:UnpackItemDBTables()
 function LL:InitializeItemDB()
     self._processingModelCache=nil
+    self._categorySourceProjectionCache=nil
     self._tokenRewardIndex={}
     local ok,reason=self:ValidateItemDB(self.ItemDB)
     if ok and self.ValidateProfessionRules then ok,reason=self:ValidateProfessionRules(self.ItemDB) end
@@ -549,9 +593,24 @@ end
 local function gearKey(f)
     if not finite(f.expansionID) or f.expansionID%1~=0
         or not finite(f.quality) or f.quality%1~=0
-        or (f.classID~=2 and f.classID~=4) then return nil end
+        or (f.classID~=2 and f.classID~=4 and f.classID~=19) then return nil end
     return 'gear:'..tostring(f.expansionID)..':'..tostring(f.quality)..':'..
-        (f.classID==2 and 'weapon' or 'armor')
+        (f.classID==2 and 'weapon' or f.classID==19 and 'profession' or 'armor')
+end
+function LL:DisenchantCategoryKey(f) return gearKey(f) end
+local function mixedGemPool(items,material)
+    if type(material.rankIDs)~='table' or #material.rankIDs<2 then return false end
+    local family,rank,mixed
+    for _,id in ipairs(material.rankIDs) do
+        local item=items[id]
+        if not item or not finite(item.qualityFamilyID) or item.qualityFamilyID<=0
+            or not finite(item.qualityRank) or item.qualityRank<=0 then return false end
+        if rank and rank~=item.qualityRank then return false end
+        rank=item.qualityRank
+        if family and family~=item.qualityFamilyID then mixed=true end
+        family=family or item.qualityFamilyID
+    end
+    return mixed==true
 end
 local function itemCategoryException(record)
     if type(record.categoryExceptionReason)~='string' or not record.categoryExceptionReason:match('%S') then return false end
@@ -605,7 +664,7 @@ local function userWeight(self,key,mode)
 end
 -- Informational source references obey the same observation policy as yields.
 function LL:EvidenceSourceWeight(key,mode) return userWeight(self,key,mode) end
-local function sourceModel(self,f,option,r)
+local function buildSourceModel(self,f,option,r,projectionMemo)
     local model={recordID=r.recordID,inputItemID=r.inputItemID,inputCount=r.inputCount,patchBuild=r.patchBuild,referenceContextID=r.referenceContextID,
         sourceKey=r.sourceKey,baselineProfile=r.baselineProfile,baselineStatus=r.baselineStatus,
         baselineProfileAssumed=r.baselineProfileAssumed,
@@ -616,7 +675,7 @@ local function sourceModel(self,f,option,r)
         reviewedEffectOverrides=r.reviewedEffectOverrides,
         reviewedDisenchantProjection=r.reviewedDisenchantProjection,
         namedOutputs=r.namedOutputs,unknownOutputs=r.unknownOutputs,
-        duration=r.duration,expectedInputCount=r.expectedInputCount,materials={},source=r.source,
+        expectedInputCount=r.expectedInputCount,materials={},source=r.source,
         referenceApplicability=r.referenceApplicability,
         operationUnverified=r.operationUnverified,
         sourceReferenceOnly=r.sourceReferenceOnly,observedSourceOperations=r.observedSourceOperations,
@@ -667,7 +726,7 @@ local function sourceModel(self,f,option,r)
         model.normalizationFailure=model.normalizationFailure or 'Reviewed disenchant source projection is unavailable'
     end
     if self.ApplyGeneralProfessionModel and r.sourceKey~='personal' and r.sourceKey~='imported' then
-        model=self:ApplyGeneralProfessionModel(f,option,model)
+        model=self:ApplyGeneralProfessionModel(f,option,model,nil,projectionMemo)
     end
     if r.sourceKey~='itemdb' then return model end
     if self.ApplyProfessionModel then model=self:ApplyProfessionModel(f,option,model) end
@@ -675,6 +734,163 @@ local function sourceModel(self,f,option,r)
     local verified=self.ApplyVerifiedMechanics and self:ApplyVerifiedMechanics(f,option,model) or model
     if verified~=model and verified.mechanicsApplied then verified.adjustment='character-adjusted'..(verified.unreviewedRule and ' / research rule, not yet reviewed' or '') end
     return verified
+end
+local categoryIdentityFields={inputID=true,_cacheKey=true,_cacheIdentity=true}
+local function categoryFingerprint(value,ignoreIdentity)
+    local visiting,nodes={},0
+    local function encode(item,root)
+        if issecretvalue and issecretvalue(item) then return nil end
+        local kind=type(item)
+        if kind=='nil' then return 'nil' end
+        if kind=='string' then return 's'..#item..':'..item end
+        if kind=='number' or kind=='boolean' then return kind..':'..tostring(item) end
+        if kind~='table' or visiting[item] then return nil end
+        nodes=nodes+1;if nodes>1024 then return nil end
+        visiting[item]=true
+        local keys={}
+        for key in pairs(item) do
+            if not (root and ignoreIdentity and categoryIdentityFields[key]) then
+                if type(key)~='string' and type(key)~='number' then return nil end
+                keys[#keys+1]=key
+            end
+        end
+        table.sort(keys,function(a,b)if type(a)==type(b) then return a<b end return type(a)<type(b) end)
+        local parts={'{'}
+        for _,key in ipairs(keys) do
+            local encoded=encode(item[key],false)
+            if not encoded then return nil end
+            parts[#parts+1]=encode(key,false)..'='..encoded..';'
+        end
+        parts[#parts+1]='}';visiting[item]=nil
+        return table.concat(parts)
+    end
+    return encode(value,true)
+end
+local function categoryProjectionScope(self,f,option,ctx,mode)
+    local key=option.name=='Disenchant' and option.inputCount==1 and gearKey(f)
+    if not key or not self.ProfessionCategoryProjectionIndependent
+        or not self:ProfessionCategoryProjectionIndependent(f,option,ctx) then return nil end
+    if not self.ProcessingPlayerConditions or self:ProcessingPlayerConditions(
+        f,option.name,option.recipeID,option.character,'Enchanting')~=ctx then return nil end
+    local db=self.ItemDB
+    -- These adapters can select a source transform by exact item identity.
+    -- Keep their original path even if their current coefficient is neutral.
+    for _,name in ipairs({'professionRules','mechanicRules'}) do
+        for _,rule in ipairs(db[name] or {}) do
+            if (not rule.method or rule.method==option.name)
+                and (not rule.expansionID or rule.expansionID==f.expansionID) then return nil end
+        end
+    end
+    local contextKey=categoryFingerprint(ctx,true)
+    local operationKey=categoryFingerprint(option,false)
+    if not contextKey or not operationKey then return nil end
+    local data=db.professionProfiles
+    local profile=data and data.profiles and data.profiles['Enchanting:'..tostring(f.expansionID)]
+    local version,build
+    if GetBuildInfo then version,build=GetBuildInfo() end
+    local signature=table.concat({key,tostring(f.reagentQuality),tostring(f.inputQuality),
+        tostring(mode),tostring(version),tostring(build),contextKey,operationKey},'\030')
+    local cache=self._categorySourceProjectionCache
+    if not cache or cache.db~=self.db or cache.database~=db or cache.evidence~=self._evidenceIndex
+        or cache.modelCache~=self._processingModelCache or cache.data~=data
+        or cache.dataRevision~=(data and data.revision) or cache.dataBuild~=(data and data.build)
+        or cache.version~=db.version or cache.revision~=db.modelRevision
+        or cache.specializationRevision~=db.specializationRevision then
+        cache={db=self.db,database=db,evidence=self._evidenceIndex,modelCache=self._processingModelCache,
+            data=data,version=db.version,revision=db.modelRevision,
+            dataRevision=data and data.revision,dataBuild=data and data.build,
+            specializationRevision=db.specializationRevision,scopes={}}
+        self._categorySourceProjectionCache=cache
+    end
+    local now=GetTime and GetTime() or 0
+    local kept,found={}
+    for _,scope in ipairs(cache.scopes) do
+        if now-scope.at<5 and scope.profile==profile then
+            kept[#kept+1]=scope
+            if scope.key==signature then found=scope end
+        end
+    end
+    if not found then
+        if #kept>=2 then table.remove(kept,1) end
+        found={key=signature,at=now,profile=profile,models={},count=0}
+        kept[#kept+1]=found
+    end
+    cache.scopes=kept
+    return found
+end
+local function bindingStamp(item)
+    return item and table.concat({tostring(item.bindType),tostring(item.itemBinding),
+        tostring(item.bonding),tostring(item.qualityFamilyID),tostring(item.qualityRank)},':') or ''
+end
+local function outputBinding(items,result,id,previous)
+    if id==nil then return true end
+    local item=items[id] or items[tostring(id)]
+    local old=result[id]
+    if previous then return old and old.item==item and old.stamp==bindingStamp(item) end
+    result[id]={item=item,stamp=bindingStamp(item)}
+    return true
+end
+local function outputBindings(self,record,previous)
+    local data=self.ItemDB and self.ItemDB.professionProfiles
+    local items=data and data.items or {}
+    local result=previous or {}
+    for _,material in ipairs(record and record.materials or {}) do
+        if type(material.rankIDs)=='table' and #material.rankIDs>0 then
+            for _,id in ipairs(material.rankIDs) do
+                if not outputBinding(items,result,id,previous) then return false end
+            end
+        elseif not outputBinding(items,result,material.id,previous) then return false end
+    end
+    -- Group-only observations also depend on native output family identities.
+    for _,group in ipairs(record and record.groupedSourceQuantities or {}) do
+        for _,id in ipairs(group.outputItemIDs or {}) do
+            if not outputBinding(items,result,id,previous) then return false end
+        end
+    end
+    return result
+end
+local function reboundSource(model,f,memo)
+    local result=copy(model)
+    if model.projectedContext then
+        -- Every ordinary source uses this actual target context; the general
+        -- projection changes only effectiveSkill. Copy once per evaluation,
+        -- rather than once for every source behind the same gear category.
+        memo.categoryContexts=memo.categoryContexts or {}
+        local skill=model.projectedContext.effectiveSkill
+        local key=type(skill)..':'..tostring(skill)
+        local context=memo.categoryContexts[key]
+        if not context then
+            context=copyReference(memo.categoryContext);context.effectiveSkill=skill
+            memo.categoryContexts[key]=context
+        end
+        result.projectedContext=context
+    end
+    if model.professionParameters then
+        result.professionParameters=copy(model.professionParameters)
+        result.professionParameters.inputItemID=f.id
+    end
+    return result
+end
+local function sourceModel(self,f,option,r,projectionMemo)
+    local scope=projectionMemo and projectionMemo.categoryScope
+    if not scope or r.inputItemID~=nil or r.gearKey~=gearKey(f) or r.inputCount~=1
+        or (r.sourceKey~='itemdb' and r.sourceKey~='legacy' and r.sourceKey~='reference')
+        or r.categoryExceptionReason or r.reviewedEffectOverrides or r.reviewedDisenchantProjection then
+        return buildSourceModel(self,f,option,r,projectionMemo)
+    end
+    local cached=scope.models[r]
+    local model
+    if cached and outputBindings(self,r,cached.bindings) then model=cached.model
+    else
+        model=buildSourceModel(self,f,option,r,projectionMemo)
+        if cached or scope.count<256 then
+            if not cached then scope.count=scope.count+1 end
+            scope.models[r]={model=model,bindings=outputBindings(self,r)}
+        end
+    end
+    -- Fusion creates fresh public materials. Only its target context can retain
+    -- this source view, so give it an isolated context with current input IDs.
+    return reboundSource(model,f,projectionMemo)
 end
 local function modelMetadata(original,material,field,modelField)
     local meta=copy((field=='expectedQuantity' and material.derivedExpected) or original[field])
@@ -774,6 +990,11 @@ function LL:BorrowFromSibling(f,option,mode,ctx)
     return nil,pending
 end
 function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRecords)
+    -- All sources in this evaluation share the same input and operation.
+    -- Reuse their target-profile calculation only for this call.
+    local projectionMemo={}
+    projectionMemo.categoryScope=categoryProjectionScope(self,f,option,ctx,mode)
+    projectionMemo.categoryContext=ctx
     local build=GetBuildInfo and select(2,GetBuildInfo())
     local records,seenRecords={},{}
     local function include(input)
@@ -789,19 +1010,34 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
     end
     include(f.id) -- preserved source studies and documented item exceptions
     if option.name=='Disenchant' then include(gearKey(f)) end
+    local nativeItems=self.ItemDB.professionProfiles and self.ItemDB.professionProfiles.items or {}
+    local mixedPools,hasGrouped={},{}
+    local function groupOnly(material)
+        local known=mixedPools[material]
+        if known==nil then known=option.name=='Prospect' and mixedGemPool(nativeItems,material);mixedPools[material]=known end
+        return known
+    end
     local eligible,transformed,hasExpected,staleRecord,partialStrength={},{},{},{},{}
     local hasEligibleSalvage=false
     for _,r in ipairs(records) do
         -- Input rarity can change on the same gear item ID (for example an
         -- upgraded Courtly Wrists). Mechanics must never normalize away that
         -- physical identity mismatch or apply a rare study to an epic copy.
+        local lo,hi=r.categoryItemLevelMin,r.categoryItemLevelMax
+        local bandMatches=lo==nil or finite(f.itemLevel) and f.itemLevel>=lo and f.itemLevel<=hi
+            or not finite(f.itemLevel) and lo==1 and hi==999
         if (r.inputRarity==nil or r.inputRarity==f.quality)
-            and (r.inputClassID==nil or r.inputClassID==f.classID) then
-        local model=sourceModel(self,f,option,r)
+            and (r.inputClassID==nil or r.inputClassID==f.classID) and bandMatches
+            and userWeight(self,r.sourceKey,mode)>0 and (not r.recipeID or r.recipeID==option.recipeID)
+            and (not r.inputQualityRank or r.inputQualityRank==ctx.inputQuality)
+            and (not r.expansionID or r.expansionID==f.expansionID) then
+        local model=sourceModel(self,f,option,r,projectionMemo)
         local hasMean=false
         for i,material in ipairs(model.materials) do
             local original=r.materials[i]
-            if self:EvidenceReliability(modelMetadata(original,material,'expectedQuantity','expectedQuantity'),r)>0 then
+            if groupOnly(original) then
+                hasGrouped[r]=true
+            elseif self:EvidenceReliability(modelMetadata(original,material,'expectedQuantity','expectedQuantity'),r)>0 then
                 hasMean=true;break
             elseif r.fieldSpecificEvidence and (not option.inputCount or option.inputCount==r.inputCount) then
                 partialStrength[r]=math.max(partialStrength[r] or 0,
@@ -814,14 +1050,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         hasExpected[r]=hasMean
         -- Applicability defines the output universe. An unknown expectation must
         -- remain an unknown cooutput rather than disappear as if impossible.
-        if userWeight(self,r.sourceKey,mode)>0 and (not r.recipeID or r.recipeID==option.recipeID)
-            and (not r.inputQualityRank or r.inputQualityRank==ctx.inputQuality)
-            and (not r.expansionID or r.expansionID==f.expansionID) then
-            local ok,stale=contextEligible(r,ctx,build,model,self.ItemDB.mechanicRules)
-            if ok then
-                eligible[#eligible+1]=r;staleRecord[r]=stale or nil
-                hasEligibleSalvage=hasEligibleSalvage or r.salvage==true
-            end
+        local ok,stale=contextEligible(r,ctx,build,model,self.ItemDB.mechanicRules)
+        if ok then
+            eligible[#eligible+1]=r;staleRecord[r]=stale or nil
+            hasEligibleSalvage=hasEligibleSalvage or r.salvage==true
         end
         end
     end
@@ -901,8 +1133,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
     for _,r in ipairs(eligible) do
         if hasExpected[r] and (not anchor or sourcePriority[r.sourceKey]==sourcePriority[anchor.sourceKey]) then
             local strength=0
-            for i,material in ipairs((transformed[r] or sourceModel(self,f,option,r)).materials) do
-                strength=math.max(strength,self:EvidenceReliability(modelMetadata(r.materials[i],material,'expectedQuantity','expectedQuantity'),r))
+            for i,material in ipairs((transformed[r] or sourceModel(self,f,option,r,projectionMemo)).materials) do
+                if not groupOnly(r.materials[i]) then
+                    strength=math.max(strength,self:EvidenceReliability(modelMetadata(r.materials[i],material,'expectedQuantity','expectedQuantity'),r))
+                end
             end
             if staleRecord[r] then strength=strength*STALE_FACTOR end
             -- Prefer a cohort that identifies this exact rarity/class variant
@@ -952,6 +1186,13 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         end
     end
     if not anchor then
+        -- Group totals can identify possible gem outputs, but never supply
+        -- numeric anchor strength or an individual gem's processing value.
+        for _,record in ipairs(eligible) do
+            if hasGrouped[record] then anchor=record;partialOnly=true;break end
+        end
+    end
+    if not anchor then
         local enabled=false
         for _,r in ipairs(records) do if userWeight(self,r.sourceKey,mode)>0 then enabled=true end end
         local why=#records==0 and 'No researched yield record for this item'
@@ -993,11 +1234,13 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             and personal.numericTransformApplied==false and personal.coverageCensored==false) or nil
         result.adjustment=personal.adjustment or 'measured character context / unadjusted'
     end
-    local bins,studySeen,outputReasons={},{},{}
+    local bins,studySeen,outputReasons,groupOutputIDs={},{},{},{}
     local consumptionSum,consumptionWeight,consumptionIncomplete=0,0,false
     local contributingSalvage=false
     for _,r in ipairs(eligible) do
-        for _,m in ipairs(r.materials) do outputReasons[m.id]=outputReasons[m.id] or unavailableReason(r,m) end
+        for _,m in ipairs(r.materials) do
+            if not groupOnly(m) then outputReasons[m.id]=outputReasons[m.id] or unavailableReason(r,m) end
+        end
     end
     local function sameContext(r)
         if r==anchor then return true end
@@ -1006,7 +1249,6 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             and r.inputRarity==anchor.inputRarity and r.inputClassID==anchor.inputClassID
             and r.patchBuild==anchor.patchBuild and same(r.referenceConditions,anchor.referenceConditions)
     end
-    local nativeItems=self.ItemDB.professionProfiles and self.ItemDB.professionProfiles.items or {}
     local function outputFamily(material)
         local item=nativeItems[material.id] or nativeItems[tostring(material.id)]
         return item and item.qualityFamilyID
@@ -1015,12 +1257,12 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
     if option.name=='Mill' or option.name=='Prospect' then
         for _,record in ipairs(eligible) do
             if sameContext(record) or record.fixedReference then
-                local model=transformed[record] or sourceModel(self,f,option,record)
+                local model=transformed[record] or sourceModel(self,f,option,record,projectionMemo)
                 for index,material in ipairs(model.materials or {}) do
                     local original=record.materials[index]
                     local field=original and original.expectedQuantity or {}
                     local family=outputFamily(material)
-                    if family and finite(material.expectedQuantity) and material.expectedQuantity>0
+                    if not groupOnly(original) and family and finite(material.expectedQuantity) and material.expectedQuantity>0
                         and (field.status=='measured' or field.status=='observed' or field.status=='verified')
                         and finite(field.samples or record.samples) and (field.samples or record.samples)>0 then
                         measuredFamilies[family]=measuredFamilies[family] or {}
@@ -1035,11 +1277,14 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         if anchor.isDisenchantCategory and r.sourceKey==anchor.sourceKey and r.inputItemID
             and not itemCategoryException(r) then
             result.excludedSources[#result.excludedSources+1]=r.sourceKey..': source study represented by disenchant category'
-        elseif not compatible and not r.fixedReference then
+        elseif not compatible and (not r.fixedReference or anchor.categoryReferenceOnly) then
+            -- An explicitly selected source cohort keeps its own distribution.
+            -- A generic fixed baseline is not evidence of that cohort's hits
+            -- or quantities merely because both now share a gear category.
             result.excludedSources[#result.excludedSources+1]=r.sourceKey..': reference context cannot be normalized'
         else
             -- Build a model, then apply the preserved PR #4 adapter exactly once.
-            local model=transformed[r] or sourceModel(self,f,option,r)
+            local model=transformed[r] or sourceModel(self,f,option,r,projectionMemo)
             if model.unknownOutputs or #(model.namedOutputs or {})>0 then
                 result.unknownOutputs=true
                 result.unknownOutputIdentities=true
@@ -1075,7 +1320,6 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                 if model.expectedInputCount~=nil and not r.salvage then
                     result.expectedInputCount=model.expectedInputCount*batch/r.inputCount
                 end
-                if model.mechanicsApplied then result.duration=model.duration end
             end
             if model.mechanicsApplied then
                 result.adjustment=model.adjustment or 'character-adjusted';result.mechanicsApplied=true
@@ -1083,6 +1327,15 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             local acceptedMeanWeight=0
             for i,m in ipairs(model.materials) do
                 local original=r.materials[i]
+                if groupOnly(original) then
+                    result.groupedSourceQuantities=result.groupedSourceQuantities or {}
+                    result.groupedSourceQuantities[#result.groupedSourceQuantities+1]={recordID=r.recordID,
+                        inputCount=r.inputCount,outputItemIDs=copyReference(original.rankIDs),
+                        expectedQuantity=m.expectedQuantity,sourceExpectedQuantity=original.expectedQuantity.value,
+                        status=original.expectedQuantity.status,confidence=original.expectedQuantity.confidence,
+                        quantityBasis='unallocated-gem-group-total'}
+                    for _,id in ipairs(original.rankIDs) do groupOutputIDs[id]=true end
+                else
                 local id=m.id
                 -- A known rank-family expectation already includes its rank
                 -- alternatives. Do not add exact-rank fallback rows on top.
@@ -1139,6 +1392,11 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                 b.chanceInferenceBlocked=b.chanceInferenceBlocked or original.dropChance.inferenceBlocked
                 b.quantityInferenceBlocked=b.quantityInferenceBlocked or original.expectedQuantity.inferenceBlocked
                 if original.samplingVariation and r.inputCount==batch and not m.expectationTransformed then b.samplingEvidence=original end
+                if original.observedBoundIndependence and r.inputCount==batch and not m.expectationTransformed
+                    and m.chance==original.dropChance.value and m.expectedQuantity==original.expectedQuantity.value
+                    and m.minQuantity==original.minQuantity.value and m.maxQuantity==original.maxQuantity.value then
+                    b.independentBoundsEvidence={recordID=r.recordID,material=original}
+                end
                 if m.conditionalExpectedQuantity~=nil then
                     b.conditionalExpectedQuantity=m.conditionalExpectedQuantity*batch/r.inputCount
                     b.conditionalConfidence=m.conditionalConfidence
@@ -1264,10 +1522,11 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                     lo=self:EvidenceReliability(original.minQuantity,r)>0 and lo or nil
                     hi=self:EvidenceReliability(original.maxQuantity,r)>0 and hi or nil
                     if (lo and hi) or (not b.boundsSource and r.fieldSpecificEvidence and (lo or hi)) then
-                        b.minQuantity=lo;b.maxQuantity=hi;b.boundsSource=r.source
+                        b.minQuantity=lo;b.maxQuantity=hi;b.boundsSource=r.source;b.boundsRecordID=r.recordID
                     end
                 end
                 end -- reference family already covered
+                end -- individually identified material
             end
             -- Use the strongest accepted mean weight once per cohort. Refunds
             -- are per cast, so additional cooutputs do not add refund evidence.
@@ -1286,6 +1545,26 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
     if contributingSalvage then
         -- Price output only when any contributor has unknown net consumption.
         result.expectedInputCount=not consumptionIncomplete and batch*(consumptionSum/consumptionWeight) or nil
+    end
+    -- Existing per-gem baselines own their quantities. Keep uncovered legal
+    -- identities as unknowns, without allocating the group total or duplicating
+    -- a native quality family already covered by an individual baseline.
+    local covered={}
+    for _,material in pairs(bins) do
+        for _,id in ipairs(material.rankIDs or {material.id}) do covered[id]=true end
+    end
+    local unidentified={}
+    for id in pairs(groupOutputIDs) do
+        if not covered[id] then
+            local family=nativeItems[id].qualityFamilyID
+            unidentified[family]=unidentified[family] or {}
+            unidentified[family][#unidentified[family]+1]=id
+        end
+    end
+    for _,ids in pairs(unidentified) do
+        table.sort(ids,function(a,b)return nativeItems[a].qualityRank<nativeItems[b].qualityRank end)
+        bins[ids[1]]={id=ids[1],rankIDs=#ids>1 and ids or nil,fields={},contributions={},sourceEstimates={},
+            groupReference=true,unavailableReason='Grouped source total does not identify this gem quantity'}
     end
     local totalContribution,confidenceTotal=0,0
     local acceptedReviewedPrior,acceptedOtherQuantity=false,false
@@ -1307,10 +1586,21 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         end
         local observed=b.samplingEvidence
         b.samplingEvidence=nil
+        local independent=b.independentBoundsEvidence
+        b.independentBoundsEvidence=nil
+        local independentMaterial=independent and independent.material
         if observed and b.chance and b.expectedQuantity and math.abs(b.chance-observed.dropChance.value)<=1e-9
             and math.abs(b.expectedQuantity-observed.expectedQuantity.value)<=1e-9
             and b.minQuantity==observed.minQuantity.value and b.maxQuantity==observed.maxQuantity.value then
             b.samplingVariation=true
+        elseif independentMaterial and independent.recordID==b.boundsRecordID
+            and b.chance and b.expectedQuantity
+            and math.abs(b.chance-independentMaterial.dropChance.value)<=1e-9
+            and math.abs(b.expectedQuantity-independentMaterial.expectedQuantity.value)<=1e-9
+            and b.minQuantity==independentMaterial.minQuantity.value and b.maxQuantity==independentMaterial.maxQuantity.value then
+            -- Keep the actual observations. Another cohort's sampled extreme
+            -- does not become a universal cap on this independently measured mean.
+            b.observedBoundIndependence=copyReference(independentMaterial.observedBoundIndependence)
         elseif b.minQuantity and b.maxQuantity
             and violatedYieldBound(b.chance,b.expectedQuantity,b.minQuantity,b.maxQuantity) then
             -- A disagreement is useful evidence. Retain the named source's
@@ -1387,6 +1677,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         b.fields=nil;b.contributions=nil;b.chanceSources=nil;b.chanceContributions=nil
         b.reviewedPriorQuantity=nil;b.otherQuantityContribution=nil
         b.chanceInferenceBlocked=nil;b.quantityInferenceBlocked=nil
+        b.boundsRecordID=nil
         result.materials[#result.materials+1]=b
     end
     for key,v in pairs(result.sources) do result.sources[key]=v/math.max(1,totalContribution) end
@@ -1437,9 +1728,9 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
     local importedContext,importedRecords
     if self.ImportedSalvageContextKey then importedContext,importedRecords=self:ImportedSalvageContextKey(f,option,ctx) end
     local build=GetBuildInfo and select(2,GetBuildInfo())
-    local key=table.concat({tostring(f.id),tostring(f.quality),tostring(f.classID),tostring(f.expansionID),
+    local key=table.concat({tostring(f.id),tostring(f.quality),tostring(f.classID),tostring(f.expansionID),tostring(f.itemLevel),
         tostring(option.name),tostring(option.inputCount),tostring(option.recipeID),tostring(option.character),
-        tostring(ctx._cacheIdentity or fingerprint(ctx)),tostring(build),tostring(self.ItemDB and self.ItemDB.version),
+        tostring(ctx._cacheKey or ctx._cacheIdentity or fingerprint(ctx)),tostring(build),tostring(self.ItemDB and self.ItemDB.version),
         tostring(mode),tostring(personal and personal.effectiveSamples),tostring(personal and personal.samples),
         tostring(personal and personal.studyID),tostring(personal and personal.observationContextID),
         tostring(personal and personal.expectedInputCount),
@@ -1450,10 +1741,25 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
         tostring(self.ItemDB and self.ItemDB.specializationRevision),fingerprint(personal and personal.projectionRules),
         tostring(importedContext)},'|')
     self._processingModelCache=self._processingModelCache or {count=0}
-    self._processingModelCache.count=self._processingModelCache.count or 0
-    local cached=self._processingModelCache[key]
-    if cached then return cached.model,cached.reason end
-    if self._processingModelCache.count>=512 then self._processingModelCache={count=0} end
+    local cache=self._processingModelCache
+    cache.count=cache.count or 0
+    local now=GetTime and GetTime() or 0
+    local cached=cache[key]
+    if cached and cached.bindings and cached.contextIdentity==ctx._cacheIdentity and now-(cached.at or 0)<30
+        and outputBindings(self,cached.model,cached.bindings) then
+        return cached.model,cached.reason
+    end
+    if now-(cache.sweptAt or 0)>=5 or cache.count>=256 then
+        local oldestKey,oldestAt
+        for existing,entry in pairs(cache) do
+            if type(entry)=='table' then
+                if now-(entry.at or 0)>=30 then cache[existing]=nil;cache.count=cache.count-1
+                elseif not oldestAt or (entry.at or 0)<oldestAt then oldestKey=existing;oldestAt=entry.at or 0 end
+            end
+        end
+        cache.sweptAt=now
+        if cache.count>=256 and not cache[key] and oldestKey then cache[oldestKey]=nil;cache.count=cache.count-1 end
+    end
     local model,reason,retry=self:ComputeEvidenceModel(f,option,personal,mode,ctx,nil,importedRecords)
     if self.ApplyDisenchantBaseline then model=self:ApplyDisenchantBaseline(f,option,model,ctx,mode) end
     if model and self.ApplyGeneralProfessionAdditions then model=self:ApplyGeneralProfessionAdditions(f,option,model,ctx) end
@@ -1464,10 +1770,10 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
         if self.ApplySpecializationEffects then model=self:ApplySpecializationEffects(f,option,model,ctx) end
     end
     if model and self.ApplyProfessionOutputGates then model=self:ApplyProfessionOutputGates(f,option,model,ctx) end
-    if model and self.ApplySyntheticBenchmark then model=self:ApplySyntheticBenchmark(f,option,model,ctx) end
     if retry then return model,reason end -- C2: an item name is loading; try again later
-    self._processingModelCache[key]={model=model,reason=reason}
-    self._processingModelCache.count=self._processingModelCache.count+1
+    if not cache[key] then cache.count=cache.count+1 end
+    cache[key]={model=model,reason=reason,contextIdentity=ctx._cacheIdentity,at=now,
+        bindings=outputBindings(self,model)}
     return model,reason
 end
 function LL:EvidenceDatabaseStatus()

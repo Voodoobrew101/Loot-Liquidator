@@ -1,15 +1,16 @@
--- Source facts use the real policy/filter and actual item tooltip renderer.
+-- Source facts retain their offline policy/filter and research formatter.
+-- The normal item tooltip excludes this research-only archive.
 -- Fixture prices demonstrate that none of these facts joins economic values.
 local LL={db={tooltipDetail=3,showResearchDetails=true}}
 CreateFrame=function() return {RegisterEvent=function()end,SetScript=function()end} end
 GetBuildInfo=function() return '12.1.5','123456','',120105 end
 GetItemInfo=function(id) return ({[16204]='Illusion Dust',[219946]='Storm Dust'})[id] end
-for _,file in ipairs({'Database.lua','Observations.lua','ReviewedSourceFacts.lua','Badges.lua'}) do
+for _,file in ipairs({'Database.lua','Observations.lua','Badges.lua'}) do
     assert(loadfile('LootLiquidator/'..file))('LootLiquidator',LL)
 end
+assert(loadfile('tools/reviewed_source_facts.lua'))('LootLiquidator',LL)
 LL.MarkupColor=function()return ''end
 LL.Money=function(_,v)return tostring(v)..' copper'end
-LL.ProfessionProgression=function()return {}end
 local checks=0
 local function check(ok,message)checks=checks+1;assert(ok,message)end
 local function fact(id,metric,value,extra)
@@ -32,18 +33,24 @@ check(result[1].sourceContextOnly and result[1].targetProfileAdjusted==false,'so
 check(result[1].nativeInputVariant=='15278:0:887','exact original variant preserved, not declared target match')
 result[1].sourceProfile.skill=999
 check(original.sourceProfile.skill==75,'query returns detached metadata')
-local function render(decision)
+local function normalTooltip(decision)
     local tip={lines={}}
     function tip:AddLine(s)self.lines[#self.lines+1]=s end
     function tip:AddDoubleLine(l,r)self.lines[#self.lines+1]=l..' | '..r end
     LL:AppendRecommendationTooltip(tip,decision or {facts=f,conversionOptions={option}})
     return table.concat(tip.lines,'\n')
 end
+local function render(decision)
+    local lines=LL:ReviewedProcessingSourceFactLines(decision and decision.facts or f,
+        decision and decision.conversionOptions or {option})
+    return normalTooltip(decision)..table.concat(lines,'\n')
+end
+check(not normalTooltip():find('Processing source facts',1,true),'normal tooltip never includes the source archive')
 local text=render()
-check(text:find('Processing source facts',1,true),'actual tooltip includes source section without an available option')
+check(text:find('Processing source facts',1,true),'offline research formatter includes source section without an available option')
 check(text:find('3.5 units per positive result',1,true),'conditional quantity denominator rendered')
 check(text:find('Confidence 0%',1,true),'explicit zero modeling confidence survives')
-check(text:find('Source context: skill 75',1,true) and text:find('15278:0:887',1,true),'original profile/variant visible on real item tooltip')
+check(text:find('Source context: skill 75',1,true) and text:find('15278:0:887',1,true),'original profile/variant retained in offline research display')
 check(not text:find('250',1,true),'target skill is not substituted into source fact')
 for _,forbidden in ipairs({'estimate','provisional','unquantified','gold','copper','Research: 1 casts'}) do
     check(not text:find(forbidden,1,true),'source fact does not display '..forbidden)
@@ -60,8 +67,7 @@ for detail=0,3 do
     LL.db.tooltipDetail=detail
     for _,research in ipairs({false,true})do
         LL.db.showResearchDetails=research
-        local s=render()
-        check((s:find('Processing source facts',1,true)~=nil)==(detail==3 and research),'only Research/Breakdown shows facts')
+        check(not normalTooltip():find('Processing source facts',1,true),'source archive stays outside every normal tooltip setting')
     end
 end
 LL.db.tooltipDetail=3;LL.db.showResearchDetails=true
@@ -155,4 +161,4 @@ for _,case in ipairs({
     LL.ItemDB.reviewedSourceFacts.facts[1].unit='probability'
     check(#LL:ReviewedProcessingSourceFacts(f,option,{})==0,'incompatible input/event dimension is rejected')
 end
-print('PASS: '..checks..' reviewed source-fact policy, scope, dimension and real tooltip checks')
+print('PASS: '..checks..' reviewed source-fact policy, scope, dimension and offline research display and normal-tooltip exclusion checks')

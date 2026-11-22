@@ -96,7 +96,7 @@ class MaterialIdentityTests(unittest.TestCase):
         self.assertAlmostEqual(amber['expectedQuantity']['value'], 0.05)
         self.assertEqual(amber['expectedQuantity']['status'], 'measured')
         self.assertEqual(amber['dropChance']['status'], 'unknown')
-        self.assertTrue(amber['dropChance']['inferenceBlocked'])
+        self.assertNotIn('inferenceBlocked', amber['dropChance'])
         self.assertAlmostEqual(diamond['expectedQuantity']['value'], 0.05)
 
     def test_runecloth_headband_classic_mirrors_share_the_same_five_casts(self):

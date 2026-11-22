@@ -11,7 +11,7 @@ manifest = [s.strip() for s in (root / 'LootLiquidator.toc').read_text().splitli
 assert len(manifest) == len(set(manifest)), 'Duplicate TOC entry'
 assert all((root / s).is_file() for s in manifest), 'Missing runtime file'
 assert {s for s in manifest if s.endswith('.lua')} == {s.name for s in root.glob('*.lua') if s.name != 'itemdb.lua'}
-assert len([s for s in manifest if s.endswith('.lua')]) == 21  # Includes reviewed source facts.
+assert len([s for s in manifest if s.endswith('.lua')]) == 18
 assert 'itemdb.lua' not in manifest, 'Research-only schema must not replace the runtime database'
 for name in manifest:
     assert '/' not in name and '\\' not in name, 'Runtime package must be self-contained'
@@ -25,8 +25,9 @@ for file in root.glob('*.lua'):
 assert manifest.index('ItemDBRuntime.lua') < manifest.index('Database.lua') < manifest.index('Core.lua')
 assert manifest.index('Professions.lua') < manifest.index('Observations.lua') < manifest.index('CraftRecording.lua') < manifest.index('ConversionEngine.lua')
 assert manifest.index('ProfessionCatalog.lua') < manifest.index('Professions.lua')
-assert manifest.index('Database.lua') < manifest.index('ReviewedSourceFacts.lua') < manifest.index('Badges.lua')
-print('PASS: installable LootLiquidator/ package, 21 Lua sources, manifest coverage/load order and XML')
+for removed in ('ReviewedSourceFacts.lua', 'DirectTokenCollector.lua', 'BuildInfo.lua'):
+    assert removed not in manifest and not (root / removed).exists(), removed + ' must not ship'
+print('PASS: installable LootLiquidator/ package, 18 Lua sources, manifest coverage/load order and XML')
 
 import hashlib
 import json

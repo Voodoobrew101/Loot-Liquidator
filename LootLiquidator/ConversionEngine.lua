@@ -56,6 +56,74 @@ function LL:RateProfileTarget(performer)
     if mode==2 then return known and chosen or own,false end
     return known and chosen or current,true
 end
+local function projectionScalars(value)
+    local parts={}
+    for key,v in pairs(value or {}) do
+        local kind=type(v)
+        if kind=='string' or kind=='boolean' or kind=='number' then
+            local text=kind=='number' and ('%.17g'):format(v) or tostring(v)
+            parts[#parts+1]=tostring(key)..'='..kind..':'..#text..':'..text
+        end
+    end
+    table.sort(parts)
+    return table.concat(parts,';')
+end
+local function projectionKey(self,f,options,profession,selection,current)
+    local key=selection=='@hypothetical' and current or selection
+    local record=self.db.characters and self.db.characters[key]
+    local profile=record and record.researchProfiles and record.researchProfiles[profession..':'..tostring(f.expansionID)]
+    local manual=self.db.manualProfessionProfiles and self.db.manualProfessionProfiles[key]
+    manual=manual and manual[profession..':'..tostring(f.expansionID)]
+    local candidates={}
+    for _,option in ipairs(options or {}) do
+        local name=option.profession or (self.ProfessionForMethod and self:ProfessionForMethod(option.name))
+        if name==profession then
+            local letter=processingMethodLetters[option.name]
+            candidates[#candidates+1]=projectionScalars(option)..':mode:'..
+                tostring(letter and self.ProcessingMethodMode and self:ProcessingMethodMode(letter))
+        end
+    end
+    table.sort(candidates)
+    return table.concat({profession,selection,tostring(current),projectionScalars(f),projectionScalars(f.context),
+        table.concat(candidates,'|'),tostring(record),projectionScalars(record and record.altMethods),
+        tostring(profile),projectionScalars(profile),tostring(manual),projectionScalars(manual),
+        tostring(self._professionAuraFingerprint),tostring(self._importedRevision)},'\030')
+end
+local function projectionCache(self,now)
+    local cache=self._tooltipProjectionCache
+    if not cache or cache.db~=self.db or cache.database~=self.ItemDB or cache.evidence~=self._evidenceIndex
+        or cache.version~=(self.ItemDB and self.ItemDB.version) then
+        cache={db=self.db,database=self.ItemDB,evidence=self._evidenceIndex,
+            version=self.ItemDB and self.ItemDB.version,count=0,entries={}}
+        self._tooltipProjectionCache=cache
+    end
+    if now-(cache.sweptAt or 0)>=1 then
+        for key,entry in pairs(cache.entries) do
+            if now-entry.at>=5 then cache.entries[key]=nil;cache.count=cache.count-1 end
+        end
+        cache.sweptAt=now
+    end
+    return cache
+end
+local function cacheProjection(cache,key,quotes,now)
+    if #quotes==0 then return end
+    for _,quote in ipairs(quotes) do
+        -- Missing sibling item names and unresolved output prices must retry
+        -- on the next render, as the underlying model resolver already does.
+        if not quote.yieldModel or quote.value==nil or quote.yieldModel.partialPrice then return end
+    end
+    if not cache.entries[key] then
+        if cache.count>=128 then
+            local oldestKey,oldestAt
+            for existing,entry in pairs(cache.entries) do
+                if not oldestAt or entry.at<oldestAt then oldestKey=existing;oldestAt=entry.at end
+            end
+            if oldestKey then cache.entries[oldestKey]=nil;cache.count=cache.count-1 end
+        end
+        cache.count=cache.count+1
+    end
+    cache.entries[key]={at=now,quotes=quotes}
+end
 -- Build display-only quotes in an isolated context. Never replace the
 -- decision's options, character access, or recommendation with these results.
 function LL:TooltipConversionOptions(f,options)
@@ -69,35 +137,49 @@ function LL:TooltipConversionOptions(f,options)
             out[#out+1]=option
         elseif selection~="@hide" then
             if not projected[profession] then
-                local hypothetical=selection=="@hypothetical"
-                local key=hypothetical and current or selection
-                local db={} for k,v in pairs(self.db) do db[k]=v end
-                local record=key and self.db.characters and self.db.characters[key]
-                db.characters={}
-                if record then db.characters[key]=record end
-                db.rateProfile=hypothetical and 3 or 2
-                db.rateProfileCharacter=key
-                local proxy=setmetatable({db=db,_processingModelCache={count=0},_processingContextCache={},
-                    _professionOperationCache={},_tooltipScannedProfile=not hypothetical}, {__index=self})
-                if hypothetical or key~=current then
-                    -- Live spellbook access belongs only to the current character.
-                    proxy.HasCurrentProfession=function() return false end
-                    proxy.CurrentHasEnchanting=function() return false end
+                local now=GetTime and GetTime() or 0
+                local cache=projectionCache(self,now)
+                local cacheKey=projectionKey(self,f,options,profession,selection,current)
+                local cached=cache.entries[cacheKey]
+                if cached and now-cached.at<5 then
+                    projected[profession]=cached.quotes
+                else
+                    local hypothetical=selection=="@hypothetical"
+                    local key=hypothetical and current or selection
+                    local db={} for k,v in pairs(self.db) do db[k]=v end
+                    local record=key and self.db.characters and self.db.characters[key]
+                    db.characters={}
+                    if record then db.characters[key]=record end
+                    db.rateProfile=hypothetical and 3 or 2
+                    db.rateProfileCharacter=key
+                    local proxy=setmetatable({db=db,_processingModelCache={count=0},_processingContextCache={},
+                        _professionOperationCache={},_tooltipScannedProfile=not hypothetical}, {__index=self})
+                    if hypothetical or key~=current then
+                        -- Live spellbook access belongs only to the current character.
+                        proxy.HasCurrentProfession=function() return false end
+                        proxy.CurrentHasEnchanting=function() return false end
+                    end
+                    if hypothetical then
+                        -- No scanned skill, equipment or live operation bonuses are
+                        -- silently substituted for an unset hypothetical profile.
+                        db.characters[key or "Current character"]={professions={},recipes={},
+                            skillQualityOperations=record and record.skillQualityOperations,
+                            -- Input eligibility is recipe identity, not a character
+                            -- bonus. Keep the complete scanned salvage list when
+                            -- simulating skill/stat changes for those inputs.
+                            salvageRecipes=record and record.salvageRecipes}
+                        proxy.GetResearchProfessionSnapshot=function() return nil end
+                        proxy.GetCachedOperationInfo=function() return nil end
+                    end
+                    local facts={} for k,v in pairs(f) do facts[k]=v end
+                    projected[profession]={}
+                    for _,quote in ipairs((record or hypothetical) and proxy:ConversionOptions(facts) or {}) do
+                        if (quote.profession or (self.ProfessionForMethod and self:ProfessionForMethod(quote.name)))==profession then
+                            projected[profession][#projected[profession]+1]=quote
+                        end
+                    end
+                    cacheProjection(cache,projectionKey(self,f,options,profession,selection,current),projected[profession],now)
                 end
-                if hypothetical then
-                    -- No scanned skill, equipment or live operation bonuses are
-                    -- silently substituted for an unset hypothetical profile.
-                    db.characters[key or "Current character"]={professions={},recipes={},
-                        skillQualityOperations=record and record.skillQualityOperations,
-                        -- Input eligibility is recipe identity, not a character
-                        -- bonus. Keep the complete scanned salvage list when
-                        -- simulating skill/stat changes for those inputs.
-                        salvageRecipes=record and record.salvageRecipes}
-                    proxy.GetResearchProfessionSnapshot=function() return nil end
-                    proxy.GetCachedOperationInfo=function() return nil end
-                end
-                local facts={} for k,v in pairs(f) do facts[k]=v end
-                projected[profession]=(record or hypothetical) and proxy:ConversionOptions(facts) or {}
             end
             for _,quote in ipairs(projected[profession]) do
                 if quote.name==option.name and quote.recipeID==option.recipeID
@@ -278,7 +360,6 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character,professionHin
         ctx.preSpecializationSkill=simulated.skill
         ctx.specializationKnown=type(ctx.specializationPoints)=='table';ctx.specializationEncoding='invested-points'
         ctx.concentrationApplied=nil
-        ctx.benchmark=self.NormalizeSyntheticBenchmark and self:NormalizeSyntheticBenchmark(simulated.benchmark) or nil
         ctx.incomplete=not validNumber(ctx.skill) or not ctx.specialization
         if method=="Disenchant" then
             ctx.preSpecializationSkill=simulated.skill
@@ -308,10 +389,13 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character,professionHin
         end
     end
     self._processingContextGeneration=(self._processingContextGeneration or 0)+1
+    ctx._cacheKey=contextKey
     ctx._cacheIdentity=self._processingContextGeneration
     if (self._processingContextCache.count or 0)>=256 then self._processingContextCache={} end
+    if not self._processingContextCache[contextKey] then
+        self._processingContextCache.count=(self._processingContextCache.count or 0)+1
+    end
     self._processingContextCache[contextKey]={at=now,context=ctx}
-    self._processingContextCache.count=(self._processingContextCache.count or 0)+1
     return ctx
 end
 -- Compiled mechanics v0.2 adapter. Research JSON is NEVER loaded directly in WoW.
@@ -391,9 +475,9 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
                 (target=="OUTPUT_UNCONDITIONAL_EXPECTATION"
                  or target=="OUTPUT_OCCURRENCE"
                  or target=="OUTPUT_POSITIVE_QUANTITY"
-                 or target=="EXPECTED_INPUT_CONSUMPTION" or target=="OPERATION_DURATION") then
-                if target=="EXPECTED_INPUT_CONSUMPTION" or target=="OPERATION_DURATION" then
-                    if rule.formulaID=="MULTIPLY" and (target~="EXPECTED_INPUT_CONSUMPTION" or params.multiplier<=1) then
+                 or target=="EXPECTED_INPUT_CONSUMPTION") then
+                if target=="EXPECTED_INPUT_CONSUMPTION" then
+                    if rule.formulaID=="MULTIPLY" and params.multiplier<=1 then
                         if eligible[target] then duplicates[target]=true else eligible[target]=rule end
                     end
                 end
@@ -460,17 +544,13 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
         materials[#materials+1]=material
     end
     local inputRule=not duplicates.EXPECTED_INPUT_CONSUMPTION and eligible.EXPECTED_INPUT_CONSUMPTION
-    local timeRule=not duplicates.OPERATION_DURATION and eligible.OPERATION_DURATION
     local inputCount=inputRule and baseline.inputCount and baseline.inputCount*inputRule.parameters.multiplier
-    local duration=timeRule and baseline.duration and baseline.duration*timeRule.parameters.multiplier
     if inputCount then changed=changed+1;used[inputRule]=true end
-    if duration then changed=changed+1;used[timeRule]=true end
     if changed==0 then return baseline end
     local result={}
     for k,v in pairs(baseline) do result[k]=v end
     result.materials=materials
     result.expectedInputCount=inputCount or baseline.expectedInputCount
-    result.duration=duration or baseline.duration
     result.mechanicsRuleCount=changed
     result.mechanicsApplied=true
     for rule in pairs(used) do
@@ -608,31 +688,62 @@ function LL:GetMaterialPrice(m)
     end
     return self:GetOutputPrice(m.id,m.itemLink)
 end
-function LL:GetOutputPrice(itemID,itemLink)
+local function outputPrice(self,itemID,itemLink,fee)
     local items=self.ItemDB and self.ItemDB.professionProfiles and self.ItemDB.professionProfiles.items
-    local item=items and (items[itemID] or items[tostring(itemID)])
+    local item=self.GetNativeProfessionItem and self:GetNativeProfessionItem(itemID,itemLink)
+        or items and (items[itemID] or items[tostring(itemID)])
     local binding=item and (item.bindType or item.itemBinding)
     local bound=binding==1 or binding==4
+    local knownBinding=type(binding)=='number' and validNumber(binding) and binding%1==0
     local key=self:TSMString(itemLink,itemID)
     local function quote(item)
         return self:Price("dbminbuyout",item) or self:Price("dbmarket",item) or self:Price("dbregionmarketavg",item)
     end
-    local ask=not bound and quote(key)
-    if not bound and not ask and itemLink then
+    local ask=binding~=nil and not bound and quote(key)
+    if binding~=nil and not bound and not ask and itemLink then
         local base=self:TSMString(nil,itemID)
         if base~=key then ask=quote(base) end
     end
-    if ask then return ask*(1-self:AHFeeRate()),
-        self:AHFeeRate()>0 and "TSM auction estimate (net)" or "TSM auction estimate (gross)" end
+    if ask then
+        fee=fee or self:AHFeeRate()
+        return ask*(1-fee),fee>0 and "TSM auction estimate (net)" or "TSM auction estimate (gross)",knownBinding
+    end
     local fn=C_Item and C_Item.GetItemInfo or GetItemInfo
     if fn then
-        local ok,_,_,_,_,_,_,_,_,_,_,vendor=pcall(fn,itemID)
+        local ok,name,_,_,_,_,_,_,_,_,_,vendor=pcall(fn,itemID)
         if ok then
-            if bound and validNumber(vendor) then return vendor,'Vendor output' end
-            return number(vendor),"Vendor output"
+            local ready=knownBinding and not (issecretvalue and issecretvalue(name))
+                and type(name)=='string' and name~='' and validNumber(vendor)
+            if bound and validNumber(vendor) then return vendor,'Vendor output',ready end
+            return validNumber(vendor) and vendor or nil,"Vendor output",ready
         end
     end
     if bound then return 0,'Bound output' end
+end
+function LL:GetOutputPrice(itemID,itemLink)
+    -- Share only completed quotes during one Evaluate call. A later request
+    -- starts fresh, and unresolved native binding/item info remains retryable.
+    local request=rawget(self,'_outputPriceRequest')
+    local fee
+    if type(request)=='table' and request.db==self.db and request.database==self.ItemDB
+        and type(request.quotes)=='table' and self.AHFeeRate then
+        fee=self:AHFeeRate()
+        if request.fee~=fee
+            or (issecretvalue and (issecretvalue(itemID) or issecretvalue(itemLink)))
+            or not validNumber(itemID) or itemID<=0 or itemID%1~=0
+            or (itemLink~=nil and type(itemLink)~='string')
+            then request=nil end
+    else request=nil end
+    local quotes=request and request.quotes[itemID]
+    local link=itemLink or false
+    local previous=quotes and quotes[link]
+    if previous then return previous.price,previous.source end
+    local price,source,ready=outputPrice(self,itemID,itemLink,fee)
+    if request and ready and validNumber(price) then
+        if not quotes then quotes={};request.quotes[itemID]=quotes end
+        quotes[link]={price=price,source=source}
+    end
+    return price,source
 end
 function LL:ConversionOptions(f)
     local out,knownOperations={},{}
@@ -670,7 +781,11 @@ function LL:ConversionOptions(f)
         if c.method=="Exchange" or c.method=="Combine" or c.method=="Split" then
             dataMode=3
         end
-        local research=(self.GetLearnedProcessingEstimate and
+        local fixedProfession=c.outputID and c.outputCount and c.inputCount
+            and c.method~='Exchange' and c.method~='Combine' and c.method~='Split' and c.method~='Use' and self.ProfessionCraftModel
+        -- Fixed recipe quantities are projected from their native recipe,
+        -- not personal cast logs. Personal-only mode still reads its note.
+        local research=(not fixedProfession or dataMode==2) and (self.GetLearnedProcessingEstimate and
             self:GetLearnedProcessingEstimate(f,c.method,inputCount,processingRecipe)) or nil
         if c.outputID and c.outputCount and c.inputCount then
             price,source=self:GetOutputPrice(c.outputID,c.outputItemLink)
@@ -706,8 +821,6 @@ function LL:ConversionOptions(f)
         local yieldModel,modelIssue
         local salvage=c.salvage and self.SalvageRecipeDefinition and self:SalvageRecipeDefinition(processingRecipe)
         local verifiedSalvage=salvage and salvage.method==c.method and salvage.inputCount==inputCount
-        local fixedProfession=c.outputID and c.outputCount and c.inputCount
-            and c.method~='Exchange' and c.method~='Combine' and c.method~='Split' and c.method~='Use' and self.ProfessionCraftModel
         if fixedProfession then
             yieldModel,modelIssue=self:ProfessionCraftModel(f,c,character)
             if yieldModel then value,source=self:ValueProcessingModel(yieldModel,suppliesCost,suppliesKnown,f) end

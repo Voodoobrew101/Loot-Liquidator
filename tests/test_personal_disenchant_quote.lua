@@ -29,6 +29,7 @@ LL.DisenchantExpansion=function(_,f)return f.expansionID end
 LL.GetOutputPrice=function()return 100 end
 LL.MarkupColor=function()return ''end
 LL.Money=function(_,value)return ('%.3f copper'):format(value)end
+C_Item={GetItemInfo=function(id)return 'Fixture material '..id end,GetItemIconByID=function(id)return 100000+id end}
 LL.ProfessionProgression=function()return {}end
 LL:MigrateEvidenceSettings();assert(LL:InitializeItemDB(),LL.itemDBError)
 for _,simulated in ipairs({false,true})do
@@ -237,8 +238,8 @@ C_UnitAuras={GetAuraDataByIndex=function(_,index)
 end}
 buffs,stacks,known=LL:ProfessionAuraState('Enchanting',11,'Disenchant')
 assert(known and buffs['101'] and stacks['101']==3 and not buffs['999999'],'fallback also excludes unrelated auras')
-assert(LL:ProfessionEffectAffectsTooltip({metric='perception',scope={method='Gather'}},'Skinning',11,'Skin'))
-assert(LL:ProfessionEffectAffectsTooltip({metric='perception',scope={method='Gather'}},'Fishing',11,'Fish'))
+assert(not LL:ProfessionEffectAffectsTooltip({metric='perception',scope={method='Gather'}},'Skinning',11,'Skin'))
+assert(not LL:ProfessionEffectAffectsTooltip({metric='perception',scope={method='Gather'}},'Fishing',11,'Fish'))
 LL.ItemDB.professionProfiles.profiles['Enchanting:11'].nodes[3]={pointEffects={{metric='skill',scope={scopeUnknown=true}}}}
 local unresolved=context();unresolved.specialization='3=1';unresolved.specializationPoints={['3']=1}
 assert(not LL:DisenchantObservationProfileKey(unresolved),'unknown native scope cannot prove a node irrelevant')
@@ -248,7 +249,7 @@ for _,profession in ipairs({'Alchemy','Blacksmithing','Enchanting','Engineering'
  local craft=not gather and profession~='Cooking' and profession~='Fishing'
  local ids=LL:KnownProfessionAuraIDs(profession,11,gather and 'Gather' or 'Craft')
  assert((ids['1239755']==true)==craft,'ingenuity phial scope: '..profession)
- assert((ids['185562']==true)==gather,'firewater scope: '..profession)
+ assert(not ids['185562'],'removed gathering phials cannot alter processing: '..profession)
  assert((ids['1235733']==true)==(profession=='Enchanting'),'Shattered Essence scope: '..profession)
  if profession=='Inscription' or profession=='Jewelcrafting' then
   assert(LL:KnownProfessionAuraIDs(profession,11,profession=='Inscription' and 'Mill' or 'Prospect')['1239755'],

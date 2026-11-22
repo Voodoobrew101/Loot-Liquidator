@@ -1,4 +1,4 @@
-"""Stamp the packaged addon's source commit, branch and included PR identities."""
+"""Write build provenance beside build artifacts, outside the installed addon."""
 import json
 import hashlib
 import os
@@ -7,18 +7,16 @@ import re
 import subprocess
 import urllib.request
 
-from capture_observations import lua
-
-TARGET = Path('LootLiquidator/BuildInfo.lua')
+TARGET = Path('dist/build-info.json')
 GENERATED_RESEARCH_PATHS = {
     'LootLiquidator/ProfessionCatalog.lua',
     *('database/' + name + '.lua' for name in (
-        'profession-profile-rules', 'gathering-study-baselines', 'reference-calculator-baselines',
+        'profession-profile-rules', 'reference-calculator-baselines',
         'skill-quality-rules', 'specialization-effects', 'research-v3-baselines',
         'evidence-baselines', 'capture-observations', 'att-token-baselines', 'disenchant-category-baselines')),
     *('database/research/' + name for name in (
         'build-study-review.json', 'build-study-review.lua', 'source-catalogue-build-review.json',
-        'gathering-study-review.json', 'profession-profile-rule-coverage.json',
+        'profession-profile-rule-coverage.json',
         'profession-effect-coverage.json', 'disenchant-gaps.lua')),
     'research/evidence/v3/midnight/2026-11-06-enchanting-yields.json',
     'research/mechanics/2026-11-19-profession-profile-coverage.md',
@@ -136,17 +134,13 @@ def collect(env, event, read_git=git, lookup=associated_prs):
 
 
 def stamp():
-    if not TARGET.exists(): return  # Generic package fixtures contain no provenance module.
+    if not Path('LootLiquidator/ItemDBRuntime.lua').exists(): return
     env = os.environ
     event_path = env.get('GITHUB_EVENT_PATH')
     event = json.loads(Path(event_path).read_text()) if event_path else {}
     info = collect(env, event)
-    text = TARGET.read_text(encoding='utf-8')
-    replacement = '-- BEGIN GENERATED BUILD INFO\nLL.buildInfo=' + lua(info) + '\n-- END GENERATED BUILD INFO'
-    text, count = re.subn(r'-- BEGIN GENERATED BUILD INFO\n.*?-- END GENERATED BUILD INFO',
-                         lambda _: replacement, text, flags=re.DOTALL)
-    assert count == 1, 'Build provenance marker missing or duplicated'
-    TARGET.write_text(text, encoding='utf-8', newline='\n')
+    TARGET.parent.mkdir(parents=True, exist_ok=True)
+    TARGET.write_text(json.dumps(info, sort_keys=True, indent=2) + '\n', encoding='utf-8', newline='\n')
     print('BUILD:', info['kind'], info['commit'][:12], 'PRs:', [p['number'] for p in info['prs']])
 
 

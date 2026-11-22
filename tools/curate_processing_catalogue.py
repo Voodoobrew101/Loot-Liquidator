@@ -67,6 +67,34 @@ def json_write(path, value):
     Path(path).write_text(json.dumps(value, ensure_ascii=False, indent=1, allow_nan=False) + '\n', encoding='utf-8', newline='\n')
 
 
+def ore_matched_crushed_family(source):
+    """Return the native family only for the pinned Gem Finding identity rule.
+
+    This verifies an output-rank restriction, never a quantity or proc rate.
+    """
+    routing = source.get('recipeRouting', {})
+    family = routing.get('qualityFamilies', {}).get('383', {})
+    ids = family.get('rankItemIDs', [])
+    if ids != [213219, 213220, 213221] or not family.get('qualityOrderVerified'):
+        return None
+    items = routing.get('items', {})
+    if any(items.get(str(item), {}).get('qualityRank') != rank
+           or items.get(str(item), {}).get('qualityFamilyID') != 383
+           for rank, item in enumerate(ids, 1)):
+        return None
+    for node in source.get('nodes', []):
+        if node.get('nodeID') != 98663 or node.get('profession') != 'Jewelcrafting' or node.get('expansionID') != 10:
+            continue
+        for milestone in node.get('milestones', []):
+            if milestone.get('investedPoints') != 20:
+                continue
+            for entry in milestone.get('entries', []):
+                if entry.get('entryID') == 121951 and entry.get('definitionID') == 126851 and entry.get('resolvedDescription') == (
+                    'You now have a chance to uncover Crushed Gemstones of an equivalent quality to the ore you Prospect.'):
+                    return 383
+    return None
+
+
 class Curator:
     def __init__(self, research):
         self.research = Path(research).resolve()
@@ -92,6 +120,7 @@ class Curator:
         if len(self.source) != 2845 or len(self.review['sources']) != 224:
             raise ValueError('Incomplete processing partition')
         self.native_source = native_rules.load_source()
+        self.ore_matched_crushed_family = ore_matched_crushed_family(self.native_source)
         self.items = {int(k): v for k, v in self.native_source['recipeRouting']['items'].items()}
         self.families = {int(k): v for k, v in self.native_source['recipeRouting']['qualityFamilies'].items()}
         self.recipes, _ = native_rules.build_recipes(self.native_source, self.items, self.families)
@@ -534,14 +563,24 @@ class Curator:
                 family_id = self.items.get(item, {}).get('qualityFamilyID')
                 family = self.families.get(family_id)
                 if family and len(family.get('rankItemIDs', [])) > 1:
-                    native_family_ids.add(family_id)
+                    native_input = self.items.get(input_id, {})
+                    ore_matched = (family_id == self.ore_matched_crushed_family and method == 'Prospect' and era == 10
+                            and native_input.get('expansionID') == 10 and native_input.get('classID') == 7
+                            and native_input.get('subclassID') == 7 and native_input.get('qualityRank') in (1, 2, 3))
+                    if ore_matched:
+                        assumptions.append('Native Gem Finding entry121951 preserves ore-matched Crushed Gemstones quality; unreported sibling grades incompatible with the native input rank receive no modeled zero rows. Reported quantities remain unchanged.')
+                    else:
+                        native_family_ids.add(family_id)
                     for sibling in family['rankItemIDs']:
                         if sibling not in present:
+                            if ore_matched and self.items.get(sibling, {}).get('qualityRank') != native_input['qualityRank']:
+                                continue
                             materials.append({'id': sibling, 'expectedQuantity': {'value': 0, 'sourceSupportConfidence': 5,
                                 'modelConfidenceCap': 0, 'derivation': {'kind': 'reviewed-model-formula',
                                 'formula': '0 modeled units for unreported sibling rank in this source-quality anchor',
                                 'assumption': 'Missing rank is a model completion only, not an observed zero/drop failure. Only the reported family total is conserved.'}}})
                             present.add(sibling); filled.append(sibling)
+                            native_family_ids.add(family_id)
             if native_family_ids:
                 assumptions.append('Complete native quality-family vector uses explicitly modeled zero units for unreported ranks. Unknown-source reference skill0 preserves the original reported rank shares; already-highest quality is saturated, not forced to respond by assuming a high source skill.')
                 assumptions.append('Processing quality endpoint at maximum modeled skill is all highest native rank; interpolation is confidence0 and conserves the source-reported family quantity.')

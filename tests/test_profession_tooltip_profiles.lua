@@ -126,7 +126,16 @@ assert(model==nil and reason:find('No researched yield record',1,true))
 assert(LL._processingModelCache.count==1,'empty cache initializes its counter')
 LL:ResolveEvidenceModel(f,option,nil,1)
 assert(LL._processingModelCache.count==1,'cached misses do not increment the counter')
-LL._processingModelCache={count=512}
+local fullCache={count=256,sweptAt=100}
+for i=1,256 do fullCache['fixture:'..i]={at=99+i/1000} end
+LL._processingModelCache=fullCache
 LL:ResolveEvidenceModel(f,option,nil,1)
-assert(LL._processingModelCache.count==1,'full caches reset before inserting')
+assert(LL._processingModelCache==fullCache and fullCache.count==256,
+    'A full model cache must preserve its remaining entries when inserting')
+assert(fullCache['fixture:1']==nil,'The oldest unexpired model entry must be evicted')
+local actualCount=0
+for key,entry in pairs(fullCache)do if type(entry)=='table'then actualCount=actualCount+1 end end
+assert(actualCount==256,'The model-cache counter must match its actual entries')
+for i=2,256 do assert(fullCache['fixture:'..i],
+    'Capacity eviction must preserve every newer unexpired model entry')end
 print('PASS: real resolver handles selected profiles, empty caches, cached misses and eviction')

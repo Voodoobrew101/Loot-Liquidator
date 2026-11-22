@@ -31,13 +31,15 @@ local function setup(data)
     LL.EligibleDisenchant=function()return false end
     LL.MarkupColor=function()return''end
     LL.Money=function(_,v)return string.format('%.10g copper',v)end
-    LL.ProfessionProgression=function()return{}end
     LL.Invalidate=function(self)self._processingContextCache=nil;self._processingModelCache=nil end
     LL:MigrateEvidenceSettings();assert(LL:InitializeItemDB(),LL.itemDBError)
+    local learn=assert(loadfile('tests/learned_recipe_fixture.lua'))()
+    for _,id in ipairs({1230867,1229598,1236098,1229755,1230016,1230437,1237486,1227926,1226166})do learn(LL,id)end
     for profession in pairs(data.professionProfiles.professionParameters)do
         LL.db.characters.Player.professions[profession]=true
         LL.db.professionTooltipProfiles[profession]='@hypothetical'
     end
+    LL._testNativeSnapshot=copy(data.professionProfiles)
     return LL
 end
 local function profile(LL,profession,expansion,full)
@@ -49,7 +51,7 @@ local function profile(LL,profession,expansion,full)
     if full then for _,e in ipairs(LL:GetProfessionConditionalEffects(profession,expansion))do effects[tostring(e.entryID)]={active=true,stacks=e.maxStacks}end end
     assert(LL:SetManualProfessionProfile('Player',profession,expansion,{enabled=true,skill=full and 140 or 0,
         specialization=#points>0 and table.concat(points,',')or'none',effectStates=effects,
-        stats=full and{multicraft={percent=25},resourcefulness={percent=25},finesse={percent=25},perception={percent=25},deftness={percent=25}}or{},buffs={}}))
+        stats=full and{multicraft={percent=25},resourcefulness={percent=25}}or{},buffs={}}))
 end
 local function tooltip(LL,f,options)
     local t={lines={}}
@@ -88,21 +90,6 @@ local function receipts(LL)
         out[#out+1]={options=options,tooltip=tooltip(LL,f,options)}
     end
     LL.db.recipeCandidates=nil
-    for _,profession in ipairs({'Herbalism','Mining','Skinning','Fishing'})do for expansion=9,11 do
-        profile(LL,profession,expansion,true)
-        for _,target in ipairs(LL:GetGatheringSimulationTargets(profession,expansion))do
-            local model=LL:GatheringSimulationPreview(profession,expansion,target.targetID,'Player',true)
-            out[#out+1]={target=target.targetID,model=model}
-        end
-    end end
-    local keys={}for k in pairs(LL.ItemDB.professionProfiles.profiles)do keys[#keys+1]=k end;table.sort(keys)
-    for _,key in ipairs(keys)do
-        local p=LL.ItemDB.professionProfiles.profiles[key];profile(LL,p.profession,p.expansionID,true)
-        for _,target in ipairs(LL:GetProfessionOpportunityTargets(p.profession,p.expansionID))do
-            local model=LL:ProfessionOpportunityPreview(p.profession,p.expansionID,target.targetID,'Player',true)
-            out[#out+1]={target=target.targetID,model=model}
-        end
-    end
     -- Exercise every distinct exact-input source operation as well as the
     -- native profession scenarios above. Unknown models/reasons are preserved
     -- just as strictly as valued results; no missing field becomes a zero.
@@ -129,7 +116,12 @@ local function receipts(LL)
     end end
     return out
 end
-local old=receipts(setup(previous.ItemDB))
-local native=receipts(setup(current.ItemDB))
+local previousRuntime,currentRuntime=setup(previous.ItemDB),setup(current.ItemDB)
+local old=receipts(previousRuntime)
+local native=receipts(currentRuntime)
 same(old,native,'source-to-tooltip')
+-- Evaluating all profiles and source receipts must not write into shared
+-- immutable native metadata, including nested milestone/recipe tables.
+same(previousRuntime._testNativeSnapshot,previous.ItemDB.professionProfiles,'immutable keyed profession metadata')
+same(currentRuntime._testNativeSnapshot,current.ItemDB.professionProfiles,'immutable compact profession metadata')
 print(('PASS: ItemDB storage parity across %d real source/profile/target receipts and %d scalar fields (including rendered tooltips)'):format(#native,checks))

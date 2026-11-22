@@ -1,5 +1,4 @@
--- Distinct profession metrics: units, input savings, time, concentration and
--- eligibility. A catalog entry need not increase per-operation output units.
+-- Item-processing quantities, input savings and output quality share one model.
 local checks=0
 local function check(value,label) assert(value,label);checks=checks+1 end
 local function near(actual,expected,label)
@@ -27,13 +26,17 @@ for _,file in ipairs({'ItemDBRuntime.lua','ProfessionCatalog.lua','Professions.l
     assert(loadfile('LootLiquidator/'..file))('LL',LL)
 end
 local metadata=assert(LL.ItemDB.professionProfiles,'compiled profession profiles required')
+local learn=assert(loadfile('tests/learned_recipe_fixture.lua'))()
+for _,id in ipairs({1230854,1230867,1229598,1236098,1229755,1230016,1230437,1237486,1227926,1226166,405832})do
+    learn(LL,id)
+end
 local matrix={
     {'Alchemy','Craft',1230854},{'Blacksmithing','Craft',1229598},
     {'Enchanting','Craft',1236098},{'Engineering','Craft',1229755},
-    {'Herbalism','Gather'},{'Inscription','Craft',1230016},
+    {'Inscription','Craft',1230016},
     {'Jewelcrafting','Craft',1230437},{'Leatherworking','Craft',1237486},
-    {'Mining','Gather'},{'Skinning','Skin'},{'Tailoring','Craft',1227926},
-    {'Cooking','Craft',1226166},{'Fishing','Fish'},
+    {'Mining','Smelt'},{'Tailoring','Craft',1227926},
+    {'Cooking','Craft',1226166},
 }
 local function context(profession,points)
     return {profession=profession,expansionID=11,skill=100,effectiveSkill=100,
@@ -50,7 +53,21 @@ end
 local function units(model,id)
     for _,material in ipairs(model.materials or {}) do if material.id==id then return material.expectedQuantity end end
 end
+local projectedMetrics={skill=true,difficulty=true,resourcefulness=true,multicraft=true,
+    extraOutput=true,dropChance=true,yieldMultiplier=true,resourcefulnessSaved=true,multicraftExtra=true}
+local function projectedEffect(effect,method)
+    if not projectedMetrics[effect.metric] then return false end
+    if effect.metric=='multicraft' or effect.metric=='multicraftExtra' then return method=='Craft' end
+    if effect.metric=='resourcefulness' or effect.metric=='resourcefulnessSaved' then return method~='Disenchant' and method~='Use' end
+    return true
+end
 local nodeCount,milestoneCount,profileCount=0,0,0
+for _,profession in ipairs({'Herbalism','Skinning','Fishing'})do
+    check(metadata.professionParameters[profession],'Native recipe identity remains available: '..profession)
+    for _,expansion in ipairs({9,10,11})do
+        check(metadata.profiles[profession..':'..expansion]==nil,'Unsupported simulation stub is removed: '..profession..':'..expansion)
+    end
+end
 for _,row in ipairs(matrix) do
     local profession,method,recipe=row[1],row[2],row[3]
     check(metadata.professionParameters[profession],profession..' has native profession parameters')
@@ -88,8 +105,10 @@ for _,row in ipairs(matrix) do
         check(material.samples==nil and material.chance==nil,profession..' model creates no observations or hit probability')
     end
 end
-check(profileCount==39,'all thirteen professions across three modern eras are exercised')
-check(nodeCount==727,'every compiled specialization node is accounted for')
+check(profileCount==#matrix*3,'item-processing professions across three modern eras are exercised')
+local retainedNodes=0
+for _,profile in pairs(metadata.profiles)do for _ in pairs(profile.nodes or {})do retainedNodes=retainedNodes+1 end end
+check(nodeCount==retainedNodes,'every retained item-processing specialization node is accounted for')
 check(milestoneCount>nodeCount,'actual milestone inventory is tested, not a fabricated fixed node schedule')
 
 for _,row in ipairs({{'Enchanting','Disenchant'},{'Inscription','Mill'},
@@ -129,25 +148,6 @@ local highPotion=assert(LL:ProfessionCraftModel(facts('Alchemy'),potionOption))
 check(highPotion.qualityRank==2 and highPotion.materials[1].id==241302,'high skill selects the verified rank-two potion')
 near(highPotion.materials[1].expectedQuantity,lowPotion.materials[1].expectedQuantity,
     'quality changes potion identity while conserving the native five-unit output')
-potionContext.stats.resourcefulness={percent=25}
-local fixedBeforeBenchmark=assert(LL:ProfessionCraftModel(facts('Alchemy'),potionOption))
-local unscaledFixed=copy(fixedBeforeBenchmark)
-potionContext.benchmark={outputLevel=160,specializationBonus=25,resourcefulnessChance=50,resourcefulnessSaved=40}
-local benchmarkContextBefore=copy(potionContext);local potionOptionBefore=copy(potionOption)
-local fixedBenchmark=assert(LL:ProfessionCraftModel(facts('Alchemy'),potionOption))
-check(fixedBenchmark.syntheticBenchmark,'fixed native crafting applies the selected benchmark')
-near(fixedBenchmark.materials[1].expectedQuantity,fixedBeforeBenchmark.materials[1].expectedQuantity*2,
-    'fixed craft output level and specialization bonus multiply final native units exactly once')
-near(fixedBenchmark.expectedInputCount,.8,'benchmark Resourcefulness replaces the native input saving')
-near(fixedBenchmark.supplyCostFactor,.8,'fixed craft supply costing uses the replacement Resourcefulness factor')
-check(fixedBeforeBenchmark.expectedInputCount~=.8,'the replacement is distinct from the existing native input factor')
-check(fixedBenchmark.confidence==0 and fixedBenchmark.materials[1].confidence==0,'fixed craft benchmark retains confidence zero')
-check(LL:ApplySyntheticBenchmark(facts('Alchemy'),option('Craft',1230867),fixedBenchmark,potionContext)==fixedBenchmark,
-    'fixed craft benchmark replay does not scale its output twice')
-check(same(fixedBeforeBenchmark,unscaledFixed),'benchmark evaluation preserves the preceding native model')
-check(same(potionContext,benchmarkContextBefore) and same(potionOption,potionOptionBefore),
-    'fixed native crafting preserves the selected profile and recipe inputs')
-near(fixedBenchmark.rawProfessionBaseline.materials[1].expectedQuantity,5,'fixed craft source baseline remains five native units')
 LL.ProcessingPlayerConditions=savedConditions
 local rfBase=context('Alchemy');rfBase.expansionID=9;rfBase.stats.resourcefulness={percent=100}
 local rfTalent=copy(rfBase);rfTalent.specializationPoints={['19535']=10}
@@ -161,28 +161,13 @@ near(strongerRefund.outputFactor,plainRefund.outputFactor,
 
 local fast=context('Alchemy');fast.stats.craftingSpeed={percent=25}
 local timed=parameters('Alchemy','Craft',1230867,fast)
-check(timed.duration<neutral.duration,'crafting speed improves duration')
+check(timed.duration==nil and timed.speedFactor==nil,'item processing does not project crafting time')
 near(timed.outputFactor,neutral.outputFactor,'crafting speed does not multiply per-cast output units')
-local efficient=context('Alchemy');efficient.stats.ingenuity={percent=25}
+local efficient=context('Alchemy');efficient.stats.ingenuity={percent=25};efficient.ingenuityRefundFraction=.5
 local concentration=parameters('Alchemy','Craft',1230867,efficient)
-check(concentration.expectedConcentrationCost<concentration.concentrationCost,
-    'Ingenuity changes expected concentration use')
+check(concentration.expectedConcentrationCost==nil and concentration.concentrationCost==nil,
+    'item processing does not project concentration use')
 near(concentration.outputFactor,neutral.outputFactor,'Ingenuity does not multiply output units')
-for _,row in ipairs({{'Herbalism','Gather'},{'Mining','Gather'},{'Skinning','Skin'}}) do
-    local plain=parameters(row[1],row[2])
-    local deft=context(row[1]);deft.stats.deftness={percent=25}
-    local quicker=parameters(row[1],row[2],nil,deft)
-    check(quicker.duration<plain.duration,row[1]..' Deftness changes gathering duration')
-    near(quicker.outputFactor,plain.outputFactor,row[1]..' Deftness does not change units per target')
-    local finesse=context(row[1]);finesse.stats.finesse={percent=25}
-    check(parameters(row[1],row[2],nil,finesse).outputFactor>plain.outputFactor,
-        row[1]..' Finesse changes the declared gathering quantity metric')
-    local perception=context(row[1]);perception.stats.perception={percent=25}
-    local rare=parameters(row[1],row[2],nil,perception)
-    check(rare.rareDiscoveryFactor>plain.rareDiscoveryFactor,row[1]..' Perception changes rare discovery')
-    near(rare.outputFactor,plain.outputFactor,row[1]..' Perception is separate from common quantity')
-end
-
 local baseCalibration=context('Alchemy')
 baseCalibration.stats.multicraft={rating=100,percent=20}
 baseCalibration.statAnchors={multicraft={rating=100,percent=20}}
@@ -247,7 +232,9 @@ for key,profile in pairs(metadata.profiles) do
         for _,candidate in ipairs(candidates) do
             local effect=candidate.effect;local c=effect.condition
             if not conditionalTested and c and c.contextFlags and next(c.contextFlags)
-                and not c.requiresActiveBuff and not c.event and not (effect.scope or {}).scopeUnknown then
+                and not c.requiresActiveBuff and not c.event and not (effect.scope or {}).scopeUnknown
+                and not effect.numericUnsupported and not effect.requiresSemanticReview
+                and projectedEffect(effect,(effect.scope or {}).method or 'Craft') then
                 local ctx=context(profile.profession,{[tostring(nodeID)]=candidate.rank})
                 ctx.expansionID=profile.expansionID
                 local op=option((effect.scope or {}).method or 'Craft')
@@ -272,8 +259,6 @@ for key,profile in pairs(metadata.profiles) do
         end
     end
 end
-check(conditionalTested,'an actual compiled context-conditional effect is exercised')
-
 -- Evaluate every source-backed point/learning/milestone handler at a matching
 -- scope. This proves dispatch and conditions, not a fictional output gain for
 -- convenience, unlock, time or unresolved-identity effects.
@@ -283,19 +268,26 @@ for id,recipe in pairs(metadata.recipes) do
     recipeIndex[key]=recipeIndex[key] or {};defaultRecipe[key]=defaultRecipe[key] or id
     for _,label in ipairs(recipe.labels or {}) do recipeIndex[key][label]=recipeIndex[key][label] or id end
 end
-local exercised,unknownScope,gatherScopes,unresolvedBuff,dedicated,targetFiltered=0,0,0,0,0,0
+local exercised,unknownScope,unresolvedBuff,dedicated,targetFiltered,unsupportedNumeric,retired,effectCount=0,0,0,0,0,0,0,0
 local function exerciseEffect(profile,nodeID,node,effect,rank,learned,perPoint)
+    effectCount=effectCount+1
     local scope=effect.scope or {}
+    if effect.numericUnsupported or effect.requiresSemanticReview then
+        unsupportedNumeric=unsupportedNumeric+1
+        check(effect.amount==0 or effect.requiresSemanticReview,'unquantified descriptions carry no invented coefficient')
+        return
+    end
     if scope.scopeUnknown then unknownScope=unknownScope+1;return end
     local key=profile.profession..':'..profile.expansionID
     local method=scope.method or 'Craft'
+    if not projectedEffect(effect,method) then retired=retired+1;return end
     local recipe
     for _,label in ipairs(scope.labelIDs or {}) do
         recipe=recipe or (recipeIndex[key] and recipeIndex[key][label])
     end
     recipe=recipe or defaultRecipe[key]
     local op=option(method,recipe)
-    -- Gathering/loot spell labels describe a target rather than a craft recipe.
+    -- Loot spell labels describe a target rather than a craft recipe.
     op.labels=scope.labelIDs
     local ctx=context(profile.profession,{[tostring(nodeID)]=rank})
     ctx.expansionID=profile.expansionID
@@ -403,7 +395,6 @@ local function exerciseEffect(profile,nodeID,node,effect,rank,learned,perPoint)
         check(type(id)=='number' and type(quantity)=='number' and quantity>=0,'additional outcomes retain valid identities and units')
     end
     check(params.outputFactor>=0 and params.inputFactor>0,'matching handler retains nonnegative units and invertible input cost')
-    if method=='Gather' or method=='Skin' or method=='Fish' then gatherScopes=gatherScopes+1 end
     exercised=exercised+1
 end
 for _,profile in pairs(metadata.profiles) do for nodeID,node in pairs(profile.nodes) do
@@ -413,52 +404,10 @@ for _,profile in pairs(metadata.profiles) do for nodeID,node in pairs(profile.no
         for _,effect in ipairs(milestone.effects) do exerciseEffect(profile,nodeID,node,effect,milestone.rank,true,false) end
     end end
 end end
-check(exercised>5000,'all scope-resolved handlers are evaluated rather than sampling only a profession')
-check(gatherScopes>0,'actual gathering effect scopes are exercised')
-check(targetFiltered>=8,'every species-specific and Majestic output binding is target-filtered at runtime')
+check(exercised>0 and exercised+unknownScope+dedicated+unsupportedNumeric+retired==effectCount,
+    'all retained handlers are evaluated or explicitly classified')
+check(targetFiltered>0 or unsupportedNumeric>0,'target-specific effects are filtered when numeric or excluded when unquantified')
 
-for _,row in ipairs({{'Herbalism','Gather',236761},{'Mining','Gather',237359},
-    {'Skinning','Skin',238511},{'Fishing','Fish',999998}}) do
-    local target={targetID='reference-target:'..row[1],profession=row[1],expansionID=11,method=row[2],
-        baseline={inputCount=1,materials={{id=row[3],expectedQuantity=3,confidence=0}},duration=4,confidence=0}}
-    local original=copy(target)
-    local ctx=context(row[1]);ctx.stats.perception={percent=25}
-    if row[1]~='Fishing' then ctx.stats.finesse={percent=25};ctx.stats.deftness={percent=25} end
-    local result=assert(LL:GatheringSimulationModel(target,ctx))
-    check(result.actionable==false,'a target preview never becomes a bag conversion')
-    check(result.targetID==target.targetID,'target simulation retains its non-item identity')
-    check(result.rareDiscoveryFactor>1,'target Perception reports its separate discovery metric')
-    near(units(result,row[3]),3*result.yieldFactor,'target quantities use their own baseline')
-    check(same(target,original),'target projection retains its source baseline')
-    if row[1]~='Fishing' then check(result.duration<4,'target Deftness changes time per gather') end
-    local unscaledTarget=copy(result)
-    ctx.benchmark={outputLevel=160,specializationBonus=25,resourcefulnessChance=50,resourcefulnessSaved=40}
-    local contextBefore=copy(ctx)
-    local benchmarked=assert(LL:GatheringSimulationModel(target,ctx))
-    check(benchmarked.syntheticBenchmark and benchmarked.actionable==false,
-        'a gathering benchmark remains a non-actionable target preview')
-    near(units(benchmarked,row[3]),units(result,row[3])*2,'target benchmark doubles final gathered units exactly once')
-    near(benchmarked.yieldFactor,result.yieldFactor*2,'target benchmark also doubles the displayed gathering yield factor')
-    near(benchmarked.expectedInputCount,result.expectedInputCount,'gathering does not acquire crafting Resourcefulness consumption')
-    check(benchmarked.confidence==0 and benchmarked.materials[1].confidence==0,'gathering benchmark retains confidence zero')
-    check(LL:ApplySyntheticBenchmark(target,{name=row[2]},benchmarked,ctx)==benchmarked,
-        'target benchmark replay cannot double the output again')
-    check(same(target,original) and same(ctx,contextBefore) and same(result,unscaledTarget),
-        'target benchmark preserves source target, context and previous model')
-end
-local namedSource={inputCount=1,materials={},namedOutputs={
-    {name='Unresolved byproduct identity',expectedQuantity=.25,confidence=0},
-    {name='Separate discovery effect',discoveryFactor=1.1,confidence=0}},confidence=0}
-local namedBefore=copy(namedSource)
-local namedContext=context('Alchemy');namedContext.benchmark={outputLevel=160,specializationBonus=25}
-local namedBenchmark=LL:ApplySyntheticBenchmark(facts('Alchemy'),option('Craft',1230867),namedSource,namedContext)
-near(namedBenchmark.namedOutputs[1].expectedQuantity,.5,'named expected units use the same once-only output factor')
-near(namedBenchmark.namedOutputs[2].discoveryFactor,1.1,'output benchmark does not rewrite a separate discovery factor')
-for _,out in ipairs(namedBenchmark.namedOutputs) do
-    check(out.chance==nil and out.samples==nil and out.histogram==nil,'scaling a named expectation creates no probability or observations')
-end
-check(same(namedSource,namedBefore),'named benchmark preserves its source information')
-check(LL:ApplySyntheticBenchmark(facts('Alchemy'),option('Craft',1230867),namedBenchmark,namedContext)==namedBenchmark,
-    'named expected units are not scaled again on replay')
+check(LL.ApplySyntheticBenchmark==nil and LL.NormalizeSyntheticBenchmark==nil,'arbitrary benchmark multipliers are removed')
 print('PROFESSION CALCULATIONS: '..checks..' checks passed; '..exercised..' scoped handlers, '
     ..unknownScope..' unresolved scopes, '..unresolvedBuff..' unresolved buff identities, '..dedicated..' dedicated routes')

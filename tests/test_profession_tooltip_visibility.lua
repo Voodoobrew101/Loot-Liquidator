@@ -43,7 +43,7 @@ for _,method in ipairs({{'Mill','Inscription','M','Milling'},{'Prospect','Jewelc
                 local text=render(option,level,show)
                 local visible=level>=2 and (available or show)
                 assert((text:find(method[4],1,true)~=nil)==visible,scenario..' visibility')
-                assert((text:find('20% Material 10 [1-2]',1,true)~=nil)==(visible and level==3))
+                assert((text:find('20% |T134400:14:14:0:0|t Material 10 [1-2]',1,true)~=nil)==(visible and level==3))
                 if level==0 then assert(text=='') else assert(text:find('Auction',1,true)) end
                 assert(option.available==available and option.value==50,'display never changes eligibility or prices')
                 n=n+1
@@ -70,8 +70,8 @@ print('PASS: unavailable recipe filtering preserves the usable alternative')
 local recycling={name='Recycle',letter='R',profession='Engineering',eligibleInput=true,
     available=false,why='Need 5 inputs for one Recycle operation',category='salvage-input'}
 text=render(recycling,2,false)
-assert(text:find('Recycle',1,true) and text:find('Insufficient Data',1,true))
-assert(text:find('Need 5 inputs',1,true),'unowned reagent explains availability')
+assert(text:find('Recycle',1,true) and not text:find('Insufficient Data',1,true))
+assert(not text:find('Need 5 inputs',1,true),'compact header does not append access diagnostics')
 assert(recycling.value==nil and recycling.available==false)
 LL.db.professionTooltipProfiles={Engineering='@hide'}
 local hidden={lines={}}

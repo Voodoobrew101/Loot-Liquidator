@@ -1,4 +1,4 @@
--- Exact-instance native eligibility wins; catalog scope is informational only.
+-- Exact-instance native eligibility wins; unused catalog warnings stay offline.
 local checks=0
 local function check(v,why) assert(v,why);checks=checks+1 end
 CreateFrame=function() return {RegisterEvent=function()end,SetScript=function()end} end
@@ -14,6 +14,8 @@ local restrictions={noDisenchant={38},researchNoDisenchant={},researchNoDisencha
 local LL={db={},ItemDB={schemaVersion=1,processing={},restrictions=restrictions}}
 assert(loadfile('LootLiquidator/Core.lua'))('LL',LL)
 assert(loadfile('LootLiquidator/Database.lua'))('LL',LL)
+check(LL.ResearchNoDisenchantObservations==nil,'offline observations have no runtime alias')
+check(LL.ResearchDisenchantRestrictionWarnings==nil,'unused catalog warning scanner is removed')
 local function link(id,bonus)
     return 'item:'..id..'::::::::90:0:0:0:1:'..bonus
 end
@@ -29,12 +31,12 @@ C_TooltipInfo={GetHyperlink=function()return{id=251786,lines={}}end,
     GetItemByID=function()return{id=251786,lines={{leftText='Cannot be disenchanted'}}}end}
 local f=facts(197)
 local ok,reason=eligible(f)
-check(ok and reason:match('Candidate only'),'base catalog is a warning, not positive native proof or hard denial')
-check(f.researchDisenchantWarnings and f.researchDisenchantWarnings[1].rawSHA256==base.rawSHA256,'base warning keeps original source hash')
+check(ok and reason:match('Candidate only'),'base catalog is not positive native proof or hard denial')
+check(not f.researchDisenchantWarnings,'unused source warnings are not copied into item facts')
 f=facts(292)
 ok,reason=eligible(f)
 check(ok and reason:match('Candidate only'),'292bonus item not denied by197 catalog')
-check(not f.researchDisenchantWarnings,'197 warning does not claim292 scope match')
+check(not f.researchDisenchantWarnings,'different item level does not attach offline observations')
 check(not f.nativeDisenchantVerified,'absent native denial is not a positive verification')
 C_TooltipInfo.GetHyperlink=function()return nil end
 f=facts(292)
@@ -47,20 +49,22 @@ C_TooltipInfo=nil
 f=facts(292,111,38)
 ok,reason=eligible(f)
 check(not ok and reason=='Item database: Cannot be disenchanted','native DB2 hard flag unchanged')
--- Exact bonus scope remains exact, including unknown/missing itemlink fields.
+-- Legacy observation payloads have no eligibility effect at any bonus scope.
 local scoped={recordID='exact-bonus',scope={itemLevel=292,bonusIDs={111}}}
 restrictions.researchNoDisenchantObservations[1].observations[2]=scoped
-f=facts(292,111);eligible(f)
-check(f.researchDisenchantWarnings and f.researchDisenchantWarnings[1]==scoped,'matching bonus observation retained')
-f=facts(292,222);eligible(f)
-check(not f.researchDisenchantWarnings,'different bonus has no matching source warning')
-f=facts(292);f.link='item:251786';eligible(f)
-check(not f.researchDisenchantWarnings,'missing bonus identity is not treated as observed empty set')
+f=facts(292,111)
+check(eligible(f) and not f.researchDisenchantWarnings,'matching catalog bonus neither denies nor adds unused fields')
+f=facts(292,222)
+check(eligible(f) and not f.researchDisenchantWarnings,'different bonus remains eligible without unused fields')
+f=facts(292);f.link='item:251786'
+check(eligible(f) and not f.researchDisenchantWarnings,'missing bonus identity is not a catalog denial')
 scoped.scope.itemLink=link(251786,111)
-f=facts(292,111);eligible(f)
-check(f.researchDisenchantWarnings,'explicit full source itemlink matches')
-f=facts(292,222);eligible(f)
-check(not f.researchDisenchantWarnings,'different explicit itemlink stays unmatched')
+f=facts(292,111)
+check(eligible(f) and not f.researchDisenchantWarnings,'matching source itemlink is not a native restriction')
+f=facts(292,222)
+check(eligible(f) and not f.researchDisenchantWarnings,'different source itemlink is not a native restriction')
+local restriction,warnings=LL:ExternalDisenchantRestriction(f)
+check(restriction==nil and warnings==nil,'restriction lookup has no unused warning return')
 -- Old packaged catalog IDs must not survive as hard restrictions after reload.
 restrictions.researchNoDisenchant={251786};restrictions.researchNoDisenchantPolicy=nil
 LL.ItemRestrictions[251786]=true

@@ -29,8 +29,7 @@ def command_plan(python=sys.executable):
     # existing two-pass fixed-point chain rather than introducing new math.
     commands = [[python, 'tools/import_profession_catalog.py'],
                 [python, 'tools/profession_profile_rules.py'],
-                [python, 'tools/profession_effect_inventory.py'],
-                [python, 'tools/gathering_study_baselines.py']]
+                [python, 'tools/profession_effect_inventory.py']]
     for _ in range(2):
         commands.extend([python, 'tools/' + generator] for generator in GENERATORS)
     commands.append([python, 'tools/recycling_capture_baselines.py', '--check'])
@@ -97,17 +96,6 @@ def prepare(research_ref=None, lua=None, run=subprocess.run, root=ROOT):
             Path('database/research/source-catalogue-build-review.json').write_text(
                 json.dumps({'catalogues': catalogues, 'complete': True}, ensure_ascii=False, sort_keys=True, indent=2) + '\n',
                 encoding='utf-8', newline='\n')
-        world_review_path = Path('database/research/gathering-study-review.json')
-        if world_review_path.exists():
-            world_review_bytes = world_review_path.read_bytes()
-            world_review = json.loads(world_review_bytes)
-            manifest['nativeGatheringReview'] = {
-                'path': world_review_path.as_posix(),
-                'sha256': sha256(world_review_bytes).hexdigest(),
-                'summary': world_review['summary'],
-                'policy': world_review['policy'],
-                'rowCountsAreNotIndependentOperations': True,
-            }
         from stamp_build_info import generated_research_hashes
         manifest['generatedFileSHA256'] = generated_research_hashes()
         path = Path('database/research/build-research-manifest.json')

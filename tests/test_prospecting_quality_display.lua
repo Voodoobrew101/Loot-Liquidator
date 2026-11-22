@@ -5,11 +5,12 @@ assert(loadfile('LootLiquidator/Badges.lua'))('LL',LL)
 LL.MarkupColor=function()return ''end
 LL.Money=function(_,n)return tostring(n)..' copper'end
 LL.ProfessionProgression=function()return {}end
-C_Item={GetItemInfo=function()return 'Flawless Amani Lapis'end}
+C_Item={GetItemInfo=function()return 'Flawless Amani Lapis'end,GetItemIconByID=function()return 123 end}
 local materials={}
 for id=1,14 do
     LL.ItemDB.professionProfiles.items[id]={qualityRank=(id-1)%2+1,qualityFamilyID=100}
-    materials[id]={id=id,expectedQuantity=id==14 and 0 or .2,netExpectedValue=id,confidence=30}
+    materials[id]={id=id,expectedQuantity=id==14 and 0 or .2,chance=id==14 and 0 or .2,
+        minQuantity=1,maxQuantity=1,netExpectedValue=id,confidence=30}
 end
 local model={inputCount=5,materials=materials,confidence=30,generalQualityApplied=true}
 local tip={rows={}}
@@ -17,16 +18,14 @@ function tip:AddLine()end
 function tip:AddDoubleLine(left,right)self.rows[#self.rows+1]={left,right}end
 LL:AppendRecommendationTooltip(tip,{action='A',facts={id=999,classID=7},conversionOptions={{name='Prospect',
     inputCount=5,profession='Jewelcrafting',value=42,yieldModel=model}}})
-local count,zero=0,false
+local count=0
 for _,row in ipairs(tip.rows)do if row[1]:find('Flawless Amani Lapis',1,true)then
     count=count+1
     assert(not row[1]:find('[avg',1,true) and not row[1]:find('per prospect',1,true),row[1])
-    assert(row[1]:find('20%%') or row[1]:find('0%%'),row[1])
-    if row[1]:find('0%% Flawless',1,false)then zero=true end
+    assert(row[1]:find('[R1]',1,true) or row[1]:find('[R2]',1,true),'native verified quality remains distinguishable without a live rank API')
 end end
-assert(count==14,'all separate quality rows remain visible beyond the old twelve-row cutoff')
-assert(zero,'a numerical zero for a distinct quality remains visible')
-for _,m in ipairs(materials)do assert(m.chance==nil,'presentation must not invent probability evidence')end
+assert(count==14,'every grade, including zero, remains separate beyond the old twelve-row cutoff')
+for id,m in ipairs(materials)do assert(m.chance==(id==14 and 0 or .2),'presentation preserves the supplied occurrence fixture')end
 assert(materials[1].expectedQuantity==.2 and materials[1].netExpectedValue==1,'yield and valuation unchanged')
 -- A measured grade does not erase a separate exact-grade reference merely
 -- because their native family/name matches. Pooled family fallbacks stay separate.
@@ -47,4 +46,4 @@ LL:MigrateEvidenceSettings();assert(LL:InitializeItemDB(),LL.itemDBError)
 local quote=assert(LL:ComputeEvidenceModel({id=999,expansionID=11},{name='Prospect',inputCount=5},nil,1,{}))
 local byID={}for _,m in ipairs(quote.materials)do byID[m.id]=m.expectedQuantity end
 assert(byID[1]==.2 and math.abs(byID[2]-.3)<1e-12,'both exact quality rows retain their own numerical baseline')
-print('PASS: leading 20% without average suffix, fourteen separate quality rows, zero quality, immutable evidence/value')
+print('PASS: every quality row including zero, native rank fallback and unchanged evidence/value')

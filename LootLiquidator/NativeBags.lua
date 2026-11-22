@@ -1,5 +1,10 @@
 -- Native Blizzard bags, banks and guild-bank adapters.
 local _, LL = ...
+local function IsVisible(frame)
+    if not frame then return false end
+    if type(frame.IsVisible)=="function" then return frame:IsVisible() end
+    return type(frame.IsShown)=="function" and frame:IsShown()
+end
 local subscriptions={}
 local eventFrame=CreateFrame("Frame")
 local function NewNativeObserver()
@@ -64,7 +69,7 @@ local function ItemContext(bag, slot)
 end
 
 local function ScanFrame(frame, changed)
-    if not frame or not frame.IsShown or not frame:IsShown() then return end
+    if not IsVisible(frame) then return end
     -- Retail combined bags may use pooled buttons. Check visible children and
     -- their grandchildren; ignore unknown widget shapes rather than mislabel.
     local candidates={}
@@ -83,6 +88,7 @@ local function ScanFrame(frame, changed)
     end
     collect(frame,1)
     for _,b in ipairs(candidates) do
+        if IsVisible(b) then
         local bag=b.GetBagID and b:GetBagID() or b.bagID
         local slot=b.GetID and b:GetID() or b.slotID
         if type(bag)=="number" and type(slot)=="number" and slot>0 then
@@ -99,6 +105,7 @@ local function ScanFrame(frame, changed)
                     LL:ClearButton(b)
                 end
             end
+        end
         end
     end
 end
@@ -143,16 +150,17 @@ local function BankTick()
         local job=bankJobs[button]
         bankJobs[button]=nil
         local panel=BankPanel()
-        if job and panel and panel.IsShown and panel:IsShown()
-            and button.IsShown and button:IsShown() then
+        if job and IsVisible(panel) and IsVisible(button) then
             local bag,slot=BankButtonCoordinates(button)
             local link=bag and C_Container and C_Container.GetContainerItemLink
                 and C_Container.GetContainerItemLink(bag,slot)
             if bag==job.bag and slot==job.slot and link==job.link then
                 local decision=LL:Evaluate(link,ItemContext(bag,slot))
+                if IsVisible(panel) and IsVisible(button) then
                 LL:Paint(button,link,decision)
                 button.laBlizzardBag=true
                 button.laBagID,button.laSlotID=bag,slot
+                end
             end
         end
         processed=processed+1
@@ -184,8 +192,9 @@ end
 
 local function ScanBankPanel(changed)
     local panel=BankPanel()
-    if not panel or not panel.IsShown or not panel:IsShown() then return end
+    if not IsVisible(panel) then return end
     local function VisitButton(button)
+        if not IsVisible(button) then return end
         local bag,slot=BankButtonCoordinates(button)
         if not bag then return end
         local link=C_Container and C_Container.GetContainerItemLink
@@ -272,7 +281,8 @@ function LL:QueueBlizzardBagRefresh(bag)
     scheduled = true
     local function Refresh()
         scheduled = false
-        local changed = fullPending and nil or changedBags
+        local changed
+        if not fullPending then changed=changedBags end
         fullPending, changedBags = false, {}
         self:UpdateBlizzardBags(changed)
     end
@@ -309,6 +319,9 @@ do -- Guild bank
 local hooked = false
 local queued = false
 local guildOpen = false
+local guildJobs,guildJobCount,guildCursor={},0,1
+local guildWorkScheduled=false
+local guildWorkFrame,guildWorkTab
 
 local function GuildButton(frame, slot)
     local column = math.ceil(slot / 14)
@@ -319,32 +332,91 @@ local function GuildButton(frame, slot)
     return _G["GuildBankColumn" .. column .. "Button" .. idx]
 end
 
-local function UpdateGuild()
-    local f = _G.GuildBankFrame
-    if not f then return end
-    if not guildOpen or not LL.db or not LL.db.showGuildBank
-       or not f:IsShown() or (f.mode and f.mode ~= "bank") then
-        for i=1,98 do LL:ClearButton(GuildButton(f, i)) end
-        return
+local function ClearGuild(frame)
+    if frame then for slot=1,98 do LL:ClearButton(GuildButton(frame,slot))end end
+end
+local function ResetGuildWork(clear)
+    if clear then ClearGuild(guildWorkFrame or _G.GuildBankFrame)end
+    guildJobs,guildJobCount,guildCursor={},0,1
+    guildWorkFrame,guildWorkTab=nil,nil
+end
+local function GuildState()
+    local frame=_G.GuildBankFrame
+    if not guildOpen or not frame or not LL.db or not LL.db.showGuildBank
+        or not IsVisible(frame) or frame.mode and frame.mode~='bank' then return nil end
+    local tab=GetCurrentGuildBankTab and GetCurrentGuildBankTab()
+    if type(tab)~='number'or tab<1 or not GetGuildBankItemLink then return nil end
+    return frame,tab
+end
+local function GuildCount(tab,slot)
+    if GetGuildBankItemInfo then local _,count=GetGuildBankItemInfo(tab,slot);return count or 1 end
+    return 1
+end
+local function GuildJobMatches(job)
+    local frame,tab=GuildState()
+    return frame==job.frame and tab==job.tab and GuildButton(frame,job.slot)==job.button
+        and GetGuildBankItemLink(tab,job.slot)==job.link and GuildCount(tab,job.slot)==job.count
+end
+local function GuildTick()
+    guildWorkScheduled=false
+    if guildJobCount==0 then ResetGuildWork(false);return end
+    local start=type(debugprofilestop)=='function'and debugprofilestop()or nil
+    local processed=0
+    while guildJobCount>0 and processed<8 do
+        local frame,tab=GuildState()
+        if frame~=guildWorkFrame or tab~=guildWorkTab then
+            ResetGuildWork(true)
+            if frame then LL:QueueGuildRefresh()end
+            return
+        end
+        if start and debugprofilestop()-start>=3 and processed>0 then break end
+        local slot=guildCursor;guildCursor=slot%98+1
+        local job=guildJobs[slot]
+        if job then
+            guildJobs[slot]=nil;guildJobCount=guildJobCount-1
+            if GuildJobMatches(job)then
+                local result=LL:Evaluate(job.link,{guild=true,count=job.count,_LLFastBadge=true})
+                -- Native updates can replace a slot/tab while its data is read.
+                -- Never paint an earlier item's answer over the latest slot.
+                if GuildJobMatches(job)then
+                    LL:Paint(job.button,job.link,result)
+                    job.button.laGuildBank=true
+                    job.button.laGuildTab,job.button.laGuildSlot,job.button.laGuildCount=job.tab,job.slot,job.count
+                else LL:ClearButton(job.button);LL:QueueGuildRefresh()end
+            else LL:ClearButton(job.button);LL:QueueGuildRefresh()end
+            processed=processed+1
+        end
     end
-    local tab = GetCurrentGuildBankTab and GetCurrentGuildBankTab()
-    if not tab or tab < 1 or not GetGuildBankItemLink then return end
+    if guildJobCount>0 then
+        guildWorkScheduled=true
+        if C_Timer and C_Timer.After then C_Timer.After(0,GuildTick)else GuildTick()end
+    else ResetGuildWork(false)end
+end
+local function UpdateGuild()
+    local f,tab=GuildState()
+    if not f then ResetGuildWork(true);return end
+    if guildWorkFrame and (guildWorkFrame~=f or guildWorkTab~=tab)then ResetGuildWork(true)end
+    guildWorkFrame,guildWorkTab=f,tab
     for slot = 1, 98 do
         local b = GuildButton(f, slot)
         if b then
             b.laGuildBank = true
             local link = GetGuildBankItemLink(tab, slot)
             if link then
-                local count = 1
-                if GetGuildBankItemInfo then
-                    local _, c = GetGuildBankItemInfo(tab, slot)
-                    count = c or 1
-                end
-                LL:Paint(b, link, LL:Evaluate(link, {guild=true, count=count,_LLFastBadge=true}))
+                local count=GuildCount(tab,slot)
+                if b.laGuildTab~=tab or b.laLink~=link or b.laGuildCount~=count then LL:ClearButton(b)end
+                if not guildJobs[slot]then guildJobCount=guildJobCount+1 end
+                guildJobs[slot]={frame=f,tab=tab,slot=slot,button=b,link=link,count=count}
             else
+                if guildJobs[slot]then guildJobCount=guildJobCount-1 end
+                guildJobs[slot]=nil
                 LL:ClearButton(b)
             end
         end
+    end
+    if guildJobCount>0 and not guildWorkScheduled then
+        guildWorkScheduled=true
+        if C_Timer and C_Timer.After then C_Timer.After(0,GuildTick)else GuildTick()end
     end
 end
 
@@ -369,7 +441,7 @@ local function HookGuild()
         hooksecurefunc("GuildBankFrame_Update", function() LL:QueueGuildRefresh() end)
     end
     f:HookScript("OnShow", function() guildOpen = true; LL:QueueGuildRefresh() end)
-    f:HookScript("OnHide", function() guildOpen = false; LL:QueueGuildRefresh() end)
+    f:HookScript("OnHide", function() guildOpen = false;ResetGuildWork(true);LL:QueueGuildRefresh() end)
 end
 
 local e = NewNativeObserver()
@@ -386,7 +458,7 @@ e:SetScript("OnEvent", function(_, event, name)
         return
     end
     if event == "GUILDBANKFRAME_OPENED" then guildOpen = true end
-    if event == "GUILDBANKFRAME_CLOSED" then guildOpen = false end
+    if event == "GUILDBANKFRAME_CLOSED" then guildOpen = false;ResetGuildWork(true)end
     HookGuild()
     LL:QueueGuildRefresh()
 end)

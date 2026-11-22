@@ -35,7 +35,7 @@ local snapshot={recipeID=rule.recipeID,inputItemID=10,inputQualityRank=1,expansi
     observed=100,effectiveSkill=366,craftingQuality=2,highQualitySkillThreshold=365,
     character='Player',maxQuality=2,allocationVerified=true,concentration=false}
 local context={simulated=true,profileKind='manual-simulation',effectiveSkill=364,
-    character='Player',skillQualityOperation=copy(snapshot),benchmark={}}
+    character='Player',skillQualityOperation=copy(snapshot)}
 LL.ProcessingPlayerConditions=function() return context end
 local function resolve()
     LL._processingModelCache=nil
@@ -57,16 +57,13 @@ near(LL:ValueProcessingModel(gold,0,true,facts),120)
 check(LL:ApplySkillQualityModel(facts,option,gold,context)==gold,'quality projection is idempotent')
 near(source.materials[1].expectedQuantity.value,2)
 check(source.materials[1].rankIDs[1]==high,'raw family evidence stays unchanged')
-context.benchmark={outputLevel=150,specializationBonus=20}
-local combined=resolve()
-check(combined.skillQualityApplied and combined.syntheticBenchmark and combined.materials[1].id==high)
-near(combined.materials[1].expectedQuantity,3.6)
-near(LL:ValueProcessingModel(combined,0,true,facts),216)
-context.benchmark={}
 -- A real-character quote uses its exact operation quality, not a synthetic
 -- skill value or another character's cached operation.
 context.simulated=false;context.profileKind='live';context.effectiveSkill=0
-check(resolve().materials[1].id==high)
+local actual=resolve()
+check(actual.materials[1].id==high)
+near(actual.materials[1].chance,.5)
+near(actual.materials[1].minQuantity,2);near(actual.materials[1].maxQuantity,6)
 context.simulated=true;context.profileKind='manual-simulation';context.effectiveSkill=365
 for _,damage in ipairs({
     {build='70782'},{recipeID=1},{inputItemID=11},{inputQualityRank=2},{expansionID=10},

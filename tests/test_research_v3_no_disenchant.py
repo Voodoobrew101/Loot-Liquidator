@@ -2,7 +2,7 @@
 
 Unit checks on a small temporary snapshot, then checks on the pinned snapshot and the
 shipped ItemDBRuntime.lua: authoritative restrictions are intact and research-only
-claims ship as provenance-bearing observations, with conflicts retained.
+claims remain offline with provenance, while native proofs and conflicts are retained.
 """
 import json
 import re
@@ -62,8 +62,8 @@ with tempfile.TemporaryDirectory() as folder:
 # ---- pinned real snapshot and shipped database
 real, _ = nd.build_no_disenchant(Path('database/research/v3-snapshot'))
 ok(len(real) > 100, 'the research team has recorded no-disenchant items')
-src = Path('database/sources/DB2Restrictions.lua').read_text()
-compiled = Path('LootLiquidator/ItemDBRuntime.lua').read_text()
+src = Path('database/sources/DB2Restrictions.lua').read_text(encoding='utf-8')
+compiled = Path('LootLiquidator/ItemDBRuntime.lua').read_text(encoding='utf-8')
 runtime = [l for l in compiled.splitlines() if l.startswith('LL.ItemDB.restrictions=')]
 ok(len(runtime) == 1, 'one restrictions line')
 line = runtime[0]
@@ -87,8 +87,10 @@ ok(not (added & game), 'verified research flags never duplicate or remove native
 proven = {r['itemID'] for r in real if r.get('globalRestriction')}
 ok(added == proven - game, 'only explicit native all-variant proofs become global research flags')
 ok(held <= {r['itemID'] for r in real}, 'positive-output conflicts retain their source item identities')
-observed = set(map(int, re.findall(r'\["itemID"\]=(\d+)', line)))
-ok(observed == {r['itemID'] for r in real}, 'every source item ships as an observation, including native overlap and conflicts')
+ok('researchNoDisenchantObservations' not in line, 'unused scoped observation payload stays out of the runtime database')
+ok(all(r.get('observations') and all(o.get('rawSHA256') and o.get('sourceFile')
+       and o.get('sourceURL') and isinstance(o.get('scope'), dict) for o in r['observations']) for r in real),
+   'full offline observations retain source lineage, hashes and scope')
 ok('researchNoDisenchantPolicy' in line and 'native-proof-only' in line, 'compiled native-only hard restriction policy explicit')
 trinket = next((r for r in real if r['itemID'] == 251786), None)
 if trinket:

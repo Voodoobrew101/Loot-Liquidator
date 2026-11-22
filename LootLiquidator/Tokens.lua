@@ -50,6 +50,9 @@ function LL:AppearanceCollectionState(link,sourceID)
         if not SafeNumber(appearanceID) and SafeNumber(current.itemAppearanceID) then appearanceID=current.itemAppearanceID end
         if sameAppearance(current.itemAppearanceID) and boolean(current.isCollected) then newState=current.isCollected end
     end
+    -- An affirmative current result is already decisive. Keep the legacy
+    -- metadata fallback only when it may still supply the appearance identity.
+    if newState==true and SafeNumber(appearanceID) then return true,sourceID,appearanceID end
     local legacy=info(collection.GetAppearanceInfoBySource,sourceID)
     if legacy then
         if not SafeNumber(appearanceID) and SafeNumber(legacy.appearanceID) then appearanceID=legacy.appearanceID end
@@ -723,7 +726,9 @@ if eventFrame and eventFrame.RegisterEvent then
         'TRANSMOG_COLLECTION_SOURCE_REMOVED','TRANSMOG_COLLECTION_ITEM_UPDATE','COVENANT_CHOSEN'}) do
         pcall(eventFrame.RegisterEvent,eventFrame,event)
     end
-    eventFrame:SetScript("OnEvent",function()
-        if LL.Invalidate then LL:Invalidate() end
+    eventFrame:SetScript("OnEvent",function(_,event)
+        if LL.Invalidate then
+            LL:Invalidate(event~='COVENANT_CHOSEN' and 'appearance' or nil)
+        end
     end)
 end

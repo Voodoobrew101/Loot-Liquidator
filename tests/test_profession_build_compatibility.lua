@@ -48,16 +48,16 @@ local expected={
     {'Jewelcrafting',11,true,{'106982','106983'}},
     {'Jewelcrafting',10,false,{'98659','98660','98661','98662'}},
 }
--- Exact shipped control counts after excluding crafting-only Enchanting and
--- non-output-only nodes; a new source capability requires an explicit update.
-local compiledControlCounts={['Enchanting:11']=4,['Enchanting:10']=4,['Inscription:9']=28,
- ['Inscription:10']=26,['Inscription:11']=35,['Jewelcrafting:11']=35,['Jewelcrafting:10']=29}
+-- Exact shipped operation/value controls, including real resourcefulness and
+-- ore-specific unlocks, but no unrelated craft/time/concentration branches.
+local compiledControlCounts={['Enchanting:11']=4,['Enchanting:10']=4,['Inscription:9']=3,
+ ['Inscription:10']=4,['Inscription:11']=5,['Jewelcrafting:11']=7,['Jewelcrafting:10']=5}
 for _,clientBuild in ipairs({'70783','70961'}) do
     build=clientBuild
     for _,row in ipairs(expected) do
         local capability=support(row[1],row[2])
         local generic=tonumber(build)>=70961 and LL.ItemDB.professionProfiles.profiles[row[1]..':'..row[2]]
-        check(capability.skill==(generic and true or row[3]),row[1]..' base skill capability on '..build)
+        check(capability.skill==row[3],row[1]..' base skill capability on '..build)
         local count=0 for _ in pairs(capability.nodes) do count=count+1 end
         local expectedCount=#row[4]
         if generic then expectedCount=assert(compiledControlCounts[row[1]..':'..row[2]]) end
@@ -141,8 +141,8 @@ for _,case in ipairs({
         case.name..' compact tooltip uses confidence only')
     check(not compact:find(case.name..': 10 / 30 points.',1,true),'detailed point notes respect the profession-details option')
     local detailed=render(facts,selected,true)
-    check(detailed:find(case.name..': 10 / 30 points.',1,true) and detailed:find('Simulated skill:',1,true),
-        case.name..' point and researched skill notes reach the actual tooltip')
+    check(not detailed:find(case.name..': 10 / 30 points.',1,true) and not detailed:find('Simulated skill:',1,true),
+        case.name..' planning notes remain available through the profession API without normal tooltip panels')
     local wrongRarity={id=999992,expansionID=11,quality=3,classID=4}
     check(not table.concat(LL:ProfessionSimulationEffectNotes(wrongRarity,disenchant,selected),'\n'):find(case.name,1,true),
         case.name..' description does not cross rarity scope')

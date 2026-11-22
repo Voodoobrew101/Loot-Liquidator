@@ -1,207 +1,82 @@
--- Regression fixtures for the screenshot paths: milling, prospecting, and
--- conflicting reference evidence. Every Advanced switch is independent.
 local LL={db={}}
-CreateFrame=function() return {RegisterEvent=function()end,SetScript=function()end} end
+CreateFrame=function()return{RegisterEvent=function()end,SetScript=function()end}end
 assert(loadfile('LootLiquidator/Badges.lua'))('LootLiquidator',LL)
 LL.MarkupColor=function()return ''end
 LL.Money=function(_,v)return tostring(v)..' copper'end
 LL.SourceOrder={'fixture'}
-LL.ProfessionProgression=function()return {}end
-local cases={
-    {168487,'Mill','M','Reference fallback; current skill/patch applicability unverified'},
-    {188658,'Prospect','P','Reference fallback; current skill/patch applicability unverified'},
-    {123919,'Prospect','P','Reference fallback; conflicting source mean replaced by a conservative estimate'},
-}
-local function contains(text,needle,expected)
-    assert((text:find(needle,1,true)~=nil)==expected,needle..' expected '..tostring(expected)..' in:\n'..text)
-end
+LL.ReviewedProcessingSourceFactLines=function()error('the normal tooltip must not query research detail')end
+LL.ProfessionSimulationEffectNotes=function()error('the normal tooltip must not query diagnostic notes')end
+LL.ProfessionProgression=function()error('the normal tooltip must not query progression notes')end
+C_Item={GetItemInfo=function(id)return ({[1]='Dawn Crystal',[2]='Eversinging Dust',[3]='Radiant Shard',[4]='Eversinging Dust'})[id],nil,id==1 and 4 or id==3 and 3 or 2 end,
+    GetItemIconByID=function(id)return 100+id end}
+ITEM_QUALITY_COLORS={[2]={hex='|cff1eff00'},[3]={hex='|cff0070dd'},[4]={hex='|cffa335ee'}}
+local probabilities={.029,.663,.402,.175}
+local materials={}
+for id,chance in ipairs(probabilities)do materials[id]={id=id,chance=chance,expectedQuantity=chance,minQuantity=1,maxQuantity=id%2==0 and 3 or 1,netExpectedValue=id*100}end
+local model={inputCount=1,materials=materials,confidence=30,provisional=true,partial=true,
+    skillQualityApplied=true,warning='diagnostic warning',adjustment='diagnostic adjustment',sources={fixture=1},samples=2}
 local renders=0
-for _,case in ipairs(cases) do
-    local material={id=10,chance=.2,minQuantity=1,maxQuantity=2,expectedQuantity=.3,
-        netExpectedValue=25,provisional=true,unavailableReason='Conditional output excluded from current value',
-        derivedMean=true,inconsistentFields=true,rankReferences={{id=11,chance=.1,minQuantity=1,maxQuantity=3}},
-        sourceEstimates={fixture={dropChance=.2,inputCount=5,expectedQuantity=.3,sourceConflict=true,appliedRule='fixture rule'}},
-        boundsSource='fixture bounds',personalHistogram={[1]=2},personalSamples=2}
-    local model={inputCount=5,materials={material,{id=12}},provisional=true,partial=true,
-        confidence=33,warning=case[4],adjustment='fixture processing adjustment',samples=2,sources={fixture=1},
-        context={profession='Jewelcrafting',effectiveSkill=104,character='Tester',profileKind='live'}}
-    local option={name=case[2],letter=case[3],category='destroy',available=false,value=50,yieldModel=model,
-        why='Ability manually indicated, but no character/recipe verified',character='Tester'}
-    local decision={action=case[3],facts={id=case[1],classID=7},converted=50,vendor=5,
-        conversionOptions={option,{name='Craft',profession='Engineering',letter='C',value=20,available=false,
-        why='No eligible character with verified recipe/unlock'},
-        {name='Smelt',letter='S',available=false}}}
-    for level=0,3 do
+for _,method in ipairs({'Disenchant','Mill','Prospect','Smelt','Craft','Recycle','Research','Combine','Split','Exchange'})do
+    for detail=0,3 do
         for mask=0,7 do
-            local processing=mask%2==1
-            local profession=math.floor(mask/2)%2==1
-            local research=mask>=4
-            LL.db={professionTooltipProfiles={Inscription="@hypothetical",Jewelcrafting="@hypothetical",Mining="@hypothetical",Engineering="@hypothetical",},tooltipDetail=level,showTooltipExplanations=processing,
-                showProfessionDetails=profession,showResearchDetails=research}
-            local tip={lines={}}
+            LL.db={tooltipDetail=detail,tooltipHeaderPrice=false,tooltipOutputSort='database',
+                showResearchDetails=mask>=4,showProfessionDetails=math.floor(mask/2)%2==1,showTooltipExplanations=mask%2==1}
+            local option={name=method,profession='Enchanting',letter='D',available=true,value=1234,
+                tooltipProfileLabel='Voodoobrew - Grizzly Hills',yieldModel=model}
+            local tip={lines={},rows={}}
             function tip:AddLine(s)self.lines[#self.lines+1]=s end
-            function tip:AddDoubleLine(l,r)self.lines[#self.lines+1]=l..' | '..r end
-            LL:AppendRecommendationTooltip(tip,decision)
+            function tip:AddDoubleLine(l,r)self.lines[#self.lines+1]=l..' | '..r;self.rows[#self.rows+1]={l,r}end
+            LL:AppendRecommendationTooltip(tip,{action='V',facts={id=276033,classID=7},conversionOptions={option}})
             local text=table.concat(tip.lines,'\n')
-            if level==0 then assert(text=='','Off stays empty even with every Advanced switch on')
-            else
-                contains(text,'estimate',true)
-                contains(text,'unavailable',true)
-                contains(text,'partial',true)
-                contains(text,'50 copper',true)
-                contains(text,'~',false)
-                contains(text,'Estimate — provisional',false)
-                contains(text,'Partial value',false)
-                if level>=2 then contains(text,'Confidence 33%, partial, estimate, unavailable',true) end
-                contains(text,'Per 5 input',level==3 and processing)
-                contains(text,'fixture processing adjustment',level==3 and processing)
-                contains(text,'value counts only outputs',level==3 and processing)
-                contains(text,option.why,level>=2 and profession)
-                contains(text,'No eligible character with verified recipe/unlock',level>=2 and profession)
-                contains(text,'On: Tester',level>=2 and profession)
-                contains(text,'skill 104',level==3 and profession)
-                contains(text,case[4],level==3 and research)
-                for _,note in ipairs({'Conditional output excluded','Estimated average:',
-                    'Source range retained','Separate rank reference:', 'Source fields disagree',
-                    'Profession rule:','Conditional bounds:','Personal x1:', 'effective contribution','Research: 2 casts',
-                    'Insufficient Data: no researched yield model'}) do
-                    contains(text,note,level==3 and research)
+            if detail==0 then assert(text=='')else
+                assert(tip.lines[1]=='|cff66ccffLoot Liquidator:|r Vendor|r','required recommendation header')
+                if detail>=2 then
+                    assert(tip.rows[1][1]:find(' — Voodoobrew - Grizzly Hills (Confidence 30%)',1,true),'required character/confidence header')
+                    assert(tip.rows[1][2]=='1234 copper','method value remains numerical')
                 end
-                contains(text,'20% Material 10',level==3)
-                contains(text,'20% Material 10 [1-2]',false) -- inconsistent source bounds are research detail only
-                contains(text,'5 copper',level>=2) -- per-input material and vendor prices
-                contains(text,'Material 12 (chance unavailable) [yield unavailable]',level==3)
-                contains(text,'Insufficient Data',level>=2)
+                if detail==3 then
+                    assert(#tip.rows==5,'one method and all four material rows, no extra panels')
+                    assert(tip.rows[2][1]=='  2.9% |T101:14:14:0:0|t |cffa335eeDawn Crystal|r [1]|r')
+                    assert(tip.rows[3][1]=='  66.3% |T102:14:14:0:0|t |cff1eff00Eversinging Dust|r [1-3]|r')
+                    assert(tip.rows[4][1]=='  40.2% |T103:14:14:0:0|t |cff0070ddRadiant Shard|r [1]|r')
+                    assert(tip.rows[5][1]=='  17.5% |T104:14:14:0:0|t |cff1eff00Eversinging Dust|r [1-3]|r')
+                    for i=2,5 do assert(tip.rows[i][2]==tostring((i-1)*100)..' copper')end
+                end
+                for _,word in ipairs({'diagnostic','partial','estimate','unavailable','unscored','Processing source facts','skill-based quality'})do
+                    assert(not text:find(word,1,true),'no '..word..' appendage')
+                end
             end
-            assert(option.value==50 and material.netExpectedValue==25 and model.partial and model.provisional,
-                'rendering preserves valuation and eligibility')
-            assert(option.available==false and model.materials[1]==material,'cached models unchanged')
+            assert(materials[1].chance==.029 and materials[1].netExpectedValue==100 and option.available==true,'no numerical/access mutation')
             renders=renders+1
         end
     end
 end
-print('PASS: '..renders..' tooltip renders: three screenshot paths, four levels, eight Advanced switch combinations')
--- Profession simulations use their confidence score for uncertainty. Research
--- flags remain on the model, while ordinary reference/token labels stay intact.
-LL.db={tooltipDetail=3,showTooltipExplanations=true,showProfessionDetails=true,showResearchDetails=true,
-    professionTooltipProfiles={Enchanting='@hypothetical',Inscription='@hypothetical',Jewelcrafting='@hypothetical'}}
-LL.ProfessionSimulationEffectNotes=function()
-    return {'Simulated skill: 125 (specialization bonus: +25).','Selected specialization: 10 / 30 points.'}
-end
-for _,case in ipairs({{'Disenchant','D','Enchanting',4},{'Mill','M','Inscription',7},{'Prospect','P','Jewelcrafting',7}}) do
-    local material={id=10,chance=.2,minQuantity=1,maxQuantity=2,expectedQuantity=.3,netExpectedValue=25,
-        derivedMean=true,inconsistentFields=true,samplingVariation=true,
-        unavailableReason='Conditional output excluded from current value',
-        sourceEstimates={fixture={dropChance=.2,inputCount=5,expectedQuantity=.3,sourceConflict=true,
-            heldExpectedQuantity={value=.9},heldDropChance={value=.8}}}}
-    local model={inputCount=5,materials={material,{id=12}},confidence=33,provisional=true,partial=true,
-        syntheticBenchmark=true,warning='Published endpoint: current applicability unverified',
-        adjustment='Research assumptions — provisional estimate',
-        context={simulated=true,profileKind='manual-simulation',profession=case[3],effectiveSkill=125,character='Tester'}}
-    local option={name=case[1],letter=case[2],profession=case[3],available=false,value=50,yieldModel=model,
-        tooltipProfileLabel='Simulated',why='No eligible character with verified recipe/unlock'}
-    local function simulationText()
-        local tip={lines={}}
-        function tip:AddLine(s)self.lines[#self.lines+1]=s end
-        function tip:AddDoubleLine(l,r)self.lines[#self.lines+1]=l..' | '..r end
-        LL:AppendRecommendationTooltip(tip,{action=case[2],converted=50,conversion={confidence='baseline'},
-            facts={id=1,classID=case[4]},disenchantEligible=true,conversionOptions={option}})
-        return table.concat(tip.lines,'\n')
-    end
-    for level=1,3 do
-        LL.db.tooltipDetail=level
-        local text=simulationText()
-        for _,word in ipairs({'estimate','provisional','assumptions','unquantified','Published endpoint',
-            'Estimated average','Source range retained','different sets of casts','Source fields disagree','Conflicting source'}) do
-            contains(text,word,false)
-        end
-        contains(text,'(unavailable)',false)
-        contains(text,'Confidence 33%, partial, unavailable',false)
-        contains(text,'partial',true)
-        contains(text,'50 copper',true)
-        if level>=2 then
-            contains(text,'Confidence 33%',true)
-            contains(text,' — Simulated',true)
-            contains(text,option.why,true)
-            contains(text,'Selected specialization: 10 / 30 points.',true)
-        end
-        contains(text,'Material 12 (chance unavailable) [yield unavailable]',level==3)
-        contains(text,'Conditional output excluded from current value',level==3)
-        contains(text,'value counts only outputs',level==3)
-    end
-    LL.db.tooltipDetail=3
-    option.value=nil;option.eligibleInput=true;model.materials={};option.note='Insufficient Data: no matching output quantities'
-    contains(simulationText(),option.note,true)
-    assert(model.provisional and model.partial and material.netExpectedValue==25 and option.available==false,
-        'simulation presentation preserves evidence, values and access')
-end
-LL.ProfessionSimulationEffectNotes=nil
-print('PASS: profession simulations retain confidence, identity and missing-data notices without estimate labels')
--- A valued simulated profile has no character that can perform the action.
--- That access flag remains false, but does not make its numeric preview unavailable.
-LL.db={tooltipDetail=3}
-local previewModel={confidence=20,materials={{id=10,expectedQuantity=1,netExpectedValue=50}},
-    context={simulated=true,profileKind='manual-simulation',profession='Enchanting'}}
-local preview={name='Disenchant',letter='D',eligibleInput=true,available=false,value=50,yieldModel=previewModel,
-    tooltipProfileLabel='Simulated'}
-local function previewText()
-    local tip={lines={}}
-    function tip:AddLine(s)self.lines[#self.lines+1]=s end
-    function tip:AddDoubleLine(l,r)self.lines[#self.lines+1]=l..' | '..r end
-    LL:AppendRecommendationTooltip(tip,{action='D',converted=50,facts={id=272225,classID=4},
-        disenchantEligible=true,conversionOptions={preview}})
-    return table.concat(tip.lines,'\n')
-end
-local text=previewText()
-contains(text,'Disenchant — Simulated (Confidence 20%)',true)
-contains(text,'(unavailable)',false)
-contains(text,'Confidence 20%, unavailable',false)
-contains(text,'100% Material 10',true)
-contains(text,'50 copper',true)
-assert(preview.available==false and preview.value==50 and previewModel.confidence==20,
-    'preview presentation preserves access and its numeric model')
-preview.tooltipProfileLabel=nil;previewModel.context.simulated=false
-contains(previewText(),'Disenchant (Confidence 20%, unavailable)',true)
-preview.tooltipProfileLabel='Simulated';previewModel.context.simulated=true;preview.value=nil
-contains(previewText(),'Disenchant — Simulated (Confidence 20%, unavailable)',true)
-print('PASS: valued simulated preview header excludes action-access status; actual/unpriced options retain it')
--- Also use the current shipped evidence for the exact reported item IDs.
-LL={}
-GetBuildInfo=function()return '12.1.5','123456','',120105 end
-GetTime=function()return 100 end
-for _,name in ipairs({'ItemDBRuntime.lua','ProfessionModels.lua','Database.lua','ConversionEngine.lua','Badges.lua'}) do
-    assert(loadfile('LootLiquidator/'..name))('LootLiquidator',LL)
-end
-LL.db={professionTooltipProfiles={Inscription="@hypothetical",Jewelcrafting="@hypothetical",Mining="@hypothetical",Engineering="@hypothetical",},tooltipDetail=3,source_legacy_enabled=false,source_personal_enabled=false,source_imported_enabled=false}
-LL:MigrateEvidenceSettings()
-assert(LL:InitializeItemDB(),LL.itemDBError)
-LL.GetOutputPrice=function()return 100 end -- fixture copper prices
-LL.ProcessingPlayerConditions=function()return {}end
-LL.MarkupColor=function()return ''end
-LL.Money=function(_,v)return tostring(v)..' copper'end
-LL.ProfessionProgression=function()return {}end
-LL.TooltipConversionOptions=nil -- Render this fixture's explicitly supplied models.
-for _,case in ipairs(cases) do
-    local facts={id=case[1],classID=7,expansionID=case[1]==168487 and 7 or case[1]==188658 and 9 or 6}
-    local model=assert(LL:ResolveEvidenceModel(facts,{name=case[2],inputCount=5},nil,1))
-    local value=LL:ValueProcessingModel(model,0,true)
-    assert(value and value>0 and #model.materials>0,'reported item has priced outputs')
-    local function render(research)
-        LL.db.showResearchDetails=research
-        local tip={lines={}}
-        function tip:AddLine(s)self.lines[#self.lines+1]=s end
-        function tip:AddDoubleLine(l,r)self.lines[#self.lines+1]=l..' | '..r end
-        LL:AppendRecommendationTooltip(tip,{action='A',facts=facts,conversionOptions={{name=case[2],
-            letter=case[3],available=false,value=value,yieldModel=model,
-            why='Ability manually indicated, but no character/recipe verified'}}})
-        return table.concat(tip.lines,'\n')
-    end
-    local compact=render(false)
-    contains(compact,'Reference fallback',false)
-    contains(compact,'Ability manually indicated',false)
-    contains(compact,'estimate',true)
-    contains(compact,'unavailable',true)
-    if model.warning then contains(render(true),model.warning,true) end
-    assert(LL:ValueProcessingModel(model,0,true)==value,'real evidence valuation unchanged')
-end
-print('PASS: shipped evidence for 168487, 188658 and 123919 keeps prices and compact warnings; research toggle restores full warnings')
+-- Incomplete rows remain visible in the owner's shared percentage/range format.
+LL.db={tooltipDetail=3};model.materials={{id=1,expectedQuantity=.375}};model.confidenceUnscored=true
+local tip={rows={}};function tip:AddLine()end;function tip:AddDoubleLine(l,r)self.rows[#self.rows+1]={l,r}end
+LL:AppendRecommendationTooltip(tip,{action='V',facts={id=1},conversionOptions={{name='Disenchant',available=true,letter='D',yieldModel=model}}})
+assert(tip.rows[1][2]=='' and not tip.rows[1][1]:find('Confidence',1,true))
+assert(#tip.rows==2 and tip.rows[2][1]:find('37.5% ',1,true)and tip.rows[2][1]:find('[1]',1,true)and tip.rows[2][2]=='',
+    'Missing probability/range gets a local display estimate; a missing gold value stays missing')
+assert(model.materials[1].expectedQuantity==.375 and model.materials[1].chance==nil)
+-- Auto profile rows retain the same character header, including at detail 2
+-- when a recommendation action is absent.
+LL.db={tooltipDetail=2};model.materials=materials;model.confidenceUnscored=nil
+model.context={character='Voodoobrew - Grizzly Hills'}
+local autoOption={name='Disenchant',available=true,letter='D',yieldModel=model,value=42}
+tip.rows={}
+LL:AppendRecommendationTooltip(tip,{facts={id=1},conversionOptions={autoOption}})
+assert(#tip.rows==1 and tip.rows[1][1]:find('Disenchant — Voodoobrew - Grizzly Hills (Confidence 30%)',1,true))
+LL.CharacterKey=function()return 'Live - Realm'end
+model.context.character='Current character';tip.rows={}
+LL:AppendRecommendationTooltip(tip,{facts={id=1},conversionOptions={autoOption}})
+assert(tip.rows[1][1]:find('Disenchant — Live - Realm',1,true))
+-- A pooled rank family must not acquire the representative item's quality pip.
+LL.db.tooltipDetail=3;LL.MaterialReagentRanks={[1]=1};model.materials={{id=1,rankIDs={1,2},expectedQuantity=.2,
+    chance=.2,minQuantity=1,maxQuantity=1,netExpectedValue=20}}
+tip.rows={};LL:AppendRecommendationTooltip(tip,{facts={id=1},conversionOptions={autoOption}})
+assert(not tip.rows[2][1]:find('[R1]',1,true),'pooled rank family has no invented quality rank')
+model.materials[1].rankIDs=nil;tip.rows={}
+LL:AppendRecommendationTooltip(tip,{facts={id=1},conversionOptions={autoOption}})
+assert(tip.rows[2][1]:find('[R1]',1,true),'exact native quality retains its rank pip')
+print('PASS: '..renders..' compact tooltip renders, shared icon/color/range/value contract and unchanged source/value fields')

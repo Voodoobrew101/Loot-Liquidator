@@ -584,7 +584,8 @@ end
 local v3=assert(loadfile(arg[3] or 'database/research-v3-baselines.lua'))()
 assert(v3.schemaVersion==1 and type(v3.processing)=='table','Unsupported research v3 baseline schema')
 db.researchV3Manifest={revision=v3.sourceRevision,branch=v3.sourceBranch}
-db.reviewedSourceFacts=v3.reviewedSourceFacts or {schemaVersion=1,facts={}}
+-- Detailed informational observations stay in the research snapshot. Economic
+-- processing records are compiled below; the source archive is not live data.
 local studyReview=assert(loadfile('database/research/build-study-review.lua'))()
 assert(studyReview.schemaVersion==1 and studyReview.reviewType=='AUTOMATIC_BUILD_REVIEW',
     'A generated study-review manifest is required')
@@ -790,10 +791,35 @@ do
             'Prospecting diamond native quality identity changed; review required')
     end
 end
-db.gatheringStudyBaselines=assert(loadfile('database/gathering-study-baselines.lua'))()
-assert(db.gatheringStudyBaselines.schemaVersion==1 and type(db.gatheringStudyBaselines.gatheringTargets)=='table',
-    'Unsupported native gathering study schema')
 assert(loadfile('LootLiquidator/ProfessionCalculations.lua'))('LootLiquidator',LL)
+-- Ordinary equipment is indexed by the standard category. Exact identities
+-- remain only for documented exceptions; original studies stay in the source
+-- snapshot and in the build-only mapping review, never a second item override.
+if arg[5] or (not arg[2] and not arg[3]) then
+    local mapping=assert(loadfile(arg[5] or 'database/disenchant-item-categories.lua'))()
+    local transform=assert(loadfile('tools/disenchant_category_records.lua'))()
+    local rows,report=transform(db.processing,mapping)
+    assert(#report.unmapped==0,'Unmapped disenchant sources: '..table.concat(report.unmapped,', '))
+    db.processing=rows
+    db.buildReport.disenchantCategoryMigration={converted=report.converted,archived=report.archived,
+        exceptions=report.exceptions,replaced=report.replaced,represented=report.represented}
+    local retainedInputs={}
+    for _,record in ipairs(rows) do
+        if record.inputItemID then retainedInputs[record.inputItemID]=true end
+        for _,material in ipairs(record.materials) do
+            for name,field in pairs(material) do
+                if type(field)=='table' and field.status then
+                    field.sourceClaimIDs=field.sourceClaimIDs or {record.studyID..':'..material.id..':'..name}
+                end
+            end
+        end
+    end
+    for id,input in pairs(inputs) do
+        if input.method=='Disenchant' and not retainedInputs[id] then inputs[id]=nil end
+    end
+    print(('Disenchant categories: %d ordinary sources, %d offline/represented sources, %d documented exceptions')
+        :format(report.converted,report.archived,report.exceptions))
+end
 local buildProfessionBaselines=assert(loadfile('tools/profession_baselines.lua'))()
 db.modeledProfessionBaselines=buildProfessionBaselines(db,LL)
 -- Derived minimum-profile models are kept apart from source observations and
@@ -859,10 +885,10 @@ for _,r in ipairs(primary) do
 end
 restrictions.researchNoDisenchant={}
 restrictions.researchNoDisenchantPolicy='native-proof-only'
-restrictions.researchNoDisenchantObservations={}
 restrictions.researchNoDisenchantGlobalProofs={}
 db.buildReport.researchNoDisenchantConflicts={}
 local researchNoDESeen={}
+local researchNoDEObservations=0
 local function globalNativeNoDEProofs(r)
     local proofs={}
     if r.globalRestriction~=true then return proofs end
@@ -884,9 +910,9 @@ for _,r in ipairs(type(v3.noDisenchant)=='table' and v3.noDisenchant or {}) do
     local sourced=false
     for _,url in ipairs(r.sourceURLs or {}) do if type(url)=='string' and url:match('^https://%S+$') then sourced=true end end
     assert(sourced,'research no-disenchant record '..id..' needs an https source')
-    -- Preserve catalog, base-variant and historical claims as source-scoped
-    -- observations. A page saying "cannot" is not a native all-variant flag.
-    restrictions.researchNoDisenchantObservations[#restrictions.researchNoDisenchantObservations+1]=r
+    -- Full catalog/variant observations remain in the offline v3 build input.
+    -- Validate every source without serializing unused runtime warnings.
+    researchNoDEObservations=researchNoDEObservations+1
     if not gameNoDE[id] and not researchNoDESeen[id] then
         researchNoDESeen[id]=true
         local proofs=globalNativeNoDEProofs(r)
@@ -905,9 +931,17 @@ table.sort(db.buildReport.researchNoDisenchantConflicts,function(a,b) return a.i
 if #restrictions.researchNoDisenchant>0 then
     print(('Research v3 added %d verified native no-disenchant flag(s) the game-file list lacks'):format(#restrictions.researchNoDisenchant))
 end
-print(('Retained %d source-scoped no-disenchant observations without flattening catalog variants'):format(#restrictions.researchNoDisenchantObservations))
-local file=assert(io.open(output,'w'))
+print(('Validated %d offline source-scoped no-disenchant observations; runtime retains native proofs only'):format(researchNoDEObservations))
+-- The generated artifact has identical LF bytes on Windows and Unix.
+local file=assert(io.open(output,'wb'))
+local professionProfiles,pruned=assert(loadfile('tools/prune_runtime_catalog.lua'))()(db.professionProfiles,db,{legacy,restrictions})
+db.buildReport.runtimeCatalog={itemsBefore=pruned.itemsBefore,itemsAfter=pruned.itemsAfter,
+    recipesBefore=pruned.recipesBefore,recipesAfter=pruned.recipesAfter,scopeTuples=pruned.scopeTuples}
+db.professionProfiles=nil
 file:write('-- Generated by tools/compile_itemdb.lua. Unknown fields are absent, not zero.\nlocal _, LL = ...\nLL.ItemDB=',(encode(db):gsub('},%[','},\n[')),'\n')
+file:write('-- Shared immutable native profession metadata.\n',
+    assert(loadfile('tools/compact_static_tables.lua'))()(professionProfiles,encode))
+db.professionProfiles=professionProfiles
 file:write('-- Old disenchant estimates (weak "legacy" source).\nLL.ItemDB.legacy=',encode(legacy,true),'\n')
 file:write('-- DB2 no-disenchant item IDs (+ research v3 additions) and mill/prospect input hints (build ',tostring(restrictions.build),').\nLL.ItemDB.restrictions=',encode(restrictions),'\n')
 file:close()

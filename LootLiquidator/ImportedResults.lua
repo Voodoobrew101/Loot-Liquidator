@@ -16,8 +16,9 @@ local SUPPORTED={Disenchant=true,Mill=true,Prospect=true,Smelt=true}
 local function integer(n,lo,hi) return type(n)=="number" and n==n and n%1==0 and n>=(lo or 1) and n<=(hi or 2147483647) end
 local function build() return GetBuildInfo and tostring(select(2,GetBuildInfo())) or "unknown" end
 local function disenchantCategory(expansion,rarity,classID)
-    if integer(expansion,0,11) and integer(rarity,2,4) and (classID==2 or classID==4) then
-        return ('gear:%d:%d:%s'):format(expansion,rarity,classID==2 and 'weapon' or 'armor')
+    if integer(expansion,0,11) and integer(rarity,2,4) and (classID==2 or classID==4 or classID==19) then
+        return ('gear:%d:%d:%s'):format(expansion,rarity,
+            classID==2 and 'weapon' or classID==19 and 'profession' or 'armor')
     end
 end
 

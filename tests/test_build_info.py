@@ -3,13 +3,33 @@ import unittest
 import hashlib
 import json
 import tempfile
+import os
 from unittest.mock import patch
 from pathlib import Path
 sys.path.insert(0, str(Path('tools').resolve()))
-from stamp_build_info import collect, verified_release
+from stamp_build_info import collect, verified_release, stamp
 
 
 class BuildInfoTests(unittest.TestCase):
+    def test_provenance_is_written_offline_without_runtime_module(self):
+        previous = Path.cwd()
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / 'LootLiquidator').mkdir()
+            runtime = root / 'LootLiquidator/ItemDBRuntime.lua'
+            original = b'-- immutable compiled test data\n'
+            runtime.write_bytes(original)
+            info = {'kind': 'local', 'commit': 'test-source', 'prs': []}
+            try:
+                os.chdir(root)
+                with patch('stamp_build_info.collect', return_value=info):
+                    stamp()
+                self.assertEqual(json.loads(Path('dist/build-info.json').read_text()), info)
+                self.assertEqual(runtime.read_bytes(), original)
+                self.assertFalse(Path('LootLiquidator/BuildInfo.lua').exists())
+            finally:
+                os.chdir(previous)
+
     def test_verified_tag_accepts_only_generated_research_and_version_changes(self):
         env = {'GITHUB_ACTIONS': 'true', 'GITHUB_REF': 'refs/tags/v0.12.46', 'GITHUB_REF_NAME': 'v0.12.46'}
         changed = ['database/research/build-research-manifest.json', 'LootLiquidator/ItemDBRuntime.lua',

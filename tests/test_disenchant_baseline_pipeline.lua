@@ -121,7 +121,7 @@ for _,classID in ipairs({2,4}) do
 end
 check(same(records,original),'all normalization and forward tests leave the raw category data intact')
 -- The shipped artifact uses the same independent views. Exercise the actual
--- resolver order: selected profile, modeled outputs, then one benchmark pass.
+-- resolver order: selected profile and sourced modeled outputs.
 GetBuildInfo=function() return '12.1.5','70961','',120105 end
 GetTime=function() return 100 end
 time=function() return 100 end
@@ -142,9 +142,9 @@ LL.GetCachedOperationInfo=function() end
 LL:MigrateEvidenceSettings()
 check(LL:InitializeItemDB(),LL.itemDBError)
 local option={name='Disenchant',recipeID=13262,inputCount=1}
-local function resolve(facts,node,benchmark)
+local function resolve(facts,node)
     check(LL:SetManualProfessionProfile('Player','Enchanting',11,{enabled=true,skill=140,
-        specialization='107649=30,'..node..'=30',benchmark=benchmark}),'runtime simulation profile saves')
+        specialization='107649=30,'..node..'=30'}),'runtime simulation profile saves')
     LL._processingContextCache=nil;LL._processingModelCache=nil
     return assert(LL:ResolveEvidenceModel(facts,option,nil,1))
 end
@@ -204,10 +204,10 @@ for _,case in ipairs({{rarity=2,node=107648,low=243599,high=243600,total=2.9},
         if case.rarity==4 then
             local bonus=0
             for _,id in ipairs({236949,236950,236951,236952}) do
-                near(mixedMeans[id],means[id]*alpha,'new Crystal extras retain the selected ItemDB share')
-                bonus=bonus+mixedMeans[id]
+                check(mixedMeans[id]==nil and means[id]==nil,'unverified Motes are absent from Crystal projections')
+                bonus=bonus+(mixedMeans[id] or 0)
             end
-            near(bonus,.289*alpha,'Crystal bonus pool scales with the 10/90 or 80/20 source mixture')
+            near(bonus,0,'source mixtures cannot create a borrowed Crystal bonus pool')
             local missingHigh=copy(combined);table.remove(missingHigh.materials,2)
             local withNewRank=LL:ApplyDisenchantBaseline(facts,option,missingHigh,model.context,1)
             local missingMeans=amounts(withNewRank.materials)
@@ -225,7 +225,7 @@ for _,case in ipairs({{rarity=2,node=107648,low=243599,high=243600,total=2.9},
             end
             local missingBonus=0
             for _,id in ipairs({236949,236950,236951,236952}) do missingBonus=missingBonus+(missingMeans[id] or 0) end
-            near(missingBonus,.289*alpha,'a missing original high-rank row does not amplify Crystal extras')
+            near(missingBonus,0,'a missing original high-rank row cannot introduce assumed Crystal extras')
         end
         check(same(mixed.sources,combined.sources),'combined source contributions retain their original weights')
         check(same(combined,beforeCombined),'mixed projection never rewrites the original weighted model')
@@ -243,7 +243,7 @@ for _,case in ipairs({{rarity=2,node=107648,low=243599,high=243600,total=2.9},
         local unevenMeans=amounts(unevenProjection.materials)
         local bonus=0
         for _,id in ipairs({236949,236950,236951,236952}) do bonus=bonus+(unevenMeans[id] or 0) end
-        near(bonus,.289*2/5,'uneven primary weights use quantity-weighted ItemDB family share')
+        near(bonus,0,'uneven primary weights cannot introduce assumed Crystal extras')
         near(unevenMeans[case.low]+unevenMeans[case.high],2*quantityFactor+12,
             'unequal rank weights conserve the ordinary pool and the legacy-only term')
         check(unevenMeans[case.high]>=12,'quality progress may add a modeled rank without spending the legacy-only term')
@@ -273,12 +273,5 @@ for _,case in ipairs({{rarity=2,node=107648,low=243599,high=243600,total=2.9},
             'zero reference weight disables its Dust or Crystal endpoint')
         LL.db.source_reference_weight=nil
     end
-    local benchmark=resolve(facts,case.node,{outputLevel=200,specializationBonus=0,
-        resourcefulnessChance=0,resourcefulnessSaved=0})
-    check(benchmark.disenchantBaselineApplied and benchmark.syntheticBenchmark,'benchmark follows the compiled baseline model')
-    local doubled=amounts(benchmark.materials)
-    for id,value in pairs(means) do near(doubled[id],2*value,'benchmark is applied exactly once') end
-    check(LL:ApplySyntheticBenchmark(facts,option,benchmark,benchmark.context)==benchmark,
-        'a benchmark result cannot be compounded on reevaluation')
 end
 print('PASS: '..checks..' immutable Disenchant baseline build, forward/inverse, endpoint and confidence assertions')

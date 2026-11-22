@@ -23,7 +23,6 @@ LL.CanUseConversion=function() return false,'Offline native access not asserted'
 LL.EligibleDisenchant=function() return false end
 LL.MarkupColor=function() return '' end
 LL.Money=function(_,value) return string.format('%.10g copper',value) end
-LL.ProfessionProgression=function() return {} end
 LL.TooltipConversionOptions=nil
 LL.GetOutputPrice=function(self,id)
     local items=self.ItemDB.professionProfiles and self.ItemDB.professionProfiles.items or {}
@@ -32,22 +31,21 @@ LL.GetOutputPrice=function(self,id)
 end
 LL:MigrateEvidenceSettings()
 check(LL:InitializeItemDB(),LL.itemDBError)
-local hooks={'ApplyGeneralProfessionModel','ApplyGeneralProfessionAdditions','ApplyGeneralProfessionQuality','ApplySkillQualityModel','ApplySpecializationEffects','ApplySyntheticBenchmark'}
+local hooks={'ApplyGeneralProfessionModel','ApplyGeneralProfessionAdditions','ApplyGeneralProfessionQuality','ApplySkillQualityModel','ApplySpecializationEffects'}
 local original={} for _,key in ipairs(hooks) do original[key]=LL[key] end
 local function context(_,f,method,_,_,profession)
     local prof=profession or (method=='Prospect' and 'Jewelcrafting' or 'Inscription')
     return {character='Player',profession=prof,expansionID=11,inputID=f.id,inputQuality=f.reagentQuality,
         inputRarity=f.quality,inputClassID=f.classID,skill=0,effectiveSkill=0,preSpecializationSkill=0,
         simulated=true,profileKind='manual-simulation',specializationKnown=true,specializationEncoding='invested-points',
-        specializationPoints={},learnedSpecializations={},stats={},buffs={},buffsKnown=true,
-        benchmark={outputLevel=100,specializationBonus=0,resourcefulnessChance=0,resourcefulnessSaved=0}}
+        specializationPoints={},learnedSpecializations={},stats={},buffs={},buffsKnown=true}
 end
 LL.ProcessingPlayerConditions=context
 local function plain(model)
     if not model then return nil end
     local x={}
     for _,key in ipairs({'confidence','valueConfidence','value','partial','partialPrice','adjustment','referenceContextID','skillQualityApplied',
-        'skillQualityUnavailable','skillQualityIssue','generalProfessionApplied','generalQualityApplied','syntheticBenchmark','benchmarkOutputFactor'}) do x[key]=model[key] end
+        'skillQualityUnavailable','skillQualityIssue','generalProfessionApplied','generalQualityApplied'}) do x[key]=model[key] end
     x.materials={}
     for _,m in ipairs(model.materials or {}) do
         local z={}
@@ -63,7 +61,6 @@ local function run(f,scenario)
     end
     LL.ProcessingPlayerConditions=function(...)
         local c=context(...)
-        if scenario=='benchmark20' then c.benchmark.specializationBonus=20 end
         local skill=tonumber(scenario:match('^skill(%d+)$'))
         if skill then c.skill=skill;c.effectiveSkill=skill;c.preSpecializationSkill=skill end
         return c
@@ -84,7 +81,7 @@ for _,entry in ipairs({{237365,2},{236777,2},{236770,1}}) do
     local f={id=entry[1],classID=7,quality=1,expansionID=11,reagentQuality=entry[2],count=100,
         link='item:'..entry[1],name='Input '..entry[1],context={verifiedUnbound=true}}
     local result={id=f.id}
-    for _,scenario in ipairs({'source_only','zero_bonus','benchmark20','skill1','skill25','skill50','skill100','skill500'}) do result[scenario]=run(f,scenario) end
+    for _,scenario in ipairs({'source_only','zero_bonus','skill1','skill25','skill50','skill100','skill500'}) do result[scenario]=run(f,scenario) end
     PROCESSING_REPRO.inputs[#PROCESSING_REPRO.inputs+1]=result
     if not REPRO_DIAGNOSTIC_ONLY then
         local a,b=result.source_only,result.zero_bonus
@@ -102,8 +99,6 @@ for _,entry in ipairs({{237365,2},{236777,2},{236770,1}}) do
         for _,scenario in ipairs({'skill1','skill25','skill50','skill100','skill500'}) do
             check(result[scenario].value>=b.value-1e-8,'positive skill cannot downgrade an identified baseline rank '..f.id..' '..scenario)
         end
-        local c=result.benchmark20
-        check(math.abs(c.value-b.value*1.2)<1e-8,'benchmark applies once to EV '..f.id)
     end
 end
 PROCESSING_REPRO.checks=checks

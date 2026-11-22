@@ -201,13 +201,15 @@ local previewMeasured={measured=true,observed=true,verified=true}
 for _,sample in ipairs({
     {id=2447,name="Peacebloom",method="Mill",action="A",auction=20000,value=16200},
     {id=765,name="Silverleaf",method="Mill",action="M",auction=12000,value=18000},
-    {id=239671,method="Disenchant",action="D",value=480000},
-    {id=239675,method="Disenchant",action="D",value=520000},
-    {id=258920,method="Disenchant",action="D",value=360000},
+    {id=239671,gearKey="gear:11:3:armor",method="Disenchant",action="D",value=480000},
+    {id=239675,gearKey="gear:11:3:armor",method="Disenchant",action="D",value=520000},
+    {id=258920,gearKey="gear:11:2:armor",method="Disenchant",action="D",value=360000},
 }) do
     for _,record in ipairs(LL.ItemDB and LL.ItemDB.processing or {}) do
-        if record.recordID==("evidence:v3:%s:%d:x%d"):format(sample.method,sample.id,
-            sample.method=="Mill" and 5 or 1) then
+        local category=sample.gearKey and record.gearKey==sample.gearKey
+            and record.categorySourceStudyIDs and not record.categoryReferenceOnly
+        if category or not sample.gearKey and record.recordID==("evidence:v3:%s:%d:x%d"):format(
+            sample.method,sample.id,sample.method=="Mill" and 5 or 1) then
             local outputs,confidence={},100
             local complete=#(record.materials or {})>0
             for _,material in ipairs(record.materials or {}) do
@@ -395,6 +397,7 @@ function LL:ResetEvidenceSettings()
     if LL.Invalidate then LL:Invalidate("evidence") end
 end
 function LL:CreateProfessionProfilePanel(profession)
+    if not self:ProfessionTooltipMethods(profession) then return nil end
     local panel=CreateFrame('Frame')
     local scroll=CreateFrame('ScrollFrame',nil,panel,'UIPanelScrollFrameTemplate')
     scroll:SetPoint('TOPLEFT',panel,'TOPLEFT',0,0)
@@ -486,7 +489,12 @@ function LL:CreateProfessionProfilePanel(profession)
         end
         local operation=saved and record.professionOperationProfiles and record.professionOperationProfiles[tostring(saved.lineID)]
         local snapshotStats=saved and saved.stats
-        result.stats=clone(snapshotStats or operation and operation.statCalibration)
+        local sourceStats=snapshotStats or operation and operation.statCalibration
+        for _,stat in ipairs(LL:ProfessionSimulationStatOptions(profession)) do
+            if sourceStats and sourceStats[stat.key] then
+                result.stats=result.stats or {};result.stats[stat.key]=clone(sourceStats[stat.key])
+            end
+        end
         if result.stats then
             local reference={specializationPoints=LL:ProfessionSpecializationPoints(result.specialization or 'none'),
                 learnedSpecializations=clone(result.learnedSpecializations),buffs=clone(result.buffs),
@@ -628,71 +636,6 @@ function LL:CreateProfessionProfilePanel(profession)
         refresh(true)
     end)
     local status=label('')
-    local gatheringTitle=label('Gathering preview')
-    local gatheringResults=label('')
-    local gatheringTargets={}
-    local gatheringTarget
-    if LL.IsGatheringProfession and LL:IsGatheringProfession(profession) then gatheringTarget=LL:CreateSettingsDropdown(body,function()
-        gatheringTargets=LL.GetGatheringSimulationTargets and LL:GetGatheringSimulationTargets(profession,expansion) or {}
-        local rows={} for index,target in ipairs(gatheringTargets) do rows[#rows+1]={index,target.label} end
-        return choices(rows)
-    end,function()
-        local saved=LL.db.gatheringSimulationSelections and LL.db.gatheringSimulationSelections[profession..':'..expansion]
-        for index,target in ipairs(gatheringTargets) do if target.targetID==saved then return index end end
-        return 1
-    end,function(index)
-        local target=gatheringTargets[index]
-        if not target then return end
-        LL.db.gatheringSimulationSelections=LL.db.gatheringSimulationSelections or {}
-        LL.db.gatheringSimulationSelections[profession..':'..expansion]=target.targetID
-        refresh(false)
-    end) end
-    local opportunityTitle=label('Loot and item-use preview')
-    local opportunityTargets={}
-    local opportunityLines={}
-    local opportunityTooltipOpen=false
-    local opportunityResults=CreateFrame('Frame',nil,body)
-    opportunityResults:SetWidth(590);opportunityResults:EnableMouse(true)
-    local opportunityText=opportunityResults:CreateFontString(nil,'ARTWORK','GameFontHighlight')
-    opportunityText:SetWidth(590);opportunityText:SetJustifyH('LEFT')
-    opportunityText:SetPoint('TOPLEFT',opportunityResults,'TOPLEFT',0,0)
-    local function refreshOpportunityTooltip()
-        if not GameTooltip then return end
-        if #opportunityLines==0 then
-            if opportunityTooltipOpen then GameTooltip:ClearLines();GameTooltip:Hide() end
-            opportunityTooltipOpen=false;return
-        end
-        GameTooltip:SetOwner(opportunityResults,'ANCHOR_RIGHT');GameTooltip:ClearLines()
-        for _,text in ipairs(opportunityLines) do GameTooltip:AddLine(text,1,1,1,true) end
-        GameTooltip:Show()
-    end
-    opportunityResults:SetScript('OnEnter',function()
-        if #opportunityLines==0 then return end
-        opportunityTooltipOpen=true;refreshOpportunityTooltip()
-    end)
-    opportunityResults:SetScript('OnLeave',function()
-        opportunityTooltipOpen=false;if GameTooltip then GameTooltip:Hide() end
-    end)
-    local opportunityTarget
-    local function ensureOpportunityTarget()
-        if opportunityTarget then return end
-        opportunityTarget=LL:CreateSettingsDropdown(body,function()
-            opportunityTargets=LL.GetProfessionOpportunityTargets and LL:GetProfessionOpportunityTargets(profession,expansion) or {}
-            local rows={}
-            for index,target in ipairs(opportunityTargets) do rows[#rows+1]={index,target.label,target.quantityBasis} end
-            return choices(rows)
-        end,function()
-            local saved=LL.db.professionOpportunitySelections and LL.db.professionOpportunitySelections[profession..':'..expansion]
-            for index,target in ipairs(opportunityTargets) do if target.targetID==saved then return index end end
-            return 1
-        end,function(index)
-            local target=opportunityTargets[index]
-            if not target then return end
-            LL.db.professionOpportunitySelections=LL.db.professionOpportunitySelections or {}
-            LL.db.professionOpportunitySelections[profession..':'..expansion]=target.targetID
-            refresh(false)
-        end)
-    end
     local skillLabel=label('Skill before specialization',245)
     local skill=LL:CreateSettingsCanvasSlider(body,0,300,1,0,function(v)update(function(p)p.skill=v end)end)
     skill.expandRange=true
@@ -710,7 +653,7 @@ function LL:CreateProfessionProfilePanel(profession)
     local conditionsTitle=label('Conditional bonuses')
     local noBuffs=label('No captured buffs. Open this profession on the character to refresh available choices.')
     local statsTitle=label('Profession / crafting stats')
-    local statsNote=label('Whole-number simulation controls. Ratings and percentages are separate. Slider ranges are editing spans, not game caps; saved values above a span are retained.')
+    local statsNote=label('Ratings and chances are separate. Chance is limited to 0–100%; rating controls expand to retain saved values.')
     local scannedStats=label('')
     local note=label('Simulated choices never change your actual character.')
     local function ranks()
@@ -751,100 +694,6 @@ function LL:CreateProfessionProfilePanel(profession)
         visible={}
         place(title,16);place(intro,46);place(character,96);place(era,96,326);place(status,138)
         local y=200
-        if selection~='@hide' and LL.IsGatheringProfession and LL:IsGatheringProfession(profession) then
-            gatheringTargets=LL:GetGatheringSimulationTargets(profession,expansion)
-            local targetID=LL.db.gatheringSimulationSelections and LL.db.gatheringSimulationSelections[profession..':'..expansion]
-            local model,target,context=LL:GatheringSimulationPreview(profession,expansion,targetID,selected,selection=='@hypothetical')
-            panel.gatheringPreview=model
-            place(gatheringTitle,y);y=y+30
-            place(gatheringTarget,y);y=y+42
-            local lines={}
-            if model then
-                if type(model.confidence)=='number' then lines[#lines+1]=('Confidence %d%%'):format(model.confidence) end
-                lines[#lines+1]=(context and type(context.effectiveSkill)=='number') and ('Skill: %g'):format(model.skill or context.effectiveSkill) or 'Skill: not captured'
-                for _,metric in ipairs({{'yieldFactor','Yield factor'},{'rareDiscoveryFactor','Discovery factor'},{'speedFactor','Speed factor'}}) do
-                    if type(model[metric[1]])=='number' then lines[#lines+1]=('%s: %.3gx'):format(metric[2],model[metric[1]]) end
-                end
-                if model.qualityRank then lines[#lines+1]='Material quality: '..model.qualityRank end
-                for _,material in ipairs(model.materials or {}) do
-                    local name
-                    if C_Item and type(C_Item.GetItemInfo)=='function' then
-                        local ok,value=pcall(C_Item.GetItemInfo,material.itemLink or material.id)
-                        if ok then name=value end
-                    end
-                    if type(material.expectedQuantity)=='number' then
-                        lines[#lines+1]=('%s: %.3g'):format(name or ('Item '..material.id),material.expectedQuantity)
-                    end
-                end
-                for _,output in ipairs(model.namedOutputs or {}) do
-                    local value=output.expectedQuantity or output.chance or output.discoveryFactor
-                    if type(value)=='number' then lines[#lines+1]=('%s: %.3g%s'):format(output.name,value,output.discoveryFactor and 'x discovery' or '') end
-                end
-                if #(model.materials or {})==0 then lines[#lines+1]='Choose a known target to see its material outputs.' end
-            else lines[1]='No gathering profile is available for this selection.' end
-            gatheringResults:SetText(table.concat(lines,'\n'));place(gatheringResults,y);y=y+#lines*22+26
-        end
-        panel.opportunityPreview=nil
-        panel.opportunityTarget=nil
-        opportunityLines={}
-        opportunityText:SetText('')
-        opportunityTargets=LL.GetProfessionOpportunityTargets and LL:GetProfessionOpportunityTargets(profession,expansion) or {}
-        if selection~='@hide' and #opportunityTargets>0 and LL.ProfessionOpportunityPreview then
-            ensureOpportunityTarget()
-            local targetID=LL.db.professionOpportunitySelections and LL.db.professionOpportunitySelections[profession..':'..expansion]
-            local model,target,context=LL:ProfessionOpportunityPreview(profession,expansion,targetID,selected,selection=='@hypothetical')
-            panel.opportunityPreview=model
-            panel.opportunityTarget=target
-            if model and target then
-                opportunityLines[#opportunityLines+1]=target.label
-                opportunityLines[#opportunityLines+1]=target.quantityBasis or 'Normalized baseline opportunity = 1; no per-kill rate'
-                if type(model.confidence)=='number' then opportunityLines[#opportunityLines+1]=('Confidence %d%%'):format(model.confidence) end
-                for _,output in ipairs(model.relativeOutputs or {}) do
-                    local name=output.name or ('Item '..tostring(output.id))
-                    if type(output.value)=='number' then
-                        if output.unit=='relative-factor' or output.metric=='discovery' then
-                            opportunityLines[#opportunityLines+1]=('%s discovery: %.3gx baseline'):format(name,output.value)
-                        elseif output.unit=='percent' then
-                            opportunityLines[#opportunityLines+1]=('%s: %.3g%%'):format(name,output.value)
-                        else
-                            opportunityLines[#opportunityLines+1]=('%s: %+.3g normalized units'):format(name,output.value)
-                        end
-                    end
-                end
-                local params=model.professionParameters or model.params or model.parameters or model.generalProfessionParameters or {}
-                if type(params.skill)=='number' then opportunityLines[#opportunityLines+1]=('Skill: %g'):format(params.skill) end
-                local statNames={resourcefulness='Resourcefulness',multicraft='Multicraft',ingenuity='Ingenuity',
-                    finesse='Finesse',perception='Perception',deftness='Deftness',craftingSpeed='Crafting Speed',inspiration='Inspiration'}
-                for _,key in ipairs({'resourcefulness','multicraft','ingenuity','finesse','perception','deftness','craftingSpeed','inspiration'}) do
-                    local value=params.stats and params.stats[key]
-                    if type(value)=='number' and value~=0 then
-                        opportunityLines[#opportunityLines+1]=('%s: %.3g%%'):format(statNames[key],key=='craftingSpeed' and value or value*100)
-                    end
-                end
-                if type(params.inputFactor)=='number' and params.inputFactor~=1 then
-                    opportunityLines[#opportunityLines+1]=('Input consumption factor: %.3gx'):format(params.inputFactor)
-                end
-                for _,metric in ipairs({{'resourcefulnessSaved','Resourcefulness extra saving','%'},
-                    {'multicraftExtra','Multicraft extra yield','%'},{'finesseExtra','Finesse extra yield','%'},
-                    {'inspirationSkill','Inspiration skill',''},{'concentrationCost','Concentration cost modifier','%'},
-                    {'concentrationRefund','Concentration refund modifier','%'}}) do
-                    local value=params.effectTotals and params.effectTotals[metric[1]]
-                    if type(value)=='number' and value~=0 then
-                        opportunityLines[#opportunityLines+1]=('%s: %+.3g%s'):format(metric[2],value,metric[3])
-                    end
-                end
-                local unlockCount=0 for _,active in pairs(params.unlocks or {}) do if active then unlockCount=unlockCount+1 end end
-                if unlockCount>0 then opportunityLines[#opportunityLines+1]='Recipe unlocks: '..unlockCount end
-                if params.simulatedEligibility then opportunityLines[#opportunityLines+1]='Eligibility: unlocked' end
-                local conveniences=params.effectTotals and params.effectTotals.nonOutput
-                if type(conveniences)=='number' and conveniences>0 then opportunityLines[#opportunityLines+1]=('Convenience bonuses: %g'):format(conveniences) end
-            else opportunityLines[1]='No profile is available for this context.' end
-            place(opportunityTitle,y);y=y+30
-            place(opportunityTarget,y);y=y+42
-            opportunityText:SetText(table.concat(opportunityLines,'\n'))
-            opportunityResults:SetHeight(math.max(24,#opportunityLines*22))
-            place(opportunityResults,y);y=y+math.max(24,#opportunityLines*22)+26
-        end
         if selection~='@hide' then
             advanced:SetText(advancedOpen and 'Hide advanced' or 'Advanced')
             place(advanced,y);y=y+38
@@ -1013,15 +862,13 @@ function LL:CreateProfessionProfilePanel(profession)
                             stats[key]=stats[key] or {};stats[key][field]=v;p.stats=stats
                         end)
                     end
-                    local chance=LL:IsProfessionChanceStat(key)
                     if fields.rating and not row.rating then
                         row.rating=LL:CreateSettingsCanvasSlider(body,0,1000,1,0,function(v)set('rating',v)end)
                         row.rating.expandRange=true;row.label=label(stat.name..' rating',245)
                     end
                     if fields.percent and not row.percent then
-                        row.percent=LL:CreateSettingsCanvasSlider(body,0,chance and 100 or 200,1,0,function(v)set('percent',v)end)
-                        row.percent.expandRange=not chance
-                        row.percentLabel=label(stat.name..(chance and ' chance (%)' or ' bonus (%)'),245)
+                        row.percent=LL:CreateSettingsCanvasSlider(body,0,100,1,0,function(v)set('percent',v)end)
+                        row.percentLabel=label(stat.name..' chance (%)',245)
                     end
                     local v=profile().stats and profile().stats[stat.key] or {}
                     if fields.rating then
@@ -1031,7 +878,7 @@ function LL:CreateProfessionProfilePanel(profession)
                         y=y+44
                     end
                     if fields.percent then
-                        row.percentLabel:SetText(stat.name..(chance and ' chance (%)' or ' bonus (%)')..(scannedDisplay and not known(v.percent) and ' — not captured' or ''))
+                        row.percentLabel:SetText(stat.name..' chance (%)'..(scannedDisplay and not known(v.percent) and ' — not captured' or ''))
                         place(row.percentLabel,y+5)
                         if not scannedDisplay or known(v.percent) then row.percent:SetPreferenceValue(v.percent or 0);place(row.percent,y,270) end
                         y=y+44
@@ -1128,18 +975,11 @@ function LL:CreateProfessionProfilePanel(profession)
             hideUnused(row.check);hideUnused(row.label);hideUnused(row.stacks);hideUnused(row.stackLabel)
         end
         for _,w in ipairs({skillLabel,skill,reset,scan,empty,advanced,buffsTitle,noBuffs,note,statsTitle,statsNote,scannedStats}) do hideUnused(w) end
-        hideUnused(gatheringTitle);hideUnused(gatheringTarget);hideUnused(gatheringResults);hideUnused(conditionsTitle)
-        hideUnused(opportunityTitle);hideUnused(opportunityTarget);hideUnused(opportunityResults)
-        if opportunityTooltipOpen then refreshOpportunityTooltip() end
+        hideUnused(conditionsTitle)
         body:SetHeight(math.max(y,260))
-        character:Refresh();era:Refresh();if gatheringTarget then gatheringTarget:Refresh() end;if opportunityTarget then opportunityTarget:Refresh() end;refreshing=false
+        character:Refresh();era:Refresh();refreshing=false
     end
     panel:SetScript('OnShow',function()refresh(true)end)
-    panel:SetScript('OnHide',function()
-        panel.opportunityPreview=nil;panel.opportunityTarget=nil;opportunityLines={}
-        opportunityText:SetText('')
-        if opportunityTooltipOpen then refreshOpportunityTooltip() end
-    end)
     return panel
 end
 
@@ -1249,31 +1089,6 @@ function LL:RateProfileCharacterChoices()
 end
 
 
--- Settings are grouped by user intent, not by the Lua module providing them.
--- Crucially each SavedVariables key is registered exactly once so existing
--- profiles and preferences survive moving a control to another page.
--- Expansion is presentation state for this Settings session, never a tooltip preference.
-function LL:AddTooltipAdvancedSettings(category,layout)
-    local expanded=false
-    local function buttonText() return expanded and "Hide advanced options" or "Show advanced options" end
-    local toggle=CreateSettingsButtonInitializer("Advanced",buttonText,function(button)
-        expanded=not expanded
-        if button then button:SetText(buttonText()) end
-        local list=SettingsPanel and SettingsPanel:GetSettingsList()
-        if list then list:RepairDisplay(layout) end
-    end,"Expand or collapse the three advanced tooltip controls. Their values are preserved.",false)
-    layout:AddInitializer(toggle)
-    local control=Checkbox(category,"showTooltipExplanations","Show processing explanations",
-        "Breakdown level: explain input batches, output ranges and average quantities, and show reference or profession adjustment notes. Hidden by default.",false)
-    control:AddShownPredicate(function() return expanded end)
-    control=Checkbox(category,"showProfessionDetails","Show profession details",
-        "Show profession skill, the character and profile used, profession progression, eligible characters, recipe/unlock eligibility and disenchant candidate notes. Short unavailable indicators remain visible. Hidden by default.",false)
-    control:AddShownPredicate(function() return expanded end)
-    control=Checkbox(category,"showResearchDetails","Show research notes",
-        "For troubleshooting: show fallback and source-conflict explanations, evidence contributions, research casts and material source notes. Short provisional and incomplete-data indicators remain visible.",false)
-    control:AddShownPredicate(function() return expanded end)
-end
-
 function LL:RegisterNativeSettings()
     if self.settingsCategory or not self.db or not Settings
         or not Settings.RegisterVerticalLayoutCategory then return end
@@ -1285,16 +1100,6 @@ function LL:RegisterNativeSettings()
     Section(generalLayout,"General")
     Checkbox(general,"enabled","Enable Loot Liquidator",
         "Analyze items and recommend the most valuable available action.",true)
-    Section(generalLayout,"PRs & build")
-    local source,prs
-    if self.BuildSummary then source,prs=self:BuildSummary() end
-    Section(generalLayout,source or "Source details unavailable")
-    Section(generalLayout,prs or "PR information unavailable")
-    if CreateSettingsButtonInitializer and generalLayout and generalLayout.AddInitializer then
-        generalLayout:AddInitializer(CreateSettingsButtonInitializer("Build details","View details",function()
-            if LL.ShowCopy and LL.BuildDetails then LL:ShowCopy("PRs & build",LL:BuildDetails()) end
-        end,"Shows the source branch, exact commit, included PRs and GitHub build link.",false))
-    end
     Section(generalLayout,"Use the pages on the left for badge appearance, tooltips, pricing, and addon integrations.")
 
     -- B8a: native vertical page (was a hand-placed canvas).
@@ -1314,21 +1119,14 @@ function LL:RegisterNativeSettings()
         {{0,"Off — badges only"},{1,"Recommendation — one line"},
          {2,"Alternatives — every option with its gold value"},
          {3,"Breakdown — plus the materials behind each option"}},2)
-    Checkbox(tooltips,"tooltipHeaderPrice","Show price in the header",
-        "Add the recommended action's gold value per item to the first line, e.g. \"Loot Liquidator: Smelt 6g 87s\".",true)
     Section(ttLayout,"Extras")
-    Checkbox(tooltips,"showAverageQuantity","Show average output quantity",
-        "Breakdown level: show average units per operation, including zero outcomes. Estimated averages remain estimates. Hidden by default; gold calculations are unchanged.",false)
     Dropdown(tooltips,"tooltipOutputSort","Sort material outputs",
         "Sort breakdown rows before the display limit. Missing values appear last. Gold calculations are unchanged.",
         {{"value","Value — highest first"},{"chance","Drop chance — highest first"},
          {"quantity","Average quantity — highest first"},{"name","Name — A to Z"},
          {"database","Database order"}},"value")
-    Checkbox(tooltips,"showMaterialConfidence","Show confidence per material",
-        "Breakdown level: add each material's own confidence. The option's overall confidence is always shown.",false)
-    Checkbox(tooltips,"showProfessionThresholds","Show known profession breakpoints",
-        "Show the next researched skill breakpoint for this exact recipe and item when available. No bonus or threshold is guessed.",true)
-    self:AddTooltipAdvancedSettings(tooltips,ttLayout)
+    Checkbox(tooltips,"showResearchDetails","Show token and pricing diagnostics",
+        "Show extra token-cost and TradeSkillMaster operation diagnostics when using detailed tooltips.",false)
     -- Hover-preview is intentionally at the top of this same page. No extra
     -- Tooltips subcategory or tall static preview remains.
 
@@ -1355,8 +1153,10 @@ function LL:RegisterNativeSettings()
         Settings.RegisterAddOnCategory(chars)
         Section(charsLayout,"Your characters' professions are read automatically when you log into them.")
         Section(charsLayout,"Choose a profession, then pick a character, Don't show, or Simulated in its dropdown.")
-        for _,profession in ipairs({"Alchemy","Blacksmithing","Enchanting","Engineering","Herbalism",
-            "Inscription","Jewelcrafting","Leatherworking","Mining","Skinning","Tailoring","Cooking","Fishing"}) do
+        local professions={}
+        for profession in pairs(self:ProfessionTooltipMethods()) do professions[#professions+1]=profession end
+        table.sort(professions)
+        for _,profession in ipairs(professions) do
             local page=Settings.RegisterCanvasLayoutSubcategory(chars,self:CreateProfessionProfilePanel(profession),profession)
             Settings.RegisterAddOnCategory(page)
         end
@@ -1382,8 +1182,6 @@ function LL:RegisterNativeSettings()
         "Record reliably matched disenchant yields to account-wide SavedVariables.",true)
     Checkbox(research,"recordConversions","Record crafting and processing results",
         "Record isolated completed crafts with measured inputs, outputs and profession context. Unresolved results never become zero samples. Use the Export button below; nothing is sent anywhere automatically.",true)
-    Checkbox(research,"showProcessingSamples","Show sample counts in tooltips",
-        "Show how many personal observations are available. Full distributions also require Detailed tooltips.",true)
     -- B6a: buttons instead of slash commands for recorded results.
     if CreateSettingsButtonInitializer and researchLayout and researchLayout.AddInitializer then
         researchLayout:AddInitializer(CreateSettingsButtonInitializer(
@@ -1426,28 +1224,7 @@ function LL:RegisterNativeSettings()
     Section(integrationsLayout,"Connected addons")
     Checkbox(integrations,"enableTSMIntegration","TradeSkillMaster pricing",
         "Read TSM auction pricing and operations without changing your TSM profile.",true)
-    Section(integrationsLayout,"Independent token research")
-    Checkbox(integrations,"collectTokenResearch","Record direct token rewards and exchanges",
-        "Passively record item-token vendor offers and directly opened equipment rewards as research candidates. No crafting outputs and no automatic changes to valuations.",true)
-    if CreateSettingsButtonInitializer and integrationsLayout.AddInitializer then
-        integrationsLayout:AddInitializer(CreateSettingsButtonInitializer(
-            "Token research observations","View / copy research export",function()
-                if LL.TokenResearchExport and LL.ShowCopy then
-                    LL:ShowCopy("Direct token observations - page 1",LL:TokenResearchExport(1))
-                end
-            end,"Copy direct equipment token relationships. Additional pages: /ll debug tokenexport 2 (etc.).",false))
-    end
     TSMDropdown(integrations,"tsmFallbackOperation","TSM operation for ungrouped items")
-    Section(integrationsLayout,"TSM recommended setup")
-    if CreateSettingsButtonInitializer and integrationsLayout.AddInitializer then
-        integrationsLayout:AddInitializer(CreateSettingsButtonInitializer(
-            "Recommended TSM setup","Select / copy TSM export",function()
-                if LL.ShowCopy and LL.RecommendedTSMSetupText then
-                    LL:ShowCopy("Recommended TSM Setup",LL:RecommendedTSMSetupText())
-                end
-            end,"Opens selectable text. Press Ctrl+C in WoW, then paste into TSM. Does not modify TSM.",false))
-    end
-
     if self.CreateItemIgnorePanel then
         local ignores=Settings.RegisterCanvasLayoutSubcategory(general,
             self:CreateItemIgnorePanel(),"Ignored Items")

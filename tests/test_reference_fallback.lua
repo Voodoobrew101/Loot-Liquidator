@@ -46,9 +46,14 @@ function tip:AddDoubleLine(a,b)self.lines[#self.lines+1]=a..' | '..b end
 LL:AppendRecommendationTooltip(tip,{action='P',count=5,facts={id=237366,classID=7},
     conversionOptions={{name='Prospect',letter='P',available=true,value=value,yieldModel=thorium}}})
 local text=table.concat(tip.lines,'\n')
-assert(text:find('0.150',1,true) and text:find('1.140',1,true),'calculator quantities reach actual formatter')
-assert(text:find('Reference fallback',1,true),'provisional reference is labeled')
-assert(text:find('conditional',1,true) and text:find('excluded from current value',1,true),'known conditional values remain visible without inventing eligibility')
+assert(text:find('15% |T134400:14:14:0:0|t Material 242610 [1]',1,true)
+    and text:find('100% |T134400:14:14:0:0|t Material 242788 [1-2]',1,true),
+    'calculator quantities receive canonical display estimates without changing their actual values')
+assert(not text:find('Reference fallback',1,true),'compact tooltip leaves reference provenance outside the normal display')
+assert(text:find('22% |T134400:14:14:0:0|t Material 242608 [1]',1,true)
+    and not text:find('(conditional)',1,true)and not text:find('excluded from current value',1,true),
+    'conditional quantities use a local canonical display estimate without an alternate row layout')
+assert(conditional.expectedQuantity==nil and value==thorium.value,'conditional count stays excluded from unconditional valuation')
 LL:SetEvidenceSource('itemdb',true)
 local primary=assert(LL:ResolveEvidenceModel({id=237366,classID=7,expansionID=11},option,nil,1))
 assert(LL:ValueProcessingModel(primary,0,true)==52,'existing usable research is not replaced or added twice')

@@ -73,7 +73,10 @@ LL.TooltipConversionOptions=nil -- This diagnostic fixture renders explicitly su
 LL.db.professionTooltipProfiles={Mining="@hypothetical"};LL.db.showProfessionDetails=true;LL.db.showResearchDetails=true
 LL:AppendRecommendationTooltip(tip,decision)
 local text=table.concat(tip.lines,'\n')
-assert(text:find('Smelting',1,true) and text:find('verified Smelt Copper',1,true) and text:find('sources disabled',1,true))
+assert(text:find('Smelting',1,true) and not text:find('verified Smelt Copper',1,true) and not text:find('sources disabled',1,true),
+    'compact method header stays visible without access/source explanation panels')
+assert(decision.conversionOptions[1].available==false and decision.conversionOptions[1].value==nil,
+    'compact presentation does not grant access or fabricate value')
 -- Built-in specialization labels/ranks are cached only for the selected owner.
 local char=LL.db.characters['Tester - Realm']
 char.details[300]={parentName='Enchanting',name='Midnight Enchanting'}

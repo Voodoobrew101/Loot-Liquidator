@@ -8,6 +8,7 @@ GetBuildInfo=function()return '12.1.5','70961' end
 GetTime=function()return 100 end
 time=function()return 1795219200 end
 CreateFrame=function()return {RegisterEvent=function()end,SetScript=function()end}end
+C_Item={GetItemInfo=function(id)return 'Material '..id end,GetItemIconByID=function(id)return id+1000 end}
 local LL={db={characters={Player={professions={},recipes={}}},rateProfile=3,rateProfileCharacter='Player',
     tooltipDetail=3,showProfessionDetails=false,showAverageQuantity=false,
     source_itemdb_enabled=true,source_itemdb_weight=81,source_reference_enabled=true,source_reference_weight=10,
@@ -29,7 +30,6 @@ LL.EligibleDisenchant=function(_,f)return f.classID==2 or f.classID==4 end
 LL.DisenchantEstimate=LL.EvaluateDisenchant
 LL.MarkupColor=function()return ''end
 LL.Money=function(_,v)return ('%.6f copper'):format(v)end
-LL.ProfessionProgression=function()return {}end
 LL.GetOutputPrice=function(self,id)
     local item=self.ItemDB.professionProfiles.items[id] or {}
     return (item.qualityRank or 1)*100,'synthetic fixture price'
@@ -62,8 +62,7 @@ local function setProfile(profession,skill,stat,points,expansion)
     LL.db.manualProfessionProfiles.Player=LL.db.manualProfessionProfiles.Player or {}
     LL.db.manualProfessionProfiles.Player[profession..':'..expansion]=nil
     check(LL:SetManualProfessionProfile('Player',profession,expansion,{enabled=true,skill=skill or 0,
-        specialization=points or 'none',stats=stat and {[stat]={percent=10}} or {},buffs={},
-        benchmark={outputLevel=100,specializationBonus=0,resourcefulnessChance=0,resourcefulnessSaved=0}}),
+        specialization=points or 'none',stats=stat and {[stat]={percent=10}} or {},buffs={}}),
         profession..' isolated profile saves')
     LL:Invalidate()
 end
@@ -77,7 +76,7 @@ local function render(f,quote,dispatch)
     LL.TooltipConversionOptions=saved
     return table.concat(tip.lines,'\n')
 end
-local stats={'resourcefulness','multicraft','ingenuity','finesse','perception','deftness','craftingSpeed','inspiration'}
+local stats={'resourcefulness','multicraft','ingenuity','craftingSpeed','inspiration'}
 local scenariosFor={{name='baseline',skill=0},{name='skill',skill=100},{name='high-skill',skill=1000}}
 for _,stat in ipairs(stats)do scenariosFor[#scenariosFor+1]={name=stat,stat=stat}end
 local function isolated(context,profession,scenario)
@@ -90,7 +89,9 @@ local function isolated(context,profession,scenario)
             check(key==scenario.stat and value.percent==10,'exactly the selected stat is active')
         end
     end
-    check(count==(scenario.stat and scenario.stat~='inspiration' and 1 or 0),'the previous stat was fully reset: '..profession..'/'..scenario.name..' count '..count)
+    local supported={}
+    for _,stat in ipairs(LL:ProfessionSimulationStatOptions(profession)) do supported[stat.key]=true end
+    check(count==(supported[scenario.stat] and 1 or 0),'Only applicable value stats enter this profile: '..profession..'/'..scenario.name..' count '..count)
 end
 local function means(model)
     local result={}
@@ -187,14 +188,14 @@ for _,case in ipairs(cases)do
         end
         local text=render(f,selected,true)
         check(text:find('copper',1,true),case.id..' '..scenario.name..' actual tooltip selector retains the evaluated price: '..text)
-        check(text:find('%%') or text:find('[avg ',1,true),'actual tooltip has numeric rates or quantities')
+        check(text:find('%%'),'Actual tooltip uses the shared percentage format')
         for _,m in ipairs(model.materials)do if finite(m.expectedQuantity) and m.expectedQuantity>0 then
-            local line=text:match('Material '..m.id..'[^\n]*')
+            local line=text:match('([^\n]*Material '..m.id..'[^\n]*)')
             check(line,'each numerical output reaches the selected tooltip: '..m.id)
             check(not line:find('unavailable',1,true),'a numerical yield cannot be displayed as unavailable')
             if type(m.chance)~='number' or not m.minQuantity and not m.maxQuantity or m.inconsistentFields then
-                check((case.method=='Prospect' or case.method=='Mill' or case.method=='Disenchant') and not line:find('[avg ',1,true) or line:find('[avg ',1,true),
-                    'numerical output follows the profession display format')
+                check(not line:find('[avg ',1,true) and line:find('%d[%d.]*%% ') and line:find('%['),
+                    'Every profession uses a display percentage and bracketed quantity, leaving the actual mean unchanged')
             end
         end end
         if case.id==272269 then
@@ -257,25 +258,12 @@ for _,row in ipairs({{'Alchemy',1230854},{'Blacksmithing',1229598},{'Enchanting'
         check(finite(value),'native craft valuation remains numerical')
         local text=render(f,{name='Craft',profession=profession,inputCount=1,recipeID=id,eligibleInput=true,
             value=value,confidence=model.valueConfidence,yieldModel=model,tooltipProfileLabel='Simulated'},false)
-        check(text:find('[avg ',1,true) or text:find('%%'),'native craft tooltip exposes its quantity')
-        scenarios=scenarios+1;saw[profession]=true
-    end
-end
--- Gathering has explicit native target previews. Empty general targets expose
--- modifier indexes, never invented per-node item yields or observation counts.
-for _,profession in ipairs({'Herbalism','Mining','Skinning','Fishing'})do
-    for _,scenario in ipairs(scenariosFor)do
-        setProfile(profession,scenario.skill,scenario.stat)
-        local model,target,context=LL:GatheringSimulationPreview(profession,11,nil,'Player',true)
-        check(model and target,'public gathering target resolves '..profession)
-        isolated(context,profession,scenario)
-        check(finite(model.yieldFactor) and finite(model.speedFactor) and finite(model.rareDiscoveryFactor),
-            'gathering zero and isolated modifiers have numerical indexes')
+        check(text:find('%%') and text:find('%['),'Native Craft uses the same percentage and bracketed quantity format')
         scenarios=scenarios+1;saw[profession]=true
     end
 end
 local count=0 for _ in pairs(saw)do count=count+1 end
-check(count==13,'all thirteen professions use the actual profile API')
+check(count==9,'all nine crafting professions retain the item-processing pipeline')
 
 -- Named-character routing uses the real snapshot reader, not a fabricated
 -- ProcessingPlayerConditions receiver. The existing capture remains 200 casts.

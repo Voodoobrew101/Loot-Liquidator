@@ -84,19 +84,21 @@ for _,case in ipairs(cases)do
     for _,rank in ipairs({0,19,20,29,30})do
         set(30,rank,140)
         local result=resolve(case)
-        local progress=rank>=30 and 1 or rank>=20 and .5 or 0
         near(quantity(result,243605)+quantity(result,243606),case.low+case.high,'Collector preserves this exact source primary pool')
-        local extra=0
         for _,id in ipairs({236949,236950,236951,236952})do
-            near(quantity(result,id),.07225*progress,'Collector extra milestone '..rank)
-            extra=extra+quantity(result,id)
+            check(map(result)[id]==nil,'native Collector milestone does not add an unmeasured essence outcome')
         end
-        near(extra,.289*progress,'pooled extra milestone exactly once')
         LL:ValueProcessingModel(result,0,true,f)
         check(type(result.value)=='number' and result.valueConfidence==0,'all four actual quotes price every Collector milestone with confidence0')
         if rank==30 then near(quantity(result,243606)/(case.low+case.high),.66,'full skill reaches existing declared quality endpoint')end
         for _,m in ipairs(result.materials)do
-            check(m.chance==nil and m.quantityCounts==nil and m.samples==nil,'projected source does not invent P or samples')
+            check(m.quantityCounts==nil and m.samples==nil,'projected source adds no observed counts or samples')
+            if m.chance~=nil then
+                check((m.id==243605 or m.id==243606) and m.minQuantity==1 and m.maxQuantity==1
+                    and m.probabilityVerified==false and m.chanceConfidence==0,
+                    'a projected source may expose only the explicit confidence-zero one-unit category model')
+                near(m.chance,m.expectedQuantity,'one-unit modeled occurrence agrees with its unchanged source expectation')
+            end
         end
     end
     local disabled=copy(raw);disabled.reviewedDisenchantProjection=nil
@@ -112,7 +114,7 @@ for _,case in ipairs(cases)do
     blocked(LL:ProjectReviewedDisenchantPrior(other,de,raw,LL:ProcessingPlayerConditions(f,de.name,de.recipeID,de.character),1),raw,'exact source prior never widens into another item')
     local stale=copy(LL:ProcessingPlayerConditions(f,de.name,de.recipeID,de.character));stale.stale=true
     blocked(LL:ProjectReviewedDisenchantPrior(f,de,raw,stale,1),raw,'stale target fails closed without altering source fields')
-    -- Preserve reviewed and other-source terms, with a single weighted bonus.
+    -- Preserve reviewed and other-source terms without an invented bonus.
     local current=LL:ProcessingPlayerConditions(f,de.name,de.recipeID,de.character)
     local primary=LL:ProjectReviewedDisenchantPrior(f,de,raw,current,1)
     local mixture={sources={itemdb=.3,legacy=.7},source='Mixed source fixture',confidence=0,inputCount=1,materials={}}
@@ -122,8 +124,8 @@ for _,case in ipairs(cases)do
             inputCount=1,unprojectedDisenchantExpectedQuantity=0}}}end
     local mixed=LL:ApplyDisenchantBaseline(f,de,mixture,current,1)
     for i,m in ipairs(mixture.materials)do near(quantity(mixed,m.id),m.expectedQuantity,'independent source primary term retained')end
-    for _,id in ipairs({236949,236950,236951,236952})do near(quantity(mixed,id),.3*.07225,'bonus follows ItemDB family contribution')end
-    check(LL:ApplyDisenchantBaseline(f,de,mixed,current,1)==mixed,'post-fusion extras are not applied twice')
+    for _,id in ipairs({236949,236950,236951,236952})do check(map(mixed)[id]==nil,'source blending creates no unmeasured Collector outcome')end
+    check(LL:ApplyDisenchantBaseline(f,de,mixed,current,1)==mixed,'post-fusion projection is not applied twice')
     -- Different source pool sizes must round-trip at zero; U/all-pool would
     -- inflate this ordinary portion because the reviewed pool is below1.
     set(0,0,0);current=LL:ProcessingPlayerConditions(f,de.name,de.recipeID,de.character)
@@ -151,7 +153,7 @@ for _,case in ipairs(cases)do
     routed=LL:ApplyDisenchantBaseline(f,de,fused,current,1)
     for _,m in ipairs(fused.materials)do near(quantity(routed,m.id),.4*quantity(targetPrimary,m.id)
         +.6*canonicalTarget[m.id].expectedQuantity,'only ordinary ItemDB portion is projected after fusion')end
-    for _,id in ipairs({236949,236950,236951,236952})do near(quantity(routed,id),.07225,'mixed ItemDB terms get one full Collector bonus')end
+    for _,id in ipairs({236949,236950,236951,236952})do check(map(routed)[id]==nil,'mixed ItemDB terms do not gain a borrowed essence budget')end
 end
 check(same(LL.ItemDB.processing,immutable),'published source records and counts remain immutable')
 -- Render the actual final model, with source0 means and current skill effects
@@ -166,7 +168,10 @@ LL.db.tooltipDetail=3;LL.db.showAverageQuantity=true;LL.db.showProfessionDetails
 LL:AppendRecommendationTooltip(tip,{action='D',facts=f,disenchantEligible=true,conversionOptions={{name='Disenchant',letter='D',
     profession='Enchanting',recipeID=13262,inputCount=1,available=true,yieldModel=result,value=result.value or result.partialValue}}})
 local text=table.concat(tip.lines,'\n')
-check(text:find('243606',1,true) and text:find('236949',1,true),'actual tooltip contains projected crystal and Collector material')
+check(text:find('243606',1,true),'actual tooltip contains the sourced projected crystal')
+for _,id in ipairs({236949,236950,236951,236952})do
+    check(not text:find(tostring(id),1,true),'actual tooltip omits the removed unmeasured essence pool')
+end
 check(not text:find('provisional',1,true) and not text:find('estimated',1,true),'no new tooltip estimate labels')
 LL.ItemDB.processing=originalProcessing
 print('PASS: '..checks..' reviewed DE prior source roundtrip, weighted fusion, milestone, price and tooltip checks')

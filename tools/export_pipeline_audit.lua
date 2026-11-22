@@ -35,10 +35,13 @@ local sources,runtime={},{}
 assert(loadfile('database/sources/ReferenceData.lua'))('LootLiquidator',sources)
 assert(loadfile(arg[3] or 'LootLiquidator/ItemDBRuntime.lua'))('LootLiquidator',runtime)
 if arg[2]=='--catalogue' then
+    -- Source-detail audits explicitly load the offline archive. It is not
+    -- shipped in the addon or needed by the calculation pipeline.
+    runtime.ItemDB.reviewedSourceFacts=assert(loadfile('database/research-v3-baselines.lua'))().reviewedSourceFacts
     assert(loadfile('LootLiquidator/Database.lua'))('LootLiquidator',runtime)
     runtime.db={};runtime:MigrateEvidenceSettings()
     assert(runtime:InitializeItemDB(),runtime.itemDBError)
-    assert(loadfile('LootLiquidator/ReviewedSourceFacts.lua'))('LootLiquidator',runtime)
+    assert(loadfile('tools/reviewed_source_facts.lua'))('LootLiquidator',runtime)
     runtime.db.source_itemdb_enabled=true
     local factValidation=assert(loadfile('tools/reviewed_source_fact_audit.lua'))()(runtime)
     local file=assert(io.open(assert(arg[1],'Output JSON path required'),'w'))

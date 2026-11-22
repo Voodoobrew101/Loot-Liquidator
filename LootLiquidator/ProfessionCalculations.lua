@@ -5,6 +5,11 @@ local function copy(v)
     if type(v)~='table' then return v end
     local r={} for k,x in pairs(v) do r[k]=copy(x) end return r
 end
+-- Scope probes only replace top-level identity/operation fields. Nested
+-- facts may include whole quote graphs; they are read-only to these probes.
+local function scopeCopy(value)
+    local out={}for key,item in pairs(value or {})do out[key]=item end return out
+end
 local function number(v,default)
     return type(v)=='number' and v==v and math.abs(v)<math.huge and v or (default or 0)
 end
@@ -141,10 +146,18 @@ local function materialUnits(self,material,params)
     if factor<=0 then return nil,'Output multiplier must be positive for an identifiable inverse' end
     return {relativeFactor=factor,extra=extra,minimum=minimum,policy=policy}
 end
-local statKeys={'resourcefulness','multicraft','ingenuity','finesse','perception','deftness','craftingSpeed','inspiration'}
-local nativeNames={resourcefulness='Resourcefulness',multicraft='Multicraft',ingenuity='Ingenuity',
-    finesse='Finesse',perception='Perception',deftness='Deftness',craftingSpeed='Crafting Speed',inspiration='Inspiration'}
-local function methodIsGather(method) return method=='Gather' or method=='Skin' or method=='Fish' end
+local statKeys={'resourcefulness','multicraft'}
+local nativeNames={resourcefulness='Resourcefulness',multicraft='Multicraft'}
+local outputMetrics={skill=true,difficulty=true,resourcefulness=true,multicraft=true,
+    extraOutput=true,dropChance=true,yieldMultiplier=true,resourcefulnessSaved=true,multicraftExtra=true}
+local function metricApplies(metric,method)
+    if not outputMetrics[metric] then return false end
+    if metric=='multicraft' or metric=='multicraftExtra' then return method=='Craft' end
+    if metric=='resourcefulness' or metric=='resourcefulnessSaved' then
+        return method~='Disenchant' and method~='Use'
+    end
+    return true
+end
 local function nativeStat(context,key)
     for _,v in ipairs(context.operationStats or {}) do
         if v.key==key or v.bonusStatName==nativeNames[key] then
@@ -180,7 +193,7 @@ local function scopeMatches(effect,profession,expansion,context,option,facts,rec
     local alternate=contains(s.alternateRecipeIDs,option.recipeID) and option.name==s.alternateMethod
     if s.profession and s.profession~=profession then return false end
     if s.expansionID and s.expansionID~=expansion then return false end
-    if s.method and s.method~=option.name and not alternate and not (s.method=='Gather' and methodIsGather(option.name)) then return false end
+    if s.method and s.method~=option.name and not alternate then return false end
     if s.inputRarity and s.inputRarity~=facts.quality and not alternate then return false end
     if s.inputClassID and s.inputClassID~=facts.classID then return false end
     if #(s.inputItemIDs or {})>0 and not contains(s.inputItemIDs,facts.id) then return false end
@@ -189,6 +202,45 @@ local function scopeMatches(effect,profession,expansion,context,option,facts,rec
         and not intersect(s.labelIDs,option.labels or context.recipeLabels or (recipe and recipe.labels)) then return false end
     if s.labelContext=='disenchant-input' and option.name~='Disenchant' and not alternate then return false end
     return conditionMatches(effect,context)
+end
+
+-- Sharing a standard DE source must not erase an item-specific talent gate.
+-- Character conditions remain part of the caller's full context key; explicit
+-- input identities require the ordinary per-item path instead.
+function LL:ProfessionCategoryProjectionIndependent(facts,option,context)
+    if option.name~='Disenchant' or option.recipeID~=13262 or option.inputCount~=1
+        or context.profession~='Enchanting' or context.expansionID~=facts.expansionID
+        or option.profession and option.profession~='Enchanting'
+        or option.expansionID and option.expansionID~=facts.expansionID
+        or option.reviewedEffectOverrides then return false end
+    local data=self.ItemDB and self.ItemDB.professionProfiles or {}
+    local recipe=lookup(data.recipes,option.recipeID)
+    if recipe and (recipe.profession and recipe.profession~='Enchanting'
+        or recipe.expansionID and recipe.expansionID~=facts.expansionID) then return false end
+    if lookup(data.recipeQualityModels,option.recipeID) then return false end
+    local profile=data.profiles and data.profiles['Enchanting:'..tostring(facts.expansionID)]
+    local function itemScoped(effects)
+        for _,effect in ipairs(effects or {}) do
+            local scope=effect.scope or {}
+            local alternate=contains(scope.alternateRecipeIDs,option.recipeID) and scope.alternateMethod==option.name
+            if (not scope.profession or scope.profession=='Enchanting')
+                and (not scope.expansionID or scope.expansionID==facts.expansionID)
+                and (not scope.method or scope.method==option.name or alternate)
+                and (not scope.inputRarity or scope.inputRarity==facts.quality or alternate)
+                and (not scope.inputClassID or scope.inputClassID==facts.classID)
+                and (#(scope.inputItemIDs or {})>0 or scope.inputItemID~=nil or scope.inputID~=nil
+                    or effect.inputItemID~=nil) then return true end
+        end
+        return false
+    end
+    if itemScoped(profile and profile.buffs) then return false end
+    for _,node in pairs(profile and profile.nodes or {}) do
+        if itemScoped(node.pointEffects) or itemScoped(node.learningEffects) then return false end
+        for _,milestone in ipairs(node.milestones or {}) do
+            if itemScoped(milestone.effects) then return false end
+        end
+    end
+    return true
 end
 
 local function recipeQualityModel(self,params,option)
@@ -251,213 +303,9 @@ local function qualityMaterialChanged(material,confidence)
     material.confidence=math.min(number(material.confidence,100),confidence)
 end
 
--- A reviewed source endpoint is a quality anchor, not a minimum-profile
--- observation. These curves are declared confidence-zero quantity priors;
--- neither their shares nor their skill progress describes P(drop) or casts.
-local function reviewedQualityMode(model,params)
-    return model.reviewedBacklogModel==true
-        and model.reviewedQualityProjection=='source-anchored'
-        and ((params.method=='Disenchant' and params.expansionID~=11)
-            or ((params.method=='Mill' or params.method=='Prospect') and params.expansionID>=9))
-end
-local function validUnits(value)
-    return type(value)=='number' and value==value and value>=0 and value<math.huge
-end
-local function qualityGroups(model,data,params)
-    local groups={}
-    for _,material in ipairs(model.materials or {}) do
-        local item=lookup(data.items,material.id)
-        local familyID=item and item.qualityFamilyID
-        local eligibleClass=item and (params.method~='Disenchant' or item.subclassID==12)
-        local family=eligibleClass and lookup(data.qualityFamilies,familyID)
-        if not family and material.rankIDs then
-            for _,id in ipairs(material.rankIDs) do
-                local pooled=lookup(data.items,id)
-                local candidate=pooled and (params.method~='Disenchant' or pooled.subclassID==12)
-                    and lookup(data.qualityFamilies,pooled.qualityFamilyID)
-                if candidate and #(candidate.rankItemIDs or {})>1 then
-                    return nil,'Reviewed quality anchor requires exact native ranks, not a pooled rank placeholder'
-                end
-            end
-        end
-        if family and #(family.rankItemIDs or {})>1 and material.economicPolicy~='nontradable' then
-            local group=groups[familyID]
-            if not group then group={familyID=familyID,family=family,items={},sourceValues={}};groups[familyID]=group end
-            if material.rankIDs or group.items[material.id] or not validUnits(material.expectedQuantity)
-                or not contains(family.rankItemIDs,material.id) then
-                return nil,'Reviewed quality anchor requires one finite exact mean per native rank'
-            end
-            group.items[material.id]=material
-            group.sourceValues[material.id]=material.expectedQuantity
-        end
-    end
-    for _,group in pairs(groups) do
-        group.total=0
-        for _,id in ipairs(group.family.rankItemIDs) do
-            if not group.items[id] then
-                return nil,'Reviewed quality anchor is missing an explicit native family rank'
-            end
-            group.total=group.total+group.items[id].expectedQuantity
-        end
-        if not validUnits(group.total) then return nil,'Reviewed quality family total is not finite' end
-    end
-    return groups
-end
-local function validShares(shares,n)
-    if type(shares)~='table' or #shares~=n then return false end
-    local total=0
-    for rank=1,n do
-        if not validUnits(shares[rank]) then return false end
-        total=total+shares[rank]
-    end
-    return math.abs(total-1)<=1e-8
-end
-local function dominatingQualityShares(reference,source)
-    local result,referenceCDF,sourceCDF,previous={},0,0,0
-    for rank=1,#reference-1 do
-        referenceCDF=referenceCDF+reference[rank]
-        sourceCDF=sourceCDF+source[rank]
-        local current=math.min(referenceCDF,sourceCDF)
-        result[rank]=current-previous;previous=current
-    end
-    result[#reference]=1-previous
-    return result
-end
-local function reviewedQualityChanged(material)
-    qualityMaterialChanged(material,0)
-    -- Source counts remain in immutable evidence records, not on a moved
-    -- target-rank quantity. No transformed amount gets a synthetic count.
-    for _,key in ipairs({'casts','castsWithDrop','totalQuantity','samples','personalSamples',
-        'chanceSamples','quantitySamples','minSeen','maxSeen','sourceCounts','quantityHistogram'}) do
-        material[key]=nil
-    end
-    material.reviewedQualityProjected=true
-end
-local function qualityProgress(params)
-    if not validUnits(params.skill) or not validUnits(params.skillMaximum) or params.skillMaximum<=0 then
-        return nil,'Reviewed quality projection requires a finite source skill and scoped maximum'
-    end
-    return clamp(params.skill/params.skillMaximum,0,1)
-end
-local function sourceQuantityTotal(total,shares,group,params)
-    local projected=0
-    for rank,id in ipairs(group.family.rankItemIDs) do
-        local factor=params.outputFactor*(1+number(lookup(params.relativeExtraOutputs,id)))
-        local value=total*shares[rank]*factor+number(lookup(params.extraOutputs,id))
-        projected=projected+math.max(value,number(lookup(params.minimumOutputs,id)))
-    end
-    return projected
-end
-local function normalizeReviewedQuality(raw,params,groups)
-    local progress,why=qualityProgress(params)
-    if not progress then return nil,why end
-    local anchors={schemaVersion=1,families={}}
-    for familyID,group in pairs(groups) do
-        if group.total>0 then
-            local ids=group.family.rankItemIDs
-            local shares,zero,high={},{},{}
-            local override=lookup(raw.reviewedQualityZeroShares,familyID)
-            if override~=nil and not validShares(override,#ids) then
-                return nil,'Declared zero-skill quality shares must explicitly cover the complete native family and sum to one'
-            end
-            local total=0
-            for rank,id in ipairs(ids) do
-                shares[rank]=group.sourceValues[id]/group.total
-                zero[rank]=override and override[rank] or (rank==1 and 1 or 0)
-                if params.method=='Disenchant' then
-                    high[rank]=rank==#ids and .66 or rank==#ids-1 and .34 or 0
-                else
-                    -- Processing's highest-quality endpoint is a separate
-                    -- declared prior, not the disenchanting rank mix.
-                    high[rank]=rank==#ids and 1 or 0
-                end
-                total=total+group.items[id].expectedQuantity
-            end
-            -- An inferred endpoint cannot make a reported higher-quality
-            -- baseline worse. This remains a confidence-zero quality prior.
-            high=dominatingQualityShares(high,shares)
-            if progress==0 then
-                if override then
-                    for rank=1,#ids do if math.abs(zero[rank]-shares[rank])>1e-8 then
-                        return nil,'Declared zero-skill quality prior conflicts with the observed zero-skill source anchor'
-                    end end
-                end
-                zero=copy(shares)
-            end
-            if not validUnits(total) or total<=0 then return nil,'Reviewed quality source has no positive normalized family units' end
-            -- Rank-dependent multipliers/floors can change a family total when
-            -- its zero-profile shares change. Such a source is unidentified
-            -- under this quality-only model; fail closed rather than rescale it.
-            local roundTrip=sourceQuantityTotal(total,zero,group,params)
-            if math.abs(roundTrip-group.total)>1e-8*math.max(1,group.total) then
-                return nil,'Source quantity transforms do not reproduce the source quality-family total under the declared zero prior'
-            end
-            anchors.families[familyID]={familyID=familyID,rankItemIDs=copy(ids),sourceProgress=progress,
-                sourceSkill=params.skill,sourceSkillMaximum=params.skillMaximum,sourceShares=shares,
-                zeroShares=zero,highShares=high,sourceFamilyTotal=group.total,normalizedFamilyTotal=total,
-                confidence=0,zeroPrior=override and 'explicit-declared-quality-prior'
-                    or progress==0 and 'observed-zero-profile-source' or 'all-family-units-at-lowest-native-quality'}
-            for rank,id in ipairs(ids) do
-                local material=group.items[id]
-                local value=total*zero[rank]
-                if math.abs(material.expectedQuantity-value)>1e-12 then reviewedQualityChanged(material) end
-                material.expectedQuantity=value
-            end
-        end
-    end
-    raw.reviewedQualityAnchors=anchors
-    raw.normalizationConfidence=0
-    return raw
-end
-local function projectReviewedQuality(self,result,params)
-    local anchors=result.reviewedQualityAnchors
-    if type(anchors)~='table' or anchors.schemaVersion~=1 or type(anchors.families)~='table' then
-        return nil,'Reviewed quality projection is missing its normalized source anchors'
-    end
-    local data=self.ItemDB and self.ItemDB.professionProfiles or {}
-    local groups,why=qualityGroups(result,data,params)
-    if not groups then return nil,why end
-    local progress,error=qualityProgress(params)
-    if not progress then return nil,error end
-    local used,changed=false,false
-    for familyID,anchor in pairs(anchors.families) do
-        local group=groups[familyID] or groups[tonumber(familyID)]
-        local ids=anchor.rankItemIDs or {}
-        local sourceProgress=anchor.sourceProgress
-        if not group or #ids~=#group.family.rankItemIDs or not validUnits(sourceProgress) or sourceProgress>1
-            or not validShares(anchor.sourceShares,#ids) or not validShares(anchor.zeroShares,#ids)
-            or not validShares(anchor.highShares,#ids) then return nil,'Invalid reviewed quality source anchor' end
-        for rank,id in ipairs(ids) do if id~=group.family.rankItemIDs[rank] then
-            return nil,'Reviewed quality anchor differs from the verified native family order'
-        end end
-        if group.total>0 then
-            for rank,id in ipairs(ids) do
-                local share
-                if progress==sourceProgress then share=anchor.sourceShares[rank]
-                elseif progress<sourceProgress then
-                    local t=progress/sourceProgress
-                    share=anchor.zeroShares[rank]*(1-t)+anchor.sourceShares[rank]*t
-                else
-                    local t=(progress-sourceProgress)/(1-sourceProgress)
-                    share=anchor.sourceShares[rank]*(1-t)+anchor.highShares[rank]*t
-                end
-                local material=group.items[id]
-                local value=group.total*share
-                if math.abs(material.expectedQuantity-value)>1e-12 then
-                    reviewedQualityChanged(material);changed=true
-                end
-                material.expectedQuantity=value
-            end
-            used=true
-        end
-    end
-    if used then
-        result.reviewedQualityProjected=true
-        if changed then result.confidence=0;result.ruleConfidence=0 end
-    end
-    return result
-end
-
+-- Source rank distributions are retained until a dedicated, sourced recipe
+-- model provides a numeric skill-to-quality relationship. Skill by itself is
+-- not evidence for a universal highest-rank mix.
 local function modelRecipeQuality(self,model,params,option,inverse)
     local rule,why=recipeQualityModel(self,params,option)
     if not rule then return nil,why end
@@ -503,10 +351,6 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
     local profile=data.profiles and data.profiles[profession..':'..tostring(expansion)]
     if GetBuildInfo and self.ProfessionRuleMatchesBuild and not self:ProfessionRuleMatchesBuild(data) then profile=nil end
     local recipe=lookup(data.recipes,option.recipeID) or {}
-    if methodIsGather(option.name) and option.qualityThresholds then
-        recipe=copy(recipe);recipe.qualityThresholds=option.qualityThresholds
-        recipe.difficulty=option.difficulty or recipe.difficulty;recipe.supportsQuality=true
-    end
     local native=data.professionParameters and data.professionParameters[profession] or {}
     local live=context.operationStatsIncludeSpecialization==true
     local liveSkill=live and context.skillFromAllocation~=false
@@ -518,9 +362,8 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
             number(context.effectiveSkill,number(context.skill))),skillBonus=0,
         difficulty=number(context.difficulty,context.baseDifficulty and
             (number(context.baseDifficulty)+number(context.bonusDifficulty)) or number(recipe.difficulty)),stats={},confidence=100,
-        appliedEffects={},unlocks={},extraOutputs={},minimumOutputs={},nontradableExtraOutputs={},relativeExtraOutputs={},namedOutputs={},opportunityEffects={},effectTotals={},duration=number(recipe.baseDuration,number(context.duration,number(context.craftTime))),
-        concentrationCost=number(context.concentrationCost),concentrationRefund=number(context.concentrationRefund),
-        outputFactor=1,inputFactor=1,recipe=recipe,eligible=number(context.skill)>=number(recipe.minimumSkill)}
+        appliedEffects={},extraOutputs={},minimumOutputs={},nontradableExtraOutputs={},relativeExtraOutputs={},namedOutputs={},effectTotals={},
+        outputFactor=1,inputFactor=1,recipe=recipe}
     local customQuality=lookup(data.recipeQualityModels,option.recipeID)
     if customQuality and params.inputQuality==nil then
         for rank,id in ipairs(customQuality.inputRankItemIDs) do if id==facts.id then params.inputQuality=rank end end
@@ -530,10 +373,14 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
     local pendingOutputs={}
     for _,key in ipairs(statKeys) do ratings[key]=0;percents[key]=0 end
     local function apply(effect,multiplier)
+        -- Descriptions without a numeric coefficient never alter drops or
+        -- prices. Keep the supported source baseline and native numeric rules.
+        if effect.numericUnsupported or effect.requiresSemanticReview then return end
         if effect.dedicatedHandler then return end
+        if not metricApplies(effect.metric,option.name) then return end
         if context.statReferenceScope and ratings[effect.metric]~=nil then
             local s=effect.scope or {}
-            local probe,probeContext=copy(facts),copy(context)
+            local probe,probeContext=scopeCopy(facts),copy(context)
             local missing=false
             local alternate=contains(s.alternateRecipeIDs,option.recipeID) and option.name==s.alternateMethod
             for _,pair in ipairs({{'inputRarity','quality'},{'inputClassID','classID'}}) do
@@ -567,8 +414,7 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
         local metric=effect.metric
         if skillIncludes and metric=='skill' then return end
         -- Native operations already contain skill and talent stat grants.
-        if live and (metric=='difficulty' or metric=='concentrationCost'
-            or metric=='concentrationRefund' or ratings[metric]~=nil) then return end
+        if live and (metric=='difficulty' or ratings[metric]~=nil) then return end
         local declaredAmount,calibrated=reviewedEffectAmount(effect,option)
         local amount=number(declaredAmount)*multiplier*(effect.operator=='subtract' and -1 or 1)
         local selected=lookup(context.effectStates,effect.entryID)
@@ -581,15 +427,12 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
         end
         params.appliedEffects[#params.appliedEffects+1]={entryID=effect.entryID,metric=metric,amount=amount,
             mechanism=effect.mechanism,confidence=effect.confidence,reviewedCalibration=calibrated or nil}
-        if metric~='nonOutput' then params.confidence=math.min(params.confidence,number(effect.confidence)) end
+        params.confidence=math.min(params.confidence,number(effect.confidence))
         if metric=='skill' then params.skillBonus=params.skillBonus+amount
         elseif metric=='difficulty' then params.difficulty=params.difficulty+amount
         elseif ratings[metric]~=nil then
             if effect.unit=='rating' then ratings[metric]=ratings[metric]+amount
             else percents[metric]=percents[metric]+amount end
-        elseif metric=='recipeUnlock' or metric=='eligibility' then
-            for _,id in ipairs(effect.recipeIDs or {}) do params.unlocks[id]=true end
-            if metric=='eligibility' then params.simulatedEligibility=true end
         elseif metric=='extraOutput' or metric=='dropChance' then
             if effect.unit=='percent' then amount=amount/100 end
             pendingOutputs[#pendingOutputs+1]={effect=effect,amount=amount}
@@ -648,8 +491,6 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
             local outputs=option.outputQualityItems or recipe.outputQualityItems
             local output=lookup(outputs,quality)
             ids=(output and {output.id}) or (option.outputID and {option.outputID}) or copy(recipe.outputIDs or {})
-        elseif binding.kind=='gather-target-primary' then
-            ids=copy(option.primaryOutputIDs or (option.baseline and option.baseline.primaryOutputIDs) or {})
         end
         if binding.requiresTargetOutputFilter and not option.mixedTargetPrior then
             local legal={}
@@ -678,7 +519,6 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
             end
         elseif not effect.identityUnresolved and not binding.kind then params.sameOutputExtra=(params.sameOutputExtra or 0)+amount
         else
-            params.opportunityEffects[#params.opportunityEffects+1]=copy(effect)
             local name=binding.name or effect.targetFamily
             if type(name)=='string' and name~='' then
                 local named={name=name,entryID=effect.entryID,confidence=number(effect.confidence),economicPolicy='unpriced'}
@@ -691,19 +531,23 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
     end
     local explicitNativeStats=live and context.operationStats and #context.operationStats>0
     for _,key in ipairs(statKeys) do
-        local current=lookup(context.stats,key) or nativeStat(context,key) or {}
-        local anchor=lookup(context.statAnchors,key) or current
-        local calibration=lookup(context.statCalibration,key) or anchor
-        local slope
-        if number(calibration.rating)>0 then slope=number(calibration.percent)/calibration.rating end
-        if not slope or slope<=0 then slope=.1 end -- declared low-confidence rating prior
-        local basePercent=number(current.percent)+(number(current.rating)-number(anchor.rating))*slope
-        local percent=basePercent+ratings[key]*slope+percents[key]
-        if (ratings[key]~=0 or (number(current.rating)-number(anchor.rating))~=0) and
-            number(calibration.rating)<=0 then params.confidence=math.min(params.confidence,10) end
-        params.stats[key]=key=='craftingSpeed' and math.max(0,percent)
-            or key=='deftness' and math.max(0,percent/100) or clamp(percent/100,0,1)
-        if profile and not contains(profile.statKeys,key) and ratings[key]==0 and percents[key]==0 then params.stats[key]=0 end
+        if metricApplies(key,option.name) then
+            local current=lookup(context.stats,key) or nativeStat(context,key) or {}
+            local anchor=lookup(context.statAnchors,key) or current
+            local calibration=lookup(context.statCalibration,key) or anchor
+            local slope
+            if number(calibration.rating)>0 then slope=number(calibration.percent)/calibration.rating end
+            -- A rating has no universal percent conversion across professions
+            -- and levels. Native percentages remain valid; uncalibrated rating
+            -- deltas do not create a guessed drop/quality bonus.
+            if not slope or slope<=0 then slope=0 end
+            local basePercent=number(current.percent)+(number(current.rating)-number(anchor.rating))*slope
+            local percent=basePercent+ratings[key]*slope+percents[key]
+            if (ratings[key]~=0 or (number(current.rating)-number(anchor.rating))~=0) and
+                number(calibration.rating)<=0 then params.confidence=math.min(params.confidence,10) end
+            params.stats[key]=clamp(percent/100,0,1)
+            if profile and not contains(profile.statKeys,key) and ratings[key]==0 and percents[key]==0 then params.stats[key]=0 end
+        else params.stats[key]=0 end
     end
     local function useReferenceStat(key)
         if params.statReferenceAssumption and (lookup(context.stats,key) or nativeStat(context,key)
@@ -712,16 +556,15 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
         end
     end
     local method=option.name
-    local gather=methodIsGather(method)
-    local opportunity=method=='Loot' or method=='Use'
+    local itemUse=method=='Use'
     local de=method=='Disenchant'
-    local stochastic=de or method=='Mill' or method=='Prospect' or method=='Crush'
     local supportsMC=option.supportsMulticraft
     if supportsMC==nil then supportsMC=recipe.supportsMulticraft end
     if explicitNativeStats then supportsMC=nativeStat(context,'multicraft')~=nil end
     if supportsMC==nil then supportsMC=number(recipe.outputCount,number(option.outputCount))>1 end
-    local extraFraction=(number(native.MinCraftExtraQtyPct,1)+number(native.MaxCraftExtraQtyPct,250))/200
-    if not stochastic and not gather and not opportunity and not customQuality and supportsMC then
+    local extraFraction=type(native.MinCraftExtraQtyPct)=='number' and type(native.MaxCraftExtraQtyPct)=='number'
+        and (native.MinCraftExtraQtyPct+native.MaxCraftExtraQtyPct)/200
+    if extraFraction and method=='Craft' and not customQuality and supportsMC then
         params.outputFactor=1+params.stats.multicraft*extraFraction*(1+number(params.effectTotals.multicraftExtra)/100)
         if params.outputFactor~=1 then useReferenceStat('multicraft') end
         if params.stats.multicraft>0 then params.confidence=math.min(params.confidence,15) end
@@ -729,38 +572,15 @@ function LL:ProfessionProfileParameters(profession,expansion,context,option,fact
             params.confidence=math.min(params.confidence,number(recipe.capabilityConfidence.multicraft,100))
         end
     end
-    if not de and not gather and not opportunity and option.supportsResourcefulness~=false and recipe.supportsResourcefulness~=false then
-        local saved=(number(native.ResourcefulEffectLow,20)+number(native.ResourcefulEffectHigh,40))/200
+    if type(native.ResourcefulEffectLow)=='number' and type(native.ResourcefulEffectHigh)=='number'
+        and not de and not itemUse and option.supportsResourcefulness~=false and recipe.supportsResourcefulness~=false then
+        local saved=(native.ResourcefulEffectLow+native.ResourcefulEffectHigh)/200
         params.inputFactor=clamp(1-params.stats.resourcefulness*saved*(1+number(params.effectTotals.resourcefulnessSaved)/100),.01,1)
         if params.inputFactor~=1 then useReferenceStat('resourcefulness') end
         if params.stats.resourcefulness>0 then params.confidence=math.min(params.confidence,15) end
     end
-    if gather then
-        params.outputFactor=1+params.stats.finesse*(1+number(params.effectTotals.finesseExtra)/100)
-        params.rareDiscoveryFactor=1+params.stats.perception
-        if params.outputFactor~=1 then useReferenceStat('finesse') end
-        if params.rareDiscoveryFactor~=1 then useReferenceStat('perception') end
-        if params.stats.finesse>0 or params.stats.perception>0 then params.confidence=math.min(params.confidence,5) end
-    end
     params.outputFactor=params.outputFactor*(1+number(params.effectTotals.yieldMultiplier)/100)
     params.sameOutputExtra=math.max(0,number(params.sameOutputExtra))
-    local speed=gather and params.stats.deftness*100 or params.stats.craftingSpeed
-    params.speedFactor=1+speed/100
-    if not recipe.baseDuration and context.durationIncludesSpeed then
-        local key=gather and 'deftness' or 'craftingSpeed'
-        local calibration=lookup(context.statCalibration,key) or nativeStat(context,key) or {}
-        params.duration=params.duration*(1+number(calibration.percent)/100)
-        if not calibration.percent then params.confidence=math.min(params.confidence,0) end
-    end
-    params.baseDuration=params.duration
-    params.duration=params.duration/params.speedFactor
-    if params.baseDuration>0 and params.speedFactor~=1 then useReferenceStat(gather and 'deftness' or 'craftingSpeed') end
-    params.concentrationCost=params.concentrationCost*math.max(0,1+number(params.effectTotals.concentrationCost)/100)
-    local refund=number(context.ingenuityRefundFraction,.5)
-    if type(context.ingenuityRefund)=='number' and params.concentrationCost>0 then refund=context.ingenuityRefund/params.concentrationCost end
-    params.concentrationRefund=clamp(refund+number(params.effectTotals.concentrationRefund)/100,0,1)*params.stats.ingenuity
-    if params.concentrationCost>0 and params.concentrationRefund~=0 then useReferenceStat('ingenuity') end
-    params.expectedConcentrationCost=params.concentrationCost*(1-params.concentrationRefund)
     if customQuality then params.confidence=math.min(params.confidence,customQuality.confidence) end
     return params
 end
@@ -794,12 +614,6 @@ function LL:NormalizeProfessionBaseline(model,params,option)
         raw.sourceQuantityBasis='gross-input'
     end
     local data=self.ItemDB and self.ItemDB.professionProfiles
-    local reviewedGroups
-    if reviewedQualityMode(raw,params) then
-        local why
-        reviewedGroups,why=qualityGroups(raw,data or {},params)
-        if not reviewedGroups then return nil,why end
-    end
     if lookup(data and data.recipeQualityModels,params.recipeID) then
         local adjusted,why=modelRecipeQuality(self,raw,params,option,true)
         if not adjusted then return nil,why end
@@ -814,50 +628,11 @@ function LL:NormalizeProfessionBaseline(model,params,option)
             m.expectedQuantity=m.expectedQuantity-units.extra
             if params.sameOutputExtra>0 and #(raw.materials or {})==1 then m.expectedQuantity=m.expectedQuantity-params.sameOutputExtra end
             local factor=params.outputFactor
-            if methodIsGather(params.method) and option then
-                if m.rareDiscovery or contains(option.rareOutputIDs,m.id) then factor=params.rareDiscoveryFactor or 1
-                elseif option.primaryOutputIDs and not contains(option.primaryOutputIDs,m.id) then factor=1 end
-            end
             m.expectedQuantity=m.expectedQuantity/(factor*units.relativeFactor)
             if m.expectedQuantity<0 then return nil,'Source cannot be inverted under declared profile' end
         end
     end
-    if reviewedGroups then
-        local normalized,why=normalizeReviewedQuality(raw,params,reviewedGroups)
-        if not normalized then return nil,why end
-    elseif params.method=='Disenchant' and params.expansionID~=11 and params.skill>0 then
-        local data=self.ItemDB and self.ItemDB.professionProfiles or {}
-        local groups={}
-        for _,m in ipairs(raw.materials or {}) do
-            local item=lookup(data.items,m.id)
-            local family=item and item.subclassID==12 and lookup(data.qualityFamilies,item.qualityFamilyID)
-            if family and #family.rankItemIDs>1 and not m.rankIDs and type(m.expectedQuantity)=='number' then
-                local key=item.qualityFamilyID
-                groups[key]=groups[key] or {family=family,items={}}
-                groups[key].items[m.id]=m
-            end
-        end
-        local progress=clamp(params.skill/math.max(1,params.skillMaximum),0,1)
-        for _,group in pairs(groups) do
-            local complete,total=true,0
-            local ids=group.family.rankItemIDs
-            for _,id in ipairs(ids) do
-                if not group.items[id] then complete=false else total=total+group.items[id].expectedQuantity end
-            end
-            if complete and progress>0 then
-                if progress>=1 then return nil,'Saturated quality profile requires a declared independent prior' end
-                for rank,id in ipairs(ids) do
-                    local share=rank==#ids and .66 or rank==#ids-1 and .34 or 0
-                    local value=(group.items[id].expectedQuantity-progress*total*share)/(1-progress)
-                    if value < -1e-8 then return nil,'Source quality mix cannot be inverted under this prior' end
-                    group.items[id].expectedQuantity=math.max(0,value)
-                end
-                raw.normalizationConfidence=0
-            end
-        end
-    end
     if raw.expectedInputCount then raw.expectedInputCount=raw.expectedInputCount/params.inputFactor end
-    if raw.duration then raw.duration=raw.duration*params.speedFactor end
     raw.baselineNormalized=true
     return raw
 end
@@ -876,10 +651,6 @@ function LL:ProjectProfessionBaseline(baseline,params,option)
             local units,why=materialUnits(self,m,params)
             if not units then return nil,why end
             local factor=params.outputFactor
-            if methodIsGather(params.method) and option then
-                if m.rareDiscovery or contains(option.rareOutputIDs,m.id) then factor=params.rareDiscoveryFactor or 1
-                elseif option.primaryOutputIDs and not contains(option.primaryOutputIDs,m.id) then factor=1 end
-            end
             local value=m.expectedQuantity*factor*units.relativeFactor+units.extra
             value=math.max(value,units.minimum)
             if params.sameOutputExtra>0 and #(result.materials or {})==1 then value=value+params.sameOutputExtra end
@@ -904,8 +675,6 @@ function LL:ProjectProfessionBaseline(baseline,params,option)
     end
     result.inputCount=number(raw.inputCount,number(option and option.inputCount,1))
     result.expectedInputCount=number(raw.expectedInputCount,result.inputCount)*params.inputFactor
-    result.duration=number(raw.duration)*params.speedFactor^(-1)
-    result.concentrationCost=params.expectedConcentrationCost
     local data=self.ItemDB and self.ItemDB.professionProfiles
     if lookup(data and data.recipeQualityModels,params.recipeID) and not (option and option.deferRecipeQuality) then
         local adjusted,why=modelRecipeQuality(self,result,params,option,false)
@@ -915,10 +684,6 @@ function LL:ProjectProfessionBaseline(baseline,params,option)
     result.qualityRank=params.recipe.supportsQuality and self:ProfessionQualityRank(params,params.recipe) or nil
     result.confidence=math.min(number(raw.confidence,100),params.confidence)
     result.ruleConfidence=math.min(number(raw.ruleConfidence,100),params.confidence)
-    if reviewedQualityMode(raw,params) then
-        local projected,why=projectReviewedQuality(self,result,params)
-        if not projected then return nil,why end
-    end
     result.professionParameters=copy(params)
     result.namedOutputs=copy(raw.namedOutputs or {})
     for _,named in ipairs(params.namedOutputs or {}) do
@@ -934,7 +699,7 @@ function LL:ProjectProfessionBaseline(baseline,params,option)
     return result
 end
 
-function LL:ApplyGeneralProfessionModel(f,option,model,context)
+function LL:ApplyGeneralProfessionModel(f,option,model,context,projectionMemo)
     if not model or (option.name=='Disenchant' and f.expansionID==11) or model.professionProjected then return model end
     local data=self.ItemDB and self.ItemDB.professionProfiles
     local recipe=data and lookup(data.recipes,option.recipeID)
@@ -944,15 +709,26 @@ function LL:ApplyGeneralProfessionModel(f,option,model,context)
     -- Calibration belongs to this evidence model, never the caller's shared
     -- operation or character profile. Source and target use the same units.
     if model.reviewedEffectOverrides then
-        option=copy(option);option.reviewedEffectOverrides=copy(model.reviewedEffectOverrides)
+        option=scopeCopy(option);option.reviewedEffectOverrides=copy(model.reviewedEffectOverrides)
     end
-    local contextFacts=copy(f);contextFacts.expansionID=expansion
+    local contextFacts=scopeCopy(f);contextFacts.expansionID=expansion
     context=context or (self.ProcessingPlayerConditions and self:ProcessingPlayerConditions(contextFacts,option.name,option.recipeID,option.character,profession)) or {}
     local source=copy(model.baselineProfile or {})
     local assumed=not model.baselineProfile
     source.skill=source.skill or source.effectiveSkill or 0;source.preSpecializationSkill=source.preSpecializationSkill or source.skill
     source.specializationPoints=source.specializationPoints or {};source.stats=source.stats or {}
-    local target=self:ProfessionProfileParameters(profession,expansion,context,option,f)
+    local target
+    if projectionMemo and not model.reviewedEffectOverrides then
+        local byOperation=projectionMemo[context]
+        if not byOperation then byOperation={};projectionMemo[context]=byOperation end
+        target=byOperation[option]
+        if not target then
+            target=self:ProfessionProfileParameters(profession,expansion,context,option,f)
+            byOperation[option]=target
+        end
+        -- Each source still has its own normalization/confidence caps.
+        target=scopeCopy(target)
+    else target=self:ProfessionProfileParameters(profession,expansion,context,option,f) end
     if assumed then target.confidence=math.min(target.confidence,5) end
     local baseline=self.ItemDB.modeledProfessionBaselines and self.ItemDB.modeledProfessionBaselines[model.recordID]
     if baseline then
@@ -966,7 +742,7 @@ function LL:ApplyGeneralProfessionModel(f,option,model,context)
             -- unlock/source policy (for example an unlearned diamond bonus).
             if material.expectedQuantity~=nil then material.expectedQuantity=normalized.expectedQuantity end
         end
-        merged.expectedInputCount=baseline.expectedInputCount;merged.duration=baseline.duration
+        merged.expectedInputCount=baseline.expectedInputCount
         merged.reviewedQualityAnchors=copy(baseline.reviewedQualityAnchors)
         merged.reviewedQualityProjection=baseline.reviewedQualityProjection or merged.reviewedQualityProjection
         merged.reviewedQualityZeroShares=copy(baseline.reviewedQualityZeroShares or merged.reviewedQualityZeroShares)
@@ -986,7 +762,7 @@ function LL:ApplyGeneralProfessionModel(f,option,model,context)
         end
         return model
     end
-    local settings=copy(option);settings.preserveMaterialIdentity=true;settings.deferRecipeQuality=true
+    local settings=scopeCopy(option);settings.preserveMaterialIdentity=true;settings.deferRecipeQuality=true
     local projected=self:ProjectProfessionBaseline(baseline,target,settings)
     if not projected then
         if model.requiresSourceNormalization then
@@ -1054,7 +830,7 @@ function LL:ProjectGeneralPersonalEstimate(f,option,raw,target,targetBuild)
     local canonical=self:NormalizeProfessionBaseline(raw.rawEstimate or raw,sp,option)
     if not canonical then return nil end
     tp.confidence=math.min(tp.confidence,sp.confidence,number(raw.confidence,85))
-    local settings=copy(option);settings.deferRecipeQuality=true;settings.preserveMaterialIdentity=true
+    local settings=scopeCopy(option);settings.deferRecipeQuality=true;settings.preserveMaterialIdentity=true
     local projected=self:ProjectProfessionBaseline(canonical,tp,settings)
     if not projected then return nil end
     projected.rawEstimate=copy(raw.rawEstimate or raw);projected.observationContext=copy(raw.observationContext)
@@ -1072,8 +848,8 @@ function LL:ProfessionCraftModel(f,c,character)
     local profession=c.profession or (recipe and recipe.profession)
     local expansion=(recipe and recipe.expansionID) or c.expansionID or f.expansionID
     if not profession or not expansion then return nil end
-    local option=copy(c);option.name=c.method or c.name
-    local contextFacts=copy(f);contextFacts.expansionID=expansion
+    local option=scopeCopy(c);option.name=c.method or c.name
+    local contextFacts=scopeCopy(f);contextFacts.expansionID=expansion
     local ctx=self:ProcessingPlayerConditions(contextFacts,option.name,c.recipeID,character,profession) or {}
     local build=GetBuildInfo and select(2,GetBuildInfo())
     if not ctx.simulated and c.operationInfo and c.operationCharacter==ctx.character
@@ -1093,7 +869,7 @@ function LL:ProfessionCraftModel(f,c,character)
     local id=output and output.id or c.outputID
     local baseline={inputCount=c.inputCount or 1,expectedInputCount=c.inputCount or 1,
         materials={{id=id,itemLink=output and output.itemLink or c.outputItemLink,
-            expectedQuantity=c.outputCount,confidence=100}},duration=params.baseDuration,
+            expectedQuantity=c.outputCount,confidence=100}},
         confidence=100,source='Profession recipe',sourceKey='recipe'}
     local model=self:ProjectProfessionBaseline(baseline,params,option)
     model.qualityRank=(qualityItems or recipe and recipe.supportsQuality or ctx.qualityFromBlizzard) and rank or nil
@@ -1101,7 +877,6 @@ function LL:ProfessionCraftModel(f,c,character)
     model.context=copy(ctx);model.context.effectiveSkill=params.skill
     model.simulated=ctx.simulated
     model.supplyCostFactor=params.inputFactor
-    if self.ApplySyntheticBenchmark then model=self:ApplySyntheticBenchmark(f,option,model,ctx) end
     return model
 end
 
@@ -1155,9 +930,11 @@ function LL:ApplyGeneralProfessionQuality(f,option,model,context)
     if params.skill==0 then return model end
     context=model.projectedContext or context or {}
     local recipe=lookup(data.recipes,option.recipeID)
-    local disenchant=option.name=='Disenchant' and f.expansionID~=11
-    if not disenchant and (not recipe or not recipe.supportsQuality) then return model end
-    local rank=not disenchant and self:ProfessionQualityRank(params,recipe,context) or nil
+    -- Random processing ranks need their own measured model. Crafting
+    -- thresholds describe crafted outputs, not disenchant/mill/prospect rolls.
+    if option.name=='Disenchant' or option.name=='Mill' or option.name=='Prospect' or option.name=='Crush' then return model end
+    if not recipe or not recipe.supportsQuality then return model end
+    local rank=self:ProfessionQualityRank(params,recipe,context)
     local groups={}
     for index,m in ipairs(model.materials or {}) do
         local item=lookup(data.items,m.id)
@@ -1166,7 +943,6 @@ function LL:ApplyGeneralProfessionQuality(f,option,model,context)
             item=lookup(data.items,m.rankIDs[1]);familyID=item and item.qualityFamilyID
         end
         local family=lookup(data.qualityFamilies,familyID)
-        if disenchant and (not item or item.subclassID~=12) then family=nil end
         if family and #(family.rankItemIDs or {})>1 then
             local valid=m.economicPolicy~='nontradable'
             for _,id in ipairs(m.rankIDs or {m.id}) do if not contains(family.rankItemIDs,id) then valid=false end end
@@ -1205,43 +981,7 @@ function LL:ApplyGeneralProfessionQuality(f,option,model,context)
                 if not valid or (quantities[entry.index] or 0)>number(m.expectedQuantity)+1e-8 then valid=false;break end
             end
             local targetID=rank and group.family.rankItemIDs[rank]
-            if disenchant then
-                -- Cross-era quality prior: retain the zero-profile source mix,
-                -- then interpolate to 66% highest rank, remainder next rank.
-                -- No empirical endpoint/count is asserted for this fallback.
-                local progress=clamp(params.skill/math.max(1,params.skillMaximum),0,1)
-                local n=#group.family.rankItemIDs
-                if valid and group.total>0 and progress>0 then
-                    local shares,endpoint={},{}
-                    for r=1,n do shares[r]=0;endpoint[r]=r==n and .66 or r==n-1 and .34 or 0 end
-                    for _,entry in ipairs(group.entries) do
-                        local rankIndex=1
-                        if not entry.material.rankIDs then
-                            for r,id in ipairs(group.family.rankItemIDs) do if entry.material.id==id then rankIndex=r;break end end
-                        end
-                        shares[rankIndex]=shares[rankIndex]+(quantities[entry.index] or 0)/group.total
-                    end
-                    endpoint=dominatingQualityShares(endpoint,shares)
-                    local byID={}
-                    for _,entry in ipairs(group.entries) do
-                        local m=result.materials[entry.index]
-                        local amount=quantities[entry.index] or 0
-                        if amount>0 then
-                            m.expectedQuantity=math.max(0,m.expectedQuantity-amount*progress)
-                            m.chance=nil;m.minQuantity=nil;m.maxQuantity=nil;m.probabilityVerified=false
-                            m.quantityCounts=nil;m.personalHistogram=nil;m.fieldEvidence=nil;m.confidence=0
-                        end
-                        if not m.rankIDs then byID[m.id]=m end
-                    end
-                    for r,share in ipairs(endpoint) do
-                        local id=group.family.rankItemIDs[r]
-                        local amount=group.total*progress*share
-                        if byID[id] then byID[id].expectedQuantity=byID[id].expectedQuantity+amount
-                        elseif amount>0 then additions[#additions+1]={id=id,expectedQuantity=amount,confidence=0,sourceContributions={itemdb=1}} end
-                    end
-                    result.ruleConfidence=0;result.confidence=0;changed=true
-                end
-            elseif valid and targetID and group.total>0 then
+            if valid and targetID and group.total>0 then
                 local targetIndex,upgraded= nil,0
                 for _,entry in ipairs(group.entries) do
                     local material=entry.material
@@ -1335,123 +1075,5 @@ function LL:ApplyRecipeProfessionQuality(f,option,model,params)
     result.ruleConfidence=math.min(number(result.ruleConfidence,100),rule.confidence)
     result.recipeQualityApplied=true;result.generalQualityApplied=true;result.skillQualityApplied=true
     result.recipeQualityRule=rule.ruleID
-    return result
-end
-
-function LL:GatheringSimulationModel(target,context)
-    if type(target)~='table' or not methodIsGather(target.method or target.name) then return nil end
-    local option=copy(target);option.name=target.method or target.name;option.inputCount=1
-    local profession=target.profession
-    local expansion=target.expansionID
-    if not profession or not expansion then return nil end
-    context=context or self:ProcessingPlayerConditions({expansionID=expansion},option.name,target.recipeID,nil,profession)
-    if not context.simulated and self.CharacterKey and context.character==self:CharacterKey()
-        and C_TradeSkillUI and type(C_TradeSkillUI.GetGatheringOperationInfo)=='function' then
-        local ok,info=pcall(C_TradeSkillUI.GetGatheringOperationInfo,target.recipeID)
-        if ok and type(info)=='table' then
-            context=copy(context)
-            if self.CopyProfessionOperationContext then self:CopyProfessionOperationContext(context,info,target.recipeID) end
-            if info.baseSkill and info.bonusSkill then context.effectiveSkill=info.baseSkill+info.bonusSkill end
-            if info.maxDifficulty then option.difficulty=info.maxDifficulty end
-        end
-    end
-    local params=self:ProfessionProfileParameters(profession,expansion,context,option,target)
-    local baseline=target.baseline
-    local result
-    if baseline and type(baseline.materials)=='table' then
-        local source=target.sourceProfile or {skill=0,preSpecializationSkill=0,stats={},specializationPoints={}}
-        local sourceParams=self:ProfessionProfileParameters(profession,expansion,source,option,target)
-        params.confidence=math.min(params.confidence,sourceParams.confidence,number(baseline.confidence,100))
-        local normalized=self:NormalizeProfessionBaseline(baseline,sourceParams,option)
-        if normalized then result=self:ProjectProfessionBaseline(normalized,params,option) end
-    end
-    result=result or {materials={},confidence=params.confidence}
-    result.professionParameters=params;result.skill=params.skill;result.yieldFactor=params.outputFactor
-    result.rareDiscoveryFactor=params.rareDiscoveryFactor;result.speedFactor=params.speedFactor
-    result.qualityRank=(target.qualityThresholds or params.recipe.supportsQuality)
-        and self:ProfessionQualityRank(params,params.recipe,context) or nil
-    if baseline and target.primaryOutputIDs and self.ItemDB and self.ItemDB.professionProfiles then
-        local data=self.ItemDB.professionProfiles
-        local first=lookup(data.items,target.primaryOutputIDs[1])
-        local family=first and lookup(data.qualityFamilies,first.qualityFamilyID)
-        if family and #family.rankItemIDs>1 then
-            local rank=result.qualityRank
-            if target.qualityThresholds then rank=self:ProfessionQualityRank(params,{qualityThresholds=target.qualityThresholds},context) end
-            local id=family.rankItemIDs[rank]
-            if id then
-                local kept,total={},0
-                for _,m in ipairs(result.materials) do
-                    if contains(target.primaryOutputIDs,m.id) then total=total+number(m.expectedQuantity)
-                    else kept[#kept+1]=m end
-                end
-                kept[#kept+1]={id=id,expectedQuantity=total,confidence=math.min(result.confidence,number(target.qualityConfidence))}
-                result.materials=kept;result.qualityRank=rank
-            end
-        end
-    end
-    result.targetID=target.targetID;result.actionable=false;result.generalProfessionApplied=true
-    result.inputCount=result.inputCount or 1
-    if self.ApplySyntheticBenchmark then
-        result=self:ApplySyntheticBenchmark(target,option,result,context)
-        if result.benchmarkOutputFactor then result.yieldFactor=result.yieldFactor*result.benchmarkOutputFactor end
-    end
-    return result
-end
-
--- These are normalized scenario indexes, not item quantities per kill/use and
--- not liquidation EV. Real item identities remain separate from named pools.
-function LL:OpportunitySimulationModel(target,context)
-    if type(target)~='table' or (target.method~='Loot' and target.method~='Use')
-        or type(target.profession)~='string' or type(target.expansionID)~='number' then return nil end
-    context=context or {}
-    local option={name=target.method,labels=copy(target.labels or {}),inputCount=1}
-    local params=self:ProfessionProfileParameters(target.profession,target.expansionID,context,option,
-        {expansionID=target.expansionID})
-    local data=self.ItemDB and self.ItemDB.professionProfiles or {}
-    local relativeOutputs={}
-    local total=0
-    local function itemName(id)
-        local item=lookup(data.items,id)
-        return item and item.name or 'Item '..id
-    end
-    local function add(name,value,metric,unit,id,policy)
-        if type(value)=='number' and value~=0 then
-            relativeOutputs[#relativeOutputs+1]={name=name,value=value,metric=metric,unit=unit,id=id,
-                economicPolicy=policy,confidence=0}
-            if metric=='additional-output' then total=total+value end
-        end
-    end
-    for id,quantity in pairs(params.extraOutputs) do add(itemName(id),quantity,'additional-output','normalized-additional-units',id) end
-    for id,quantity in pairs(params.nontradableExtraOutputs) do add(itemName(id),quantity,'additional-output','normalized-additional-units',id,'nontradable') end
-    for id,fraction in pairs(params.relativeExtraOutputs) do add(itemName(id),1+fraction,'discovery','relative-factor',id) end
-    for id,minimum in pairs(params.minimumOutputs) do add(itemName(id),minimum,'guaranteed-output-floor','normalized-output-floor',id) end
-    for _,named in ipairs(params.namedOutputs) do
-        if type(named.expectedQuantity)=='number' then add(named.name,named.expectedQuantity,'additional-output','normalized-additional-units')
-        elseif type(named.discoveryFactor)=='number' then add(named.name,named.discoveryFactor,'discovery','relative-factor')
-        elseif type(named.chance)=='number' then
-            -- A typed chance term is displayed on a reference index rather
-            -- than asserted as an absolute probability for an unknown kill.
-            add(named.name,1+named.chance,'discovery','relative-factor')
-        end
-    end
-    table.sort(relativeOutputs,function(a,b)
-        return a.name==b.name and a.metric<b.metric or a.name<b.name
-    end)
-    local result={kind='profession-opportunity-preview',targetID=target.targetID,method=target.method,
-        profession=target.profession,expansionID=target.expansionID,actionable=false,
-        confidence=0,baselineIndex=1,outputIndex=1+total,quantityBasis=target.quantityBasis,
-        relativeOutputs=relativeOutputs,params=params,professionParameters=params,
-        unlocks=copy(params.unlocks),effectTotals=copy(params.effectTotals),appliedEffects=copy(params.appliedEffects),
-        materials={},namedOutputs={},inputCount=1,context=copy(context)}
-    if self.ApplySyntheticBenchmark then
-        result=self:ApplySyntheticBenchmark({expansionID=target.expansionID},option,result,context)
-        local factor=result.benchmarkOutputFactor
-        if factor then
-            result.outputIndex=result.outputIndex*factor
-            for _,output in ipairs(result.relativeOutputs) do
-                if output.unit=='normalized-additional-units' or output.unit=='normalized-output-floor' then output.value=output.value*factor end
-            end
-        end
-    end
     return result
 end

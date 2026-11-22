@@ -206,7 +206,7 @@ class ProcessingSourceFactTranslationTests(unittest.TestCase):
         escaped = execute_processing_lua(r'''return {text='quote" slash'..string.char(92)..' CR'..string.char(13)..' LF'..string.char(10)..' tab'..string.char(9)}''', ROOT)
         self.assertEqual(escaped, {'text': 'quote" slash\\ CR\r LF\n tab\t'})
 
-    def test_actual_item_tooltip_source_reference_does_not_create_action_or_ev(self):
+    def test_offline_source_reference_does_not_render_in_item_tooltip_or_create_ev(self):
         import research_v3_to_baselines as bridge
         original = self.original('knownInvestedSourceMean', value=1.3)
         facts = self.adapt(original)[0]['facts']
@@ -216,13 +216,15 @@ class ProcessingSourceFactTranslationTests(unittest.TestCase):
             GetBuildInfo=function()return '12.1.5','123456','',120105 end
             GetItemInfo=function()return 'Source Pigment' end
         '''
-        for name in ('Database.lua', 'Observations.lua', 'ReviewedSourceFacts.lua', 'Badges.lua'):
+        for name in ('Database.lua', 'Observations.lua', 'Badges.lua'):
             script += 'assert(loadfile(' + json.dumps((ROOT / 'LootLiquidator' / name).as_posix()) + '))("LootLiquidator",LL)\n'
+        script += 'assert(loadfile(' + json.dumps((ROOT / 'tools/reviewed_source_facts.lua').as_posix()) + '))("LootLiquidator",LL)\n'
+        # Explicitly inject offline fixture facts for the source helper. The
+        # shipped ItemDB does not load this informational research archive.
         script += 'LL.ItemDB=' + bridge.lua({'reviewedSourceFacts': {'schemaVersion': 1, 'facts': facts}}) + '\n'
         script += '''
             LL.MarkupColor=function()return ''end
             LL.Money=function(_,value)return tostring(value)..' copper'end
-            LL.ProfessionProgression=function()return {}end
             decision={facts={id=1001,expansionID=0,classID=7,quality=1},conversionOptions={},action=nil}
             function render()
                 local tooltip={lines={}}
@@ -231,19 +233,27 @@ class ProcessingSourceFactTranslationTests(unittest.TestCase):
                 LL:AppendRecommendationTooltip(tooltip,decision)
                 return table.concat(tooltip.lines,'\\n')
             end
+            local function sourceDetails()
+                return table.concat(LL:ReviewedProcessingSourceFactLines(decision.facts,{{name='Mill'}},{}),'\\n')
+            end
+            local offline=sourceDetails()
+            assert(offline:find('source-profile mean 1.3 units per input',1,true),'offline source mean missing')
+            assert(offline:find('skill 75',1,true),'offline source skill missing')
+            assert(offline:find('Confidence 0%',1,true),'offline source confidence missing')
             local text=render()
-            assert(text:find('source-profile mean 1.3 units per input',1,true),'source mean missing')
-            assert(text:find('skill 75',1,true),'source skill missing')
-            assert(text:find('Confidence 0%',1,true),'confidence missing')
+            assert(text=='','informational archive cluttered the normal item tooltip')
             assert(not text:find('copper',1,true),'source fact acquired economic value')
             assert(#decision.conversionOptions==0 and decision.action==nil,'source fact created an action')
             LL.db.source_itemdb_enabled=false
+            assert(sourceDetails()=='','disabled source leaked through offline helper')
             assert(not render():find('Processing source facts',1,true),'disabled source leaked')
             LL.db.source_itemdb_enabled=true
             LL.db.source_itemdb_weight=0
+            assert(sourceDetails()=='','zero-weight source leaked through offline helper')
             assert(not render():find('Processing source facts',1,true),'zero-weight source leaked')
             LL.db.source_itemdb_weight=nil
             LL.db.professionTooltipProfiles={Inscription='@hide'}
+            assert(sourceDetails()=='','hidden profile leaked through offline helper')
             assert(not render():find('Processing source facts',1,true),'hidden profile leaked')
             return {passed=true}
         '''

@@ -132,8 +132,8 @@ install({old,generic})
 local exact=assert(resolve(greenFacts))
 near(byID(exact,243602).expectedQuantity,.697921,'generic pooled mean cannot outrank an exact item study')
 check(byID(exact,243599)==nil,'generic expectation is not added on top of exact item outcomes')
--- Research supplies the figures; the saved display preference controls whether
--- average quantities are rendered. Hiding averages does not discard the data.
+-- Research supplies the actual means/gold. The owner-approved presentation
+-- uses best-effort percentages/ranges without rewriting those measured fields.
 local function render(resolved)
     LL:ValueProcessingModel(resolved,0,true,facts)
     local tip={lines={},rows={}}
@@ -146,13 +146,20 @@ local function render(resolved)
     return table.concat(tip.lines,'\n'),table.concat(tip.rows,'\n')
 end
 install({counted})
-local text,rows=render(assert(resolve()))
-check(rows:find('62.9%',1,true) and not rows:find('[avg',1,true) and not rows:find('chance unavailable',1,true),
-    'a known DE mean remains numerical when chance and range are absent')
+local meanOnly=assert(resolve())
+local text,rows=render(meanOnly)
+check(rows:find('62.9%',1,true) and rows:find('[1]',1,true)
+    and not rows:find('0.629x',1,true) and not rows:find('[avg',1,true)
+    and not rows:find('chance unavailable',1,true),
+    'mean-only DE uses the required percentage/range presentation')
+near(byID(meanOnly,243602).expectedQuantity,.629,'presentation preserves the actual measured mean')
+check(byID(meanOnly,243602).chance==nil and byID(meanOnly,243602).minQuantity==nil,
+    'display estimates never become measured model probabilities or bounds')
+near(byID(meanOnly,243602).netExpectedValue,62.9,'gold uses the actual mean and unchanged output price')
 LL.db.showAverageQuantity=true
 text,rows=render(assert(resolve()))
-check(rows:find('62.9%',1,true) and not rows:find('chance unavailable',1,true),
-    'enabling averages displays the researched mean without inventing probability')
+check(rows:find('62.9%',1,true) and rows:find('[1]',1,true) and not rows:find('0.629x',1,true),
+    'retired average preference cannot restore quantity-x rows')
 check(not text:find('Personal x',1,true),'units-only study is not presented as a quantity histogram')
 local occurrence=record('independent-counts-and-units',{output(243602,.5,.2,1,3)})
 occurrence.inputRarity=3;occurrence.inputClassID=4
@@ -171,20 +178,21 @@ LL.db.showAverageQuantity=true
 -- Finally exercise the real generated record, after the evidence builder and
 -- native ItemDB compiler have run, rather than only these controlled fixtures.
 local shipped={}
-assert(loadfile('tests/fixtures/research-golden/ItemDBRuntime.lua'))('LL',shipped)
+assert(loadfile('LootLiquidator/ItemDBRuntime.lua'))('LL',shipped)
 local native
 for _,r in ipairs(shipped.ItemDB.processing) do
-    if r.inputItemID==239671 and r.inputRarity==3 and r.inputClassID==4 then
+    if r.categorySourceInputItemID==239671 and r.inputRarity==3 and r.inputClassID==4 then
         for _,m in ipairs(r.materials) do
             if m.id==243602 and m.expectedQuantity.value==.629 then native=r end
         end
     end
 end
-check(native,'native ItemDB contains the new identity-scoped Courtly units study')
+check(native and native.inputItemID==nil and native.isDisenchantCategory,
+    'native ItemDB preserves the independent Courtly units remainder as category evidence')
 LL.ItemDB=shipped.ItemDB;check(LL:InitializeItemDB(),LL.itemDBError)
 local rareCategory,maxSpecCategory
 for _,r in ipairs(shipped.ItemDB.processing) do
-    if r.isDisenchantCategory and r.gearKey=='gear:11:3:armor' then
+    if r.isDisenchantCategory and r.gearKey=='gear:11:3:armor' and r.recordID:match('^evidence:category:') then
         if r.categoryReferenceOnly then maxSpecCategory=r else rareCategory=r end
     end
 end
@@ -212,5 +220,13 @@ check(rows:find('%%') and not rows:find('[avg',1,true),
 local crystalFacts={id=250456,quality=4,classID=4,expansionID=11,count=1}
 local crystals=assert(resolve(crystalFacts))
 check(math.abs(byID(crystals,243605).chance-190/318)<.0000005,'native category crystal probability uses its counted cohort')
-near(byID(crystals,243605).expectedQuantity,byID(crystals,243605).chance,'fixed-one source stack makes E equal P for that category')
+near(byID(crystals,243605).expectedQuantity,.5812970837510016,
+    'current category includes additional independent means without rewriting the measured occurrence')
+local canonical
+for _,r in ipairs(shipped.ItemDB.processing)do
+    if r.recordID:match('^evidence:category:') and r.gearKey=='gear:11:4:armor' then canonical=r;break end
+end
+local crystalReceipt=assert(byID(assert(canonical),243605))
+near(crystalReceipt.expectedQuantity.value,crystalReceipt.dropChance.value,
+    'original fixed-one source receipt retains its own equal E and P verbatim')
 print('PASS: '..checks..' Midnight DE category, cohort isolation, units/probability and native compilation assertions')

@@ -59,7 +59,9 @@ tip.lines={}
 LL:AppendRecommendationTooltip(tip,{action='P',count=5,facts={id=1,classID=7},
     conversionOptions={{name='Prospect',letter='P',value=40,yieldModel=model}}})
 text=table.concat(tip.lines,'\n')
-assert(text:find('chance '..m.chanceConfidence..'%, quantity support 80%',1,true),text)
+assert(not text:find('quantity support',1,true) and text:find('50%',1,true) and text:find('40',1,true),
+    'compact row preserves occurrence and price without per-field confidence clutter')
+assert(m.chanceConfidence==LL:RateConfidence(5,10) and m.confidence==80,'presentation preserves separate confidence fields')
 
 local separateCasts=record(.228,.229,1,1)
 separateCasts.recordID='evidence:v3:Prospect:1:x5'
@@ -91,7 +93,10 @@ tip.lines={}
 LL:AppendRecommendationTooltip(tip,{action='P',count=5,facts={id=1,classID=7},
     conversionOptions={{name='Prospect',letter='P',value=40,yieldModel=model}}})
 text=table.concat(tip.lines,'\n')
-assert(text:find('Conflicting source chance: 25% (excluded from estimate)',1,true),text)
+assert(not text:find('Conflicting source chance:',1,true)
+    and text:find('50% |T134400:14:14:0:0|t Material 2 [2-6]',1,true),
+    'the known mean/range yields only a canonical display estimate while rejected raw source chance stays held')
+assert(model.materials[1].chance==nil and rates.heldDropChance.value==.25,'renderer cannot restore a held occurrence')
 LL.db.showResearchDetails=false
 rates.heldDropChance=nil
 

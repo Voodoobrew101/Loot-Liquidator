@@ -62,8 +62,9 @@ local function json(v,forceArray)
     for _,k in ipairs(keys(v)) do out[#out+1]=quote(tostring(k))..':'..json(v[k],arrayFields[k]) end
     return '{'..table.concat(out,',')..'}'
 end
-local function identity(context)
+local function identity(context,ignoreInputIdentity)
     local c=copy(context);c.observed=nil;c.previousSnapshot=nil;c.inputExpansionID=nil
+    if ignoreInputIdentity then c.inputIdentity=nil end
     return json(c)
 end
 local function ledger(self)
@@ -179,8 +180,8 @@ function LL:RecordCraftObservation(record)
     local measured=copy(record.context);measured.inputIdentity={}
     for _,item in ipairs(record.nominalInputs or record.inputs) do
         measured.inputIdentity[#measured.inputIdentity+1]={itemID=item.itemID,qualityRank=item.qualityRank,rarity=item.rarity,quantity=item.quantity,
-            itemLevel=(item.classID==2 or item.classID==4) and item.itemLevel or nil,
-            hyperlink=(item.classID==2 or item.classID==4) and item.hyperlink or nil}
+            itemLevel=(item.classID==2 or item.classID==4 or item.classID==19) and item.itemLevel or nil,
+            hyperlink=(item.classID==2 or item.classID==4 or item.classID==19) and item.hyperlink or nil}
     end
     local id=contextID(self,measured);if not id then return false,"Context capacity reached; export research before continuing" end
     local r=copy(record);r.context=nil;r.contextID=id;r.schemaVersion=SCHEMA;r.recorderRevision=RECORDER_REVISION
@@ -571,7 +572,7 @@ local function validateDelta(self,p,after)
         -- eligibility. Valuation exclusions (ignore list, old DB restrictions,
         -- missing equipLoc) must not veto something the game just disenchanted.
         if next(returned) or #inputs~=1 or inputs[1].quantity~=1 or not f
-            or (f.classID~=2 and f.classID~=4) then return nil,"Unverified disenchant input" end
+            or (f.classID~=2 and f.classID~=4 and f.classID~=19) then return nil,"Unverified disenchant input" end
         p.disenchantInputFacts=f
     elseif p.method=="Mill" or p.method=="Prospect" then
         local f=p.before.facts[inputs[1].itemID]
@@ -626,7 +627,8 @@ local function validateDelta(self,p,after)
         for _,r in ipairs(self.ItemDB and self.ItemDB.processing or {}) do
             if r.method==p.method and (r.recipeID==nil or r.recipeID==p.recipe)
                 and (r.inputItemID==input or (p.method=="Disenchant" and r.gearKey==
-                ('gear:%s:%s:%s'):format(tostring(p.before.facts[input].expansionID),tostring(p.before.facts[input].quality),p.before.facts[input].classID==2 and 'weapon' or 'armor'))) then
+                ('gear:%s:%s:%s'):format(tostring(p.before.facts[input].expansionID),tostring(p.before.facts[input].quality),
+                    p.before.facts[input].classID==2 and 'weapon' or p.before.facts[input].classID==19 and 'profession' or 'armor'))) then
                 for _,m in ipairs(r.materials) do
                     allowed[m.id]=true
                     for _,id in ipairs(m.rankIDs or {}) do allowed[id]=true end
@@ -869,13 +871,17 @@ function LL:CraftBaseline(studyID,contextRef,recipeID,options)
         studyID=studyID,materials={},operations=0,sourceRecordIDs={},status="EMPIRICAL_ESTIMATE",
         numericTransformValidated=false,applyPolicy="NO_NUMERIC_TRANSFORM"}
     base.patchBuild=study.build
-    base.observationContext=copy(d.contexts[contextRef])
+    -- The category aggregator already holds the immutable source context and
+    -- copies only its selected final result. Public baselines keep their copy.
+    if not (options and options.omitObservationContext) then
+        base.observationContext=copy(d.contexts[contextRef])
+    end
     if subset and study.censored and scopedGap then
         base.studyCoverageCensored=true;base.coverageCensored=false;base.studyCoverageGap=copy(scopedGap)
         base.coverageSelection='complete-retained-context-records'
         base.excludedUnresolvedOperations=0;base.excludedUnresolvedRecordIDs={}
     end
-    local totals,inputTotals,signature={},{},nil
+    local totals,inputTotals={},{}
     local unknownClientVersion=false
     for _,r in ipairs(d.records) do if r.studyID==studyID and r.contextID==contextRef and r.recipeID==recipeID then
         if review and not review.operations[r.operationID] then return nil,"Operation is outside the reviewed legacy capture" end
@@ -886,9 +892,9 @@ function LL:CraftBaseline(studyID,contextRef,recipeID,options)
             base.excludedUnresolvedRecordIDs=base.excludedUnresolvedRecordIDs or {}
             base.excludedUnresolvedRecordIDs[#base.excludedUnresolvedRecordIDs+1]=r.operationID
         else
-        local inputSignature=json(d.contexts[r.contextID].inputIdentity)
-        if signature and signature~=inputSignature then return nil,"Different input batches or variants" end
-        signature=inputSignature;base.inputs=r.nominalInputs or r.inputs;base.method=r.method
+        -- Every member has this exact immutable contextRef and therefore the
+        -- same stored input identity; reserializing it cannot find a new batch.
+        base.inputs=r.nominalInputs or r.inputs;base.method=r.method
         for _,item in ipairs(r.inputs) do inputTotals[item.itemID]=(inputTotals[item.itemID] or 0)+item.quantity end
         base.operations=base.operations+1;base.sourceRecordIDs[#base.sourceRecordIDs+1]=r.operationID
         if r.clientVersion then
@@ -926,15 +932,13 @@ local function disenchantCategory(item)
     local class=item and item.classID
     if not finite(expansion) or expansion%1~=0 or expansion>11
         or not finite(rarity) or rarity%1~=0 or rarity<2 or rarity>4
-        or (class~=2 and class~=4) then return nil end
-    return ('gear:%s:%s:%s'):format(expansion,rarity,class==2 and 'weapon' or 'armor')
+        or (class~=2 and class~=4 and class~=19) then return nil end
+    return ('gear:%s:%s:%s'):format(expansion,rarity,class==2 and 'weapon' or class==19 and 'profession' or 'armor')
 end
 local function categoryProfileIdentity(context)
-    local profile=copy(context)
     -- Keep the original item identities in the raw log. They do not make two
     -- casts in the same disenchant category different profession profiles.
-    profile.inputIdentity=nil
-    return identity(profile)
+    return identity(context,true)
 end
 local function disenchantInputMatches(input,f)
     return (input.expansionID==nil or input.expansionID==f.expansionID)
@@ -948,6 +952,15 @@ function LL:GetRecordedDisenchantCategoryEstimate(f,recipeID,targetContext)
     d=ledger(self)
     local character,currentBuild=self:CharacterKey(),build()
     local groups,order,checked,queries={},{},{},{}
+    -- Source and target contexts repeat across cohorts in this one lookup.
+    -- Reuse their serialized identities only for this request; no saved or
+    -- long-lived cache can retain a changing target profile.
+    local profileIdentities={}
+    local function profileIdentity(context)
+        local value=profileIdentities[context]
+        if not value then value=categoryProfileIdentity(context);profileIdentities[context]=value end
+        return value
+    end
     for i=#d.records,1,-1 do
         local r=d.records[i]
         local inputs=r.nominalInputs or r.inputs
@@ -964,7 +977,7 @@ function LL:GetRecordedDisenchantCategoryEstimate(f,recipeID,targetContext)
             -- source reference; no cross-build count is made current.
             local baseline=not historical or sourceProfile
             baseline=baseline and self:CraftBaseline(r.studyID,r.contextID,recipeID,
-                {allowCompleteDisenchantSubset=sourceProfile~=nil})
+                {allowCompleteDisenchantSubset=sourceProfile~=nil,omitObservationContext=true})
             if baseline and context and context.character==character then
                 local query=json({allocation=r.allocation,concentration=r.applyConcentration})
                 local current=queries[query]
@@ -980,9 +993,9 @@ function LL:GetRecordedDisenchantCategoryEstimate(f,recipeID,targetContext)
                     and sourceProfile==self:DisenchantObservationProfileKey(current)
                 local exact=not historical and (sameProfile or (current.effectiveSkill and current.specialization and current.skillLineID
                     and type(current.fieldStatus)=='table' and current.fieldStatus.equipment=='measured'
-                    and categoryProfileIdentity(context)==categoryProfileIdentity(current)))
+                    and profileIdentity(context)==profileIdentity(current)))
                 if exact or self.ProjectPersonalEstimate then
-                    local signature=tostring(r.build)..':'..(sourceProfile or categoryProfileIdentity(context))
+                    local signature=tostring(r.build)..':'..(sourceProfile or profileIdentity(context))
                     local group=groups[signature]
                     if not group then
                         group={context=context,current=current,exact=exact,sourceBuild=r.build,baselines={}}
@@ -1076,8 +1089,11 @@ function LL:GetRecordedProcessingEstimate(f,method,batch,recipeID,targetContext)
     local checked,queries={},{}
     for i=#d.records,1,-1 do
         local r=d.records[i];local id=r.contextID;local inputs=r.nominalInputs or r.inputs
-        local queryID=tostring(r.studyID)..':'..tostring(id)
-        if r.recipeID==recipeID and r.method==method and not checked[queryID]
+        -- Most bag recipe queries have no matching recorded operation. Avoid
+        -- constructing cohort keys for unrelated retained cast histories.
+        local queryID=r.recipeID==recipeID and r.method==method
+            and (tostring(r.studyID)..':'..tostring(id))
+        if queryID and not checked[queryID]
             and #inputs==1 and inputs[1].itemID==f.id and inputs[1].quantity==batch
             and (method~='Disenchant' or disenchantInputMatches(inputs[1],f)) then
             checked[queryID]=true
@@ -1095,8 +1111,8 @@ function LL:GetRecordedProcessingEstimate(f,method,batch,recipeID,targetContext)
                     local allocationGUID=r.allocationItemGUID and self.FindSkillQualityTarget and self:FindSkillQualityTarget(f)
                     current=self:CaptureCraftContext(recipeID,f,method,r.allocation,r.applyConcentration,allocationGUID)
                     current.inputIdentity={{itemID=f.id,qualityRank=f.reagentQuality,rarity=f.quality,quantity=batch,
-                        itemLevel=(f.classID==2 or f.classID==4) and f.itemLevel or nil,
-                        hyperlink=(f.classID==2 or f.classID==4) and f.link or nil}}
+                        itemLevel=(f.classID==2 or f.classID==4 or f.classID==19) and f.itemLevel or nil,
+                        hyperlink=(f.classID==2 or f.classID==4 or f.classID==19) and f.link or nil}}
                     queries[query]=current
                 end
                 local context=d.contexts[id]

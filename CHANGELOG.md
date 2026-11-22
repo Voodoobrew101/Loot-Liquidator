@@ -1,3 +1,12 @@
+# Loot Liquidator 1.0.0
+
+- Use one tooltip layout across processing methods: action header, method and character with confidence, then material percentages, icons, quality grades, quantity ranges and prices.
+- Restore missing tooltip fields from existing references and display estimates while keeping gold calculations and recorded evidence separate. Preserve skill-locked `0% [0]` rows and correct mixed-gem identities and quality rows.
+- Keep profession controls focused on effects that change supported item processing. Remove world-gathering projections, their settings and unrelated forecast data.
+- Use ordinary disenchant category tables and a smaller runtime profession catalog while preserving required item identities, quality families and learned-recipe support.
+- Reduce repeated model and tooltip allocations, reuse ready quotes within a calculation, and retain useful badge cache entries when capacity is reached.
+- Skip hidden Blizzard containers and Pawn's private item scanner. Process guild-bank badges in bounded batches, and remove the extra fixed cooldown between badge batches while retaining the work budget and item-instance checks.
+
 # Loot Liquidator 0.12.50
 
 - Apply the same compact leading-rate/count format to disenchanting, without trailing average text.

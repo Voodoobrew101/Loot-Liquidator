@@ -1,12 +1,10 @@
 # Loot Liquidator
 
-The usable-data tooltip work is tracked in [PR #24](https://github.com/Voodoobrew101/Loot-Liquidator/pull/24), with [pass-2 findings](docs/usable-data-audit/PASS-2.md) and [actual offline token tooltip proofs](docs/usable-data-audit/token-tooltip-proofs.md). Pinned AllTheThings Retail references now supply exchange relationships and explicit costs through the compiler; ATT does not need to be installed. Attribution is retained in [ATT-LICENSE.txt](database/research/ATT-LICENSE.txt).
-
 **What should I do with this item?** Loot Liquidator answers that for every item in your bags, bank, Warband bank, guild bank and BetterBags. It puts a small letter on the item's icon, and hovering the item shows the gold value behind the advice.
 
 It only gives advice. It never sells, mails, crafts or destroys anything for you.
 
-> **Status:** test version (0.11.0-claude). Back up your `WTF/Account/<name>/SavedVariables/LootLiquidator.lua` before installing.
+> **Release:** 1.0.0. Back up your `WTF/Account/<name>/SavedVariables/LootLiquidator.lua` before installing.
 
 ## The letters
 
@@ -18,54 +16,52 @@ It only gives advice. It never sells, mails, crafts or destroys anything for you
 | **M** | Mill it (herbs) |
 | **P** | Prospect it (ore) |
 | **S** | Smelt it (ore) |
-| **C** | Craft something with it |
-| **R** | Recycle it |
-| **X** | Exchange, combine or split it |
 | **T** | Keep it: you or one of your alts is still missing its appearance |
 | **?** | Not enough information to give an answer (rare) |
 
-The letter is the option worth the most gold for you (with the Auction House's 5% cut taken off, unless you switch that off).
+Gold recommendations compare the available options, including the Auction House's cut. The **T** appearance recommendation takes priority when you or an eligible alt can learn a missing appearance. Crafting, recycling and documented exchanges also appear as processing options in the tooltip; the generic **C** badge is retired.
 
 ## The tooltip
 
-Hover any item to see a short Loot Liquidator section, for example:
+Hover an item to see the recommendation, then each processing method and its materials. The layout is:
 
 ```
-Loot Liquidator: Smelt 6g 87s
-  Auction       6g 65s
-  Prospecting   2g 72s   (Confidence 48%)
-  Smelting      6g 87s   (Confidence 81%)
-  Vendor          15s
+Loot Liquidator: Vendor
+Disenchant — Character (Confidence …%)                 total value
+  100% [item icon] [quality icon] Dawn Crystal [1]      material value
+Vendor                                                vendor value
 ```
 
-**Confidence** is how sure the addon is about a disenchant, mill, prospect or smelt value. It goes up as more real results are known, including your own. Low-confidence values are still shown, because a best guess is more useful than nothing.
+The header contains the action, with no price appended to it. Each processing row shows the method, selected character and confidence, with its total value on the right. Each material row shows the drop percentage, item icon, native quality icon when applicable, colored item name, `[quantity]` or `[minimum-maximum]`, and value on the right. The same layout is used across processing methods.
 
-**Reference estimates** fill gaps from stored Retail conversion tables and sourced calculators. They are labeled provisional and do not replace usable research or recorded results. Turn them on or off under **Database & Accuracy → Reference tables and calculators**.
+**Confidence** reflects the evidence and assumptions behind an estimate. Existing reference estimates and low-confidence display estimates can complete missing tooltip percentages and ranges. These display fields never replace the expected quantities or prices used for gold calculations, and they do not rewrite recorded evidence. There is no `x` quantity fallback.
 
-Under **Tooltips**, average output quantities are optional and off by default. The same preference applies to disenchanting and hypothetical profiles. Yield ranges read `[1-2]`. Material rows can be sorted by value, drop chance, average quantity, name, or database order.
+Every actual material row remains visible. An output prevented by a known skill, specialization or buff requirement shows `0%` and `[0]`; changing the relevant profile can activate it. Separate quality grades remain distinct. Rows can be sorted by value, drop chance, quantity, name, or database order.
+
+**Reference tables and calculators** can be enabled or disabled under **Database & Accuracy**. Source selections still govern the processing estimates.
 
 Choose how much you see under **Settings → AddOns → Loot Liquidator → Tooltips → Tooltip**:
 
 - **Off** – no tooltip lines (the letters still show)
 - **Recommendation** – one line
 - **Alternatives** – every option with its gold value
-- **Breakdown** – also lists the materials behind each option, with drop chance and amount
+- **Breakdown** – adds every material in the shared percentage, icon, name, quantity-range and price format.
 
 ## Settings worth knowing
 
 Open them with **/ll** or from the game's Settings → AddOns.
 
-- **General → Show rates for**: whose profession skill sets the numbers: you, one of your alts, or a made-up "what-if" profile.
-- **Professions (Simulated) → choose a profession → Advanced**: only controls connected to researched output calculations are shown. Unsupported sliders stay hidden and return when supported calculations are added; saved choices are retained. Editing a slider selects Simulated. **Reset to minimum** clears the simulation. See the [research and modeling notes](docs/SYNTHETIC-BENCHMARK.md).
+- **Professions (Simulated)**: choose your character, a verified alt, or a manual skill/buff profile for processing. There are no arbitrary benchmark multipliers or world-drop previews.
+- **Professions (Simulated) → choose a profession → Advanced**: controls are limited to supported item processing and its material quantities, quality or input savings. Editing a slider selects Simulated. **Reset to minimum** clears the simulation. World-gathering projections and unrelated profession controls are removed. See the [processing model notes](docs/PROFESSION-BASELINE-PIPELINE.md).
 - **Researched skill effects**: Midnight prospecting and supported milling pigment families can select output quality from the exact recipe threshold, changing auction value. Open the profession with the input in your bags to capture that threshold; the hypothetical effective-skill slider can then cross it. Pigment totals use a labeled calculator estimate. Disenchanting research, personal observations and classified imports apply to matching expansion, rarity and armor/weapon groups. [Sources and research pipeline](docs/SKILL-YIELD-RESEARCH.md), [Midnight material yields](docs/MIDNIGHT-MATERIAL-YIELDS.md).
 - **Badges & Colors**: turn letters on or off, move them, change size and colors, and **Include alts** (count alts who could use or process an item you can send them).
-- **Tooltips**: the tooltip level above, plus **Show price in the header**.
+- **Tooltips**: the tooltip level above and material output sorting. The row layout is fixed.
 - **Pricing & Actions**: the Auction House cut, and how much extra profit an auction or processing option needs before it is recommended.
 - **Processing Research**: record your own disenchant/mill/prospect/smelt results so the numbers become yours. Buttons: **Export recorded results**, **Start new batch**, **Reset recorded results**, **Import** (results a friend exported) and **Remove imported results**.
 
 ## What it needs
 
-- **TradeSkillMaster (TSM)** is needed for Auction House prices. Without it, the addon still works, but it can only compare vendor values.
+- **TradeSkillMaster (TSM)** supplies Auction House prices. The addon still loads and uses available vendor values without it.
 - **Optional:** BetterBags (letters in BetterBags).
 - Retail World of Warcraft: Midnight (12.1).
 
@@ -85,15 +81,16 @@ Please say which item, what letter and tooltip you saw, and what you expected. `
 
 ## For developers
 
-- Work happens on branch `LootLiquidatorclaude-V0.1`. The plan, decisions and session log are in [`claude/HANDOFF.md`](claude/HANDOFF.md).
+- Published source is on `main`. Build from a pinned source and research snapshot.
 - After a WoW patch: [`AFTER_PATCH.md`](AFTER_PATCH.md) (a ready prompt for an AI helper, then step by step).
 - Older notes (up to 0.10.0-alpha10) are in [`docs/DEVELOPER-NOTES.md`](docs/DEVELOPER-NOTES.md).
 - Build and test (Lua 5.1 and Python 3):
 
   ```
-  lua5.1 tools/compile_itemdb.lua LootLiquidator/ItemDBRuntime.lua
+  python3 tools/prepare_build_research.py
   bash tests/run.sh
   python3 tools/package_addon.py dist/LootLiquidator-test.zip
+  python3 tools/verify_distribution.py dist/LootLiquidator-test.zip
   ```
 
 - Third-party notices: [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).

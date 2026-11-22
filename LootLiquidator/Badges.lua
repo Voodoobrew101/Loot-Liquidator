@@ -139,8 +139,7 @@ end
 
 -- All expensive recommendations remain accurate, but one lookup may
 -- exceed an entire frame's budget by itself. A timer cannot interrupt a
--- running Lua lookup.  Process ONE at a time and back off after slow calls,
--- rather than repeatedly blocking consecutive frames.
+-- running Lua lookup. Use bounded batches and resume on the next frame.
 local pendingBadgeJobs=setmetatable({}, {__mode="k"})
 local pendingBadgeOrder={}
 local pendingBadgeHead=1
@@ -151,6 +150,25 @@ local recentBadgeCount=0
 function LA:ClearBadgeDecisionCache()
     recentBadgeDecisions={}
     recentBadgeCount=0
+end
+local function RememberBadgeDecision(fingerprint,decision,now)
+    if not recentBadgeDecisions[fingerprint]then
+        if recentBadgeCount>=400 then
+            local oldestKey,oldestAt
+            for key,entry in pairs(recentBadgeDecisions)do
+                if now-entry.at>=30 then
+                    recentBadgeDecisions[key]=nil;recentBadgeCount=recentBadgeCount-1
+                elseif not oldestAt or entry.at<oldestAt then
+                    oldestKey,oldestAt=key,entry.at
+                end
+            end
+            if recentBadgeCount>=400 and oldestKey then
+                recentBadgeDecisions[oldestKey]=nil;recentBadgeCount=recentBadgeCount-1
+            end
+        end
+        recentBadgeCount=recentBadgeCount+1
+    end
+    recentBadgeDecisions[fingerprint]={result=decision,at=now}
 end
 local function BadgeTime()
     return type(debugprofilestop)=="function" and debugprofilestop() or nil
@@ -218,16 +236,14 @@ local function ProcessBadgeJobs()
                 local t=BadgeTime()
                 local ctx=job.data and GetContext(job.data) or job.context or {}
                 ctx._LLFastBadge=true -- fast path for queued bag badges
-                local decision=LA:Evaluate(job.link,ctx)
+                local previousFacts=button.laLink==job.link and button.laBadgeFingerprint==job.fingerprint
+                    and button.laDecision and button.laDecision.facts or nil
+                local decision=LA:Evaluate(job.link,ctx,previousFacts)
                 LA:Paint(button,job.link,decision)
                 local fingerprint=job.fingerprint
                 button.laBadgeFingerprint=fingerprint
-                if decision then
-                    if recentBadgeCount>=400 then
-                        recentBadgeDecisions={};recentBadgeCount=0
-                    end
-                    if not recentBadgeDecisions[fingerprint] then recentBadgeCount=recentBadgeCount+1 end
-                    recentBadgeDecisions[fingerprint]={result=decision,at=GetTime and GetTime() or 0}
+                if decision and not (decision.facts and decision.facts.itemInfoPending) then
+                    RememberBadgeDecision(fingerprint,decision,GetTime and GetTime() or 0)
                 end
                 local after=BadgeTime()
                 elapsed=t and after and math.max(0,after-t) or nil
@@ -243,11 +259,8 @@ local function ProcessBadgeJobs()
     end
     if pendingBadgeHead<=#pendingBadgeOrder and not badgeTickScheduled then
         badgeTickScheduled=true
-        -- A budget can only be observed AFTER an individual lookup returns.
-        -- Cool off between expensive item lookups rather than stalling every
-        -- frame of a Warbank opening animation.
-        local delay=elapsed and (elapsed>=16 and 0.20 or elapsed>=6 and 0.06 or 0) or 0.03
-        C_Timer.After(delay,ProcessBadgeJobs)
+        -- Yield after the budget; an individual lookup cannot be interrupted.
+        C_Timer.After(0,ProcessBadgeJobs)
     end
 end
 local function QueueBetterBagsBadge(button,link,data,context,force)
@@ -262,13 +275,15 @@ local function QueueBetterBagsBadge(button,link,data,context,force)
     -- derived binding flags, briefly hiding D on an unchanged item each cast.
     if data then button.laBetterBagsData=data end
     local fingerprint=BadgeFingerprint(link,data,context)
+    local retryingItemInfo=button.laLink==link and button.laDecision
+        and button.laDecision.facts and button.laDecision.facts.itemInfoPending
     -- Do not re-evaluate the same instance when BetterBags repaints a section.
     if not force and button.laLink==link and button.laDecision
-        and button.laBadgeFingerprint==fingerprint and not pendingBadgeJobs[button] then
+        and button.laBadgeFingerprint==fingerprint and not pendingBadgeJobs[button] and not retryingItemInfo then
         perf.repeatSkips=perf.repeatSkips+1
         return
     end
-    if not force then
+    if not force and not retryingItemInfo then
         local previous=recentBadgeDecisions[fingerprint]
         local now=GetTime and GetTime() or 0
         if previous and now-previous.at<30 and not pendingBadgeJobs[button] then
@@ -282,7 +297,9 @@ local function QueueBetterBagsBadge(button,link,data,context,force)
     if not (C_Timer and type(C_Timer.After)=="function") then
         local ctx=data and GetContext(data) or context or {}
         ctx._LLFastBadge=true
-        LA:Paint(button,link,LA:Evaluate(link,ctx))
+        local previousFacts=button.laLink==link and button.laBadgeFingerprint==fingerprint
+            and button.laDecision and button.laDecision.facts or nil
+        LA:Paint(button,link,LA:Evaluate(link,ctx,previousFacts))
         button.laBadgeFingerprint=fingerprint
         return
     end
@@ -328,7 +345,7 @@ local function HookBetterBags()
     if type(proto.ClearItem) == "function" then hooksecurefunc(proto, "ClearItem", ClearItem) end
 end
 
-function LA:RequestBadgeRefresh()
+function LA:RequestBadgeRefresh(itemID,pendingOnly)
     -- Refresh already-painted buttons immediately without requiring bag sorts.
     -- The next bag update revalidates item contents and instance binding.
     for button in pairs(activeButtons) do
@@ -337,9 +354,11 @@ function LA:RequestBadgeRefresh()
         local link=button.laLink
         local last=button.laDecision
         local data=button.laBetterBagsData
-        if data then
+        local matches=not itemID or last and last.facts and last.facts.id==itemID
+            and (not pendingOnly or last.facts.itemInfoPending)
+        if matches and data then
             QueueBetterBagsBadge(button,data.itemInfo and data.itemInfo.itemLink,data,nil,true)
-        elseif link and last then
+        elseif matches and link and last then
             local context=last.facts and last.facts.context or {}
             QueueBetterBagsBadge(button,link,nil,context,true)
         end
@@ -384,26 +403,38 @@ end
 -- calculated decisions. Elsewhere we fail closed for unverified gear binding.
 -- One renderer for in-game tooltips and the live settings preview.
 -- Sort a display copy; valuation models are cached and must retain their order.
+local EMPTY={}
+local tooltipSortFields={value='netExpectedValue',chance='chance',quantity='expectedQuantity'}
+local tooltipMethodLetters={Disenchant='D',Mill='M',Prospect='P',Smelt='S'}
 function LA:SortedTooltipMaterials(materials)
     local mode=self.db and self.db.tooltipOutputSort or 'value'
-    local fields={value='netExpectedValue',chance='chance',quantity='expectedQuantity'}
-    if not fields[mode] and mode~='name' and mode~='database' then mode='value' end
-    local rows={}
-    local info=C_Item and C_Item.GetItemInfo or GetItemInfo
-    for i,m in ipairs(materials or {}) do
-        local name
-        if mode=='name' and type(info)=='function' then
-            local ok,result=pcall(info,m.id)
-            if ok and type(result)=='string' then name=result:lower() end
-        end
-        rows[#rows+1]={material=m,index=i,name=name}
+    if not tooltipSortFields[mode] and mode~='name' and mode~='database' then mode='value' end
+    local result={}
+    if mode=='database' then
+        for i,material in ipairs(materials or EMPTY)do result[i]=material end
+        return result
     end
-    if mode~='database' then
-        table.sort(rows,function(a,b)
+    local positions,names={},mode=='name' and {} or nil
+    local duplicates=false
+    local info=C_Item and C_Item.GetItemInfo or GetItemInfo
+    for i,m in ipairs(materials or EMPTY) do
+        result[i]=m
+        if positions[m]then duplicates=true end
+        positions[m]=i
+        if mode=='name' and type(info)=='function' then
+            local ok,name=pcall(info,m.id)
+            if ok and type(name)=='string' then names[m]=name:lower() end
+        end
+    end
+    -- A caller can repeat the very same material object. Only that rare case
+    -- needs per-occurrence wrappers to preserve its original tie order.
+    if duplicates then for i,material in ipairs(result)do result[i]={material=material,index=i}end end
+        table.sort(result,function(a,b)
+            local am,bm=duplicates and a.material or a,duplicates and b.material or b
             local av,bv
-            if mode=='name' then av,bv=a.name,b.name
+            if mode=='name' then av,bv=names[am],names[bm]
             else
-                av,bv=a.material[fields[mode]],b.material[fields[mode]]
+                av,bv=am[tooltipSortFields[mode]],bm[tooltipSortFields[mode]]
                 if type(av)~='number' or av~=av then av=nil end
                 if type(bv)~='number' or bv~=bv then bv=nil end
             end
@@ -413,14 +444,385 @@ function LA:SortedTooltipMaterials(materials)
                 if mode=='name' then return av<bv end
                 return av>bv
             end
-            local ai,bi=a.material.id or 0,b.material.id or 0
+            local ai,bi=am.id or 0,bm.id or 0
             if ai~=bi then return ai<bi end
-            return a.index<b.index
+            if duplicates then return a.index<b.index end
+            return positions[am]<positions[bm]
         end)
-    end
-    local result={}
-    for i,row in ipairs(rows) do result[i]=row.material end
+    if duplicates then for i,row in ipairs(result)do result[i]=row.material end end
     return result
+end
+
+local function MaterialDisplay(self,materialID,pooledQuality)
+    local name, quality
+    local info = C_Item and C_Item.GetItemInfo or GetItemInfo
+    if type(info)=="function" then
+        local ok, n, _, q = pcall(info,materialID)
+        if ok then name, quality = n,q end
+    end
+    local icon
+    local getIcon = C_Item and C_Item.GetItemIconByID or GetItemIcon
+    if type(getIcon)=="function" then
+        local ok, value=pcall(getIcon,materialID)
+        if ok and (type(value)=='number' and value==value and value>0 and value<=2147483647 and value%1==0
+            or type(value)=='string' and value~='') then icon=value end
+    end
+    if not icon then
+        local instant=C_Item and C_Item.GetItemInfoInstant or GetItemInfoInstant
+        if type(instant)=='function' then
+            local ok,itemID,itemType,itemSubType,equipLoc,value=pcall(instant,materialID)
+            if ok and (type(value)=='number' and value==value and value>0 and value<=2147483647 and value%1==0
+                or type(value)=='string' and value~='') then icon=value end
+        end
+    end
+    local prefix=("|T%s:14:14:0:0|t "):format(tostring(icon or 134400))
+    -- Blizzard profession reagent quality is independent of ITEM_QUALITY_COLORS.
+    -- It has its own small pip atlas, shown immediately after the item icon.
+    -- Only use known rank-to-itemID mappings, never guess from item rarity.
+    local rank=self.MaterialReagentRanks and self.MaterialReagentRanks[materialID]
+    -- Retail exposes crafting reagent quality directly. Never infer it
+    -- from the ID order or from ordinary green/blue/purple item rarity.
+    local reagentInfo
+    if C_TradeSkillUI and type(C_TradeSkillUI.GetItemReagentQualityInfo)=="function" then
+        local ok,result=pcall(C_TradeSkillUI.GetItemReagentQualityInfo,materialID)
+        if ok and type(result)=="table" then reagentInfo=result end
+    end
+    local nativeItems=self.ItemDB and self.ItemDB.professionProfiles and self.ItemDB.professionProfiles.items
+    local nativeItem=nativeItems and nativeItems[materialID]
+    if type(name)~='string' or name=='' then name=nativeItem and nativeItem.name end
+    if type(name)~='string' or name=='' then name=nil end
+    rank=rank or (reagentInfo and reagentInfo.quality) or (nativeItem and nativeItem.qualityRank)
+    if type(rank)~='number' or rank~=rank or rank<1 or rank>5 or rank%1~=0 then rank=nil end
+    if rank and not pooledQuality then
+        local atlas=(reagentInfo and reagentInfo.iconSmall)
+            or ("Professions-Icon-Quality-Tier"..rank.."-Small")
+        local supported=false
+        if C_Texture and type(C_Texture.GetAtlasInfo)=="function" then
+            local ok, info=pcall(C_Texture.GetAtlasInfo,atlas)
+            supported=ok and info~=nil
+        end
+        if supported then prefix=prefix..("|A:%s:13:13|a "):format(atlas)
+        else prefix=prefix..("|cffb4d8ff[R%d]|r "):format(rank) end
+    end
+    if not name and C_Item and type(C_Item.RequestLoadItemDataByID)=="function" then
+        pcall(C_Item.RequestLoadItemDataByID,materialID)
+    end
+    local color=(quality and ITEM_QUALITY_COLORS and ITEM_QUALITY_COLORS[quality]
+        and ITEM_QUALITY_COLORS[quality].hex)
+    local label=name or ("Material "..tostring(materialID))
+    -- ITEM_QUALITY_COLORS[quality].hex normally ALREADY includes |c.
+    -- Accept either WoW markup or a raw 8/6-digit hex value, never |c|c.
+    if type(color)=="string" then
+        local code=color:match("^|[cC](%x%x%x%x%x%x%x%x)$")
+            or color:match("^#?(%x%x%x%x%x%x%x%x)$")
+        if not code then
+            local rgb=color:match("^#?(%x%x%x%x%x%x)$")
+            if rgb then code="ff"..rgb end
+        end
+        if code then label="|c"..code..label.."|r" end
+    end
+    return prefix..label,name,icon
+end
+
+local function finiteNonnegative(value)
+    return type(value)=='number' and value==value and value>=0 and value<math.huge
+end
+local function positiveInteger(value)
+    return finiteNonnegative(value) and value>0 and value<=2147483647 and value%1==0
+end
+local function tooltipQuantity(value)
+    return finiteNonnegative(value) and value<=2147483647 and value%1==0
+end
+local function tooltipSame(a,b)
+    if type(a)~=type(b) then return false end
+    if type(a)~='table' then return a==b end
+    for key,value in pairs(a)do if not tooltipSame(value,b[key])then return false end end
+    for key in pairs(b)do if a[key]==nil then return false end end
+    return true
+end
+local function tooltipContextMatches(record,context,version,build,mechanicsApplied)
+    if record.clientVersion and record.clientVersion~=version
+        or record.targetBuild and tostring(record.targetBuild)~=tostring(build)
+        or record.mechanicsSourceBuild and tostring(record.mechanicsSourceBuild)~=tostring(build) and not mechanicsApplied
+        or record.patchStartBuild and (not tonumber(build) or tonumber(build)<record.patchStartBuild)then return false end
+    local skill=context.skill or context.baseSkill or context.effectiveSkill
+    if record.minimumRecipeSkill and (not finiteNonnegative(skill) or skill<record.minimumRecipeSkill)then return false end
+    for key,value in pairs(record.referenceConditions or EMPTY)do if not tooltipSame(context[key],value)then return false end end
+    return true
+end
+local function tooltipFamily(items,id)
+    local item=items[id]
+    if not item then return nil end
+    if positiveInteger(item.qualityFamilyID)then return 'family:'..item.qualityFamilyID end
+    if positiveInteger(item.modifiedCraftingReagentItemID)then return 'reagent:'..item.modifiedCraftingReagentItemID end
+end
+local function tooltipOneFamily(items,ids)
+    local key
+    for _,id in ipairs(ids or EMPTY)do
+        local nextKey=tooltipFamily(items,id)
+        if not nextKey or key and key~=nextKey then return nil end
+        key=nextKey
+    end
+    return key
+end
+local function tooltipSameIDs(a,b)
+    if type(a)~='table' or type(b)~='table' or #a~=#b or #a==0 then return false end
+    for _,id in ipairs(a)do
+        local found=false for _,other in ipairs(b)do if other==id then found=true;break end end
+        if not found then return false end
+    end
+    return true
+end
+local function tooltipField(source,key)
+    local value=source[key]
+    if type(value)~='table' or value.status=='unknown' or value.status=='contradictory' then return nil,nil end
+    return value.value,finiteNonnegative(value.confidence)and math.min(100,value.confidence)or 0
+end
+local function tooltipEstimatedEvidence()return{kind='display-estimate',confidence=0,displayOnly=true}end
+local function ChanceText(chance)
+    if not finiteNonnegative(chance) or chance>1 then return nil end
+    if chance==0 then return '0%' end
+    if chance>=1-1e-12 then return '100%' end
+    if chance<.001 then return '<0.1%' end
+    if chance>.999 then return '>99.9%' end
+    return ('%.1f'):format(chance*100):gsub('%.0$','')..'%'
+end
+-- Complete display fields from already loaded baselines. Processing quantities,
+-- values and the original evidence/model tables remain unchanged.
+local function BaselineTooltipMaterialFields(self,material,model,option,facts)
+    if type(material)~='table' or type(model)~='table' or type(option)~='table' or type(facts)~='table'
+        or not positiveInteger(facts.id) or not positiveInteger(material.id)
+        or material.structuralZero and material.probabilityBasis=='specialization-eligibility-zero'
+        or material.conditionalExpectedQuantity~=nil and material.expectedQuantity==nil then return material end
+    local needLo,needHi=not tooltipQuantity(material.minQuantity),not tooltipQuantity(material.maxQuantity)
+    local needChance=not (finiteNonnegative(material.chance) and material.chance<=1)
+    if not needLo and not needHi and not needChance then return material end
+    local batch=model.inputCount or option.inputCount
+    local records=self._evidenceIndex and self._evidenceIndex[tostring(option.name)..':'..tostring(facts.id)]
+    if option.name=='Disenchant' and self.DisenchantCategoryKey and self._evidenceIndex then
+        local key=self:DisenchantCategoryKey(facts)
+        local category=key and self._evidenceIndex['Disenchant:'..key]
+        if category then
+            local combined={}
+            for _,record in ipairs(records or {})do combined[#combined+1]=record end
+            for _,record in ipairs(category)do
+                local lo,hi=record.categoryItemLevelMin,record.categoryItemLevelMax
+                if lo==nil or finiteNonnegative(facts.itemLevel) and facts.itemLevel>=lo and facts.itemLevel<=hi
+                    or facts.itemLevel==nil and lo==1 and hi==999 then combined[#combined+1]=record end
+            end
+            records=combined
+        end
+    end
+    if not positiveInteger(batch) then return material end
+    if type(records)~='table' then
+        if needLo or needHi then return material end
+        records={} -- The selected model already supplies both quantity bounds.
+    end
+    local data=self.ItemDB and self.ItemDB.professionProfiles or EMPTY
+    local items=data.items or EMPTY
+    local inputRank=facts.reagentQuality or facts.inputQuality or (items[facts.id] and items[facts.id].qualityRank)
+    local mode=option.dataMode or (self.ProcessingMethodMode and self:ProcessingMethodMode(option.letter or
+        tooltipMethodLetters[option.name] or 'C'))
+    local version,build
+    if GetBuildInfo then version,build=GetBuildInfo() end
+    local context=model.projectedContext or model.context or facts.context or EMPTY
+    if type(material.rankIDs)=='table' and #material.rankIDs>1 and not tooltipOneFamily(items,material.rankIDs)then return material end
+    local mean=material.expectedQuantity
+    local function fits(p,lo,hi)
+        return finiteNonnegative(p) and p<=1 and finiteNonnegative(mean) and mean>0
+            and tooltipQuantity(lo) and lo>0 and tooltipQuantity(hi) and hi>=lo
+            and mean+1e-9>=p*lo and mean<=p*hi+1e-9
+    end
+    local bestRange,bestChance
+    local function consider(record,p,pc,lo,lc,hi,hc,kind,allowChance,allowMidpoint)
+        local nextLo=needLo and lo or material.minQuantity
+        local nextHi=needHi and hi or material.maxQuantity
+        if tooltipQuantity(nextLo) and nextLo>0 and tooltipQuantity(nextHi) and nextHi>=nextLo then
+            local confidence=math.min(needLo and (lc or 0) or 100,needHi and (hc or 0) or 100)
+            local priority=kind=='baseline-family' and 1 or 2
+            if (needLo or needHi) and (not bestRange or priority>bestRange.priority
+                or priority==bestRange.priority and confidence>bestRange.confidence) then
+                bestRange={lo=nextLo,hi=nextHi,lc=lc,hc=hc,confidence=confidence,recordID=record.recordID,kind=kind,allowMidpoint=allowMidpoint,priority=priority}
+            end
+            if needChance and allowChance and fits(p,nextLo,nextHi)
+                and (not bestChance or (pc or 0)>bestChance.confidence) then
+                bestChance={value=p,confidence=pc or 0,recordID=record.recordID,kind=kind}
+            end
+        end
+    end
+    for _,record in ipairs(records) do
+        local conditions=record.researchConditions or EMPTY
+        local enabled=self.EvidenceSourceWeight and self:EvidenceSourceWeight(record.sourceKey,mode)>0
+        local matchesInput=record.inputItemID==facts.id or option.name=='Disenchant'
+            and self.DisenchantCategoryKey and record.gearKey==self:DisenchantCategoryKey(facts)
+        if enabled and matchesInput and record.method==option.name and record.inputCount==batch
+            and not record.operationUnverified and record.quantityBasis~='per-input'
+            and (not record.recipeID or not option.recipeID or record.recipeID==option.recipeID)
+            and (not record.expansionID or record.expansionID==facts.expansionID
+                or record.expansionID==0 and conditions.expansionIDKnown==false)
+            and (not record.inputQualityRank or record.inputQualityRank==inputRank)
+            and (not record.inputRarity or record.inputRarity==facts.quality)
+            and (not record.inputClassID or record.inputClassID==facts.classID)
+            and #(record.unresolvedResearchConditions or EMPTY)==0
+            and tooltipContextMatches(record,context,version,build,model.mechanicsApplied)
+            and not (type(conditions.eligibilityStatus)=='string' and conditions.eligibilityStatus:find('REQUIRES_',1,true)) then
+            for _,source in ipairs(record.materials or EMPTY) do
+                local targetPool=type(material.rankIDs)=='table' and #material.rankIDs>1
+                local sourcePool=type(source.rankIDs)=='table' and #source.rankIDs>1
+                local exactPool=targetPool and sourcePool and tooltipSameIDs(material.rankIDs,source.rankIDs)
+                local exact=not targetPool and not sourcePool and source.id==material.id
+                local sourceFamily=sourcePool and tooltipOneFamily(items,source.rankIDs) or tooltipFamily(items,source.id)
+                local targetFamily=targetPool and tooltipOneFamily(items,material.rankIDs) or tooltipFamily(items,material.id)
+                local qualityFamily=sourceFamily and sourceFamily==targetFamily
+                local exactVariant=false
+                if not targetPool and sourcePool and sourceFamily then
+                    for _,variant in ipairs(source.referenceVariants or EMPTY) do if variant.id==material.id then exactVariant=true;break end end
+                end
+                if exact or exactPool or qualityFamily or exactVariant then
+                    local p,pc=tooltipField(source,'dropChance')
+                    local lo,lc=tooltipField(source,'minQuantity');local hi,hc=tooltipField(source,'maxQuantity')
+                    local allowMidpoint=not (source.dropChance and source.dropChance.inferenceBlocked or source.heldDropChance)
+                    if not source.conditionalReference or model.outputGate and model.outputGate.eligible==true then
+                        consider(record,p,pc,lo,lc,hi,hc,exact and 'baseline' or exactPool and 'baseline-pool' or 'baseline-family',exact or exactPool,allowMidpoint)
+                    end
+                    local variants=source.referenceVariants
+                    if type(variants)=='table' then
+                        local confidence=select(2,tooltipField(source,'expectedQuantity')) or 0
+                        for _,variant in ipairs(variants) do
+                            if variant.id==material.id and (not variant.sourceQuality or variant.sourceQuality==inputRank)
+                                and (not targetPool or exactPool) then
+                                local pooledChance=not sourcePool
+                                if exactPool then
+                                    pooledChance=true
+                                    for _,other in ipairs(variants) do
+                                        if other.matRate~=variant.matRate or other.minAmount~=variant.minAmount or other.maxAmount~=variant.maxAmount then pooledChance=false;break end
+                                    end
+                                end
+                                consider(record,variant.matRate,confidence,variant.minAmount,confidence,variant.maxAmount,confidence,
+                                    'baseline-variant',pooledChance,allowMidpoint)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+    local out,evidence
+    local function copy()
+        if not out then out={} for key,value in pairs(material) do out[key]=value end;evidence={};out.tooltipFieldEvidence=evidence end
+        return out
+    end
+    if bestRange then
+        if needLo then copy().minQuantity=bestRange.lo;evidence.minQuantity={recordID=bestRange.recordID,confidence=bestRange.lc or 0,kind=bestRange.kind} end
+        if needHi then copy().maxQuantity=bestRange.hi;evidence.maxQuantity={recordID=bestRange.recordID,confidence=bestRange.hc or 0,kind=bestRange.kind} end
+    end
+    local lo,hi=(out or material).minQuantity,(out or material).maxQuantity
+    if needChance then
+        if bestChance and fits(bestChance.value,lo,hi) then
+            copy().chance=bestChance.value;out.chanceConfidence=bestChance.confidence;evidence.chance=bestChance
+        elseif (bestRange and bestRange.allowMidpoint or not needLo and not needHi) and self.FillChanceOrAverage
+            and finiteNonnegative(mean) and mean>0 and tooltipQuantity(lo) and lo>0 and tooltipQuantity(hi) and hi>=lo then
+            local p,_,filled=self:FillChanceOrAverage(nil,mean,lo,hi)
+            if filled=='chance' and fits(p,lo,hi) then
+                local confidence=math.min(material.confidence or model.confidence or 0,
+                    evidence and evidence.minQuantity and evidence.minQuantity.confidence or 100,
+                    evidence and evidence.maxQuantity and evidence.maxQuantity.confidence or 100)
+                copy().chance=p;out.chanceConfidence=math.floor(confidence*(self.FILLED_CONFIDENCE_FACTOR or .5)+.5)
+                evidence.chance={kind='midpoint',recordID=bestRange and bestRange.recordID,confidence=out.chanceConfidence}
+            end
+        end
+    end
+    return out or material
+end
+-- The owner permits best-effort presentation estimates. These copies are never
+-- passed to valuation: actual means, prices, source fields and decisions stay put.
+function LA:TooltipMaterialDisplayFields(material,model,option,facts)
+    if type(material)~='table' or not positiveInteger(material.id) then return material end
+    if material.structuralZero==true and material.probabilityBasis=='specialization-eligibility-zero' then return material end
+    local display=BaselineTooltipMaterialFields(self,material,model,option,facts)
+    local chance,lo,hi=display.chance,display.minQuantity,display.maxQuantity
+    local hasChance=finiteNonnegative(chance) and chance<=1
+    local hasLo,hasHi=tooltipQuantity(lo),tooltipQuantity(hi)
+    if hasChance and hasLo and hasHi and hi>=lo then return display end
+    local out,evidence={},{}
+    for key,value in pairs(display)do out[key]=value end
+    for key,value in pairs(display.tooltipFieldEvidence or EMPTY)do evidence[key]=value end
+    out.tooltipFieldEvidence=evidence
+    local mean=finiteNonnegative(display.expectedQuantity) and display.expectedQuantity or nil
+    if mean==nil and finiteNonnegative(display.conditionalExpectedQuantity) then mean=display.conditionalExpectedQuantity end
+    local knownRange=hasLo and hasHi and hi>=lo
+    local units=mean
+    local guessLo,guessHi=0,0
+    if units and units>0 or hasChance and chance>0 then
+        local amount=math.min(units or 1,2147483647)
+        guessLo=math.max(1,math.floor(amount));guessHi=math.max(guessLo,math.ceil(amount))
+    end
+    if not hasLo then lo=hasHi and math.min(hi,guessLo) or guessLo end
+    if not hasHi then hi=math.max(lo,guessHi) end
+    if hi<lo then lo,hi=hi,lo;hasLo,hasHi=false,false end
+    if mean==nil and not hasChance and (not hasLo or not hasHi) then
+        out.tooltipUnknownRange=true
+        if not hasLo then evidence.minQuantity={kind='display-unknown',confidence=0,displayOnly=true}end
+        if not hasHi then evidence.maxQuantity={kind='display-unknown',confidence=0,displayOnly=true}end
+    else
+        if not hasLo then out.minQuantity=lo;evidence.minQuantity=tooltipEstimatedEvidence()end
+        if not hasHi then out.maxQuantity=hi;evidence.maxQuantity=tooltipEstimatedEvidence()end
+    end
+    if not hasChance then
+        local p,average,filled
+        if knownRange and mean and mean>0 and lo>0 and self.FillChanceOrAverage then
+            p,average,filled=self:FillChanceOrAverage(nil,mean,lo,hi)
+            if finiteNonnegative(p) and (mean+1e-9<p*lo or mean>p*hi+1e-9) then filled=nil end
+        end
+        out.chance=finiteNonnegative(p) and math.min(1,p) or mean and math.min(1,mean) or nil
+        if mean==nil then out.tooltipUnknownChance=true end
+        local support=display.confidence or model and model.confidence or 0
+        if not finiteNonnegative(support) then support=0 end
+        out.chanceConfidence=filled=='chance' and math.floor(math.min(100,support)*(self.FILLED_CONFIDENCE_FACTOR or .5)+.5) or 0
+        evidence.chance={kind=filled=='chance' and 'midpoint' or mean==nil and 'display-unknown' or 'display-estimate',
+            confidence=out.chanceConfidence,displayOnly=true}
+    end
+    return out
+end
+-- One material layout, including presentation estimates and pending metadata.
+-- Gold uses actual valuation quantities and net quotes, never display estimates.
+function LA:FormatTooltipMaterialRow(material,model,option,facts)
+    if type(material)~='table' then return nil end
+    material=self:TooltipMaterialDisplayFields(material,model,option,facts)
+    -- A proven specialization lock has no possible output. Supply its display
+    -- zero locally; a missing market quote alone never establishes this case.
+    local eligibilityZero=material.structuralZero==true
+        and material.probabilityBasis=='specialization-eligibility-zero'
+    local amount=ChanceText(eligibilityZero and 0 or material.chance)
+        or material.tooltipUnknownChance and '?%'
+    local display=MaterialDisplay(self,material.id,
+        type(material.rankIDs)=='table' and #material.rankIDs>1)
+    local lo,hi=material.minQuantity,material.maxQuantity
+    if eligibilityZero then lo,hi=0,0 end
+    local range=''
+    if finiteNonnegative(lo) and finiteNonnegative(hi)
+        and lo<=2147483647 and hi<=2147483647 and lo%1==0 and hi%1==0 and hi>=lo then
+        range=(self:MarkupColor(option and option.letter or 'D') or '')..
+            (lo==hi and (' [%d]'):format(lo) or (' [%d-%d]'):format(lo,hi))
+    elseif material.tooltipUnknownRange then
+        range=' [?]'
+    end
+    local batch=model and model.inputCount or option and option.inputCount or 1
+    local price=''
+    local expectedValue=eligibilityZero and 0 or material.netExpectedValue
+    if not finiteNonnegative(expectedValue) and finiteNonnegative(material.expectedQuantity) then
+        if material.expectedQuantity==0 then expectedValue=0
+        else
+            local quote=material.netUnitPrice
+            if not finiteNonnegative(quote) and self.GetMaterialPrice then quote=self:GetMaterialPrice(material) end
+            if finiteNonnegative(quote) then expectedValue=material.expectedQuantity*quote end
+        end
+    end
+    if positiveInteger(batch) and finiteNonnegative(expectedValue) then
+        local ok,value=pcall(self.Money,self,expectedValue/batch)
+        if ok and type(value)=='string' then price=value end
+    end
+    return '  '..(amount and amount..' ' or '')..display..range,price
 end
 
 function LA:AppendRecommendationTooltip(tooltip,decision)
@@ -432,39 +834,12 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
     local label=names[decision.action]
     local compactToken=decision.tokenInfo
         and type(LA.TokenClassSummary)=="function"
-    if decision.tokenInfo and decision.action=="Q" then label="Review token" end
-    if decision.tokenQuote and decision.tokenQuote.piece and not decision.tokenQuote.informational then
-        label=decision.tokenQuote.label or label
-    end
     local detail=LA.db.tooltipDetail or 2
-    local showProcessing=LA.db.showTooltipExplanations==true
-    local showProfession=LA.db.showProfessionDetails==true
     local showResearch=LA.db.showResearchDetails==true
-    local function professionSimulation(model)
-        local context=model and model.context
-        return model and (model.disenchantBaselineApplied==true or model.generalProfessionApplied==true)
-            or type(context)=='table' and context.simulated==true and context.profileKind=='manual-simulation'
-    end
-    local function valuedSimulationPreview(option)
-        local context=option and option.yieldModel and option.yieldModel.context
-        return option and option.tooltipProfileLabel=='Simulated' and type(option.value)=='number'
-            and type(context)=='table' and context.simulated==true
-    end
-    local printedSamples=false
-    local progress=(detail>=3 and showProfession and LA.ProfessionProgression and decision.facts)
-        and LA:ProfessionProgression(decision.facts,decision) or {}
-    -- Bound/vendor-only loot remains quiet unless there are research results
-    -- or a detailed external reference model worth showing transparently.
     local f=decision.facts
-    local reviewedSourceLines={}
-    if detail>=3 and showResearch and f and LA.ReviewedProcessingSourceFactLines then
-        reviewedSourceLines=LA:ReviewedProcessingSourceFactLines(f,decision.conversionOptions)
-    end
-    -- Old imported reference-rates toggle retired: compiled Game Data
-    -- supplies rates with explicit per-output confidence instead.
-    if not decision.action and (detail<3 or #(decision.conversionOptions or {})==0)
-        and #progress==0 and not (LA.db.showProcessingSamples and decision.deStats)
-        and #reviewedSourceLines==0
+    local vendorKnown=finiteNonnegative(decision.vendor)
+        and (decision.vendor>0 or not f or not f.itemInfoPending or f.itemInfoFromSnapshot)
+    if not decision.action and (detail<2 or #(decision.conversionOptions or {})==0)
         then return end
     local function two(left,right,letter)
         local color=LA:MarkupColor(letter)
@@ -474,62 +849,6 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             tooltip:AddLine(color..left.."|r"..(right and "  "..right or ""))
         end
     end
-    local function MaterialDisplay(materialID)
-        local name, quality
-        local info = C_Item and C_Item.GetItemInfo or GetItemInfo
-        if type(info)=="function" then
-            local ok, n, _, q = pcall(info,materialID)
-            if ok then name, quality = n,q end
-        end
-        local icon
-        local getIcon = C_Item and C_Item.GetItemIconByID or GetItemIcon
-        if type(getIcon)=="function" then
-            local ok, value=pcall(getIcon,materialID)
-            if ok and (type(value)=="number" or type(value)=="string") then icon=value end
-        end
-        local prefix=icon and ("|T%s:14:14:0:0|t "):format(tostring(icon)) or ""
-        -- Blizzard profession reagent quality is independent of ITEM_QUALITY_COLORS.
-        -- It has its own small pip atlas, shown immediately after the item icon.
-        -- Only use known rank-to-itemID mappings, never guess from item rarity.
-        local rank=LA.MaterialReagentRanks and LA.MaterialReagentRanks[materialID]
-        -- Retail exposes crafting reagent quality directly. Never infer it
-        -- from the ID order or from ordinary green/blue/purple item rarity.
-        local reagentInfo
-        if C_TradeSkillUI and type(C_TradeSkillUI.GetItemReagentQualityInfo)=="function" then
-            local ok,result=pcall(C_TradeSkillUI.GetItemReagentQualityInfo,materialID)
-            if ok and type(result)=="table" then reagentInfo=result end
-        end
-        rank=rank or (reagentInfo and reagentInfo.quality)
-        if rank then
-            local atlas=(reagentInfo and reagentInfo.iconSmall)
-                or ("Professions-Icon-Quality-Tier"..rank.."-Small")
-            local supported=false
-            if C_Texture and type(C_Texture.GetAtlasInfo)=="function" then
-                local ok, info=pcall(C_Texture.GetAtlasInfo,atlas)
-                supported=ok and info~=nil
-            end
-            if supported then prefix=prefix..("|A:%s:13:13|a "):format(atlas)
-            else prefix=prefix..("|cffb4d8ff[R%d]|r "):format(rank) end
-        end
-        if not name and C_Item and type(C_Item.RequestLoadItemDataByID)=="function" then
-            pcall(C_Item.RequestLoadItemDataByID,materialID)
-        end
-        local color=(quality and ITEM_QUALITY_COLORS and ITEM_QUALITY_COLORS[quality]
-            and ITEM_QUALITY_COLORS[quality].hex)
-        local label=name or ("Material "..tostring(materialID))
-        -- ITEM_QUALITY_COLORS[quality].hex normally ALREADY includes |c.
-        -- Accept either WoW markup or a raw 8/6-digit hex value, never |c|c.
-        if type(color)=="string" then
-            local code=color:match("^|[cC](%x%x%x%x%x%x%x%x)$")
-                or color:match("^#?(%x%x%x%x%x%x%x%x)$")
-            if not code then
-                local rgb=color:match("^#?(%x%x%x%x%x%x)$")
-                if rgb then code="ff"..rgb end
-            end
-            if code then label="|c"..code..label.."|r" end
-        end
-        return prefix..label
-    end
     local function valued(label,unit,letter)
         if unit==nil then return end
         -- All prices are per original item, like TSM. Repeating '(each)'
@@ -537,59 +856,15 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         two(label,LA:Money(unit),letter)
     end
     if label then
-        local suffix=""
-        if decision.action=="A" and decision.fallback then
-            local fallbackName=names[decision.fallback] or method
-            if fallbackName then suffix=" ("..fallbackName..")" end
-        end
-        local actionModel=decision.conversion and decision.conversion.yieldModel
-        for _,option in ipairs(decision.conversionOptions or {}) do
-            if option.letter==decision.action then actionModel=option.yieldModel;break end
-        end
-        if decision.action=="D" and decision.conversion
-            and decision.conversion.confidence=="baseline" and not professionSimulation(actionModel) then suffix=" (estimated)" end
-        for _,option in ipairs(decision.conversionOptions or {}) do
-            if option.letter==decision.action then
-                local model=option.yieldModel
-                if option.available==false and not valuedSimulationPreview(option) then suffix=suffix.." (unavailable)" end
-                if model and model.provisional and not professionSimulation(model) and not model.reviewedPublishedPriorOnly
-                    and not (model.personalReference and model.personalReference.personalSourceProfileMatched) then suffix=suffix.." (estimate)" end
-                if model and (model.partial or model.partialPrice) then suffix=suffix.." (partial)" end
-                break
-            end
-        end
-        -- A5: optional per-item value of the recommended action in the header,
-        -- e.g. "Loot Liquidator: Smelt 6g 87s".
-        local headerPrice=""
-        if LA.db.tooltipHeaderPrice~=false then
-            local a,unit=decision.action,nil
-            if decision.tokenQuote and decision.tokenQuote.letter==a then
-                unit=decision.tokenQuote.value -- C4c: token valued by its piece
-            elseif a=="A" then
-                unit=(LA.db.tooltipShowAfterAHCut~=false and decision.netAuction~=0 and decision.netAuction)
-                    or decision.rawAuction or decision.marketAuctionNet
-            elseif a=="V" then unit=decision.vendor
-            elseif a=="D" or a=="M" or a=="P" or a=="S" or a=="C" then unit=decision.converted
-            end
-            if type(unit)=="number" and unit>0 then headerPrice=" "..LA:Money(unit) end
-        end
-        if decision.tokenQuote and (decision.tokenQuote.informational or
-            (decision.tokenQuote.piece and decision.tokenQuote.piece.variantNote)) then suffix=suffix.." (estimate)" end
         tooltip:AddLine("|cff66ccffLoot Liquidator:|r "..
-            LA:MarkupColor(decision.action)..label..suffix.."|r"..headerPrice)
+            LA:MarkupColor(decision.action)..label.."|r")
     end
-    -- All priced methods (including the winning Auction) use the SAME row
-    -- renderer below. Minimal mode still includes the Auction quote.
-    if detail<2 and decision.action=="A" and decision.rawAuction then
-        local price=LA.db.tooltipShowAfterAHCut~=false and decision.netAuction
-            or decision.rawAuction
-        two("Auction",LA:Money(price),"A")
-    end
+    if detail<2 then return end -- Recommendation is exactly the action header.
     -- For tokens the guaranteed price belongs directly below the action,
     -- as it does for ordinary disenchant/vendor recommendations.  Do not
     -- repeat it after class sets or confuse it with a redeemed reward's price.
     if compactToken
-        and type(decision.vendor)=="number" and decision.vendor>0 then
+        and vendorKnown then
         two("Vendor token (guaranteed)",LA:Money(decision.vendor),"V")
     end
     -- C4c: what opening the token is worth (piece's sell price / disenchant).
@@ -685,309 +960,68 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             Exchange="Exchange",Combine="Combine",Split="Split"}
         local methodOrder={"Disenchant","Mill","Prospect","Smelt","Craft",
             "Recycle","Research","Combine","Split","Exchange"}
-        local function ChanceText(chance)
-            if type(chance)~='number' then return '?' end
-            if chance==0 then return '0%' end
-            if chance==1 then return '100%' end
-            if chance<.001 then return '<0.1%' end
-            if chance>.999 then return '>99.9%' end
-            return ('%.1f'):format(chance*100):gsub('%.0$','')..'%'
+        local function PrepareMaterials(option,model,inputFacts)
+            local list=model and model.materials
+            if type(list)~='table' then return nil end
+            local prepared,confidence={}
+            for _,material in ipairs(list) do
+                local display=LA:TooltipMaterialDisplayFields(material,model,option,inputFacts)
+                prepared[#prepared+1]=display
+                for _,field in pairs(display.tooltipFieldEvidence or {}) do
+                    if finiteNonnegative(field.confidence) and field.confidence<=100 then
+                        confidence=math.min(confidence or 100,field.confidence)
+                    end
+                end
+            end
+            return LA:SortedTooltipMaterials(prepared),confidence
         end
-        local function UnitsText(units)
-            if type(units)~='number' then return '?' end
-            if units>0 and units<.001 then return '<0.001' end
-            return ('%.3f'):format(units)
-        end
-        local function ShowMaterials(option,model)
+        local function ShowMaterials(option,model,list)
             if detail<3 then return end
-            local compactMethod=option.name=='Prospect' or option.name=='Mill' or option.name=='Disenchant'
-            local simulated=professionSimulation(model)
-            for _,named in ipairs(model and model.namedOutputs or {}) do
-                local amount=type(named.expectedQuantity)=='number' and ('Average '..UnitsText(named.expectedQuantity))
-                    or type(named.chance)=='number' and ChanceText(named.chance)
-                    or type(named.discoveryFactor)=='number' and ('Discovery x'..UnitsText(named.discoveryFactor))
-                if amount then tooltip:AddDoubleLine('  '..named.name,amount,.85,.88,.95,.85,.88,.95) end
-            end
-            local list=model and model.materials and LA:SortedTooltipMaterials(model.materials)
-            if type(list)=='table' then
-                local nativeItems=LA.ItemDB and LA.ItemDB.professionProfiles and LA.ItemDB.professionProfiles.items or {}
-                local positiveFamilies={}
-                if option.name=='Disenchant' then
-                    for _,m in ipairs(list) do
-                        local item=nativeItems[m.id]
-                        if item and item.qualityFamilyID and type(m.expectedQuantity)=='number' and m.expectedQuantity>0 then
-                            positiveFamilies[item.qualityFamilyID]=true
-                        end
-                    end
-                end
-                local visible={}
-                for _,material in ipairs(list) do
-                    -- A zero modeled unlock has no output at this allocation,
-                    -- including DE endpoint identities without an extra tag.
-                    -- Preserve explicit ordinary source zeroes and unknowns.
-                    local nativeItem=nativeItems[material.id]
-                    local distinctProcessingQuality=compactMethod and not material.rankIDs
-                        and nativeItem and nativeItem.qualityRank
-                        and (option.name~='Disenchant' or positiveFamilies[nativeItem.qualityFamilyID])
-                    if not (material.expectedQuantity==0 and not material.structuralZero and not distinctProcessingQuality and
-                        (material.additionalOutput or model.disenchantBaselineApplied
-                            or model.generalQualityApplied or model.skillQualityApplied or model.sourceReferenceOnly)) then
-                        visible[#visible+1]=material
-                    end
-                end
-                list=visible
-            end
-            if type(list)=="table" and #list>0 then
-                local batch=math.max(1,tonumber(model.inputCount) or tonumber(option.inputCount) or 1)
-                local explanation=("  Per %d input(s); range when a material drops"):format(batch)
-                if model.operationUnverified then explanation=("  Values normalized per %d input(s); recipe batch unverified"):format(batch) end
-                if LA.db.showAverageQuantity==true then explanation=explanation.."; average units include zeros" end
-                if showProcessing then
-                    tooltip:AddLine(explanation,.70,.75,.82,true)
-                end
-                local limit=(showResearch or compactMethod) and #list or math.min(#list,12)
-                for i=1,limit do
-                    local m=list[i]
-                    local left="  "
-                    local compactProcessing=compactMethod and not model.operationUnverified and not option.operationUnverified
-                    if type(m.chance)=="number" then
-                        -- Keep probabilities readable; uncertainty is summarized
-                        -- once on the method row instead of prefixing each material.
-                        left=left..ChanceText(m.chance).." "
-                    elseif compactProcessing and type(m.expectedQuantity)=='number' then
-                        -- Owner-requested presentation of the average yield.
-                        -- This never changes chance evidence or valuation.
-                        if m.expectedQuantity<=1 then left=left..ChanceText(m.expectedQuantity)..' '
-                        else left=left..UnitsText(m.expectedQuantity)..'x ' end
-                    end
-                    left=left..MaterialDisplay(m.id)
-                    if type(m.rankIDs)=="table" and #m.rankIDs>1 then left=left.." (rank unknown)" end
-                    if type(m.chance)~='number' and type(m.expectedQuantity)~='number' then left=left..' (chance unavailable)' end
-                    if not m.inconsistentFields and m.minQuantity and m.maxQuantity then
-                        left=left..(m.minQuantity==m.maxQuantity
-                            and (" [%d]"):format(m.minQuantity)
-                            or (" [%d-%d]"):format(m.minQuantity,m.maxQuantity))
-                     elseif not m.inconsistentFields and m.minQuantity then left=left..(" [min seen: %d]"):format(m.minQuantity)
-                     elseif not m.inconsistentFields and m.maxQuantity then left=left..(" [max seen: %d]"):format(m.maxQuantity)
-                    elseif type(m.expectedQuantity)~='number' then
-                        left=left.." [yield unavailable]"
-                    end
-                    local needsAverage=type(m.expectedQuantity)=='number' and (type(m.chance)~='number'
-                        or m.inconsistentFields or not m.minQuantity and not m.maxQuantity)
-                    if compactProcessing then
-                        -- Rate/count is already at the start of the row.
-                    elseif LA.db.showAverageQuantity~=true and needsAverage then
-                        left=left..(' [avg %s per %d %s]'):format(UnitsText(m.expectedQuantity),batch,batch==1 and 'input' or 'inputs')
-                    elseif LA.db.showAverageQuantity==true then
-                        left=left.."  "..(type(m.expectedQuantity)=='number' and UnitsText(m.expectedQuantity)
-                            or type(m.conditionalExpectedQuantity)=='number' and (UnitsText(m.conditionalExpectedQuantity)..' conditional') or 'average unavailable')
-                    end
-                    -- Optional per-material confidence (A3), off by default.
-                    if LA.db.showMaterialConfidence==true and not model.syntheticBenchmark then
-                        if m.fieldSpecificEvidence and not m.confidenceUnscored then
-                            local scores={}
-                            if type(m.chanceConfidence)=="number" then scores[#scores+1]=("chance %d%%"):format(m.chanceConfidence) end
-                            if type(m.confidence)=="number" then scores[#scores+1]=("quantity support %d%%"):format(m.confidence) end
-                            if #scores>0 then left=left.." ("..table.concat(scores,", ")..")" end
-                        elseif m.confidenceUnscored or model.confidenceUnscored then
-                            left=left.." (Confidence unscored)"
-                        elseif type(m.confidence)=="number" then
-                            left=left..(" (%d%%)"):format(m.confidence)
-                        end
-                    end
-                    local net=m.netExpectedValue
-                    local amount=net~=nil and LA:Money(net/batch) or "unknown"
-                    if net==nil and m.conditionalExpectedValue~=nil then amount=LA:Money(m.conditionalExpectedValue/batch)..' conditional' end
-                    two(left,amount,option.letter or "D")
-                    if showResearch then
-                        if compactProcessing and m.chance==nil and type(m.expectedQuantity)=='number' then
-                            tooltip:AddLine(('    Displayed yield rate uses %.3f average units per %s; no measured occurrence inferred.'):format(
-                                m.expectedQuantity,option.name=='Mill' and 'milling operation' or option.name=='Disenchant' and 'disenchant' or 'prospect'),.70,.75,.82,true)
-                        end
-                        if m.unavailableReason then tooltip:AddLine('    '..m.unavailableReason,.90,.72,.45,true) end
-                        if m.derivedMean and not simulated then tooltip:AddLine('    Estimated average: probability times conditional yield midpoint',.70,.75,.82,true) end
-                        if m.inconsistentFields and not simulated then tooltip:AddLine('    Source range retained; selected average and chance disagree with it',.90,.72,.45,true) end
-                        if m.samplingVariation and not simulated then tooltip:AddLine('    Drop chance and average use different sets of casts',.70,.75,.82,true) end
-                        for _,rank in ipairs(m.rankReferences or {}) do
-                            local fields={}
-                            if rank.chance~=nil then fields[#fields+1]='chance '..ChanceText(rank.chance) end
-                            if rank.minQuantity and rank.maxQuantity then fields[#fields+1]=('yield %d-%d'):format(rank.minQuantity,rank.maxQuantity) end
-                            tooltip:AddLine('    Separate rank reference: '..MaterialDisplay(rank.id)..'; '..table.concat(fields,', '),.70,.75,.82,true)
-                        end
-                        for _,source in ipairs(LA.SourceOrder or {}) do
-                            local estimate=m.sourceEstimates and m.sourceEstimates[source]
-                            if estimate then
-                                local p=ChanceText(estimate.dropChance)
-                                tooltip:AddLine(('    %s (per %d inputs): P %s; range %s–%s; E %s'):format(source,estimate.inputCount or batch,p,
-                                    tostring(estimate.minQuantity or '?'),tostring(estimate.maxQuantity or '?'),
-                                    UnitsText(estimate.expectedQuantity)),.65,.68,.76,true)
-                                if estimate.sourceConflict and not simulated then tooltip:AddLine('    Source fields disagree; original values preserved',1,.68,.3,true) end
-                                local heldChance,heldMean=estimate.heldDropChance,estimate.heldExpectedQuantity
-                                if not simulated and heldChance and type(heldChance.value)=='number' then
-                                    tooltip:AddLine('    Conflicting source chance: '..ChanceText(heldChance.value)..' (excluded from estimate)',.90,.72,.45,true)
-                                end
-                                if not simulated and heldMean and type(heldMean.value)=='number' then
-                                    tooltip:AddLine('    Conflicting source average: '..UnitsText(heldMean.value)..' (excluded from estimate)',.90,.72,.45,true)
-                                end
-                                if estimate.appliedRule then tooltip:AddLine('    Profession rule: '..estimate.appliedRule,.65,.68,.76,true) end
-                            end
-                        end
-                        if m.boundsSource then tooltip:AddLine("    Conditional bounds: "..m.boundsSource,.65,.68,.76,true) end
-                        if m.personalHistogram and m.personalSamples and m.personalSamples>0 then
-                            local bins={} for quantity,n in pairs(m.personalHistogram) do bins[#bins+1]={quantity=quantity,n=n} end
-                            table.sort(bins,function(a,b) return tonumber(a.quantity)<tonumber(b.quantity) end)
-                            for j=1,math.min(#bins,12) do
-                                local bin=bins[j]
-                                tooltip:AddLine(("    Personal x%s: %.1f%% (%g/%g casts)"):format(tostring(bin.quantity),
-                                    bin.n*100/m.personalSamples,bin.n,m.personalSamples),.62,.72,.83,true)
-                            end
-                        end
-                    end
-                end
-                if showResearch and model.sources then
-                    for _,source in ipairs(LA.SourceOrder or {}) do
-                        local contribution=model.sources[source]
-                        if contribution and contribution>0 then
-                            tooltip:AddLine(("  %s: %.1f%% effective contribution"):format(source,contribution*100),.65,.72,.80,true)
-                        end
-                    end
-                end
-                if showProfession and model.context then
-                    local ctx=model.context
-                    local era=LA.DisenchantTables and LA.DisenchantTables[ctx.expansionID]
-                    tooltip:AddLine(("  %s %s — skill %s"):format(era and era.name or "Unknown expansion",
-                        ctx.profession or option.profession or "Profession",tostring(ctx.effectiveSkill or "?")),.70,.75,.82,true)
-                    tooltip:AddLine(("  %s (%s)"):format(ctx.character or "Unknown character",ctx.profileKind or "unknown context"),.70,.75,.82,true)
-                    if ctx.stale or ctx.incomplete then tooltip:AddLine("  Profession snapshot stale or incomplete",1,.68,.3,true) end
-                end
-                if showProfession and model.generalProfessionApplied then
-                    if model.qualityRank and model.qualityRank>0 then
-                        tooltip:AddLine(('  Output quality: %d'):format(model.qualityRank),.78,.82,.95,true)
-                    end
-                    if model.duration and model.duration>0 then
-                        tooltip:AddLine(('  Time per operation: %.2f s'):format(model.duration),.78,.82,.95,true)
-                    end
-                    if model.concentrationCost and model.concentrationCost>0 then
-                        tooltip:AddLine(('  Concentration per operation: %.2f'):format(model.concentrationCost),.78,.82,.95,true)
-                    end
-                end
-                if showProcessing and not simulated then
-                    tooltip:AddLine("  "..(model.adjustment or "Unadjusted reference")..
-                        (model.provisional and not model.reviewedPublishedPriorOnly and " — provisional" or ""),.72,.70,.80,true)
-                elseif not option.name and model.provisional and not simulated and not model.reviewedPublishedPriorOnly then
-                    tooltip:AddLine("  Estimate — provisional",.72,.70,.80,true)
-                end
-                if showResearch and model.warning and not simulated then tooltip:AddLine("  "..model.warning,1,.68,.3,true) end
-                if showProcessing and model.partial then
-                    tooltip:AddLine("  Partial: value counts only outputs with a known amount and price",1,.82,.4,true)
-                elseif (showProcessing or not option.name) and model.partialPrice then
-                    tooltip:AddLine("  Insufficient Data: incomplete output valuation",1,.68,.3,true)
-                end
-                if #list>limit then
-                    tooltip:AddLine(("  +%d more materials"):format(#list-limit),.70,.72,.78,true)
-                end
-                if showResearch then
-                    if model.samples then
-                        tooltip:AddLine(("  Research: %d casts"):format(model.samples),.62,.79,.98,true)
-                    end
-                end
-                return
-            end
-            if showResearch then
-                tooltip:AddLine("  "..(option.note or "Insufficient Data: no researched yield model"),.83,.72,.59,true)
+            for _,m in ipairs(list or {}) do
+                local left,amount=LA:FormatTooltipMaterialRow(m,model,option)
+                if left then two(left,amount,option.letter or 'D') end
             end
         end
         for _,methodName in ipairs(methodOrder) do
             local option=choices[methodName]
             -- A sword cannot acquire unrelated Prospect/Smelt rows merely
             -- because a Force On profession switch is set.
-            local isGear=f and (f.classID==2 or f.classID==4)
+            local isGear=f and (f.classID==2 or f.classID==4 or f.classID==19)
             if option and (not isGear or methodName=="Disenchant")
                 then -- Unavailable options are an explicit display opt-in.
                 -- Reuse the exact evaluated material model used to price this option.
                 local model=option.yieldModel
-                local hasMaterials=(model and model.materials and #model.materials>0)
-                    or (model and model.namedOutputs and #model.namedOutputs>0)
+                local hasMaterials=model and model.materials and #model.materials>0
                 if option.value or hasMaterials or option.eligibleInput
                     or ((option.category=="destroy" or option.category=="research-operation") and
                         (methodName=="Mill" or methodName=="Prospect"))
                     or (methodName=="Disenchant"
                     and decision.disenchantEligible)
                     or methodName=="Smelt" then
+                    local prepared,fieldConfidence=PrepareMaterials(option,model,f)
                     local confidence=model and (model.valueConfidence or model.confidence)
+                    if fieldConfidence and finiteNonnegative(confidence) then confidence=math.min(confidence,fieldConfidence) end
                     local label=names[methodName] or methodName
-                    if option.tooltipProfileLabel then
-                        label=label.." — "..option.tooltipProfileLabel
+                    local profileLabel=option.tooltipProfileLabel
+                        or model and model.context and model.context.character or option.character
+                        or (LA.CharacterKey and LA:CharacterKey())
+                    if profileLabel=='Current character' then
+                        profileLabel=LA.CharacterKey and LA:CharacterKey()
                     end
-                    local status={}
-                    local simulationNotes={}
-                    if model and LA.ProfessionSimulationEffectNotes then
-                        simulationNotes=LA:ProfessionSimulationEffectNotes(f,option,model)
+                    if profileLabel then label=label.." — "..profileLabel end
+                    if finiteNonnegative(confidence) and confidence<=100 and not model.confidenceUnscored then
+                        label=label..(' (Confidence %d%%)'):format(math.floor(confidence+.5))
                     end
-                    local simulated=professionSimulation(model)
-                    if model and model.syntheticBenchmark and not simulated then
-                        status[#status+1]="Simulated assumptions"
-                    elseif model and model.confidenceUnscored then
-                        status[#status+1]="Confidence unscored"
-                    elseif confidence then
-                        status[#status+1]=("Confidence %d%%"):format(confidence)
-                    end
-                    if model and model.skillQualityApplied then status[#status+1]="skill-based quality" end
-                    if model and (model.partial or model.partialPrice) then
-                        status[#status+1]="partial"
-                    end
-                    if model and (model.provisional or model.estimatedFrom) and not simulated and not model.reviewedPublishedPriorOnly
-                        and not (model.personalReference and model.personalReference.personalSourceProfileMatched) then
-                        status[#status+1]="estimate"
-                    end
-                    if option.available==false and not valuedSimulationPreview(option) then
-                        status[#status+1]="unavailable"
-                    end
-                    if #status>0 then
-                        label=label.." ("..table.concat(status,", ")..")"
-                    end
-                    if option.value then
-                        valued(label,option.value,option.letter)
-                    else
-                        two(label,"Insufficient Data",option.letter or "D")
-                    end
-                    ShowMaterials(option,model)
-                    if showProfession then
-                        for _,note in ipairs(simulationNotes) do tooltip:AddLine('  '..note,.78,.82,.95,true) end
-                    end
-                    if option.eligibleInput and option.available==false and option.why then
-                        tooltip:AddLine('  '..option.why,.83,.72,.59,true)
-                    end
-                    if LA.ProfessionThresholdNotes and f and model and model.context
-                        and LA.db.showProfessionThresholds~=false then
-                        local notes=LA:ProfessionThresholdNotes(f,option,model.context)
-                        for i=1,math.min(#notes,3) do
-                            if showProfession or notes[i]:sub(1,3)~='No ' then
-                                tooltip:AddLine('  '..notes[i],.78,.82,.95,true)
-                            end
-                        end
-                    end
-                    if showResearch and not option.value and detail<3 then
-                        local note=(not simulated and model and model.warning) or option.note
-                        if note then tooltip:AddLine("  "..note,.83,.72,.59,true) end
-                    end
-                    if showProfession and option.available==false and option.why then
-                        tooltip:AddLine("  "..option.why,1,.68,.3,true)
-                    end
-                    if showResearch and not hasMaterials and not option.value
-                        and (methodName=="Mill" or methodName=="Prospect") then
-                        tooltip:AddLine("  Output yields not researched yet",.73,.69,.61,true)
-                    end
-                    if showProfession and option.character
-                        and option.character~="Current character" then
-                        tooltip:AddLine("  On: "..option.character,.68,.80,.97,true)
-                    end
+                    two(label,type(option.value)=='number' and LA:Money(option.value) or '',option.letter or 'D')
+                    ShowMaterials(option,model,prepared)
                 end
             end
         end
         if piece and piece.disenchantModel then
             tooltip:AddLine('Redeemed reward disenchant outputs (per reward)',.68,.82,1,true)
-            ShowMaterials({letter='D',inputCount=1},piece.disenchantModel)
+            local option={name='Disenchant',letter='D',inputCount=1}
+            ShowMaterials(option,piece.disenchantModel,PrepareMaterials(option,piece.disenchantModel,
+                piece.facts or piece.disenchantFacts or {id=piece.itemID}))
         end
         -- The actual collection state is informational even if the account
         -- prefers the higher-gold method or has no eligible transmog recipient.
@@ -1010,51 +1044,8 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 or "AH pricing unavailable (no TSM price data)",.95,.6,.35,true)
         end
         -- Vendor is the LAST comparison row for ordinary items.
-        if type(decision.vendor)=="number"
-            and decision.vendor>0 and not compactToken then
+        if vendorKnown and not compactToken then
             valued("Vendor",decision.vendor,"V")
-        end
-    end
-    for _,line in ipairs(reviewedSourceLines) do
-        tooltip:AddLine(line,.66,.78,.91,true)
-    end
-    if detail>=3 and showResearch
-        and LA.db.showProcessingSamples~=false and decision.deStats
-        and not printedSamples then
-        local n=decision.deStats.total or 0
-        tooltip:AddLine(("Personal samples: %d / %d"):format(n,
-            LA.ProcessingMinimum and LA:ProcessingMinimum() or 30),.56,.81,1,true)
-    end
-    -- Profession progression stays strictly informational: it never changes
-    -- the highest-gold action or fabricates discovery/skill-up chances.
-    if #progress>0 then
-        for i=1,math.min(#progress,3) do
-            tooltip:AddLine("Profession: "..progress[i],.67,.85,.97,true)
-        end
-    end
-    if detail>=3 and showProfession and decision.disenchantEligible -- optional profession notes
-        and decision.action~="D" then
-        local note=decision.deIssue or (decision.canDisenchant
-            and "Disenchant candidate; outcome probabilities may be unknown"
-            or "Disenchant requires a verified eligible character")
-        tooltip:AddLine(note,.69,.56,.82,true)
-    end
-    if showProfession and LA.ProfessionAlternatives and decision.facts then -- B3: with notes
-        local options=LA:ProfessionAlternatives(decision.facts,decision)
-        for i=1,math.min(#options,4) do
-            local option=options[i]
-            tooltip:AddLine("Profession: "..option.description,.73,.78,.92,true)
-            if LA.MatchingCharacters then
-                local matches=LA:MatchingCharacters(option.profession)
-                if #matches>0 then
-                    local labels={}
-                    for j=1,math.min(3,#matches) do
-                        local char=matches[j]
-                        labels[#labels+1]=char.name.." (profession known; recipe may not be)"
-                    end
-                    tooltip:AddLine("Known characters: "..table.concat(labels,", "),.67,.75,.85,true)
-                end
-            end
         end
     end
     local token=decision.tokenInfo
@@ -1222,6 +1213,11 @@ end
 
 local function TooltipItem(tooltip, data)
     if not LA.db or (LA.db.tooltipDetail or 2)<=0 or not tooltip then return end
+    -- Pawn parses its private scanner's lines as item stats. Keep our rows
+    -- out of that scan, while allowing its explicitly anchored debug view.
+    local pawnName=PawnPrivateTooltipName
+    if type(pawnName)=="string" and _G and tooltip==_G[pawnName]
+        and tooltip.GetAnchorType and tooltip:GetAnchorType()=="ANCHOR_NONE" then return end
     local link
     if TooltipUtil and TooltipUtil.GetDisplayedItem then
         local _, l = TooltipUtil.GetDisplayedItem(tooltip)
@@ -1299,13 +1295,16 @@ end
 local eventFrame = CreateFrame("Frame")
 eventFrame:RegisterEvent("PLAYER_LOGIN")
 eventFrame:RegisterEvent("ADDON_LOADED")
-eventFrame:SetScript("OnEvent", function(_, event, name)
+eventFrame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
+eventFrame:SetScript("OnEvent", function(_, event, name, success)
     if event == "PLAYER_LOGIN" then
         HookBetterBags()
         if TooltipDataProcessor and TooltipDataProcessor.AddTooltipPostCall
             and Enum and Enum.TooltipDataType then
             TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, TooltipItem)
         end
+    elseif event=="GET_ITEM_INFO_RECEIVED" then
+        if type(name)=="number" and success~=false then LA:RequestBadgeRefresh(name,true) end
     elseif name == "BetterBags" then
         HookBetterBags()
     end

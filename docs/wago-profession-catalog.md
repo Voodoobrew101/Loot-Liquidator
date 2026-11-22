@@ -53,7 +53,7 @@ controls do not assert which stats affect a given recipe.
 
 Catalog data supplies no yield formulas, rating curves or promotion of research
 mechanics. A separate sourced specialization-effect pipeline now consumes the
-named point allocations; see [the calculation contract](SYNTHETIC-BENCHMARK.md).
+named point allocations; see [the calculation contract](PROFESSION-BASELINE-PIPELINE.md).
 Tooltip values change where a scoped researched rule supports the chosen
 context. A shared [capability check](PROFESSION-CONTROL-VISIBILITY.md) hides inactive
 sliders and restores them when compatible compiled rules arrive. Automated coverage includes all catalogs with an empty character database,

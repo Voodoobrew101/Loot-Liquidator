@@ -1,3 +1,4 @@
+-- Offline research audit only; this module is not shipped or loaded by the addon.
 -- Reviewed source facts are informational. They never join the yield/price or
 -- eligibility model: conditional amounts, unit shares and website counters have
 -- different denominators from unconditional expected material quantities.

@@ -1,6 +1,6 @@
 local LL={}
 CreateFrame=function()return {RegisterEvent=function()end,SetScript=function()end}end
-for _,name in ipairs({'ItemDBRuntime.lua','ProfessionModels.lua','Database.lua','Professions.lua','CraftRecording.lua','ImportedResults.lua','ConversionEngine.lua','BuildInfo.lua'})do
+for _,name in ipairs({'ItemDBRuntime.lua','ProfessionModels.lua','Database.lua','Professions.lua','CraftRecording.lua','ImportedResults.lua','ConversionEngine.lua'})do
     assert(loadfile('LootLiquidator/'..name))('LL',LL)
 end
 LL.db={};assert(LL:InitializeItemDB())
@@ -57,9 +57,5 @@ study.coverageGaps['Recycle:1229930']={reason='missing'}
 assert(not LL:CraftBaseline(first.studyID,first.contextID,first.recipeID),'same recipe gap must block its denominator')
 study.coverageGaps['Recycle:1229930']=nil;study.globalCoverageGap='Unclosed recording session'
 assert(not LL:CraftBaseline(first.studyID,first.contextID,first.recipeID),'session-wide uncertainty stays blocked')
-LL.buildInfo={kind='main',branch='main',commit='abc',prs={}}
-local a,b=LL:BuildSummary();assert(a=='Main branch build' and b=='PRs beyond main: none')
-LL.buildInfo={kind='pr',branch='fix/recycling',commit='abc',prs={{number=49,title='Recycling',url='url'}}}
-a,b=LL:BuildSummary();assert(a=='Pull request build' and b=='PRs: #49')
-assert(LL:BuildDetails():find('Branch: fix/recycling',1,true))
-print('PASS: native 200-cast coverage restoration, recipe isolation, global gaps and build provenance labels')
+assert(LL.BuildSummary==nil and LL.BuildDetails==nil,'Developer build panel must not return')
+print('PASS: native 200-cast coverage restoration, recipe isolation and global gaps')

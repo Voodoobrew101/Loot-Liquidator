@@ -197,9 +197,9 @@ def row_support(module, row, batch, weight, notes, shared_casts=None):
         for name, value, hist_bound in (('minQuantity', lo, histogram.minimum if histogram else None),
                                         ('maxQuantity', hi, histogram.maximum if histogram else None)):
             if value is not None:
-                supports[name].append(Observation(value, bound_n, weight=weight))
+                supports[name].append(Observation(value, bound_n, weight=weight, source='observedBound'))
             elif hist_bound is not None:
-                supports[name].append(Observation(hist_bound, histogram.hits, weight=weight))
+                supports[name].append(Observation(hist_bound, histogram.hits, weight=weight, source='observedBound'))
     for field in conflicts:
         supports.pop(field, None)
         notes[f'inconsistent source {field}'] += 1
@@ -219,7 +219,8 @@ def choose_observation(values):
         first = measured[0]
         if any((v.casts, v.amount, v.value) != (first.casts, first.amount, first.value) for v in measured):
             return None
-        return Observation(first.value, first.casts, first.amount, weight=min(v.weight for v in measured))
+        source = first.source if all(v.source == first.source for v in measured) else 'mixed'
+        return Observation(first.value, first.casts, first.amount, weight=min(v.weight for v in measured), source=source)
     candidates = provisional_candidates(values)
     first = candidates[0]
     if not all(isclose(v.value, first.value, rel_tol=1e-9) for v in candidates):
@@ -235,8 +236,11 @@ def combine(field, observations, notes):
         value = extreme(o.value for o in (direct or observations))
         supporting = [o for o in direct if o.value == value]
         casts = sum(o.casts * o.weight for o in supporting)
-        return {'value': value, 'casts': casts, 'sampleSizeKnown': bool(casts),
-                'status': 'measured' if supporting and all(o.weight == 1 for o in supporting) else 'provisional'}
+        result = {'value': value, 'casts': casts, 'sampleSizeKnown': bool(casts),
+                  'status': 'measured' if supporting and all(o.weight == 1 for o in supporting) else 'provisional'}
+        if direct and all(o.source == 'observedBound' for o in direct):
+            result['basis'] = 'observed-sample'
+        return result
 
     amount_key = 'hits' if field == 'dropChance' else 'total'
     if direct:
@@ -363,6 +367,7 @@ def build_field_support(module, rows, names):
 
         selected = defaultdict(list)
         counted_cohorts = defaultdict(set)
+        observed_bound_cohorts = defaultdict(set)
         for cohort, fields in cohorts.items():
             for field, options in fields.items():
                 observation = choose_observation(options)
@@ -370,12 +375,17 @@ def build_field_support(module, rows, names):
                     selected[field].append(observation)
                     if observation.casts and field in ('dropChance', 'expectedQuantity'):
                         counted_cohorts[field].add(cohort)
+                    elif observation.casts and observation.source == 'observedBound':
+                        observed_bound_cohorts[field].add(cohort)
                 else:
                     notes[f'conflicting {field} in one cohort'] += 1
         supports = {field: support for field, observations in selected.items()
                     if (support := combine(field, observations, notes)) is not None}
         for field, cohort_ids in counted_cohorts.items():
             supports[field]['_countedCohorts'] = cohort_ids
+        for field, cohort_ids in observed_bound_cohorts.items():
+            if field in supports and supports[field].get('basis') == 'observed-sample':
+                supports[field]['_observedCohorts'] = cohort_ids
         if supports:
             estimates.append({'method': method, 'input': item, 'outputItemID': output, 'inputsPerCast': batch,
                               'conditional': requires is not None, 'requires': requires,

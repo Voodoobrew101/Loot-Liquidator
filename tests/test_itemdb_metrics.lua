@@ -58,8 +58,13 @@ for _,case in ipairs({{152506,256218,15.48},{152507,256223,16.39},{152508,256221
     end
     near(options[1].value,total/20)
     local text=render(f,options[1])
-    -- Ranges may come from working estimates; the method row carries the estimate label.
-    assert(text:find('Per 20 input(s)',1,true) and (text:find('[yield unavailable]',1,true) or text:find('100%',1,true)))
+    -- The numerical model retains its batch; the normal tooltip shows only
+    -- the operation's numerical outputs, not denominator diagnostics.
+    assert(not text:find('Per 20 input(s)',1,true) and not text:find('[yield unavailable]',1,true))
+    local range=('[%d-%d]'):format(math.floor(case[3]),math.ceil(case[3]))
+    assert(text:find('Ultramarine Pigment',1,true) and text:find('100%',1,true)
+        and text:find(range,1,true) and not text:find(('%.3fx'):format(case[3]),1,true),
+        'actual operation output keeps the shared percentage, native name and display range')
     f.count=5
     options=LL:ConversionOptions(f)
     assert(not options[1].available and options[1].inputShort and options[1].inputCount==20)
@@ -112,7 +117,11 @@ assert(text:find('50%',1,true) and text:find('[10-20]',1,true) and not text:find
 material.dropChance.status='provisional'
 assert(render(f,option()):find('50%',1,true) and not render(f,option()):find('~50%',1,true),'probabilities omit tilde prefixes')
 material.dropChance=field(nil,'unknown');material.minQuantity=field(nil,'unknown');material.maxQuantity=field(nil,'unknown')
-text=render(f,option());assert(not text:find('[yield unavailable]',1,true) and text:find('8.000x ',1,true) and not text:find('50%',1,true))
+local missing=option()
+text=render(f,missing)
+assert(text:find('100%',1,true) and text:find('[8]',1,true) and not text:find('8.000x ',1,true))
+near(missing.yieldModel.materials[1].expectedQuantity,8)
+near(missing.value,40) -- display completion cannot alter actual E or gold
 material.dropChance=field(1e-7);material.expectedQuantity=field(1e-7)
 material.minQuantity=field(1);material.maxQuantity=field(1)
 text=render(f,option())
@@ -127,7 +136,8 @@ text=render(f,chosen);assert(text:find('0%',1,true) and not text:find('[avg',1,t
 -- Operation discovery does not admit disabled evidence or bypass recipe access.
 LL.db.source_itemdb_enabled=false
 local disabled=option();assert(disabled.value==nil)
-assert(render(f,disabled):find('Insufficient Data',1,true),'known operations need an explanation even when yields are unavailable')
+assert(not render(f,disabled):find('Insufficient Data',1,true) and disabled.value==nil,
+    'disabled evidence produces no made-up value or diagnostic substitute')
 LL.db.source_itemdb_enabled=true
 LL.CanUseConversion=function()return false,'Recipe not learned'end
 assert(not option().available)
@@ -199,11 +209,17 @@ local prospect=LL:ConversionOptions(oreFacts)[1]
 near(prospect.value,40) -- 2 known units * 100 copper / 5 ore; the gem adds nothing yet
 assert(prospect.partial and prospect.confidence==40,'partial value: confidence 80 scaled by 1 of 2 outputs priced')
 text=render(oreFacts,prospect)
-assert(text:find('Partial:',1,true) and text:find('Confidence 40%, partial',1,true) and not text:find('incomplete output valuation',1,true))
+assert(not text:find('Partial:',1,true) and text:find('Confidence 0%',1,true)
+    and not text:find('incomplete output valuation',1,true),
+    'mean-only display estimates keep their independent confidence without extra explanation panels')
+assert(prospect.confidence==40,'tooltip display estimates cannot change numerical valuation confidence')
 -- A3: one confidence per option, weighted by value. The valuable output
 -- (confident, 80) dominates a cheap uncertain one (20): (80*900+20*100)/1000=74,
 -- not the plain average 50.
 oreRow.materials={ore(900032,9,80),ore(900033,1,20)}
+for _,m in ipairs(oreRow.materials)do
+    m.dropChance=field(1);m.minQuantity=field(m.expectedQuantity.value);m.maxQuantity=field(m.expectedQuantity.value)
+end
 LL.GetOutputPrice=function()return 100 end
 assert(LL:InitializeItemDB())
 prospect=LL:ConversionOptions(oreFacts)[1]
@@ -212,6 +228,7 @@ text=render(oreFacts,prospect)
 assert(text:find('(Confidence 74%)',1,true) and not text:find('(80%)',1,true),'per-material confidence is off by default')
 LL.db.showMaterialConfidence=true
 text=render(oreFacts,prospect)
-assert(text:find('(80%)',1,true) and text:find('(20%)',1,true),'per-material confidence when switched on')
+assert(text:find('(Confidence 74%)',1,true) and not text:find('(80%)',1,true) and not text:find('(20%)',1,true),
+    'the compact format keeps one value-weighted confidence even with an old material-detail setting')
 LL.db.showMaterialConfidence=nil
 print('PASS: ItemDB-only real mass-milling recipes, all four metric units, source/access gates, conditional ranges, unknowns and probability/yield precision')

@@ -24,14 +24,15 @@ class ProfessionProfileRulesTests(unittest.TestCase):
                 for milestone in node["milestones"]:
                     yield from milestone["effects"]
 
-    def test_all_actual_nodes_entries_effects_and_milestones_are_typed(self):
-        self.assertEqual(self.audit["summary"]["nodes"], 727)
-        self.assertEqual(self.audit["summary"]["entries"], 6275)
-        self.assertEqual(self.audit["summary"]["milestones"], 4821)
+    def test_all_retained_value_entries_and_milestones_are_typed(self):
+        self.assertGreater(self.audit["summary"]["nodes"], 500)
         self.assertEqual(self.audit["summary"]["unmappedSourceEffects"], 0)
         expected = {(node["nodeID"], entry["entryID"])
                     for node in self.source["nodes"]
-                    for entry in node["baseEntries"] + [entry for milestone in node["milestones"] for entry in milestone["entries"]]}
+                    for entry in node["baseEntries"] + [entry for milestone in node["milestones"] for entry in milestone["entries"]]
+                    if node["profession"] not in {"Herbalism", "Skinning"}
+                    and any(MODULE.is_runtime_value_effect(effect)
+                            for effect in MODULE.compile_entry(node, entry, self.native_nodes, self.rules["recipes"]))}
         self.assertEqual({(row["nodeID"], row["entryID"]) for row in self.audit["entries"]}, expected)
         for effect in self.all_effects():
             self.assertIn(effect["metric"], MODULE.METRICS)
@@ -55,8 +56,9 @@ class ProfessionProfileRulesTests(unittest.TestCase):
                 self.assertEqual((effect["metric"], effect["unit"]), ("resourcefulness", "rating"))
             elif effect["mechanism"] == "client-effect-10":
                 self.assertEqual((effect["metric"], effect["unit"]), ("resourcefulness", "percent"))
-            elif effect["mechanism"] == "client-effect-14":
-                self.assertEqual((effect["metric"], effect["unit"]), ("craftingSpeed", "percent"))
+        mechanisms = {effect["mechanism"] for effect in self.all_effects()}
+        self.assertTrue({"client-effect-2", "client-effect-10", "client-effect-7"} <= mechanisms)
+        self.assertNotIn("client-effect-14", mechanisms, "Retired speed projections are not runtime effects")
 
     def test_custom25_transmutagen_is_not_mapped_to_skill(self):
         candidates = []
@@ -86,8 +88,8 @@ class ProfessionProfileRulesTests(unittest.TestCase):
                            "Your tinkers can no longer catastrophically malfunction.",
                            "Shorten the recovery time after crafting Arcanoweave Bolts."}}
         effects = [effect for effect in self.all_effects() if effect["definitionID"] in definitions]
-        self.assertTrue(effects)
-        self.assertTrue(all(effect["metric"] == "nonOutput" for effect in effects))
+        self.assertTrue(definitions, "The native non-economic source fixtures remain available offline")
+        self.assertEqual(effects, [], "Convenience/cooldown handlers are not shipped as value effects")
 
     def test_resourcefulness_prose_changes_input_savings_not_drop_quantities(self):
         entry_ids = {24520, 24518, 24516, 24514, 54893, 54891, 54889, 54887, 87415, 87413, 87411, 87409, 124509}
@@ -96,16 +98,9 @@ class ProfessionProfileRulesTests(unittest.TestCase):
         self.assertTrue(any(effect["metric"] == "resourcefulnessSaved" for effect in effects))
         self.assertFalse(any(effect["metric"] in {"extraOutput", "dropChance", "yieldMultiplier"} for effect in effects))
 
-    def test_specific_loot_relative_chance_does_not_boost_arbitrary_crafting(self):
+    def test_world_loot_relative_chance_is_not_shipped(self):
         effects = [effect for effect in self.all_effects() if effect["entryID"] == 125760]
-        drops = [effect for effect in effects if effect["metric"] == "dropChance"]
-        self.assertEqual(len(drops), 1)
-        effect = drops[0]
-        self.assertEqual(effect["amount"], 50)
-        self.assertEqual(effect["operator"], "multiply")
-        self.assertEqual(effect["scope"]["method"], "Loot")
-        self.assertEqual(effect["targetFamily"], "Darkmoon Cards")
-        self.assertFalse(effect["baselineOutputFallback"])
+        self.assertEqual(effects, [])
 
     def test_existing_exact_family_replacement_keeps_its_dedicated_handler(self):
         for identity in (98659, 98660, 98661, 98662):
@@ -159,61 +154,69 @@ class ProfessionProfileRulesTests(unittest.TestCase):
         self.assertTrue(all(recipe["supportsMulticraft"] is False for recipe in nonstackable))
         self.assertNotIn("supportsMulticraft", recipes[13262])
 
-    def test_gathering_and_overload_have_explicit_scope_and_state(self):
+    def test_item_processing_profiles_keep_real_craft_metadata_without_unrouted_scopes(self):
         effects = list(self.all_effects())
-        gathering = [effect for effect in effects if effect["scope"].get("method") == "Gather"]
-        self.assertTrue(gathering)
-        overload = [effect for effect in gathering if effect.get("condition", {}).get("contextFlags", {}).get("overload")]
-        self.assertTrue(overload)
-        self.assertFalse(any(effect["scope"].get("method") == "Smelt" for effect in overload))
+        self.assertFalse(any(effect["scope"].get("method") in {"Gather", "Skin", "Fish", "Loot", "Use"} for effect in effects))
+        self.assertFalse(any(effect.get("outputBinding", {}).get("kind") == "gather-target-primary" for effect in effects))
+        refining = [effect for effect in effects if effect["scope"].get("method") == "Refine"]
+        self.assertEqual(refining, [], "Unrouted Refine scope effects are not active item-processing code")
+        self.assertFalse(any(effect["scope"].get("method") == "Unravel" for effect in effects))
+        self.assertEqual(self.rules["recipes"][2657]["outputIDs"], [2840], "Actual Smelt metadata remains")
+        self.assertFalse(any(effect["scope"]["profession"] == "Skinning" for effect in effects))
+        self.assertEqual(self.rules["recipes"][375773]["outputIDs"], [193893],
+                         "A real Skinning item-craft identity survives removal of its simulated tree")
         buffs = [effect for effect in effects if effect["mechanism"] == "conditional-stat-buff"]
         self.assertTrue(any(effect.get("condition", {}).get("requiresActiveBuff") for effect in buffs))
         self.assertTrue(all(effect["condition"]["manualStateKey"] == effect["entryID"] for effect in buffs))
 
-    def test_native_gathering_target_has_only_explicit_unit_prior_not_observed_yield(self):
-        target = self.rules["gatheringTargets"][1223138]
-        self.assertEqual(target["profession"], "Herbalism")
-        self.assertEqual(target["primaryOutputIDs"], [236776, 236777])
-        self.assertEqual(target["baseline"]["materials"], [{"id": 236776, "expectedQuantity": 1, "confidence": 0}])
-        self.assertEqual(target["nativeDifficultyParameter"], 120)
-        self.assertFalse(target["baseline"]["observedYield"])
-        self.assertNotIn("samples", target["baseline"])
-        self.assertEqual(target["difficultyConfidence"], 0)
-        self.assertEqual(target["targetID"], "native-gather-spell:1223138")
-        self.assertEqual(target["nativeTargetID"], "spell:1223138")
-        self.assertEqual(target["method"], "Gather")
-        self.assertEqual(target["label"], "Argentleaf")
-        for profession in ("Herbalism", "Mining", "Skinning"):
+    def test_world_gathering_targets_and_metadata_are_not_generated(self):
+        self.assertNotIn("gatheringTargets", self.rules)
+        self.assertFalse(set(self.rules["metrics"]) & {"finesse", "finesseExtra", "perception", "deftness"})
+        self.assertTrue(all("GatherTimeIncreasePct" not in row for row in self.rules["professionParameters"].values()))
+        self.assertFalse(hasattr(MODULE, "build_gathering_targets"))
+        spells = {row["spellID"]: row for row in self.source["recipeRouting"]["spells"]}
+        for identity in self.rules["recipes"]:
+            effects = spells.get(identity, {}).get("effects", [])
+            if any(effect["Effect"] == 302 for effect in effects):
+                self.assertTrue(any(effect["Effect"] in (24, 157, 288, 296) or effect.get("craftingDataID") for effect in effects))
+        for profession in ("Herbalism", "Skinning", "Fishing"):
             for expansion in (9, 10, 11):
-                self.assertTrue(any(row["profession"] == profession and row["expansionID"] == expansion
-                                    for row in self.rules["gatheringTargets"].values()), (profession, expansion))
+                self.assertNotIn(f"{profession}:{expansion}", self.rules["profiles"])
+        for expansion in (9, 10, 11):
+            self.assertEqual(self.rules["profiles"][f"Mining:{expansion}"]["statKeys"], ["skill"])
 
-    def test_static_cast_time_preserves_native_milliseconds_to_seconds(self):
-        recipe = self.rules["recipes"][1230867]
-        self.assertGreater(recipe["baseDuration"], 0)
-        self.assertEqual(recipe["baseDuration"], recipe["baseDurationSource"]["baseMilliseconds"] / 1000)
-        self.assertGreater(recipe["baseDurationSource"]["spellCastTimesID"], 0)
+    def test_fishing_keeps_only_actual_item_crafting_recipes(self):
+        recipes = {identity: row for identity, row in self.rules["recipes"].items()
+                   if row["profession"] == "Fishing"}
+        self.assertEqual(set(recipes), {1295922, 1302819, 1235486, 1226157, 1226159, 1226161})
+        self.assertTrue(all(recipe["outputIDs"] for recipe in recipes.values()))
+
+    def test_native_cast_time_stays_offline_without_runtime_projection_fields(self):
+        native = next(row for row in self.source["recipeRouting"]["spells"] if row["spellID"] == 1230867)
+        self.assertGreater(native["baseDuration"], 0)
+        self.assertEqual(native["baseDuration"], native["castTimeSource"]["baseMilliseconds"] / 1000)
+        self.assertGreater(native["castTimeSource"]["spellCastTimesID"], 0)
+        self.assertNotIn("baseDuration", self.rules["recipes"][1230867])
+        self.assertNotIn("baseDurationSource", self.rules["recipes"][1230867])
 
     def test_discovery_only_decay_perk_does_not_create_materials(self):
         effects = [effect for effect in self.all_effects() if effect["entryID"] == 24528]
-        self.assertTrue(effects)
-        self.assertFalse(any(effect["metric"] in {"extraOutput", "dropChance"} for effect in effects))
+        self.assertTrue(any(entry["entryID"] == 24528 for node in self.source["nodes"]
+                            for milestone in node["milestones"] for entry in milestone["entries"]))
+        self.assertEqual(effects, [], "Inert recipe-discovery controls do not become material output handlers")
 
-    def test_mystic_loot_context_overrides_mention_of_disenchanting_results(self):
+    def test_mystic_loot_context_is_excluded_from_processing(self):
         for entry in (87397, 87396):
             effects = [effect for effect in self.all_effects() if effect["entryID"] == entry]
-            self.assertTrue(effects)
-            self.assertTrue(all(effect["scope"]["method"] == "Loot" for effect in effects))
+            self.assertEqual(effects, [])
 
     def test_secondary_professions_have_parameters_without_fictitious_trees(self):
-        self.assertEqual(len(self.rules["profiles"]), 39)
+        self.assertEqual(len(self.rules["profiles"]), 30)
         self.assertEqual(len(self.rules["professionParameters"]), 13)
         for expansion in (9, 10, 11):
-            fishing = self.rules["profiles"][f"Fishing:{expansion}"]
             cooking = self.rules["profiles"][f"Cooking:{expansion}"]
-            self.assertEqual(fishing["nodes"], {})
+            self.assertNotIn(f"Fishing:{expansion}", self.rules["profiles"])
             self.assertEqual(cooking["nodes"], {})
-            self.assertNotIn("multicraft", fishing["statKeys"])
             self.assertIn("multicraft", cooking["statKeys"])
 
     def test_compilation_is_deterministic_and_carries_no_sample_counts(self):
@@ -223,6 +226,15 @@ class ProfessionProfileRulesTests(unittest.TestCase):
         for effect in self.all_effects():
             self.assertNotIn("samples", effect)
             self.assertNotIn("casts", effect)
+
+    def test_unquantified_descriptions_never_supply_numeric_bonuses(self):
+        effects = list(self.all_effects())
+        unsupported = [effect for effect in effects if effect.get("numericUnsupported")]
+        self.assertTrue(unsupported)
+        for effect in unsupported:
+            self.assertEqual(effect["amount"], 0, effect)
+        unresolved = [effect for effect in effects if effect.get("requiresSemanticReview")]
+        self.assertTrue(all(effect.get("numericUnsupported") for effect in unresolved))
 
 
 if __name__ == "__main__":

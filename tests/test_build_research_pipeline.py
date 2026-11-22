@@ -118,10 +118,6 @@ class BuildResearchTests(unittest.TestCase):
             source = {'commit': 'b' * 40, 'branch': 'durable-source'}
             (root / 'database/research/v3-snapshot/SNAPSHOT.json').write_text(json.dumps(source))
             (root / 'LootLiquidator').mkdir()
-            world_review = {'summary': {'reviewedRows': 8, 'nonWorldRows': 7, 'empiricalTargets': 1},
-                            'policy': 'Native world identities stay native'}
-            world_review_path = root / 'database/research/gathering-study-review.json'
-            world_review_path.write_text(json.dumps(world_review))
             runtime = b'compiled fixture database'
             (root / 'LootLiquidator/ItemDBRuntime.lua').write_bytes(runtime)
             commands = []
@@ -136,22 +132,17 @@ class BuildResearchTests(unittest.TestCase):
             self.assertEqual(result['researchSnapshot'], source)
             self.assertEqual(result['runtimeSHA256'], sha256(runtime).hexdigest())
             self.assertFalse(result['automaticPullRequests'])
-            self.assertEqual(result['nativeGatheringReview']['summary'], world_review['summary'])
-            self.assertEqual(result['nativeGatheringReview']['sha256'], sha256(world_review_path.read_bytes()).hexdigest())
-            self.assertTrue(result['nativeGatheringReview']['rowCountsAreNotIndependentOperations'])
+            self.assertNotIn('nativeGatheringReview', result)
             self.assertTrue(any(command[0] == 'lua-fixture' and command[1] == 'tools/compile_itemdb.lua' for command in commands))
-            self.assertIn([sys.executable, 'tools/gathering_study_baselines.py'], commands)
+            self.assertFalse(any('gathering' in part.lower() for command in commands for part in command))
             self.assertFalse(any(command[0] in {'git', 'gh'} for command in commands))
             self.assertTrue(any('tools/specialization_effects.py' in command for command in commands))
             self.assertTrue(any('tools/disenchant_categories.py' in command for command in commands))
 
-    def test_workflows_keep_the_schedule_and_manual_pr_validation(self):
-        refresh = Path('.github/workflows/research-refresh.yml').read_text()
-        self.assertIn("cron: '23 */6 * * *'", refresh)
-        for action in ('git commit', 'git push', 'gh issue', 'gh pr', 'update_addon_version.py'):
-            self.assertNotIn(action, refresh)
-        self.assertIn('actions/upload-artifact', refresh)
-        self.assertIn('prepare_build_research.py', refresh)
+    def test_automatic_research_and_version_push_are_removed(self):
+        self.assertFalse(Path('.github/workflows/research-refresh.yml').exists())
+        self.assertFalse(Path('.github/workflows/addon-version.yml').exists())
+        self.assertFalse(Path('tools/update_addon_version.py').exists())
         distribution = Path('.github/workflows/distribution.yml').read_text()
         self.assertIn('pull_request:', distribution)
         self.assertIn('workflow_dispatch:', distribution)

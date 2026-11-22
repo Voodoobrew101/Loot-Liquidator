@@ -18,6 +18,7 @@ LL.ProcessingPlayerConditions=function()return {skill=0,effectiveSkill=0}end
 LL.GetOutputPrice=function()return 100 end
 LL.MarkupColor=function()return '|cffffffff'end
 LL.Money=function(_,value)return ('%.6f copper (fixture)'):format(value)end
+C_Item={GetItemInfo=function(id)return 'Fixture material '..id end,GetItemIconByID=function(id)return 100000+id end}
 LL.ProfessionProgression=function()return {}end
 local output={}
 local function render(id,expansion,quality)
@@ -31,7 +32,7 @@ local function render(id,expansion,quality)
     LL:AppendRecommendationTooltip(tip,{action='D',facts=facts,conversionOptions={option},count=1})
     local text=table.concat(tip.lines,'\n')
     assert(not text:find('Insufficient Data',1,true),'numeric item must not render missing data')
-    assert(text:find('estimate',1,true),'uncertain historical contexts stay labelled')
+    assert(not text:find('estimate',1,true),'uncertainty stays in the numeric confidence header')
     assert(not text:find('  EV ',1,true),'owner-requested EV prefix cleanup')
     output[#output+1]='ITEM '..id..' — synthetic prices, offline rendering\n'..text
     return option,text
@@ -74,13 +75,16 @@ assert(math.abs(amber.netExpectedValue-5)<1e-10,'100 copper times .05 units, no 
 local tip={lines={}}
 function tip:AddLine(s)self.lines[#self.lines+1]=s end
 function tip:AddDoubleLine(a,b)self.lines[#self.lines+1]=a..' | '..b end
--- Amber sorts after the default twelve-material display limit. Full research
--- details exposes the complete model; the default still prices all materials.
+-- Breakdown exposes every real material, including the mean-only Amber family.
 LL.db.showResearchDetails=true
 LL:AppendRecommendationTooltip(tip,{action='P',facts=facts,conversionOptions={prospect},count=5})
 local amberText=table.concat(tip.lines,'\n')
-assert(amberText:find('rank unknown',1,true),'tooltip labels the missing rank')
-assert(amberText:find('0.05',1,true),'restored expected quantity reaches the tooltip')
+assert(not amberText:find('rank unknown',1,true),'compact family row does not add diagnostic text')
+local amberLine
+for _,line in ipairs(tip.lines)do if line:find('Fixture material 192849',1,true)then amberLine=line end end
+assert(amberLine and amberLine:find('[1]',1,true) and amberLine:find('5% ',1,true),
+    'Mean-only Amber uses the shared display estimate while actual quantities and gold stay unchanged')
+assert(amber.chance==nil and math.abs(amber.expectedQuantity-.05)<1e-12 and math.abs(amber.netExpectedValue-5)<1e-10)
 output[#output+1]='ITEM 194545 — synthetic prices, offline rendering\n'..amberText
 -- Disabling both sources still respects the player's evidence choice.
 LL.db.source_itemdb_enabled=false;LL._processingModelCache=nil

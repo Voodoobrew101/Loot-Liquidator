@@ -610,6 +610,29 @@ def support_strength(field):
     return 1, field.get('reportedCasts', 0), False
 
 
+def independent_observed_bound(occurrence, quantity, bound, field, estimates):
+    """An observed range from other casts is not a hard cap on this mean."""
+    if (occurrence['status'] != 'measured' or quantity['status'] != 'measured'
+            or not occurrence['sampleSizeKnown'] or not quantity['sampleSizeKnown']
+            or min(occurrence['samples'], quantity['samples']) <= 0
+            or not (0 < occurrence['value'] <= 1) or quantity['value'] + 1e-9 < occurrence['value']
+            or bound['status'] != 'measured' or not bound['sampleSizeKnown']):
+        return None
+    supports = [e['fieldSupport'][field] for e in estimates if field in e['fieldSupport']]
+    if not supports or any(f.get('basis') != 'observed-sample' or not f.get('_observedCohorts') for f in supports):
+        return None
+    mean_cohorts = counted_cohorts(estimates, 'expectedQuantity')
+    bound_cohorts = {cohort for f in supports for cohort in f['_observedCohorts']}
+    if not mean_cohorts or mean_cohorts & bound_cohorts or max(len(mean_cohorts), len(bound_cohorts)) > 256:
+        return None
+    def identities(cohorts):
+        # Stable compact identities, not extra copies of raw source records.
+        return sorted(hashlib.sha256(json.dumps(c, sort_keys=True, separators=(',', ':'),
+                                               allow_nan=False).encode('utf-8')).hexdigest() for c in cohorts)
+    return {'version': 1, 'field': field, 'meanCohorts': identities(mean_cohorts),
+            'boundCohorts': identities(bound_cohorts)}
+
+
 def material(item, estimates):
     occurrence = numeric_field(estimates, 'dropChance')
     quantity = numeric_field(estimates, 'expectedQuantity')
@@ -630,12 +653,22 @@ def material(item, estimates):
         out['rankIDs'] = estimates[0]['rankIDs']
     if p is not None and e is not None:
         boundary = None
+        boundary_field = None
         if e + 1e-9 < p * (lo or 1):
             boundary = lo or 1
+            if lo is not None and lo > 1:
+                boundary_field = 'minQuantity'
         elif hi is not None and e > p * hi + 1e-9:
             boundary = hi
+            boundary_field = 'maxQuantity'
         zero_conflict = (p == 0) != (e == 0)
-        if not zero_conflict and boundary is not None and sampling_compatible(occurrence, quantity, boundary, estimates):
+        independent = (independent_observed_bound(occurrence, quantity, out[boundary_field], boundary_field, estimates)
+                       if not zero_conflict and boundary_field else None)
+        if independent:
+            out['observedBoundIndependence'] = independent
+            out[boundary_field]['basis'] = 'observed-sample'
+            boundary = None
+        elif not zero_conflict and boundary is not None and sampling_compatible(occurrence, quantity, boundary, estimates):
             out['samplingVariation'] = True
             boundary = None
         if (zero_conflict or boundary is not None) and support_strength(occurrence) > support_strength(quantity):
@@ -644,8 +677,9 @@ def material(item, estimates):
         elif zero_conflict or boundary is not None:
             out['heldDropChance'] = occurrence
             out['dropChance'] = unknown(block_inference=True)
-    if p is None and e is not None:
-        out['dropChance']['inferenceBlocked'] = True
+    # A missing chance may be filled by the runtime's owner-approved
+    # mean / conditional-range-midpoint estimate. Explicit conflict blocks
+    # from numeric_field() and the held-field cases above remain in place.
     if e is None and p != 0 and (lo is None or hi is None):
         out['expectedQuantity']['inferenceBlocked'] = True
     out['_casts'] = max(occurrence.get('samples', 0), quantity.get('samples', 0),

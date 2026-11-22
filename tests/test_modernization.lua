@@ -30,13 +30,13 @@ for line in io.lines(root..'LootLiquidator.toc') do
     end
 end
 check(not LL.itemDBError,LL.itemDBError)
-eq(#manifest,21,'runtime source count') -- Includes reviewed source facts.
+eq(#manifest,18,'item-processing runtime source count')
 check(LL.ApplyVerifiedMechanics and LL.ResolveEvidenceModel and LL.QueueGuildRefresh and LL.QueueBlizzardBagRefresh)
 -- Names present before consolidation remain available.
 for _,name in ipairs({'SetIgnoreEntry','IsIgnoredAction','CanUseConversion','RecordProfessions',
-    'SetAltMethodEnabled','SkinSettingsCanvasControl','TokenResearchExport','Paint','ClearButton',
+    'SetAltMethodEnabled','SkinSettingsCanvasControl','Paint','ClearButton',
     'GetLearnedDisenchantEstimate','GetLearnedProcessingEstimate','ExportProcessingData',
-    'ExportDisenchantData','GetAuctionOperationNames','CreateItemIgnorePanel','RecommendedTSMSetupText'}) do
+    'ExportDisenchantData','GetAuctionOperationNames','CreateItemIgnorePanel'}) do
     check(type(LL[name])=='function','missing preserved API '..name)
 end
 LootLiquidatorDB={rateProfile=3,rateProfileCharacter='Old - Realm',professionTooltipProfiles={Engineering='@hypothetical'},prospectingDataMode=2,processingModes={P=4,M=3},characters={['Old - Realm']={altMethods={P=false},professions={Mining={}}}},appearance={colors={A={.1,.2,.3}}}}
@@ -253,7 +253,6 @@ LL:Invalidate();eq(LL:ConversionOptions(f)[1].value,0,'known zero is not insuffi
 integrationRecord.materials[1]=savedMaterial;LL:Invalidate()
 
 LL.db.showResearchDetails=true;LL.db.tooltipDetail=3;LL.db.showTooltips=true;LL.db.showMaterialBreakdown=true;LL.db.showAverageQuantity=true
-LL.ProfessionProgression=function() return {} end
 local tooltip={lines={}}
 function tooltip:AddLine(text) self.lines[#self.lines+1]=text end
 function tooltip:AddDoubleLine(left,right) self.lines[#self.lines+1]=left..' '..right end
@@ -261,11 +260,11 @@ LL:AppendRecommendationTooltip(tooltip,{action='P',facts=f,conversionOptions=opt
 local rendered=table.concat(tooltip.lines,'\n')
 check(not rendered:find('[avg',1,true),'compact prospecting omits the trailing average annotation')
 check(rendered:find('50%',1,true),'tooltip probability')
-check(rendered:find('itemdb: 100.0%',1,true),'tooltip actual source contributions')
+check(not rendered:find('itemdb: 100.0%',1,true),'source contributions remain outside the normal tooltip')
 near(options[1].yieldModel.materials[1].expectedQuantity,2,'tooltip must not recalculate')
 options[1].yieldModel.confidenceUnscored=true;tooltip.lines={}
 LL:AppendRecommendationTooltip(tooltip,{action='P',facts=f,conversionOptions=options,count=1,method='Prospect'})
-check(table.concat(tooltip.lines,'\n'):find('Confidence unscored',1,true),'unreviewed captures do not display a numeric confidence claim')
+check(not table.concat(tooltip.lines,'\n'):match('Confidence %d+%%'),'unreviewed captures do not display a numeric confidence claim')
 options[1].yieldModel.confidenceUnscored=nil
 -- Method off and insufficient batch remain eligibility gates.
 LL.db.processingModes.P=3;eq(#LL:ConversionOptions(f),0)

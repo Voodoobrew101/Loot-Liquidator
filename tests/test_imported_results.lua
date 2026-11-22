@@ -142,7 +142,7 @@ function tip:AddDoubleLine(l,r)self.lines[#self.lines+1]=l..' | '..r end
 LL:AppendRecommendationTooltip(tip,{action='P',facts=f,count=5,
  conversionOptions={{name='Prospect',letter='P',available=true,value=actual.value,yieldModel=actual}}})
 local shown=table.concat(tip.lines,'\n')
-check(shown:find('Confidence unscored',1,true),'actual imported option is explicitly unscored')
+check(not shown:find('Confidence unscored',1,true),'unscored import does not add a diagnostic status')
 check(not shown:match('Confidence %d+%%'), 'no option probability claim')
 check(not shown:match('%(%d+%%%)'),'no material confidence percentage')
 check(shown:find('copper',1,true),'economic values remain visible')

@@ -68,37 +68,42 @@ assert(r.action=='S','profitable smelt stays S')
 
 print('PASS: ? badge only when no option has any estimate (A4)')
 
--- A5: optional price in the tooltip header, default on.
+-- The owner-requested header contains only the selected action.
 local evaluated=LL.Evaluate
 assert(loadfile('LootLiquidator/Badges.lua'))('LootLiquidator',LL)
 LL.Evaluate=evaluated
 LL.MarkupColor=function() return '' end
 LL.db.showTooltips=true;LL.db.tooltipDetail=1
-assert(LL.db.tooltipHeaderPrice==nil or LL.db.tooltipHeaderPrice==true)
 local function header(decision)
     local tip={lines={}}
     function tip:AddLine(t) self.lines[#self.lines+1]=t end
     function tip:AddDoubleLine(l,r) self.lines[#self.lines+1]=l..' '..r end
     decision.facts=decision.facts or {id=1,classID=7};decision.conversionOptions={};decision.count=1
     LL:AppendRecommendationTooltip(tip,decision)
+    if LL.db.tooltipDetail==1 then
+        assert(#tip.lines==1,'Recommendation must remain one line for '..tostring(decision.action))
+    end
     return tip.lines[1] or ''
 end
 local h=header({action='S',method='Smelt',converted=68700})
-assert(h:find('Smelt',1,true) and h:find(LL:Money(68700),1,true),'header shows smelt value: '..h)
+assert(h=='|cff66ccffLoot Liquidator:|r Smelt|r','canonical smelt header: '..h)
 h=header({action='V',vendor=1500})
-assert(h:find(LL:Money(1500),1,true),'header shows vendor value: '..h)
-h=header({action='A',rawAuction=10000,netAuction=9500})
-assert(h:find(LL:Money(9500),1,true),'header shows auction value after AH cut: '..h)
-h=header({action='Q'})
+assert(h=='|cff66ccffLoot Liquidator:|r Vendor|r','canonical vendor header: '..h)
+h=header({action='A',rawAuction=10000,netAuction=9500,fallback='V'})
+assert(h=='|cff66ccffLoot Liquidator:|r Auction|r','no inline price or fallback suffix: '..h)
+h=header({action='Q',why='No price yet',blocked='No TSM price',tokenInfo={}})
 assert(not h:find('%dg'),'no price for ?: '..h)
-LL.db.tooltipHeaderPrice=false
-h=header({action='S',method='Smelt',converted=68700})
-assert(not h:find(LL:Money(68700),1,true),'header price can be switched off: '..h)
-print('PASS: optional price in the tooltip header (A5)')
+for _,stale in ipairs({false,true})do
+    LL.db.tooltipHeaderPrice=stale
+    h=header({action='S',method='Smelt',converted=68700})
+    assert(h=='|cff66ccffLoot Liquidator:|r Smelt|r','stale settings cannot change the header contract')
+end
+print('PASS: canonical action-only header regardless of stale settings')
 
 -- B1: dead settings are gone from defaults and quietly removed from old saved data.
 local old={methodEnabledD=true,methodEnabledX=false,allowMilling=true,allowExchanges=true,
-    allowEnchantingAlt=true,includeVerifiedAlts=false,tooltipDetail=3}
+    allowEnchantingAlt=true,includeVerifiedAlts=false,tooltipDetail=3,
+    gatheringTargetProfiles={obsolete={}},gatheringSimulationSelections={Mining='obsolete'}}
 LL:RemoveRetiredSettings(old)
 for _,key in ipairs(LL.RetiredSettings) do assert(old[key]==nil,'retired setting kept: '..key) end
 assert(old.includeVerifiedAlts==false and old.tooltipDetail==3,'live settings untouched')
@@ -126,6 +131,7 @@ print('PASS: slash commands are troubleshooting-only under /ll debug (B6c)')
 
 -- B3: one tooltip level: 0 Off, 1 Recommendation, 2 Alternatives, 3 Breakdown.
 LL.db.tooltipHeaderPrice=true
+C_Item={GetItemInfo=function(id)return 'Fixture material '..id end,GetItemIconByID=function()return 123 end}
 local function lines(level)
     LL.db.tooltipDetail=level
     local tip={lines={}}
@@ -175,7 +181,7 @@ r=tokenCase(0)
 assert(r.action=='V' and r.tokenQuote and r.tokenQuote.value==45*G and r.why:find('Open it, then vendor',1,true),
     'token with no sell price is valued by its piece: '..tostring(r.action)..' '..tostring(r.why))
 h=header(r)
-assert(h:find(LL:Money(45*G),1,true),'header shows the piece value: '..h)
+assert(h=='|cff66ccffLoot Liquidator:|r Vendor|r','token header keeps its selected action: '..h)
 piece={itemID=271457,name="Jeweled Gauntlets of the Jade Warlord",vendor=45*G,disenchant=60*G,disenchantConfidence=40,ownClass=true}
 r=tokenCase(0)
 assert(r.action=='D' and r.tokenQuote.value==60*G and r.why:find('disenchant',1,true),'disenchanting the piece can win')

@@ -24,14 +24,16 @@ class OutputClauseTests(unittest.TestCase):
         speed=next(e for e in effects if e['metric']=='craftingSpeed')
         output=next(e for e in effects if e['metric']=='extraOutput')
         self.assertEqual((speed['amount'],speed['unit'],speed['sourceAmount']),(15,'percent',15))
-        self.assertEqual((output['amount'],output['confidence'],output['unit']),(.05,0,'quantity'))
+        self.assertEqual((output['amount'],output['confidence'],output['unit']),(0,0,'quantity'))
+        self.assertTrue(output['numericUnsupported'])
         self.assertEqual(output['scope']['inputItemIDs'],[194545])
         self.assertNotIn('inputItemIDs',speed['scope'])
         self.assertFalse(any(e['metric']=='dropChance' for e in effects))
     def test_midnight_speed_twenty_is_not_extra_gem_chance(self):
         effects=self.compile(131816)
         output=next(e for e in effects if e['metric']=='extraOutput')
-        self.assertEqual((output['amount'],output['confidence']),(.05,0))
+        self.assertEqual((output['amount'],output['confidence']),(0,0))
+        self.assertTrue(output['numericUnsupported'])
         self.assertFalse(any(e['metric']=='dropChance' for e in effects))
     def test_six_real_output_clauses_keep_their_explicit_percent(self):
         for identity in [87375,87397,121928,121934,121940,121946]:
@@ -46,5 +48,17 @@ class OutputClauseTests(unittest.TestCase):
         effects=self.compile(36392,"Prospecting speed increased by 15%. Prospecting Prismatic Ore has a 25% chance to contain Khaz'gorite Ore.")
         chance=next(e for e in effects if e['metric']=='dropChance')
         self.assertEqual((chance['amount'],chance['operator']),(25,'add'))
+        self.assertFalse(chance['numericUnsupported'])
+
+    def test_qualitative_rarity_words_do_not_invent_proc_rates(self):
+        for description in ['You can now find extremely rare diamonds when prospecting.',
+                            'You can now find very rare diamonds when prospecting.',
+                            'Chance to receive additional materials when prospecting.',
+                            'Increases your chances of acquiring raw gems when prospecting.']:
+            with self.subTest(description=description):
+                output = next(e for e in self.compile(36393, description)
+                              if e['metric'] in ('extraOutput', 'dropChance'))
+                self.assertEqual(output['amount'], 0)
+                self.assertTrue(output['numericUnsupported'])
 
 if __name__=='__main__':unittest.main()

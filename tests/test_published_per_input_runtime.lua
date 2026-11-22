@@ -100,8 +100,8 @@ for _,record in ipairs(sources)do
     check(quote.eligibleInput,'accepted reference has a reachable informational tooltip without granting action access')
     local text=render(f,quote)
     check(text:find('confidence 0%',1,true),'actual tooltip displays numeric confidence zero')
-    check(text:find('values normalized per',1,true) and text:find('recipe batch unverified',1,true),
-        'tooltip describes normalized input units and explicitly unknown recipe batch')
+    check(not text:find('values normalized per',1,true) and not text:find('recipe batch unverified',1,true),
+        'compact tooltip omits batch diagnostics while source/model denominators remain intact')
     for _,word in ipairs({'estimate','provisional','unquantified'})do check(not text:find(word,1,true),'prior-only tooltip avoids an extra '..word..' label')end
     local partial=copy(quote);partial.yieldModel=copy(quote.yieldModel);partial.yieldModel.partial=true
     partial.yieldModel.warning='Missing price for unrelated output';partial.partial=true
@@ -110,7 +110,10 @@ for _,record in ipairs(sources)do
     LL.db.professionTooltipProfiles.Inscription='@auto'
     local warning=render(f,partial)
     LL.db.professionTooltipProfiles.Inscription='Player'
-    check(warning:find('partial',1,true) and warning:find('missing price for unrelated output',1,true),'reviewed-prior labels do not suppress partial or missing-data warnings')
+    check(not warning:find('partial',1,true) and not warning:find('missing price for unrelated output',1,true),
+        'normal tooltip retains numerical rows without partial/missing-price explanation panels')
+    check(partial.yieldModel.partial and partial.yieldModel.warning=='Missing price for unrelated output'
+        and partial.value==quote.value,'compact presentation preserves partial status and numerical value in the model')
     LL.db.source_itemdb_enabled=false;LL:Invalidate()
     check(LL:ResolveEvidenceModel(f,{name='Mill',inputCount=1},nil,1)==nil,'disabling ItemDB excludes the reviewed reference')
     LL.db.source_itemdb_enabled=true;LL.db.source_itemdb_weight=0;LL:Invalidate()

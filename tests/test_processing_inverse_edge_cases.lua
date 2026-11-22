@@ -14,8 +14,8 @@ local rawGemEffect
 for _,milestone in ipairs(rules.profiles['Jewelcrafting:9'].nodes[28609].milestones)do
  for _,effect in ipairs(milestone.effects or{})do if effect.entryID==36393 and effect.metric=='extraOutput'then rawGemEffect=effect end end
 end
-check(rawGemEffect and rawGemEffect.operator=='multiply' and rawGemEffect.unit=='fraction' and rawGemEffect.confidence==0,'native raw-gem opportunity uses a relative zero-confidence coefficient')
-close(rawGemEffect.amount,.05,'raw-gem coefficient is .05 relative, not units per rank')
+check(rawGemEffect and rawGemEffect.numericUnsupported,'qualitative raw-gem opportunity has no numeric coefficient')
+close(rawGemEffect.amount,0,'no invented raw-gem coefficient is shipped')
 local function facts(s)return {id=s.inputItemID,expansionID=s.expansionID,reagentQuality=s.inputQualityRank}end
 local function flat(s)
  local m={inputCount=s.inputCount,sourceQuantityBasis=s.sourceQuantityBasis,materials={},reviewedBacklogModel=true,
@@ -46,36 +46,31 @@ for _,s in ipairs(fixtures)do
  if s.reviewedEffectOverrides then
   local zero=copy(s.baselineProfile);zero.specializationPoints={};zero.learnedSpecializations={}
   local off=LL:ProfessionProfileParameters(s.profession,s.expansionID,zero,o,facts(s))
-  local z=LL:ProjectProfessionBaseline(raw,off,o);close(means(z)[194545]or 0,0,'Prismatic locked baseline is zero')
   zero.learnedSpecializations[28609]=true
   local learned=LL:ProfessionProfileParameters(s.profession,s.expansionID,zero,o,facts(s))
-  local p=LL:ProjectProfessionBaseline(raw,learned,o)
-  local count=0 for _,m in ipairs(p.materials)do if m.id==194545 then count=count+1;check(m.economicPolicy=='nontradable','Prismatic stays bound')end end
-  check(count==1,'calibrated Prismatic not duplicated as normal+bound')
-  close(means(p)[194545],s.reviewedEffectOverrides['entry:36397:extraOutput:1'].amount,'learning applies source-calibrated units')
-  for _,bad in ipairs({{confidence=1},{entryID=123},{metric='skill'},{mechanism='client-effect-0'},{unit='percent'},{operator='multiply'},{inputCount=1},{amount=-1},{amount=0/0}})do
-   local wrong=copy(o);local override=wrong.reviewedEffectOverrides['entry:36397:extraOutput:1'];for k,v in pairs(bad)do override[k]=v end
-   local w=LL:ProfessionProfileParameters(s.profession,s.expansionID,zero,wrong,facts(s))
-   close(w.nontradableExtraOutputs[194545],.05,'invalid override cannot replace native scoped prior')
-  end
+  close(off.nontradableExtraOutputs[194545]or 0,0,'qualitative unlock creates no guessed bound amount')
+  close(learned.nontradableExtraOutputs[194545]or 0,0,'old zero-confidence override cannot restore an unsupported coefficient')
+  local z=assert(LL:ProjectProfessionBaseline(raw,off,o))
+  local p=assert(LL:ProjectProfessionBaseline(raw,learned,o))
+  close(means(z)[194545]or 0,means(p)[194545]or 0,'supported source quantity stays intact without an invented learning increment')
  end
 end
 -- Khaz'gorite chance wording is scoped to Prismatic input; the adjacent
--- native15% speed bonus stays available on all valid prospect operations.
+-- native15% speed bonus does not become an item quantity or gold projection.
 local ctx={skill=0,specializationPoints={[28609]=25},learnedSpecializations={[28609]=true},stats={}}
 local op={name='Prospect',profession='Jewelcrafting',recipeID=374627,inputCount=5}
 for _,input in ipairs({190394,190396,194545})do
  local p=LL:ProfessionProfileParameters('Jewelcrafting',9,ctx,op,{id=input,expansionID=9})
  local quantity,speed=false,false
  for _,effect in ipairs(p.appliedEffects)do if effect.entryID==36392 then
-  if effect.metric=='extraOutput'then quantity=true;close(effect.amount,.05,'Khaz magnitude is an uncalibrated qualitative prior')end
+  if effect.metric=='extraOutput'then quantity=true end
   if effect.metric=='craftingSpeed'then speed=true;close(effect.amount,15,'native15% is crafting speed')end
  end end
- check(quantity==(input==194545),'Khaz output perk cannot leak onto Serevite')
- check(speed,'native speed perk remains active')
+ check(not quantity,'qualitative Khaz chance wording creates no made-up output gain')
+ check(not speed,'speed-only perk is excluded from item-processing projections')
 end
 -- Pure pooled alternatives: one quantity and one additive term across ranks.
-local minimal={skill=0,skillMaximum=100,outputFactor=1.1,inputFactor=.9,speedFactor=1,confidence=0,recipe={},method='Prospect',
+local minimal={skill=0,skillMaximum=100,outputFactor=1.1,inputFactor=.9,confidence=0,recipe={},method='Prospect',
  extraOutputs={[192870]=.003},nontradableExtraOutputs={},relativeExtraOutputs={[192869]=.05,[192870]=.05,[192871]=.05},minimumOutputs={},
  sameOutputExtra=0,namedOutputs={},effectTotals={}}
 local pool={inputCount=5,materials={{id=192869,rankIDs={192869,192870,192871},expectedQuantity=.2,confidence=0}}}

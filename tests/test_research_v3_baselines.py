@@ -53,8 +53,17 @@ ok(m['expectedQuantity']['confidence'] == eb.quality_score(100), 'expected quant
 ok(m['dropChance']['confidence'] == eb.rate_confidence(2.5, 5), 'drop chance score uses observed occurrences')
 ok(m['expectedQuantity']['independentConfidence'], 'mark independently supported mean for runtime')
 m = v3.material(5, [{'fieldSupport': {'expectedQuantity': quantity, 'minQuantity': lo, 'maxQuantity': hi}}])
+ok(m['dropChance']['status'] == 'unknown' and 'inferenceBlocked' not in m['dropChance'],
+   'missing chance remains eligible for the runtime midpoint estimate from mean and observed bounds')
+near(m['expectedQuantity']['value'], .75, 'enabling modeled chance does not change the source mean')
+near(m['minQuantity']['value'], 1, 'enabling modeled chance preserves the source minimum')
+near(m['maxQuantity']['value'], 2, 'enabling modeled chance preserves the source maximum')
+m = v3.material(5, [{'fieldSupport': {'expectedQuantity': quantity,
+                                    'dropChance': support(.2, 0, 'provisional'),
+                                    'minQuantity': lo, 'maxQuantity': hi}},
+                    {'fieldSupport': {'dropChance': support(.3, 0, 'provisional')}}])
 ok(m['dropChance']['status'] == 'unknown' and m['dropChance']['inferenceBlocked'],
-   'mean and observed bounds do not establish a drop chance')
+   'conflicting reported chances remain blocked rather than being replaced by the midpoint estimate')
 m = v3.material(5, [{'fieldSupport': {'dropChance': occurrence, 'minQuantity': lo, 'maxQuantity': hi}}])
 ok(m['expectedQuantity']['status'] == 'unknown' and 'inferenceBlocked' not in m['expectedQuantity'],
    'measured chance and positive bounds allow only runtime modeled expectation')
@@ -129,7 +138,27 @@ for r in records:
         p, e, lo, hi = (mat[field].get('value') for field in ('dropChance', 'expectedQuantity', 'minQuantity', 'maxQuantity'))
         ok(p is None or 0 <= p <= 1 and f['samples'] >= 0, f'{r["recordID"]}:{mat["id"]} chance')
         ok(lo is None or hi is None or 1 <= lo <= hi, f'{r["recordID"]}:{mat["id"]} range')
-        ok(mat.get('samplingVariation') or e is None or p is None or lo is None or hi is None or p*lo - 1e-9 <= e <= p*hi + 1e-9,
+        independent = mat.get('observedBoundIndependence')
+        if independent:
+            label = f'{r["recordID"]}:{mat["id"]} independent observed bound'
+            ok(set(independent) == {'version', 'field', 'meanCohorts', 'boundCohorts'}
+               and independent['version'] == 1 and independent['field'] in ('minQuantity', 'maxQuantity'), label + ' typed proof')
+            cohorts = [independent[key] for key in ('meanCohorts', 'boundCohorts')]
+            ok(all(isinstance(ids, list) and 0 < len(ids) <= 256 and len(ids) == len(set(ids))
+                   and all(isinstance(identity, str) and len(identity) == 64
+                           and set(identity) <= set('0123456789abcdef') for identity in ids) for ids in cohorts)
+               and not set(cohorts[0]) & set(cohorts[1]), label + ' disjoint identified cohorts')
+            ok(r['sourceKey'] == 'itemdb' and r['fieldSpecificEvidence']
+               and r['recordID'].startswith('evidence:v3:') and p is not None and 0 < p <= 1
+               and e is not None and e + 1e-9 >= p
+               and all(mat[key]['status'] == 'measured' and mat[key]['sampleSizeKnown']
+                       and mat[key]['samples'] > 0 for key in ('dropChance', 'expectedQuantity')), label + ' measured valid fields')
+            bound = mat[independent['field']]
+            ok(bound['basis'] == 'observed-sample' and bound['status'] == 'measured'
+               and bound['sampleSizeKnown'] and bound['samples'] > 0
+               and ((independent['field'] == 'minQuantity' and lo > 1 and e + 1e-9 < p*lo)
+                    or (independent['field'] == 'maxQuantity' and e > p*hi + 1e-9)), label + ' actual sampled bound')
+        ok(mat.get('samplingVariation') or independent or e is None or p is None or lo is None or hi is None or p*lo - 1e-9 <= e <= p*hi + 1e-9,
            f'{r["recordID"]}:{mat["id"]} exposed average in range')
 by_id = {r['recordID']: r for r in records}
 

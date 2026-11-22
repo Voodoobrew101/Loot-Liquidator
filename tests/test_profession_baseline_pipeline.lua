@@ -69,7 +69,7 @@ end
 local known={recordID='test:known-profile',method='Craft',profession='Alchemy',expansionID=11,
     inputItemID=f.id,inputCount=5,recipeID=recipe,sourceKey='itemdb',source='Synthetic mathematical fixture',
     studyID='test:known',samples=100,referenceContextID='test:canonical',referenceConditions={},
-    baselineProfile=sourceProfile,expectedInputCount=5*p.inputFactor,duration=10/p.speedFactor,
+    baselineProfile=sourceProfile,expectedInputCount=5*p.inputFactor,duration=10,
     materials={material(241303,2*p.outputFactor),material(241302,p.outputFactor)}}
 local unknown=copy(known);unknown.recordID='test:unknown-profile';unknown.baselineProfile=nil
 local small={processing={known,unknown},professionProfiles=originalDB.professionProfiles}
@@ -80,7 +80,7 @@ local k=assert(normalized[known.recordID]);local u=assert(normalized[unknown.rec
 near(k.materials[1].expectedQuantity,2,'Multicraft inverse restores the first baseline mean')
 near(k.materials[2].expectedQuantity,1,'Multicraft inverse restores the second baseline mean')
 near(k.expectedInputCount,5,'Resourcefulness inverse restores nominal input consumption')
-near(k.duration,10,'speed inverse restores reference duration')
+near(k.duration,10,'normalization retains raw duration metadata without forecasting time')
 check(k.baselineConfidence<=p.confidence,'source normalization carries its transformation uncertainty')
 check(u.sourceProfileAssumed and u.baselineConfidence<=5,'unprofiled source uses a separate low-confidence prior')
 near(u.materials[1].expectedQuantity,unknown.materials[1].expectedQuantity.value,'unknown source observations are not relabeled as measured zero-skill data')
@@ -114,14 +114,6 @@ for index,row in ipairs(crafting) do
     LL.db.source_itemdb_enabled=true
 end
 LL.db.recipeCandidates=nil
-for _,row in ipairs({{'Herbalism','Gather'},{'Mining','Gather'},{'Skinning','Skin'},{'Fishing','Fish'}}) do
-    set(row[1],{perception={percent=25}})
-    local preview=LL:GatheringSimulationModel({targetID='reference:'..row[1],profession=row[1],expansionID=11,method=row[2],
-        baseline={inputCount=1,materials={{id=999998,expectedQuantity=1,confidence=0}},confidence=0}},
-        {profession=row[1],expansionID=11,skill=100,preSpecializationSkill=100,stats={perception={percent=25}},specializationPoints={}})
-    check(preview and not preview.actionable and preview.rareDiscoveryFactor>1,row[1]..' uses a target preview instead of a bag conversion')
-end
-
 -- Different empirical profiles normalize independently before weighted fusion.
 local neutral=copy(known);neutral.recordID='test:neutral';neutral.studyID='test:neutral'
 neutral.baselineProfile={skill=100,preSpecializationSkill=100,stats={},specializationPoints={}}

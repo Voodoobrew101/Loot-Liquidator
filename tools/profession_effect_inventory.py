@@ -457,7 +457,7 @@ def build_coverage(snapshot, rules_document):
                         "typedProfileClassification": typed_audit.get("summary") if typed_current else None,
                         "sourceImportIssues": len(snapshot["importIssues"])},
             "professionEraCoverage": cells, "statCoveragePlan": stat_plan, "nodes": nodes,
-            "openWork": ["Calibrate declared low/zero-confidence quantity, proc and gathering priors using existing published evidence",
+            "openWork": ["Calibrate processing quantity and proc terms using existing published evidence",
                          "Resolve named unpriced output families to primary item IDs; semantic coverage is not complete identity coverage",
                          "Validate recipe-specific stat eligibility and conditional-state assumptions without inventing sample sizes",
                          "Preserve per-recipe stat eligibility, quality ranks, extra-output identities and input refunds separately",

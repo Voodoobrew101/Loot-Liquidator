@@ -1,6 +1,6 @@
 local ADDON, LA = ...
 LA = LA or {}
-LA.version = "0.12.50"
+LA.version = "1.0.0"
 LA.targetInterface = 120105  -- Current Retail 12.1.5 compatibility target; NOT in-game QA
 
 local COPPER_PER_GOLD = 10000
@@ -10,7 +10,7 @@ local function Ignored(self,id,method)
     return self.IsIgnoredAction and self:IsIgnoredAction(id,method) or false
 end
 local defaults = {
-    enabled = true, collectTokenResearch = true,
+    enabled = true,
     -- External integrations are opt-in to their own runtime dependencies.
     -- Tooltip visibility toggles never change the underlying calculations.
     enableTSMIntegration = true,
@@ -18,17 +18,16 @@ local defaults = {
     showBetterBags = true, showGuildBank = true, showBlizzardBags = true,
     showBadges = true,
     processingModes = {}, -- T/D/M/P/S/C/R/X: 1 Force on, 2 Auto, 3 Off, 4 Manual
-    showSkillDetails = false, showUnknownBadge = true,
+    showUnknownBadge = true,
     showSoulboundVendorBadge = false,
-    recordDisenchants = true, showDisenchantSamples = true,
-    recordConversions = true, showProcessingSamples = true,
+    recordDisenchants = true,
+    recordConversions = true,
     professionTooltipProfiles = {}, -- Character key, @auto, @hide, or @hypothetical per profession.
-    showMaterialConfidence = false, showResearchDetails = false, showExternalRates = false,
-    showAverageQuantity = false, showTooltipExplanations = false, showProfessionDetails = false, tooltipOutputSort = 'value',
+    showResearchDetails = false, tooltipOutputSort = 'value',
     disenchantDataMode = 1, millingDataMode = 1, prospectingDataMode = 1,
     otherConversionDataMode = 1, minPersonalSamples = 30,
     -- B3: one tooltip level: 0 Off, 1 Recommendation, 2 Alternatives, 3 Breakdown.
-    tooltipDetail = 2, tooltipHeaderPrice = true,
+    tooltipDetail = 2,
     tooltipShowAfterAHCut = true,
     manualMilling=false,manualProspecting=false,
     manualSmelting=false,manualDisenchanting=false,
@@ -50,6 +49,20 @@ local defaults = {
 }
 
 local cache = {}
+local cacheCount,cacheSweep=0,0
+local function TrimDecisionCache(now,reserve)
+    if now-cacheSweep<5 and (not reserve or cacheCount<256) then return end
+    local oldestKey,oldestAt
+    for key,entry in pairs(cache) do
+        if now-entry.at>=30 then
+            cache[key]=nil;cacheCount=cacheCount-1
+        elseif not oldestAt or entry.at<oldestAt then
+            oldestKey=key;oldestAt=entry.at
+        end
+    end
+    cacheSweep=now
+    if reserve and cacheCount>=256 and oldestKey then cache[oldestKey]=nil;cacheCount=cacheCount-1 end
+end
 
 -- The existing AH-fee setting controls BOTH prices and recommendations.
 -- Keep the SavedVariables key so players retain their existing preference.
@@ -84,7 +97,7 @@ function LA:Price(source, itemString)
     return ok and Positive(value) or nil
 end
 
-function LA:GetItemFacts(link, context)
+function LA:GetItemFacts(link, context, previousFacts)
     if not link then return nil end
     local itemID = (C_Item and C_Item.GetItemInfoInstant and C_Item.GetItemInfoInstant(link))
         or (GetItemInfoInstant and GetItemInfoInstant(link))
@@ -92,6 +105,26 @@ function LA:GetItemFacts(link, context)
     local fn = C_Item and C_Item.GetItemInfo or GetItemInfo
     if type(fn) ~= "function" then return nil end
     local name, _, quality, baseLevel, _, _, _, _, equipLoc, _, sell, classID, subClassID, bindType, expansionID = fn(link)
+    local itemInfoPending=name==nil or quality==nil or sell==nil or bindType==nil
+    -- A bag redraw may race the asynchronous item-info read. Reuse only
+    -- static metadata verified for this exact hyperlink, never its old
+    -- location, binding context, counts, prices or processing decisions.
+    local snapshot=type(previousFacts)=="table" and previousFacts.link==link
+        and previousFacts.id==itemID and type(previousFacts.name)=="string"
+        and type(previousFacts.quality)=="number" and type(previousFacts.vendor)=="number"
+        and previousFacts.bindType~=nil
+        and (not previousFacts.itemInfoPending or previousFacts.itemInfoFromSnapshot)
+    if itemInfoPending and snapshot then
+        name=name or previousFacts.name
+        quality=quality==nil and previousFacts.quality or quality
+        baseLevel=baseLevel==nil and previousFacts.itemLevel or baseLevel
+        equipLoc=equipLoc==nil and previousFacts.equipLoc or equipLoc
+        sell=sell==nil and previousFacts.vendor or sell
+        classID=classID==nil and previousFacts.classID or classID
+        subClassID=subClassID==nil and previousFacts.subClassID or subClassID
+        bindType=bindType==nil and previousFacts.bindType or bindType
+        expansionID=expansionID==nil and previousFacts.expansionID or expansionID
+    end
     if not classID then
         local instant=C_Item and C_Item.GetItemInfoInstant or GetItemInfoInstant
         if instant then classID,subClassID=select(6,instant(link)) end
@@ -104,6 +137,7 @@ function LA:GetItemFacts(link, context)
         quality = quality, classID = classID, subClassID = subClassID,
         vendor = sell or 0, bindType = bindType, context = context or {},
         count = max(1, tonumber(context and context.count) or 1),
+        itemInfoPending=itemInfoPending,itemInfoFromSnapshot=itemInfoPending and snapshot or nil,
     }
     -- For reagent tooltips, prefer the total quantity carried in bags; a
     -- single BetterBags button can represent just one stack of several.
@@ -267,8 +301,8 @@ function LA:DisenchantEligibility(f)
     if f and (self.TokenInfo and self:TokenInfo(f)) then
         return Verdict(false, "Equipment token: identify redemption/reward before valuing disenchant")
     end
-    if not f or not (f.classID == 2 or f.classID == 4) then
-        return Verdict(false, "Not a weapon or armor item")
+    if not f or not (f.classID == 2 or f.classID == 4 or f.classID == 19) then
+        return Verdict(false, "Not disenchant equipment")
     end
     if not f.quality or f.quality < 2 or f.quality > 4 then
         return Verdict(false, "Quality outside the normal disenchant range")
@@ -281,8 +315,7 @@ function LA:DisenchantEligibility(f)
         return Verdict(false, "Not ordinary equippable gear")
     end
     if self.ExternalDisenchantRestriction then
-        local restriction,warnings=self:ExternalDisenchantRestriction(f)
-        f.researchDisenchantWarnings=warnings
+        local restriction=self:ExternalDisenchantRestriction(f)
         if restriction then return Verdict(false, "Item database: Cannot be disenchanted") end
     end
     if self._observedNoDisenchantLinks and self._observedNoDisenchantLinks[f.link] then
@@ -445,9 +478,9 @@ local COLORS = {A="|cFFFFFF00", V="|cFFE0E0E0", D="|cFFAA55FF", C="|cFFFF9933",
                 M="|cFF33DD66", P="|cFF55AAFF", S="|cFFFF9933", Q="|cFFFF8833"}
 LA.Colors = COLORS
 
-function LA:Evaluate(link, context)
+local function Evaluate(self, link, context, previousFacts)
     if not self.db or not self.db.enabled then return nil end
-    local f = self:GetItemFacts(link, context)
+    local f = self:GetItemFacts(link, context, previousFacts)
     if not f then return nil end
     if (self.IgnoreEntry and self:IgnoreEntry(f.id)) and Ignored(self,f.id,"A")
         and Ignored(self,f.id,"D") and Ignored(self,f.id,"V")
@@ -490,6 +523,7 @@ function LA:Evaluate(link, context)
        ..tostring(self.db.tooltipShowAfterAHCut)..":"
        ..tostring(f.tsmString) .. ":" .. tostring(f.count) .. ":" ..
        tostring(f.expansionID) .. ":" .. tostring(f.quality) .. ":" .. tostring(f.itemLevel) .. ":"
+       ..tostring(f.vendor)..":"..tostring(f.classID)..":"..tostring(f.bindType)..":"
        .. tostring(f.context.verifiedUnbound) .. ":" .. tostring(f.context.guild)
        .. ":" .. tostring(f.context.isBound) .. ":" .. tostring(f.context.isBoundToAccount)
        .. ":" .. tostring(f.context.isSoulbound) .. ":" .. tostring(f.context.verifiedWarbound)
@@ -503,11 +537,12 @@ function LA:Evaluate(link, context)
        .. ":appearance:" .. tostring(collectedAppearance)
        .. ":transmogMode:" .. tostring(self.ProcessingMethodMode and self:ProcessingMethodMode("T") or 2)
     local now = (GetTime and GetTime()) or 0
+    TrimDecisionCache(now)
     local cached = cache[signature]
     -- Token reward metadata, exchange balances and currencies can load/change
     -- between hovers. Re-evaluate that small path instead of keeping a stale
     -- unavailable or free-exchange result for thirty seconds.
-    if not tokenInfo and cached and (now - cached.at) < 30 then return cached.result end
+    if not tokenInfo and not f.itemInfoPending and cached and (now - cached.at) < 30 then return cached.result end
 
     local conversion
     if not tokenInfo then conversion=self:BestConversion(f) end
@@ -744,14 +779,41 @@ function LA:Evaluate(link, context)
         missingAppearance=missingAppearance, collectedAppearance=collectedAppearance,
         transmogRecipient=transmogRecipient }
     self:ReportMissing(f)
-    cache[signature] = {at=now, result=result}
+    -- Token decisions are deliberately re-evaluated on every read. Keeping
+    -- their unused cache entries only retains reward/model graphs.
+    if not tokenInfo and not f.itemInfoPending then
+        if not cache[signature] then
+            TrimDecisionCache(now,true)
+            cacheCount=cacheCount+1
+        end
+        cache[signature] = {at=now, result=result}
+    end
+    return result
+end
+
+function LA:Evaluate(link, context, previousFacts)
+    -- Repeated recipe alternatives may quote the same exact output hundreds
+    -- of times. Share ready output prices only inside this synchronous request.
+    -- A later evaluation always starts fresh, including after an error.
+    if rawget(self,"_outputPriceRequest") then return Evaluate(self,link,context,previousFacts) end
+    self._outputPriceRequest={db=self.db,database=self.ItemDB,fee=self:AHFeeRate(),quotes={}}
+    local ok,result=pcall(Evaluate,self,link,context,previousFacts)
+    self._outputPriceRequest=nil
+    if not ok then error(result,0) end
     return result
 end
 
 function LA:Invalidate(reason)
     wipe(cache)
-    self._processingModelCache=nil
-    if reason~="evidence" then
+    cacheCount=0;cacheSweep=0
+    -- Collection ownership changes recommendations, not profession yields.
+    -- Keep the unpriced numerical work; decisions and display quotes refresh.
+    if reason~="appearance" then
+        self._processingModelCache=nil
+        self._categorySourceProjectionCache=nil
+    end
+    self._tooltipProjectionCache=nil
+    if reason~="evidence" and reason~="appearance" then
         self._processingContextCache=nil
         self._professionOperationCache=nil
     end
@@ -924,7 +986,6 @@ local DEBUG_HELP = {
     "report, clearreport, ignore ITEMID, unignore ITEMID",
     "craftstats, craftexport [page], craftbaseline, craftstudy LABEL, craftzero",
     "destats, detrack, deexport, processstats, processexport",
-    "tokenstats, tokenexport [page]",
 }
 local function DebugCommand(msg)
     local command, arg = msg:lower():match("^(%S*)%s*(%S*)")
@@ -969,13 +1030,6 @@ local function DebugCommand(msg)
         local names,reason=LA:GetAuctionOperationNames()
         if #names==0 then Say("No TSM Auctioning operations: "..tostring(reason or "none found"))
         else Say("TSM Auctioning operations: "..table.concat(names,", ")) end
-    elseif command == "tokenstats" then
-        Say(LA.TokenResearchStatus and LA:TokenResearchStatus() or "Token collector unavailable")
-    elseif command == "tokenexport" then
-        local page=math.max(1,math.floor(tonumber(arg) or 1))
-        if LA.TokenResearchExport then
-            LA:ShowCopy("Direct token research - page "..page,LA:TokenResearchExport(page))
-        else Say("Token collector unavailable") end
     elseif command == "perf" then
         if LA.BadgePerfReport then
             local result=LA:BadgePerfReport(arg=="reset")
@@ -1074,15 +1128,14 @@ local function DebugCommand(msg)
     elseif command == "craftzero" then
         local _,message=LA:ConfirmEmptyCraft();Say(message)
     elseif command == "scanstatus" then
-        local candidates,consumers,recipes=0,0,0
+        local candidates,recipes=0,0
         for _,list in pairs(LA.db.recipeCandidates or {}) do
             for _ in pairs(list) do candidates=candidates+1 end
         end
-        for _ in pairs(LA.db.reagentConsumers or {}) do consumers=consumers+1 end
         for _,char in pairs(LA.db.characters or {}) do
             for _ in pairs(char.recipes or {}) do recipes=recipes+1 end
         end
-        Say(("Scanned %d learned recipes; %d single-input recipe candidates; %d reagent IDs observed in profession recipes. Coverage is partial until you open professions on your characters."):format(recipes,candidates,consumers))
+        Say(("Scanned %d learned recipes; %d single-input recipe candidates. Coverage is partial until you open professions on your characters."):format(recipes,candidates))
     elseif command == "status" then
         if LA.EvidenceDatabaseStatus then Say(LA:EvidenceDatabaseStatus()) end
         if LA.personalProjectionStatus then Say("Personal history: "..LA.personalProjectionStatus) end
@@ -1120,6 +1173,13 @@ SlashCmdList.LOOTLIQUIDATOR = Command
 -- B1: settings that were saved but never read by any code. Quietly drop
 -- them from old saved data so nothing stale lingers.
 local RETIRED_SETTINGS = {
+    -- Gathering projections were removed; discard their private saved state.
+    "gatheringTargetProfiles","gatheringSimulationSelections",
+    "collectTokenResearch","directTokenResearch","professionOpportunitySelections",
+    "reagentConsumers",
+    "showAverageQuantity","showMaterialConfidence","showProfessionThresholds",
+    "tooltipHeaderPrice","showProcessingSamples","showDisenchantSamples",
+    "showTooltipExplanations","showProfessionDetails","showExternalRates","showSkillDetails",
     "rateProfile","rateProfileCharacter",
     "methodEnabledD","methodEnabledM","methodEnabledP","methodEnabledS",
     "methodEnabledC","methodEnabledR","methodEnabledX",
@@ -1139,6 +1199,31 @@ function LA:RemoveRetiredSettings(db)
     -- B3: the old "Show Loot Liquidator tooltips" box becomes the Off level.
     if db.showTooltips == false then db.tooltipDetail = 0 end
     for _, key in ipairs(RETIRED_SETTINGS) do db[key] = nil end
+    if type(db.professionTooltipProfiles)=='table' then
+        db.professionTooltipProfiles.Fishing=nil
+        db.professionTooltipProfiles.Herbalism=nil
+        db.professionTooltipProfiles.Skinning=nil
+    end
+    -- Only manual simulation settings are retired. Captured profession stats
+    -- remain part of their original recorded item-processing context.
+    for _, profiles in pairs(type(db.manualProfessionProfiles)=='table' and db.manualProfessionProfiles or {}) do
+        if type(profiles)=='table' then
+            for key, profile in pairs(profiles) do
+                if type(key)=='string' and (key:match('^Fishing:') or key:match('^Herbalism:') or key:match('^Skinning:')) then
+                    profiles[key]=nil
+                elseif type(profile)=='table' then
+                    profile.benchmark=nil
+                    for _, field in ipairs({'stats','statAnchors'}) do
+                        local stats=profile[field]
+                        if type(stats)=='table' then
+                            stats.finesse=nil;stats.perception=nil;stats.deftness=nil
+                            stats.ingenuity=nil;stats.craftingSpeed=nil;stats.concentration=nil
+                        end
+                    end
+                end
+            end
+        end
+    end
     -- B5b: the alts table (per-method On/Auto/Off/Manual and per-alt boxes)
     -- was removed. With no menu left to change them, old choices would stay
     -- stuck invisibly, so every method returns to Auto. Professions, recipes
@@ -1146,7 +1231,22 @@ function LA:RemoveRetiredSettings(db)
     db.processingModes = {}
     if type(db.characters) == "table" then
         for _, character in pairs(db.characters) do
-            if type(character) == "table" then character.altMethods = nil end
+            if type(character) == "table" then
+                character.altMethods = nil
+                character.reagentUses = nil
+                for key in pairs(type(character.professionOptions)=='table' and character.professionOptions or {}) do
+                    if type(key)=='string' and (key:match('^Fishing:') or key:match('^Herbalism:') or key:match('^Skinning:')) then
+                        character.professionOptions[key]=nil
+                    end
+                end
+                for _,recipe in pairs(type(character.recipes)=='table' and character.recipes or {}) do
+                    if type(recipe)=='table' then
+                        recipe.relativeDifficulty=nil;recipe.canSkillUp=nil
+                        recipe.numSkillUps=nil;recipe.firstCraft=nil
+                        recipe.maxTrivialLevel=nil
+                    end
+                end
+            end
         end
     end
 end
@@ -1167,7 +1267,6 @@ boot:SetScript("OnEvent", function(_, event, name)
         LA.db.appearance.colors = LA.db.appearance.colors or {}
         LA.db.characters = LA.db.characters or {}
         LA.db.recipeCandidates = LA.db.recipeCandidates or {}
-        LA.db.reagentConsumers = LA.db.reagentConsumers or {}
         -- Migrate thresholds from the old copper values on existing installs.
         if not LA.db._v04Migrated then
             if type(LA.db.minConversionExtra)=="number" then
@@ -1181,6 +1280,8 @@ boot:SetScript("OnEvent", function(_, event, name)
             end
             LA.db._v04Migrated=true
         end
+        if LA.RestoreKnownProfessionRecipeMetadata then LA:RestoreKnownProfessionRecipeMetadata() end
+        if LA.CleanupManualProfessionControls then LA:CleanupManualProfessionControls() end
     elseif event == "PLAYER_LOGIN" then
         Say("Loaded. Type /ll to open the settings. Nothing is ever sold automatically.")
     end
@@ -1241,67 +1342,8 @@ local function restrictionContains(ids,id)
     for _,value in ipairs(ids or {}) do if value==id then return true end end
     return false
 end
-local function restrictionItemString(link)
-    return not (issecretvalue and issecretvalue(link)) and type(link)=='string' and link:match('item:[^|]+') or nil
-end
-local function restrictionBonuses(link)
-    local payload=restrictionItemString(link)
-    if not payload then return nil end
-    local fields={} for value in (payload:sub(6)..':'):gmatch('(.-):') do fields[#fields+1]=value end
-    local count=tonumber(fields[13])
-    if not count or count<0 or count>64 or count%1~=0 then return nil end
-    local bonuses={}
-    for i=14,13+count do
-        local id=tonumber(fields[i])
-        if not id or id<=0 or id%1~=0 then return nil end
-        bonuses[id]=true
-    end
-    return bonuses
-end
-local function restrictionScopeMatches(scope,f)
-    scope=type(scope)=='table' and scope or {}
-    for _,key in ipairs({'itemLevel','expansionID','quality'}) do
-        if issecretvalue and issecretvalue(f[key]) then return false end
-    end
-    if scope.itemLevel~=nil and scope.itemLevel~=f.itemLevel then return false end
-    if scope.minItemLevel and (type(scope.minItemLevel)~='number' or type(f.itemLevel)~='number' or f.itemLevel<scope.minItemLevel) then return false end
-    if scope.maxItemLevel and (type(scope.maxItemLevel)~='number' or type(f.itemLevel)~='number' or f.itemLevel>scope.maxItemLevel) then return false end
-    if scope.expansionID~=nil and scope.expansionID~=f.expansionID then return false end
-    if scope.quality~=nil and scope.quality~=f.quality then return false end
-    if scope.itemLink then
-        local expected,actual=restrictionItemString(scope.itemLink),restrictionItemString(f.link)
-        if not expected or not actual or expected~=actual then return false end
-    end
-    if scope.build then
-        local build=GetBuildInfo and tonumber(select(2,GetBuildInfo()))
-        if build~=scope.build then return false end
-    end
-    if type(scope.bonusIDs)=='table' then
-        local actual=restrictionBonuses(f.link)
-        if not actual then return false end
-        local expected={}
-        for _,id in ipairs(scope.bonusIDs) do if type(id)~='number' then return false end expected[id]=true end
-        for id in pairs(expected) do if not actual[id] then return false end end
-        for id in pairs(actual) do if not expected[id] then return false end end
-    end
-    return true
-end
-function LL:ResearchDisenchantRestrictionWarnings(f)
-    if type(f)~='table' or not f.id then return nil end
-    local warnings={}
-    for _,record in ipairs(self.ResearchNoDisenchantObservations or {}) do
-        if record.itemID==f.id then
-            for _,observation in ipairs(record.observations or {}) do
-                if restrictionScopeMatches(observation.scope,f) then
-                    warnings[#warnings+1]=observation
-                end
-            end
-        end
-    end
-    return #warnings>0 and warnings or nil
-end
--- Native DB2 flags take priority over estimates. A source catalog or scoped
--- historical observation is retained as a warning, never an item-wide denial.
+-- Native DB2 flags take priority over estimates. Source catalog observations
+-- remain in offline research and never become item-wide denials.
 function LL:ExternalDisenchantRestriction(item)
     local facts=type(item)=='table' and item or nil
     local id=facts and facts.id or Id(item)
@@ -1318,7 +1360,7 @@ function LL:ExternalDisenchantRestriction(item)
     if self.ItemRestrictions and self.ItemRestrictions[id] and not legacyCatalogOnly and proofMatches then
         return "Item database: Cannot be disenchanted"
     end
-    return nil,facts and self:ResearchDisenchantRestrictionWarnings(facts) or nil
+    return nil
 end
 
 end
