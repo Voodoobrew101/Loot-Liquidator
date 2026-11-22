@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-22T06:10:41.216Z",
-  "status": "Refreshed implementation/five-agent-completion and read all five required v3 sources/queue. Targeted current-patch Midnight DE, 272246 variant eligibility, 237359/237361 Copper, 237362/237363 Tin, 237364/237365 Silver prospecting, 242608 Diamond conditions and 10-herb milling. New original published per-operation zero-inclusive numeric cohorts were not located; no numeric admission or evidence JSONL. Independently inspected the actual public code of Ka0s Loot History (Retail) CSV exporter, collector and cast attribution: rows contain acquired output itemID/quantity/itemLevel and wowheadLink with bonus IDs, and source type, but there is no completed-operation ledger, consumed input-item link or cast GUID joining output to 272246. Source 'Certain' only describes attribution, not event-denominator completeness. Held as a schema-verified output-only source, not a new cohort. Historic Wowhead item-side aggregates and pre-cutoff forum posts remain assigned to Codex catalogue and were not transcribed again. No game actions, PRs, pipeline changes, merges, releases or schedule changes.",
+  "updated_at": "2026-11-22T07:12:12.781Z",
+  "status": "Refreshed implementation/five-agent-completion and reread v3 README, evidence format, checked mechanics, worker role and current queue. Searched for new Retail Midnight 272246 disenchant variant-linked trials, rank-specific 237362/237363 Tin and 237359/237361 Copper prospecting, 242608/242712 Diamond event data and milling cohorts; no new original per-operation numerical source with actual casts and zero events found outside owner-assigned catalogue. Inspected newly released MyLootHistory 2.7.0 code: source records acquired item links and crafted/looted outputs internally, but exported item CSV is aggregated by output item ID, quality and source rather than input cast, and does not expose input itemLink/bonus, operation GUID, operation-level zero outcomes or refund ledger. Held as an output-only export lead, not empirical DE/prospecting data. EzDisenchant release notes verify a 500-entry history and CSV/TXT export but not event-linked outcomes; package source not independently verified. No new JSONL, numerical cohorts, probabilities, eligibility conclusions, PRs, pipeline changes, game actions, release, merge or schedule changes.",
   "task_ids": [
     "T0026",
     "T0049",
@@ -1376,17 +1376,19 @@
     }
   ],
   "newly_verified_fields_or_cohorts": [
-    "New source schema (not a measured study): Ka0s Loot History master@62595780 exports output itemID, quantity, itemLevel, generated wowheadLink with the output item's bonus IDs, source and timestamp; exporter intentionally omits raw itemLink, sourceDetail and attribution confidence. Cast-success handler uses spellID to stamp deconstruct source but does not preserve castGUID or consumed input item ID for output joins. No material probabilities or casts are supported."
+    "Schema-only non-numeric finding: RustyDaemon/MyLootHistory 2.7.0 (Nov 21 2026) saves variants (item links, quality) in internal item loot history and labels created loot 'crafted'; public CSV code exports type,name,id,quality,quantity,value,marketValue,source,character,zone,firstLooted,lastLooted aggregated over the filtered report. No input-to-output association, completed DE cast denominator, output per-cast zeros/refunds, profession skill/spec or item 272246 at-cast ilvl is available from that CSV."
   ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": [],
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/tusharsaxena/LootHistory/blob/62595780c408f9833df3ae868ebb2578601caeff/modules/Export.lua",
-    "https://github.com/tusharsaxena/LootHistory/blob/62595780c408f9833df3ae868ebb2578601caeff/modules/Collector.lua",
-    "https://github.com/tusharsaxena/LootHistory/blob/62595780c408f9833df3ae868ebb2578601caeff/modules/Attribution.lua",
-    "https://www.curseforge.com/wow/addons/ka0s-loot-history"
+    "https://github.com/RustyDaemon/MyLootHistory/blob/main/data/Export.lua",
+    "https://github.com/RustyDaemon/MyLootHistory/blob/main/data/Database.lua",
+    "https://github.com/RustyDaemon/MyLootHistory/blob/main/data/Source.lua",
+    "https://github.com/RustyDaemon/MyLootHistory/blob/main/CHANGELOG.md",
+    "https://www.curseforge.com/wow/addons/my-loot-history",
+    "https://www.curseforge.com/wow/addons/ezdisenchant/files/9635154"
   ],
   "blockers": [
     "272246: actual disenchantable item bonus/at-cast ilvl 305 itemLink and correlated original DE output are not published; generic 206 cannot-be-disenchanted catalog conflicts with aggregate 140-row Looter display.",
@@ -1508,13 +1510,17 @@
     {
       "url": "https://www.wowhead.com/ptr/item=157915/gonk-outrunner-shoulderguards",
       "reason": "Historical BFA item, only commenter-reported Looter/eligibility presentation mismatch; no original Retail Midnight 272246 event, no cast-level dataset, no current-client validation. Do not revisit absent raw evidence."
+    },
+    {
+      "url": "https://github.com/RustyDaemon/MyLootHistory/blob/main/data/Export.lua",
+      "reason": "2026-11-21 2.7.0 Retail exported CSV code verified: acquired output rows aggregated by item ID/quality/source, no input item-link or cast/zero/refund joins, and no published participant cohort. Reconsider only if a genuinely new raw input/output event ledger is published."
     }
   ],
-  "next_concrete_step": "Focus exclusively on independent published original Retail Midnight processing ledgers outside Codex-owned cutoff corpus. Seek saved actual per-operation input item-link/bonus and consumed itemID, separate earned output stacks from Resourcefulness refunds, completed success counts and zero outcomes, output quality/rank/IDs, profession skill/spec and patch. Test any existing published EzDisenchant output schema; do not treat Ka0s output-only CSV as full casts or invent missing denominators. Revisit 237362 and milling only with new source events or a genuine source correction; do not re-catalogue 731 cutoff sources.",
-  "verified_base_commit_sha": "4b78b4e67c6eb2f6909ee4886772a86942b3de0e",
+  "next_concrete_step": "Seek NEW, published, original Retail Midnight per-processing-operation data generated after catalogue cutoff: consumed input itemLink/variant and rank, actual completed cast ID/count (not nominal ore batches), output item IDs/ranks and quantities including no-drop outcomes, refund ledger separately, source skill/spec and build. Check original public exports for input/output joins before treating them as samples; current Ka0s and MyLootHistory output CSVs fail. Inspect EzDisenchant raw history schema only if publicly available and avoid repeating exhausted source descriptions. Route any actual evidence correction/schema need through Master; owner Codex team retains 731-source cutoff catalogue.",
+  "verified_base_commit_sha": "b4788149d3dbf0ab364b08fe68780fcd8bb6d5aa",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Quiet-status-only checkpoint; no new independent measured cohort or JSONL evidence. Git commit hash cannot be self-referential in this same one-file commit. After write, independently verify commit and read-back on branch.",
+  "commit_note": "Single owned quiet-status-only commit; no independent numeric sample or new JSONL file. Commit SHA cannot be self-referential in the committed file; independently read back the commit via branch after write.",
   "new_leads_screened": [
     {
       "source": "https://github.com/ErorNya/ForeverFlip/blob/main/ForeverFlip/Modules/Disenchant.lua",
@@ -1762,6 +1768,54 @@
         "refund_attribution_possible": true
       },
       "detail": "Source code confirms output-side CSV is useful for provenance but not a standalone completed disenchant/prospect/mill cohort. `wowheadLink` is calculated from each acquired item, not from 272246 gear at disenchant. Spell-success stamps a transient source classification without recording input item-link, cast GUID, completed cast denominator or zero outcomes. 'Certain' classification is source attribution, not yield confidence; sample/simulation rows are artificial and cannot be used. No new source numbers admitted."
+    },
+    {
+      "source": "https://github.com/RustyDaemon/MyLootHistory/blob/main/data/Export.lua",
+      "supporting_source": [
+        "https://github.com/RustyDaemon/MyLootHistory/blob/main/data/Database.lua",
+        "https://github.com/RustyDaemon/MyLootHistory/blob/main/data/Source.lua",
+        "https://github.com/RustyDaemon/MyLootHistory/blob/main/CHANGELOG.md",
+        "https://www.curseforge.com/wow/addons/my-loot-history"
+      ],
+      "published": "2026-11-21",
+      "classification": "held_updated_retail_source_verified_aggregated_output_only_csv_no_published_actual_yield_cohort",
+      "exact_ids": [
+        272246,
+        243599,
+        243600,
+        243602,
+        243603,
+        243605,
+        243606,
+        237359,
+        237361,
+        237362,
+        237363,
+        237364,
+        237365,
+        242608,
+        242712
+      ],
+      "source_original": {
+        "version": "2.7.0",
+        "public_code_blobs": {
+          "export": "3f0465140143765fb34f23876c3be8c6a0719020",
+          "database": "8ab0b33b46faf9b492dc1bed36c03e45b5526da6",
+          "source": "44dde5a3f59c1a7f6154238d6e6cb99f27127855",
+          "changelog": "26a76408c97b2383924325275a05d8a1ab878dcf"
+        },
+        "csv_header": "type,name,id,quality,quantity,value,marketValue,source,character,zone,firstLooted,lastLooted",
+        "internal_variant_itemLink": true,
+        "internal_crafted_loot_category": true,
+        "csv_raw_itemLink": false,
+        "csv_per_cast_results": false,
+        "csv_input_item_and_bonus": false,
+        "csv_completed_casts": null,
+        "csv_output_hit_and_zero_histogram": null,
+        "csv_resourcefulness_refund_join": null,
+        "source_published_actual_independent_retail_yield_cohort": null
+      },
+      "detail": "The 2.7.0 changelog changes clock pause rules, not profession event recording. The exported filter/report aggregates output item quantity, not 1:1 disenchant/prospect/mill operations. Do not interpret count of acquired output items as completed casts or output units as positive-hit counts; the source-side itemLink is for what was acquired, not destroyed gear. No distinct 272246 ilvl 305 DE study or 237362 per-rank operation cohort."
     }
   ],
   "catalogue_checkpoint": {
