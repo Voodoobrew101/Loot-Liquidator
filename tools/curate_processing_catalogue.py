@@ -10,7 +10,6 @@ from __future__ import annotations
 import argparse
 from collections import Counter, defaultdict
 from copy import deepcopy
-import csv
 from hashlib import sha256
 import json
 import math
@@ -125,11 +124,11 @@ class Curator:
         self.families = {int(k): v for k, v in self.native_source['recipeRouting']['qualityFamilies'].items()}
         self.recipes, _ = native_rules.build_recipes(self.native_source, self.items, self.families)
         self.catalogs = load(ROOT / 'database/wago-professions-70783.json')['catalogs']
-        self.names = {}
-        sparse = ROOT.parent / '.validation/de-formula-data/ItemSparse-70961.csv'
-        with sparse.open(encoding='utf-8-sig') as stream:
-            for item in csv.DictReader(stream):
-                self.names[int(item['ID'])] = {'name': item['Display_lang'], 'expansionID': int(item['ExpansionID'])}
+        # The pinned native snapshot already carries these ItemSparse fields.
+        # Missing metadata stays absent instead of acquiring a default era.
+        self.names = {identity: {'name': item['name'], 'expansionID': item['expansionID']}
+                      for identity, item in self.items.items()
+                      if item.get('name') is not None and item.get('expansionID') is not None}
         self.model = []; self.fact = []; self.disposition = []; self.integration = []; self.field_decisions = []; self.extra_definitions = []; self.exclusions = []
         self.fact_ids = set(); self.disposition_ids = set(); self.ref_cache = {}
         self.calculator = bridge.load_calculator(self.research)
