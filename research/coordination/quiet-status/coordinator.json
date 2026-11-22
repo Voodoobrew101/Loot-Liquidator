@@ -1,8 +1,8 @@
 {
   "role": "research-manager",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-22T01:59:08.830Z",
-  "status": "Read charter, current owner three-pass checkpoint, v3 instructions/schema/mechanics/queue/flags/strategy, branch heads, worker reports and remote CI. Independently verified new Dragonflight 200353 Wowhead Looter 74 reported disenchants with 47 Resonant Crystal/40 Vibrant Shard occurrences (64%/54% rounded); source-aggregated, no quantity EV, at-cast item version/skill/patch, full histogram or live Retail eligibility. Manager-only review and dashboard committed, catalogue 731-source scope untouched. Legacy excluded mining data as non-prospecting; TWW historical cross-era single event held; Midnight no new completed ranked operations. No new supported gold decision, client/local build, competing PR, merge, release or schedule edit.",
+  "updated_at": "2026-11-22T03:06:29.787Z",
+  "status": "Read current charter, three-pass plan and checkpoint, v3 evidence/schema/mechanics/queue/strategy/flags, exact heads and all four current worker reports. Corroborated existing S23 Warmaul 24995 no-DE warning and independently found two further same-family WoWDB LIVE negative labels (24992,24996), while current main pinned DB2 negative list has no IDs 24900..25199. Verified candidate/tooltip runtime boundary read-only; no production/live-client failure claimed. Scoped review and dashboard committed; no new measured yield cohort, supported gold valuation, local addon tests, owner catalogue recatalogue, competing PR, main edit, merge, release or schedule edit.",
   "task_ids": [
     "T0003",
     "T0005",
@@ -36,7 +36,8 @@
     "Midnight rank-sensitive prospecting QA: reported June 2026 displayed skill/Concentration anomaly; need effective on-cast UI skill and actual successful outputs, with same-author forum duplicates deduped; no numeric production-rate inference.",
     "TWW Lamplighter 229154 item-level variants 80/86 on Retail listing; 229159 base catalog ilvl 545 cannot be compared without itemLink/bonus, at-cast build, rarity and post-squish version context; 229158/229159 38-count identical shard vectors need independent event receipts.",
     "New TWW Reddit 1fprthm Sep2024 R2 crafted gear disenchant: locate author's theoretical spreadsheet and source-native 3x2000 material receipts, link exact input/output rank IDs/skill/bonus; do not turn author-claimed total 6000 into an outcome-specific denominator or mislabel >100% theory as P(hit).",
-    "New Dragonflight item 200353 Lost Landcaller's Claws: site-reported N=74, material hits 47 (200113) and 40 (194124); source itemLink/bonus at event time, actual disenchants across builds, skill/spec/patch, per-material positive quantities and 0..N event ledger needed before gold EV or current Retail claim."
+    "New Dragonflight item 200353 Lost Landcaller's Claws: site-reported N=74, material hits 47 (200113) and 40 (194124); source itemLink/bonus at event time, actual disenchants across builds, skill/spec/patch, per-material positive quantities and 0..N event ledger needed before gold EV or current Retail claim.",
+    "Legacy Warmaul 24992/24995/24996: LIVE WoWDB says Cannot be disenchanted, but current main ItemSparse 12.1.7.70493 native negative list contains zero IDs 24900..25199; exact itemLink/bonus/current client-native tooltip and restriction semantics not independently verified; do not infer affirmative eligibility from absent flag."
   ],
   "newly_verified_fields_cohorts": {
     "tww_nacreous_output_identity": {
@@ -506,6 +507,31 @@
       "manager_note_commit": "9f2b0c61840e0858852bf52bc6ccf3b798455208",
       "no_live_client_or_local_build": true,
       "source_disposition": "SOURCE_REPORTED_OCCURRENCE_CONTEXT_HOLD_FOR_APPLICABILITY"
+    },
+    "warmaul_same_family_negative_list_scope_20261122": {
+      "category": "eligibility_context_discrepancy_not_numeric_yield",
+      "original_live_sources": {
+        "24992": "https://www.wowdb.com/items/24992-warmaul-breastplate",
+        "24995": "https://www.wowdb.com/items/24995-warmaul-legplates",
+        "24996": "https://www.wowdb.com/items/24996-warmaul-epaulets"
+      },
+      "source_display": "Cannot be disenchanted",
+      "catalog_item_level": 31,
+      "db2_build": "12.1.7.70493",
+      "db2_list_blob": "e03c7b0c302b1ef718b62b7de9c364e2c0b6ea03",
+      "negative_ids_total": 21061,
+      "negative_ids_inclusive_range_24900_25199": 0,
+      "s23_previous_24995_known": true,
+      "manager_new_source_scope": [
+        24992,
+        24996
+      ],
+      "at_cast_retail_itemlink_bonus_verified": false,
+      "current_live_api_verified": false,
+      "real_de_operations_or_yields_admitted": 0,
+      "supported_new_gold_decisions": 0,
+      "review_path": "research/v3/evidence/master/20261122T0305-warmaul-native-negative-list-scope-review.md",
+      "review_commit": "1eea76596381cd923622c444ae4dbc1399106344"
     }
   },
   "source_links": {
@@ -543,6 +569,10 @@
     "63": "https://www.wowhead.com/ptr/item=200353/lost-landcallers-claws?bonus=6652%3A8817%3A8822%3A9130%3A7977%3A8829%3A1498&ilvl=421",
     "64": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261122T0158-dragonflight-landcallers-looter-source-review.md",
     "65": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-22T0132-lost-landcallers-claws-original-looter-hits.jsonl",
+    "68": "https://www.wowdb.com/items/24992-warmaul-breastplate",
+    "69": "https://www.wowdb.com/items/24995-warmaul-legplates",
+    "70": "https://www.wowdb.com/items/24996-warmaul-epaulets",
+    "71": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261122T0305-warmaul-native-negative-list-scope-review.md",
     "manager_verified_brilliant_glass_ptr": "https://www.mmo-champion.com/threads/605873-PTR-Brilliant-Glass-Test-Results",
     "worker_reported_tww_shatter": "https://www.reddit.com/r/woweconomy/comments/1nr2rk3",
     "manager_midnight_skill_state_original": "https://us.forums.blizzard.com/en/wow/t/jewelcrafting-prospecting-bug-not-giving-high-quality-mats/2315949",
@@ -587,78 +617,73 @@
     "research/v3/evidence/master/20261122T0010-lamplighter-item-version-source-review.md",
     "research/v3/evidence/master/20261122T0106-tww-rank-skill-disenchant-source-review.md",
     "research/v3/evidence/master/20261122T0158-dragonflight-landcallers-looter-source-review.md",
-    "research/v3/evidence/dragonflight/2026-11-22T0132-lost-landcallers-claws-original-looter-hits.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-22T0132-lost-landcallers-claws-original-looter-hits.jsonl",
+    "research/v3/evidence/master/20261122T0305-warmaul-native-negative-list-scope-review.md"
   ],
   "verified_worker_source_shas": {
-    "midnight": "c0b42de6836d62fd87a76e0c9e02d3c6315b9eb4",
-    "war-within": "ff39dce91b163380363c5c763911591d29294aad",
-    "dragonflight": "ca0d88285ddca50a1cf52f2690066c1b94d8af06",
-    "legacy": "64f2dada65f8c36177ffe8b31a867b01ab8a496d"
+    "midnight": "a72f956ad28e95531a71f7fe7a0c7986467a9ae1",
+    "war-within": "13cda5fe28fd693161d4a8d04b5aa062f3222f63",
+    "dragonflight": "810fab701ae877ac11ae76b0899ce7dde961247e",
+    "legacy": "167d9cf6eedab26d41a4df0a8704dd7e33086a9d"
   },
-  "verified_commit_sha": "15401c9fafbd00430da1efdc9e18c0f038f16230",
-  "dashboard_commit_sha": "15401c9fafbd00430da1efdc9e18c0f038f16230",
-  "checked_research_branch_head_before_status_write": "15401c9fafbd00430da1efdc9e18c0f038f16230",
+  "verified_commit_sha": "e79e7d539199402084017e19d79bcbff5a5744a0",
+  "dashboard_commit_sha": "e79e7d539199402084017e19d79bcbff5a5744a0",
+  "checked_research_branch_head_before_status_write": "e79e7d539199402084017e19d79bcbff5a5744a0",
   "main_head_checked": "bd38a158ea79309ae3be34adaf2c31ad95bce159",
   "owner_three_pass_head_checked": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "owner_catalogue_manifest_revision_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
   "owner_catalogue_pipeline_branch_checked": "a23e65d784f0c36833df0ad903d817d10d2f2ae3",
   "worker_reports_verified": {
     "midnight": {
-      "updated_at": "2026-11-22T01:07:12.642Z",
-      "source_blob_sha": "c0b42de6836d62fd87a76e0c9e02d3c6315b9eb4",
-      "status": "Refreshed current branch and read research/v3/README.md, evidence-format.md, mechanics.md, roles/worker.md, queue.json, and this role's quiet status. Searched for new first-person Retail Midnight disenchant item-instance/skill-linked logs (272246), rank-identifiable 237359/237362 ore prospecting results and Eversong Diamond unlock/zeros, and ten-herb milling operation records. Fresh targeted searches surfaced no NEW independently measurable or identity-resolving cohort after the owner Codex cutoff. Rediscovered the April 8 Reddit prospecting percentage table but it predates the cutoff and is a",
-      "independently_verified_client_samples": 0,
-      "worker_new_original_site_cohorts": 0
+      "updated_at": "2026-11-22T02:16:26.129Z",
+      "source_blob_sha": "a72f956ad28e95531a71f7fe7a0c7986467a9ae1",
+      "status": "No independently qualified new ranked-cast source; recorded next prospective source target.",
+      "manager_attributed_not_claimed_as_own": true
     },
     "war-within": {
-      "updated_at": "2026-11-22T01:23:24.159Z",
-      "source_blob_sha": "ff39dce91b163380363c5c763911591d29294aad",
-      "status": "active: new original Mar 10 2026 historical Midnight Focus->TWW Gleaming Shard single observed event; reference-only cross-era bug before Mar 18 fix, no current yield admission",
-      "independently_verified_client_samples": 0,
-      "worker_new_original_site_cohorts": 0
+      "updated_at": "2026-11-22T02:20:29.250Z",
+      "source_blob_sha": "13cda5fe28fd693161d4a8d04b5aa062f3222f63",
+      "status": "No new numeric cohort or corrected identity this run.",
+      "manager_attributed_not_claimed_as_own": true
     },
     "dragonflight": {
-      "updated_at": "2026-11-22T01:32:10.897Z",
-      "source_blob_sha": "ca0d88285ddca50a1cf52f2690066c1b94d8af06",
-      "status": "research-active; one new original Dragonflight gear Looter cohort (two output-specific hit rows) located and staged with explicit unknowns; priority ore/herb cast and histogram gaps remain",
-      "independently_verified_client_samples": 0,
-      "worker_new_original_site_cohorts": 1
+      "updated_at": "2026-11-22T02:34:54.503Z",
+      "source_blob_sha": "810fab701ae877ac11ae76b0899ce7dde961247e",
+      "status": "No newly qualified independent operation cohort this run.",
+      "manager_attributed_not_claimed_as_own": true
     },
     "legacy": {
-      "updated_at": "2026-11-22T01:39:28.860Z",
-      "source_blob_sha": "64f2dada65f8c36177ffe8b31a867b01ab8a496d",
-      "status": "Read current branch and required v3 README, evidence-format, mechanics, worker role, and legacy queue. Searched new original-source paths for Warmaul 24995, Cobalt 36909 and Fel Iron 23424 across indexed Wowhead item comments/guides, wikis, Reddit and public processing addons. Found no new original Retail operation-level log, independently confirmed completed casts, per-output hit counts, zeros, stack histograms, or client eligibility; no new evidence file was warranted. A high-volume Cobalt-related Wowhead Looter table was identified as mined-deposit loot rather than prospecting, so it must n",
-      "independently_verified_client_samples": 0,
-      "worker_new_original_site_cohorts": 0
+      "updated_at": "2026-11-22T02:39:01.585Z",
+      "source_blob_sha": "167d9cf6eedab26d41a4df0a8704dd7e33086a9d",
+      "status": "New DB2 absent-negative-list discrepancy with current WoWDB no-DE labels; no new yields.",
+      "manager_attributed_not_claimed_as_own": true
     }
   },
   "validation_this_run": {
-    "method": "Read-only GitHub current branch/charter/three-pass/v3 schema queue strategy flags, all four worker checkpoint files, current CI, original indexed Wowhead 200353 source, owner closed source manifest and main build field-support code; exact 47/74 and 40/74 rounded occurrence arithmetic checked. Manager review and dashboard committed. No local addon suite, synthetic valuation/tooltip execution or game-client QA.",
+    "method": "Read-only current GitHub charter/three-pass and v3 docs, queue, role reports, main build pipeline, original WoWDB LIVE 24992/24995/24996 catalogue labels, parsed current 21,061 native DB2 restriction item IDs and count in 24900..25199=0, traced Core.lua NativeDisenchantRestriction and ConversionEngine.lua candidate evaluation; verified exact main/research head remote Actions. No manager local Lua suite, generated ItemDB/synthetic prices, real character or live client test.",
     "main_revision": "bd38a158ea79309ae3be34adaf2c31ad95bce159",
-    "research_pre_status_head": "15401c9fafbd00430da1efdc9e18c0f038f16230",
+    "research_pre_status_head": "e79e7d539199402084017e19d79bcbff5a5744a0",
     "threepass_revision": "3d667d053db587c91401cfed7ecc56862b8340c9",
     "catalogue_revision": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
-    "review_commit": "9f2b0c61840e0858852bf52bc6ccf3b798455208",
-    "dashboard_commit": "15401c9fafbd00430da1efdc9e18c0f038f16230",
+    "review_commit": "1eea76596381cd923622c444ae4dbc1399106344",
+    "dashboard_commit": "e79e7d539199402084017e19d79bcbff5a5744a0",
     "remote_main_ci": {
       "id": 44972080103,
+      "head": "bd38a158ea79309ae3be34adaf2c31ad95bce159",
       "status": "completed",
-      "conclusion": "success",
-      "head": "bd38a158ea79309ae3be34adaf2c31ad95bce159"
+      "conclusion": "success"
     },
-    "remote_research_ci_before_manager": {
-      "id": 44972472800,
+    "remote_research_ci": {
+      "id": 44977075328,
+      "head": "2534ab03c09b75de4c03fa220f3674424d069e02",
       "status": "completed",
-      "conclusion": "success",
-      "head": "af785c28b8fb60413f982a9969d2ce1828850fbd"
+      "conclusion": "success"
     },
-    "not_executed": [
-      "local addon test suite",
-      "synthetic valuation/tooltip run",
-      "live WoW client test"
-    ],
-    "new_source_reported_hit_cohorts": 1,
-    "new_independently_profiled_Retail_operation_cohorts": 0,
+    "opened_prs": 0,
+    "merged_prs": 0,
+    "changed_schedules": 0,
+    "new_local_tests_run": 0,
+    "new_measured_cohorts": 0,
     "new_gold_decisions": 0
   },
   "blockers": [
@@ -679,7 +704,8 @@
     "Lamplighter 229158/229159 newly reported N=38 shard vectors match exactly; absent raw disenchanted-event timestamps/itemLinks/bonuses and at-cast profile, so two item-side Looter populations are not proven independent, and 12 reference rows cannot be promoted to measured probabilities or current Retail gold EV.",
     "New 229154 listing variants 80/86 and separate 229159 base catalogue ilvl 545 demonstrate a version/profile matching gap, not observed conversion outputs; original source Looter lacks event-level historical itemLink/bonus, at-cast item level and event independence.",
     "New TWW Sep2024 1fprthm source has no original workbook link, item IDs or observed per-output totals; theoretical tables contain ambiguous >100% units and a duplicated R3 label; nothing to price.",
-    "Dragonflight 200353 Wowhead reports 74 aggregated disenchant entries and 47/40 output-specific hit counts, but lacks actual item-instance/bonus/ilvl, time/build, skill/spec, complete stack/zero event distributions and current Retail eligibility. Source-only chance cannot establish EV without output quantities; exact-SHA build applicability still unverified by manager."
+    "Dragonflight 200353 Wowhead reports 74 aggregated disenchant entries and 47/40 output-specific hit counts, but lacks actual item-instance/bonus/ilvl, time/build, skill/spec, complete stack/zero event distributions and current Retail eligibility. Source-only chance cannot establish EV without output quantities; exact-SHA build applicability still unverified by manager.",
+    "Warmaul family 24992/24995/24996 LIVE WoWDB displays no-DE, while pinned ItemSparse 12.1.7.70493 negative list has no 24900..25199 IDs; exact-instance eligibility unverified. Restrict only on verified source-native or displayed-instance denial; do not assume no native bit means eligible or hard-code global catalog flags."
   ],
   "exhausted_sources": [
     "Reddit 1rteoqr Tranquility Bloom 1473: already in pre-cutoff Codex ownership manifest and duplicated in existing research; do not re-transcribe",
@@ -701,15 +727,69 @@
     "2026-11-22 TWW 1fprthm indexed original: only author-reported aggregate N and theoretical comparative percentages; no linked raw spreadsheet/event samples in visible post. Further numeric work requires a new primary artifact.",
     "Lost Landcaller's Claws Looter item 200353 independently source-checked on 2026-11-22: 74 site reports with 47/40 material hits; no linked per-operation item versions, zero/stack histograms, skill/spec, time/build or original client receipts. Treat as source-reported occurrence context, not current-Retail gold evidence; do not re-search this page without changed source/event logs."
   ],
-  "next_concrete_step": "Obtain source-native Dragonflight 200353 at-disenchant itemLink/bonus, patch, skill/spec and 0..N material quantity receipts to validate source-reported 74/47/40 before any EV; otherwise seek genuinely new post-cutoff ranked Midnight 237359/237362 completed prospect ledger or TWW 210796-210798 mill logs. Keep 731-source Codex catalogue closed unless a changed hash/consumer defect.",
+  "next_concrete_step": "Obtain independently verifiable non-destructive current Retail 24992/24995/24996 exact itemLink/bonus + native eligibility tooltip/API proof and add owner-approved negative/unknown fixtures on an isolated code branch; in parallel prioritize NEW original ranked Midnight 237359/237362 complete 0..N operation/refund logs, TWW Mycobloom 210796 quantity/profile logs, or DF 200353 event quantities without duplicating owner 725-source catalogue.",
   "production_main_changes": false,
   "addon_changes": false,
   "routine_research_prs": false,
   "merge_or_release": false,
   "new_schedules": false,
   "role_schedules_unchanged": true,
-  "prior_status_blob_sha": "e20b867b05cade9fd19c980f106cc15f8406fef7",
+  "prior_status_blob_sha": "598c0698f4e1684681bc85ea44ed3cde8b6a2ebd",
   "owner_catalogue_manifest_branch_head_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
   "owner_catalogue_manifest_blob_checked": "1bb9a4100c2be45282532f6205d722946f3b3e44",
-  "next": "Obtain source-native Dragonflight 200353 at-disenchant itemLink/bonus, patch, skill/spec and 0..N material quantity receipts to validate source-reported 74/47/40 before any EV; otherwise seek genuinely new post-cutoff ranked Midnight 237359/237362 completed prospect ledger or TWW 210796-210798 mill logs. Keep 731-source Codex catalogue closed unless a changed hash/consumer defect."
+  "next": "Obtain independently verifiable non-destructive current Retail 24992/24995/24996 exact itemLink/bonus + native eligibility tooltip/API proof and add owner-approved negative/unknown fixtures on an isolated code branch; in parallel prioritize NEW original ranked Midnight 237359/237362 complete 0..N operation/refund logs, TWW Mycobloom 210796 quantity/profile logs, or DF 200353 event quantities without duplicating owner 725-source catalogue.",
+  "manager_latest_checkpoint": {
+    "as_of": "2026-11-22T03:06:29.787Z",
+    "prewrite_research_commit": "e79e7d539199402084017e19d79bcbff5a5744a0",
+    "dashboard_commit_sha": "e79e7d539199402084017e19d79bcbff5a5744a0",
+    "main_commit": "bd38a158ea79309ae3be34adaf2c31ad95bce159",
+    "three_pass_commit": "3d667d053db587c91401cfed7ecc56862b8340c9",
+    "owner_catalogue_branch_commit": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
+    "owner_catalogue_code_commit": "a23e65d784f0c36833df0ad903d817d10d2f2ae3",
+    "workers": [
+      {
+        "role": "midnight",
+        "stamp": "2026-11-22T02:16:26.129Z",
+        "source_blob_sha": "a72f956ad28e95531a71f7fe7a0c7986467a9ae1",
+        "status": "No independently qualified new ranked-cast source; recorded next prospective source target."
+      },
+      {
+        "role": "war-within",
+        "stamp": "2026-11-22T02:20:29.250Z",
+        "source_blob_sha": "13cda5fe28fd693161d4a8d04b5aa062f3222f63",
+        "status": "No new numeric cohort or corrected identity this run."
+      },
+      {
+        "role": "dragonflight",
+        "stamp": "2026-11-22T02:34:54.503Z",
+        "source_blob_sha": "810fab701ae877ac11ae76b0899ce7dde961247e",
+        "status": "No newly qualified independent operation cohort this run."
+      },
+      {
+        "role": "legacy",
+        "stamp": "2026-11-22T02:39:01.585Z",
+        "source_blob_sha": "167d9cf6eedab26d41a4df0a8704dd7e33086a9d",
+        "status": "New DB2 absent-negative-list discrepancy with current WoWDB no-DE labels; no new yields."
+      }
+    ],
+    "new_verified_source_scope_items": [
+      24992,
+      24996
+    ],
+    "new_independent_retail_operation_cohorts": 0,
+    "new_gold_decisions": 0,
+    "main_ci": {
+      "id": 44972080103,
+      "head": "bd38a158ea79309ae3be34adaf2c31ad95bce159",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "research_ci": {
+      "id": 44977075328,
+      "head": "2534ab03c09b75de4c03fa220f3674424d069e02",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "no_local_build_or_client_qa": true
+  }
 }
