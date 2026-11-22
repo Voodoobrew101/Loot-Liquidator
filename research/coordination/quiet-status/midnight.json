@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-22T04:13:30.622Z",
-  "status": "Refreshed implementation/five-agent-completion and read README/evidence-format/mechanics/worker/queue. Targeted new original Retail Midnight DE, Umbral Tin/Copper/Silver prospecting and milling sources after the cutoff; no independent source with actual new cast-level trial, per-output event hit/zero histogram, or 272246 at-cast gear link. New methodological crosscheck: the Wowhead PTR item 157915 comment reports the same presentation conflict (a no-disenchant claim alongside a Looter disenchant-count tab); this is historical cross-expansion reference only, NOT a new Midnight yield cohort or proof of 272246 eligibility. Established Blizzard crate-hotfix, JD3K/Bue, Cardinalai, Aurn and Goblinomics references were already recorded; no duplicate record, empty JSONL, PR, runtime/build change, merge, release or scheduling action.",
+  "updated_at": "2026-11-22T05:10:26.720Z",
+  "status": "Refreshed research branch and all five required v3 instructions/queue sources. Searched new published Retail Midnight disenchant, Umbral Tin/Copper/Silver prospect, and milling cohorts; no source produced new original measured input/output operation denominators, material-hit/zero histograms, or live event-linked item 272246 ilvl/bonus. Newly screened two independent November 2026 Retail-capable addon release notes as potential existing-user export sources only: EzDisenchant 1.1.7 provides up to 500 per-character disenchant-history entries with CSV/TXT export but published text does NOT establish output-vector, rank, skill or item-bonus fields; ForeverStats 0.63.0 counts processing as gathering and offers CSV export but does NOT publish real exported processing cohorts or event schema. Both held as collection leads, not new evidence. A Nov 16 removed Reddit TSM thread and current price/guide pages add no material-yield observations. No new JSONL, data PR, schema/runtime change, game action, merging, release, or schedule change.",
   "task_ids": [
     "T0026",
     "T0049",
@@ -1441,7 +1441,11 @@
     "https://www.youtube.com/watch?v=1gGwR51s1RE",
     "https://wowgoldfarms.com/guides/retail/enchanting-gold-midnight/",
     "https://warcraft.wiki.gg/wiki/Dawn_Crystal",
-    "https://www.wowhead.com/ptr/item=157915/gonk-outrunner-shoulderguards"
+    "https://www.wowhead.com/ptr/item=157915/gonk-outrunner-shoulderguards",
+    "https://www.curseforge.com/wow/addons/ezdisenchant/files/9635154",
+    "https://www.curseforge.com/wow/addons/ezdisenchant",
+    "https://www.curseforge.com/wow/addons/forever-stats/files/9377899",
+    "https://www.curseforge.com/wow/addons/forever-stats"
   ],
   "blockers": [
     "272246: actual disenchantable item bonus/at-cast ilvl 305 itemLink and correlated original DE output are not published; generic 206 cannot-be-disenchanted catalog conflicts with aggregate 140-row Looter display.",
@@ -1564,11 +1568,11 @@
       "reason": "Historical BFA item, only commenter-reported Looter/eligibility presentation mismatch; no original Retail Midnight 272246 event, no cast-level dataset, no current-client validation. Do not revisit absent raw evidence."
     }
   ],
-  "next_concrete_step": "Prioritize newly published independent event/character-linked Retail Midnight exports: 272246 successful DE with raw bonus-string and at-operation ilvl, profession skill/build, item rarity and material IDs; or 237362/237363 Umbral Tin and 237359 Copper prospect logs with actual five-ore operations, refunded inputs, rank-specific outputs and per-cast zeros/hits plus ore Diamond unlock. Seek 10-herb mills with per-operation pigment rank/itemId stack histograms. Do not revisit already catalogued 731 cutoff sources or use Wowhead Looter aggregates as conclusive live DE eligibility.",
-  "verified_base_commit_sha": "2bb71d341360812a180e91935efa3887c37ea58f",
+  "next_concrete_step": "Seek independently published, consented existing Retail Midnight processing CSV/TXT logs with actual item-link (especially 272246 at-cast ilvl/bonus), outputs by exact ranked ID, timestamp/build, profession profile and completed casts, plus per-event zero outcomes. Screen EzDisenchant/ForeverStats exports if already published: first verify their schemas really include outputs and per-event joins; otherwise mark as input-only activity and do not admit as numeric. Continue new 237362/237363 Umbral Tin and 10-herb milling original cohort search; preserve Resourcefulness refunds and Diamond node separately. Do not re-catalogue owner Codex cutoff corpus.",
+  "verified_base_commit_sha": "bbbe799d39a84d0b4d99d3fcfea488d3ce676753",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "One quiet-status-only checkpoint; no evidence JSONL because no genuinely new independent numerical cohort. The status file cannot self-reference the generated commit SHA; verify post-write commit and exact file read-back separately.",
+  "commit_note": "Quiet-status-only checkpoint. No independently grounded numeric JSONL warranted. The status cannot encode its own future SHA; post-write Git commit and read-back must be checked separately.",
   "new_leads_screened": [
     {
       "source": "https://github.com/ErorNya/ForeverFlip/blob/main/ForeverFlip/Modules/Disenchant.lua",
@@ -1715,6 +1719,63 @@
         "verified_current_client_eligibility": null
       },
       "detail": "Wowhead commenter flags a 157915 Azerite gear page claiming Cannot be disenchanted while also displaying Disenchanted 883 times. Comment report, not independently verified raw events; supports treating Wowhead item-side Looter aggregates as insufficient to settle the existing 272246 eligibility conflict. No cross-expansion material yield inference or measured casts admitted."
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/ezdisenchant/files/9635154",
+      "supporting_source": "https://www.curseforge.com/wow/addons/ezdisenchant",
+      "published": "2026-11-15",
+      "classification": "held_potential_public_existing_user_export_schema_unverified_no_study",
+      "exact_ids": [
+        272246,
+        243599,
+        243600,
+        243602,
+        243603,
+        243605,
+        243606
+      ],
+      "source_original": {
+        "retail_version": "12.1.5",
+        "history_max_entries_per_character": 500,
+        "history_export_formats": [
+          "CSV",
+          "TXT"
+        ],
+        "actual_completed_disenchants": null,
+        "input_item_link_bonus_at_cast": null,
+        "output_item_id_quantities": null,
+        "profession_skill_or_spec": null,
+        "per_cast_zero_histogram": null
+      },
+      "detail": "Developer release note verifies 500-entry ring history and CSV/TXT export, not its material outcome content. Description explicitly cautions candidate gear may be ineligible and only live click checks exact variant; this is a methodological caution, not proof of 272246 disenchantability or a new trial. Do not solicit player crafting/destruction."
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/forever-stats/files/9377899",
+      "supporting_source": "https://www.curseforge.com/wow/addons/forever-stats",
+      "published": "2026-10-30",
+      "classification": "held_processing_gathering_export_collection_lead_no_published_original_cohort",
+      "exact_ids": [
+        237362,
+        237363,
+        237359,
+        237361,
+        237364,
+        237365
+      ],
+      "source_original": {
+        "retail_version": "12.1.7",
+        "counts_professions": [
+          "Disenchanting",
+          "Prospecting",
+          "Milling"
+        ],
+        "tab_csv_export": "yes, generic",
+        "completed_operation_counts_for_target_items": null,
+        "linked_input_output_event_rows": null,
+        "resourcefulness_refunds": null,
+        "positive_events_and_zeros": null
+      },
+      "detail": "Changelog says gathering includes processing and profession tab exports are available; does not guarantee per-operation, per-rank or zero-inclusive rows or publish actual anonymized source data. No numeric admission."
     }
   ],
   "catalogue_checkpoint": {
