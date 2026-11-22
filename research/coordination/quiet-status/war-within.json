@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-22T07:18:39.128Z",
-  "status": "active: new independent source-code exclusion for TWW prospect/mill numeric recovery; no independently measured yield cohort",
+  "updated_at": "2026-11-22T08:23:11.437Z",
+  "status": "active: exact TWW Enchanting knowledge-item Looter eligibility anomaly held; no new numeric-yield cohorts",
   "task_ids": [
     "T0009",
     "T0008",
@@ -19,7 +19,7 @@
     "Bismuth 210930/210931/210932 post-Oct-25-2024 verified prospect yields remain missing.",
     "T0048 TWW DE rarity/armor/weapon: exact item+bonus and player skill/spec, source-era independent 0..N outcomes and 219946..219955 output quality IDs remain missing; cumulative Looter overlap held."
   ],
-  "source_branch_head_reviewed": "b5a03d850845faa101f43ff2de9bbfec6238dbd3",
+  "source_branch_head_reviewed": "f867e2c5eaa90cddde372c42363db68d49317951",
   "source_policy": "READ current research/v3 README/evidence-format/mechanics/worker/queue before search. Source cutoff catalogue CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources incl six recovered; reuse 12,222 scoped decisions; do not recatalogue Codex backlog. Review/admission merged to main in PR #82 but worker branch remains evidence-only; no release asserted.",
   "study_backlog_triage": [
     {
@@ -438,6 +438,17 @@
       "exact_inputs": "Arathor's Spear 210808 R1, 210809 R2, 210810 R3; observed 119/500 inventory counts, not consumed processing inputs",
       "outputs": null,
       "reason": "No 0..N completed standard Khaz Algar mills; Nov2025 housing dyes use separate process/output. Epoch+method scoped only; evidence schema lacks noMill."
+    },
+    {
+      "status": "held",
+      "scope": "new source identity/eligibility mismatch; no empirical direct-gear disenchant output, no new estimator admission",
+      "original_cohort": "Wowhead Looter cumulative report on non-destroyable TWW weekly enchanting knowledge consumable, not a verified gear processing cohort",
+      "source": "https://www.wowhead.com/item=227661/gleaming-telluric-crystal",
+      "secondary_source": "https://us.forums.blizzard.com/en/wow/t/unable-to-restore-first-5-items-disenchanted-per-week/1972427",
+      "existing_ids": null,
+      "exact_inputs": "227661 Gleaming Telluric Crystal, item-level-1 BoP consumable, 'Cannot be destroyed'; 'Study' awards 4 Khaz Algar Enchanting knowledge. No independent source-confirmed successful disenchant of 227661.",
+      "outputs": "Wowhead PTR search-indexed Looter lists 10 alleged disenchant rows: Refulgent Crystal 5/10 and 2/10, Gleaming Shard 1/10 three times; exact ranked IDs 219949-219955 not author-confirmed; row hit counts are not a valid processing denominator.",
+      "reason": "Source shows mutually confusing metadata: item is a non-destroyable knowledge-point reward normally obtained by disenchanting other gear, yet its 'Disenchanting' related tab labels it as input. A site index/Looter association is not verified normal Retail item eligibility. Historical forum author independently confirms the Crystal is an OUTPUT of disenchanting gear and a weekly restore reagent, not an input. Do not manufacture noDisenchant=true or interpret its 10 as source-verified casts; hold for Master identity review if a candidate pipeline ever consumes this item. Separate 227659 was already exhausted, and 227662 belongs to Codex's existing cutoff catalogue; do not recatalogue them."
     }
   ],
   "triage_counts": {
@@ -450,7 +461,8 @@
     "Desolate Talus TWW rank IDs: 238201 R1, 238212 R2, 238213 R3. 2025-08-09 first-person report: not prospectable and not used in regular recipes; independent Wowhead 2025-08-03 mining overview: no profession recipes, vendor exchange instead. Historical source context only, no successful casts.",
     "Arathor's Spear rank IDs 210808 R1, 210809 R2, 210810 R3. Original 2024-08-29 through 2025-04-29 reports say not listed for standard Khaz Algar Milling despite inventory quantities 119/500; particular source rank and live-2026 eligibility not known.",
     "2025-11-30 housing-dye beta describes distinct 10 herb -> 1 dye pigment craft using TWW herbs, not measured standard Khaz Algar milling into Nacreous/Blossom/Luredrop/Orbinid Pigment. No standard Mill output cohort or recipe identity equivalence.",
-    "Aug-2025 Wowhead guide gives example Talus exchanges 3:1 Bismuth, 1:1 Aqirite, 5:1 Ironclaw, but separate firsthand item comments report rates varying by day; do not add fixed conversion to live-value model."
+    "Aug-2025 Wowhead guide gives example Talus exchanges 3:1 Bismuth, 1:1 Aqirite, 5:1 Ironclaw, but separate firsthand item comments report rates varying by day; do not add fixed conversion to live-value model.",
+    "227661 Gleaming Telluric Crystal: Wowhead identifies an item-level-1, BoP, non-destroyable Enchanting Knowledge +4 consumable; its separate 'This item has been disenchanted 10 times' Looter table lists Refulgent Crystal and Gleaming Shard occurrences without verified eligible armor/weapon input or item-version provenance. Do NOT treat these 10 displays as validated 227661 disenchant casts or TWW rarity/armor/weapon yield observations."
   ],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
@@ -469,8 +481,8 @@
     "https://www.reddit.com/r/wow/comments/1pa98qw/player_housing_herbs/"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-01T1621-wowhead-looter-single-stack-replacements.jsonl",
-  "verified_commit_sha": "b5a03d850845faa101f43ff2de9bbfec6238dbd3",
-  "verification": "Read branch README/evidence-format/mechanics/worker/queue and current role status. Source-code checks independently validated public ProspectMate blob. This status-only commit's verified_commit_sha and source_branch_head_reviewed record the reviewed parent; self-embedding the new commit SHA would change that commit. Read-back of the new commit must be performed separately. No new yield JSONL manufactured.",
+  "verified_commit_sha": "f867e2c5eaa90cddde372c42363db68d49317951",
+  "verification": "Read research/v3 README, evidence-format, mechanics, worker role and queue at refreshed branch. Verified original Wowhead item 227661 item-type/knowledge+4/undestroyable metadata, its mismatched 10-row Looter table and independent Blizzard forum account. This commit stores only a held new source identity finding. verified_commit_sha and source_branch_head_reviewed identify reviewed parent because self-embedding the commit SHA would change it. Verify committed branch content separately after write.",
   "blockers": [
     "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
     "Cumulative PTR Looter display rows contain repeated material names with linked rank IDs unavailable; no per-row independent study and no safe current-Retail rank-specific mapping.",
@@ -525,41 +537,42 @@
     "2026-11-22T04:17:56.044Z: May 2025 1kfbbdd Q3 dust hourly throughput lacks cast counts, input item IDs and per-operation output histogram; do not repeat search absent original logs. Rechecked old PeaEsk/quality anecdotes and low-level cross-era Looter sample; none represent new current TWW cohort.",
     "2026-11-22T05:24:22.129Z: 2025 1k78h4v / 1l91chl economic discussions have no usable per-cast output ledgers (already held); newly reviewed test-supply bag 224032/224035 opening tables cannot be used as independent processing studies. Do not revisit without genuine processing captures.",
     "2026-11-22T06:19:49.816Z: Source searches for new TWW complete successful rank-specific DE/prospect/mill operations with hit/zero histograms found none; newly reviewed original eligibility/forum and housing-dye reports are not yield cohorts. Do not repeat absent raw logs.",
-    "2026-11-22: ProspectMate public current source (Urutseg/ProspectMate blob 2e15542a) lacks all TWW 210930..210938/210796..210798 and spell 434018; stored net consumed/output totals lack casts/hits/zeros. Not a TWW data source unless a separately verified historical version or original independent export is produced; do not revisit current source unchanged."
+    "2026-11-22: ProspectMate public current source (Urutseg/ProspectMate blob 2e15542a) lacks all TWW 210930..210938/210796..210798 and spell 434018; stored net consumed/output totals lack casts/hits/zeros. Not a TWW data source unless a separately verified historical version or original independent export is produced; do not revisit current source unchanged.",
+    "2026-11-22T08:23:11.437Z: Item 227661's site Looter display has no independent proof of disenchantability despite knowledge-item metadata; re-open only on original successful-cast replay/log and ranked IDs. Existing 227659 anomaly and Codex-owned 227662 not re-catalogued."
   ],
-  "next_concrete_step": "Prioritize new original post-2024-10-25 Khaz Algar Prospecting 434018 and Khaz Algar Milling logs directly recording successful TWW 210930..210938/210796..210798 casts with rank IDs, 0..N material hits, source profiles/bonus, original outputs and Resourcefulness refunds. Request voluntarily published source-original logs from TWW-compatible recorders, not current ProspectMate code. Keep T0048 TWW DE rank/bonus/skill and client-era gaps open; do not duplicate Codex's verified closed cutoff catalogue.",
-  "previous_status_updated_at": "2026-11-22T06:19:49.816Z",
+  "next_concrete_step": "Seek genuinely independent post-2024-10-25 TWW 210930..210938 prospect and 210796..210798 mill successful-cast logs, with per-output IDs/ranks, 0..N histograms, skill/spec, unlock and Resourcefulness refunds. For DE T0048 verify source input item is genuinely eligible armor/weapon in the corresponding build/bonus before importing even a numerically populated Looter table; separate original 227661 knowledge-consumable anomaly and report identity blockers to Master. No Codex backlog recataloguing.",
+  "previous_status_updated_at": "2026-11-22T07:18:39.128Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "timestamp_utc": "2026-11-22T07:18:39.128Z",
+    "timestamp_utc": "2026-11-22T08:23:11.437Z",
     "focus": [
-      "T0007/T0008/T0009/T0010/T0011/T0012/T0040 TWW original operation log recovery",
-      "Verify public processing tracker can actually identify TWW inputs and retain cast denominators"
+      "T0048 item-side Looter source eligibility versus gear-input proof",
+      "T0007/T0008/T0009/T0010/T0011/T0012/T0040 new independent rank-specific operation logs and correct source/profile denom"
     ],
     "checks": [
       {
-        "source": "https://www.curseforge.com/wow/addons/prospectmate",
-        "disposition": "Current v2.0.3 advertised processing logger but public source verified not TWW-compatible"
+        "source": "https://www.wowhead.com/item=227661/gleaming-telluric-crystal",
+        "disposition": "New exact item 227661 metadata incompatible with treating its 10 alleged Looter disenchants as real gear processing; hold"
       },
       {
-        "source": "https://github.com/Urutseg/ProspectMate/blob/main/ProspectMate.lua",
-        "disposition": "Primary-code negative: TWW skill spell 434018 and specified input/output rank IDs absent; net bag-delta aggregation only, no 0..N or refunds"
+        "source": "https://us.forums.blizzard.com/en/wow/t/unable-to-restore-first-5-items-disenchanted-per-week/1972427",
+        "disposition": "Independent firsthand source confirms knowledge crystal as disenchant output/restore reagent, not verified disenchant input"
       },
       {
-        "source": "https://github.com/Urutseg/ProspectMate/issues",
-        "disposition": "No open publicly posted source-original TWW sample/export visible; this does not rule out private exports"
+        "source": "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation",
+        "disposition": "Already identified contradictory Looter display, not a new cohort"
+      },
+      {
+        "source": "https://www.reddit.com/r/woweconomy/comments/1fspqym",
+        "disposition": "Previously recorded 18,300 and 3x1,000 uncommon disenchant averages, no new cohort"
       },
       {
         "source": "https://www.reddit.com/r/woweconomy/comments/1fdmzwy",
-        "disposition": "Previously catalogued Mycobloom conditional mean, not re-admitted"
-      },
-      {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1f3qf96",
-        "disposition": "Previously catalogued six individual green DEs, not duplicated"
+        "disposition": "Existing Mycobloom R1/R2 per-herb means rechecked; missing completed cast/hit logs unchanged"
       }
     ]
   },
@@ -997,6 +1010,12 @@
       ],
       "missing_TWW_recipe_spell": 434018,
       "detail": "Source code in public ProspectMate current main lists Dragon Isles legacy and Midnight prospect/mill spells/items, but none of Khaz Algar Prospecting 434018, 12 targeted TWW ore/herb rank IDs, or Nacreous Pigment 222618/222619. Session commits to SmartProspectorDB.reagents[inputID]={consumed,results} using net bag deltas, not an original per-operation cast ledger or hit/0..N histograms; refund separation, skill/spec/build and completed operations are absent. Current listed Retail v2.0.3 updated 2026-06-17. No public player SavedVariables export found in inspected public source/issues; do not infer that no private exports exist. The addon cannot fill T0007-12/T0040 numeric nulls as shipped. No evidence/estimates admitted."
+    },
+    {
+      "source": "https://www.wowhead.com/item=227661/gleaming-telluric-crystal",
+      "date": "2026-11-22",
+      "status": "held-new-item-side-looter-identity-contradiction",
+      "detail": "New original linked item 227661 is classified consumable/knowledge+4 and cannot be destroyed, but Wowhead PTR search index reports 10 putative disenchants (Refulgent Crystal 5+2 positive rows and Gleaming Shard 1+1+1). The site displays aggregate related/Looter associations, not independently verified completed disenchants of 227661; unknown original item version, source client build, exact output rank URLs, skill/spec, casts, zeros and histograms. Blizzard forum 1972427 says the crystal is obtained from disenchanting gear as a weekly knowledge reward, not sacrificed as input. Source exclusion only; no confidence/EV effect."
     }
   ],
   "last_source_commit_pending": false
