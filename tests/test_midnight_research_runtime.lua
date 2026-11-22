@@ -147,11 +147,11 @@ local function render(resolved)
 end
 install({counted})
 local text,rows=render(assert(resolve()))
-check(rows:find('[avg 0.629 per 1 input]',1,true) and not rows:find('chance unavailable',1,true),
+check(rows:find('62.9%',1,true) and not rows:find('[avg',1,true) and not rows:find('chance unavailable',1,true),
     'a known DE mean remains numerical when chance and range are absent')
 LL.db.showAverageQuantity=true
 text,rows=render(assert(resolve()))
-check(rows:find('0.629',1,true) and not rows:find('chance unavailable',1,true),
+check(rows:find('62.9%',1,true) and not rows:find('chance unavailable',1,true),
     'enabling averages displays the researched mean without inventing probability')
 check(not text:find('Personal x',1,true),'units-only study is not presented as a quantity histogram')
 local occurrence=record('independent-counts-and-units',{output(243602,.5,.2,1,3)})
@@ -161,7 +161,7 @@ local hitModel=assert(resolve())
 near(hitModel.materials[1].chance,.2,'hit probability is based on casts with a drop')
 near(hitModel.materials[1].expectedQuantity,.5,'unconditional average is based on material units')
 text,rows=render(hitModel)
-check(rows:find('20%',1,true) and rows:find('0.500',1,true),'renderer keeps occurrence and units/cast figures distinct')
+check(rows:find('20%',1,true) and not rows:find('[avg',1,true),'renderer keeps the known occurrence as the compact leading rate')
 LL.db.showAverageQuantity=false
 text,rows=render(hitModel)
 check(rows:find('20%',1,true) and rows:find('[1-3]',1,true) and not rows:find('0.500',1,true),
@@ -207,8 +207,8 @@ local unseenModel=assert(resolve(unseen))
 near(byID(unseenModel,243599).expectedQuantity,byID(dust,243599).expectedQuantity,'an unseen item receives category research')
 check(byID(dust,243599).minQuantity==1 and byID(dust,243599).maxQuantity==3)
 text,rows=render(dust)
-check(rows:find(string.format('%.3f',byID(dust,243599).expectedQuantity),1,true),
-    'native tooltip displays the shared category mean under the saved preference')
+check(rows:find('%%') and not rows:find('[avg',1,true),
+    'native tooltip displays compact category rates without trailing averages')
 local crystalFacts={id=250456,quality=4,classID=4,expansionID=11,count=1}
 local crystals=assert(resolve(crystalFacts))
 check(math.abs(byID(crystals,243605).chance-190/318)<.0000005,'native category crystal probability uses its counted cohort')

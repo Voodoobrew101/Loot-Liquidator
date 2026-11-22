@@ -1,3 +1,9 @@
+# Loot Liquidator 0.12.50
+
+- Apply the same compact leading-rate/count format to disenchanting, without trailing average text.
+- Keep separate disenchant quality rows beyond twelve, including zero siblings of materials currently produced. Keep unrelated locked bonus materials hidden.
+- Preserve baseline quantities, probability evidence, confidence and valuation.
+
 # Loot Liquidator 0.12.49
 
 - Apply the same compact leading-rate/count format to milling, with no trailing average annotation.

@@ -700,7 +700,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         end
         local function ShowMaterials(option,model)
             if detail<3 then return end
-            local compactMethod=option.name=='Prospect' or option.name=='Mill'
+            local compactMethod=option.name=='Prospect' or option.name=='Mill' or option.name=='Disenchant'
             local simulated=professionSimulation(model)
             for _,named in ipairs(model and model.namedOutputs or {}) do
                 local amount=type(named.expectedQuantity)=='number' and ('Average '..UnitsText(named.expectedQuantity))
@@ -710,15 +710,25 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             end
             local list=model and model.materials and LA:SortedTooltipMaterials(model.materials)
             if type(list)=='table' then
+                local nativeItems=LA.ItemDB and LA.ItemDB.professionProfiles and LA.ItemDB.professionProfiles.items or {}
+                local positiveFamilies={}
+                if option.name=='Disenchant' then
+                    for _,m in ipairs(list) do
+                        local item=nativeItems[m.id]
+                        if item and item.qualityFamilyID and type(m.expectedQuantity)=='number' and m.expectedQuantity>0 then
+                            positiveFamilies[item.qualityFamilyID]=true
+                        end
+                    end
+                end
                 local visible={}
                 for _,material in ipairs(list) do
                     -- A zero modeled unlock has no output at this allocation,
                     -- including DE endpoint identities without an extra tag.
                     -- Preserve explicit ordinary source zeroes and unknowns.
-                    local nativeItem=LA.ItemDB and LA.ItemDB.professionProfiles and LA.ItemDB.professionProfiles.items
-                        and LA.ItemDB.professionProfiles.items[material.id]
+                    local nativeItem=nativeItems[material.id]
                     local distinctProcessingQuality=compactMethod and not material.rankIDs
                         and nativeItem and nativeItem.qualityRank
+                        and (option.name~='Disenchant' or positiveFamilies[nativeItem.qualityFamilyID])
                     if not (material.expectedQuantity==0 and not material.structuralZero and not distinctProcessingQuality and
                         (material.additionalOutput or model.disenchantBaselineApplied
                             or model.generalQualityApplied or model.skillQualityApplied or model.sourceReferenceOnly)) then
@@ -792,7 +802,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     if showResearch then
                         if compactProcessing and m.chance==nil and type(m.expectedQuantity)=='number' then
                             tooltip:AddLine(('    Displayed yield rate uses %.3f average units per %s; no measured occurrence inferred.'):format(
-                                m.expectedQuantity,option.name=='Mill' and 'milling operation' or 'prospect'),.70,.75,.82,true)
+                                m.expectedQuantity,option.name=='Mill' and 'milling operation' or option.name=='Disenchant' and 'disenchant' or 'prospect'),.70,.75,.82,true)
                         end
                         if m.unavailableReason then tooltip:AddLine('    '..m.unavailableReason,.90,.72,.45,true) end
                         if m.derivedMean and not simulated then tooltip:AddLine('    Estimated average: probability times conditional yield midpoint',.70,.75,.82,true) end
