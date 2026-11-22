@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-22T20:43:22.017Z",
-  "status": "Independently checked a dated Nov 17 2026 third-party Retail AH scan for Warmaul Legplates 24995: item level 31, BoE, required level 26. This corroborates the live-style scaled item-level context previously seen at WoWDB (31) and contradicts naive reuse of the historical TBC/WotLK item-level-108 profile, but is NOT a witnessed disenchant cast, client itemLink/bonus ID or a current disenchant-eligibility check. Earlier conflicting Retail tooltip presentations and WoWDB's Cannot be disenchanted flag remain unresolved. New numerical cast/output/zero/histogram data: none. Old Fel Iron 565-ore Thottbot and Cobalt Enchantrix reports remain previously imported, no duplicated cohorts. Existing Codex-owned 731-source cutoff catalogue and implementation were not modified; no evidence file or pricing.",
+  "updated_at": "2026-11-22T21:44:20.804Z",
+  "status": "Independently checked current LIVE Wowhead item displays (not PTR): Fel Iron Ore 23424 is item level 11 and explicitly says Requires Outland Jewelcrafting (1); Cobalt Ore 36909 is item level 12 with no item-specific skill restriction shown. The live Outland Prospecting spell 382980 and Northrend Prospecting spell 382979 each show profession Jewelcrafting (1), Salvage Item with value 5. These are directly displayed item/recipe profile numbers, NOT completed-cast measurements, proof of successful access or eligibility, historical 275/350 skill equivalence, or output rates. Current Retail Warmaul Legplates 24995 remains item level 31 in recent corroborated sources but disenchant eligibility is unproven. The Reddit p71mrp Adamantite 2051-prospect OP and cumulative 48,315-ore commenter already belong to Codex-owned cutoff and were NOT reimported. No new independent processing cohort, evidence JSONL, price snapshot or implementation change.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -16,7 +16,11 @@
     "Cobalt 36909 and Fel Iron 23424 current Retail spell identity/batch-size versus independent actual successful processing session with full denominators/zeros/refunds",
     "Skill, specialization, exact build/hotfix and historical-vs-Retail separation for all target measurements"
   ],
-  "newly_verified_fields_cohorts": [],
+  "newly_verified_fields_cohorts": [
+    "Retail LIVE Wowhead Fel Iron Ore 23424: itemLevel=11; presented required skill label=Outland Jewelcrafting (1); this upgrades earlier PTR-only presentation to independently visible LIVE site context, not a live character operation test.",
+    "Retail LIVE Wowhead Cobalt Ore 36909: itemLevel=12; current item page does not display any ore-specific Jewelcrafting requirement, which is absence of a label, not evidence that skill or recipe access is unrestricted.",
+    "Current LIVE 382980 Outland Prospecting and 382979 Northrend Prospecting spells: Profession Jewelcrafting (1), Salvage Item effects 11/10, respective Value=5; previously recorded spell IDs/input counts corroborated, no new material outputs or casts."
+  ],
   "source_urls": [
     "https://github.com/p3lim-wow/Molinari/blob/da14202ccfa4c2d892f5c6d7bd5dbcc89cb4a7cc/data/Standard/prospectable.lua",
     "https://www.wowhead.com/spell=382980/outland-prospecting",
@@ -25,15 +29,18 @@
     "https://www.wowdb.com/items/24995-warmaul-legplates",
     "https://www.wowhead.com/wotlk/spell=31252/prospecting",
     "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
-    "https://bootybaybroker.com/item/24995/warmaul-legplates/us/alleria"
+    "https://bootybaybroker.com/item/24995/warmaul-legplates/us/alleria",
+    "https://www.wowhead.com/item=23424/fel-iron-ore",
+    "https://www.wowhead.com/item=36909/cobalt-ore",
+    "https://warcraft.wiki.gg/wiki/Prospecting"
   ],
-  "numeric_summary": "No new independent measured processing cohorts, actual successful casts, output hit counts, zero outcomes, material totals, 1..N histograms or skill/build/bonus IDs for 24995, 36909 or 23424. Newly checked 2026-11-17 Retail AH feed shows 24995 item level 31, binds when equipped, required level 26, but does not establish DE eligibility, source patch, operation count or output identity; source-based context corroboration only, not new yield numbers or frozen gold evidence.",
+  "numeric_summary": "New verified displayed Retail profile numbers: Fel Iron Ore inputItemID=23424 itemLevel=11, Outland Jewelcrafting skill label=1; Cobalt Ore inputItemID=36909 itemLevel=12 (item tooltip has no skill gate); spells=382980 Outland and 382979 Northrend, each 5 ore inputs, profession Jewelcrafting (1). No new measured successful casts, output hit counts, zeros, output quantities, histograms or mean/rate data for 24995/23424/36909. Historic and Retail epochs remain separated, no frozen gold.",
   "evidence_file": "research/v3/evidence/legacy/2026-11-22T1746-outland-northrend-recipe-spell-identity.jsonl",
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "a649ac2902a58669e2365dc88de958a3e137f1c4",
-  "verified_commit_sha": "a649ac2902a58669e2365dc88de958a3e137f1c4",
-  "commit_note": "verified_parent_sha and verified_commit_sha are pre-write branch HEAD; commit SHA cannot appear inside the file it hashes. Verify resulting commit independently after write.",
+  "verified_parent_sha": "23b19f9581394d54e1aa44b5f081b394e0232ace",
+  "verified_commit_sha": "23b19f9581394d54e1aa44b5f081b394e0232ace",
+  "commit_note": "verified_parent_sha and verified_commit_sha are PRE-WRITE branch HEAD, not the new commit (self-reference impossible in hashed content). Read back new branch commit separately.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -232,6 +239,12 @@
       "source": "https://bootybaybroker.com/item/24995/warmaul-legplates/us/alleria",
       "disposition": "new-time-stamped-third-party-retail-item-level-corroboration-not-cast-eligible",
       "reason": "Last Blizzard-linked AH scan 2026-11-17 06:00 UTC lists exact 24995 Warmaul Legplates at item level 31, BoE, required level 26. Source lacks full itemLink, bonusIDs, actual DE attempt/API gate, material outcome and patch. Independently corroborates scaled level 31 context of WoWDB, without overriding current WoWDB no-DE flag or treating historical TBC item level 108 as live eligibility. Market price deliberately excluded."
+    },
+    {
+      "task": "T0044/T0022 Retail source display context",
+      "source": "Wowhead LIVE Fel Iron Ore 23424, Cobalt Ore 36909, recipe spell 382980/382979 (checked 2026-11-22)",
+      "disposition": "newly-verified-published-live-profile-only-not-processing-admission",
+      "reason": "23424 shows itemLevel 11 and Requires Outland Jewelcrafting (1), a live confirmation of the prior PTR-only label; 36909 shows itemLevel 12 but no explicit ore-specific prospecting skill line. Spell 382980/382979 both profession Jewelcrafting 1 and 5-reagent salvage. None proves successful in-client operations, zero-inclusive yields, 24995 DE eligibility or current gem output probability."
     }
   ],
   "blockers": [
@@ -253,7 +266,7 @@
     "Existing legacy status had cut gem item IDs 23094/23095/23096 mistaken for direct Fel Iron prospect outputs; this run corrected status listing only using previously audited 12 uncut output IDs. Verify final compiled schema/consumer with Master rather than changing code.",
     "2016 ProspectMe raw data caveat: normal TimesProspected increments 1 per capture while 2016 mass operations increment 4 nominal equivalents; code also overwrites duplicate same-material results within an event. Do not equate saved counter with original physical 5-ore operations or trust totals without source-version/operation reconciliation. This is not evidence of an existing target corpus.",
     "GuideMMO's 2021 TBC Classic Fel Iron 1000-ore video is not a Retail 12.x measurement; publicly indexed description does not expose actual item-specific gem totals, completed successful casts, zero outcomes or player profile. Video observation/extraction and cohort uniqueness would be required before any historical-only evidence.",
-    "12.1.7 PTR Fel Iron tooltip Outland Jewelcrafting (1) is not a verified live skill/operation gate and must not be mixed with historical 275-skill lookup.",
+    "The previously PTR-only Fel Iron 23424 Outland Jewelcrafting (1) display is now independently seen on Wowhead LIVE item page (2026-11-22); this is a published requirement label, NOT a witnessed successful current character prospect. No captured in-client operation/skill permission receipt, date/build or material ledger; never transfer historical skill 275/350 or yields into Retail.",
     "NEW 40959 historical original source (item 41122 Wowhead comment 282402): explicitly claimed 278 Infinite Dust conflicts with 272 units from positive stack frequency bins 25×2+21×3+21×4+15×5; correct source from original commenter or archived context before compiler admission. 22 purchased bar stacks are not proven 110 completed disenchant casts. 2 Dream Shards are quantity-only, not proven two hits. Historical WotLK provenance must never be treated as current Retail without version/eligibility check.",
     "2026 published Retail recorder addons (TheWoWDB Companion and ProfitProphet) provide capability/eligibility changelog descriptions but no downloadable independent 24995/36909/23424 session ledger, exact observed item/output ID per event, successful N, zeros, client build, skill/spec or refund accounting. Do not turn 600 source cap or template percentages into observed casts.",
     "40959 new conditional epoch conflict: 22 purchased 20-bar stacks (440 bars) cannot supply 82 dust-positive outcomes at post-3.0.8 8 bars per craft without other sourced bars; early positive dust stacks 2/3 conflict with cited 3.2.2 4-7 hotfix bracket. No actual craft/disenchant N, acquisition dates, exclusive bar inventory, build or 278-vs-272 resolution; Master must decide source-profile flag.",
@@ -398,26 +411,27 @@
     }
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Find publicly accessible independent, current Retail 12.x zero-inclusive disenchant/prospect operation log with successful consumption and complete per-output 0/1/2+ material quantities, exact itemLink/bonus/build, skill and refund accounting; for 24995 first obtain actual live client disenchant eligibility/API proof. AH listing/gear level is not sufficient for a DE recommendation. Skip previously catalogued 565-Fel-Iron study, OZZIEEM/EVIAN/HASKINA copies and empty Enchantrix exports.",
+  "next_concrete_step": "Find newly published independent Retail 12.x zero-inclusive 24995 disenchant or 23424/36909 successful prospect operation ledger with itemLink/bonus/build, true consumed inputs, skill, casts/zeros/hits/output histograms and refunds, or an authoritative current client eligibility receipt for 24995. Do not relabel published tooltip/profile values as measured output or repeat the Codex-owned p71mrp cumulative/OP studies.",
   "coordination_cutoff": "Cutoff 0cd0bad8867e7a8d909b4ecae74f6136a3e23d42. Repository README and manifest now report CLOSED_VERIFIED_CURRENT_PIPELINE: 731 sources (713 original + 12 addendum + six recovered); Codex/direct reviewers own source decisions, build/database/tooltip verification. No recataloguing/branch changes.",
   "sources_reviewed_this_run": [
-    "https://bootybaybroker.com/item/24995/warmaul-legplates/us/alleria",
-    "https://www.wowhead.com/wotlk/item=24995/warmaul-legplates",
-    "https://www.wowhead.com/tbc/item=23424/fel-iron-ore",
-    "https://www.wowhead.com/it/item=36909/minerale-di-cobalto",
-    "https://www.wowhead.com/tbc/forums/topic/inks-bulk-profession-macros-193012"
+    "https://www.wowhead.com/item=23424/fel-iron-ore",
+    "https://www.wowhead.com/item=36909/cobalt-ore",
+    "https://www.wowhead.com/spell=382980/outland-prospecting",
+    "https://www.wowhead.com/spell=382979/northrend-prospecting",
+    "https://warcraft.wiki.gg/wiki/Prospecting",
+    "https://www.reddit.com/r/classicwow/comments/p71mrp"
   ],
   "latest_run_source_date": "2026-11-22",
   "latest_run": {
-    "at_utc": "2026-11-22T20:43:22.017Z",
-    "branch_head_reviewed": "a649ac2902a58669e2365dc88de958a3e137f1c4",
-    "source_count": 5,
+    "at_utc": "2026-11-22T21:44:20.804Z",
+    "branch_head_reviewed": "23b19f9581394d54e1aa44b5f081b394e0232ace",
+    "source_count": 6,
     "new_measured_studies": 0,
     "new_recipe_identity_records": 0,
     "new_evidence_jsonl": null,
-    "new_retitled_item_level_corroborations": 1,
-    "scope": "New dated Retail AH third-party current 24995 item-level context contrasted with historical WotLK; TBC Fel Iron historical source and shared list macro checked only for previous-cohort/ambiguous-source exclusion; no current operation ledger and no v3 admission."
+    "new_published_live_item_profile_correlations": 2,
+    "scope": "Verified two LIVE item displays and two LIVE spell tooltips; known Adamantite Reddit studies traced to Codex-owned 731-source cutoff, not duplicated; no independent new target processing cohort."
   },
   "new_evidence_file_this_run": null,
-  "next": "Need primary live character/client eligibility and exact bonus-tagged operation data for 24995, and original actual 0..N processing counters for Cobalt 36909 or Fel Iron 23424. New 2026 Retail AH current item-level 31 listing is not evidence of DE eligibility."
+  "next": "Find newly published independent Retail 12.x zero-inclusive 24995 disenchant or 23424/36909 successful prospect operation ledger with itemLink/bonus/build, true consumed inputs, skill, casts/zeros/hits/output histograms and refunds, or an authoritative current client eligibility receipt for 24995. Do not relabel published tooltip/profile values as measured output or repeat the Codex-owned p71mrp cumulative/OP studies."
 }
