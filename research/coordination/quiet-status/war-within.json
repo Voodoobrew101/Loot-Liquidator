@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-21T23:24:01.716Z",
-  "status": "active: two independent original Retail processing-interruption reports document nominal batch ≠ completed operation; method-specific denominator safeguards, no admissible new yield cohort",
+  "updated_at": "2026-11-22T00:27:03.441Z",
+  "status": "active: 3 new WoWDB LIVE item-template cannot-disenchant labels conflict with prior Lamplighter Looter positive references; version/bonus eligibility held, no new measured numeric yields",
   "task_ids": [
     "T0010",
     "T0011",
@@ -18,7 +18,7 @@
     "Bismuth 210930/210931/210932 post-Oct-25-2024 verified prospect yields remain missing.",
     "T0048 TWW DE rarity/armor/weapon: exact item+bonus and player skill/spec, source-era independent 0..N outcomes and 219946..219955 output quality IDs remain missing; cumulative Looter overlap held."
   ],
-  "source_branch_head_reviewed": "3b4e32902e85b6780a67dce7308b74d2709a97f2",
+  "source_branch_head_reviewed": "288d84aafcb8dea7eb75aff56e72271b693e0f75",
   "source_policy": "READ current research/v3 README/evidence-format/mechanics/worker/queue before search. Source cutoff catalogue CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources incl six recovered; reuse 12,222 scoped decisions; do not recatalogue Codex backlog. Review/admission merged to main in PR #82 but worker branch remains evidence-only; no release asserted.",
   "study_backlog_triage": [
     {
@@ -362,30 +362,64 @@
       "exact_inputs": "229159",
       "outputs": "219946: 1 source-reported hits; 219947: 1 source-reported hits; 219949: 22 source-reported hits; 219950: 8 source-reported hits; 219951: 6 source-reported hits",
       "reason": "38 source-reported disenchants, but individual completed cast logs, bonuses, skill/spec/build and source submission epoch missing; 229158 and 229159 shard rows exactly coincide and may reflect shared sample lineage; not independently admissible for measured baseline."
+    },
+    {
+      "status": "held",
+      "scope": "new post-cutoff independently checked WoWDB LIVE item-template source; eligibility contradiction, not cast sample",
+      "source": "https://www.wowdb.com/items/229154-lamplighters-edge",
+      "original_cohort": null,
+      "exact_inputs": "229154 Lamplighter's Edge BoP static ilvl545",
+      "outputs": null,
+      "reason": "WoWDB says Cannot be disenchanted, whereas independently catalogued reference-only Wowhead Looter claims 31 disenchants for same base itemID. No verified at-cast version/bonus, actual in-game eligibility test, source build/skill, or event-level output ledger. Do not turn static label into unconditional exclusion or overwrite positive historical Looter reference. "
+    },
+    {
+      "status": "held",
+      "scope": "new post-cutoff independently checked WoWDB LIVE item-template source; eligibility contradiction, not cast sample",
+      "source": "https://www.wowdb.com/items/229158-lamplighters-war-knives",
+      "original_cohort": null,
+      "exact_inputs": "229158 Lamplighter's War Knives BoP static ilvl545",
+      "outputs": null,
+      "reason": "WoWDB says Cannot be disenchanted, whereas independently catalogued reference-only Wowhead Looter claims 38 disenchants for same base itemID. No verified at-cast version/bonus, actual in-game eligibility test, source build/skill, or event-level output ledger. Do not turn static label into unconditional exclusion or overwrite positive historical Looter reference. 229158 and 229159 shard hit vectors coincide; original event overlap unknown."
+    },
+    {
+      "status": "held",
+      "scope": "new post-cutoff independently checked WoWDB LIVE item-template source; eligibility contradiction, not cast sample",
+      "source": "https://www.wowdb.com/items/229159-lamplighters-lightstone",
+      "original_cohort": null,
+      "exact_inputs": "229159 Lamplighter's Lightstone BoP static ilvl545",
+      "outputs": null,
+      "reason": "WoWDB says Cannot be disenchanted, whereas independently catalogued reference-only Wowhead Looter claims 38 disenchants for same base itemID. No verified at-cast version/bonus, actual in-game eligibility test, source build/skill, or event-level output ledger. Do not turn static label into unconditional exclusion or overwrite positive historical Looter reference. 229158 and 229159 shard hit vectors coincide; original event overlap unknown."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 7,
-    "held": 22,
+    "held": 25,
     "duplicate": 3
   },
-  "newly_verified_fields": [],
+  "newly_verified_fields": [
+    "229154 Lamplighter's Edge: WoWDB LIVE template says Cannot be disenchanted, ilvl 545 BoP one-hand dagger; historical item-side Looter 31 disenchants conflicts, item bonus/build unknown",
+    "229158 Lamplighter's War Knives: same LIVE no-DE template label, ilvl 545 BoP one-hand dagger; Looter 38 operation count separate and independently unverified",
+    "229159 Lamplighter's Lightstone: same LIVE no-DE template label, ilvl 545 BoP offhand; Looter 38 operation count, shard vector matches 229158 but original overlap unresolved"
+  ],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
   "new_reference_only_numeric_records": 0,
-  "new_no_disenchant_records": 0,
+  "new_no_disenchant_records": 3,
   "new_condition_records": 0,
   "numeric_fields_advanced": [],
-  "evidence_file": null,
-  "evidence_files": [],
+  "evidence_file": "research/v3/evidence/war-within/20261122T0027-lamplighter-wowdb-live-eligibility-conflicts.jsonl",
+  "evidence_files": [
+    "research/v3/evidence/war-within/20261122T0027-lamplighter-wowdb-live-eligibility-conflicts.jsonl"
+  ],
   "evidence_source_links": [
-    "https://us.forums.blizzard.com/en/wow/t/anyone-else-having-issues-getting-mycobloom-to-mill-via-create-all/1944679",
-    "https://us.forums.blizzard.com/en/wow/t/jc-prospecting-not-working-properly/1934709"
+    "https://www.wowdb.com/items/229154-lamplighters-edge",
+    "https://www.wowdb.com/items/229158-lamplighters-war-knives",
+    "https://www.wowdb.com/items/229159-lamplighters-lightstone"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-01T1621-wowhead-looter-single-stack-replacements.jsonl",
-  "verified_commit_sha": "3b4e32902e85b6780a67dce7308b74d2709a97f2",
-  "verification": "Read base role rules, mechanics, evidence format, queue and current owner catalogue and checked original first-person forum reports. This status document is authored before its own commit; read-back and the resulting Git commit SHA must be verified after writing. Previous recorded SHA remains a historical reference, not proof of this new write.",
+  "verified_commit_sha": "288d84aafcb8dea7eb75aff56e72271b693e0f75",
+  "verification": "Refreshed owner worker docs, v3 mechanic/evidence rules and queue, current source catalogue cutoff 731; 229160 Wowhead Looter is Codex-owned cutoff and explicitly not duplicated; 229155/229160 WoWDB labels previously captured in owned 20261117T1433. These 3 new LIVE WoWDB source labels independently checked against archived 20261121T2221 Looter references. Submitted as one atomic multi-file Git commit with lease; commit's own SHA cannot be embedded self-referentially in its status body and is to be checked after ref update.",
   "blockers": [
     "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
     "Cumulative PTR Looter display rows contain repeated material names with linked rank IDs unavailable; no per-row independent study and no safe current-Retail rank-specific mapping.",
@@ -414,7 +448,8 @@
     "New Aendri 2024 mean has no original cast denominator, rank-linked dust ID, input-item identity, gear type or skill/spec: cannot be treated as a current ranked TWW disenchant baseline or measured hit rate.",
     "2026-03-17/19 original cross-era Refulgent Crystal eyewitness reports identify a Midnight wand, not TWW gear; output ID/rank, event date versus Mar18 hotfix, item bonuses, client build and skill/spec missing. No current TWW numeric cohort.",
     "Raw Wowhead Looter IDs recovered for inputs 219208/237999/238002, but this does not establish homogeneous independent client measurements or live-client PTR validity; all 13 replacements remain sourceKind=reference, no build-specific estimate/tooltip admission. 237999 older Nov16 records duplicate Nov17 source rows and require Codex terminal dedup.",
-    "2026-11-21 newly acquired live-page Lamplighter Looter items 229158 and 229159 both report N=38 and identical shard hits Q1/Q2/Q3=22/8/6; independent sample provenance is unproven. These source-original cumulative reference rows must not contribute to estimator, be added as independent casts, or license an uncommon-to-shard rule without original item-version/client-log review."
+    "2026-11-21 newly acquired live-page Lamplighter Looter items 229158 and 229159 both report N=38 and identical shard hits Q1/Q2/Q3=22/8/6; independent sample provenance is unproven. These source-original cumulative reference rows must not contribute to estimator, be added as independent casts, or license an uncommon-to-shard rule without original item-version/client-log review.",
+    "2026-11-22 T0048: independently checked LIVE WoWDB 229154/229158/229159 BoP ilvl545 templates explicitly say Cannot be disenchanted, while older Wowhead Looter item-side reference samples claim 31/38/38 results. Item ID alone insufficient for eligibility; at-cast full itemLink/bonus/version and current live client need verification by owner reviewer before any unconditional DE badge."
   ],
   "exhausted_sources": [
     "Previously indexed 1f83cnd, 1g350pq, PeaEsk/434018, 1fdmzwy and 1f3qf96 already provide historical studies; source duplicates not re-imported.",
@@ -432,36 +467,67 @@
     "2026-11-21 20:19 UTC search: Reddit 1g8kbaq is already in this owned status as held; 1jnvht8 already held; 1smgllg and 1rrn6of are Midnight-only, not TWW. No new current-Retail numerator/denominator records. Avoid recataloguing.",
     "2026-11-21 2026-11-21T21:24:52.693Z: item-side Looter 219208/237999/238002 raw tables fully inspected and 13 earlier anonymous hit-only rows updated via replacements; repeating identical cumulative tables cannot supply new independent cohorts, skill or refunds."
   ],
-  "next_concrete_step": "Seek a NEW original exported 2024-10-25-or-later Retail TWW saved-variables/CSV cast ledger with separately verified completed operations (vs Create All requests), input quality/item IDs 210930..210938 or 210796..210798, output quality IDs and 0..N quantities, patch, skill/spec and Resourcefulness refunds; preserve every unknown until sourced. Do not recatalogue the 731 owner-reviewed cutoff sources.",
-  "previous_status_updated_at": "2026-11-21T22:21:10.625Z",
+  "next_concrete_step": "Request original Lamplighter itemLink/bonus, rarity/ilvl/eligibility at operation time and client build for 229154/229158/229159, reconcile WoWDB static no-DE source against historical Wowhead Looter on verified version; independently seek post-Oct25-2024 Bismuth/Ironclaw/Aqirite or Mycobloom completed cast ledgers with 0..N outputs, rank, skill/spec and refunds. Leave all unknown yields null.",
+  "previous_status_updated_at": "2026-11-21T23:24:01.716Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "timestamp_utc": "2026-11-21T23:24:01.716Z",
+    "timestamp_utc": "2026-11-22T00:27:03.441Z",
     "focus": [
-      "Original first-person TWW Mycobloom milling failed Create All operation denominator",
-      "Original first-person Ironclaw/Aqirite prospecting stopped Create All requests",
-      "New rank-specific complete-operation and 0..N log searches for TWW prospecting/milling"
+      "T0048 War Within item-specific DE eligibility and version/bonus reconciliation after Looter 229154/229158/229159"
     ],
     "checks": [
       {
-        "source": "https://us.forums.blizzard.com/en/wow/t/anyone-else-having-issues-getting-mycobloom-to-mill-via-create-all/1944679",
-        "status": "original found; denominator warning; no output units/hit histogram; held context-only",
-        "source_reported_nominal_inputs": 1000,
-        "observed_first_cast": "1 successful mill before some failures; not a study N"
+        "source": "https://www.wowdb.com/items/229154-lamplighters-edge",
+        "itemID": 229154,
+        "source_label": "Cannot be disenchanted",
+        "source_ilvl": 545,
+        "source_bind": "Bind on Pickup",
+        "source_intro_patch": "11.0.2",
+        "source_intro_build": 55789,
+        "contradictory_wowhead_url": "https://www.wowhead.com/item=229154",
+        "contradictory_looter_item_side_count": 31,
+        "observed_client_build": null,
+        "actual_casts": null,
+        "status": "new original source metadata; held as version/eligibility conflict, not live DE prohibition or yield study"
       },
       {
-        "source": "https://us.forums.blizzard.com/en/wow/t/jc-prospecting-not-working-properly/1934709",
-        "status": "original multiple first-person comments; incomplete batch; no yield ledger",
-        "source_reported_nominal_inputs": 2800,
-        "actual_completed_casts": null
+        "source": "https://www.wowdb.com/items/229158-lamplighters-war-knives",
+        "itemID": 229158,
+        "source_label": "Cannot be disenchanted",
+        "source_ilvl": 545,
+        "source_bind": "Bind on Pickup",
+        "source_intro_patch": "11.0.2",
+        "source_intro_build": 55789,
+        "contradictory_wowhead_url": "https://www.wowhead.com/item=229158",
+        "contradictory_looter_item_side_count": 38,
+        "observed_client_build": null,
+        "actual_casts": null,
+        "status": "new original source metadata; held as version/eligibility conflict, not live DE prohibition or yield study"
+      },
+      {
+        "source": "https://www.wowdb.com/items/229159-lamplighters-lightstone",
+        "itemID": 229159,
+        "source_label": "Cannot be disenchanted",
+        "source_ilvl": 545,
+        "source_bind": "Bind on Pickup",
+        "source_intro_patch": "11.0.2",
+        "source_intro_build": 55789,
+        "contradictory_wowhead_url": "https://www.wowhead.com/item=229159",
+        "contradictory_looter_item_side_count": 38,
+        "observed_client_build": null,
+        "actual_casts": null,
+        "status": "new original source metadata; held as version/eligibility conflict, not live DE prohibition or yield study"
       }
     ],
-    "excluded_catalogue_overlaps": [],
-    "outcome": "No new per-output measured numeric yields. Preserved two method-specific source-context warnings relevant to rejecting planned ore/herb batch size as successful operation denominators. No JSONL or estimates written."
+    "excluded_catalogue_overlaps": [
+      "wowhead:item=229160 in 731-source Codex manifest: not recatalogued",
+      "WoWDB 229155 and 229160 in earlier worker evidence: not duplicated"
+    ],
+    "outcome": "Three new independent LIVE WoWDB item-template labels archived as source-only noDisenchant evidence with explicit conflict hold; no new operation count, material yield, or current Retail admission."
   },
   "source_integrity_findings": [
     {
@@ -782,6 +848,39 @@
       "observed_completed_operations": null,
       "reported_nominal_ore": 2800,
       "detail": "Independent Retail player Barp (Aug 29 2024) reports Ironclaw Prospect All stops after an initial one or two successful 5-ore processes when inventory/bank stacks differ; LastChance (Apr 13 2025) reports Ironclaw halting after about the first 5 ore; KingLeonidas (May 27 2025) complains about prospecting 2800 Aqirite five at a time. 2800 is an intended processing inventory/scale, not a cast count or output study; commenters may be different cohorts. Missing actual 0..N operations, ore rank, outputs, hits, zeros, bonus/refund, skill and build."
+    },
+    {
+      "source": "https://www.wowdb.com/items/229154-lamplighters-edge",
+      "date": "2026-11-22",
+      "status": "new-live-database-template-eligibility-conflict-held",
+      "itemID": 229154,
+      "observed_label": "Cannot be disenchanted",
+      "template_ilvl": 545,
+      "reference": "https://www.wowhead.com/item=229154",
+      "reference_looter_count": 31,
+      "detail": "Not a current-client disenchant test; no version/bonus/skill/game build. Hold baseline/eligibility admission and preserve historical Looter reference; no casting, spending, operations or gold EV."
+    },
+    {
+      "source": "https://www.wowdb.com/items/229158-lamplighters-war-knives",
+      "date": "2026-11-22",
+      "status": "new-live-database-template-eligibility-conflict-held",
+      "itemID": 229158,
+      "observed_label": "Cannot be disenchanted",
+      "template_ilvl": 545,
+      "reference": "https://www.wowhead.com/item=229158",
+      "reference_looter_count": 38,
+      "detail": "Not a current-client disenchant test; no version/bonus/skill/game build. Hold baseline/eligibility admission and preserve historical Looter reference; no casting, spending, operations or gold EV."
+    },
+    {
+      "source": "https://www.wowdb.com/items/229159-lamplighters-lightstone",
+      "date": "2026-11-22",
+      "status": "new-live-database-template-eligibility-conflict-held",
+      "itemID": 229159,
+      "observed_label": "Cannot be disenchanted",
+      "template_ilvl": 545,
+      "reference": "https://www.wowhead.com/item=229159",
+      "reference_looter_count": 38,
+      "detail": "Not a current-client disenchant test; no version/bonus/skill/game build. Hold baseline/eligibility admission and preserve historical Looter reference; no casting, spending, operations or gold EV."
     }
   ],
   "last_source_commit_pending": true
