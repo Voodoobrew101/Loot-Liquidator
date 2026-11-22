@@ -1,16 +1,16 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-22T05:24:22.129Z",
-  "status": "active: discovered and source-verified Khaz Algar testing-only profession supply bags whose Wowhead Looter opening tables must NOT be treated as disenchant/prospect/mill yields; no new independent processing cohort",
+  "updated_at": "2026-11-22T06:19:49.816Z",
+  "status": "active: newly verified TWW ore/herb normal-processing eligibility exceptions and method distinction; no independently measured numeric yield",
   "task_ids": [
     "T0009",
     "T0008",
     "T0007",
     "T0040",
-    "T0032",
     "T0010",
     "T0011",
     "T0012",
+    "T0032",
     "T0048"
   ],
   "exact_gaps_targeted": [
@@ -19,7 +19,7 @@
     "Bismuth 210930/210931/210932 post-Oct-25-2024 verified prospect yields remain missing.",
     "T0048 TWW DE rarity/armor/weapon: exact item+bonus and player skill/spec, source-era independent 0..N outcomes and 219946..219955 output quality IDs remain missing; cumulative Looter overlap held."
   ],
-  "source_branch_head_reviewed": "9fa2cf34af7c60117eb72228bbe1e7abc0e0b7f4",
+  "source_branch_head_reviewed": "db42d0da7186adc588349d5cba331629fd2df4ad",
   "source_policy": "READ current research/v3 README/evidence-format/mechanics/worker/queue before search. Source cutoff catalogue CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources incl six recovered; reuse 12,222 scoped decisions; do not recatalogue Codex backlog. Review/admission merged to main in PR #82 but worker branch remains evidence-only; no release asserted.",
   "study_backlog_triage": [
     {
@@ -420,18 +420,37 @@
       "exact_inputs": "224032 Enchanting Bag; 224035 Jewelcrafting Bag; Inscription testing bag ID unverified",
       "outputs": "Named bulk outputs of 1000 Storm Dust/Shards/Crystals or 1000 ores/gems/glass/pebbles per opening; item rank IDs not source-confirmed",
       "reason": "Wiki explicitly marks test bags alpha/beta/PTR only. Wowhead 17/17 and 15/15 are bag-open counts, not disenchants/prospects/mills; even if output commodity category says 'Disenchanted', no valid Retail processing denominator. Exclude from studies/estimator; provenance safeguard for Master/build reviewer."
+    },
+    {
+      "status": "held",
+      "scope": "Post-cutoff new non-prospectable TWW 11.2 ore family",
+      "source": "https://us.forums.blizzard.com/en/wow/t/gathering-in-season-3/2145981",
+      "existing_ids": null,
+      "exact_inputs": "Desolate Talus 238201 R1, 238212 R2, 238213 R3; actual reporter's item rank unknown",
+      "outputs": null,
+      "reason": "Only 2025-08-09 eligibility assertion; no successful processing yield/casts, no current-2026 eligibility proof, and existing evidence schema lacks noProspect. No statistical admission."
+    },
+    {
+      "status": "held",
+      "scope": "Post-cutoff original standard-milling exclusion versus housing dye method",
+      "source": "https://us.forums.blizzard.com/en/wow/t/inscription-unable-to-mill-arathors-spear/1935257",
+      "existing_ids": null,
+      "exact_inputs": "Arathor's Spear 210808 R1, 210809 R2, 210810 R3; observed 119/500 inventory counts, not consumed processing inputs",
+      "outputs": null,
+      "reason": "No 0..N completed standard Khaz Algar mills; Nov2025 housing dyes use separate process/output. Epoch+method scoped only; evidence schema lacks noMill."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 7,
-    "held": 28,
+    "held": 30,
     "duplicate": 3
   },
   "newly_verified_fields": [
-    "Source-mechanism exclusion only: item 224032 is a testing-only consumable/opened bag (17 Wowhead openings), NOT gear disenchanted 17 times; 1000 Storm Dust and Gleaming Shard per reported opening are provided supplies, rank-specific IDs unreported.",
-    "Source-mechanism exclusion only: item 224035 is a testing-only consumable/opened Jewelcrafting bag (15 Wowhead openings) with 1000 each of ore, gems, pebbles and glass; 15/15 occurrences are NOT prospecting casts or probabilities.",
-    "Independent Warcraft Wiki testing-only labels and Professor Instructaur vendor confirm 224032, 224035, and named Inscription bag are alpha/beta/PTR test supply containers. Inscription bag exact item ID not verified; do not invent."
+    "Desolate Talus TWW rank IDs: 238201 R1, 238212 R2, 238213 R3. 2025-08-09 first-person report: not prospectable and not used in regular recipes; independent Wowhead 2025-08-03 mining overview: no profession recipes, vendor exchange instead. Historical source context only, no successful casts.",
+    "Arathor's Spear rank IDs 210808 R1, 210809 R2, 210810 R3. Original 2024-08-29 through 2025-04-29 reports say not listed for standard Khaz Algar Milling despite inventory quantities 119/500; particular source rank and live-2026 eligibility not known.",
+    "2025-11-30 housing-dye beta describes distinct 10 herb -> 1 dye pigment craft using TWW herbs, not measured standard Khaz Algar milling into Nacreous/Blossom/Luredrop/Orbinid Pigment. No standard Mill output cohort or recipe identity equivalence.",
+    "Aug-2025 Wowhead guide gives example Talus exchanges 3:1 Bismuth, 1:1 Aqirite, 5:1 Ironclaw, but separate firsthand item comments report rates varying by day; do not add fixed conversion to live-value model."
   ],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
@@ -442,15 +461,16 @@
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://www.wowhead.com/item=224032/bottomless-bag-of-khaz-algar-enchanting-goods",
-    "https://www.wowhead.com/item=224035/bottomless-bag-of-khaz-algar-jewelcrafting-goods",
-    "https://warcraft.wiki.gg/wiki/Bottomless_Bag_of_Khaz_Algar_Enchanting_Goods",
-    "https://warcraft.wiki.gg/wiki/Bottomless_Bag_of_Khaz_Algar_Jewelcrafting_Goods",
-    "https://warcraft.wiki.gg/wiki/Bottomless_Bag_of_Khaz_Algar_Inscription_Goods"
+    "https://us.forums.blizzard.com/en/wow/t/gathering-in-season-3/2145981",
+    "https://www.wowhead.com/guide/the-war-within/professions/mining-overview",
+    "https://www.wowhead.com/item=238201/desolate-talus",
+    "https://us.forums.blizzard.com/en/wow/t/inscription-unable-to-mill-arathors-spear/1935257",
+    "https://us.forums.blizzard.com/en/wow/t/inscription-arathors-spear-not-on-milling-list/2083666",
+    "https://www.reddit.com/r/wow/comments/1pa98qw/player_housing_herbs/"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-01T1621-wowhead-looter-single-stack-replacements.jsonl",
-  "verified_commit_sha": "cfcdfc7df77a0aff513f65d531cb6d37724190d3",
-  "verification": "Required README, evidence-format, mechanics, roles/worker and queue read from refreshed research branch; status-only write, independently sourced test-only supply mechanism; no evidence JSONL because no admissible original processing study. Commit readback to be verified after write.",
+  "verified_commit_sha": "db42d0da7186adc588349d5cba331629fd2df4ad",
+  "verification": "Read branch instruction files and queue; this status-only commit's verified_commit_sha records the reviewed parent because embedding its own SHA is impossible with one commit. GitHub read-back of the new commit performed separately; no numeric JSONL manufactured.",
   "blockers": [
     "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
     "Cumulative PTR Looter display rows contain repeated material names with linked rank IDs unavailable; no per-row independent study and no safe current-Retail rank-specific mapping.",
@@ -482,7 +502,8 @@
     "2026-11-21 newly acquired live-page Lamplighter Looter items 229158 and 229159 both report N=38 and identical shard hits Q1/Q2/Q3=22/8/6; independent sample provenance is unproven. These source-original cumulative reference rows must not contribute to estimator, be added as independent casts, or license an uncommon-to-shard rule without original item-version/client-log review.",
     "2026-11-22 T0048: independently checked LIVE WoWDB 229154/229158/229159 BoP ilvl545 templates explicitly say Cannot be disenchanted, while older Wowhead Looter item-side reference samples claim 31/38/38 results. Item ID alone insufficient for eligibility; at-cast full itemLink/bonus/version and current live client need verification by owner reviewer before any unconditional DE badge.",
     "Historical 259349 Focus->Gleaming Shard report has no output quality ID, item bonuses, skill or at-cast build; official 2026-03-18 fix prevents use for current TWW yields. No new post-2024-10-25 TWW complete operation log found.",
-    "2026-11-22 targeted data search: public results inspected do not expose NEW, independently attributable post-Oct-25-2024 TWW completed per-rank operation/output/refund ledgers. No cross-cast denominator or quality-linked 0..N histogram obtained; do not invent P(hit)."
+    "2026-11-22 targeted data search: public results inspected do not expose NEW, independently attributable post-Oct-25-2024 TWW completed per-rank operation/output/refund ledgers. No cross-cast denominator or quality-linked 0..N histogram obtained; do not invent P(hit).",
+    "v3 evidence format lacks a noProspect/noMill method-specific, build/epoch-scoped eligibility type, and vendor exchange rates may vary daily. Master/reviewer should decide representation before runtime edits; no worker schema change."
   ],
   "exhausted_sources": [
     "Previously indexed 1f83cnd, 1g350pq, PeaEsk/434018, 1fdmzwy and 1f3qf96 already provide historical studies; source duplicates not re-imported.",
@@ -502,45 +523,50 @@
     "2026-11-22: Archived pvpxan March 10 historical Focus->TWW Gleaming Shard report as one reference-only source; revisit only for actual timestamped skill/item/output rank/client logs.",
     "2026-11-22T03:24:09.946Z: Historical first-person Gem Finding 40/40 Aqirite 5,000-ore report (https://us.forums.blizzard.com/en/wow/t/jewelcrafting-4040-gem-finding-broken-no-ambers/1942494) lacks actual successful casts and ordinary-vs-bonus Amber counts; retain as held specialization note, do not recycle without raw output ledger. Searches spanning Reddit, Blizzard US/EU forums, Wowhead, Method and GitHub-source candidates returned previously catalogued studies or qualitative tips, not new complete 0..N yield cohorts.",
     "2026-11-22T04:17:56.044Z: May 2025 1kfbbdd Q3 dust hourly throughput lacks cast counts, input item IDs and per-operation output histogram; do not repeat search absent original logs. Rechecked old PeaEsk/quality anecdotes and low-level cross-era Looter sample; none represent new current TWW cohort.",
-    "2026-11-22T05:24:22.129Z: 2025 1k78h4v / 1l91chl economic discussions have no usable per-cast output ledgers (already held); newly reviewed test-supply bag 224032/224035 opening tables cannot be used as independent processing studies. Do not revisit without genuine processing captures."
+    "2026-11-22T05:24:22.129Z: 2025 1k78h4v / 1l91chl economic discussions have no usable per-cast output ledgers (already held); newly reviewed test-supply bag 224032/224035 opening tables cannot be used as independent processing studies. Do not revisit without genuine processing captures.",
+    "2026-11-22T06:19:49.816Z: Source searches for new TWW complete successful rank-specific DE/prospect/mill operations with hit/zero histograms found none; newly reviewed original eligibility/forum and housing-dye reports are not yield cohorts. Do not repeat absent raw logs."
   ],
-  "next_concrete_step": "Continue searching original post-2024-10-25 Retail TWW per-cast logs; at build-time, ask Master/reviewer to ensure anonymous output-item source-type labels and testing-only bags 224032/224035 never enter process-yield cohorts. Keep test-bag opened N distinct from successful DE/prospect/mill N. Seek actual skill/spec/bonus/rank/0..N/refund ledgers.",
-  "previous_status_updated_at": "2026-11-22T03:24:09.946Z",
+  "next_concrete_step": "Seek original post-Oct-2024 TWW completed item-linked DE/prospect/mill 0..N outcomes with skill, rank, build and refunds. Master should review separate method/epoch-aware noProspect/noMill support for 238201/238212/238213 and 210808/210809/210810; keep housing-dye craft outputs separate from Khaz Algar Milling. Do not duplicate closed cutoff catalogue.",
+  "previous_status_updated_at": "2026-11-22T05:24:22.129Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "timestamp_utc": "2026-11-22T05:24:22.129Z",
+    "timestamp_utc": "2026-11-22T06:19:49.816Z",
     "focus": [
-      "T0048 DE primary-method provenance contamination",
-      "T0007/T0008/T0009/T0040 prospect primary-method provenance contamination",
-      "T0010/T0011/T0012 milling testing-only supply provenance"
+      "TWW Desolate Talus prospect eligibility",
+      "TWW Arathor's Spear standard milling eligibility",
+      "distinguish housing dye output from TWW profession pigments"
     ],
     "checks": [
       {
-        "source": "https://www.wowhead.com/item=224032/bottomless-bag-of-khaz-algar-enchanting-goods",
-        "disposition": "NEW held source-integrity finding: Wowhead shows 17 *openings* of item 224032 with 1000 Storm Dust and Gleaming Shard 17/17; 1000 Refulgent Crystal in 15/17. Output source-type badge includes 'Disenchanted' but source bag is a right-click testing-only container, NOT a disenchanting operation; qualities/output item IDs not established."
+        "source": "https://us.forums.blizzard.com/en/wow/t/gathering-in-season-3/2145981",
+        "disposition": "Verified source context; historical eligibility/recipe scope only, no new numeric processing cohort"
       },
       {
-        "source": "https://www.wowhead.com/item=224035/bottomless-bag-of-khaz-algar-jewelcrafting-goods",
-        "disposition": "NEW held source-integrity finding: Wowhead shows 15 *openings* of test supply bag 224035 containing 1000 Bismuth, Aqirite, Ironclaw, Ruby, Onyx, Emerald, Sapphire, Ambivalent Amber, Glass, Pebbles etc. This is NOT 15 prospects and does not establish material hit chance or per-input means."
+        "source": "https://www.wowhead.com/guide/the-war-within/professions/mining-overview",
+        "disposition": "Verified source context; historical eligibility/recipe scope only, no new numeric processing cohort"
       },
       {
-        "source": "https://warcraft.wiki.gg/wiki/Bottomless_Bag_of_Khaz_Algar_Jewelcrafting_Goods",
-        "disposition": "Independent Wiki explicitly flags the item as alpha/beta/PTR testing-only and documents Professor Instructaur distribution; confirms reason to exclude all test-supply opening table rows from Retail material yield studies."
+        "source": "https://www.wowhead.com/item=238201/desolate-talus",
+        "disposition": "Verified source context; historical eligibility/recipe scope only, no new numeric processing cohort"
       },
       {
-        "source": "https://warcraft.wiki.gg/wiki/Bottomless_Bag_of_Khaz_Algar_Enchanting_Goods",
-        "disposition": "Independent Wiki flags Enchanting bag as testing-only; expected bulk supplies, not disenchant output."
+        "source": "https://us.forums.blizzard.com/en/wow/t/inscription-unable-to-mill-arathors-spear/1935257",
+        "disposition": "Verified source context; historical eligibility/recipe scope only, no new numeric processing cohort"
       },
       {
-        "source": "https://warcraft.wiki.gg/wiki/Bottomless_Bag_of_Khaz_Algar_Inscription_Goods",
-        "disposition": "Testing-only inscription reagent bag supplies 1000 herbs/inks/pigments; no confirmed live milling operations nor item ID; beware guide or Looter method confusion."
+        "source": "https://us.forums.blizzard.com/en/wow/t/inscription-arathors-spear-not-on-milling-list/2083666",
+        "disposition": "Verified source context; historical eligibility/recipe scope only, no new numeric processing cohort"
+      },
+      {
+        "source": "https://www.reddit.com/r/wow/comments/1pa98qw/player_housing_herbs/",
+        "disposition": "Verified source context; historical eligibility/recipe scope only, no new numeric processing cohort"
       }
     ],
-    "outcome": "One new reproducible source-contamination exclusion for two exact input IDs (224032 and 224035) and one named ID-unknown Inscription supply bag; no actual DE/prospect/mill cohort, input/output rate/hit denominator, baseline admission, or evidence JSONL. Avoid treating commodity 'source type' tags as an action ledger."
+    "outcome": "Held two new independent 2024-25 original eligibility contexts with exact identified family rank IDs, plus dynamic-vendor-rate caution. No 2026 live eligibility claim, no sample operations, no evidence JSONL, no numeric admission."
   },
   "source_integrity_findings": [
     {
@@ -918,6 +944,42 @@
       "type": "jewelcrafting",
       "detail": "Testing-only JC bag 15 openings; provides bulk 1000-unit stacks of ores/gems/glass/pebbles, NOT 15 prospect casts or per-ore output quantities. Output ranks/skill/refunds unknown.",
       "independent_context": "https://warcraft.wiki.gg/wiki/Bottomless_Bag_of_Khaz_Algar_Jewelcrafting_Goods"
+    },
+    {
+      "source": "https://us.forums.blizzard.com/en/wow/t/gathering-in-season-3/2145981",
+      "date": "2026-11-22",
+      "original_publication": "2025-08-09",
+      "status": "held-new-TWW-Desolate-Talus-no-prospect-context",
+      "itemIDs_by_rank": {
+        "1": 238201,
+        "2": 238212,
+        "3": 238213
+      },
+      "corroboration": "https://www.wowhead.com/guide/the-war-within/professions/mining-overview",
+      "detail": "Original Teishoku reports ore unprospectable as of Aug 2025; independent Wowhead guide says no crafting recipes and suggests vendor trade. No rank-specific casts, output units, zero observations, build/skill/refunds or proof current 2026 eligibility."
+    },
+    {
+      "source": "https://us.forums.blizzard.com/en/wow/t/inscription-unable-to-mill-arathors-spear/1935257",
+      "date": "2026-11-22",
+      "original_publication": "2024-08-29/2025-04-29",
+      "status": "held-new-Arathors-Spear-no-standard-Mill-context",
+      "itemIDs_by_rank": {
+        "1": 210808,
+        "2": 210809,
+        "3": 210810
+      },
+      "corroboration": [
+        "https://us.forums.blizzard.com/en/wow/t/inscription-arathors-spear-not-on-milling-list/2083666",
+        "https://www.reddit.com/r/wow/comments/1pa98qw/player_housing_herbs/"
+      ],
+      "detail": "Jonar August 2024 reports 119 herbs not offered in Khaz Algar Milling; Distinction March 2025 reports 500 herbs and missing standard milling recipe, April 2025 bump confirms issue. Nov 2025 housing beta permits a distinct 10-herb 1-dye-pigment craft. Do not map housing dye outputs onto Khaz Algar milling yields or call all 2026 milling ineligible."
+    },
+    {
+      "source": "https://www.wowhead.com/guide/the-war-within/professions/mining-overview",
+      "date": "2026-11-22",
+      "original_publication": "2025-08-03",
+      "status": "held-new-TWW-Talus-dynamic-exchange-source-context",
+      "detail": "Guide's dated example exchange ratios are 3 Talus/Bismuth, 1 Talus/Aqirite, 5 Talus/Ironclaw, with source item comments noting daily rate variability; not a permanent fixed exchange or price-derived processing yield."
     }
   ],
   "last_source_commit_pending": true
