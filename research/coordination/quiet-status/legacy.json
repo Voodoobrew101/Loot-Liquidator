@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-22T14:47:27.548Z",
-  "status": "Read current v3 research rules, mechanics, worker role, queue and legacy status at refreshed branch. Searched new original-publication leads for Warmaul 24995 and Fel Iron 23424/Cobalt 36909; independently found 2023 DalaGG WorthIt prospect-flip export titles for both ores, but only commercial scenario templates are publicly visible, not process ledgers. No verified original completed Retail 12.x casts, hit counts, zero-inclusive outcomes, quantities, histograms or 24995 eligibility. No new v3 evidence JSONL, routine research PR, runtime/schema change or cataloguing overlap.",
+  "updated_at": "2026-11-22T15:39:44.599Z",
+  "status": "Refreshed current research/v3 README, evidence-format, mechanics, worker role and queue at branch head f2d24dfe4f33. Verified a previously counted Cobalt counter is duplicated across 3 OZZIEEM account exports and checked official live UI API naming; examined four other original SavedVariables with empty prospect tables. No independent successful Retail 12.x Warmaul 24995 DE / Cobalt 36909 / Fel Iron 23424 processing ledger or new zero-inclusive numeric measurements. No new evidence JSONL, schema/runtime edits, duplicate Codex backlog review, PR, release or schedule change; status-only update.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -17,6 +17,9 @@
     "40959 Reinforced Cobalt Chestpiece: reconcile already-preserved first-person positive-event bins with original crafting epoch, hotfix, 22-bar-stack input count, unresolved 278 versus 272 dust units; no unsupported inference of real N"
   ],
   "newly_verified_fields_cohorts": [
+    "NEW 2026-11-22 provenance check: at pinned ozzieem/WoW_3.3.5_Addons commit 0337b2b7, three account snapshots EVIAN/HASKINA/OZZIEEM have identical Cobalt Ore 36909 ProspectedLocal total-counter 40 and seven named output aggregate counters (36923=6,36920=14,36929=13,36917=10,36926=10,36932=2,36918=2). Same three files also repeat Adder's Tongue 36903 MillingLocal total-counter 703, output IDs 39343=2027 and 43109=1086. These match across account exports; one dataset mirrored at least 3 times, NOT three independent cohorts. The account total counters are not verified physical operations or zero-inclusive casts, and no new empirical data were admitted.",
+    "NEW 2026-11-22 client-API naming check: exact Gethe/wow-ui-source 'live' Blizzard_APIDocumentationGenerated/ItemDocumentation.lua blob 4955484268741dfe40991520d6c04edffb6d8d75 declares neither 'C_Item.CanDisenchant' nor 'C_Item.IsDisenchantable' (it does declare C_Item.CanScrapItem). The live GroupLootFrame.lua blob d174d0ff3b7cd129ef2b8bf32343ed5f1cd17c0d consumes 'canDisenchant' from GetLootRollItemInfo(self.rollID) for loot rolls, NOT an inventory itemLink eligibility gate. Do not propose an unverified C_Item.CanDisenchant call; request Master implementation/API review. This is source-code identity/eligibility context only, not a measured processing cohort.",
+    "NEW source-negative checks: burned05/Classic-Addons, nfgallimore/WoW, ingshtrom/wow-ui and rbutera/ModernClassic pinned Enchantrix SavedVariables all have literal empty ProspectedLocal tables; item metadata caches cannot be treated as observed Fel Iron or Cobalt prospecting.",
     "Deduplication VERIFIED: The Dreamer's Shoulderpads item 31190 (historical rare leather shoulders, TBC item level 97) -> Small Prismatic Shard 22448 single firsthand positive disenchant is already recorded as legacy-20261115-1047010, research/v3/evidence/legacy/2026-11-15T1047-tbc-ilvl97-rare-armor-looter-and-original.jsonl. Same archived Allakhazam comment; NO second independent measured cohort and no 2026 Retail eligibility. Preserve source age/build unknown.",
     "Deduplication VERIFIED: KingOfKingz2109 original Shadow Pigment/Misty Pigment six-herb published means (e.g. Green Tea Leaf 72234: 1146 milling operations, source averages 2.47 x 79251 and 0.27 x 79253 per milling) are already in research/v3/evidence/legacy/2026-11-14T1448-mop-original-six-herb-milling-means.jsonl. Do not restate means as event hits or manufacture total units/zero histograms.",
     "No newly measured cohort, original per-event process N, positive-event histogram, zero outcomes, item quality/rank or 2026 Retail client receipt advanced this run. No new numeric evidence file. Existing 40959 historical held positive bins and dust-total conflict remain unchanged.",
@@ -124,15 +127,24 @@
     "https://github.com/BestLanguage/bless-fraternity/blob/63d688674601d556067f5c9be9fc47e54237e81e/WTF/Account/157763925%231/SavedVariables/Enchantrix.lua",
     "https://github.com/ELLIOTTCABLE/Warcrack/blob/04e75a363d06caaafac078e76a83eb68b3506a4a/WTF/Account/55689639%232/SavedVariables/Enchantrix.lua",
     "https://github.com/Industrial/nixos-dotfiles/blob/964310d4e575771120a4b540a450de227256d74a/features/games/wow-classic/WTF/Account/2NDUSTRIAL/SavedVariables/Enchantrix.lua",
-    "https://www.patreon.com/dalagg/sitemap"
+    "https://www.patreon.com/dalagg/sitemap",
+    "https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_APIDocumentationGenerated/ItemDocumentation.lua",
+    "https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_UIPanels_Game/Mainline/GroupLootFrame.lua",
+    "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/EVIAN/SavedVariables/Enchantrix.lua",
+    "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/HASKINA/SavedVariables/Enchantrix.lua",
+    "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/OZZIEEM/SavedVariables/Enchantrix.lua",
+    "https://github.com/burned05/Classic-Addons/blob/25d399efa097776c83da577f15907ec90e557301/WTF/Account/54989383%235/SavedVariables/Enchantrix.lua",
+    "https://github.com/nfgallimore/WoW/blob/6a3ca4f6d00e3919672dbb9908fba6a7fea09a9c/WTF/Account/CYBERUKE/SavedVariables/Enchantrix.lua",
+    "https://github.com/ingshtrom/wow-ui/blob/83746f918aa9b31c8b585ccb64261e69cced66d7/WTF/Account/AVIDGAMER123/SavedVariables/Enchantrix.lua",
+    "https://github.com/rbutera/ModernClassic/blob/093007ff732cbeafcc9dc3241a7988d66cce1317/WTF/Account/ZEROPOSITIVE/SavedVariables/Enchantrix.lua"
   ],
-  "numeric_summary": "New exact-input numeric measurements: none. Item 24995 -> no newly measured output IDs 22445, 22446, 22447, 22449 or actual N; ore 36909 and 23424 -> no new successful operation N, confirmed zero outcomes, gem output units or hit frequencies. DalaGG 1000-ore flip titles represent an import/export scenario, NOT proof 1000 ore physically prospected or 200 completed 5-ore operations. Retain pre-existing historical samples unchanged; no rates or EV derived.",
+  "numeric_summary": "New measured input/output numeric fields: NONE; no eligible new independent casts, per-output hit counts, zero outcomes, material totals or histogram. Historical 36909 Cobalt counter 40 and seven output aggregate values were independently read back as the SAME raw table under EVIAN, HASKINA and OZZIEEM (not 3 cohorts). Repeated 36903 Adder's Tongue counters 703 and outputs 39343=2027, 43109=1086 are a copied same-source table, not new milling means/operations. 24995 current Retail eligibility unresolved; official live C_Item documentation does not expose named CanDisenchant/IsDisenchantable API. No gold EV.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "09b3c3aecc09f61e6f5dedad33865260181a2e2a",
-  "verified_commit_sha": "09b3c3aecc09f61e6f5dedad33865260181a2e2a",
-  "commit_note": "Status-only evidence triage for independent newly located 2023 flip-export titles; commit SHA to be verified via returned commit and branch/file read-back. No new empirical sample added, preserving only the owned status path.",
+  "verified_parent_sha": "f2d24dfe4f336fadcfc39f3f41b274fb6f660e82",
+  "verified_commit_sha": "f2d24dfe4f336fadcfc39f3f41b274fb6f660e82",
+  "commit_note": "This field names the independently verified PRE-WRITE branch head, not a self-referential new commit hash. The status-only write's actual resulting commit SHA must be checked from GitHub returned metadata and branch/file read-back. No empirical JSONL or other files touched.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -277,9 +289,22 @@
       "source": "Creator Patreon 2023-01-28 named 1000-ore Cobalt/Fel Iron WorthIt flip posts; dalaggstudios.com/worthit-exports search-index",
       "disposition": "held-commercial-pricing-model-no-recoverable-observed-casts",
       "reason": "Public index only titles and explains flip import workflow; direct studio page now 404 and individual post contents not available. Number 1000 denotes named template amount and must not become 200 real casts, output N/hits, zeros or measured units. Need genuine original event ledger before admitting anything."
+    },
+    {
+      "task": "T0022",
+      "source": "ozzieem/WoW_3.3.5_Addons 0337b2b7, EVIAN/HASKINA/OZZIEEM account saved variables",
+      "disposition": "duplicate-same-original-historical-counters-not-new-cohorts",
+      "reason": "All 3 account files contain exactly the same 36909 output counts and 40 total counter; also same 36903 milling two-output counters. Preserve previously recorded source only; no measured zero/cast N or Retail bridge."
+    },
+    {
+      "task": "T0047",
+      "source": "Gethe/wow-ui-source live ItemDocumentation.lua / GroupLootFrame.lua",
+      "disposition": "implementation-API-naming-blocker-only-not-an-eligibility-sample",
+      "reason": "Neither proposed C_Item.CanDisenchant nor IsDisenchantable appears in generated official live C_Item API; loot-roll-only canDisenchant does not prove inventory target 24995 eligibility."
     }
   ],
   "blockers": [
+    "NEW Master implementation/API naming blocker: current official live generated C_Item documentation contains neither CanDisenchant nor IsDisenchantable. GetLootRollItemInfo's 'canDisenchant' is per group loot roll and cannot establish inventory eligibility for item 24995. Require verified supported current-client eligibility test without automated destruction or fictional API calls.",
     "NEW implementation/Master review needed: Retail ItemSparse DB2 12.1.7.70493 derives a negative-only NO_DISENCHANT bit list with no entries 24900..25199, but WoWDB LIVE explicitly flags target 24995 and comparable 25000 non-disenchantable. Missing bit is NOT positive eligibility; determine exact client build/item variant and API check (C_Item.CanDisenchant or supported eligibility path) before any recommendation or negative fixture. Runtime/schema changes are Master-owned.",
     "No original per-event Warmaul 24995 DE ledger, 0-inclusive per-operation joint histogram or current Retail client receipt. Existing 2026-11-15 source-rounded-percent arithmetic reconstructs positive-bin conditional histograms and derived units, but original hit/stack cohort build/bonus/skill and zero-event data remain unknown; do not treat 2068 - 2031 = 37 as zeros.",
     "No current Retail exact itemLink/bonus build plus CanDisenchant and receipt validating Warmaul 24995 versus current no-DE database flag; historical original item level 108 differs from modern item level 31.",
@@ -386,10 +411,26 @@
     {
       "source": "https://github.com/Industrial/nixos-dotfiles/blob/964310d4e575771120a4b540a450de227256d74a/features/games/wow-classic/WTF/Account/2NDUSTRIAL/SavedVariables/Enchantrix.lua",
       "reason": "Both 36909/23424 item cache IDs occur, but indexed ProspectedLocal = {}. Explicit wow-classic path prevents treating this as Retail; no measured operations. Retry only if original event counts or a newer SavedVariables revision become available."
+    },
+    {
+      "source": "https://github.com/burned05/Classic-Addons/blob/25d399efa097776c83da577f15907ec90e557301/WTF/Account/54989383%235/SavedVariables/Enchantrix.lua",
+      "reason": "Pinned original SavedVariables checked 2026-11-22: ProspectedLocal = {}. No measured Fel Iron/Cobalt operation, named output observation or zero-inclusive cohort; do not retry without nonempty later revision."
+    },
+    {
+      "source": "https://github.com/nfgallimore/WoW/blob/6a3ca4f6d00e3919672dbb9908fba6a7fea09a9c/WTF/Account/CYBERUKE/SavedVariables/Enchantrix.lua",
+      "reason": "Pinned original SavedVariables checked 2026-11-22: ProspectedLocal = {}. No measured Fel Iron/Cobalt operation, named output observation or zero-inclusive cohort; do not retry without nonempty later revision."
+    },
+    {
+      "source": "https://github.com/ingshtrom/wow-ui/blob/83746f918aa9b31c8b585ccb64261e69cced66d7/WTF/Account/AVIDGAMER123/SavedVariables/Enchantrix.lua",
+      "reason": "Pinned original SavedVariables checked 2026-11-22: ProspectedLocal = {}. No measured Fel Iron/Cobalt operation, named output observation or zero-inclusive cohort; do not retry without nonempty later revision."
+    },
+    {
+      "source": "https://github.com/rbutera/ModernClassic/blob/093007ff732cbeafcc9dc3241a7988d66cce1317/WTF/Account/ZEROPOSITIVE/SavedVariables/Enchantrix.lua",
+      "reason": "Pinned original SavedVariables checked 2026-11-22: ProspectedLocal = {}. No measured Fel Iron/Cobalt operation, named output observation or zero-inclusive cohort; do not retry without nonempty later revision."
     }
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Search for a publicly accessible, independently authored Retail 12.x 24995 exact itemLink/bonus plus client CanDisenchant receipt and completed disenchant result ledger, or real Fel Iron 23424/Cobalt 36909 successful operation export with named output ID/quantity, saved/reused inputs, zeros, skill/profile/patch. Reopen 2023 WorthIt listings only if original full raw empirical receipts (not an import/pricing scenario) become accessible; do not retry exhausted Enchantrix cache-only repos or duplicate Codex catalogue.",
+  "next_concrete_step": "Seek NEW original successful Retail 12.x 24995 itemLink/bonus + verified current-client DE eligibility and per-event outputs, or 36909/23424 zero-inclusive processing exports with actual successful operation/refund N, precise output IDs, skill/build. Master should confirm supported inventory DE eligibility API because neither proposed C_Item.CanDisenchant nor IsDisenchantable is declared in official live C_Item docs; do not attempt in-game disenchants. Keep triplicate OZZIEEM 40 counter as one historical source, not independent source profiles.",
   "coordination_cutoff": "Cutoff 0cd0bad8867e7a8d909b4ecae74f6136a3e23d42. Repository README and manifest now report CLOSED_VERIFIED_CURRENT_PIPELINE: 731 sources (713 original + 12 addendum + six recovered); Codex/direct reviewers own source decisions, build/database/tooltip verification. No recataloguing/branch changes.",
   "sources_reviewed_this_run": [
     {
