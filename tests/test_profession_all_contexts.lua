@@ -197,6 +197,12 @@ LL.GetOutputPrice=realOutputPrice
 LL.TSMString=function(_,link,id) return link or 'i:'..id end
 LL.AHFeeRate=function() return 0 end
 LL.Price=function(_,source,item) if source=='dbminbuyout' then return ({['item:2001:q2']=300,['i:2000']=100})[item] end end
+check(LL:GetMaterialPrice({id=2001,itemLink='item:2001:q2'})==nil,
+    'unknown native binding cannot authorize the synthetic output auction quote')
+-- These synthetic outputs are explicitly tradable in this pricing fixture.
+-- Recipe/quality identity alone does not establish native binding metadata.
+LL.ItemDB.professionProfiles.items[2000]={bindType=0}
+LL.ItemDB.professionProfiles.items[2001]={bindType=0}
 near(LL:GetMaterialPrice({id=2001,itemLink='item:2001:q2'}),300,'native hyperlink selects its exact variant price')
 near(LL:GetMaterialPrice({id=2001,itemLink='item:2001:q2',economicPolicy='nontradable'}),0,
     'bound/conjured outputs cannot inherit a marketable original item price')

@@ -17,15 +17,57 @@ LL.db={characters={['Tester - Realm']={details={},professions={Enchanting={}},re
 LL:MigrateEvidenceSettings();assert(LL:InitializeItemDB())
 local gear={id=272234,quality=4,classID=4,expansionID=11,count=1}
 local option={name='Disenchant',recipeID=13262,inputCount=1}
--- A1: legacy disenchant tables are on by default (weak weight), so gear gets an answer.
+local function finite(value)return type(value)=='number'and value==value and math.abs(value)<math.huge end
+local function categoryMaterials(model,legacyEnabled)
+    assert(model and model.isDisenchantCategory and model.gearKey=='gear:11:4:armor'
+        and model.inputCount==1,'ordinary epic armor resolves its disenchant category')
+    assert(model.sources and model.sources.itemdb>0,'independent category evidence remains available')
+    assert(legacyEnabled and model.sources.legacy and model.sources.legacy>0
+        or not legacyEnabled and not model.sources.legacy,'legacy source participation follows its setting')
+    local byID={}
+    for _,material in ipairs(model.materials)do
+        local id=material.id
+        assert(finite(id)and id>0 and id%1==0 and not byID[id],'category outputs have distinct real item IDs')
+        assert(LL.ItemDB.professionProfiles.items[id],'category output retains native item identity')
+        assert(finite(material.expectedQuantity)and material.expectedQuantity>=0,'category output has a usable quantity')
+        assert(material.chance==nil or finite(material.chance)and material.chance>=0 and material.chance<=1,
+            'known output chances remain probabilities')
+        assert(material.minQuantity==nil or finite(material.minQuantity)and material.minQuantity>=0,'valid lower quantity bound')
+        assert(material.maxQuantity==nil or finite(material.maxQuantity)and material.maxQuantity>=0,'valid upper quantity bound')
+        assert(not material.minQuantity or not material.maxQuantity or material.maxQuantity>=material.minQuantity,
+            'known output range remains ordered')
+        local weight,total=0,0
+        for source,share in pairs(material.sourceContributions or{})do
+            local evidence=material.sourceEstimates and material.sourceEstimates[source]
+            assert(finite(share)and share>0 and model.sources[source]and model.sources[source]>0,
+                'every contributing output source is enabled')
+            assert(evidence and finite(evidence.expectedQuantity)and evidence.expectedQuantity>=0
+                and evidence.inputCount==1,'every output retains its source quantity and denominator')
+            weight=weight+share;total=total+share*evidence.expectedQuantity
+        end
+        assert(math.abs(weight-1)<1e-9 and math.abs(material.expectedQuantity-total)<1e-9,
+            'output quantity matches its actual weighted source evidence')
+        byID[id]=material
+    end
+    for _,id in ipairs({243605,243606})do
+        local crystal=byID[id]
+        assert(crystal and crystal.expectedQuantity>0 and finite(crystal.chance)and crystal.chance>0,
+            'both supported epic crystal identities retain positive quantities and chances')
+    end
+    return byID
+end
+-- Legacy is a weak default contributor; independent category studies can
+-- legitimately add supported materials beyond its two primary crystal rows.
 local model,reason=LL:ComputeEvidenceModel(gear,option,nil,1,{})
-assert(model and #model.materials==2,'default settings give historical gear disenchant estimates')
+local defaults=categoryMaterials(model,true)
+local defaultMeans={}
+for id,material in pairs(defaults)do defaultMeans[id]=material.expectedQuantity end
 -- A player who switches legacy off still gets that choice honoured.
 LL.db.source_legacy_enabled=false;LL._processingModelCache=nil
 model,reason=LL:ComputeEvidenceModel(gear,option,nil,1,{})
--- New item-specific studies may now answer this item with legacy disabled.
+-- Independent category studies can answer this item with legacy disabled.
 -- The user's choice disables that source, not independently sourced ItemDB.
-assert(not model or not model.sources.legacy,'manually disabled legacy yields stay off')
+categoryMaterials(model,false)
 -- Old saved data from before schema 2 had legacy off by default: migrate it on once.
 local old={source_legacy_enabled=false,evidenceSchemaVersion=1};local saved=LL.db;LL.db=old
 LL:MigrateEvidenceSettings();assert(old.source_legacy_enabled==true and old.evidenceSchemaVersion==2)
@@ -33,7 +75,12 @@ old.source_legacy_enabled=false;LL:MigrateEvidenceSettings();assert(old.source_l
 LL.db=saved
 LL.db.source_legacy_enabled=true
 model=LL:ComputeEvidenceModel(gear,option,nil,1,{})
-assert(model and #model.materials==2,'explicitly enabled historical gear records must remain accessible')
+local restored=categoryMaterials(model,true)
+for id,mean in pairs(defaultMeans)do
+    assert(restored[id]and math.abs(restored[id].expectedQuantity-mean)<1e-12,
+        'reenabling legacy restores the default output identities and quantities')
+end
+for id in pairs(restored)do assert(defaultMeans[id]~=nil,'reenabling legacy does not invent extra outputs')end
 -- Specific item research must be searched in addition to expansion/rarity pools.
 local function field(value) return {value=value,status=value and 'measured' or 'unknown',confidence=80} end
 local record={recordID='specific-gear',method='Disenchant',profession='Enchanting',inputItemID=272234,

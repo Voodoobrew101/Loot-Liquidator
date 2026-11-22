@@ -82,19 +82,35 @@ check(output(full,212495).minQuantity==nil and output(full,212495).maxQuantity==
 near(output(full,212495).sourceEstimates.itemdb.expectedQuantity,1,'source mean stays available as provenance')
 check(LL:ApplySpecializationEffects(facts,option,full,full.context)==full,'cached replay never applies the point effect twice')
 local function render(quote)
-    local tip={lines={}}
+    local tip={lines={},rows={}}
     function tip:AddLine(text) self.lines[#self.lines+1]=text end
-    function tip:AddDoubleLine(left,right) self.lines[#self.lines+1]=left..' | '..right end
+    function tip:AddDoubleLine(left,right)
+        self.lines[#self.lines+1]=left..' | '..right;self.rows[#self.rows+1]={left=left,right=right}
+    end
     LL:AppendRecommendationTooltip(tip,{action='P',facts=facts,conversionOptions={{name='Prospect',letter='P',
         profession='Jewelcrafting',recipeID=434018,inputCount=5,available=true,value=31.2,yieldModel=quote}}})
-    return table.concat(tip.lines,'\n')
+    return table.concat(tip.lines,'\n'),tip.rows
 end
-local text=render(full)
-check(text:find('1.400',1,true) and text:find('1.600',1,true),'changed node-point quantities reach actual material tooltip rows')
+local text,rows=render(full)
+check(#rows==3,'method header and both changed specialization outputs remain visible')
+local renderedValue=0
+for index=2,3 do
+    check(rows[index].left:match('^  100%% |T[^|]+|t .+ %[1%-2%]|r$')~=nil,
+        'changed specialization quantities use shared percentage/icon/range rows')
+    local value=tonumber(rows[index].right:match('^([%d%.]+) copper$'))
+    check(value~=nil,'each changed output retains its numerical gold value');renderedValue=renderedValue+value
+end
+near(renderedValue,31.2,'material row prices retain the actual specialization gold total')
+local originalText=text
 LL.db.showAverageQuantity=false
 text=render(full)
-check(text:find('1.400x ',1,true) and text:find('1.600x ',1,true) and not text:find('[avg',1,true),
-    'changed specialization quantities stay numerical when current chance/range is unavailable')
+check(text==originalText and not text:find('x ',1,true) and not text:find('[avg',1,true),
+    'retired average setting cannot change the shared percentage/range layout')
+near(output(full,212498).expectedQuantity,1.6);near(output(full,212495).expectedQuantity,1.4)
+for _,id in ipairs({212498,212495})do local m=output(full,id)
+    check(m.chance==nil and m.minQuantity==nil and m.maxQuantity==nil,
+        'display-only completion does not rewrite specialization quantities or distribution evidence')
+end
 near(full.value,31.2,'hiding averages does not change the specialization valuation')
 LL.db.showAverageQuantity=true
 set('Jewelcrafting',10,'98659=20,98660=20,98661=20,98662=20')

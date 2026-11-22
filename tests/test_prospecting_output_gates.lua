@@ -55,15 +55,28 @@ for _,rule in ipairs(LL.ItemDB.professionOutputGates.rules)do
         profile();local locked,f,option=resolve(id);local m=assert(diamond(locked))
         check(locked.outputGate.eligible==false and m.expectedQuantity==0 and m.chance==0,'known locked ore has numerical zero')
         check(m.structuralZero and not m.quantityCounts and not m.samples,'zero is eligibility, not invented observations')
-        local tip={lines={}}
+        local tip={lines={},rows={}}
         function tip:AddLine(s)self.lines[#self.lines+1]=s end
-        function tip:AddDoubleLine(a,b)self.lines[#self.lines+1]=a..' | '..b end
+        function tip:AddDoubleLine(a,b)
+            self.lines[#self.lines+1]=a..' | '..b;self.rows[#self.rows+1]={left=a,right=b}
+        end
         LL:AppendRecommendationTooltip(tip,{action='A',facts=f,conversionOptions={{name='Prospect',profession='Jewelcrafting',
             recipeID=1231127,inputCount=5,yieldModel=locked,value=LL:ValueProcessingModel(locked,0,true,f)}}})
         local text=table.concat(tip.lines,'\n')
-        local zeroLine=text:match('[^\n]*242608[^\n]*')
-        check(zeroLine and zeroLine:find('0%%') and not zeroLine:find('unavailable',1,true),
-            'zero reaches the actual diamond row in simulated tooltip dispatch')
+        local name=assert(LL.ItemDB.professionProfiles.items[m.id].name,'native diamond name')
+        local expectedRows,zeroRows=0,0
+        for _,material in ipairs(locked.materials)do
+            if material.id==242608 or material.id==242712 then expectedRows=expectedRows+1 end
+        end
+        for _,row in ipairs(tip.rows)do if row.left:find(name,1,true)then
+            zeroRows=zeroRows+1
+            check(row.left:match('^  0%% |T')and row.left:match('%[0%]|r$')and row.right=='0 copper',
+                'every native diamond quality row shows the shared0% icon/name[0] and zero-price format')
+        end end
+        check(zeroRows==expectedRows and zeroRows>0 and not text:find('unavailable',1,true),
+            'all locked diamond quality rows remain visible in simulated tooltip dispatch')
+        check(m.expectedQuantity==0 and m.chance==0 and m.structuralZero,
+            'display preserves the actual eligibility zero without inventing observations')
         profile(rule.nodeID);local unlocked=resolve(id);m=assert(diamond(unlocked))
         check(unlocked.outputGate.eligible==true and totalDiamonds(unlocked)>0,
             'one-point '..id..' eligibility='..tostring(unlocked.outputGate and unlocked.outputGate.eligible)..' mean='..tostring(m.expectedQuantity)..' conditional='..tostring(m.conditionalExpectedQuantity))

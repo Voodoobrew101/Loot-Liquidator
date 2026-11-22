@@ -19,16 +19,21 @@ for _,r in ipairs(LL.ItemDB.processing) do
                 assert(LL:EvidenceReliability(m[key],r)==0,'histogram is not a rate estimate')
             end
         end
-        if r.inputItemID==275544 then row=r end
+        if r.categorySourceInputItemID==275544 then row=r end
     end
 end
 assert(records==38 and casts==42,'complete unique owner captures reach the shared database')
 assert(row and row.materials[1].id==243606,'observed Dawn Crystal identity retained')
+assert(row.inputItemID==nil and row.isDisenchantCategory and row.gearKey=='gear:11:2:weapon',
+    'ordinary gear uses its shared category while retaining the original capture item as provenance')
 -- Isolate direct captures: they cannot produce a numerical valuation alone.
 LL.ItemDB.processing={row};assert(LL:InitializeItemDB())
 LL.db.source_legacy_enabled=false;LL.db.source_reference_enabled=false
 LL.db.source_imported_enabled=false;LL.db.source_personal_enabled=false
-local model=LL:ComputeEvidenceModel({id=275544,quality=4,classID=2,expansionID=11},
+-- Match the retained category and a documented band boundary; a mismatched
+-- old item-rarity fixture must not be the reason no numerical quote appears.
+local model=LL:ComputeEvidenceModel({id=275544,quality=row.inputRarity,classID=row.inputClassID,
+    expansionID=row.expansionID,itemLevel=row.categoryItemLevelMin},
     {name='Disenchant',recipeID=13262,inputCount=1},nil,1,{})
 if model then
     for _,m in ipairs(model.materials) do

@@ -135,8 +135,30 @@ for rank=2,3 do
     set(133,30,30,0,{multicraft={percent=100},resourcefulness={percent=100}})
     local stats=assert(LL:ResolveEvidenceModel(f,op,nil,1))
     near(pool(stats),3,'Multicraft and Resourcefulness never inflate the three-dust completed-cast pool')
-    check(stats.expectedInputCount<1,'Resourcefulness changes expected shard consumption independently')
+    local manual=LL:GetManualProfessionProfile('Player','Enchanting',10)
+    check(not (manual.stats or {}).resourcefulness and not (manual.stats or {}).multicraft,
+        'the DE-only Enchanting editor does not introduce unrelated Craft stat controls')
+    near(stats.expectedInputCount,full.expectedInputCount,'excluded manual stats do not change shard consumption')
+    -- Real learned Craft operations still consume their captured native stats;
+    -- the removed manual controls are not a substitute for that live reader.
+    local reader=LL.ProcessingPlayerConditions
+    local nativeStats=copy(reader(LL,f,op.name,op.recipeID))
+    nativeStats.simulated=false;nativeStats.profileKind='live'
+    nativeStats.skill=133;nativeStats.effectiveSkill=278;nativeStats.preSpecializationSkill=133
+    nativeStats.operationStatsIncludeSpecialization=true
+    nativeStats.stats={};nativeStats.statAnchors={};nativeStats.statCalibration={}
+    nativeStats.operationStats={{bonusStatName='Resourcefulness',ratingPct=100},
+        {bonusStatName='Multicraft',ratingPct=100}}
+    LL.ProcessingPlayerConditions=function()return nativeStats end;LL:Invalidate()
+    local resourceful=assert(LL:ResolveEvidenceModel(f,op,nil,1))
+    near(pool(resourceful),3,'native Craft stats preserve the three-dust completed-cast pool')
+    near(resourceful.expectedInputCount,.7,'native Resourcefulness independently saves the source-backed midpoint fraction')
+    LL:ValueProcessingModel(resourceful,0,true,f)
+    LL:ValueProcessingModel(full,0,true,f)
+    near(resourceful.partialValue-full.partialValue,30,'native input savings reach gold once at the fixture shard quote')
+    LL.ProcessingPlayerConditions=reader;LL:Invalidate()
 end
+check(same(LL.ItemDB.processing,sourceBefore),'all native/manual stat projections preserve original source evidence')
 LL.db.source_itemdb_enabled=false;LL:Invalidate()
 check(LL:ResolveEvidenceModel(facts(2),op,nil,1)==nil,'the quality model cannot bypass disabled source evidence')
 check(LL:ResolveEvidenceModel(facts(2),op,nil,2)==nil,'personal-only mode does not import published endpoint evidence')

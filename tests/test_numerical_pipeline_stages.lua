@@ -239,10 +239,12 @@ for _,case in ipairs(cases)do
 end
 -- Every crafting profession follows real profile -> native recipe -> baseline
 -- -> one modifier -> the same material tooltip renderer.
+local learn=assert(loadfile('tests/learned_recipe_fixture.lua'))()
 for _,row in ipairs({{'Alchemy',1230854},{'Blacksmithing',1229598},{'Enchanting',1236098},
     {'Engineering',1229755},{'Inscription',1230016},{'Jewelcrafting',1230437},
     {'Leatherworking',1237486},{'Tailoring',1227926},{'Cooking',1226166}})do
     local profession,id=row[1],row[2]
+    learn(LL,id)
     local recipe=assert(data.recipes[id])
     local c={method='Craft',profession=profession,recipeID=id,expansionID=11,inputCount=1,
         outputID=recipe.outputIDs[1],outputCount=recipe.outputCount,qualityOrderVerified=recipe.qualityOrderVerified,

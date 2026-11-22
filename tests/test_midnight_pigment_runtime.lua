@@ -77,15 +77,21 @@ local facts={id=236761,expansionID=11,reagentQuality=1,classID=7,quality=1,count
 LL._processingModelCache=nil
 local model=assert(LL:ResolveEvidenceModel(facts,option,nil,1))
 LL:ValueProcessingModel(model,0,true,facts)
-local tip={lines={}}
+local tip={lines={},rows={}}
 function tip:AddLine(text) self.lines[#self.lines+1]=text end
-function tip:AddDoubleLine(left,right) self.lines[#self.lines+1]=left..' | '..right end
+function tip:AddDoubleLine(left,right)
+    self.lines[#self.lines+1]=left..' | '..right;self.rows[#self.rows+1]={left=left,right=right}
+end
 local quote={name='Mill',letter='M',recipeID=1269575,inputCount=10,available=false,
     value=model.value,yieldModel=model}
 LL:AppendRecommendationTooltip(tip,{action='A',facts=facts,conversionOptions={quote}})
 local text=table.concat(tip.lines,'\n')
-check(text:find('13.000',1,true) and not text:find('chance unavailable',1,true),
-    'native tooltip shows the known reference total without inventing a hit rate: '..text)
+check(#tip.rows==2 and tip.rows[2].left:match('^  100%% |T[^|]+|t .+ %[%d+%-?%d*%]|r$')
+    and tip.rows[2].right=='260 copper' and not text:find('x ',1,true),
+    'native tooltip uses the shared percentage/icon/range/price layout for the reference: '..text)
+near(model.materials[1].expectedQuantity,13);near(model.value,260)
+check(model.materials[1].chance==nil and model.materials[1].minQuantity==nil
+    and model.materials[1].maxQuantity==nil,'display estimates never become source distribution evidence')
 LL.CanUseConversion=function() return true,nil,'Player' end
 LL.EligibleDisenchant=function() return false end
 local discovered

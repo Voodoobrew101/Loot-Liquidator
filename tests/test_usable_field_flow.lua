@@ -12,12 +12,30 @@ LL.Money=function(_,n)return tostring(n)..' copper'end
 LL.ProfessionProgression=function()return {}end
 assert(LL:InitializeItemDB())
 local option={name='Disenchant',inputCount=1,recipeID=13262}
+local function copy(value)
+    if type(value)~='table' then return value end
+    local result={};for key,item in pairs(value) do result[key]=copy(item) end
+    return result
+end
+local function same(actual,expected)
+    if type(actual)~='table' or type(expected)~='table' then return actual==expected end
+    for key,item in pairs(actual) do if not same(item,expected[key]) then return false end end
+    for key in pairs(expected) do if actual[key]==nil then return false end end
+    return true
+end
+local sourceRecord
+for _,candidate in ipairs(LL._evidenceIndex['Disenchant:gear:1:3:armor']) do
+    if candidate.recordID=='evidence:v3:Disenchant:gear:1:3:armor:x1' then sourceRecord=candidate;break end
+end
+assert(sourceRecord,'the shipped occurrence-only category study is present')
+local sourceBefore=copy(sourceRecord)
 local model=assert(LL:ComputeEvidenceModel({id=-1,expansionID=1,quality=3,classID=4},option,nil,1,{}))
 local m=model.materials[1]
 assert(math.abs(m.chance-1/268)<1e-12 and m.expectedQuantity==nil,
     'one observed hit in the shipped study gives a chance, not a supported unit count')
 assert(LL:ValueProcessingModel(model,0,true)==nil)
-local source=LL._evidenceIndex['Disenchant:gear:1:3:armor'][1].materials[1]
+local source=sourceRecord.materials[1]
+assert(source.id==m.id and same(sourceRecord,sourceBefore),'evaluation preserves every source field')
 assert(source.expectedQuantity.value==nil and source.expectedQuantity.status=='unknown','source field remains immutable')
 local fish=assert(LL:ComputeEvidenceModel({id=199344,classID=7,expansionID=9},{name='Prospect',inputCount=5},nil,1,{}))
 assert(fish.operationUnverified and LL:ValueProcessingModel(fish,0,true)>0,'known source means per input are usable without inventing a recipe batch')

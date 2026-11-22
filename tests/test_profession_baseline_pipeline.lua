@@ -17,7 +17,15 @@ GetBuildInfo=function() return '12.1.5','70961' end
 GetTime=function() return 100 end
 time=function() return 100 end
 CreateFrame=function() return {RegisterEvent=function()end,SetScript=function()end} end
-GetItemInfo=function(id) return 'Item '..id end
+-- Native API facts for encountered learned outputs; the runtime item catalog
+-- remains pruned and is hydrated only through RestoreProfessionRecipeMetadata.
+local nativeItemFacts=assert(loadfile('database/profession-profile-rules.lua'))().items
+GetItemInfo=function(id)
+    local item=nativeItemFacts[id]
+    if not item then return 'Item '..id end
+    return item.name,nil,nil,nil,nil,nil,nil,item.stackable,nil,nil,item.vendorPrice,
+        item.classID,item.subclassID,item.bindType,item.expansionID
+end
 GetItemCount=function() return 100000 end
 local LL={db={characters={Player={professions={}}},rateProfile=3,rateProfileCharacter='Player',
     source_itemdb_enabled=true,source_legacy_enabled=true,source_reference_enabled=true,
@@ -56,6 +64,8 @@ end
 check(builtCount>0,'real compiled processing records produce derived baselines')
 
 local recipe=1230867
+local learn=assert(loadfile('tests/learned_recipe_fixture.lua'))()
+learn(LL,recipe) -- Source observations and their inverse must use the same native recipe capability.
 local op={name='Craft',recipeID=recipe,inputCount=5,profession='Alchemy'}
 local f={id=900001,expansionID=11,classID=7,quality=2,count=20}
 local sourceProfile={skill=100,preSpecializationSkill=100,specializationPoints={},
@@ -97,6 +107,7 @@ local crafting={{'Alchemy',1230867},{'Blacksmithing',1229598},{'Enchanting',1236
     {'Leatherworking',1237486},{'Tailoring',1227926},{'Cooking',1226166}}
 for index,row in ipairs(crafting) do
     local profession,spell=row[1],row[2]
+    learn(LL,spell)
     local native=assert(originalDB.professionProfiles.recipes[spell])
     local input={id=990000+index,expansionID=11,classID=7,quality=2,count=100}
     local candidate={method='Craft',profession=profession,recipeID=spell,inputCount=1,
