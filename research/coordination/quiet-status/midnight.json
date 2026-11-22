@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-22T18:08:38.091Z",
-  "status": "Refreshed the research branch and read current v3 README, evidence format, mechanics, worker role and queue. Investigated T0049/272246 eligibility and selected-variant ilvl, T0026 item-level DE evidence, T0005/T0039/237362 rank-specific prospecting, and T0045/236761 milling. Server-rendered Wowhead pages still do not expose 272246's pooled Looter operation details; the 305 tooltip is a selected display variant, not a linked DE event. Cardinalai's 4000 nominal ore with 39.6% Resourcefulness does not state completed casts; kyzenbka's pigment observation was previously recorded. Screened LFCarry's Nov 18 Retail 12.1.5 Enchanting guide: it describes material families/spec but no source-observed cast counts, item versions, output totals, zeros or histograms. No new independently measured, identity-resolved numeric cohort, and no evidence JSONL created. Original catalogue and other workers' files untouched.",
+  "updated_at": "2026-11-22T19:13:36.673Z",
+  "status": "Read current branch research/v3 README, evidence-format, mechanics, worker role and task queue, then screened new acquisition searches for T0049/272246, T0026 gear-level DE, T0005/T0039/237362 prospecting and T0045/236761 milling. Found no post-cutoff original Retail per-event numeric cohort: original casts, castsWithDrop, zeros, histograms, item-instance links, and rank/profile evidence remain unresolved. A separately located Aug 31 secondary client-bracket article asserts all modern item levels share rarity/expansion/type loot brackets and skill requirement zero; this is a non-validated static table interpretation, not observed DE yields, and is pre-cutoff Codex catalogue scope. Do not promote as mechanic or replace prior measured studies without raw client DB and Master review. No evidence JSONL, addon changes, PRs or release.",
   "task_ids": [
     "T0049",
     "T0026",
@@ -1413,7 +1413,8 @@
     "https://www.wowhead.com/ru/item=245807",
     "https://wow-god.com/guides/inscription-leveling",
     "https://www.wowhead.com/guide/midnight/professions/inscription-leveling-1-100",
-    "https://lfcarry.com/guides/wow-midnight-enchanting-leveling"
+    "https://lfcarry.com/guides/wow-midnight-enchanting-leveling",
+    "https://thewowdb.com/guides/disenchant-roi-trap/"
   ],
   "blockers": [
     "272246: actual disenchantable item bonus/at-cast ilvl 305 itemLink and correlated original DE output are not published; generic 206 cannot-be-disenchanted catalog conflicts with aggregate 140-row Looter display.",
@@ -1583,30 +1584,47 @@
     {
       "url": "https://www.curseforge.com/wow/addons/goldcap-gg/files/9748719",
       "reason": "Nov 22 Retail GoldCap 0.31.3 release describes self-learned DE value and in-game eligibility checking, but no original participant outcomes, item 272246 bonus/at-cast ilvl or sample denominators are published. No data cohort; do not repeat unless raw exported samples appear."
+    },
+    {
+      "url": "https://thewowdb.com/guides/disenchant-roi-trap/",
+      "reason": "Aug 31 pre-cutoff secondary article of claimed client bracket selection. No linked raw 12.1.5 DB row, at-event 272246 variant, completed disenchants, units, hit/zero distribution, skill/spec; not a new yield cohort. Master-only mechanics review if original table appears."
     }
   ],
-  "next_concrete_step": "Seek a newly published Retail Midnight player export with event-linked input itemLink/bonus/actual ilvl and DE output for 272246, or actual rank-specific completed five-ore prospect operations, refund ledgers and 0..N output histograms for 237362/237363; alternatively ten-herb mill events with pigment item IDs, per-operation zeros, skill/spec/build. Do not recycle already reviewed original Cardinalai, kyzenbka, GoldCap, or catalogue sources.",
-  "verified_base_commit_sha": "8a0a67fa9a1d091bb1e51159267fea29cc093eb5",
+  "next_concrete_step": "Seek NEW after-cutoff Retail processing exports containing at-cast itemLink/bonus/ilvl and result for 272246, plus genuine completed-operation IDs, 0/1/2+ per-output stack counts, refund records and skill/spec/build for Umbral Tin 237362/237363 or 10-herb 236761 milling. If an original signed client 12.1.5 bracket table becomes available, refer the bracket-selection versus yield-modifier distinction to Master; do not duplicate Codex pre-cutoff catalogue.",
+  "verified_base_commit_sha": "ef64ef87ea2f5f54d2ab531f4e8eabe2afaf49b0",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Single owned quiet-status commit, no duplicate/invented JSONL. The new commit SHA cannot be embedded self-referentially without another commit; connector result and read-back verify it externally.",
+  "commit_note": "Only own midnight.json changed. The resulting commit SHA cannot be written into its own content without another commit; read-back verified commit externally.",
   "new_leads_screened": [
     {
-      "category": "held_recent_retail_leveling_reference_no_numeric_operations",
-      "source": "https://lfcarry.com/guides/wow-midnight-enchanting-leveling",
-      "source_updated": "2026-11-18",
-      "patch_reported": "12.1.5",
-      "disposition": "held_reference_only_no_yield_admission",
-      "reported_facts": "Names Eversinging Dust, Radiant Shard and Dawn Crystal as material families and Disenchanting Delegate; does not supply any independently measured material distribution by rarity, slot, ilvl, build, skill or specialization.",
-      "exact_input_ids": null,
-      "original_player_study": null,
-      "completed_casts": null,
-      "output_units": null,
+      "category": "held_pre_cutoff_secondary_client_bracket_claim_no_original_numeric_trial",
+      "source": "https://thewowdb.com/guides/disenchant-roi-trap/",
+      "source_published": "2026-08-31",
+      "current_retail_context_claimed": "12.1.5",
+      "task_ids": [
+        "T0049",
+        "T0026"
+      ],
+      "exact_input_ids": [
+        272246
+      ],
+      "related_output_ids": [
+        243599,
+        243600,
+        243602,
+        243603,
+        243605,
+        243606
+      ],
+      "reported_claim": "Article says retail disenchant bracket selection uses expansion, item type and rarity; modern entries have an item-level span of 1–999 and zero base Enchanting skill requirement. This does not establish quality/skill/specialization-adjusted quantity distributions or 272246 eligibility.",
+      "disposition": "held_reference_not_new_original_study; historical source belongs to Codex cutoff catalogue",
+      "measured_completed_casts": null,
       "castsWithDrop": null,
-      "zero_outcomes": null,
+      "total_material_units": null,
+      "observed_zeros": null,
       "histograms": null,
-      "skill_specialization_at_cast": null,
-      "reason": "Leveling/training and commercial-guide material are not original disenchant outcome cohorts; overlap with pre-cutoff context should be left to owner catalogue, not re-catalogued."
+      "matched_item_instance_bonus": null,
+      "verification_gap": "No cited downloadable DB2 table version/row set, event-linked 272246 disenchant or independent current Retail game action; article may conflate bracket eligibility/selection with profession-modified outcomes. Do not change M12/ItemDB or claim ilvl has no effect on observed distributions on this basis."
     }
   ],
   "catalogue_checkpoint": {
