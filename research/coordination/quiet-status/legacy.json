@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-22T18:44:37.838Z",
-  "status": "New firsthand Oct 28–29 2006 Burning Crusade BETA Fel Iron prospecting narrative recovered: the author reports some attempts yielded no gem and names Deep Peridot 23079 and Azure Moonstone 23117 around Jewelcrafting skill 300–315, but provides no completed operation count, measured zero count, per-gem hits/quantities or exact game build. Held as epoch-specific qualitative context, NOT quantitative Retail evidence. Four additional original Enchantrix archive paths checked: three empty prospect ledgers; DOOMAGE's 27 Ghost Iron capture counter already recorded earlier, not a new legacy cohort. No qualifying new measured data, evidence JSONL, PR, build, game operation or schedule change.",
+  "updated_at": "2026-11-22T19:45:29.090Z",
+  "status": "Rechecked current LIVE Warmaul 24995 against separate Retail and historical pages: Wowhead live shows item level 14 but no independently accessible raw Looter event/stack table; WoWDB LIVE flags cannot disenchant at item level 31. No safe Retail eligibility adjudication. Confirmed source-backed processing-log failure semantics from a firsthand WotLK prospecting comment: a missing loot window with ore not destroyed is a failed attempt, NOT a completed zero-output prospect; vendor/raw batches must not be used as valid cast denominators. Original Wowhead spell 31252 and original item 23424 pages are assigned to Codex's reviewed cutoff catalogue: no duplicated source records, no new post-cutoff measured target cohorts, no evidence file, no EV or PR/build/runtime changes.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -20,15 +20,19 @@
   "source_urls": [
     "https://github.com/p3lim-wow/Molinari/blob/da14202ccfa4c2d892f5c6d7bd5dbcc89cb4a7cc/data/Standard/prospectable.lua",
     "https://www.wowhead.com/spell=382980/outland-prospecting",
-    "https://www.wowhead.com/spell=382979/northrend-prospecting"
+    "https://www.wowhead.com/spell=382979/northrend-prospecting",
+    "https://www.wowhead.com/item=24995/warmaul-legplates",
+    "https://www.wowdb.com/items/24995-warmaul-legplates",
+    "https://www.wowhead.com/wotlk/spell=31252/prospecting",
+    "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore"
   ],
-  "numeric_summary": "New measured quantities/casts/hits/zeros/histograms: NONE for Warmaul 24995, Fel Iron 23424, Cobalt 36909. Historical 2006 beta author personally names two Fel Iron gem outputs (23079 Deep Peridot, 23117 Azure Moonstone), subject to previously known identities; skill documented as progressing from 300 to 315 during the weekend, not measured skill per cast. Approximate 'half' of attempts without gems is narrative, not an observed probability or zero count. Earlier verified recipe identities and historical cohorts remain unchanged.",
+  "numeric_summary": "This pass: zero additional independently verified input/output IDs, measured casts, output hits, zero outcomes, total quantities or histograms for 24995, 36909 or 23424. Finko's first-person failed Mithril prospecting attempt (ore NOT destroyed) supports only failed-operation exclusion, not a target measured zero row. An unlabeled 10-stack Fel Iron, one unnamed blue gem report at JC skill 361 in the same historically mirrored 31252 thread cannot yield exact output ID, actual operation count or Retail rates; held under Codex-owned sourceKey.",
   "evidence_file": "research/v3/evidence/legacy/2026-11-22T1746-outland-northrend-recipe-spell-identity.jsonl",
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "704922196b9d7940ec244fb01fe21c19d3d5a4fd",
-  "verified_commit_sha": "704922196b9d7940ec244fb01fe21c19d3d5a4fd",
-  "commit_note": "SHA fields refer to pre-write refreshed branch head; verified final commit SHA must be read back separately because a self-referential committed JSON cannot embed its own Git commit hash.",
+  "verified_parent_sha": "767705770c8c8353bf4bc7bce81379d38c86a33b",
+  "verified_commit_sha": "767705770c8c8353bf4bc7bce81379d38c86a33b",
+  "commit_note": "verified_parent_sha and verified_commit_sha are pre-write HEAD only; commit object SHA cannot be self-referenced from the file it hashes. Final commit must be fetched separately.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -209,6 +213,18 @@
       "source": "amdam/wow_retail_wtf DOOMAGE original SavedVariables",
       "disposition": "duplicate-already-in-legacy-evidence-not-new",
       "reason": "Nonempty original ProspectedLocal entry for Ghost Iron Ore 72092 has [total]=27 and named output units, already documented in legacy 2026-11-15 and 2026-11-16 records and independently reviewed by Master. Target Cobalt 36909/Fel Iron 23424 not among ProspectedLocal entries; do not reimport or count copied cohort."
+    },
+    {
+      "task": "T0047 / independent public LIVE sources",
+      "source": "2026-11-22 LIVE Wowhead 24995 versus WoWDB 24995",
+      "disposition": "held-conflicting-displayed-item-level-and-eligibility-not-client-operation",
+      "reason": "Wowhead LIVE stat page displays iLvl14; WoWDB LIVE item displays iLvl31 and explicitly 'Cannot be disenchanted'. Neither page supplies exact current itemLink bonus/build and attempted cast receipt. Historical Looter table is not observable in text extraction. No new empirical drop record."
+    },
+    {
+      "task": "T0042/T0044 processing-attempt controls",
+      "source": "https://www.wowhead.com/wotlk/spell=31252/prospecting original Finko and unnamed 10-stack Fel Iron first-person comments",
+      "disposition": "duplicate-Codex-owned-cutoff-source-held-qualitative",
+      "reason": "SourceKey wowhead:spell=31252@wotlk assigned 13 scopes in current verified 731-source catalogue. A prospecting UI failure with the ore not destroyed is not a completed cast/zero. A 10-stack Fel Iron report at JC361 mentions 1 unnamed blue gem, but provides no exact output ID/verified cast denominator, no Retail client context. No second catalogue or JSONL made."
     }
   ],
   "blockers": [
@@ -233,7 +249,8 @@
     "12.1.7 PTR Fel Iron tooltip Outland Jewelcrafting (1) is not a verified live skill/operation gate and must not be mixed with historical 275-skill lookup.",
     "NEW 40959 historical original source (item 41122 Wowhead comment 282402): explicitly claimed 278 Infinite Dust conflicts with 272 units from positive stack frequency bins 25×2+21×3+21×4+15×5; correct source from original commenter or archived context before compiler admission. 22 purchased bar stacks are not proven 110 completed disenchant casts. 2 Dream Shards are quantity-only, not proven two hits. Historical WotLK provenance must never be treated as current Retail without version/eligibility check.",
     "2026 published Retail recorder addons (TheWoWDB Companion and ProfitProphet) provide capability/eligibility changelog descriptions but no downloadable independent 24995/36909/23424 session ledger, exact observed item/output ID per event, successful N, zeros, client build, skill/spec or refund accounting. Do not turn 600 source cap or template percentages into observed casts.",
-    "40959 new conditional epoch conflict: 22 purchased 20-bar stacks (440 bars) cannot supply 82 dust-positive outcomes at post-3.0.8 8 bars per craft without other sourced bars; early positive dust stacks 2/3 conflict with cited 3.2.2 4-7 hotfix bracket. No actual craft/disenchant N, acquisition dates, exclusive bar inventory, build or 278-vs-272 resolution; Master must decide source-profile flag."
+    "40959 new conditional epoch conflict: 22 purchased 20-bar stacks (440 bars) cannot supply 82 dust-positive outcomes at post-3.0.8 8 bars per craft without other sourced bars; early positive dust stacks 2/3 conflict with cited 3.2.2 4-7 hotfix bracket. No actual craft/disenchant N, acquisition dates, exclusive bar inventory, build or 278-vs-272 resolution; Master must decide source-profile flag.",
+    "For parsing captured prospecting sessions: explicitly exclude attempts where loot window did not open and input was not consumed; an API/UI failure is not an observed material zero. Source: first-person Finko comment on wotlk spell 31252, pre-modern client. Exact target actual successful operations and refunds remain unobserved."
   ],
   "exhausted_sources": [
     {
@@ -394,5 +411,6 @@
     "new_evidence_jsonl": null,
     "source_scope": "New original 2006 beta firsthand qualitative prospect note plus 4 pinned archived SavedVariables; held historical anecdote, 3 empty ledgers and 1 already-researched unrelated cohort."
   },
-  "new_evidence_file_this_run": null
+  "new_evidence_file_this_run": null,
+  "next": "Prioritize a genuinely NEW independent published post-cutoff Retail 12.x session log (successful input consumption, exact item links, output IDs/quality, zeros and refund accounting) for 24995, 36909 or 23424. Do not recatalogue the already reviewed Wowhead spell=31252/item=23424 mirror or count failed loot-window attempts as zero; request Master to resolve 24995 Retail eligibility with verified client item variant/API path. Keep cutoff catalogue and implementation under Codex ownership."
 }
