@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-22T00:44:18.359Z",
-  "status": "Read current v3 rules, schema, mechanics, legacy role, queue and branch. Investigated new original-source paths for Warmaul Legplates 24995, Cobalt Ore 36909, Fel Iron Ore 23424, and historical original spreadsheet access. Verified a first-person 2008 Prospect Stats addon counter anomaly: one Fel Iron five-ore prospect reportedly increments displayed prospect count 18 -> 20 rather than 19; this is potential denominator contamination in old addon-derived reports, NOT an observed yield cohort or proof it affects other recorders. Additional historical Adamantite spreadsheet URL was found but original is inaccessible. No new original Retail 12.x operation/output ledger, valid cast denominator, measured zeros, named material totals, class rewards or histograms qualified; no evidence JSONL produced.",
+  "updated_at": "2026-11-22T01:39:28.860Z",
+  "status": "Read current branch and required v3 README, evidence-format, mechanics, worker role, and legacy queue. Searched new original-source paths for Warmaul 24995, Cobalt 36909 and Fel Iron 23424 across indexed Wowhead item comments/guides, wikis, Reddit and public processing addons. Found no new original Retail operation-level log, independently confirmed completed casts, per-output hit counts, zeros, stack histograms, or client eligibility; no new evidence file was warranted. A high-volume Cobalt-related Wowhead Looter table was identified as mined-deposit loot rather than prospecting, so it must not be used as a processing cohort. The 725-cutoff/731-source catalogue remains Codex owned and untouched.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -16,9 +16,9 @@
     "Legacy TBC armor-vs-weapon group source identity/level build, Runecloth Headband 13866 patch-sensitive dust identity and output-event distributions; avoid already-reviewed 45661 token mapping"
   ],
   "newly_verified_fields_cohorts": [
-    "Independent source-processing reliability note (not empirical yield): WowInterface Prospect Stats v1.1 comment dated 2008-08-01 reports Fel Iron Ore prospect counter 18 to 20 after one five-ore operation, implying potential double increment in this legacy recorder; reporter's observation only, no code validation or evidence it affects ProspectMe/modern data.",
-    "Newly surfaced historical second Adamantite spreadsheet link pdr-MibcRlh8wIv3SUuWxKw from original Thottbot-migrated Wowhead 23425 comment; original spreadsheet could not be retrieved; do not count data, inferred denominators or outputs.",
-    "New independent Retail Warmaul 24995 -> 22445/22446/22447/22449 actual operations, zero/hit histograms, build/skill/eligibility: NONE. New 36909 via 382979 or 23424 via 382980 actual operations, named outputs, hits/zeros/ranks: NONE. Token 45661 full seven class reward identities already resolved, not re-counted."
+    "New provenance/method exclusion: Wowhead Rich Cobalt Deposit object 189979 lists 114,675 mined-deposit interactions and material counts (for example Bloodstone 1,703/114,675), explicitly under Mined. These are NOT 36909 Prospect operations, hits, or zeros; do not admit or infer prospecting rates from this high-volume Looter table.",
+    "Fresh Retail-compatible EasyDisenchant source describes secure Use buttons for Disenchant/Prospect/Mill on 12.1.5, but publishes no 24995, 36909, or 23424 operation outcomes, character-profile logs or zero-inclusive exports. Instrumentation is not an original empirical cohort.",
+    "No novel measured fields: 24995 -> 22445/22446/22447/22449 real Retail operations/hits/zeros/totals = none; 36909 spell 382979 and 23424 spell 382980 matched successful processing logs/hits/zeros/ranks = none. Previously verified 45661 seven class rewards were not duplicated."
   ],
   "source_urls": [
     "https://thewowdb.com/guides/disenchant-roi-trap/",
@@ -87,15 +87,19 @@
     "https://www.curseforge.com/wow/addons/disenchantry",
     "https://www.curseforge.com/wow/addons/professionsforever/files/9680289/additional-files",
     "https://wowinterface.com/downloads/info9751-ProspectStats.html",
-    "https://spreadsheets.google.com/pub?key=pdr-MibcRlh8wIv3SUuWxKw"
+    "https://spreadsheets.google.com/pub?key=pdr-MibcRlh8wIv3SUuWxKw",
+    "https://www.wowhead.com/object=189979/rich-cobalt-deposit",
+    "https://www.wowhead.com/guide/mining-for-ores-gems-and-stones-mop-updated-376",
+    "https://github.com/Somora/EasyDisenchant",
+    "https://www.wowhead.com/item=36923/chalcedony"
   ],
-  "numeric_summary": "New source-qualified Retail input/output numeric fields this run: 0. New independently measured completed disenchant/prospect operations: 0. Target output hit counts: 0. Zero-inclusive histograms: 0. Verified material totals: 0. New identity/rank/skill/build mapping: 0. The 2008 Prospect Stats Fel Iron counter 18 -> 20 after one five-ore action is a reported logging anomaly, NOT two real completed casts; no inferred measured probability or EV. Existing historical and source-derived totals remain unchanged.",
+  "numeric_summary": "New admissible Retail actual processing operations: 0. New target output hit counts, zero outcomes, per-output material totals, zero-inclusive histograms and per-operation means: 0. The 114,675-count Rich Cobalt Deposit source is MINING rather than PROSPECTING and provides zero usable 36909 processing operations; do not import mining loot tables into prospecting. No computed chances, EV or frozen prices.",
   "evidence_file": "research/v3/evidence/legacy/2026-11-21T1445-retail-prospect-spell-identity.jsonl",
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "f8abcbac8904bcbe739c6b1d214a29a98f8ad0d8",
+  "verified_parent_sha": "048b185c8e17790d5999745a15224f24eaa9ec61",
   "verified_commit_sha": "0afbd7f7ab0df1649f0503423ca5db30f275b779",
-  "commit_note": "One owned status-file update only via GitHub Contents API; actual commit SHA verified separately after write; embedded parent marks the pre-write branch head, not a self-referential commit SHA. No JSONL, PR, snapshot, schema/runtime or schedule updates.",
+  "commit_note": "Updated owned legacy quiet-status only. No new evidence JSONL because no new independently verified Retail processing measurement; no source catalogue, code, schema, PR, release or schedule edits. Embedded verified_parent_sha is pre-write branch head; external commit/read-back verifies the new update.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -250,40 +254,40 @@
     }
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Locate independently published, accessible source-native Retail processing exports with explicit input itemLink/profile and successful operation log: first 24995 actual disenchant N and per-output 22445/22446/22447/22449 0/1/2+ events (plus client eligibility); then 36909 spell 382979 and 23424 spell 382980 with consumed/refunded ore and named gem output counts. If only legacy addon counters are available, demand event-level audit proving denominators are not doubled; do not reprocess the 731-source Codex-owned catalogue or exhausted 2008 links.",
+  "next_concrete_step": "Seek a source-native, public Retail 12.x successful processing session with exact itemLink/client build, character skill/spec and event-level input/output reconciliation: 24995 disenchants tied to 22445/22446/22447/22449 with completed N and zero-inclusive outputs; thereafter 36909 spell 382979 and 23424 spell 382980 with actual consumed/refunded ore and named gem stacks. Ignore Rich Cobalt mining denominators and existing 731-source catalogue. Hold instrument-only addon pages until a specific original export is found.",
   "coordination_cutoff": "Cutoff 0cd0bad8867e7a8d909b4ecae74f6136a3e23d42. Current branch manifest status CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources (713 original + 12 addendum + 6 recovered) and enabled catalogue registry. Codex/direct reviewers own source decisions and implementation; no duplicate assignment.",
   "sources_reviewed_this_run": [
     {
-      "url": "https://wowinterface.com/downloads/info9751-ProspectStats.html",
-      "type": "Original 2008 addon page and dated first-person issue comment",
-      "disposition": "new-source-processing-caveat-only-held-not-an-empirical-yield-study",
-      "detail": "Aug 1 2008 Ookami.kun reports Fel Iron prospect counter 18->20 after one five-ore prospect, not 19. Original author promises repair for an earlier error, but no verified correction for this double-increment. Do not infer every recorder doubles casts."
+      "url": "https://www.wowhead.com/object=189979/rich-cobalt-deposit",
+      "type": "First-party indexed Looter mined-deposit table, 114675 recorded node interactions",
+      "disposition": "held-method-mismatch-not-prospecting",
+      "detail": "Bloodstone 1703/114675 and other named material counts are Rich Cobalt Deposit MINING drops; neither ore consumption nor completed 36909 prospect operations. Do not infer casts or processing zeros."
     },
     {
-      "url": "https://spreadsheets.google.com/pub?key=pdr-MibcRlh8wIv3SUuWxKw",
-      "type": "Historical first-person prospecting spreadsheet link via Adamantite Ore 23425 Thottbot comment",
-      "disposition": "held-original-spreadsheet-unretrievable-not-numeric-admissible",
-      "detail": "Search/index exposes a distinct old original spreadsheet link; direct published link is inaccessible. No original raw rows, actual completed operations, build or gem material bins verified."
+      "url": "https://www.wowhead.com/guide/mining-for-ores-gems-and-stones-mop-updated-376",
+      "type": "Historical community source table with Cobalt six-uncommon/six-rare possible gem outputs",
+      "disposition": "reference-only-no-original-study",
+      "detail": "Lists item families and 1-2 common gem range but no actual Cobalt or Fel Iron completed casts, conditional histogram, material hits or current Retail profile."
     },
     {
-      "url": "https://www.wowhead.com/item=24995/warmaul-legplates",
-      "type": "Indexed Warmaul Legplates Retail page and historical Looter prospecting/disenchant tab leads",
-      "disposition": "held-existing-ambiguous-build-and-unverified-live-eligibility",
-      "detail": "Existing 2068 historical cumulative table not newly reconstructed from primary raw events; modern itemLevel/bonus and Retail live DE ability remain unresolved."
+      "url": "https://github.com/Somora/EasyDisenchant",
+      "type": "Retail 12.1.5 secure processing action addon documentation",
+      "disposition": "instrumentation-lead-no-public-yield-data",
+      "detail": "Documents Disenchant/Mill/Prospect actions but no public Retail 24995/36909/23424 original event source or cast/output reconciliation."
     },
     {
-      "url": "https://www.wowhead.com/wotlk/item=23425/adamantite-ore",
-      "type": "Thottbot-migrated original study alias search",
-      "disposition": "already-audited-source-link-Vulpestia-not-new",
-      "detail": "Original Vulpestia >5000 stacks spreadsheet was already documented as inaccessible by Master; do not re-transcribe or count as independent casts."
+      "url": "https://www.wowhead.com/item=36923/chalcedony",
+      "type": "Historical first-person descriptive Cobalt/Saronite gem observation",
+      "disposition": "held-nonquantitative-no-denominators",
+      "detail": "Author reports 'hundreds of stacks' mixed Cobalt and Saronite with perceived Chalcedony rarity, but no independent exact input-by-ore N, named outputs totals, hits or zeros; no source-cohort admission."
     },
     {
-      "url": "https://www.curseforge.com/wow/addons/prospectmate",
-      "type": "Retail addon prospect/mill session tracking documentation",
-      "disposition": "instrument-only-no-public-target-export",
-      "detail": "Opt-in old-expansion processing and reset guidance, but no original Cobalt/Fel Iron input/output per-event records publicly provided."
+      "url": "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
+      "type": "Thottbot-migrated historical Fel Iron 100- and 565-ore report",
+      "disposition": "duplicate-exhausted-existing-originals",
+      "detail": "Known separate original source cohorts already recorded; repeated mirror not independent evidence."
     }
   ],
   "latest_run_source_date": "2026-11-21",
-  "latest_run": "2026-11-22T00:44:18.359Z: Refreshed branch/required five research documents and queue; searched source-native exact item/ore names across Wowhead locale pages, Reddit, guides, archival original spreadsheets and addon changelogs. New held provenance/reliability finding: 2008 Prospect Stats v1.1 first-person Fel Iron counter double increment. Historical Adamantite original spreadsheet link inaccessible, and Vulpestia link already exhausted; no actual Retail target casts/hits/zeros/qualities or novel verified material identity. No evidence file generated."
+  "latest_run": "2026-11-22T01:39:28.860Z: Refreshed all five required research documents and current branch head; prioritized original post-cutoff 24995/36909/23424 logs. Screened high-volume Rich Cobalt Looter mining data as non-prospecting, historical Cobalt possible-output guide and Retail secure-action addon. No new Retail cast/hit/zero totals or original ledger. Source provenance/method hold recorded; only owned status file changed."
 }
