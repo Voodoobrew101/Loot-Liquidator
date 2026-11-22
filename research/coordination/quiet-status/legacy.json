@@ -1,46 +1,49 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-22T21:44:20.804Z",
-  "status": "Independently checked current LIVE Wowhead item displays (not PTR): Fel Iron Ore 23424 is item level 11 and explicitly says Requires Outland Jewelcrafting (1); Cobalt Ore 36909 is item level 12 with no item-specific skill restriction shown. The live Outland Prospecting spell 382980 and Northrend Prospecting spell 382979 each show profession Jewelcrafting (1), Salvage Item with value 5. These are directly displayed item/recipe profile numbers, NOT completed-cast measurements, proof of successful access or eligibility, historical 275/350 skill equivalence, or output rates. Current Retail Warmaul Legplates 24995 remains item level 31 in recent corroborated sources but disenchant eligibility is unproven. The Reddit p71mrp Adamantite 2051-prospect OP and cumulative 48,315-ore commenter already belong to Codex-owned cutoff and were NOT reimported. No new independent processing cohort, evidence JSONL, price snapshot or implementation change.",
+  "updated_at": "2026-11-22T22:39:38.695Z",
+  "status": "New live-source presentation/profile conflict for Warmaul Legplates 24995: Wowhead LIVE page currently exposes item levels 14 and 74 in distinct displayed tooltip variants with a 'Disenchanting (4)' related tab, while WoWDB LIVE and 2026-11-17 BootyBayBroker list item level 31 and WoWDB says 'Cannot be disenchanted'. These are published database/display facts, NOT an exact live itemLink/bonus ID, successful Retail disenchant operation or proof of eligibility. Historical WotLK/TBC Classic 24995 item level 108 and 'Disenchantable (275)' must remain a separate epoch. Reopened exact client itemLink/bonus/scale & eligibility QA concern for Master, no rate changes or new empirical processing sample. Re-checked original Fel Iron 23424 and Cobalt 36909 Wowhead comment leads; the 8-stack/1-unnamed-blue and 9-stack/180-ore output data lack completed operation logs or per-output hit histograms, and source pages are already old/cutoff-adjacent, not new independent Retail cohorts. No new evidence JSONL, data PR, merged changes or gold snapshots.",
   "task_ids": [
     "T0047",
     "T0042",
     "T0022",
     "T0044",
-    "T0021",
-    "T0050"
+    "T0050",
+    "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 Retail live client disenchant eligibility/item bonus and completed-cast material distributions 22445/22446/22447/22449",
-    "Cobalt 36909 and Fel Iron 23424 current Retail spell identity/batch-size versus independent actual successful processing session with full denominators/zeros/refunds",
-    "Skill, specialization, exact build/hotfix and historical-vs-Retail separation for all target measurements"
+    "Warmaul Legplates 24995 Retail exact itemLink, bonus/scaling/itemLevel and disenchant eligibility; source-derived 22445,22446,22447,22449 hits need real casts/profile and true material-unit histograms",
+    "Cobalt Ore 36909 and Fel Iron Ore 23424 independently published actual successful Retail prospect sessions: operation denominator, per-output cast hits/zeros, quantity histograms, skill/spec/build and refunds",
+    "Separate Classic/TBC/WotLK reference/Looter snapshots, nominal stacks and current Retail conversion eligibility without implied rate transfer"
   ],
   "newly_verified_fields_cohorts": [
-    "Retail LIVE Wowhead Fel Iron Ore 23424: itemLevel=11; presented required skill label=Outland Jewelcrafting (1); this upgrades earlier PTR-only presentation to independently visible LIVE site context, not a live character operation test.",
-    "Retail LIVE Wowhead Cobalt Ore 36909: itemLevel=12; current item page does not display any ore-specific Jewelcrafting requirement, which is absence of a label, not evidence that skill or recipe access is unrestricted.",
-    "Current LIVE 382980 Outland Prospecting and 382979 Northrend Prospecting spells: Profession Jewelcrafting (1), Salvage Item effects 11/10, respective Value=5; previously recorded spell IDs/input counts corroborated, no new material outputs or casts."
+    "2026-11-22 checked Wowhead LIVE 24995 page: presented itemLevel=14 and alternate tooltip itemLevel=74 (site renderings, no observed in-game itemLink/bonus/scaling context); Related 'Disenchanting (4)' is a site aggregate not proof of current spell usability.",
+    "2026-11-22 checked WoWDB LIVE 24995: itemLevel=31, 'Cannot be disenchanted'; BootyBayBroker source item profile also itemLevel=31 (2026-11-17 scan). Direct unresolved cross-source 14/74 versus 31 and eligibility conflict, NOT a novel measured cohort.",
+    "2026-11-22 checked Wowhead TBC/WotLK Classic 24995: itemLevel=108 and 'Disenchantable (275)' for Classic flavor only, not evidence that the current Retail item is eligible.",
+    "Current Retail 23424 and 36909 live ore pages keep their previous verified item profile IDs (Fel Iron 11, Cobalt 12); visible historical player comments do not add new complete actual-operation receipts or zero-inclusive output measurements."
   ],
   "source_urls": [
+    "https://www.wowhead.com/item=24995/warmaul-legplates",
+    "https://www.wowdb.com/items/24995-warmaul-legplates",
+    "https://bootybaybroker.com/item/24995/warmaul-legplates/us/alleria",
+    "https://www.wowhead.com/tbc/item=24995/warmaul-legplates",
+    "https://www.wowhead.com/wotlk/item=24995/warmaul-legplates",
+    "https://www.wowhead.com/item=23424/fel-iron-ore",
+    "https://www.wowhead.com/item=36909/cobalt-ore",
     "https://github.com/p3lim-wow/Molinari/blob/da14202ccfa4c2d892f5c6d7bd5dbcc89cb4a7cc/data/Standard/prospectable.lua",
     "https://www.wowhead.com/spell=382980/outland-prospecting",
     "https://www.wowhead.com/spell=382979/northrend-prospecting",
-    "https://www.wowhead.com/item=24995/warmaul-legplates",
-    "https://www.wowdb.com/items/24995-warmaul-legplates",
     "https://www.wowhead.com/wotlk/spell=31252/prospecting",
     "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
-    "https://bootybaybroker.com/item/24995/warmaul-legplates/us/alleria",
-    "https://www.wowhead.com/item=23424/fel-iron-ore",
-    "https://www.wowhead.com/item=36909/cobalt-ore",
     "https://warcraft.wiki.gg/wiki/Prospecting"
   ],
-  "numeric_summary": "New verified displayed Retail profile numbers: Fel Iron Ore inputItemID=23424 itemLevel=11, Outland Jewelcrafting skill label=1; Cobalt Ore inputItemID=36909 itemLevel=12 (item tooltip has no skill gate); spells=382980 Outland and 382979 Northrend, each 5 ore inputs, profession Jewelcrafting (1). No new measured successful casts, output hit counts, zeros, output quantities, histograms or mean/rate data for 24995/23424/36909. Historic and Retail epochs remain separated, no frozen gold.",
+  "numeric_summary": "No NEW empirical completed casts, total outputs, hits, zero outcomes, source-supported unconditional mean or histogram. Item 24995 profile conflict: LIVE Wowhead displayed iLvl14 and iLvl74; LIVE WoWDB and 2026-11-17 AH metadata displayed iLvl31; Classic variants iLvl108 and DE skill275. None establishes Retail DE eligibility. Prior 24995 historical Looter 2068/1559/etc and historical Cobalt/Fel Iron cohorts unchanged; prior spell IDs 382979/382980 (5 ore each) unchanged.",
   "evidence_file": "research/v3/evidence/legacy/2026-11-22T1746-outland-northrend-recipe-spell-identity.jsonl",
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "23b19f9581394d54e1aa44b5f081b394e0232ace",
-  "verified_commit_sha": "23b19f9581394d54e1aa44b5f081b394e0232ace",
-  "commit_note": "verified_parent_sha and verified_commit_sha are PRE-WRITE branch HEAD, not the new commit (self-reference impossible in hashed content). Read back new branch commit separately.",
+  "verified_parent_sha": "111bf128dd3085810abb9126a97be3adc7a15400",
+  "verified_commit_sha": "111bf128dd3085810abb9126a97be3adc7a15400",
+  "commit_note": "verified_parent_sha and verified_commit_sha record PRE-WRITE branch HEAD; cannot self-reference own Git SHA. New commit and read-back checked separately by connector.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -248,170 +251,17 @@
     }
   ],
   "blockers": [
-    "NEW Master implementation/API naming blocker: current official live generated C_Item documentation contains neither CanDisenchant nor IsDisenchantable. GetLootRollItemInfo's 'canDisenchant' is per group loot roll and cannot establish inventory eligibility for item 24995. Require verified supported current-client eligibility test without automated destruction or fictional API calls.",
-    "NEW implementation/Master review needed: Retail ItemSparse DB2 12.1.7.70493 derives a negative-only NO_DISENCHANT bit list with no entries 24900..25199, but WoWDB LIVE explicitly flags target 24995 and comparable 25000 non-disenchantable. Missing bit is NOT positive eligibility; determine exact client build/item variant and API check (C_Item.CanDisenchant or supported eligibility path) before any recommendation or negative fixture. Runtime/schema changes are Master-owned.",
-    "No original per-event Warmaul 24995 DE ledger, 0-inclusive per-operation joint histogram or current Retail client receipt. Existing 2026-11-15 source-rounded-percent arithmetic reconstructs positive-bin conditional histograms and derived units, but original hit/stack cohort build/bonus/skill and zero-event data remain unknown; do not treat 2068 - 2031 = 37 as zeros.",
-    "No current Retail exact itemLink/bonus build plus CanDisenchant and receipt validating Warmaul 24995 versus current no-DE database flag; historical original item level 108 differs from modern item level 31.",
-    "No independent post-cutoff Retail Cobalt 36909 or Fel Iron 23424 zero-inclusive prospect export documenting successful operation count, consumed inputs/refunds, exact output IDs/ranks, profile/build and complete 0..N material outcomes.",
-    "Runecloth Headband 13866 old source averages have no per-output hit/zero data; material dust identity is patch-dependent. Do not derive hit probabilities from means.",
-    "The 725-source cutoff catalogue is exclusively Codex/direct-reviewer owned; no repeated bulk audit or duplicate transcriptions.",
-    "Fresh source lead: warcraftecon 141-stack/564-prospect Titanium aggregate lacks original page, exact named output IDs, timestamp, patch and independence; hold until primary source available.",
-    "Current Retail DisenchantLoot DBD layout (12.1.7) has MinLevel/MaxLevel, but no verified live DB2 row/matcher evidence establishes those fields' effective values or whether 24995 is eligible; conflicting item-level variants 14/31/74 require exact itemLink and build.",
-    "New original Brilliant Glass 35945 2008 PTR study is container opening (random `Open`, not Prospect); schema method enum has no Open/Use. Held for Master if container conversion becomes in-scope; no schema/runtime change or unsupported drop record by legacy worker.",
-    "New source search shows no downloadable original Looter raw per-event event table for 24995 despite Wowhead displaying a dynamic disenchant section; static page cannot independently substantiate historical 2068 event detail.",
-    "TBC pre/post Patch 2.1 gem guarantee is patch-sensitive, but no primary individual Fel Iron or Cobalt operation ledger with observed zero/nonzero and output stack is available; avoid inferring samples from published percentages or generic 2000-record comments.",
-    "Public addon descriptions show possible future original session recordings but do not constitute downloadable, independently measured processing evidence or establish Retail input identity, game build, casts, zero outcomes or refund semantics.",
-    "12 original Warmaul record IDs legacy-20261101-201..212 collide with different Netherweave evidence; original audit requires file-qualified adjudication before data promotion, and compiler histogram support is a separate Master-owned implementation concern.",
-    "Gold Forever (Nov 2026) may provide new Retail disenchant original-source logs but no publicly released target 24995 corpus; its loot tracker attributes by base item ID and source code's predicted DE tables are reference/model only, not actual operation denominators or current eligibility.",
-    "Existing legacy status had cut gem item IDs 23094/23095/23096 mistaken for direct Fel Iron prospect outputs; this run corrected status listing only using previously audited 12 uncut output IDs. Verify final compiled schema/consumer with Master rather than changing code.",
-    "2016 ProspectMe raw data caveat: normal TimesProspected increments 1 per capture while 2016 mass operations increment 4 nominal equivalents; code also overwrites duplicate same-material results within an event. Do not equate saved counter with original physical 5-ore operations or trust totals without source-version/operation reconciliation. This is not evidence of an existing target corpus.",
-    "GuideMMO's 2021 TBC Classic Fel Iron 1000-ore video is not a Retail 12.x measurement; publicly indexed description does not expose actual item-specific gem totals, completed successful casts, zero outcomes or player profile. Video observation/extraction and cohort uniqueness would be required before any historical-only evidence.",
-    "The previously PTR-only Fel Iron 23424 Outland Jewelcrafting (1) display is now independently seen on Wowhead LIVE item page (2026-11-22); this is a published requirement label, NOT a witnessed successful current character prospect. No captured in-client operation/skill permission receipt, date/build or material ledger; never transfer historical skill 275/350 or yields into Retail.",
-    "NEW 40959 historical original source (item 41122 Wowhead comment 282402): explicitly claimed 278 Infinite Dust conflicts with 272 units from positive stack frequency bins 25×2+21×3+21×4+15×5; correct source from original commenter or archived context before compiler admission. 22 purchased bar stacks are not proven 110 completed disenchant casts. 2 Dream Shards are quantity-only, not proven two hits. Historical WotLK provenance must never be treated as current Retail without version/eligibility check.",
-    "2026 published Retail recorder addons (TheWoWDB Companion and ProfitProphet) provide capability/eligibility changelog descriptions but no downloadable independent 24995/36909/23424 session ledger, exact observed item/output ID per event, successful N, zeros, client build, skill/spec or refund accounting. Do not turn 600 source cap or template percentages into observed casts.",
-    "40959 new conditional epoch conflict: 22 purchased 20-bar stacks (440 bars) cannot supply 82 dust-positive outcomes at post-3.0.8 8 bars per craft without other sourced bars; early positive dust stacks 2/3 conflict with cited 3.2.2 4-7 hotfix bracket. No actual craft/disenchant N, acquisition dates, exclusive bar inventory, build or 278-vs-272 resolution; Master must decide source-profile flag.",
-    "For parsing captured prospecting sessions: explicitly exclude attempts where loot window did not open and input was not consumed; an API/UI failure is not an observed material zero. Source: first-person Finko comment on wotlk spell 31252, pre-modern client. Exact target actual successful operations and refunds remain unobserved."
+    "Need actual Retail 12.x in-game Warmaul 24995 itemLink with bonus/scale and authoritative disenchant spell eligibility result; two live sites disagree on item level and eligibility; Wowhead related-tab observations are not successful casts.",
+    "Need original raw source of Warmaul 24995 Looter counts (2068 total alleged historical DE, material hits 22445/22446/22447/22449), true per-operation material stack histogram and patch/skill/variant; 37 unaccounted counts cannot be inferred as zeros.",
+    "Need independent current Retail successful operation ledgers for Cobalt 36909 and Fel Iron 23424 with item material IDs, denominators and refunds; original 725-cutoff catalogue is Codex-owned and closed; no recataloguing.",
+    "Master must determine live client eligibility and runtime gating; worker does not edit schema/runtime/implementation."
   ],
   "exhausted_sources": [
-    {
-      "source": "https://www.wowhead.com/item=24995/warmaul-legplates",
-      "reason": "Existing Looter aggregate reused; raw event ledger not accessible"
-    },
-    {
-      "source": "https://www.wowhead.com/tbc/item=23424/fel-iron-ore",
-      "reason": "Already recorded 100-ore and 565-ore Thottbot originals, copied on mirrors"
-    },
-    {
-      "source": "https://www.wowhead.com/wotlk/item=36909/cobalt-ore",
-      "reason": "Known 180-ore and stack reports; no new complete log"
-    },
-    {
-      "source": "https://warcraft.wiki.gg/wiki/Patch_2.1.0",
-      "reason": "Original patch mechanics previously recorded in 2026-11-02 legacy evidence and reviewed; not an additional event cohort"
-    },
-    {
-      "source": "https://legacyofwarcraft.com/db/tbc/professions/disenchanting.html",
-      "reason": "Patch-2.4.3 derived model already in legacy evidence and manager review; not empirical observation"
-    },
-    {
-      "source": "https://www.bluetracker.gg/wow/topic/eu-en/99450029-disenchanting-for-profit-a-guide/",
-      "reason": "Historical source-model guide; no measured sample or Retail item eligibility."
-    },
-    {
-      "source": "https://kaliope.wordpress.com/2007/01/18/mithril-prospecting/",
-      "reason": "Known same-page original already partly transcribed; isolated 'Brill Draenite' wording lacks verifiable item identity and full event ledger."
-    },
-    {
-      "source": "https://www.wowhead.com/item=13866/runecloth-headband",
-      "reason": "T0050 two independent comments already in queue; no per-output hits or zeros, no new sample."
-    },
-    {
-      "source": "https://www.wowhead.com/wotlk/spell=31252/prospecting",
-      "reason": "Found Doometh/Fylinss originals already present in legacy JSONL; no new sample to record."
-    },
-    {
-      "source": "https://www.wowhead.com/item=46849/titanium-powder",
-      "reason": "ZeRoTaCtIcS and 154957 historic source samples already recorded in legacy files."
-    },
-    {
-      "source": "https://www.curseforge.com/wow/addons/prospectbuddy",
-      "reason": "Classic TBC expected-rate tooltip using historical published table, not original measurements or 2026 Retail."
-    },
-    {
-      "source": "https://dalaggstudios.com/worthit-exports",
-      "reason": "WorthIt flipping import presets called 1000 prospects, not source-observed 1000 operations or logged outcomes."
-    },
-    {
-      "source": "https://www.wowhead.com/mop-classic/it/item=23425/adamantite-ore",
-      "reason": "Gary13579 original 35-stack six-rare/powder report is already in existing legacy study and task T0051; commenter 17911 cumulative archive also previously transcribed; MoP Classic mirror is not new client observation."
-    },
-    {
-      "source": "https://www.bluetracker.gg/wow/topic/us-en/75313095-jewelcrafting-gem-and-socket-guide/",
-      "reason": "Newly acquired dated 2007 BC author guide, pre-2.1; describes theoretical 0–4 gem possibility and 1 dust per 5 ore but no tracked casts, actual zero outcomes, exact gem IDs or present-day Retail bridge. Do not revisit for measured rates unless original event logs appear."
-    },
-    {
-      "source": "https://wowinterface.com/downloads/info9751-ProspectStats.html",
-      "reason": "Only first-person 2008 tracking bug, no original Fel Iron cast-by-cast results or valid zero-inclusive sample; tool should not be used to infer N until counter integrity and version independently verified."
-    },
-    {
-      "source": "https://spreadsheets.google.com/pub?key=pdr-MibcRlh8wIv3SUuWxKw",
-      "reason": "Historical published spreadsheet link inaccessible. No raw numerator/denominator/identity facts verified; do not repeatedly query absent document unless archival copy surfaces."
-    },
-    {
-      "source": "https://kaliope.wordpress.com/2007/01/18/jc-prospecting-levels-for-ore/",
-      "reason": "Primary firsthand historical tested-at 290 skill, no actual Fel Iron successful-operation denominator, exact output materials or zero-inclusive processing log; do not retry for numeric rates without new underlying log."
-    },
-    {
-      "source": "https://github.com/Urutseg/ProspectMate/blob/main/ProspectMate.lua",
-      "reason": "Source code inspected: only Dragonflight/Midnight reagent/recipe tracking, not Fel Iron or Cobalt; SavedVariables are aggregates and no published per-event target corpus. Do not revisit for legacy observations absent a documented new version or uploaded actual target log."
-    },
-    {
-      "source": "https://github.com/BestLanguage/bless-fraternity/blob/63d688674601d556067f5c9be9fc47e54237e81e/WTF/Account/157763925%231/SavedVariables/Enchantrix.lua",
-      "reason": "GitHub's indexed original shows Fel Iron Ore 23424 and Cobalt Ore 36909 in the item metadata cache, but ProspectedLocal = {}. The separate .bak also has an empty counter map. Cache membership proves no completed processing operation, hit count, item-output study or zero result. Retry only if original event counts or a newer SavedVariables revision become available."
-    },
-    {
-      "source": "https://github.com/ELLIOTTCABLE/Warcrack/blob/04e75a363d06caaafac078e76a83eb68b3506a4a/WTF/Account/55689639%232/SavedVariables/Enchantrix.lua",
-      "reason": "Cobalt 36909 and Fel Iron 23424 appear in static ore-name/item-link mappings; original indexed ProspectedLocal = {}. Not an observed cohort; game flavor and Retail 2026 eligibility are not established. Retry only if original event counts or a newer SavedVariables revision become available."
-    },
-    {
-      "source": "https://github.com/Industrial/nixos-dotfiles/blob/964310d4e575771120a4b540a450de227256d74a/features/games/wow-classic/WTF/Account/2NDUSTRIAL/SavedVariables/Enchantrix.lua",
-      "reason": "Both 36909/23424 item cache IDs occur, but indexed ProspectedLocal = {}. Explicit wow-classic path prevents treating this as Retail; no measured operations. Retry only if original event counts or a newer SavedVariables revision become available."
-    },
-    {
-      "source": "https://github.com/burned05/Classic-Addons/blob/25d399efa097776c83da577f15907ec90e557301/WTF/Account/54989383%235/SavedVariables/Enchantrix.lua",
-      "reason": "Pinned original SavedVariables checked 2026-11-22: ProspectedLocal = {}. No measured Fel Iron/Cobalt operation, named output observation or zero-inclusive cohort; do not retry without nonempty later revision."
-    },
-    {
-      "source": "https://github.com/nfgallimore/WoW/blob/6a3ca4f6d00e3919672dbb9908fba6a7fea09a9c/WTF/Account/CYBERUKE/SavedVariables/Enchantrix.lua",
-      "reason": "Pinned original SavedVariables checked 2026-11-22: ProspectedLocal = {}. No measured Fel Iron/Cobalt operation, named output observation or zero-inclusive cohort; do not retry without nonempty later revision."
-    },
-    {
-      "source": "https://github.com/ingshtrom/wow-ui/blob/83746f918aa9b31c8b585ccb64261e69cced66d7/WTF/Account/AVIDGAMER123/SavedVariables/Enchantrix.lua",
-      "reason": "Pinned original SavedVariables checked 2026-11-22: ProspectedLocal = {}. No measured Fel Iron/Cobalt operation, named output observation or zero-inclusive cohort; do not retry without nonempty later revision."
-    },
-    {
-      "source": "https://github.com/rbutera/ModernClassic/blob/093007ff732cbeafcc9dc3241a7988d66cce1317/WTF/Account/ZEROPOSITIVE/SavedVariables/Enchantrix.lua",
-      "reason": "Pinned original SavedVariables checked 2026-11-22: ProspectedLocal = {}. No measured Fel Iron/Cobalt operation, named output observation or zero-inclusive cohort; do not retry without nonempty later revision."
-    },
-    {
-      "source": "https://github.com/sfpprxy/wow-addon/blob/a2bf27027c33019dafa1cfb5713a85f16a6d6415/WTF/Account/235540318%231/SavedVariables/Enchantrix.lua",
-      "reason": "Original Enchantrix export blob cde75e5ccc1712512c6e623fb1dabc89ed22b07e is only 167 bytes; ProspectedLocal, MillingLocal, EnchantedLocal empty. No Fel Iron/Cobalt/Warmaul processing evidence."
-    },
-    {
-      "source": "https://github.com/sfpprxy/wow-addon/blob/a2bf27027c33019dafa1cfb5713a85f16a6d6415/WTF/Account/186557135%232/SavedVariables/Enchantrix.lua.bak",
-      "reason": "Original backup contains the same 167-byte blob cde75e5 as sfpprxy 235540318 account, not independent cohort; all processing tables empty."
-    },
-    {
-      "source": "https://github.com/burned05/Classic-Addons/blob/25d399efa097776c83da577f15907ec90e557301/WTF/Account/398438309%231/SavedVariables/Enchantrix.lua",
-      "reason": "Original separate account export blob bf378f6dab138e845e8e659dbc7aca5ca350d922, 238 bytes: EnchantedLocal, ProspectedLocal, MillingLocal empty; no empirical target operations."
-    },
-    {
-      "source": "https://github.com/ELLIOTTCABLE/Warcrack/blob/04e75a363d06caaafac078e76a83eb68b3506a4a/WTF/Account/84813902%231/SavedVariables/Enchantrix.lua",
-      "reason": "Original separate account export blob 2b42071932958bb80ecc8583bca283f1c7fd9494, 182 bytes: all processing tables empty."
-    },
-    {
-      "source": "https://github.com/ELLIOTTCABLE/Warcrack/blob/04e75a363d06caaafac078e76a83eb68b3506a4a/WTF/Account/84813902%232/SavedVariables/Enchantrix.lua",
-      "reason": "Original second account copy has same blob 2b42071932958bb80ecc8583bca283f1c7fd9494 as 84813902#1; not independent, no operations."
-    },
-    {
-      "source": "https://gamesfacebook-usa.blogspot.com/2006/10/",
-      "reason": "Original 2006 prelaunch beta firsthand narrative identifies qualitative Fel Iron gem/no-gem episodes, 300→315 JC skill progression; no actual cast denominator or measured zero count or batch histogram. Do not repeat for numeric rates absent original ledger. Individual permalink was Google-blocked; monthly archive lines 90–98 and 49–70 were readable."
-    },
-    {
-      "source": "https://github.com/mmathias01/WoWza/blob/b209e3f8faae341d99b9c007d28365935fff1f62/WTF/Account/SWEETDOC/SavedVariables/Enchantrix.lua",
-      "reason": "Pinned blob 0912a7e72a949d3c13af3d88f1b8711a32b2ece2: ProspectedLocal and MillingLocal empty; cache references do not prove operations."
-    },
-    {
-      "source": "https://github.com/gordon-to/wow-ui/blob/a379400d142ca423ddd34b6c0c1b845c7765045d/WTF/Account/9INCHTOENAILS/SavedVariables/Enchantrix.lua",
-      "reason": "Pinned blob cf78b77c766400a5ddad9b1246965fba948e5dfc: ProspectedLocal empty; no measured target operations."
-    },
-    {
-      "source": "https://github.com/rbutera/modernclassicmac/blob/b8871f80894a3df52467b0306d209db2dc0794a5/WTF/Account/ZEROPOSITIVE/SavedVariables/Enchantrix.lua",
-      "reason": "Pinned blob e6eb0938afa383f9abc5315047440b371ca03c13: ProspectedLocal empty, EnchantedLocal contains unrelated early-gear positive sightings; no new target measurements."
-    }
+    "2026-11-22 this pass: Wowhead LIVE and Classic Warmaul 24995 text summaries; database item-level presentations cannot resolve current itemLink/bonus/eligibility without client data.",
+    "2026-11-22 this pass: original old Wowhead Fel Iron 23424 and Cobalt 36909 comments expose nominal-stack or averaged reports, no new actual Retail operation ledger or zero-inclusive per-output events; existing sources must not be reimported."
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Find newly published independent Retail 12.x zero-inclusive 24995 disenchant or 23424/36909 successful prospect operation ledger with itemLink/bonus/build, true consumed inputs, skill, casts/zeros/hits/output histograms and refunds, or an authoritative current client eligibility receipt for 24995. Do not relabel published tooltip/profile values as measured output or repeat the Codex-owned p71mrp cumulative/OP studies.",
+  "next_concrete_step": "Target an original publicly posted Retail 12.x SavedVariables/log with a full 24995 itemLink and eligibility failure/success receipt; if none, search independent actual successful 23424/36909 prospect export with per-operation consumed inputs/outputs including zero and refund fields. Route source-version and item-scaling conflict to Master via owned status; keep no-new-cohort status until new raw evidence.",
   "coordination_cutoff": "Cutoff 0cd0bad8867e7a8d909b4ecae74f6136a3e23d42. Repository README and manifest now report CLOSED_VERIFIED_CURRENT_PIPELINE: 731 sources (713 original + 12 addendum + six recovered); Codex/direct reviewers own source decisions, build/database/tooltip verification. No recataloguing/branch changes.",
   "sources_reviewed_this_run": [
     "https://www.wowhead.com/item=23424/fel-iron-ore",
