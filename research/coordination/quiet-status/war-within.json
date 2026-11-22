@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-22T00:27:03.441Z",
-  "status": "active: 3 new WoWDB LIVE item-template cannot-disenchant labels conflict with prior Lamplighter Looter positive references; version/bonus eligibility held, no new measured numeric yields",
+  "updated_at": "2026-11-22T01:23:24.159Z",
+  "status": "active: new original Mar 10 2026 historical Midnight Focus->TWW Gleaming Shard single observed event; reference-only cross-era bug before Mar 18 fix, no current yield admission",
   "task_ids": [
     "T0010",
     "T0011",
@@ -18,7 +18,7 @@
     "Bismuth 210930/210931/210932 post-Oct-25-2024 verified prospect yields remain missing.",
     "T0048 TWW DE rarity/armor/weapon: exact item+bonus and player skill/spec, source-era independent 0..N outcomes and 219946..219955 output quality IDs remain missing; cumulative Looter overlap held."
   ],
-  "source_branch_head_reviewed": "288d84aafcb8dea7eb75aff56e72271b693e0f75",
+  "source_branch_head_reviewed": "cfcdfc7df77a0aff513f65d531cb6d37724190d3",
   "source_policy": "READ current research/v3 README/evidence-format/mechanics/worker/queue before search. Source cutoff catalogue CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources incl six recovered; reuse 12,222 scoped decisions; do not recatalogue Codex backlog. Review/admission merged to main in PR #82 but worker branch remains evidence-only; no release asserted.",
   "study_backlog_triage": [
     {
@@ -398,28 +398,42 @@
     "duplicate": 3
   },
   "newly_verified_fields": [
-    "229154 Lamplighter's Edge: WoWDB LIVE template says Cannot be disenchanted, ilvl 545 BoP one-hand dagger; historical item-side Looter 31 disenchants conflicts, item bonus/build unknown",
-    "229158 Lamplighter's War Knives: same LIVE no-DE template label, ilvl 545 BoP one-hand dagger; Looter 38 operation count separate and independently unverified",
-    "229159 Lamplighter's Lightstone: same LIVE no-DE template label, ilvl 545 BoP offhand; Looter 38 operation count, shard vector matches 229158 but original overlap unresolved"
+    "259349 Blossoming Rootwarden's Focus (Midnight rare wand): first-person Mar 10 source reports 1 completed DE yielding a singular Gleaming Shard (TWW quality ID unknown among 219949/219950/219951); pre-Mar 18 fix only"
   ],
-  "newly_verified_cohorts": [],
+  "newly_verified_cohorts": [
+    {
+      "studyKey": "blizzard-forum-2268859-pvpxan-20260310-rootwarden-gleaming",
+      "source": "https://us.forums.blizzard.com/en/wow/t/disenchanted-rare-quality-item-reward-from-daily-in-harandar-and-got-war-within-mats/2268859",
+      "published": "2026-03-10",
+      "inputItemID": 259349,
+      "outputItemID": null,
+      "outputName": "Gleaming Shard",
+      "casts": 1,
+      "castsWithDrop": 1,
+      "totalQuantity": 1,
+      "sourceKind": "reference",
+      "admission": "held historical cross-era; no post-hotfix Retail TWW rate"
+    }
+  ],
   "new_estimator_eligible_numeric_yield_records": 0,
-  "new_reference_only_numeric_records": 0,
-  "new_no_disenchant_records": 3,
+  "new_reference_only_numeric_records": 1,
+  "new_no_disenchant_records": 0,
   "new_condition_records": 0,
-  "numeric_fields_advanced": [],
-  "evidence_file": "research/v3/evidence/war-within/20261122T0027-lamplighter-wowdb-live-eligibility-conflicts.jsonl",
+  "numeric_fields_advanced": [
+    "Historical anomalous one-event source: 259349->unranked Gleaming Shard, casts=1, castsWithDrop=1, reported singular units=1; other outputs/zeros/rank/build unverified"
+  ],
+  "evidence_file": "research/v3/evidence/war-within/20261122T0120-rootwarden-historical-shard.jsonl",
   "evidence_files": [
-    "research/v3/evidence/war-within/20261122T0027-lamplighter-wowdb-live-eligibility-conflicts.jsonl"
+    "research/v3/evidence/war-within/20261122T0120-rootwarden-historical-shard.jsonl"
   ],
   "evidence_source_links": [
-    "https://www.wowdb.com/items/229154-lamplighters-edge",
-    "https://www.wowdb.com/items/229158-lamplighters-war-knives",
-    "https://www.wowdb.com/items/229159-lamplighters-lightstone"
+    "https://us.forums.blizzard.com/en/wow/t/disenchanted-rare-quality-item-reward-from-daily-in-harandar-and-got-war-within-mats/2268859",
+    "https://www.wowhead.com/item=259349/blossoming-rootwardens-focus",
+    "https://worldofwarcraft.blizzard.com/en-us/news/24266320/hotfixes-march-13-2026"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-01T1621-wowhead-looter-single-stack-replacements.jsonl",
-  "verified_commit_sha": "288d84aafcb8dea7eb75aff56e72271b693e0f75",
-  "verification": "Refreshed owner worker docs, v3 mechanic/evidence rules and queue, current source catalogue cutoff 731; 229160 Wowhead Looter is Codex-owned cutoff and explicitly not duplicated; 229155/229160 WoWDB labels previously captured in owned 20261117T1433. These 3 new LIVE WoWDB source labels independently checked against archived 20261121T2221 Looter references. Submitted as one atomic multi-file Git commit with lease; commit's own SHA cannot be embedded self-referentially in its status body and is to be checked after ref update.",
+  "verified_commit_sha": "cfcdfc7df77a0aff513f65d531cb6d37724190d3",
+  "verification": "Read current v3 README/evidence-format/mechanics/worker/queue. Verified original pvpxan March 10 forum post directly, item ID via Wowhead and March 18 Blizzard hotfix; /2268859 absent owner closed 731-source cutoff manifest. Atomic branch write leased against parent cfcdfc7df77a0aff513f65d531cb6d37724190d3; new commit must be checked externally, self-SHA cannot appear in committed status.",
   "blockers": [
     "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
     "Cumulative PTR Looter display rows contain repeated material names with linked rank IDs unavailable; no per-row independent study and no safe current-Retail rank-specific mapping.",
@@ -449,7 +463,8 @@
     "2026-03-17/19 original cross-era Refulgent Crystal eyewitness reports identify a Midnight wand, not TWW gear; output ID/rank, event date versus Mar18 hotfix, item bonuses, client build and skill/spec missing. No current TWW numeric cohort.",
     "Raw Wowhead Looter IDs recovered for inputs 219208/237999/238002, but this does not establish homogeneous independent client measurements or live-client PTR validity; all 13 replacements remain sourceKind=reference, no build-specific estimate/tooltip admission. 237999 older Nov16 records duplicate Nov17 source rows and require Codex terminal dedup.",
     "2026-11-21 newly acquired live-page Lamplighter Looter items 229158 and 229159 both report N=38 and identical shard hits Q1/Q2/Q3=22/8/6; independent sample provenance is unproven. These source-original cumulative reference rows must not contribute to estimator, be added as independent casts, or license an uncommon-to-shard rule without original item-version/client-log review.",
-    "2026-11-22 T0048: independently checked LIVE WoWDB 229154/229158/229159 BoP ilvl545 templates explicitly say Cannot be disenchanted, while older Wowhead Looter item-side reference samples claim 31/38/38 results. Item ID alone insufficient for eligibility; at-cast full itemLink/bonus/version and current live client need verification by owner reviewer before any unconditional DE badge."
+    "2026-11-22 T0048: independently checked LIVE WoWDB 229154/229158/229159 BoP ilvl545 templates explicitly say Cannot be disenchanted, while older Wowhead Looter item-side reference samples claim 31/38/38 results. Item ID alone insufficient for eligibility; at-cast full itemLink/bonus/version and current live client need verification by owner reviewer before any unconditional DE badge.",
+    "Historical 259349 Focus->Gleaming Shard report has no output quality ID, item bonuses, skill or at-cast build; official 2026-03-18 fix prevents use for current TWW yields. No new post-2024-10-25 TWW complete operation log found."
   ],
   "exhausted_sources": [
     "Previously indexed 1f83cnd, 1g350pq, PeaEsk/434018, 1fdmzwy and 1f3qf96 already provide historical studies; source duplicates not re-imported.",
@@ -465,69 +480,42 @@
     "2026-11-21: Aendri forum 1942112 contributes only the original unranked 1-dust-per-green historical per-item mean; do not reread without raw logs. Reddit 1f117id repeats the existing 1f3qf96 exact 100-green 119/97/55 cohort (not independent); Wowhead 213399 and Reddit 1fdmzwy remain Codex-catalogued.",
     "2026-11-21: Seven original Wowhead Looter source raw HTML pages 232446,229150,238249,233264,233265,229143,229162 independently match archived Nov1 data; re-scraping unchanged cumulative snapshots cannot create independent evidence. Revisit only if an actual sourced table change or per-character original cast/bonus/build ledger appears.",
     "2026-11-21 20:19 UTC search: Reddit 1g8kbaq is already in this owned status as held; 1jnvht8 already held; 1smgllg and 1rrn6of are Midnight-only, not TWW. No new current-Retail numerator/denominator records. Avoid recataloguing.",
-    "2026-11-21 2026-11-21T21:24:52.693Z: item-side Looter 219208/237999/238002 raw tables fully inspected and 13 earlier anonymous hit-only rows updated via replacements; repeating identical cumulative tables cannot supply new independent cohorts, skill or refunds."
+    "2026-11-21 2026-11-21T21:24:52.693Z: item-side Looter 219208/237999/238002 raw tables fully inspected and 13 earlier anonymous hit-only rows updated via replacements; repeating identical cumulative tables cannot supply new independent cohorts, skill or refunds.",
+    "2026-11-22: Archived pvpxan March 10 historical Focus->TWW Gleaming Shard report as one reference-only source; revisit only for actual timestamped skill/item/output rank/client logs."
   ],
-  "next_concrete_step": "Request original Lamplighter itemLink/bonus, rarity/ilvl/eligibility at operation time and client build for 229154/229158/229159, reconcile WoWDB static no-DE source against historical Wowhead Looter on verified version; independently seek post-Oct25-2024 Bismuth/Ironclaw/Aqirite or Mycobloom completed cast ledgers with 0..N outputs, rank, skill/spec and refunds. Leave all unknown yields null.",
-  "previous_status_updated_at": "2026-11-21T23:24:01.716Z",
+  "next_concrete_step": "Seek original post-2024-10-25 TWW Bismuth/Ironclaw/Aqirite and Mycobloom completed cast logs, 0..N per-material outcomes, output quality, rank, skill/spec and Resourcefulness ledger; reconcile gear DE item bonus/build eligibility. 259349 only as pre/post-2026-03-18 cross-era anomaly.",
+  "previous_status_updated_at": "2026-11-22T00:27:03.441Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "timestamp_utc": "2026-11-22T00:27:03.441Z",
+    "timestamp_utc": "2026-11-22T01:23:24.159Z",
     "focus": [
-      "T0048 War Within item-specific DE eligibility and version/bonus reconciliation after Looter 229154/229158/229159"
+      "T0048 historical cross-era item DE source, no current baseline inference"
     ],
     "checks": [
       {
-        "source": "https://www.wowdb.com/items/229154-lamplighters-edge",
-        "itemID": 229154,
-        "source_label": "Cannot be disenchanted",
-        "source_ilvl": 545,
-        "source_bind": "Bind on Pickup",
-        "source_intro_patch": "11.0.2",
-        "source_intro_build": 55789,
-        "contradictory_wowhead_url": "https://www.wowhead.com/item=229154",
-        "contradictory_looter_item_side_count": 31,
-        "observed_client_build": null,
-        "actual_casts": null,
-        "status": "new original source metadata; held as version/eligibility conflict, not live DE prohibition or yield study"
+        "source": "https://us.forums.blizzard.com/en/wow/t/disenchanted-rare-quality-item-reward-from-daily-in-harandar-and-got-war-within-mats/2268859",
+        "published": "2026-03-10",
+        "inputItemID": 259349,
+        "outputName": "Gleaming Shard",
+        "casts": 1,
+        "castsWithDrop": 1,
+        "totalQuantity": 1,
+        "outputItemID": null,
+        "skill": null,
+        "build": null
       },
       {
-        "source": "https://www.wowdb.com/items/229158-lamplighters-war-knives",
-        "itemID": 229158,
-        "source_label": "Cannot be disenchanted",
-        "source_ilvl": 545,
-        "source_bind": "Bind on Pickup",
-        "source_intro_patch": "11.0.2",
-        "source_intro_build": 55789,
-        "contradictory_wowhead_url": "https://www.wowhead.com/item=229158",
-        "contradictory_looter_item_side_count": 38,
-        "observed_client_build": null,
-        "actual_casts": null,
-        "status": "new original source metadata; held as version/eligibility conflict, not live DE prohibition or yield study"
-      },
-      {
-        "source": "https://www.wowdb.com/items/229159-lamplighters-lightstone",
-        "itemID": 229159,
-        "source_label": "Cannot be disenchanted",
-        "source_ilvl": 545,
-        "source_bind": "Bind on Pickup",
-        "source_intro_patch": "11.0.2",
-        "source_intro_build": 55789,
-        "contradictory_wowhead_url": "https://www.wowhead.com/item=229159",
-        "contradictory_looter_item_side_count": 38,
-        "observed_client_build": null,
-        "actual_casts": null,
-        "status": "new original source metadata; held as version/eligibility conflict, not live DE prohibition or yield study"
+        "source": "https://worldofwarcraft.blizzard.com/en-us/news/24266320/hotfixes-march-13-2026",
+        "fix_date": "2026-03-18",
+        "effect": "Focus should now DE into Midnight materials"
       }
     ],
-    "excluded_catalogue_overlaps": [
-      "wowhead:item=229160 in 731-source Codex manifest: not recatalogued",
-      "WoWDB 229155 and 229160 in earlier worker evidence: not duplicated"
-    ],
-    "outcome": "Three new independent LIVE WoWDB item-template labels archived as source-only noDisenchant evidence with explicit conflict hold; no new operation count, material yield, or current Retail admission."
+    "catalogue_check": "Original forum URL /2268859 not in cutoff 731 manifest",
+    "outcome": "1 newly located reference-only historical event, 0 current-rate cohorts"
   },
   "source_integrity_findings": [
     {
