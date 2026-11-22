@@ -1,0 +1,15 @@
+# Source-attribution QA — TWW Glittering Glass post 28 (2026-11-22 UTC)
+
+## Finding
+
+The original [Blizzard forum thread, page 2, post 28](https://us.forums.blizzard.com/en/wow/t/glittering-glass/1958379?page=2) currently displays the author as **irdoz-3034955 (irdoz)**, posted **2024-10-27 11:30 a.m.**. Fresh post-cutoff replacement evidence `research/v3/evidence/war-within/2026-11-22T2124-prospect-hotfix-epoch-replacements.jsonl`, IDs `war-within-20261122-212409..212411`, instead records `source.author = Bearabletrio`. An earlier alias/account relationship has not been established. The original-page identity differs from the new research metadata; do **not** silently assume either alias is equivalent or attribute an additional independent cohort to this difference.
+
+The source itself reports *Glittering Glass per 200 ore* as **12 Bismuth, 4 Ironclaw, 6 Aqirite** and describes averages after processing 400 of each, with input quality phrased "rank 1 or rank 2". The worker's conversions to **60/20/30 units per 1,000 input ore** are arithmetically correct. The source does **not** establish the collection date relative to Blizzard's **2024-10-25 prospecting hotfix**, completed cast counts, refund ledger, exact rank-specific ore IDs, hits, zeros or a current Retail rate. A posting date after the hotfix is not a measurement date.
+
+The other original [Reikah post 9](https://us.forums.blizzard.com/en/wow/t/jewelcrafting-broken-pebbles-and-glass/1968257) does display **Reikah** and the 9,000-ore first-character correction, 1,089 pooled gems/951 pebbles/358 glass, and second-character 1,504 pooled gems/1,030 pebbles/335 glass/202 crushed gemstones; its eight post-cutoff replacement records preserve the source-level distinctions without verified casts. This is two character profiles from one original author, not independent per-material sample denominators.
+
+Official [Blizzard running hotfix history](https://worldofwarcraft.blizzard.com/en-us/news/24148555/hotfixes-october-28-2024) includes the 2024-10-25 byproduct/gem-drop change; Blizzard's 2024-08-29 gem-rate improvement appears in the earlier [hotfix history](https://worldofwarcraft.blizzard.com/en-us/news/24134803/hotfixes-october-16-2024). Both hotfixes precede the 2024-10-27 post's publication except the latter change precedes it by two days; no collection epoch is deduced.
+
+## Disposition
+
+**Correct source-author attribution through a worker-owned append-only source correction, after confirming any historical alias.** Do not edit the worker's original or replacement JSONL, duplicate the original cohort, fabricate samples, change method/ranks, alter addon valuation, or reopen Codex-owned source catalogue without a demonstrated changed hash/consumer defect. Until resolved, retain the exact forum post URL, post number and on-page displayed author in review metadata; treat Bearabletrio as an unverified alias. No observed new means, probability, expected-gold decision, runtime test or client test results from this manager QA.
