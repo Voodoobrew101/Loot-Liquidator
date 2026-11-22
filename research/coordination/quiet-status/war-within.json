@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-22T15:20:29.367Z",
-  "status": "active: original-source TWW milling/prospect/disenchant search and cross-repo dedupe completed; no new independent numeric cohorts or estimator-eligible yield fields",
+  "updated_at": "2026-11-22T16:26:36.158Z",
+  "status": "active: original-source TWW scan; one newly documented held input-identity lead, zero new independent measured yield cohorts",
   "task_ids": [
     "T0009",
     "T0008",
@@ -459,12 +459,23 @@
       "exact_inputs": "Author says about 50,000 ores total across TWW prospecting types/ranks; exact Bismuth 210930..210932, Aqirite 210933..210935, Ironclaw 210936..210938 allocation, skill/spec and extra refunded/reprospected ore unknown",
       "outputs": null,
       "reason": "Original author personally reports roughly 50,000 prospecting ore inputs after recent rate change; confirms increased Pebbles/Glass, Amber now present and reduced gem rates, but the numerical gateway worksheet is paid-only. No per-rank original operation counts, cast completion/refund ledger, output IDs/qualities, units, hit/zero histograms, source build or separate independent cohort identifiers. An approximate ore-input count is NOT 10,000 verified completed casts. No estimate admission or paywalled access attempted. January 20 2025 spreadsheet update remains paid."
+    },
+    {
+      "status": "held",
+      "scope": "newly checked 2026-05-18 Dornogal old-expansion Storm Dust vendor-disenchant allegation; exact item identity absent",
+      "original_cohort": "2026-05-18 Reddit discussion relaying a YouTube video, with independent unsized commenter anecdotes (not an original counted DE study)",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1th2zkl/major_vendor_pricing_oversight_in_dornogal_is/",
+      "secondary_source": "https://www.youtube.com/watch?v=Ziks9LyfitQ",
+      "existing_ids": null,
+      "exact_inputs": "Dornogal vendor item allegedly costing 16 copper; exact input itemID, name, rarity, armor/weapon kind, bonus and ilvl not supplied in inspected public discussion",
+      "outputs": "Storm Dust family claimed, with no independently linked ranked ID among 219946/219947/219948, output unit totals, completed DE N, hits or 0..N histograms; commenter suggests ~3 dust/DE without cited measured sample",
+      "reason": "Although published May 18 2026, source calls Storm Dust 'current expansion' after Midnight release (another commenter corrects this), so epoch/expansion labeling is unreliable. Original poster reports watching a video, not personal measured operations; video content could not be independently retrieved. Follow-up commenter claims fresh-character testing but provides gold/hour, not source-item ID or output ledger. This is a plausible eligibility/identity lead only, not a Retail TWW output study, no special vendor exchange, yield rate, confidence or noDisenchant record. Preserve unknowns; skip unless direct original item and per-operation evidence surfaces."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 7,
-    "held": 31,
+    "held": 33,
     "duplicate": 3
   },
   "newly_verified_fields": [],
@@ -481,11 +492,12 @@
     "https://www.reddit.com/r/woweconomy/comments/1l91chl",
     "https://www.reddit.com/r/woweconomy/comments/1nmnuc2",
     "https://www.curseforge.com/wow/addons/ezdisenchant/files/9635154",
-    "https://www.wowhead.com/spell=434018/algari-prospecting"
+    "https://www.wowhead.com/spell=434018/algari-prospecting",
+    "https://www.reddit.com/r/woweconomy/comments/1th2zkl/major_vendor_pricing_oversight_in_dornogal_is/"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-01T1621-wowhead-looter-single-stack-replacements.jsonl",
   "verified_commit_sha": "f867e2c5eaa90cddde372c42363db68d49317951",
-  "verification": "Read current README/evidence-format/mechanics/worker/queue and refreshed branch; checked five original URLs and compared their source fingerprints against existing worker/source-catalogue research. Source-only held or duplicate; all unknown N/P(hit)/zeros remain null. No new JSONL, PR, merges, releases, build writes or valuation changes. Parent head 01e377ff9d7299fcf1aebaa948f08128260f94c3; status commit/read-back verified externally after write.",
+  "verification": "Fresh README, evidence-format, mechanics, worker role and queue were read on implementation/five-agent-completion. Public source and original Reddit comments inspected; no new scientific numerator/denominator, item identity or rank. Existing Aqirite, milling and Wowhead sources not re-imported. The status write is verified by read-back in this run. No JSONL manufactured, catalogue edits, PR, merge, release or addon changes.",
   "blockers": [
     "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
     "Cumulative PTR Looter display rows contain repeated material names with linked rank IDs unavailable; no per-row independent study and no safe current-Retail rank-specific mapping.",
@@ -553,43 +565,43 @@
     "2026-11-22: Reddit 1nmnuc2 (Sep 2025) ink/pigment milling costs are historical prices only; not a measured 10-herb yield sample."
   ],
   "next_concrete_step": "Prioritize genuinely new author-published raw Retail TWW per-operation disenchant logs or per-ranked 5-ore/10-herb result ledgers with timestamps/skill/spec, output unit and 0..N histogram, refund reuse and patch epoch. Verify against canonical 731-source/12,222-scope catalogue before admission; do not process existing 725-source Codex backlog. The Retail CSV-export addon is a source-acquisition possibility only if an actual original player export is publicly published; no in-game tests, purchases or requests to owner.",
-  "previous_status_updated_at": "2026-11-22T14:20:15.881Z",
+  "previous_status_updated_at": "2026-11-22T15:20:29.367Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "timestamp_utc": "2026-11-22T15:20:29.367Z",
+    "timestamp_utc": "2026-11-22T16:26:36.158Z",
     "focus": [
-      "T0009/T0008/T0040 fresh post-hotfix ranked prospecting logs with original denominators",
-      "T0010/T0011/T0012 10-herb milling distributions distinguished from illustrative yield math",
-      "T0048 original TWW gear DE output histograms and character profile"
+      "T0048 TWW disenchant item/version identity and independent historical source-context",
+      "T0009/T0008/T0040 prospecting genuine cast ledgers after 2024-10-25 hotfix",
+      "T0010/T0011/T0012 10-herb Mycobloom casts and pigment rank identities"
     ],
     "checks": [
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1neicjm",
-        "original_post": "2025-09-11/12",
-        "disposition": "held as mathematical/example commentary, not a sampled mill cohort; 13 pigments per 10 herbs from illustrative 11..15 possible outputs does NOT state counted Mycobloom casts, input rank, material rank or refunded herbs. Already present in TWW source-gap evidence; no new row."
+        "source": "https://www.reddit.com/r/woweconomy/comments/1th2zkl/major_vendor_pricing_oversight_in_dornogal_is/",
+        "original_post": "2026-05-18",
+        "disposition": "newly assessed source-level identity lead; no named item or empirical cast/hit/zero/output ledger. Novel URL in owned status; inclusion in canonical 731-source catalogue not independently demonstrated. Held without numeric or recipe claims."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1l91chl",
-        "original_post": "2025-06-11",
-        "disposition": "held: 42,000g spent on R2 Ironclaw and ~32,000g material value returned are historical prices, not total gem/byproduct units. No completed 5-ore operations, per-output IDs/hits/zeros or refund ledger. Prior migration index already contains URL, so no duplicate evidence."
+        "source": "https://www.reddit.com/r/woweconomy/comments/1g350pq",
+        "original_post": "2024-10-14",
+        "disposition": "already recorded Oct-2024 Aqirite R1/R2 per-1000-ore means (11,000/10,000 ore, refunded ore not re-prospected); historical pre-2024-10-25 epoch, so neither new cohorts nor live rates."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1nmnuc2",
-        "original_post": "2025-09-25",
-        "disposition": "economics-only anecdote on milling pigment purchase-vs-processing costs; no named herb/rank quantitative pigment yields, operation counts, hits, zeros or skill. Not usable for live-price EV or baseline; no evidence added."
+        "source": "https://www.reddit.com/r/woweconomy/comments/1l3uqnw",
+        "original_post": "2025-06",
+        "disposition": "already held pooled 1,500 Orbinid and 1,500 Blessing Blossom statement; resourcefulness-dependent output interval unallocated to herb/rank, no new 10-herb ledger."
       },
       {
-        "source": "https://www.curseforge.com/wow/addons/ezdisenchant/files/9635154",
-        "original_post": "2026-11-15",
-        "disposition": "Retail 12.1.5 edition advertises per-character Disenchant History capped at 500 with CSV/TXT export. This is a potential route to a genuine original cast ledger, NOT a published TWW result: no actual user export, output unit rows, skill/spec/build or verified zero-inclusive data inspected. Existing Midnight role researched the addon, so avoid duplicate source/cross-role re-cataloguing."
+        "source": "https://www.wowhead.com/ptr-2/spell=434018/algari-prospecting",
+        "disposition": "existing PeaEsk rank-2 100-ore aggregate and DobberSH Null Stone single original prospect; no independent original per-cast 0..N logs. Do not re-record or double-count."
       },
       {
-        "source": "https://www.wowhead.com/spell=434018/algari-prospecting",
-        "disposition": "DobberSH 5-Null-Stone/one-cast first-person four-output comment already captured under war-within-20261102-0918-004..007 and original cohort in source-catalogue QA. No second cast, output or status row."
+        "source": "https://us.forums.blizzard.com/en/wow/t/the-war-within-hotfixes-october-16/1930982?page=5",
+        "original_post": "2024-08-29 hotfix listing",
+        "disposition": "confirmed historical official Bismuth/Ironclaw/Aqirite gem-rate increase; historical known mechanism, not a new post-2024-10-25 yield cohort."
       }
     ],
     "independently_new_numeric_cohorts": 0,
@@ -1079,6 +1091,12 @@
       "date": "2026-11-22",
       "status": "existing-source-identity-overlap-for-master-check-not-new-yield",
       "detail": "six existing worker JSONL rows cite the same original Adreymar report (IDs war-within-20261030-027, war-within-20261031-3314, war-within-20261101-021725, war-within-20261101-2020-014, war-within-20261102-0824-011, war-within-20261117-113014). Six existing worker JSONL rows cite the same original Adreymar mixed-ore report but use six different studyKeys (five study/unspecified sourceKinds and one reference). All quote roughly 50,000 mixed TWW ore and 80 Glittering Glass item 213399 per 1,000 nominal ore inputs. These are a single original source, NOT six independent cohorts or 50,000 completed prospects. No ore rank/ID allocation, completed operations, hit/zero histograms, refunds or collection build confirmed. Raw source identity cross-checked; build-time catalogue/admission may already normalize/deduplicate these cutoff rows, so do not declare a pipeline defect absent its exact scoped decision."
+    },
+    {
+      "source": "https://www.reddit.com/r/woweconomy/comments/1th2zkl/major_vendor_pricing_oversight_in_dornogal_is/",
+      "date": "2026-11-22",
+      "status": "held-unidentified-post-expansion-vendor-disenchant-anecdote-not-numeric-evidence",
+      "detail": "May 18 2026 thread claims 16-copper Dornogal vendor item disenchanting to TWW Storm Dust but supplies no exact item ID, stack distribution, quality, DE cast ledger, skills or patch and mistakenly calls old-expansion material current. Third-party video URL unverified due to retrieval throttle. Comment 'about 3 dust per disenchant' has no sample/denominator, so no mean or rate admission."
     }
   ],
   "last_source_commit_pending": false
