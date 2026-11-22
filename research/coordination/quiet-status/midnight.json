@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-22T21:06:56.992Z",
-  "status": "Refreshed current Midnight role instructions, mechanics and queue. Searched for newly published post-cutoff original Retail 12.1.5 disenchant, prospect and milling ledgers. Newly examined Nov 21 Auction Detonator v0.21.53 release: its public changelog describes DE value lookup and automation, not a participant-level completed-operation dataset or item-version evidence. No independent numeric cohort or corrected identity/quantity field verified, and no JSONL created. Existing 731-source cutoff catalogue remains Codex-owned and not re-catalogued. Only this owned quiet status was changed; no PR, release, runtime or schema changes.",
+  "updated_at": "2026-11-22T22:16:18.727Z",
+  "status": "Read current v3 README, evidence format, mechanics, role and queue from implementation/five-agent-completion. Investigated post-Nov-20 Retail Midnight 12.1.5 original participant DE, prospecting and milling outcomes with source/domain/date checks. No new post-cutoff Retail source with independent per-operation quantities, verified at-cast item instance, completed casts, output hits/zeros or source-matched profile. Archived pre-cutoff forum sample was not recatalogued; WoW: Forever collector/bug sample was excluded as non-Retail. No numeric cohort, invented denominator or new JSONL; only this owned status updated. No Codex branches, PRs, runtime, schema, releases or schedules changed.",
   "task_ids": [
     "T0049",
     "T0026",
@@ -1407,9 +1407,10 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://www.curseforge.com/wow/addons/auction-detonator/files/9734263/additional-files",
-    "https://www.wowhead.com/ptr/item=272246/miststalkers-wristbands",
-    "https://worldofwarcraft.blizzard.com/en-us/content-update-notes"
+    "https://us.forums.blizzard.com/en/wow/t/sunglass-vial-1-hour-material-test/2323248",
+    "https://github.com/ProfessionsForever/Professions_Forever/blob/main/Core/DisenchantRecord.lua",
+    "https://github.com/ClassicWoWCommunity/forever-bugs/issues/351",
+    "https://worldofwarcraft.blizzard.com/en-us/news/24307310/hotfixes-october-21-2026"
   ],
   "blockers": [
     "272246: actual disenchantable item bonus/at-cast ilvl 305 itemLink and correlated original DE output are not published; generic 206 cannot-be-disenchanted catalog conflicts with aggregate 140-row Looter display.",
@@ -1598,11 +1599,11 @@
       "reason": "Post-cutoff addon release description not an independent Retail processing sample; lookup/devaluation is not evidence for real casts or at-cast item 272246. Revisit only if original per-event data published."
     }
   ],
-  "next_concrete_step": "Search for genuinely new publicly released Retail 12.1.5 player operation exports dated after Nov 20: per-action original input itemLink/bonuses/at-cast ilvl (272246), output IDs and quantities, zero outcomes, actual completed ore/prospect/mill counts versus refunds, gear rarity and profession skill/spec/build. Request original raw ledger rather than reverse-infer 237362 casts from 4000 nominal ore; don't copy 731 cutoff sources.",
-  "verified_base_commit_sha": "0a7f8a4cfbf186685546bc4b1fdb36a9b386f7d7",
+  "next_concrete_step": "Look only for genuinely new post-cutoff original Retail 12.1.5 event-ledger exports with source-identifiable input itemLink/bonuses/actual ilvl (272246), complete 0-inclusive disenchant results, or 237362 rank-specific completed five-ore prospect counts and refunds; follow with 10-herb milling output/zero logs and skill/spec/build. Do not revisit July forum samples or WoW Forever data; stay outside 731-source Codex catalogue.",
+  "verified_base_commit_sha": "2625e171d7ef3a757e75245cf0ae8642804ea8cf",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Single owned status-file update only; commit SHA cannot self-identify in same committed JSON. Verify externally by reading branch ref, committed file and commit-file list.",
+  "commit_note": "Single owned quiet-status commit only; commit SHA cannot be embedded in same self-referential commit. Check remote branch and committed file after write.",
   "new_leads_screened": [
     {
       "category": "held_new_nov21_secondary_addon_feature_no_raw_data",
@@ -1633,6 +1634,47 @@
       "disposition": "existing_identity_reference_only_not_new; no duplicate evidence",
       "at_cast_itemlink": null,
       "observed_outputs": null
+    },
+    {
+      "category": "precutoff_original_player_partial_prospecting_totals_codex_scope",
+      "source": "https://us.forums.blizzard.com/en/wow/t/sunglass-vial-1-hour-material-test/2323248",
+      "published": "2026-07",
+      "target_task_ids": [
+        "T0003",
+        "T0002",
+        "T0005"
+      ],
+      "target_input_ids": [
+        237359,
+        237361,
+        237364,
+        237365,
+        237362,
+        237363
+      ],
+      "observation": "Original player reports starting ore counts 67 gold-rank Refulgent Copper, 66 gold-rank Brilliant Silver and 8 gold-rank Umbral Tin with separate listed gem/stone/glass/diamond aggregate quantities; July 2026 post predates owner Nov20 source cutoff. Refunded/consumed ore, exact item IDs, completed casts, zero events and per-output ranks at event level absent. Do not derive fractional completed operations from raw ore counts or double-count if in Codex catalogue.",
+      "disposition": "precutoff_Codex_assigned_not_recatalogued_no_worker_evidence",
+      "completed_casts": null,
+      "zero_outcomes": null,
+      "refunds": null,
+      "skill": null,
+      "specialization": null,
+      "patch": null
+    },
+    {
+      "category": "non_retail_client_and_no_original_midnight_yield",
+      "source": "https://github.com/ProfessionsForever/Professions_Forever/blob/main/Core/DisenchantRecord.lua",
+      "supporting_original": "https://github.com/ClassicWoWCommunity/forever-bugs/issues/351",
+      "published": "2026-11",
+      "target_task_ids": [
+        "T0026",
+        "T0049"
+      ],
+      "observation": "Public disenchant-collector code is for WoW Forever/Classic and a linked Oct2026 Classic Beta 21–30 green-weapon trial with named original outcomes; it is not Retail Midnight (item IDs and expansion/client context differ), so no Midnight cohort or iLvl inference is valid.",
+      "disposition": "rejected_non_retail_no_evidence_added",
+      "completed_casts_for_retail": null,
+      "actual_input_272246": null,
+      "material_outputs_midnight": null
     }
   ],
   "catalogue_checkpoint": {
