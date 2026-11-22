@@ -1,15 +1,16 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-22T02:20:29.250Z",
-  "status": "active: targeted TWW ore-rank prospecting, Mycobloom milling and DE source search; no new independent numerical cohort or corrected source identity; no new evidence file created",
+  "updated_at": "2026-11-22T03:24:09.946Z",
+  "status": "active: inspected independent TWW prospecting/milling/DE sources; one historical original Gem Finding zero-extra-Amber lead held for missing operation and output ledger; no new admissible yield cohort or evidence file",
   "task_ids": [
-    "T0010",
-    "T0011",
-    "T0012",
     "T0009",
     "T0008",
     "T0007",
     "T0040",
+    "T0032",
+    "T0010",
+    "T0011",
+    "T0012",
     "T0048"
   ],
   "exact_gaps_targeted": [
@@ -18,7 +19,7 @@
     "Bismuth 210930/210931/210932 post-Oct-25-2024 verified prospect yields remain missing.",
     "T0048 TWW DE rarity/armor/weapon: exact item+bonus and player skill/spec, source-era independent 0..N outcomes and 219946..219955 output quality IDs remain missing; cumulative Looter overlap held."
   ],
-  "source_branch_head_reviewed": "88ec8a5a27fba6dc4c79de3118143b40f34cd386",
+  "source_branch_head_reviewed": "f0e13aed21bd60dfb13093cc381611676575e587",
   "source_policy": "READ current research/v3 README/evidence-format/mechanics/worker/queue before search. Source cutoff catalogue CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources incl six recovered; reuse 12,222 scoped decisions; do not recatalogue Codex backlog. Review/admission merged to main in PR #82 but worker branch remains evidence-only; no release asserted.",
   "study_backlog_triage": [
     {
@@ -389,12 +390,22 @@
       "exact_inputs": "229159 Lamplighter's Lightstone BoP static ilvl545",
       "outputs": null,
       "reason": "WoWDB says Cannot be disenchanted, whereas independently catalogued reference-only Wowhead Looter claims 38 disenchants for same base itemID. No verified at-cast version/bonus, actual in-game eligibility test, source build/skill, or event-level output ledger. Do not turn static label into unconditional exclusion or overwrite positive historical Looter reference. 229158 and 229159 shard hit vectors coincide; original event overlap unknown."
+    },
+    {
+      "status": "held",
+      "scope": "new firsthand historical conditional-specialization prospecting claim, not a measured material-zero cohort",
+      "original_cohort": "CaptMortons 2024-09-03 original Blizzard forum; reports 5,000 Aqirite ore prospected with Gem Finding 40/40 and no EXTRA amber from talent",
+      "source": "https://us.forums.blizzard.com/en/wow/t/jewelcrafting-4040-gem-finding-broken-no-ambers/1942494",
+      "existing_ids": null,
+      "exact_inputs": "Aqirite, rank/item ID unspecified (210933/210934/210935 unresolved); 5,000 ore claimed, completed casts and refunds unverified",
+      "outputs": "No extra Ambivalent Amber proc is claimed, NOT zero total Amber outputs; rank/material ID, baseline units, cast hits, zero histogram and independent operation count absent",
+      "reason": "Cannot equate no bonus talent proc with zero ambient Amber output; only a historical author claim after Aug 29 but before Oct 25 2024 prospect changes, not a current-Retail measured drop cohort. Original source not in 731-source cutoff manifest."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 7,
-    "held": 25,
+    "held": 26,
     "duplicate": 3
   },
   "newly_verified_fields": [],
@@ -409,7 +420,7 @@
   "evidence_source_links": [],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-01T1621-wowhead-looter-single-stack-replacements.jsonl",
   "verified_commit_sha": "cfcdfc7df77a0aff513f65d531cb6d37724190d3",
-  "verification": "Refreshed branch at 88ec8a5a27fba6dc4c79de3118143b40f34cd386; directly read current README.md, evidence-format.md, mechanics.md, roles/worker.md and queue.json; compared search results with existing role status and queue source/cohort references. No generated data or code changes. Commit/read-back must be verified independently; committed status cannot self-report its new SHA.",
+  "verification": "Read branch f0e13aed21bd60dfb13093cc381611676575e587 and owned status blob 13cda5fe28fd693161d4a8d04b5aa062f3222f63; read required research/v3 README, evidence-format, mechanics, roles/worker and queue; checked cutoff manifest for source-key ownership. One status-only commit is being created; its own SHA cannot be embedded into its committed contents; verify remote read-back separately.",
   "blockers": [
     "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
     "Cumulative PTR Looter display rows contain repeated material names with linked rank IDs unavailable; no per-row independent study and no safe current-Retail rank-specific mapping.",
@@ -458,49 +469,55 @@
     "2026-11-21: Seven original Wowhead Looter source raw HTML pages 232446,229150,238249,233264,233265,229143,229162 independently match archived Nov1 data; re-scraping unchanged cumulative snapshots cannot create independent evidence. Revisit only if an actual sourced table change or per-character original cast/bonus/build ledger appears.",
     "2026-11-21 20:19 UTC search: Reddit 1g8kbaq is already in this owned status as held; 1jnvht8 already held; 1smgllg and 1rrn6of are Midnight-only, not TWW. No new current-Retail numerator/denominator records. Avoid recataloguing.",
     "2026-11-21 2026-11-21T21:24:52.693Z: item-side Looter 219208/237999/238002 raw tables fully inspected and 13 earlier anonymous hit-only rows updated via replacements; repeating identical cumulative tables cannot supply new independent cohorts, skill or refunds.",
-    "2026-11-22: Archived pvpxan March 10 historical Focus->TWW Gleaming Shard report as one reference-only source; revisit only for actual timestamped skill/item/output rank/client logs."
+    "2026-11-22: Archived pvpxan March 10 historical Focus->TWW Gleaming Shard report as one reference-only source; revisit only for actual timestamped skill/item/output rank/client logs.",
+    "2026-11-22T03:24:09.946Z: Historical first-person Gem Finding 40/40 Aqirite 5,000-ore report (https://us.forums.blizzard.com/en/wow/t/jewelcrafting-4040-gem-finding-broken-no-ambers/1942494) lacks actual successful casts and ordinary-vs-bonus Amber counts; retain as held specialization note, do not recycle without raw output ledger. Searches spanning Reddit, Blizzard US/EU forums, Wowhead, Method and GitHub-source candidates returned previously catalogued studies or qualitative tips, not new complete 0..N yield cohorts."
   ],
-  "next_concrete_step": "Acquire NEW first-person post-2024-10-25 rank-tagged Bismuth/Ironclaw/Aqirite completed operation logs and TWW Mycobloom 10-herb milling logs with 0..N output histograms plus skill/spec/refund and exact quality IDs; alternatively verify at-cast bonus/patch/skill to resolve 229154/229158/229159 eligibility conflict without duplicate Looter cohorts.",
-  "previous_status_updated_at": "2026-11-22T01:23:24.159Z",
+  "next_concrete_step": "Seek an original retail post-2024-10-25 complete Aqirite/Bismuth/Ironclaw rank+skill+Gem Finding operation export with bonus-vs-ordinary gem attribution, individual 0..N output histogram and refunds; or a Mycobloom 10-herb pigment-quality batch log / DE full itemLink and skill log. Re-evaluate 1942494 only if the author supplies raw logs; do not infer zero Amber from zero EXTRA Amber.",
+  "previous_status_updated_at": "2026-11-22T02:20:29.250Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "timestamp_utc": "2026-11-22T02:20:29.250Z",
+    "timestamp_utc": "2026-11-22T03:24:09.946Z",
     "focus": [
-      "T0009/T0008/T0007/T0040 TWW ore rank-specific completed prospects after 2024-10-25",
-      "T0010/T0011/T0012 Mycobloom rank-specific successful 10-herb mills",
-      "T0048 historical DE by item/skill with original per-output event ledger"
+      "T0009/T0008/T0007/T0040: seek original rank-tagged Bismuth/Ironclaw/Aqirite complete prospects, 0..N material histograms, unlock/skill and net-refund basis",
+      "T0032: Gem Finding 40/40 Aqirite extra-Amber claim versus measured baseline output; historical 2024-09-03",
+      "T0010/T0011/T0012: Mycobloom 10-herb milling actual successful casts and pigment quality IDs",
+      "T0048: gear-rarity and armor/weapon disenchant original cast-by-cast quality yields"
     ],
     "checks": [
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1g350pq",
-        "disposition": "Already indexed R1/R2 Aqirite original per-1000-input means; nominal ore counts not measured operations, and pre-Oct-25-2024 regime. No new independent data."
+        "source": "https://us.forums.blizzard.com/en/wow/t/jewelcrafting-4040-gem-finding-broken-no-ambers/1942494",
+        "disposition": "First-person September 3–4, 2024 report: 40/40 Gem Finding; 5,000 Aqirite ore prospected, player says no EXTRA Amber. A conditional proc complaint, NOT proof of zero Ambivalent Amber outputs; ore rank and exact ID, completed prospect count, actual Amber quantity, output quality ID, skill, other specialization and refunds are absent. Held reference-only, no drop record or measured P(hit). Source URL absent from cutoff ownership manifest."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1f83cnd",
-        "disposition": "Already indexed 1040 completed Aqirite clicks; reuse existing cohort, no duplicate addition."
+        "source": "https://us.forums.blizzard.com/en/wow/t/jewelcrafting-broken-pebbles-and-glass/1968257",
+        "disposition": "Previously catalogued source blizzforum:1968257; includes R1 Bismuth 350-ore numbers and Reikah Ironclaw skill profile. No independent cohort created."
+      },
+      {
+        "source": "https://www.reddit.com/r/woweconomy/comments/1f51u6e",
+        "disposition": "Previously catalogued original anecdote reddit:1f51u6e; 1000 Ironclaw ore and rough ruby/onyx relative difference without verified completed casts. No duplicate import."
+      },
+      {
+        "source": "https://www.reddit.com/r/woweconomy/comments/1fvhzy0",
+        "disposition": "Previously catalogued mixed Mycobloom/Luredrop cipher economics; pooled herb totals and yield multipliers do not isolate rank-specific Nacreous 0..N completed mills."
+      },
+      {
+        "source": "https://www.reddit.com/r/woweconomy/comments/1fdmzwy",
+        "disposition": "Previously catalogued Mycobloom 1.15/1.35 per-herb R1/R2 output means; no per-rank cast counts/hit distribution, do not re-transcribe."
       },
       {
         "source": "https://www.wowhead.com/item=222618/nacreous-pigment",
-        "disposition": "Original LotzBoi guide reconfirms 10-herb Mycobloom recipe and linked Nacreous quality families 222618/222619/222620 with skill bands; guide ranges x4-6/x5-7/x6-8 are not operation histograms. Already documented."
+        "disposition": "Previously indexed LotzBoi published milling recipe/skill ranges, not 0..N measured empirical output events."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1fmrp4z",
-        "disposition": "Existing queue T0048 already identifies historical Storm Dust cohort; no new operation provenance or at-cast item ID from searchable result."
-      },
-      {
-        "source": "https://www.wowhead.com/item=220141/specular-rainbowfish",
-        "disposition": "Existing war-within 2026-11-09 evidence already captures Golgoth first-person fish milling; no new herb-rank yield cohort."
-      },
-      {
-        "source": "https://us.forums.blizzard.com/en/wow/t/requires-10-mycobloom-for-bulk-milling-but-i-do-have-them/1927887",
-        "disposition": "Historical failed bulk mills are not completed operations; already recognized missing-successful-cast issue, no actual denominators."
+        "source": "https://us.forums.blizzard.com/en/wow/t/profession-advice/2110965",
+        "disposition": "2025 darkmoon deck / catch-up material guidance does not provide measured disenchant output histograms for standard 219946–219955 materials; no research yield admission."
       }
     ],
-    "outcome": "No source-new post-cutoff independent completed-operation cohort, numerical rate, 0..N histogram, exact output rank correction or eligible current estimator evidence. Search results largely duplicate pre-cutoff originals or guidance. Preserve unknown/nulls and model boundaries."
+    "outcome": "One non-catalogued historical firsthand specialization/absence-of-extra-Amber report held. No new cast-verified input/output material cohort, per-output hit/zero counts, quality IDs or current post-October-25-2024 numerical yield evidence."
   },
   "source_integrity_findings": [
     {
