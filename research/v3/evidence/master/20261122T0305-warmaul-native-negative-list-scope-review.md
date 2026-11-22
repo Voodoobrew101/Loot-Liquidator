@@ -1,0 +1,22 @@
+# Warmaul disenchant restriction: additional same-family catalog evidence (2026-11-22 UTC)
+
+**Disposition:** Source/context review only; **do not import as numeric Retail yield**, set a global hard restriction, alter raw studies, or claim an in-game failure. Manager scope expands existing concern **research/v3/strategy.md S23** (which already documented Warmaul Legplates 24995). Not a newly observed operation.
+
+## Original sources checked
+
+- [WoWDB LIVE Warmaul Legplates 24995](https://www.wowdb.com/items/24995-warmaul-legplates): item level **31**, displayed **"Cannot be disenchanted"**. S23 already documented this item.
+- [WoWDB LIVE Warmaul Breastplate 24992](https://www.wowdb.com/items/24992-warmaul-breastplate): item level **31**, displayed **"Cannot be disenchanted"**. **Additional family member independently located by manager this run.**
+- [WoWDB LIVE Warmaul Epaulets 24996](https://www.wowdb.com/items/24996-warmaul-epaulets): item level **31**, displayed **"Cannot be disenchanted"**. **Additional family member independently located by manager this run.**
+- Legacy worker's [quiet status](https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/coordination/quiet-status/legacy.json) (2026-11-22T02:39:01.585Z) reports LIVE 25000 likewise restricted and newly identifies the missing native flag range. The 25000 item page was **not** independently re-read by manager, so do not reclassify that worker report as manager observation.
+
+## Exact source/consumer comparison
+
+Read current main **bd38a158ea79309ae3be34adaf2c31ad95bce159** file [DB2Restrictions.lua](https://github.com/Voodoobrew101/Loot-Liquidator/blob/bd38a158ea79309ae3be34adaf2c31ad95bce159/database/sources/DB2Restrictions.lua) blob **e03c7b0c302b1ef718b62b7de9c364e2c0b6ea03**. Parsed the first `for _,itemID in ipairs({...}) do` list as decimal item IDs: **21,061 negative `NO_DISENCHANT` IDs**. There are **zero listed IDs 24900–25199 inclusive**; in particular **24992, 24995, 24996, 25000, 25019** are absent. The source is explicitly user-supplied **Retail ItemSparse 12.1.7.70493**. A missing `NO_DISENCHANT` bit is **not positive proof of eligibility**, and WoWDB display cannot prove all item variants/builds carry a native prohibition.
+
+Read [Core.lua](https://github.com/Voodoobrew101/Loot-Liquidator/blob/bd38a158ea79309ae3be34adaf2c31ad95bce159/LootLiquidator/Core.lua) `DisenchantEligibility` and `NativeDisenchantRestriction`. Current runtime checks exact-instance `C_TooltipInfo.GetBagItem/GetHyperlink`, honoring a displayed native negative when obtained; absent/unreadable output can fall through to **"Candidate only; the game makes the final eligibility decision"**. [ConversionEngine.lua](https://github.com/Voodoobrew101/Loot-Liquidator/blob/bd38a158ea79309ae3be34adaf2c31ad95bce159/LootLiquidator/ConversionEngine.lua) `EvaluateDisenchant` relies on that candidate gate. Existing [test_numeric_refresh_tooltip.lua](https://github.com/Voodoobrew101/Loot-Liquidator/blob/bd38a158ea79309ae3be34adaf2c31ad95bce159/tests/test_numeric_refresh_tooltip.lua) stubs `EligibleDisenchant`; S23 already notes that this does **not** exercise real Warmaul eligibility.
+
+**Scope of finding:** An evidenced catalog-vs-build-flag coverage discrepancy for multiple WoWDB family members, **not** demonstrated wrong gold advice for a live held character item. The exact itemLink/bonus, at-cast build, current raw ItemSparse semantics, and live-game eligibility remain unknown. Historical 24995 DE baseline and its operation counts must be preserved as historical research, not reclassified or cleared.
+
+**Implementation QA handoff (no direct code changes):** On an isolated owner-approved implementation branch, add scenario coverage for a relevant 24992/24995/24996 exact-instance tooltip that explicitly disallows DE, and for missing tooltip/bonus context. Assert no actionable disenchant recommendation when an actual exact-instance denial is present, without turning a base catalog observation into an all-variant negative; verify the current client with non-destructive inspection only, if separately authorized. Correct native/build mapping only on reproducible source proof. Pipeline admission of numerical studies remains separate from client eligibility.
+
+**New measured cohorts:** 0. **New source-backed sale values/gold decisions:** 0. **Local Lua tests/client tests run by manager:** 0. **Owner's 725-source cutoff catalogue altered:** no.
