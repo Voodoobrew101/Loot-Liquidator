@@ -1,8 +1,8 @@
 {
   "role": "research-manager",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-22T03:59:23.499Z",
-  "status": "Read current owner charter, three-pass plan, main research build scripts, current research schema/mechanics/queue/strategy/flags and exact main/research/owner/Codex heads. Read all four latest completed worker automation results and owned reports. Independently verified the Dragonflight worker's new positive-event Vibrant Shard 194124 stack range 1–2 (200353, 40 indexed hits among 74 source reports), in the ORIGINAL indexed WoWhead Looter table. Recorded independent QA in manager dashboard; one existing cohort, no new operation sample, no unconditional expected quantity or eligible gold decision. Searched original current/historical Midnight prospecting and TWW milling/DE leads, but identified earlier-indexed sources and no distinct qualified new source to import. No catalogue recataloguing, addon edits, local tests, CI pass claim, PR, merge, release or schedule changes.",
+  "updated_at": "2026-11-22T05:03:24.190Z",
+  "status": "New independent manager QA: read original Wowhead recipe-comment 282402 and 194390 item-side Looter index, checked 11/11 bounded arithmetic guards; exact worker source records confirmed. 40959 Dust positive-bin total 272 versus author's 278 (six-unit unresolved contradiction); 194390 Looter 5/7 Dust and 2/7 Shard hits share one pooled 7-report cohort, not proven mutually exclusive or per-output mean. Manager review preserved and dashboard updated. No new independent cohorts, current Retail supported gold decisions, addon changes, PRs, releases, schedules, main edits or client/build tests. Checked current main/research/three-pass/Codex heads, CI and build policy; did not recatalogue cutoff or touch other owned branches.",
   "task_ids": [
     "T0003",
     "T0005",
@@ -37,7 +37,9 @@
     "TWW Lamplighter 229154 item-level variants 80/86 on Retail listing; 229159 base catalog ilvl 545 cannot be compared without itemLink/bonus, at-cast build, rarity and post-squish version context; 229158/229159 38-count identical shard vectors need independent event receipts.",
     "New TWW Reddit 1fprthm Sep2024 R2 crafted gear disenchant: locate author's theoretical spreadsheet and source-native 3x2000 material receipts, link exact input/output rank IDs/skill/bonus; do not turn author-claimed total 6000 into an outcome-specific denominator or mislabel >100% theory as P(hit).",
     "New Dragonflight item 200353 Lost Landcaller's Claws: site-reported N=74, material hits 47 (200113) and 40 (194124); source itemLink/bonus at event time, actual disenchants across builds, skill/spec/patch, per-material positive quantities and 0..N event ledger needed before gold EV or current Retail claim.",
-    "Legacy Warmaul 24992/24995/24996: LIVE WoWDB says Cannot be disenchanted, but current main ItemSparse 12.1.7.70493 native negative list contains zero IDs 24900..25199; exact itemLink/bonus/current client-native tooltip and restriction semantics not independently verified; do not infer affirmative eligibility from absent flag."
+    "Legacy Warmaul 24992/24995/24996: LIVE WoWDB says Cannot be disenchanted, but current main ItemSparse 12.1.7.70493 native negative list contains zero IDs 24900..25199; exact itemLink/bonus/current client-native tooltip and restriction semantics not independently verified; do not infer affirmative eligibility from absent flag.",
+    "New legacy 40959 source: source's Infinite Dust positive bins =272 units but author later prices 278; no legitimate correction of missing six units, actual operations, zeros or 3.0.8 patch version",
+    "New Dragonflight 194390 item-side seven-report Looter source: one pooled cohort, unknown joint material outcomes, positive dust stack histogram and source at-cast variant; do not equate 5+2=7 with exclusive outcomes"
   ],
   "newly_verified_fields_cohorts": {
     "tww_nacreous_output_identity": {
@@ -493,6 +495,47 @@
       "supported_new_gold_decisions": 0,
       "review_path": "research/v3/evidence/master/20261122T0305-warmaul-native-negative-list-scope-review.md",
       "review_commit": "1eea76596381cd923622c444ae4dbc1399106344"
+    },
+    "manager_20261122_0502_new_original_source_QA": {
+      "independent_original_QA": true,
+      "source_review": "research/v3/evidence/master/20261122T0502-new-disenchant-original-source-qa.md",
+      "source_review_commit": "a319d6a5f005482c0d51834f4b8c540dc2abdba6",
+      "dashboard_commit": "5285e83a6efb9306613009c779c484e6136329e1",
+      "original_sources": [
+        "https://www.wowhead.com/item=41122/plans-reinforced-cobalt-chestpiece",
+        "https://www.wowhead.com/item=194390/obsidian-spellsplitter"
+      ],
+      "original_worker_files": [
+        "research/v3/evidence/legacy/2026-11-22T0437-reinforced-cobalt-positive-bins-held.jsonl",
+        "research/v3/evidence/dragonflight/2026-11-22T0429-obsidian-spellsplitter-original-looter-hits.jsonl"
+      ],
+      "legacy_inputItemID": 40959,
+      "legacy_dust_itemID": 34054,
+      "legacy_dust_positive_events": 82,
+      "legacy_dust_weighted_units_from_bins": 272,
+      "legacy_author_claimed_units": 278,
+      "legacy_discrepancy": 6,
+      "legacy_essence_positive_events": 25,
+      "legacy_essence_units": 38,
+      "legacy_shard_units_reported": 2,
+      "legacy_casts": null,
+      "legacy_source_status": "historical_hold_inconsistent_total_no_at_cast_context",
+      "dragonflight_inputItemID": 194390,
+      "dragonflight_site_total_reports": 7,
+      "dragonflight_dust_hits": 5,
+      "dragonflight_dust_positive_stack_range": [
+        1,
+        5
+      ],
+      "dragonflight_shard_hits": 2,
+      "dragonflight_shard_stack_units": null,
+      "dragonflight_joint_histogram": null,
+      "dragonflight_source_status": "pooled_unversioned_item_side_looter_not_runtime_valuation_verified",
+      "new_cohorts_beyond_workers": 0,
+      "new_supported_retail_gold_decisions": 0,
+      "arithmetic_assertions_executed": 11,
+      "arithmetic_assertions_passed": 11,
+      "actual_addon_build_or_client_tests_by_manager": false
     }
   },
   "source_links": {
@@ -588,7 +631,7 @@
     "dragonflight": "0842b3c45259ab5a91cc32b6bf6783726da699b6",
     "legacy": "8b23b01cee04b3a5430f045239e5ac1bc5ea67fe"
   },
-  "verified_commit_sha": "f90f49c366dd57dcbad04ec062138aaa159bbc19",
+  "verified_commit_sha": "5285e83a6efb9306613009c779c484e6136329e1",
   "dashboard_commit_sha": "f90f49c366dd57dcbad04ec062138aaa159bbc19",
   "checked_research_branch_head_before_status_write": "f90f49c366dd57dcbad04ec062138aaa159bbc19",
   "main_head_checked": "bd38a158ea79309ae3be34adaf2c31ad95bce159",
@@ -671,7 +714,7 @@
     "2026-11-22 TWW 1fprthm indexed original: only author-reported aggregate N and theoretical comparative percentages; no linked raw spreadsheet/event samples in visible post. Further numeric work requires a new primary artifact.",
     "Lost Landcaller's Claws Looter item 200353 independently source-checked on 2026-11-22: 74 site reports with 47/40 material hits; no linked per-operation item versions, zero/stack histograms, skill/spec, time/build or original client receipts. Treat as source-reported occurrence context, not current-Retail gold evidence; do not re-search this page without changed source/event logs."
   ],
-  "next_concrete_step": "Find original ranked Midnight 237359/237362 completed-operation, 0/1/2+ output-event and Resourcefulness refund logs, or TWW Mycobloom 210796 rank/profile-specific 10-herb mill receipts. For DF 200353 pursue source-original Vibrant Shard 1-vs-2 stack frequencies and exact at-cast item variant; do not infer expected quantity from range or source occurrence count. Respect Codex's closed catalogue and all worker ownership.",
+  "next_concrete_step": "Preserve and seek only genuinely new source-original Retail completed-operation/zero/refund and at-cast identity evidence for Midnight 237359/237362/272246 and TWW Mycobloom rank-specific ten-herb mills; manager's 40959 original has six-unit dust contradiction and no DE denominator, while DF 194390 requires original joint stacks and item variant before suitable EV. No Codex 731-source recatalogue, no unverified baseline admissions.",
   "production_main_changes": false,
   "addon_changes": false,
   "routine_research_prs": false,
@@ -735,5 +778,8 @@
       "conclusion": "success"
     },
     "no_local_build_or_client_qa": true
-  }
+  },
+  "verified_base_commit_sha": "5285e83a6efb9306613009c779c484e6136329e1",
+  "commit_sha": null,
+  "commit_note": "review + dashboard commit read back before status write; status's own generated SHA must be verified separately and cannot be self-referential"
 }
