@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-22T02:16:26.129Z",
-  "status": "Refreshed implementation/five-agent-completion and read required v3 rules, mechanics, worker role and queue. Searched for new Retail Midnight DE item-instance/cast logs (272246), rank-specific Umbral Tin 237362/237363, Refulgent Copper 237359, Diamond 242608, and 10-herb milling. Screened two previously unindexed public DE addon implementations and a candidate original YouTube prospecting cohort. Their code publishes static or derived DE tables and personal capture mechanisms, not publicly available player operation rows; YouTube cohort already exists in the 2026-11-18 evidence and is not new. No independent numeric cohort, exact live 272246 disenchant eligibility, skill-stratified original outcome or new yield field; no new evidence file. Did not recatalogue the Codex-assigned source corpus, invent casts/zeros, create PRs or change runtime.",
+  "updated_at": "2026-11-22T03:16:17.015Z",
+  "status": "Refreshed implementation/five-agent-completion, read current research/v3/README.md, evidence-format.md, mechanics.md, roles/worker.md and queue.json. Ran targeted searches of new original Midnight disenchant/prospect/milling casts, item-instance 272246 at-disenchant ilvl/bonus eligibility, 237362 rank-specific actual successful operations, conditional Diamond 242608 and output IDs, and ten-herb milling source logs. Confirmed indexed JD3K and Bue results are preexisting independent leads (2026-11-01 and 2026-11-18 evidence); did not duplicate their cohorts or owner/Codex 731-source catalogue. Two additional independent-source checks are held as unmeasured reference, not studies: WoWGoldFarms October 8 enchant guide explicitly disclaims measuring gear-DE yields, while Warcraft Wiki Dawn Crystal mentions rare/epic inputs but no measured rate. No new player operation ledger, at-cast item link or completed cast/hit/zero histogram. No new evidence JSONL, production decisions, PR, runtime edit, gold EV, merge, release or schedule edit.",
   "task_ids": [
     "T0026",
     "T0049",
@@ -1438,7 +1438,9 @@
     "https://github.com/ErorNya/ForeverFlip/blob/main/ForeverFlip/Modules/Disenchant.lua",
     "https://github.com/oxedtv/OxedHub/blob/main/Modules/Shattersight/Tracking.lua",
     "https://github.com/oxedtv/OxedHub/blob/main/Modules/Shattersight/Data.lua",
-    "https://www.youtube.com/watch?v=1gGwR51s1RE"
+    "https://www.youtube.com/watch?v=1gGwR51s1RE",
+    "https://wowgoldfarms.com/guides/retail/enchanting-gold-midnight/",
+    "https://warcraft.wiki.gg/wiki/Dawn_Crystal"
   ],
   "blockers": [
     "272246: actual disenchantable item bonus/at-cast ilvl 305 itemLink and correlated original DE output are not published; generic 206 cannot-be-disenchanted catalog conflicts with aggregate 140-row Looter display.",
@@ -1547,13 +1549,21 @@
     {
       "url": "https://github.com/oxedtv/OxedHub/blob/main/Modules/Shattersight/Tracking.lua",
       "reason": "Potential logging design, not published result data. Private bucket counts unavailable and group by expansion+quality+25 skill; does not retain at-cast item version or sample outputs in the public code."
+    },
+    {
+      "url": "https://wowgoldfarms.com/guides/retail/enchanting-gold-midnight/",
+      "reason": "held_12_1_0_69933_client_and_price_guide_no_original_disenchant_yield_cohort; secondary/derived source, no independently reported completed original sample, 0-inclusive histogram or profession profile."
+    },
+    {
+      "url": "https://warcraft.wiki.gg/wiki/Dawn_Crystal",
+      "reason": "secondary_family_mechanic_reference_no_firsthand_sample; secondary/derived source, no independently reported completed original sample, 0-inclusive histogram or profession profile."
     }
   ],
-  "next_concrete_step": "Search new independent public Retail Midnight per-cast CSV/SavedVariables exports (not code-only tracking addons), especially gear 272246 with at-cast hyperlink/bonuses/ilvl and output 243599/243600/243602/243603/243605/243606, or rank-specific 237362/237363 prospecting with completed operations, actual refunded ore, item-linked output ranks 242608/242606/242607/242610/242611/242787/242788, skill/ore-specific Diamond unlock and per-event zeros. Avoid pre-cutoff Bue/Wowhead cohort duplications; leave catalogue/build decisions to owner Codex team.",
-  "verified_base_commit_sha": "d433f1182aeb072471f559ce7c4e77de969a67bf",
+  "next_concrete_step": "Find independently published original Retail Midnight character- or event-level logs/CSV with exact 272246 itemLink/bonus/actual ilvl and correlated successful disenchant (or explicit ineligible tooltip), or rank2 Umbral Tin 237363/prospecting 237362 and Copper 237359 with actual five-ore successful operation denominators and output item/rank hit/zero per-cast events plus refunds and Diamond unlock status. Do not repeat JD3K, Bue, Cardinalai or other fully catalogued pre-cutoff source transcriptions; owner Codex catalogue/build controls remain separate.",
+  "verified_base_commit_sha": "f0df4d7c33cda50c7c8e14db5992a1e4841162d6",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Status-only commit: no independently grounded new cohort; no empty JSONL. SHA deliberately omitted inside status file to avoid self-referential hash; verify GitHub commit SHA and persisted blob with a read-back.",
+  "commit_note": "Quiet status-only checkpoint with source-level negative triage. Status file does not self-encode commit SHA; branch commit and content must be independently read back. No source-based numeric field passed review; avoid empty evidence files.",
   "new_leads_screened": [
     {
       "source": "https://github.com/ErorNya/ForeverFlip/blob/main/ForeverFlip/Modules/Disenchant.lua",
@@ -1637,6 +1647,51 @@
       },
       "evidence_existing": "research/v3/evidence/midnight/2026-11-18T1220-bue-original-prospect-video-sources.jsonl",
       "detail": "Previously indexed original Bue prospecting videos, pre-March-31. No duplicate extraction or admission."
+    },
+    {
+      "source": "https://wowgoldfarms.com/guides/retail/enchanting-gold-midnight/",
+      "published": "2026-10-08",
+      "classification": "held_12_1_0_69933_client_and_price_guide_no_original_disenchant_yield_cohort",
+      "exact_ids": [
+        243599,
+        243600,
+        243602,
+        243603,
+        243605,
+        243606
+      ],
+      "source_original": {
+        "client_build": "12.1.0.69933",
+        "dated_price_snapshot": "2026-10-08",
+        "observed_de_gear_id": null,
+        "actual_completed_disenchants": null,
+        "material_per_cast_units": null,
+        "per_output_hits": null,
+        "per_cast_zero_histogram": null,
+        "at_cast_ilvl": null
+      },
+      "detail": "Publisher explicitly says gear disenchant yields were not measured; grade/material descriptions and October US market snapshots are not empirical drop-rate input. Do not promote an illustrative 'single lower-grade crystal' sell comparison to one guaranteed per epic or a gold EV."
+    },
+    {
+      "source": "https://warcraft.wiki.gg/wiki/Dawn_Crystal",
+      "published": null,
+      "classification": "secondary_family_mechanic_reference_no_firsthand_sample",
+      "exact_ids": [
+        243605,
+        243606
+      ],
+      "source_original": {
+        "gear_qualities_named": [
+          "rare",
+          "epic"
+        ],
+        "named_input_item_id": null,
+        "actual_completed_disenchants": null,
+        "measured_dawn_crystal_units": null,
+        "per_output_hits": null,
+        "at_cast_bonus_or_ilvl": null
+      },
+      "detail": "Warcraft Wiki describes Dawn Crystal as obtainable from disenchanting epic and rare Midnight gear; consistent with existing source-level rare-weapon low-frequency Crystal indications. Does not establish any rare-gear crystal probability or either output rank; static reference only."
     }
   ],
   "catalogue_checkpoint": {
