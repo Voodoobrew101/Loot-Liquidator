@@ -1,0 +1,23 @@
+# Research manager independent source QA — 2026-11-22T05:02 UTC
+
+Scope: Verify **newly supplied** worker originals on their own source pages; no pre-cutoff 731-source catalogue re-review, no data import, no real-character or actual WoW-client tests. These are two independently authored/aggregated **source identities**, not two additional cohorts beyond the worker records. References are pinned worker file paths and the publicly indexed original page text.
+
+## Legacy — Reinforced Cobalt Chestpiece (40959), source comment 282402
+
+- Primary text: https://www.wowhead.com/item=41122/plans-reinforced-cobalt-chestpiece (comment 282402), independently read from its original page. Worker original: `research/v3/evidence/legacy/2026-11-22T0437-reinforced-cobalt-positive-bins-held.jsonl`, rows `legacy-20261122-91001..91003`.
+- Source gives **Infinite Dust (34054)** positive-result bins 25 events of quantity 2; 21 of 3; 21 of 4; 15 of 5. Explicit bins sum to **82 described positive events** and **272 dust units**, but the same author's final price calculation uses **278 dust units**. Difference is **6 units**. Arithmetic and 278×4.5 = 1251 both confirm the contradiction is within the original source; do not silently select or add missing units. Preserve original 278 in source notes. **Conditional per-positive-event mean from bins is 272/82 ≈ 3.317**, not an unconditional per-DE mean.
+- **Greater Cosmic Essence (34055)** bins are 12 events of 1 and 13 of 2 = 25 positive observations, 38 units; **38/25 = 1.52 units per positive event**, not per disenchant. **Dream Shard (34052)** is only “2 Dream Shards”, units with no stated number of distinct positive events.
+- 22 purchased stacks of Cobalt Bars are **not observed finished chestpieces nor successful DE operations**. Even the hypothetical old four-bars/craft full-stack arithmetic (22×20/4=110) is a crafting ceiling under unstated full stacks, usage/leftover and patch, **not a cast count**, not inferred zero outcomes. The recipe's historical 3.0.8 material-cost change is explicitly described on both the recipe and item pages. Data patch/at-cast bonus/item level and current Retail client eligibility are unresolved. Preserve `casts=null`, 0-inclusive histogram unavailable, no current eligible gold recommendation.
+- Source comment's historical server-price profitability (50–55g purchased bar stacks, 25g essence, 4.5g dust) is dated reference economic context, **not current sale pricing**.
+
+## Dragonflight — Obsidian Spellsplitter (194390) item-side Looter
+
+- Primary text: https://www.wowhead.com/item=194390/obsidian-spellsplitter ; current indexed related table independently verified **7 reported disenchant operations**, **Chromatic Dust (194123) 5/7 hit entries**, displayed **71%**, stack range **1–5**, and **Vibrant Shard (194124) 2/7 hit entries**, displayed **29%**. Worker originals: `research/v3/evidence/dragonflight/2026-11-22T0429-obsidian-spellsplitter-original-looter-hits.jsonl`, records `dragonflight-20261122-0429-001/002`.
+- 5/7 and 2/7 are valid provider *pooled hit fractions* and independently reproduce its rounded percents. Their numerators are **not material unit totals**. Because the source does not link joint per-cast outcomes, **5+2=7 does not prove exclusive dust-versus-shard outcomes, absence of zeros, or any full stack histogram**. Dust 1–5 is a positive-stack range, not a uniform or observed conditional mean; shard stack range is unstated. Do not invent unconditional `E[units]` for price integration.
+- Source does not expose character skill, spec, item bonus string, at-cast ilvl, recorded epoch or patch. Added-in patch 10.0.0 is an item catalogue fact, **not a timestamp for the seven operations**; do not claim an eligible current-Retail build/character valuation. No additional independent operations beyond the worker's original seven.
+
+## Checks and disposition
+
+11 bounded deterministic arithmetic assertions run in coordinator session and all passed: source bin occurrence/unit sums, six-unit mismatch, 5/7 and 2/7 rounded percentage, conditional comparator and illustrative bar arithmetic. These are **arithmetic-only assertions**, not estimator, build pipeline, test suite, GitHub CI or game-client validation. Both original worker JSONL files remain untouched. Legacy source stays **historical held/contradictory total**, Dragonflight **new item-side aggregate pending scoped build-review**. Neither admits a newly verified current Retail gold decision.
+
+Next priority: find independent current Retail full successful-operation/zero/refund/bonus/skill ledgers for current Midnight ores 237359/237362 and exact-item DE 272246, plus TWW 10-herb Mycobloom by rank. Do not re-catalogue Codex's reviewed cutoff backlog.
