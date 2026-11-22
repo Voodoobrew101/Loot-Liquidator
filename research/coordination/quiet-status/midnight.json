@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-22T11:17:21.957Z",
-  "status": "Refreshed implementation/five-agent-completion and reread README, evidence-format, mechanics, worker role, and queue. Searched post-2026-11-20 original Retail Midnight disenchant/prospect/milling cohorts by item names. Screened a new publicly accessible potential first-party processing-log collector, Goblinomics v1.3.0 (publisher release Nov 8): code persists per-processed-operation input and output keys and quantities, distinct from output-only item logs, but no actual original consenting player dataset or profile was published. No new independent measured Retail cohorts, casts, hit counts, zero-event histograms, output-rank yields or prices admitted; no JSONL, PR, merge, game actions, changes to others' files or release. Existing Codex-owned 731-source catalogue not recatalogued.",
+  "updated_at": "2026-11-22T12:15:09.864Z",
+  "status": "Refreshed current protected research branch and reread research/v3/README.md, evidence-format.md, mechanics.md, roles/worker.md and queue.json. Targeted original Retail Midnight disenchanting (uncommon/rare/epic, armor vs weapon, Miststalker's Wristbands 272246), Umbral Tin Ore 237362 ranked prospecting, Refulgent Copper/Brilliant Silver and 10-herb milling source acquisition after the November 20 catalogue cutoff. No new independent original player cohort or per-event export with observed successful operations, output/zero histograms, skill/spec/build and input instance/quality was found. Crosschecked Cardinalai's original 4000-ore/39.6%-Resourcefulness totals without converting nominal ore to actual casts. DisenchantValue March 2 v1.2 release notes offer a third-party reference-only warning about overlapping expansion ilvl ranges and six ranked Midnight material IDs, not 272246 eligibility evidence. November 20 Blizzard hotfixes refer to WoW: Forever, not Retail Midnight. No newly admitted numeric fields, JSONL, schema/code, PR, release, merge, or game actions. The catalogue owner's existing 731 source decisions were not recatalogued.",
   "task_ids": [
     "T0026",
     "T0049",
@@ -1402,10 +1402,10 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/xLN1995/goblinomics",
-    "https://github.com/xLN1995/goblinomics/blob/a5c8cfdaed0bee823685f29e1a67d802f1c42fbc/Modules/Workshop/Disenchant.lua",
-    "https://github.com/xLN1995/goblinomics/blob/a5c8cfdaed0bee823685f29e1a67d802f1c42fbc/Modules/Workshop/CraftTracker.lua",
-    "https://github.com/xLN1995/goblinomics/blob/a5c8cfdaed0bee823685f29e1a67d802f1c42fbc/Modules/Workshop/Salvage.lua"
+    "https://www.wowhead.com/item=237362/umbral-tin-ore",
+    "https://www.curseforge.com/wow/addons/disenchantvalue/files/7701600/dependencies",
+    "https://www.wow-professions.com/midnight/enchanting-specialization-guide-and-builds",
+    "https://worldofwarcraft.blizzard.com/en-us/news/24315281/wow-forever-hotfixes-november-20-2026"
   ],
   "blockers": [
     "272246: actual disenchantable item bonus/at-cast ilvl 305 itemLink and correlated original DE output are not published; generic 206 cannot-be-disenchanted catalog conflicts with aggregate 140-row Looter display.",
@@ -1551,55 +1551,12 @@
       "reason": "Code-only acquisition lead, not a published independent processing cohort; no unredacted original player export or measured per-item cast/hit/zero data. Revisit only on new consented original data."
     }
   ],
-  "next_concrete_step": "Prioritize a newly published independent per-event Retail Midnight addon SavedVariables/CSV or source study with actual completed operations, input itemLink/bonus/at-cast ilvl (272246), rank-specific 237362 prospecting, 10-herb milling, exact ranked output quantities, player skill/spec/build and 0-result events. For Goblinomics, only review an authentic consented original export (if one appears) and reconcile duplicate original cohorts, zero capture and batch boundaries; do not infer new rates from collector implementation.",
-  "verified_base_commit_sha": "ec879e4432d650d6c85f585da8c41b72e28a8436",
+  "next_concrete_step": "Acquire newly published independent, original Retail Midnight per-operation SavedVariables or source spreadsheet with at-cast input variant/itemLink (272246 bonus/ilvl), successful prospect/disenchant/mill operation counts, output ranked IDs/quantities, true zero events, refund quantities and build/skill/spec; compare source-original IDs against owner catalogue before any study admission. No further static repeat audit of exhausted comments or code-only collectors.",
+  "verified_base_commit_sha": "8de20909080d644a043a4ec2e9298e956cc37349",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "One quiet-status-only commit on the current research branch. Source code identity and limitations checked at pinned published commit. Commit and owned file must be read back; no self-referential SHA embedded.",
-  "new_leads_screened": [
-    {
-      "source": "https://github.com/xLN1995/goblinomics",
-      "release": "Goblinomics v1.3.0",
-      "published": "2026-11-08",
-      "reviewed_at_utc": "2026-11-22T11:17:21.957Z",
-      "source_commit_sha": "a5c8cfdaed0bee823685f29e1a67d802f1c42fbc",
-      "type": "newly_screened_public_collector_schema_no_original_published_player_cohort",
-      "source_paths": [
-        "https://github.com/xLN1995/goblinomics/blob/a5c8cfdaed0bee823685f29e1a67d802f1c42fbc/Modules/Workshop/Disenchant.lua",
-        "https://github.com/xLN1995/goblinomics/blob/a5c8cfdaed0bee823685f29e1a67d802f1c42fbc/Modules/Workshop/CraftTracker.lua",
-        "https://github.com/xLN1995/goblinomics/blob/a5c8cfdaed0bee823685f29e1a67d802f1c42fbc/Modules/Workshop/Salvage.lua"
-      ],
-      "grounded_observations": {
-        "de_record_fields": [
-          "time",
-          "input",
-          "outputs",
-          "crafts=1",
-          "char",
-          "recipe=13262"
-        ],
-        "de_input_link_capture": "C_Container.UseContainerItem hyperlink when present; alternative item-lock or one-removal fallback; source output LOOT_RECEIVED",
-        "de_operation_counter": "UNIT_SPELLCAST_SUCCEEDED creates pending event; Flush only persists when #outputs>0; zero material records not captured",
-        "mill_prospect_craft_fields": [
-          "time",
-          "input (salvageItemID)",
-          "recipe",
-          "crafts",
-          "outputs (itemKey,qty,quality)",
-          "reagents",
-          "saved"
-        ],
-        "multi_operation_result": "CraftTracker aggregates 0.1-s result buffer into one record; craft count inferred from succeeded spell events with fallback 1, not always per-cast histogram",
-        "raw_vs_ui": "Raw saved craft entries can retain DE item link key, but Salvage.Rows groups same base item ID together and discards variant distinction in display",
-        "profession_profile": "Player skill, specialization allocation, bonus IDs for mill input, and client build not persisted in per-operation record",
-        "public_original_exports_found": 0,
-        "observed_retail_operations": null,
-        "true_zero_operation_denominator": null
-      },
-      "disposition": "source/collector acquisition lead only, not baseline evidence; validate against catalogue before any future sourcing",
-      "hold_reason": "Public project has code and synthetic spec tests, no independently verified original SavedVariables player export. Missing zero-output operations, per-operation profession profile, and some attribution; cannot infer empirical chances from code or rate tables."
-    }
-  ],
+  "commit_note": "Quiet-status-only update; no genuinely new measured evidence to warrant JSONL. Await resulting commit SHA and independent branch/file read-back; no self-referential commit SHA embedded.",
+  "new_leads_screened": [],
   "catalogue_checkpoint": {
     "source_count": 731,
     "cutoff": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
