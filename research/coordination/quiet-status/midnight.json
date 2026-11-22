@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-22T01:07:12.642Z",
-  "status": "Refreshed current branch and read research/v3/README.md, evidence-format.md, mechanics.md, roles/worker.md, queue.json, and this role's quiet status. Searched for new first-person Retail Midnight disenchant item-instance/skill-linked logs (272246), rank-identifiable 237359/237362 ore prospecting results and Eversong Diamond unlock/zeros, and ten-herb milling operation records. Fresh targeted searches surfaced no NEW independently measurable or identity-resolving cohort after the owner Codex cutoff. Rediscovered the April 8 Reddit prospecting percentage table but it predates the cutoff and is assigned to Codex; did not re-catalogue or copy it. Reviewed two unlogged secondary leads, each lacking raw operations. No new baseline, evidence file, recipe/rank correction, zero histogram or runtime result; no experiments, spending, PRs, merges or release.",
+  "updated_at": "2026-11-22T02:16:26.129Z",
+  "status": "Refreshed implementation/five-agent-completion and read required v3 rules, mechanics, worker role and queue. Searched for new Retail Midnight DE item-instance/cast logs (272246), rank-specific Umbral Tin 237362/237363, Refulgent Copper 237359, Diamond 242608, and 10-herb milling. Screened two previously unindexed public DE addon implementations and a candidate original YouTube prospecting cohort. Their code publishes static or derived DE tables and personal capture mechanisms, not publicly available player operation rows; YouTube cohort already exists in the 2026-11-18 evidence and is not new. No independent numeric cohort, exact live 272246 disenchant eligibility, skill-stratified original outcome or new yield field; no new evidence file. Did not recatalogue the Codex-assigned source corpus, invent casts/zeros, create PRs or change runtime.",
   "task_ids": [
     "T0026",
     "T0049",
@@ -1351,6 +1351,28 @@
       },
       "disposition": "reviewable logging implementation only, not a reported numeric yield cohort; no source-defined item-level 305 disenchant eligibility proof",
       "hold_reason": "Repository publishes logger code and limited validation description, not the corresponding player SavedVariables per-cast rows; 12 test disenchants cannot be assigned item/output identities or known zero events. Code's record limit 5000 is a buffer cap, not observed casts."
+    },
+    {
+      "category": "held_new_static_downstream_DE_table",
+      "source": "https://github.com/ErorNya/ForeverFlip/blob/main/ForeverFlip/Modules/Disenchant.lua",
+      "source_original": {
+        "reference_units_not_measured": true,
+        "original_casts": null,
+        "actual_item_instance_272246": null
+      },
+      "disposition": "derived-reference only; not new independent evidence",
+      "hold_reason": "No source-level original cast ledger, outputs/zero counts, or provenance beyond generic November Wowhead Looter; reusing would duplicate assigned source cohorts"
+    },
+    {
+      "category": "held_new_private_logger_without_public_samples",
+      "source": "https://github.com/oxedtv/OxedHub/blob/main/Modules/Shattersight/Tracking.lua",
+      "source_original": {
+        "min_samples_setting": 10,
+        "public_observations": null,
+        "exact_item_variant_saved_in_aggregate": false
+      },
+      "disposition": "possible future acquisition lead, no numeric admission",
+      "hold_reason": "No original player SavedVariables or per-event records publicly published; 25-skill bucket totals cannot establish ilvl-specific 272246 eligibility"
     }
   ],
   "newly_verified_fields_or_cohorts": [],
@@ -1412,7 +1434,11 @@
     "https://wowgoldfarms.com/guides/retail/umbral-tin-ore-midnight/",
     "https://huijting.github.io/MidnightHelper/",
     "https://www.wow-farming.info/farming-eversong-diamond/",
-    "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/"
+    "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/",
+    "https://github.com/ErorNya/ForeverFlip/blob/main/ForeverFlip/Modules/Disenchant.lua",
+    "https://github.com/oxedtv/OxedHub/blob/main/Modules/Shattersight/Tracking.lua",
+    "https://github.com/oxedtv/OxedHub/blob/main/Modules/Shattersight/Data.lua",
+    "https://www.youtube.com/watch?v=1gGwR51s1RE"
   ],
   "blockers": [
     "272246: actual disenchantable item bonus/at-cast ilvl 305 itemLink and correlated original DE output are not published; generic 206 cannot-be-disenchanted catalog conflicts with aggregate 140-row Looter display.",
@@ -1513,60 +1539,104 @@
     {
       "url": "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/",
       "reason": "April 8 historical post is pre-owner cutoff and in Codex assigned catalogue scope; not newly measured, not independently recatalogued."
+    },
+    {
+      "url": "https://github.com/ErorNya/ForeverFlip/blob/main/ForeverFlip/Modules/Disenchant.lua",
+      "reason": "Only derived/static per-rarity Midnight expected units and a personal 15-DE learning threshold; no raw source-counted trials, player event logs, item 272246 instance, zeros or skill context."
+    },
+    {
+      "url": "https://github.com/oxedtv/OxedHub/blob/main/Modules/Shattersight/Tracking.lua",
+      "reason": "Potential logging design, not published result data. Private bucket counts unavailable and group by expansion+quality+25 skill; does not retain at-cast item version or sample outputs in the public code."
     }
   ],
-  "next_concrete_step": "Target genuinely new, published, downloadable Retail Midnight SavedVariables/CSV event logs after the assigned cutoff with source item instance and at-cast ilvl/bonus for gear ID 272246 (eligibility), or exact rank-specific ore ID 237362/237363 with completed operations, Resourcefulness refunded inputs, output quality item IDs, Diamond unlock, cast-level 0/1/2+ outcomes, skill/spec and patch. Screen other unassigned original Mill/Prospect logs; leave pre-cutoff catalogue to Codex and do not make an evidence file without genuinely new source data.",
-  "verified_base_commit_sha": "f24f559e79769fc62c9572638a5b0327e5fe4e70",
+  "next_concrete_step": "Search new independent public Retail Midnight per-cast CSV/SavedVariables exports (not code-only tracking addons), especially gear 272246 with at-cast hyperlink/bonuses/ilvl and output 243599/243600/243602/243603/243605/243606, or rank-specific 237362/237363 prospecting with completed operations, actual refunded ore, item-linked output ranks 242608/242606/242607/242610/242611/242787/242788, skill/ore-specific Diamond unlock and per-event zeros. Avoid pre-cutoff Bue/Wowhead cohort duplications; leave catalogue/build decisions to owner Codex team.",
+  "verified_base_commit_sha": "d433f1182aeb072471f559ce7c4e77de969a67bf",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Status-only commit for this run; no new independent source-verified cohort, so no fabricated empty evidence JSONL. Verify commit and read-back externally; SHA omitted to avoid recursive self-referential file hash.",
+  "commit_note": "Status-only commit: no independently grounded new cohort; no empty JSONL. SHA deliberately omitted inside status file to avoid self-referential hash; verify GitHub commit SHA and persisted blob with a read-back.",
   "new_leads_screened": [
     {
-      "source": "https://huijting.github.io/MidnightHelper/",
+      "source": "https://github.com/ErorNya/ForeverFlip/blob/main/ForeverFlip/Modules/Disenchant.lua",
       "published": null,
-      "classification": "held_secondary_skill_stat_claim_no_original_cast_log",
+      "source_blob_sha": "2b0d25c1abd9ee06d86b90c80407fd8f6cb66fdb",
+      "classification": "held_derived_table_from_Wowhead_not_new_independent_player_cohort",
+      "exact_ids": [
+        243599,
+        243600,
+        243602,
+        243603,
+        243605,
+        243606
+      ],
       "source_original": {
-        "claimed_disenchant_stat_rule": "Raw skill only; ignores crafting secondary stats",
-        "named_gear_item_ids": null,
-        "at_cast_item_level": null,
-        "material_output_item_ids": null,
-        "completed_disenchants": null,
-        "zero_event_log": null,
-        "player_skill_comparison_denominators": null
+        "reference_rarity_band_expansion": "11 / Midnight",
+        "reference_expected_units_by_rarity": {
+          "uncommon": {
+            "243599": 1.35,
+            "243600": 0.45
+          },
+          "rare": {
+            "243602": 0.7,
+            "243603": 0.3
+          },
+          "epic": {
+            "243605": 0.5,
+            "243606": 0.45
+          }
+        },
+        "personal_learning_minimum": 15,
+        "source_says_derived_from": "Wowhead DE logs in November 2026",
+        "original_event_rows_published": null,
+        "completed_casts_published": null,
+        "item_272246_specific_rows": null,
+        "at_cast_ilvl_or_bonus": null
       },
-      "detail": "Current addon guidance says its own route was measured, but does not publish operation-linked raw data or sample dates for Midnight DE. Consistent with already recorded guide-level M13; cannot advance actual 272246 eligibility, skill coefficient or yield."
+      "detail": "Static expected units are non-independent Wowhead-derived reference estimates; the in-addon 15 threshold is a code configuration, NOT 15 published disenchants. No extra observed material yield data or item-instance verification; do not add numeric evidence."
     },
     {
-      "source": "https://www.wow-farming.info/farming-eversong-diamond/",
-      "published": "2026-10-21",
-      "classification": "held_secondary_existing_unlock_mechanic_no_observed_diamond_cohort",
+      "source": "https://github.com/oxedtv/OxedHub/blob/main/Modules/Shattersight/Tracking.lua",
+      "supporting_source": "https://github.com/oxedtv/OxedHub/blob/main/Modules/Shattersight/Data.lua",
+      "published": null,
+      "source_blob_sha": "f854ddc8d3dc9c2bdf6f1fed8a5a8f579e893fb4",
+      "supporting_blob_sha": "ac379739266ef7b7f3b03902f69b1f05c5e0bfe3",
+      "classification": "held_public_logger_schema_without_public_player_SavedVariables_or_original_counts",
+      "exact_ids": [
+        243599,
+        243600,
+        243602,
+        243603,
+        243605,
+        243606
+      ],
       "source_original": {
-        "diamond_item_id": 242608,
-        "inputs_named": [
-          "Refulgent Copper Ore",
-          "Umbral Tin Ore",
-          "Brilliant Silver Ore",
-          "Dazzling Thorium"
+        "min_sample_setting_not_observed_casts": 10,
+        "tracked_key": "expansionID_quality_25skillTier",
+        "tracked_aggregate_fields": [
+          "attempts",
+          "matTotals",
+          "matCounts"
         ],
-        "ore_specific_unlock_claim": true,
-        "completed_prospect_casts": null,
-        "observed_diamond_units": null,
-        "per_cast_zeros": null,
-        "source_author_original_trials": null
+        "event_inference": "bag added material + removed equippable gear; unmatched pending source discarded",
+        "public_saved_variables_samples": null,
+        "observed_completed_disenchants": null,
+        "at_cast_itemID_and_itemLink_preserved_in_buckets": false,
+        "item_level_or_bonus_in_buckets": false,
+        "per_cast_zero_histogram_published": null
       },
-      "detail": "Secondary guide points to known ore-specific Proficient Processor Diamond unlock; no actual independent rank-specific operations, output totals or hit/zero histogram."
+      "detail": "Code accumulates private quality+skill-tier bucketed outcomes, but no published per-gear or per-operation ledger; generic static chance tables in Data.lua are not empirical cohorts. Bag-diff attribution and grouping need original export validation before any use."
     },
     {
-      "source": "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/",
-      "published": "2026-04-08",
-      "classification": "pre_cutoff_original_table_retrieval_codex_owned_not_independently_recatalogued",
+      "source": "https://www.youtube.com/watch?v=1gGwR51s1RE",
+      "paired_source": "https://www.youtube.com/watch?v=Fl1EvGQP3Zo",
+      "published": "2026-01-06",
+      "classification": "duplicate_original_pre_release_prospecting_video_already_transcribed",
       "source_original": {
-        "claimed_nominal_ore_amounts_present": true,
-        "claimed_per_output_percentages_present": true,
-        "actual_completed_cast_ledger": null,
-        "independent_post_cutoff_sample": null
+        "nominal_ore_in_video_title": 1000,
+        "actual_completed_casts": null,
+        "pre_release_client_build": null
       },
-      "detail": "First-person historical per-ore percentages appear in comments, but source predates 2026-11-20 Codex cutoff; owner assigned its existing corpus to Codex. Do not re-record, reinterpret percentages as hits, or double-count. No new Retail run added."
+      "evidence_existing": "research/v3/evidence/midnight/2026-11-18T1220-bue-original-prospect-video-sources.jsonl",
+      "detail": "Previously indexed original Bue prospecting videos, pre-March-31. No duplicate extraction or admission."
     }
   ],
   "catalogue_checkpoint": {
@@ -1578,6 +1648,5 @@
     "implementation_status": "MERGED_MAIN",
     "worker_recataloguing": "not performed",
     "release_status": "not claimed"
-  },
-  "verified_status_blob_sha_before_commit": "a4d79d4d1889a6679ab026277623e43e18cb91e0"
+  }
 }
