@@ -92,7 +92,8 @@ assert(not assumed:find('Confidence 0%',1,true) and not assumed:find('(0%)',1,tr
     'synthetic quantities have assumptions, not measured numeric confidence')
 model.syntheticBenchmark=nil
 assert(not render(false,'Disenchant'):find('0.375',1,true),'disenchanting cannot override hidden averages')
-assert(render(true,'Disenchant'):find('0.375',1,true),'disenchanting follows the enabled average preference')
+assert(render(true,'Disenchant'):find('20%% Zinc') and not render(true,'Disenchant'):find('[avg',1,true),
+    'disenchanting uses the requested compact leading rate')
 -- Sort the complete list before the normal twelve-row limit is applied.
 LL.db.tooltipOutputSort='value'
 local many={}

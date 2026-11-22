@@ -37,7 +37,7 @@ local function render(id,expansion,quality)
     return option,text
 end
 local warmaul,text=render(24995,1,2)
-assert(text:find('75.4%',1,true) and text:find('[2-6]',1,true) and text:find('3.015',1,true))
+assert(text:find('75.4%',1,true) and text:find('[2-6]',1,true) and not text:find('[avg',1,true))
 assert(warmaul.value>345 and warmaul.value<346,'derived TBC baseline prices expected units once')
 assert(warmaul.confidence<=50,'a derived mean cannot inherit 100% occurrence confidence')
 local dust
@@ -46,7 +46,7 @@ assert(dust and math.abs(dust.chance-1559/2068)<1e-10,'original occurrence count
 -- Average is the existing midpoint estimate, not a newly claimed measured mean.
 assert(math.abs(dust.expectedQuantity-3.0155)<1e-4)
 local midnight,midText=render(258931,11,3)
-assert(midText:find('66.3%',1,true) and midText:find('[1-3]',1,true) and midText:find('1.343',1,true))
+assert(midText:find('66.3%',1,true) and midText:find('[1-3]',1,true) and not midText:find('[avg',1,true))
 local midnightDust
 for _,m in ipairs(midnight.materials) do if m.id==243599 then midnightDust=m end end
 -- Two compatible source cohorts report this output: 1,838 + 3,473 units,
@@ -55,7 +55,7 @@ assert(math.abs(midnightDust.chance-2623/3956)<.0000005)
 assert(math.abs(midnightDust.expectedQuantity-5311/3956)<.0000005)
 local unseen,unseenText=render(999999,11,3)
 assert(math.abs(unseen.value-midnight.value)<1e-9,'unseen matching gear receives the same category valuation')
-assert(unseenText:find('66.3%',1,true) and unseenText:find('1.343',1,true),'category estimates reach an unseen item tooltip')
+assert(unseenText:find('66.3%',1,true) and not unseenText:find('[avg',1,true),'category rates reach an unseen item tooltip')
 -- S21: the recovered Amber family reaches the actual prospecting engine and
 -- formatter, remains rank-unknown, and contributes E[units] exactly once.
 LL.CanUseConversion=function()return true,nil,'Tester - Realm'end
