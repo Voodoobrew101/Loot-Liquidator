@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-22T01:39:28.860Z",
-  "status": "Read current branch and required v3 README, evidence-format, mechanics, worker role, and legacy queue. Searched new original-source paths for Warmaul 24995, Cobalt 36909 and Fel Iron 23424 across indexed Wowhead item comments/guides, wikis, Reddit and public processing addons. Found no new original Retail operation-level log, independently confirmed completed casts, per-output hit counts, zeros, stack histograms, or client eligibility; no new evidence file was warranted. A high-volume Cobalt-related Wowhead Looter table was identified as mined-deposit loot rather than prospecting, so it must not be used as a processing cohort. The 725-cutoff/731-source catalogue remains Codex owned and untouched.",
+  "updated_at": "2026-11-22T02:39:01.585Z",
+  "status": "Reviewed all five required v3 research documents and current legacy queue. Audited the branch's 12.1.7.70493 Retail ItemSparse DB2-derived eligibility source against live WoWDB labels for target Burning Crusade gear. This exposes an important negative-flag coverage discrepancy, not positive proof of Retail disenchant eligibility. Searched additional Warmaul 24995/Fel Iron 23424/Cobalt 36909 source leads and deduplicated a concrete historical Brown Linen Robe 6238 firsthand cohort against existing legacy evidence. No independently new Retail event-level source, actual processing operations, per-output hits, zeros, output totals or conditional histograms qualified. No new JSONL or catalogue changes; only owned status updated.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -16,9 +16,11 @@
     "Legacy TBC armor-vs-weapon group source identity/level build, Runecloth Headband 13866 patch-sensitive dust identity and output-event distributions; avoid already-reviewed 45661 token mapping"
   ],
   "newly_verified_fields_cohorts": [
-    "New provenance/method exclusion: Wowhead Rich Cobalt Deposit object 189979 lists 114,675 mined-deposit interactions and material counts (for example Bloodstone 1,703/114,675), explicitly under Mined. These are NOT 36909 Prospect operations, hits, or zeros; do not admit or infer prospecting rates from this high-volume Looter table.",
-    "Fresh Retail-compatible EasyDisenchant source describes secure Use buttons for Disenchant/Prospect/Mill on 12.1.5, but publishes no 24995, 36909, or 23424 operation outcomes, character-profile logs or zero-inclusive exports. Instrumentation is not an original empirical cohort.",
-    "No novel measured fields: 24995 -> 22445/22446/22447/22449 real Retail operations/hits/zeros/totals = none; 36909 spell 382979 and 23424 spell 382980 matched successful processing logs/hits/zeros/ranks = none. Previously verified 45661 seven class rewards were not duplicated."
+    "Retail DB2 source build 12.1.7.70493 (176,747 source rows; 21,061 NO_DISENCHANT flag records) lists no NO_DISENCHANT flag for 24995 Warmaul Legplates or nearby 24988/25000/25019; indeed zero IDs in range 24900..25199 are flagged. This is ONLY absence of a flag, NOT verification that any can be disenchanted.",
+    "WoWDB LIVE explicitly labels item 24995 (item level 31) and 25000 (item level 32) 'Cannot be disenchanted'. The discrepancy between WoWDB eligibility display and absence from the compiled DB2 bit-based negative list must be reviewed by Master/implementation with version-specific ItemSparse and live API checks. Historical 24995 (item level 108) material records remain separate.",
+    "The SAME source explicitly lists Cobalt Ore 36909 and Fel Iron Ore 23424 among prospective DB2 processable hints, but that establishes neither real completed prospecting casts nor yield, refunds, skill gates or quality ranks.",
+    "Deduplication: biocyte's 2,086 Brown Linen Robe 6238 disenchants (Strange Dust 10940 total 2,464; Lesser Magic Essence 10938 total 647) were already recorded in legacy/2026-11-02T0835-brown-linen-and-netherweave-de-cohorts.jsonl as a single shared cohort; no duplicate records created.",
+    "Target observed numerical advancements: none. 24995 -> 22445/22446/22447/22449 hits, total material units, zero histograms and actual Retail N remain unknown; 36909 and 23424 prospecting output hit/zero counts and operation denominators remain unknown."
   ],
   "source_urls": [
     "https://thewowdb.com/guides/disenchant-roi-trap/",
@@ -91,15 +93,19 @@
     "https://www.wowhead.com/object=189979/rich-cobalt-deposit",
     "https://www.wowhead.com/guide/mining-for-ores-gems-and-stones-mop-updated-376",
     "https://github.com/Somora/EasyDisenchant",
-    "https://www.wowhead.com/item=36923/chalcedony"
+    "https://www.wowhead.com/item=36923/chalcedony",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/database/sources/DB2Restrictions.lua",
+    "https://www.wowdb.com/items/25000-bloodfist-breastplate",
+    "https://www.wowhead.com/classic/item=6238/brown-linen-robe",
+    "https://www.wowhead.com/ptr-2/object=181555/fel-iron-deposit"
   ],
-  "numeric_summary": "New admissible Retail actual processing operations: 0. New target output hit counts, zero outcomes, per-output material totals, zero-inclusive histograms and per-operation means: 0. The 114,675-count Rich Cobalt Deposit source is MINING rather than PROSPECTING and provides zero usable 36909 processing operations; do not import mining loot tables into prospecting. No computed chances, EV or frozen prices.",
+  "numeric_summary": "NEW verified source-context: 12.1.7.70493 ItemSparse-derived NO_DISENCHANT records 21,061 / 176,747 source rows, with zero flagged IDs across 24900..25199, while LIVE WoWDB marks 24995 and 25000 non-disenchantable. These are database-source counts, NOT completed disenchants or measured drop rates. NEW independently qualifying 24995/36909/23424 Retail operations: 0; output hits: 0; zero-inclusive histograms: 0; new output totals: 0. All prior counts preserved and no gold EV/estimated rates created.",
   "evidence_file": "research/v3/evidence/legacy/2026-11-21T1445-retail-prospect-spell-identity.jsonl",
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "048b185c8e17790d5999745a15224f24eaa9ec61",
-  "verified_commit_sha": "0afbd7f7ab0df1649f0503423ca5db30f275b779",
-  "commit_note": "Updated owned legacy quiet-status only. No new evidence JSONL because no new independently verified Retail processing measurement; no source catalogue, code, schema, PR, release or schedule edits. Embedded verified_parent_sha is pre-write branch head; external commit/read-back verifies the new update.",
+  "verified_parent_sha": "1c93410b034149751f0f6a9de12cea60b3a909f0",
+  "verified_commit_sha": "1c93410b034149751f0f6a9de12cea60b3a909f0",
+  "commit_note": "One owned status file only. verified_parent_sha / verified_commit_sha are the fetched pre-write branch head; the new status commit SHA cannot be embedded self-referentially in its own file. Verify the new commit and file read-back separately. No evidence JSONL, PR, build, runtime, schema, manager dashboard or schedule edits.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -166,9 +172,16 @@
       "source": "Raawr original 2007 Jewelcrafting guide",
       "disposition": "held-source-supported-pre-2.1-model-not-measured",
       "reason": "Feb 13 2007 first-person author guide is new source link; five ore / one powder / possible 0–4 gems are broad guidance not sample measurements. It predates gem-guarantee patch 2.1 and powder-removal 3.0.2 and has no exact output IDs/hit/zero observations."
+    },
+    {
+      "task": "T0047/DB2 retail item eligibility",
+      "source": "DB2Restrictions.lua 12.1.7.70493 versus WoWDB LIVE item 24995 and 25000",
+      "disposition": "held-verified-conflicting-source-context-requires-master-runtime-check",
+      "reason": "NO_DISENCHANT bit list omits 24995 and all 24900..25199; WoWDB LIVE says 24995 and 25000 cannot disenchant. The absence of an explicit bit is not a positive client spell permission. No source supports new measured casts or output rates."
     }
   ],
   "blockers": [
+    "NEW implementation/Master review needed: Retail ItemSparse DB2 12.1.7.70493 derives a negative-only NO_DISENCHANT bit list with no entries 24900..25199, but WoWDB LIVE explicitly flags target 24995 and comparable 25000 non-disenchantable. Missing bit is NOT positive eligibility; determine exact client build/item variant and API check (C_Item.CanDisenchant or supported eligibility path) before any recommendation or negative fixture. Runtime/schema changes are Master-owned.",
     "No original per-event Warmaul 24995 DE ledger, 0-inclusive per-operation joint histogram or current Retail client receipt. Existing 2026-11-15 source-rounded-percent arithmetic reconstructs positive-bin conditional histograms and derived units, but original hit/stack cohort build/bonus/skill and zero-event data remain unknown; do not treat 2068 - 2031 = 37 as zeros.",
     "No current Retail exact itemLink/bonus build plus CanDisenchant and receipt validating Warmaul 24995 versus current no-DE database flag; historical original item level 108 differs from modern item level 31.",
     "No independent post-cutoff Retail Cobalt 36909 or Fel Iron 23424 zero-inclusive prospect export documenting successful operation count, consumed inputs/refunds, exact output IDs/ranks, profile/build and complete 0..N material outcomes.",
@@ -254,40 +267,40 @@
     }
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Seek a source-native, public Retail 12.x successful processing session with exact itemLink/client build, character skill/spec and event-level input/output reconciliation: 24995 disenchants tied to 22445/22446/22447/22449 with completed N and zero-inclusive outputs; thereafter 36909 spell 382979 and 23424 spell 382980 with actual consumed/refunded ore and named gem stacks. Ignore Rich Cobalt mining denominators and existing 731-source catalogue. Hold instrument-only addon pages until a specific original export is found.",
+  "next_concrete_step": "Escalate to Master through owned status: reconcile 12.1.7.70493 ItemSparse NO_DISENCHANT bit omission for 24995/25000 with WoWDB LIVE negative item flags and existing compiled DE fixtures; require exact Retail itemLink/bonus/client-build and actual safe eligibility/API check, with no in-game item destruction authorized. Continue searching for post-cutoff 24995/36909/23424 primary event-level successful operation logs with item/output IDs, completed denominator, zero outcomes, refunds and skill/spec. No repeated biocyte/Thottbot/catalogue transcriptions.",
   "coordination_cutoff": "Cutoff 0cd0bad8867e7a8d909b4ecae74f6136a3e23d42. Current branch manifest status CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources (713 original + 12 addendum + 6 recovered) and enabled catalogue registry. Codex/direct reviewers own source decisions and implementation; no duplicate assignment.",
   "sources_reviewed_this_run": [
     {
-      "url": "https://www.wowhead.com/object=189979/rich-cobalt-deposit",
-      "type": "First-party indexed Looter mined-deposit table, 114675 recorded node interactions",
-      "disposition": "held-method-mismatch-not-prospecting",
-      "detail": "Bloodstone 1703/114675 and other named material counts are Rich Cobalt Deposit MINING drops; neither ore consumption nor completed 36909 prospect operations. Do not infer casts or processing zeros."
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/database/sources/DB2Restrictions.lua",
+      "type": "Existing original user-supplied Retail ItemSparse DB2-derived negative/processable flags, build 12.1.7.70493",
+      "disposition": "verified-context-conflict-master-review",
+      "detail": "Parsed all 21,061 negative IDs: target 24995, nearby 24988/25000/25019, and entire 24900..25199 range absent; prospectable hints include 36909 and 23424. Absence does not prove Disenchant eligibility."
     },
     {
-      "url": "https://www.wowhead.com/guide/mining-for-ores-gems-and-stones-mop-updated-376",
-      "type": "Historical community source table with Cobalt six-uncommon/six-rare possible gem outputs",
-      "disposition": "reference-only-no-original-study",
-      "detail": "Lists item families and 1-2 common gem range but no actual Cobalt or Fel Iron completed casts, conditional histogram, material hits or current Retail profile."
+      "url": "https://www.wowdb.com/items/24995-warmaul-legplates",
+      "type": "WoWDB LIVE item-side eligibility display",
+      "disposition": "conflicts-with-absence-of-DB2-negative-bit-not-a-live-client-receipt",
+      "detail": "Warmaul Legplates 24995 current item level 31 explicitly 'Cannot be disenchanted'. Historical 108 item-level cohorts cannot establish Retail eligibility."
     },
     {
-      "url": "https://github.com/Somora/EasyDisenchant",
-      "type": "Retail 12.1.5 secure processing action addon documentation",
-      "disposition": "instrumentation-lead-no-public-yield-data",
-      "detail": "Documents Disenchant/Mill/Prospect actions but no public Retail 24995/36909/23424 original event source or cast/output reconciliation."
+      "url": "https://www.wowdb.com/items/25000-bloodfist-breastplate",
+      "type": "WoWDB LIVE comparable BC item display",
+      "disposition": "same-negative-flag-coverage-gap",
+      "detail": "Item 25000 item level 32 explicitly 'Cannot be disenchanted', yet 25000 absent from DB2Restrictions NO_DISENCHANT list."
     },
     {
-      "url": "https://www.wowhead.com/item=36923/chalcedony",
-      "type": "Historical first-person descriptive Cobalt/Saronite gem observation",
-      "disposition": "held-nonquantitative-no-denominators",
-      "detail": "Author reports 'hundreds of stacks' mixed Cobalt and Saronite with perceived Chalcedony rarity, but no independent exact input-by-ore N, named outputs totals, hits or zeros; no source-cohort admission."
+      "url": "https://www.wowhead.com/classic/item=6238/brown-linen-robe",
+      "type": "Historical firsthand 2,086-operation Brown Linen Robe 6238 disenchant cohort",
+      "disposition": "duplicate-not-admitted",
+      "detail": "biocyte exact 10940=2464 and 10938=647 already recorded in legacy evidence file dated 2026-11-02; not new Retail evidence or second sample."
     },
     {
-      "url": "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
-      "type": "Thottbot-migrated historical Fel Iron 100- and 565-ore report",
-      "disposition": "duplicate-exhausted-existing-originals",
-      "detail": "Known separate original source cohorts already recorded; repeated mirror not independent evidence."
+      "url": "https://www.wowhead.com/ptr-2/object=181555/fel-iron-deposit",
+      "type": "Fel Iron Deposit mined-object Looter table",
+      "disposition": "excluded-method-mismatch",
+      "detail": "1,156,196 mined node interactions, with gems, are mined loot, not 23424 prospecting casts; do not infer 23424 outcomes, zeros or rates."
     }
   ],
   "latest_run_source_date": "2026-11-21",
-  "latest_run": "2026-11-22T01:39:28.860Z: Refreshed all five required research documents and current branch head; prioritized original post-cutoff 24995/36909/23424 logs. Screened high-volume Rich Cobalt Looter mining data as non-prospecting, historical Cobalt possible-output guide and Retail secure-action addon. No new Retail cast/hit/zero totals or original ledger. Source provenance/method hold recorded; only owned status file changed."
+  "latest_run": "2026-11-22T02:39:01.585Z: Checked required branch docs/queue and discovered DB2-negative-list versus LIVE WoWDB 24995 conflict; 24900..25199 entirely unflagged in DB2 source. Audited existing 6238 biocyte 2086-operation study as duplicate and excluded Fel Iron Deposit mining Looter counts. No new eligible Retail casts/hits/zeros or JSONL; only owned quiet status updated."
 }
