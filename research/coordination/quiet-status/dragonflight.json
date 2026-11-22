@@ -2,8 +2,8 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-22T03:36:56.533Z",
-  "status": "research-active; appended one original-source positive-stack-range correction for existing 200353 disenchanting cohort; no independent new Dragonflight prospecting/milling cohort",
+  "updated_at": "2026-11-22T04:29:37.061Z",
+  "status": "research-active; one new independent Dragonflight item-side Looter cohort (194390), two material hit-count rows; priority ore and herb completed-operation/zero-histogram gaps remain open",
   "task_ids": [
     "T0020",
     "T0018",
@@ -21,22 +21,69 @@
   ],
   "newly_verified_fields": [
     {
-      "studyKey": "wowhead-looter-df-200353",
-      "originalRecordID": "dragonflight-20261122-0132-002",
-      "correctedRecordID": "dragonflight-20261122-0336-001",
-      "inputItemID": 200353,
+      "studyKey": "wowhead-looter-df-194390-obsidian-spellsplitter",
+      "inputItemID": 194390,
+      "outputItemID": 194123,
+      "fields": {
+        "casts": 7,
+        "castsWithDrop": 5,
+        "percentShown": 71,
+        "percentMeaning": "perCast",
+        "minSeen": 1,
+        "maxSeen": 5,
+        "sourceKind": "study"
+      },
+      "source": "https://www.wowhead.com/item=194390/obsidian-spellsplitter"
+    },
+    {
+      "studyKey": "wowhead-looter-df-194390-obsidian-spellsplitter",
+      "inputItemID": 194390,
       "outputItemID": 194124,
       "fields": {
-        "minSeen": 1,
-        "maxSeen": 2
+        "casts": 7,
+        "castsWithDrop": 2,
+        "percentShown": 29,
+        "percentMeaning": "perCast",
+        "minSeen": null,
+        "maxSeen": null,
+        "sourceKind": "study"
       },
-      "source": "Original indexed Wowhead Looter 'Vibrant Shard 1-2; 40 out of 74'; conditional observed stack range only, not per-event histogram"
+      "source": "https://www.wowhead.com/item=194390/obsidian-spellsplitter"
     }
   ],
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": "One new source-documented positive-event stack RANGE (1-2 Vibrant Shard 194124) for an EXISTING 74-operation/40-hit 200353 Looter cohort; zero new independent studies/casts/hits or estimated probabilities.",
+  "newly_verified_cohorts": [
+    {
+      "studyKey": "wowhead-looter-df-194390-obsidian-spellsplitter",
+      "inputItemID": 194390,
+      "inputName": "Obsidian Spellsplitter",
+      "reportedOperations": 7,
+      "outputs": [
+        {
+          "outputItemID": 194123,
+          "outputName": "Chromatic Dust",
+          "castsWithDrop": 5,
+          "positiveStackRange": [
+            1,
+            5
+          ]
+        },
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "castsWithDrop": 2,
+          "positiveStackRange": null
+        }
+      ],
+      "source": "https://www.wowhead.com/item=194390/obsidian-spellsplitter",
+      "reportedDataEpoch": null,
+      "skill": null,
+      "specialization": null
+    }
+  ],
+  "new_numerical_measurements": "One newly checked original pooled Looter source for item 194390: 7 reported disenchants, Chromatic Dust 194123 hits 5/7 and positive 1–5 stack range, Vibrant Shard 194124 hits 2/7. No new ore/mill evidence. No derived P, totalQuantity, zero-inclusive histogram, skill or patch inferred.",
   "numerical_fields_improved": [
-    "Existing source study wowhead-looter-df-200353: Vibrant Shard 194124 source-listed positive stack minSeen=1, maxSeen=2; the same 40/74 observed Looter occurrence count remains unchanged; totalQuantity/histogram remain null."
+    "194390 → 194123: observed 5/7 per-output occurrence count, source 71% (rounded), positive-stack 1–5",
+    "194390 → 194124: observed 2/7 per-output occurrence count, source 29% (rounded); material quantity and zero-inclusive distribution unknown"
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-19T0334-prismatic-selected-batch-and-rank-gap.jsonl",
@@ -77,10 +124,11 @@
     "research/v3/evidence/dragonflight/2026-11-21T0035-xenastro-original-q3-serevite-jan08-draconium-feb05-held.jsonl",
     "research/v3/evidence/dragonflight/2026-11-21T0336-new-draconium-r1r2-firsthand-range-held.jsonl",
     "research/v3/evidence/dragonflight/2026-11-22T0132-lost-landcallers-claws-original-looter-hits.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-22T0336-200353-shard-source-stack-range-correction.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-22T0336-200353-shard-source-stack-range-correction.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-22T0429-obsidian-spellsplitter-original-looter-hits.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-22T0336-200353-shard-source-stack-range-correction.jsonl",
-  "evidence_file": "research/v3/evidence/dragonflight/2026-11-22T0336-200353-shard-source-stack-range-correction.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-22T0429-obsidian-spellsplitter-original-looter-hits.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/2026-11-22T0429-obsidian-spellsplitter-original-looter-hits.jsonl",
   "source_links": [
     "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
     "https://www.reddit.com/r/woweconomy/comments/10vz6jh/prospecting_calculator_not_for_squids/",
@@ -123,11 +171,12 @@
     "https://goldcap.gg/retail/us/items/190311",
     "https://goldcap.gg/retail/us/items/190395",
     "https://goldcap.gg/fr/retail/eu/items/190394",
-    "https://www.wowhead.com/ptr/item=200353/lost-landcallers-claws?bonus=6652%3A8817%3A8822%3A9130%3A7977%3A8829%3A1498&ilvl=421"
+    "https://www.wowhead.com/ptr/item=200353/lost-landcallers-claws?bonus=6652%3A8817%3A8822%3A9130%3A7977%3A8829%3A1498&ilvl=421",
+    "https://www.wowhead.com/item=194390/obsidian-spellsplitter"
   ],
-  "verified_parent_sha": "81a23c35f4ee3f73948d7bafb5f90980ae75131f",
+  "verified_parent_sha": "fed3e475e098e9ca24099da88a60fb5e7abcd665",
   "verified_commit_sha": "2b8800dcb0e8946fd92fbcaa388c6044187e7d87",
-  "commit_sha_scope": "verified_parent_sha is the fetched pre-write branch head. verified_commit_sha is the previous verified worker commit, not this new self-referential status write; new commit SHA and changed paths must be verified independently afterward.",
+  "commit_sha_scope": "verified_parent_sha is the fresh branch parent; verified_commit_sha remains a prior verified worker SHA because a new commit cannot contain its own SHA. Current commit and changed-path readback are verified from GitHub after publishing.",
   "blockers": [
     "Master documented Bugy held archive's four Neltharite/Ysemerald swapped outputFamilyAnchorID values and held affected rows. The builder/importer remediation decision and an exact-SHA build-review fixture are still outstanding. Do not modify the source archive or infer production valuation impact.",
     "No independent exact-input R1 Draconium 189143 numeric per-cast study; Bugy's nominal ore total and 5-ore equivalent cannot be used as observed cast denominator.",
@@ -144,7 +193,8 @@
     "NEW same-source duplicate admission risk: Xenastro original Draconium Q3 Feb 2 (CSV61) and Feb 4 (CSV63) gem grade totals and original dates are already in research/v3/evidence/dragonflight/2026-11-02T1025-xenastro-draconium-r3-original-batches.jsonl as sourceKind study; Nov 20 2026-11-20T2032-xenastro-draconium-r3-feb02-feb04-held-original.jsonl repeats these same nine output rows per batch with different studyKeys as sourceKind reference. Master must reconcile source identity and mixed-stage HELD admission before deterministic builder; do not count as new source or double-admit.",
     "No publicly inspectable Dragonflight ProspectMate or similar saved-variable export with original casts, input quality, output material-by-cast histograms, skill/spec, secondary reprocessing stage and Resourcefulness refunds surfaced. Addon ability to record future results is not an original measured study.",
     "DalaGG Jan 28 2023 original WorthIt Draconium Q1/Serevite Q2 import exports are publicly indexed but Patreon-locked. Page headers name 1000-ore flip scenarios only; cannot establish genuine completed-cast counts, output IDs/totals, Resourcefulness, 0..N histograms, specialization or actual data-versus-model provenance. Do not purchase, register, or admit numeric records on that basis.",
-    "Corrected source 200353 -> 194124 1-2 Looter stack-range needs Master/Codex reviewed source-fixture acknowledgement; positive-stack range does not establish 0/1/2 event histogram, totalQuantity or patch/skill eligibility. Do not count replacement as another sample."
+    "Corrected source 200353 -> 194124 1-2 Looter stack-range needs Master/Codex reviewed source-fixture acknowledgement; positive-stack range does not establish 0/1/2 event histogram, totalQuantity or patch/skill eligibility. Do not count replacement as another sample.",
+    "194390 Looter: pooled operations with unknown original players, client build, skill/spec/gear bonus, units per hit, overlap across outcomes and complete histogram; do not infer combined zero-yield rate."
   ],
   "exhausted_sources": [
     {
@@ -589,26 +639,39 @@
         "Wowhead original indexed 12.1.0 PTR item page 200353: 74 reported disenchant operations, Vibrant Shard 40 occurrences, visible source positive stack range 1-2; current web page may omit Looter table while cached indexed text retains it",
         "Wowhead Brush-Clearing Axe 194389 and Bronze Tower 195184 Looter cohorts; exact-ID repository search confirms previously represented, no duplicate ingestion"
       ]
+    },
+    {
+      "at": "2026-11-22T04:29:37.061Z",
+      "scope": "New post-cutoff original Dragonflight R1 Draconium 189143 and R1 Bubble Poppy 191467 completed-cast datasets, ranked ores and herbs; original Dragonflight 194390 item Looter sample crosschecked against repo",
+      "reason": "Primary searches returned pre-catalogued original Reddit/Spreadsheets/Wowhead cohorts or qualitative guide priors; no new rank-specific prospect/mill finished-operation/refund/zero ledger. Unique small original Wowhead Looter cohort for Obsidian Spellsplitter (194390) was independently checked and recorded as two item-linked material hit rows, not a modern Dragonflight-patch study.",
+      "whereLooked": [
+        "Wowhead original Dragon Isles Prospecting spell / Draconium Ore / Bubble Poppy / Prismatic Ore result and comment pages",
+        "Reddit r/woweconomy named Serevite/Draconium/Khaz'gorite/Prismatic original result posts (ar_rules, Bugy, Xenastro and historical cohorts)",
+        "WoW-Professions and official Blizzard forums for Dragonflight ranked prospect/mill sources; recipe ranges not measured casts",
+        "GitHub indexed Loot-Liquidator root evidence and 731-source catalogue source deduplication; exact item 194390 not found by code search",
+        "Wowhead original Obsidian Spellsplitter item page: 7 disenchants, 5 Dust occurrences, 2 Shard occurrences, source range 1-5 Dust"
+      ]
     }
   ],
-  "next_concrete_step": "Seek independent source-original actual completed casts/refunds and zero-inclusive histograms for rank-1 Draconium Ore 189143 and Bubble Poppy 191467; ask Master/Codex to verify Looter 200353 shard 1-2 positive-stack range as descriptive only, with no duplicated 74-cast admission.",
+  "next_concrete_step": "Seek a new original R1 Draconium Ore 189143 or Bubble Poppy 191467 source with actual completed operations, saved ore/herb refunds, rank-resolved input/output item IDs, per-output positive stack distribution and zeros; separately request owner/Master review of novel 194390 7-item pooled Looter cohort for build-time admission, no duplicate source import.",
   "validation": {
-    "schema": "New JSONL parsed and all required drop fields inherited from verified original; only minSeen/maxSeen changed numerically, keeping null for unsupported data.",
-    "source_dedupe": "Matched exact existing original record dragonflight-20261122-0132-002, retained studyKey, set replaces to suppress original study row; no new independent cohort.",
-    "evidence": "One new correction-only file: research/v3/evidence/dragonflight/2026-11-22T0336-200353-shard-source-stack-range-correction.jsonl.",
-    "paths": "Only research/v3/evidence/dragonflight/2026-11-22T0336-200353-shard-source-stack-range-correction.jsonl and research/coordination/quiet-status/dragonflight.json intended; verify postcommit.",
-    "production": "unchanged",
-    "verification": "Pending remote commit readback of both files and compare path audit."
+    "schema": "Both JSONL records have all 35 expected drop fields, JSON stringification and parse completed; no inferred rates or quantities.",
+    "source_dedupe": "Exact input ID 194390 search returned zero owner-repository references; record uses distinct Wowhead original item-side Looter URL and one shared studyKey. Codex 731-source catalogue is not independently re-reviewed.",
+    "evidence": "research/v3/evidence/dragonflight/2026-11-22T0429-obsidian-spellsplitter-original-looter-hits.jsonl",
+    "source": "https://www.wowhead.com/item=194390/obsidian-spellsplitter",
+    "paths": "Only research/v3/evidence/dragonflight/2026-11-22T0429-obsidian-spellsplitter-original-looter-hits.jsonl and research/coordination/quiet-status/dragonflight.json",
+    "verification": "GitHub commit/tree path audit and file readback required after commit",
+    "production": "unchanged"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "new_source_reported_numeric_rows": 0,
+  "new_source_reported_numeric_rows": 2,
   "identity_corrections": [],
-  "backlog_triage": "Reused exact original source identity wowhead-looter-df-200353 rather than admitting a duplicate cohort. Cached 12.1.0 PTR-indexed original page lists source reported 1-2 Vibrant Shard stacks; current PTR 12.1.7 live view omits the dynamically loaded table, so quantity-range correction remains subject to Master/Codex source-build review. The 731-source cutoff catalogue is Codex-owned and was not independently re-reviewed.",
+  "backlog_triage": "New original Wowhead item-side Looter record for 194390 added as two numerical hit rows, with original sample size 7; exact studyKey and source URL recorded. Historical 731-source catalogue is Codex-owned, no independent recatalogue.",
   "current_run_context_checks": {
     "branch": "implementation/five-agent-completion",
-    "checked_at_utc": "2026-11-22T03:36:56.533Z",
+    "checked_at_utc": "2026-11-22T04:29:37.061Z",
     "queue_tasks_prioritized": [
       "T0020",
       "T0018",
@@ -617,20 +680,18 @@
       "T0019",
       "T0046"
     ],
-    "source_numeric_admission": "Only append-only replacement of one existing source row, not a new cohort",
+    "source_numeric_admission": "New independent original pooled item-side Looter sample 194390; 7 source-reported disenchants, two material rows; no duplicate old ore/mill cohorts.",
     "evidence_created": true,
     "exact_primary_input_item_ids": [
       189143,
       191467,
       191464,
-      191465,
-      191466,
       188658,
       190394,
       190395,
       190396,
       194545,
-      200353
+      194390
     ],
     "exact_primary_output_ids_checked": [
       198412,
@@ -639,11 +700,11 @@
       198418,
       198419,
       198420,
-      194124,
-      200113
+      194123,
+      194124
     ],
-    "finding": "Original indexed 200353 Looter table gives 1-2 positive-stack range for Vibrant Shard 194124; source 40/74 occurrence count is unchanged; no output units or 0..N distribution.",
-    "next": "Find post-cutoff original 189143 R1 Draconium / 191467 R1 Bubble Poppy operation-and-refund ledgers; Master to review 200353 range correction without re-admitting the 74 operations."
+    "finding": "194390 → 194123 5/7 hits (1–5 positive stack); →194124 2/7 hits (stack size unknown); observation patch/skill/refunds and overall zero outcomes unknown",
+    "next": "Seek a new original R1 Draconium Ore 189143 or Bubble Poppy 191467 source with actual completed operations, saved ore/herb refunds, rank-resolved input/output item IDs, per-output positive stack distribution and zeros; separately request owner/Master review of novel 194390 7-item pooled Looter cohort for build-time admission, no duplicate source import."
   },
   "pipeline_catalogue_receipt": {
     "path": "research/coordination/backlog-catalogue-20261120.json",
