@@ -25,5 +25,15 @@ local before={}
 assert(loadfile('LootLiquidator/ItemDBRuntime.lua'))('LL',before)
 assert(before.ItemDB.reviewedSourceFacts==nil,'Informational research archive leaked into live addon')
 local native=assert(loadfile('database/profession-profile-rules.lua'))()
-same(native,before.ItemDB.professionProfiles,'professionProfiles')
+local function roundTrip(value,path)
+    local serialized=compact(value,encode)
+    local decoded={ItemDB={}}
+    assert(loadstring('local LL=...;'..serialized))(decoded)
+    same(value,decoded.ItemDB.professionProfiles,path)
+    assert(serialized==compact(value,encode),path..': serializer is nondeterministic')
+end
+-- Serialization preserves the entire offline input. Runtime reachability
+-- pruning is a separate operation, tested by test_runtime_catalog_pruning.
+roundTrip(native,'fullNativeProfiles')
+roundTrip(before.ItemDB.professionProfiles,'runtimeProfiles')
 print(('PASS: compact static metadata preserves %d scalar values, types and lengths; research details remain offline'):format(scalarCount))
