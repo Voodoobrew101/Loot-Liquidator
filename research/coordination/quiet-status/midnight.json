@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-22T00:09:20.681Z",
-  "status": "Refreshed current research/v3 README, evidence-format, mechanics, worker instructions, queue and Midnight status on implementation/five-agent-completion. Ran new cross-site named-input searches for 272246 at-cast disenchant evidence, rank-specific 237359/237361 Refulgent Copper, 237362/237363 Umbral Tin and 237364/237365 Brilliant Silver prospecting, and firsthand 10-herb Midnight pigment outputs. A March firsthand Resourcefulness report confirms qualitative ore refunds but no event ledger, a current WoW-Professions disenchant catch-up guide gives only approximate non-material Glimmering Powder rates with unspecified exact N, and a recently published datamine/price guide has no observed prospecting outputs. No novel independently attributable material yield cohort, rank/profile/eligibility correction or measured zero-inclusive histogram. No evidence JSONL created; no experiments, builds, PRs, merges, releases or runtime changes.",
+  "updated_at": "2026-11-22T01:07:12.642Z",
+  "status": "Refreshed current branch and read research/v3/README.md, evidence-format.md, mechanics.md, roles/worker.md, queue.json, and this role's quiet status. Searched for new first-person Retail Midnight disenchant item-instance/skill-linked logs (272246), rank-identifiable 237359/237362 ore prospecting results and Eversong Diamond unlock/zeros, and ten-herb milling operation records. Fresh targeted searches surfaced no NEW independently measurable or identity-resolving cohort after the owner Codex cutoff. Rediscovered the April 8 Reddit prospecting percentage table but it predates the cutoff and is assigned to Codex; did not re-catalogue or copy it. Reviewed two unlogged secondary leads, each lacking raw operations. No new baseline, evidence file, recipe/rank correction, zero histogram or runtime result; no experiments, spending, PRs, merges or release.",
   "task_ids": [
     "T0026",
     "T0049",
@@ -15,10 +15,9 @@
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "Miststalker's Wristbands item 272246: actual at-cast ilvl 305 bonus instance and eligibility unresolved; base WoWDB 206 template says cannot be disenchanted; selected Wowhead 305 tooltip and equipped snapshots are not DE events.",
-    "Umbral Tin Ore 237362/237363: source-reported 4000 nominal ore with Resourcefulness 39.6% cannot be assigned completed casts, ranked refund denominators, hit counts, zero outcomes or per-cast histograms; identify same-cast output quality and unlock profile.",
-    "Refulgent Copper Ore 237359/237361 and Brilliant Silver Ore 237364/237365: seek original Retail live cast-level logs before/after 2026-03-31 hotfix, source dedupe, ranked outputs and specialization capstone.",
-    "Midnight Milling 10 herbs/cast: seek original Tranquility Bloom/Mana Lily/Argentleaf/Sanguithorn input and pigment outcome ledgers with actual casts, resourcefulness, skill and zero outputs."
+    "272246 Miststalker's Wristbands: event-linked at-disenchant bonus IDs and actual ilvl (305 selected page is not event proof), real eligibility, gear rarity and player skill/spec/build, ranked 243599/243600/243602/243603/243605/243606 outcome event counts.",
+    "237362/237363 Umbral Tin; 237359/237361 Refulgent Copper; 237364/237365 Brilliant Silver: actual completed five-ore operations vs nominal inputs/refunds, per-rank exact input/output IDs, per-output units/hits/zeros/0-1-2+ histograms, 242608/242712 Diamond node, build/skill/spec.",
+    "Midnight Milling 10-herb casts for 236761/236767/236770/236771/236776/236777/236778/236779: source original per-operation counts, exact pigment 245807/245803/245867 etc rank IDs, observed quantities/zeros/refunds, profession profile/patch."
   ],
   "triage": [
     {
@@ -1410,7 +1409,10 @@
     "https://www.reddit.com/r/woweconomy/comments/1rs82hb/does_increasing_enchantment_skill_increase_dawn/",
     "https://www.curseforge.com/wow/addons/my-crafting-buttons",
     "https://www.wow-professions.com/midnight/enchanting-guide",
-    "https://wowgoldfarms.com/guides/retail/umbral-tin-ore-midnight/"
+    "https://wowgoldfarms.com/guides/retail/umbral-tin-ore-midnight/",
+    "https://huijting.github.io/MidnightHelper/",
+    "https://www.wow-farming.info/farming-eversong-diamond/",
+    "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/"
   ],
   "blockers": [
     "272246: actual disenchantable item bonus/at-cast ilvl 305 itemLink and correlated original DE output are not published; generic 206 cannot-be-disenchanted catalog conflicts with aggregate 140-row Looter display.",
@@ -1499,57 +1501,72 @@
     {
       "url": "https://wowgoldfarms.com/guides/retail/umbral-tin-ore-midnight/",
       "reason": "Retail Midnight ore market and client-data guide contains no firsthand actual rank-specific prospecting cast/output ledger. Does not resolve Cardinalai denominators or Diamond unlock events."
+    },
+    {
+      "url": "https://huijting.github.io/MidnightHelper/",
+      "reason": "Descriptive skill/stat guidance only; no public event-linked item 272246 DE sample or skill-stratified cast ledger."
+    },
+    {
+      "url": "https://www.wow-farming.info/farming-eversong-diamond/",
+      "reason": "October 21 guide repeats ore-specific Diamond unlock, does not provide independent completed prospect counts, diamond hits/zeros or rank-specific output records."
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/",
+      "reason": "April 8 historical post is pre-owner cutoff and in Codex assigned catalogue scope; not newly measured, not independently recatalogued."
     }
   ],
-  "next_concrete_step": "Seek a NEW downloadable original Retail Midnight per-operation processing log or item-instance-linked disenchant receipts: 272246 at-cast bonus and ilvl, or 237359/237362/237363 ranked five-ore prospect receipts with actual operation count, refunded inputs, outputs by quality ID, diamond unlock state, skill/spec/build and observed zero/positive histograms; otherwise look for new 10-herb milling logs. Do not revisit previously exhausted guide summaries or duplicate Codex cutoff catalogue.",
-  "verified_base_commit_sha": "12648f46947ab0febafafcab84ca2a4f9e1269e3",
+  "next_concrete_step": "Target genuinely new, published, downloadable Retail Midnight SavedVariables/CSV event logs after the assigned cutoff with source item instance and at-cast ilvl/bonus for gear ID 272246 (eligibility), or exact rank-specific ore ID 237362/237363 with completed operations, Resourcefulness refunded inputs, output quality item IDs, Diamond unlock, cast-level 0/1/2+ outcomes, skill/spec and patch. Screen other unassigned original Mill/Prospect logs; leave pre-cutoff catalogue to Codex and do not make an evidence file without genuinely new source data.",
+  "verified_base_commit_sha": "f24f559e79769fc62c9572638a5b0327e5fe4e70",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "One status-only checkpoint; no independently qualified new Retail material cohort, so no empty evidence file. Resulting commit SHA verified independently after write and not recursively stored.",
+  "commit_note": "Status-only commit for this run; no new independent source-verified cohort, so no fabricated empty evidence JSONL. Verify commit and read-back externally; SHA omitted to avoid recursive self-referential file hash.",
   "new_leads_screened": [
     {
-      "source": "https://www.reddit.com/r/woweconomy/comments/1rrn6of/resourcefulness_in_crushingprospecting/",
-      "published": "2026-03-12",
-      "classification": "held_original_qualitative_resourcefulness_not_numeric_yield",
-      "source_original": {
-        "input_item_id": null,
-        "completed_prospect_casts": null,
-        "nominal_ore": null,
-        "refunded_ore": null,
-        "per_output_hits": null,
-        "zero_histograms": null,
-        "source_stat_percent": null
-      },
-      "detail": "Player says Midnight Prospecting displays no Resourcefulness in details yet actual prospects save ore; no source-counted refunds, N, rank or output receipts. Qualitative mechanic corroboration only (M10), not a fresh eligible numeric cohort."
-    },
-    {
-      "source": "https://www.wow-professions.com/midnight/enchanting-guide",
+      "source": "https://huijting.github.io/MidnightHelper/",
       "published": null,
-      "classification": "held_firsthand_approximate_catchup_kp_not_material_baseline",
+      "classification": "held_secondary_skill_stat_claim_no_original_cast_log",
       "source_original": {
-        "sample_size": "few hundred (unspecified exact N)",
-        "green_approx_percent": 10,
-        "blue_approx_percent": 50,
-        "epic_approx_percent": 100,
-        "material_output_ids": null,
+        "claimed_disenchant_stat_rule": "Raw skill only; ignores crafting secondary stats",
+        "named_gear_item_ids": null,
         "at_cast_item_level": null,
-        "completed_casts_by_gear_quality": null
+        "material_output_item_ids": null,
+        "completed_disenchants": null,
+        "zero_event_log": null,
+        "player_skill_comparison_denominators": null
       },
-      "detail": "Guide author tested an unspecified few hundred disenchants and reports approximate Glimmering Powder catch-up knowledge drop frequencies by rarity, not Eversinging Dust/Radiant Shard/Dawn Crystal yields, and omits per-quality denominators, item links, skill/spec and event zeros. Do not convert approximations to counts or use as material rates."
+      "detail": "Current addon guidance says its own route was measured, but does not publish operation-linked raw data or sample dates for Midnight DE. Consistent with already recorded guide-level M13; cannot advance actual 272246 eligibility, skill coefficient or yield."
     },
     {
-      "source": "https://wowgoldfarms.com/guides/retail/umbral-tin-ore-midnight/",
-      "published": "2026-10 (site labels last month)",
-      "classification": "held_datamine_market_guide_not_independent_prospecting_study",
+      "source": "https://www.wow-farming.info/farming-eversong-diamond/",
+      "published": "2026-10-21",
+      "classification": "held_secondary_existing_unlock_mechanic_no_observed_diamond_cohort",
       "source_original": {
-        "input_item_id": 237362,
+        "diamond_item_id": 242608,
+        "inputs_named": [
+          "Refulgent Copper Ore",
+          "Umbral Tin Ore",
+          "Brilliant Silver Ore",
+          "Dazzling Thorium"
+        ],
+        "ore_specific_unlock_claim": true,
         "completed_prospect_casts": null,
-        "output_unit_totals": null,
-        "output_occurrences": null,
-        "histogram": null,
-        "player_profile": null
+        "observed_diamond_units": null,
+        "per_cast_zeros": null,
+        "source_author_original_trials": null
       },
-      "detail": "Retail Midnight ore market and client-data guide contains no firsthand actual rank-specific prospecting cast/output ledger. Does not resolve Cardinalai denominators or Diamond unlock events."
+      "detail": "Secondary guide points to known ore-specific Proficient Processor Diamond unlock; no actual independent rank-specific operations, output totals or hit/zero histogram."
+    },
+    {
+      "source": "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/",
+      "published": "2026-04-08",
+      "classification": "pre_cutoff_original_table_retrieval_codex_owned_not_independently_recatalogued",
+      "source_original": {
+        "claimed_nominal_ore_amounts_present": true,
+        "claimed_per_output_percentages_present": true,
+        "actual_completed_cast_ledger": null,
+        "independent_post_cutoff_sample": null
+      },
+      "detail": "First-person historical per-ore percentages appear in comments, but source predates 2026-11-20 Codex cutoff; owner assigned its existing corpus to Codex. Do not re-record, reinterpret percentages as hits, or double-count. No new Retail run added."
     }
   ],
   "catalogue_checkpoint": {
@@ -1562,5 +1579,5 @@
     "worker_recataloguing": "not performed",
     "release_status": "not claimed"
   },
-  "verified_status_blob_sha_before_commit": "4136dd0acbc7245c7279ea9dca16bf175c77674b"
+  "verified_status_blob_sha_before_commit": "a4d79d4d1889a6679ab026277623e43e18cb91e0"
 }
