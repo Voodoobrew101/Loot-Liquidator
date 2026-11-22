@@ -2,8 +2,8 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-22T13:33:48.946Z",
-  "status": "research-active; no new independent Dragonflight numerical cohort, per-output histogram or quality-rank correction verified",
+  "updated_at": "2026-11-22T14:36:03.691Z",
+  "status": "research-active; no new independently verified Dragonflight processing cohort, item-rank correction or 0-inclusive histogram",
   "task_ids": [
     "T0020",
     "T0018",
@@ -13,10 +13,11 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore rank-1 item 189143 original completed-operation denominator, refunds, output-specific hits and 0..N histograms",
-    "Bubble Poppy rank-1 item 191467 and Saxifrage rank-1 item 191464 original mill casts, pigment rank IDs, units, non-hit events",
-    "Serevite/Khaz'gorite/Prismatic ore completed prospects versus initial nominal ore and multi-stage reprocessing",
-    "Independent DF gear disenchant original source cohort with event stack distribution and verified source skill/build"
+    "Draconium Ore rank 1 (189143): independent completed operations, output-specific 192837–192844/diamond family, true refunds, 0..N stack histograms and rank identities",
+    "Bubble Poppy rank 1 (191467) -> Serene Pigment 198412/198413/198414: separate measured ranks, genuine mill operations and non-hits",
+    "Saxifrage rank 1 (191464) -> Blazing Pigment 198418/198419/198420: complete original rank-specific mill logs, Resourcefulness and source profile",
+    "Serevite and Khaz'gorite ores/Prismatic Ore (194545): distinguish actual completed first-stage operations from second-stage reprocessing and source-reported means",
+    "Dragonflight disenchanting: new item-specific independent cast/output histograms, rather than previously indexed cumulative Looter copies"
   ],
   "newly_verified_fields": [],
   "newly_verified_cohorts": [],
@@ -113,7 +114,7 @@
     "https://www.wowhead.com/item=194390/obsidian-spellsplitter",
     "https://www.wowhead.com/item=198019/bramble-chain-pauldrons"
   ],
-  "verified_parent_sha": "00b4c4f407b56af1645cc052477b092a5ef231e0",
+  "verified_parent_sha": "5ea503b7f0a1e6d223fc30a0f4385bb9143097dc",
   "verified_commit_sha": null,
   "commit_sha_scope": "Current-run commit SHA cannot be embedded in its own contents; verify via resulting Git commit and branch read-back.",
   "blockers": [
@@ -671,27 +672,40 @@
         "GoldCap retail Serevite Ore rank pages 190395 R1,190396 R2,190394 R3: corroborates 2026-11-17 documented identity conflict, not fresh authoritative evidence",
         "Wowhead Mystic items 200942/200943/200945 and 200941 original commenter ranges are already indexed; no per-cast distribution or newly independent sample"
       ]
+    },
+    {
+      "at": "2026-11-22T14:36:03.691Z",
+      "scope": "Open Dragonflight ore, milling and disenchanting true-operation/zero-inclusive studies after existing cutoff",
+      "reason": "Searches across at least four source families surfaced only already recorded independent studies and nonnumeric mapping/comment references. No original new cast ledger, measured hit/histogram or verified rank/profile update; do not repeat these leads without a new post/export/observation revision.",
+      "whereLooked": [
+        "Reddit r/woweconomy original R2 Serevite measured 1000 casts https://www.reddit.com/r/woweconomy/comments/zkay8v (already indexed, no novel histograms)",
+        "Reddit R2 Khaz'gorite explicit 20 prospects https://www.reddit.com/r/woweconomy/comments/10h6ccx (already indexed)",
+        "Wowhead Serene Pigment source/quality mapping https://www.wowhead.com/item=198412/serene-pigment and Saxifrage Blazing Pigment original Aary comment https://www.wowhead.com/item=198418/blazing-pigment (already indexed)",
+        "Wowhead original 400 Prismatic Ore 80-prospect totals https://www.wowhead.com/item=194545/prismatic-ore (already indexed)",
+        "Official Blizzard forum prior original numeric anecdote https://us.forums.blizzard.com/en/wow/t/illimited-diamond-where-are-you/1505082 (no new denominator or batch key)",
+        "GitHub connected evidence index exact original Reddit IDs, Aary milling, and Mystic item comments 200941/200942/200943 (pre-indexed)"
+      ]
     }
   ],
-  "next_concrete_step": "Locate new original Dragonflight prospect/mill operation-level exports, especially Draconium R1 189143 and Bubble Poppy R1 191467, with output IDs/qualities, completed operation and refund denominators, per-output zeros/stack histograms, skill/spec and period. Avoid repeated known Bugy/Aary and pre-indexed 10.2 Looter cumulative tables.",
+  "next_concrete_step": "Search for a genuinely new original posted/exported rank-1 Draconium 189143 or Bubble Poppy 191467 operation ledger with item/rank IDs, completed operations, refunds, skill/spec/date and 0/1/2+ output counts. Otherwise seek an unindexed original DF gear-disenthchant cast histogram; do not re-admit Aary/Bugy/Xenastro/superbondez.",
   "validation": {
-    "repo_read": "Current branch README.md, evidence-format.md, mechanics.md, roles/worker.md, queue.json and owned quiet status fetched and read.",
-    "source_dedupe": "Multi-site name-first search crosschecked against source ID-level GitHub evidence index.",
-    "new_jsonl": "None; no genuinely new, independently reviewable source.",
+    "repo_read": "Freshly fetched research/v3/README.md, evidence-format.md, mechanics.md, roles/worker.md, queue.json and owned status on authorized branch.",
+    "source_dedupe": "Name-first multi-site web checks cross-referenced to connected GitHub original study IDs, authors and exact input item IDs.",
+    "new_jsonl": "None: no genuinely novel independently grounded numerical cohort or identity correction.",
     "paths": "research/coordination/quiet-status/dragonflight.json only",
-    "commit": "GitHub contents API single-file commit with existing blob SHA; read-back verification.",
-    "production": "No edits to addon, other workers, queue, build tools, pipeline, catalogue, generated data, PR, merge, release or gameplay."
+    "commit": "Single-file GitHub Contents API update with current blob SHA; commit and read-back verification required.",
+    "production": "No addon, other-worker, queue, schema, pipeline, archive, catalogue, PR, merge or release changes."
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
   "new_source_reported_numeric_rows": 0,
   "identity_corrections": [],
-  "backlog_triage": "Priority ore and milling search returned indexed original author families or nonempirical guide references. Alternative 10.0-10.2 item-level Looter candidates all have existing source identity; no additional admission. Codex-owned cutoff catalogue not changed.",
+  "backlog_triage": "No new admitted/reviewable/held source identity; new search results already in approved Codex cutoff catalogue or existing worker records. Do not duplicate the owner team's corpus.",
   "current_run_context_checks": {
     "branch": "implementation/five-agent-completion",
-    "checked_at_utc": "2026-11-22T13:33:48.946Z",
-    "verified_head_before_write": "00b4c4f407b56af1645cc052477b092a5ef231e0",
+    "checked_at_utc": "2026-11-22T14:36:03.691Z",
+    "verified_head_before_write": "5ea503b7f0a1e6d223fc30a0f4385bb9143097dc",
     "queue_tasks_prioritized": [
       "T0020",
       "T0018",
@@ -701,16 +715,16 @@
       "T0046"
     ],
     "new_source_searches": [
-      "Draconium Ore R1, Serevite Ore, Khaz'gorite Ore and Prismatic Ore original prospecting completed-cast logs: by-name Reddit, Wowhead, Blizzard forums and profession guides found only already indexed Bugy/Jallfo/neoslayyer/superbondez originals; no per-output zero-inclusive event histogram or refund-adjusted denominator.",
-      "Bubble Poppy, Saxifrage, Serene/Blazing Pigment mill results: by-name Wowhead, Reddit, YouTube and WoW-Professions searches yielded only qualitative recipes or existing Aary/Liqourice5 samples; no new raw completed-mill cohort.",
-      "Exact item IDs 200272,194389,197639,194420,194375,194394,197999,194347,198035,195184,202467,202456 from WoWhead gear Disenchanting tables checked in connected GitHub source index; all already source-recorded.",
-      "Exact 10.0-10.2 gear item IDs 200380,200381,200378,200382,200333,209904,209902,209892,209893,209884,209942,209921,209927,209886,209928 additionally checked; all already source-recorded, including Live/PTR cumulative copies.",
-      "Dragonflight 10.2 WoWhead 209904 displays 284 item disenchants with dust 231 and shard 71 material occurrences, sum 302; not new: overlapping marginals cannot be interpreted as 302 completed operations or an exclusive yield distribution.",
-      "No new individual cast-with-drop measurements, totalQuantity histograms or source-original character skill/spec/build/unlock records could be verified."
+      "Name-first searches across Reddit r/woweconomy, Blizzard forums, Wowhead, and independent guide pages for one-star Draconium 189143; results were already catalogued Bugy, Jallfo, neoslayyer and 2022-23 Diamond cohorts; no new measured source-original R1 cast/outcome sample.",
+      "Bubble Poppy and Saxifrage milling: independent multi-site searches returned pigment lineage and Aary's already indexed R2/R3 Saxifrage and Hochenblume nominal-herb data; no new exact completed-mill/refund/zero event ledger.",
+      "Khaz'gorite R2: Reddit 10h6ccx original 100 ore/20 prospects/zero Illimited Diamonds already recorded, not a new independent cohort.",
+      "Prismatic Ore 194545: Wowhead superbondez 400 ore/80 completed operations, rank-3 Eternity Amber 4 units and other yields already source-recorded; non-hit/positive-stack histogram still unreported.",
+      "Exact known material/source controls checked: Reddit zkay8v 1,000 R2 Serevite completed prospects; reddit 108782r per-1,000 nominal-ore diamonds; wowhead 192869/192870 historic Bugy averages; all already in existing evidence with identity/dedupe protections.",
+      "Secondary gear/disenchant search: 200941, 200942, 200943, 200945 and 200946 Mystic first-person quantity reports already indexed by original author; no new numerical operation profile or Looter cohort."
     ],
     "no_cutoff_catalogue_duplication": true,
-    "existing_index_checked": "Connected GitHub code search used for 27 newly inspected gear item IDs; each exists in prior evidence or source snapshot.",
-    "no_numeric_admission": "No JSONL: no independently sourced new cohort/correction; owner policy forbids empty evidence files or duplicate transcripts."
+    "existing_index_checked": "Connected GitHub code search crosschecked original Reddit IDs zkay8v/108782r and Aary, neoslayyer, Chestapples, acemindu against existing evidence and prior catalogue references.",
+    "no_numeric_admission": "No new JSONL: original numerical studies already covered, and owner forbids duplicate transcription, fabricated probability/denominator or empty evidence commits."
   },
   "pipeline_catalogue_receipt": {
     "path": "research/coordination/backlog-catalogue-20261120.json",
