@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-22T07:12:12.781Z",
-  "status": "Refreshed implementation/five-agent-completion and reread v3 README, evidence format, checked mechanics, worker role and current queue. Searched for new Retail Midnight 272246 disenchant variant-linked trials, rank-specific 237362/237363 Tin and 237359/237361 Copper prospecting, 242608/242712 Diamond event data and milling cohorts; no new original per-operation numerical source with actual casts and zero events found outside owner-assigned catalogue. Inspected newly released MyLootHistory 2.7.0 code: source records acquired item links and crafted/looted outputs internally, but exported item CSV is aggregated by output item ID, quality and source rather than input cast, and does not expose input itemLink/bonus, operation GUID, operation-level zero outcomes or refund ledger. Held as an output-only export lead, not empirical DE/prospecting data. EzDisenchant release notes verify a 500-entry history and CSV/TXT export but not event-linked outcomes; package source not independently verified. No new JSONL, numerical cohorts, probabilities, eligibility conclusions, PRs, pipeline changes, game actions, release, merge or schedule changes.",
+  "updated_at": "2026-11-22T08:13:14.380Z",
+  "status": "Refreshed implementation/five-agent-completion and reread current README, evidence-format, mechanics, worker role and Midnight queue. Investigated new-to-this-role contextual item 272246 Blizzard-API/census evidence and an independent addon data-provenance lead; neither supplies original at-disenchant item instance/bonus, live eligibility or any measured Midnight DE/prospecting/milling operation. GamGem's 2026-11-07 item analysis distinguishes the level-206 base record from actual worn variant and reports a top-key equipped-item census, not DE trials. Profession Assistance's 2026-11-15 Retail release explicitly relies largely on Wowhead sources and disclaims reliability of newer-expansion processing percentages; it is a secondary derived tooltip, not an independent sample. A fresh r/woweconomy new-feed scan exposed no new input-to-output Retail processing ledger. No numeric cohort, probability, per-cast zeros, skill curve or refund adjustment admitted. Did not duplicate the independently catalogued 731-source cutoff corpus. No new JSONL, PR, build change, release, game action or schedule change; quiet-status-only commit.",
   "task_ids": [
     "T0026",
     "T0049",
@@ -1376,19 +1376,16 @@
     }
   ],
   "newly_verified_fields_or_cohorts": [
-    "Schema-only non-numeric finding: RustyDaemon/MyLootHistory 2.7.0 (Nov 21 2026) saves variants (item links, quality) in internal item loot history and labels created loot 'crafted'; public CSV code exports type,name,id,quality,quantity,value,marketValue,source,character,zone,firstLooted,lastLooted aggregated over the filtered report. No input-to-output association, completed DE cast denominator, output per-cast zeros/refunds, profession skill/spec or item 272246 at-cast ilvl is available from that CSV."
+    "Identity-context only: GamGem's 2026-11-07 Blizzard API-derived 272246 base item inspection confirms published level 206 is a preview/base item property rather than proof of disenchanted 206- or 305-ilvl item. Independent sampled 43 equipped characters among 11,153 top-key characters (week 2026-10-27 through 2026-11-01) is an equipment census, NOT cast counts, disenchantability proof, drop probability or materials. No at-cast bonus/link.",
+    "Secondary-data warning: Profession Assistance 2026-11-15 release describes Wowhead as its general source for milling/prospecting/disenchanting probabilities and explicitly warns recent-expansion prospecting estimates may be unreliable; not new original numeric study."
   ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": [],
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/RustyDaemon/MyLootHistory/blob/main/data/Export.lua",
-    "https://github.com/RustyDaemon/MyLootHistory/blob/main/data/Database.lua",
-    "https://github.com/RustyDaemon/MyLootHistory/blob/main/data/Source.lua",
-    "https://github.com/RustyDaemon/MyLootHistory/blob/main/CHANGELOG.md",
-    "https://www.curseforge.com/wow/addons/my-loot-history",
-    "https://www.curseforge.com/wow/addons/ezdisenchant/files/9635154"
+    "https://gamgem.com/world-of-warcraft/items/miststalkers-wristbands",
+    "https://www.curseforge.com/wow/addons/profession-assistance"
   ],
   "blockers": [
     "272246: actual disenchantable item bonus/at-cast ilvl 305 itemLink and correlated original DE output are not published; generic 206 cannot-be-disenchanted catalog conflicts with aggregate 140-row Looter display.",
@@ -1514,13 +1511,21 @@
     {
       "url": "https://github.com/RustyDaemon/MyLootHistory/blob/main/data/Export.lua",
       "reason": "2026-11-21 2.7.0 Retail exported CSV code verified: acquired output rows aggregated by item ID/quality/source, no input item-link or cast/zero/refund joins, and no published participant cohort. Reconsider only if a genuinely new raw input/output event ledger is published."
+    },
+    {
+      "url": "https://gamgem.com/world-of-warcraft/items/miststalkers-wristbands",
+      "reason": "API-derived base item 206 and 43/11153 top-key equipped census do not prove at-cast 305 variant, eligibility or any disenchant output; further static page checks exhausted."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/profession-assistance",
+      "reason": "Publisher says estimates sourced generally from Wowhead and recent expansion processing is uncertain; no independent numeric casts, original study or zero events."
     }
   ],
-  "next_concrete_step": "Seek NEW, published, original Retail Midnight per-processing-operation data generated after catalogue cutoff: consumed input itemLink/variant and rank, actual completed cast ID/count (not nominal ore batches), output item IDs/ranks and quantities including no-drop outcomes, refund ledger separately, source skill/spec and build. Check original public exports for input/output joins before treating them as samples; current Ka0s and MyLootHistory output CSVs fail. Inspect EzDisenchant raw history schema only if publicly available and avoid repeating exhausted source descriptions. Route any actual evidence correction/schema need through Master; owner Codex team retains 731-source cutoff catalogue.",
-  "verified_base_commit_sha": "b4788149d3dbf0ab364b08fe68780fcd8bb6d5aa",
+  "next_concrete_step": "Prioritize genuinely NEW after-cutoff 2026-11-20 Retail Midnight public original operation logs/studies (not Wowhead repackagings or player-equipment censuses): seek consumed exact itemLink and rank/bonuses, event-linked materials with exact output quality IDs, real successful 5-ore/10-herb casts and zeros, separately recorded refunds, build/skill/specialization. First resolve 272246 at-cast disenchantability or find a rank-specific 237362 Prospect operation export, then independently verified Midnight herb/pigment raw logs. No game actions, spend or backlog recatalogue; Master handles any schema changes.",
+  "verified_base_commit_sha": "6d4f6d048f0b4d036fc919a935b16317e53c98cb",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Single owned quiet-status-only commit; no independent numeric sample or new JSONL file. Commit SHA cannot be self-referential in the committed file; independently read back the commit via branch after write.",
+  "commit_note": "Single quiet-status-only commit, no independently new numerical source. Commit SHA cannot be self-referential inside JSON; verify by re-fetching branch and file after commit.",
   "new_leads_screened": [
     {
       "source": "https://github.com/ErorNya/ForeverFlip/blob/main/ForeverFlip/Modules/Disenchant.lua",
@@ -1816,6 +1821,51 @@
         "source_published_actual_independent_retail_yield_cohort": null
       },
       "detail": "The 2.7.0 changelog changes clock pause rules, not profession event recording. The exported filter/report aggregates output item quantity, not 1:1 disenchant/prospect/mill operations. Do not interpret count of acquired output items as completed casts or output units as positive-hit counts; the source-side itemLink is for what was acquired, not destroyed gear. No distinct 272246 ilvl 305 DE study or 237362 per-rank operation cohort."
+    },
+    {
+      "source": "https://gamgem.com/world-of-warcraft/items/miststalkers-wristbands",
+      "published": "2026-11-07",
+      "classification": "held_item_identity_context_not_original_de_operation_cohort",
+      "exact_ids": [
+        272246
+      ],
+      "source_original": {
+        "base_record_ilvl": 206,
+        "blizzard_record_rarity": "epic",
+        "top_key_characters_equipped": 43,
+        "top_key_characters_with_gear_data": 11153,
+        "census_period": "2026-10-27/2026-11-01",
+        "actual_at_disenchant_ilvl": null,
+        "raw_disenchant_casts": null,
+        "output_material_hits": null,
+        "verified_live_eligibility": null
+      },
+      "detail": "Equip census and base Blizzard record do not link a specific 272246 item variant to any disenchant cast. Do not normalize aggregate Looter 140 as 140 verified at-cast item instances."
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/profession-assistance",
+      "published": "2026-11-15",
+      "classification": "held_wowhead_derivative_processing_percentages_no_independent_trial",
+      "exact_ids": [
+        237359,
+        237361,
+        237362,
+        237363,
+        237364,
+        237365,
+        272246
+      ],
+      "source_original": {
+        "retail_release": "PA_V4.6.2",
+        "game_version": "12.1.7",
+        "source_of_rates": "Mostly Wowhead, with newer-expansion caveat",
+        "actual_completed_casts": null,
+        "original_cohort_links": null,
+        "per_output_hits": null,
+        "zeros": null,
+        "input_rank_or_bonus": null
+      },
+      "detail": "Tooltip display percentages cannot be admitted as new player cohorts; explicit publisher reliability caveat and lack of original event data."
     }
   ],
   "catalogue_checkpoint": {
