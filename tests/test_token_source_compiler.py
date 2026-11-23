@@ -31,7 +31,9 @@ with tempfile.TemporaryDirectory(prefix='ll-token-epoch-') as folder:
         baseline = folder / (label + '.lua')
         baseline.write_text("local b=assert(loadfile('database/research-v3-baselines.lua'))(); b.tokenRewards=" + lua(records) + '; return b\n')
         out = folder / (label + '-compiled.lua')
-        subprocess.run([lua_bin, 'tools/compile_itemdb.lua', str(out), 'database/evidence-baselines.lua', str(baseline), 'database/disenchant-category-baselines.lua'], cwd=ROOT, check=True, capture_output=True)
+        subprocess.run([lua_bin, 'tools/compile_itemdb.lua', str(out), 'database/evidence-baselines.lua', str(baseline),
+                        'database/disenchant-category-baselines.lua', 'database/disenchant-item-categories.lua'],
+                       cwd=ROOT, check=True, capture_output=True)
         compiled[label] = out
     # A future refresh containing ONLY these held rows must not change any byte
     # of today's compiled database, including all tokens and ATT class masks.

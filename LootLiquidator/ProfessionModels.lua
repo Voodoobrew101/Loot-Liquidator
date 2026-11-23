@@ -1496,6 +1496,13 @@ function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
         or context.profession~='Enchanting' or mode==2 or model and model.disenchantBaselineApplied then return model end
     if not self.EvidenceSourceWeight or self:EvidenceSourceWeight('itemdb',mode)<=0 then return model end
     if model and model.sources and ((model.sources.personal or 0)>0 or (model.sources.imported or 0)>0) then return model end
+    -- This marker is set only by a positive-weight contribution from the
+    -- reviewed retained cohort (or its proven-overlap personal survivor).
+    -- Its actual profile is already the target: a canonical curve would
+    -- replace those measured means rather than project an unknown baseline.
+    if model and model.retainedDisenchantProfileKey and context.buffsKnown==true
+        and (context.specializationKnown==true or context.disenchantSpecializationKnown==true)
+        and self:DisenchantObservationProfileKey(context)==model.retainedDisenchantProfileKey then return model end
     local selected=selectedDisenchantBaseline(self,f,option,context,mode)
     if not selected then return model end
     local profile=self:DisenchantForwardProfile(f,option,context,selected.rule)

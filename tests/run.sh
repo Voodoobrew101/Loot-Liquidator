@@ -192,6 +192,9 @@ python3 tests/test_legacy_cohort_admission.py
 "$lua_bin" tests/test_native_quality_distribution.lua
 "$lua_bin" tests/test_midnight_research_runtime.lua
 "$lua_bin" tests/test_disenchant_category_runtime.lua
+python3 tests/test_reviewed_disenchant_capture.py
+"$lua_bin" tests/test_reviewed_disenchant_capture_runtime.lua
+"$lua_bin" tests/test_reviewed_disenchant_full_corpus.lua
 python3 tests/test_disenchant_item_categories.py
 "$lua_bin" tests/test_disenchant_category_records.lua
 "$lua_bin" tests/test_disenchant_category_scoped_contract.lua

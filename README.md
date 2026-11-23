@@ -59,6 +59,8 @@ Open them with **/ll** or from the game's Settings → AddOns.
 - **Pricing & Actions**: the Auction House cut, and how much extra profit an auction or processing option needs before it is recommended.
 - **Processing Research**: record your own disenchant/mill/prospect/smelt results so the numbers become yours. Buttons: **Export recorded results**, **Start new batch**, **Reset recorded results**, **Import** (results a friend exported) and **Remove imported results**.
 
+Your personal recording history stays in your account's WTF settings. Export/import shares it directly; reviewed shared statistics are compiled into the database shipped with the addon. Development tests and raw research files are excluded from the installable addon.
+
 ## What it needs
 
 - **TradeSkillMaster (TSM)** supplies Auction House prices. The addon still loads and uses available vendor values without it.

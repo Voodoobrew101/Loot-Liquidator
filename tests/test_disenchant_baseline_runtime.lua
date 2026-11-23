@@ -154,8 +154,9 @@ for _,case in ipairs(cases) do for _,classID in ipairs({2,4}) do
 end end
 
 -- The reported epic item IDs use the actual shipped armor baseline. Skill0
--- must preserve its measured occurrence, and quality-only changes may project
--- a chance only because these source ranks have a verified one-unit stack.
+-- must preserve its measured occurrence. Other canonical profiles may project
+-- a fixed-stack chance; the exact reviewed skill104 profile retains independently
+-- sourced occurrence and mean fields through the full public quote.
 local collector=cases[3]
 set(collector,30,29,140)
 local collector29=assert(resolve(facts(collector,4)))
@@ -172,11 +173,36 @@ for _,id in ipairs({272225,250462}) do
         set(collector,0,0,skill)
         local model=assert(resolve(epic));valued(model,epic)
         check(model.context.preSpecializationSkill==skill,'selected simulation skill is never replaced by scanned gear')
-        for _,rankID in ipairs({243605,243606}) do
-            local material=assert(output(model,rankID))
-            near(material.chance,material.expectedQuantity,'single-crystal modeled occurrence survives the full quote')
-            check(material.chanceConfidence<=20 and material.samples==nil,
-                'retained/projected chance keeps model uncertainty without invented observations')
+        if skill==104 then
+            local context=LL:ProcessingPlayerConditions(epic,de.name,de.recipeID)
+            local computed=assert(LL:ComputeEvidenceModel(epic,de,nil,1,context,true))
+            check(model.retainedDisenchantProfileKey=='effective:104;specialization:none;buffs:'
+                and not model.disenchantBaselineApplied,'exact reviewed profile preserves actual fused evidence')
+            check(#model.materials==#computed.materials,'public resolution preserves every computed material')
+            for _,source in ipairs(computed.materials)do
+                local material=assert(output(model,source.id),'computed material missing from public quote')
+                for _,field in ipairs({'expectedQuantity','chance','minQuantity','maxQuantity',
+                    'confidence','chanceConfidence','chanceCasts','castsWithDrop'})do
+                    if type(source[field])=='number' then
+                        near(material[field],source[field],'public exact-profile '..field..' preserves computed evidence')
+                    else check(material[field]==source[field],'public exact-profile '..field..' preserves unknown evidence') end
+                end
+            end
+            near(valued(model,epic),valued(computed,epic),'public exact-profile quote preserves computed gold')
+            local expectedGold=0
+            for _,material in ipairs(computed.materials)do
+                expectedGold=expectedGold+(material.expectedQuantity or 0)*LL:GetOutputPrice(material.id)
+            end
+            near(valued(model,epic),expectedGold,'exact-profile gold uses original unconditional E times net quote once')
+        else
+            check(model.disenchantBaselineApplied and not model.retainedDisenchantProfileKey,
+                'nonmatching profile retains the original canonical fixed-stack path')
+            for _,rankID in ipairs({243605,243606}) do
+                local material=assert(output(model,rankID))
+                near(material.chance,material.expectedQuantity,'single-crystal modeled occurrence survives the full quote')
+                check(material.chanceConfidence<=20 and material.samples==nil,
+                    'modeled chance keeps the original uncertainty cap without invented observations')
+            end
         end
         if skill==0 then
             near(output(model,243605).chance,.597484,'zero-profile R1 occurrence retains the source baseline')

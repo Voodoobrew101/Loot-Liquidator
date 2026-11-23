@@ -27,6 +27,8 @@ def generated_research_hashes(root=Path('.')):
     paths = set(GENERATED_RESEARCH_PATHS)
     snapshot = root / 'database/research/v3-snapshot'
     paths.update(path.relative_to(root).as_posix() for path in snapshot.rglob('*') if path.is_file())
+    reviewed = root / 'research/integration/measured-captures/2026-11-22-reviewed-disenchant-subset'
+    paths.update(path.relative_to(root).as_posix() for path in reviewed.glob('*.json') if path.is_file())
     return {path: hashlib.sha256((root / path).read_bytes()).hexdigest()
             for path in sorted(paths) if (root / path).is_file()}
 

@@ -150,7 +150,7 @@ local shipped={}
 assert(loadfile('LootLiquidator/ItemDBRuntime.lua'))('LL',shipped)
 LL.ItemDB=shipped.ItemDB;LL.LegacyDB=nil
 check(LL:InitializeItemDB(),LL.itemDBError)
-local native,ordinary,maxReference={},{},nil
+local native,ordinary,maxReference,retained={},{},nil,{}
 local migrated=0
 for _,r in ipairs(LL.ItemDB.processing) do
     if r.categorySourceInputItemID then
@@ -158,15 +158,81 @@ for _,r in ipairs(LL.ItemDB.processing) do
             'ordinary source item identity is provenance, never an exact eligibility override')
         migrated=migrated+1
     end
-    -- These six pooled/counting receipts remain verbatim. Additional ordinary
-    -- studies now join their shared categories instead of staying exact items.
-    if r.isDisenchantCategory and r.expansionID==11 and r.recordID:match('^evidence:category:') then
+    -- Keep the six original receipts separate from the four newly admitted
+    -- measured-profile cohorts; table order must not replace the old receipt.
+    if r.retainedSourceProfileKey then
+        retained[#retained+1]=r
+    elseif r.isDisenchantCategory and r.expansionID==11 and r.recordID:match('^evidence:category:') then
         native[#native+1]=r
         if r.categoryReferenceOnly then maxReference=r else ordinary[r.gearKey]=r end
     end
 end
 check(#native==6,'native ItemDB preserves five original category receipts plus a separate max-specialization receipt')
 check(migrated>0,'native ItemDB also contains independent studies migrated to shared categories')
+-- All four additions have exact source/profile/category identities and the
+-- actual denominators. Half-weighted support must never become P/E's divisor.
+local expectedRetained={
+    ['gear:9:4:armor']={suffix='0fe2a5e798ae',n=66,skill=51,expansion=9,class=4,band=310,
+        outputs={[194124]={38,59,1,2},[200113]={28,28,1,1}}},
+    ['gear:9:4:weapon']={suffix='5f7d0f4f13dd',n=17,skill=51,expansion=9,class=2,band=313,
+        outputs={[194124]={10,23,2,3},[200113]={7,7,1,1}}},
+    ['gear:11:4:armor']={suffix='8ac87db87c7a',n=9,skill=104,expansion=11,class=4,band=331,
+        outputs={[243605]={9,9,1,1}}},
+    ['gear:11:4:weapon']={suffix='73d6cb967bbd',n=1,skill=104,expansion=11,class=2,band=328,
+        outputs={[243606]={1,1,1,1}}}}
+check(#retained==4,'exactly four new reviewed cohorts accompany the six original receipts')
+local seenCategories,seenOperations,operations,midnight,outputCount={},{},0,0,0
+for _,r in ipairs(retained)do
+    local expected=assert(expectedRetained[r.gearKey],'unexpected retained category')
+    check(not seenCategories[r.gearKey],'each retained physical category appears once')
+    seenCategories[r.gearKey]=true
+    check(r.recordID=='evidence:category:Disenchant:'..r.gearKey..':x1:scope:'..expected.suffix,
+        'retained category keeps its exact reviewed record identity')
+    check(r.method=='Disenchant' and r.recipeID==13262 and r.sourceKey=='itemdb'
+        and r.sourceKind=='reviewed-player-retained-subset' and r.inputCount==1 and r.inputItemID==nil,
+        'new shared evidence is a one-input category, not an exact-item exception')
+    check(r.expansionID==expected.expansion and r.inputClassID==expected.class and r.inputRarity==4,
+        'retained cohort keeps its actual era, epic rarity and equipment class')
+    check(r.categoryReferenceOnly==false and r.fixedReference==true
+        and r.retainedSourceProfileKey=='effective:'..expected.skill..';specialization:none;buffs:',
+        'shared cohort retains the explicit exact-profile gate')
+    check(r.baselineProfile.effectiveSkill==expected.skill and r.baselineProfile.buffsKnown==true
+        and r.baselineProfile.specializationKnown==true,'recorded source skill and known states remain measured')
+    check(r.observedOperations==expected.n and #r.sourceRecordIDs==expected.n,
+        'actual retained operation count is preserved')
+    near(r.samples,expected.n/2,'only evidence support uses the existing half weight')
+    check(r.categoryItemLevelMin==1 and r.categoryItemLevelMax==999
+        and #r.categoryNativeBandIDs==1 and r.categoryNativeBandIDs[1]==expected.band,
+        'retained source keeps its verified native category band')
+    check(tostring(r.patchBuild)=='70961' and r.targetBuild==70961 and r.clientVersion=='12.1.5',
+        'retained source stays scoped to its captured build and client')
+    for _,id in ipairs(r.sourceRecordIDs)do
+        check(not seenOperations[id],'one operation cannot appear in multiple shared cohorts')
+        seenOperations[id]=true;operations=operations+1
+    end
+    if r.expansionID==11 then midnight=midnight+1 end
+    local expectedOutputs=0 for _ in pairs(expected.outputs)do expectedOutputs=expectedOutputs+1 end
+    check(#r.materials==expectedOutputs,'only the actual admitted material rows are present')
+    for _,m in ipairs(r.materials)do
+        local count=assert(expected.outputs[m.id],'unexpected shared output, including held knowledge')
+        near(m.dropChance.value,tonumber(('%.6f'):format(count[1]/expected.n)),
+            'shared occurrence remains original hits divided by actual N')
+        near(m.expectedQuantity.value,tonumber(('%.6f'):format(count[2]/expected.n)),
+            'shared mean remains original units divided by actual N')
+        near(m.minQuantity.value,count[3],'observed positive minimum preserved')
+        near(m.maxQuantity.value,count[4],'observed positive maximum preserved')
+        local n,hits,units=0,0,0
+        for quantity,casts in pairs(m.quantityCounts)do
+            local q=assert(tonumber(quantity));n=n+casts;units=units+q*casts
+            if q>0 then hits=hits+casts end
+        end
+        check(n==expected.n and hits==count[1] and units==count[2],
+            'integer histogram retains actual operations, hits and units, including observed zeros')
+        outputCount=outputCount+1
+    end
+end
+check(operations==93 and midnight==2 and outputCount==6,
+    'new shared data is exactly93 operations, two Midnight cohorts and six material rows')
 local probes={
     {'gear:11:2:armor',2,4,278884,243599,.837915,.406635,527.5},
     {'gear:11:3:armor',3,4,239671,243602,.465373,.465373,4252.5},

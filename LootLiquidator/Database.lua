@@ -230,6 +230,16 @@ local function validObservedBoundIndependence(record,material)
     for id in pairs(means) do if bounds[id] then return false end end
     return true
 end
+local function operationIDs(ids,count)
+    if type(ids)~='table' or not finite(count) or count<1 or count%1~=0 or #ids~=count then return nil end
+    local seen,n={},0
+    for key,id in pairs(ids) do
+        if type(key)~='number' or key%1~=0 or key<1 or key>count
+            or type(id)~='string' or id=='' or #id>200 or seen[id] then return nil end
+        seen[id]=true;n=n+1
+    end
+    return n==count and seen or nil
+end
 function LL:ValidateItemDB(db)
     if type(db)~='table' or db.schemaVersion~=1 or type(db.processing)~='table' then
         return false,'Unsupported itemdb schema'
@@ -264,6 +274,20 @@ function LL:ValidateItemDB(db)
             or type(r.studyID)~='string' or type(r.source)~='string'
             or type(r.materials)~='table' then return false,'Invalid or duplicate record identity' end
         ids[r.recordID]=true
+        if r.retainedSourceProfileKey~=nil or r.sourceKind=='reviewed-player-retained-subset' then
+            if r.sourceKind~='reviewed-player-retained-subset'
+                or r.method~='Disenchant' or r.recipeID~=13262 or r.inputCount~=1 or r.sourceKey~='itemdb'
+                or not r.isDisenchantCategory or not r.fixedReference or r.categoryReferenceOnly~=false
+                or type(r.retainedSourceProfileKey)~='string' or #r.retainedSourceProfileKey>256
+                or not r.retainedSourceProfileKey:match('^effective:%d+%.?%d*;specialization:none;buffs:')
+                or type(r.baselineProfile)~='table' or r.baselineProfile.buffsKnown~=true
+                or r.baselineProfile.specializationKnown~=true or not finite(r.baselineProfile.effectiveSkill)
+                or r.baselineProfile.expansionID~=r.expansionID
+                or tonumber(r.retainedSourceProfileKey:match('^effective:([^;]+);'))~=r.baselineProfile.effectiveSkill
+                or not operationIDs(r.sourceRecordIDs,r.observedOperations) then
+                return false,'Invalid reviewed retained disenchant cohort'
+            end
+        end
         local outputs={}
         for _,m in ipairs(r.materials) do
             if not finite(m.id) or m.id<=0 or m.id%1~=0 or outputs[m.id] then return false,'Invalid output identity' end
@@ -1018,6 +1042,18 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         return known
     end
     local eligible,transformed,hasExpected,staleRecord,partialStrength={},{},{},{},{}
+    local retainedKey,retainedKeyRead
+    local function retainedProfileMatches(record)
+        if not record.retainedSourceProfileKey then return true end
+        if ctx.buffsKnown~=true or not (ctx.specializationKnown==true or ctx.disenchantSpecializationKnown==true) then return false end
+        if not self.DisenchantObservationProfileKey
+            or self:DisenchantObservationProfileKey(record.baselineProfile)~=record.retainedSourceProfileKey then return false end
+        if not retainedKeyRead then
+            retainedKeyRead=true
+            retainedKey=self.DisenchantObservationProfileKey and self:DisenchantObservationProfileKey(ctx)
+        end
+        return retainedKey~=nil and retainedKey==record.retainedSourceProfileKey
+    end
     local hasEligibleSalvage=false
     for _,r in ipairs(records) do
         -- Input rarity can change on the same gear item ID (for example an
@@ -1030,7 +1066,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             and (r.inputClassID==nil or r.inputClassID==f.classID) and bandMatches
             and userWeight(self,r.sourceKey,mode)>0 and (not r.recipeID or r.recipeID==option.recipeID)
             and (not r.inputQualityRank or r.inputQualityRank==ctx.inputQuality)
-            and (not r.expansionID or r.expansionID==f.expansionID) then
+            and (not r.expansionID or r.expansionID==f.expansionID) and retainedProfileMatches(r) then
         local model=sourceModel(self,f,option,r,projectionMemo)
         local hasMean=false
         for i,material in ipairs(model.materials) do
@@ -1070,6 +1106,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             source='Personal recorded results',inputCount=personal.inputCount or option.inputCount or 1,
             samples=personal.effectiveSamples,referenceConditions=copy(ctx),
             referenceContextID=personal.referenceContextID,patchBuild=personal.patchBuild,expectedInputCount=personal.expectedInputCount,
+            sourceRecordIDs=personal.sourceRecordIDs,observedOperations=personal.operations or personal.samples,
             materials={},fixedReference=personal.professionProjected,
             provisional=personal.professionProjected or (personal.effectiveSamples or 0)<(self.ProcessingMinimum and self:ProcessingMinimum() or 30)}
         r.personalReference={}
@@ -1103,6 +1140,66 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                     professionParameters=personal.professionParameters,ruleConfidence=personal.ruleConfidence}
             end
         end
+    end
+    -- Only explicit retained-source cohorts use this overlap contract. Do not
+    -- pool overlapping aggregates or infer a union from their reported means.
+    local candidates,personalRecord={},nil
+    for _,record in ipairs(eligible) do
+        if record.sourceKey=='personal' then personalRecord=record end
+        if record.retainedSourceProfileKey or record.sourceKey=='personal' then
+            local set=operationIDs(record.sourceRecordIDs,record.observedOperations)
+            if set then candidates[#candidates+1]={record=record,set=set,count=record.observedOperations} end
+        end
+    end
+    local overlapExcluded={}
+    if personalRecord and #candidates>1 then
+        -- An exact raw personal category need not carry the projection flag.
+        -- Only proven overlap with this reviewed, exact-profile cohort allows
+        -- its fresh wrapper to fuse with the ordinary category anchor. Never
+        -- alter the original personal estimate or relax other personal paths.
+        local source=personal and personal.observationContext
+        if source and source.buffsKnown==true
+            and (source.specializationKnown==true or source.disenchantSpecializationKnown==true)
+            and self.DisenchantObservationProfileKey then
+            local sourceKey=self:DisenchantObservationProfileKey(source)
+            for _,candidate in ipairs(candidates) do
+                if candidate.record==personalRecord then
+                    for _,shared in ipairs(candidates) do
+                        if shared.record.retainedSourceProfileKey==sourceKey
+                            and tostring(shared.record.patchBuild)==tostring(personal.patchBuild)
+                            and personal.isDisenchantCategory==true and personal.gearKey==shared.record.gearKey
+                            and personalRecord.inputCount==shared.record.inputCount then
+                            for id in pairs(candidate.set) do
+                                if shared.set[id] then
+                                    personalRecord.fixedReference=true
+                                    personalRecord.retainedOverlapProfileKey=sourceKey
+                                    break
+                                end
+                            end
+                        end
+                    end
+                    break
+                end
+            end
+        end
+        table.sort(candidates,function(a,b)
+            if a.count~=b.count then return a.count>b.count end
+            if (a.record==personalRecord)~=(b.record==personalRecord) then return a.record==personalRecord end
+            return a.record.recordID<b.record.recordID
+        end)
+        local kept={}
+        for _,candidate in ipairs(candidates) do
+            local overlaps=false
+            for _,previous in ipairs(kept) do
+                for id in pairs(candidate.set) do if previous.set[id] then overlaps=true;break end end
+                if overlaps then break end
+            end
+            if overlaps then overlapExcluded[candidate.record]=true else kept[#kept+1]=candidate end
+        end
+        local unique={}
+        for _,record in ipairs(eligible) do if not overlapExcluded[record] then unique[#unique+1]=record end end
+        eligible=unique
+        if overlapExcluded[personalRecord] then measuredReferencePreferred=false end
     end
     if measuredReferencePreferred then
         local scoped={}
@@ -1214,6 +1311,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         gearKey=anchor.gearKey,isDisenchantCategory=anchor.isDisenchantCategory,
         referenceContextID=anchor.referenceContextID,
         categorySourceStudyIDs=anchor.categorySourceStudyIDs,memberInputItemIDs=anchor.memberInputItemIDs}
+    for record in pairs(overlapExcluded) do
+        result.excludedSources[#result.excludedSources+1]=record.sourceKey..': operation overlap; larger retained cohort used'
+    end
     if anchor.sourceReferenceOnly then
         result.sourceReferenceOnly=true
         result.sourceReference={recordID=anchor.recordID,sourcePatchBuild=anchor.patchBuild,
@@ -1450,6 +1550,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                             c=math.min(c,metadata.modelConfidenceCap)
                         end
                         if field=='expectedQuantity' then
+                            local retainedProfile=r.retainedSourceProfileKey or r.retainedOverlapProfileKey
+                            if retainedProfile and retainedProfile==retainedKey then
+                                result.retainedDisenchantProfileKey=retainedProfile
+                            end
                             if v>0 and model.generalProfessionApplied and family then
                                 result.familyQualityConfidence=result.familyQualityConfidence or {}
                                 local cap=model.professionParameters and model.professionParameters.confidence or 100
@@ -1734,6 +1838,7 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
         tostring(mode),tostring(personal and personal.effectiveSamples),tostring(personal and personal.samples),
         tostring(personal and personal.studyID),tostring(personal and personal.observationContextID),
         tostring(personal and personal.expectedInputCount),
+        fingerprint(personal and personal.sourceRecordIDs),tostring(personal and personal.operations),
         tostring(userWeight(self,'itemdb',mode)),tostring(userWeight(self,'personal',mode)),
         tostring(userWeight(self,'legacy',mode)),tostring(userWeight(self,'imported',mode)),
         tostring(userWeight(self,'reference',mode)),tostring(self._importedRevision),

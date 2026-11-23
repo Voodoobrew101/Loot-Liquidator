@@ -242,6 +242,8 @@ def main(argv=None):
     args = parser.parse_args(argv)
     records, notes = build(json.loads(args.source.read_text()), json.loads(args.mappings.read_text()),
                            evidence_check.check_folder(args.evidence_folder))
+    from reviewed_disenchant_capture import compile_records
+    records.extend(compile_records())
     generated = render(records)
     if args.check:
         if not args.output.exists() or args.output.read_text() != generated:

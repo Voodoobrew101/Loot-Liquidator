@@ -1,5 +1,6 @@
 # Loot Liquidator 1.0.0
 
+- Share reviewed statistics from 93 recorded disenchants in four ordinary gear-category and measured-profile cohorts. Preserve the remaining observations as research without inventing missing profiles or recurring knowledge-item value.
 - Use one tooltip layout across processing methods: action header, method and character with confidence, then material percentages, icons, quality grades, quantity ranges and prices.
 - Restore missing tooltip fields from existing references and display estimates while keeping gold calculations and recorded evidence separate. Preserve skill-locked `0% [0]` rows and correct mixed-gem identities and quality rows.
 - Keep profession controls focused on effects that change supported item processing. Remove world-gathering projections, their settings and unrelated forecast data.
