@@ -1,21 +1,24 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-23T22:21:25.185Z",
-  "status": "New primary historical TWW forum sources screened: September 4 rare gear versus crafted green profession equipment eligibility and October 4 shard-shattering output quality. Held as method/profile context only; no independent eligible direct DE or milling/prospecting yield records. Current instructions, queue, owner catalogue registry and cutoff source keys checked. No cutoff re-catalogue.",
+  "updated_at": "2026-11-23T23:21:26.641Z",
+  "status": "Screened new search results across rank-specific prospecting, milling, and disenchanting; no independent eligible yield cohort. Found and verified two pre-existing reference rows sharing the same original Crushed Gemstones report despite differing studyKeys; no new evidence or catalogue reopening. Existing rank-gate and hotfix evidence reused.",
   "task_ids": [
-    "T0048",
+    "T0032",
     "T0040",
+    "T0007",
+    "T0008",
     "T0009",
     "T0010",
     "T0011",
-    "T0008"
+    "T0012",
+    "T0048"
   ],
   "exact_gaps_targeted": [
-    "T0048: separate direct gear disenchant outputs from downstream shard-shattering; verify rare gear variant and rank-specific dust/shard distribution with actual completed operations.",
-    "T0009/T0008/T0040/T0010/T0011: new rank-specific ore/herb post-hotfix original receipts with known completed casts and separate resourcefulness ledger."
+    "T0032: independent evidence for Crushed Gemstones 213219/213220/213221 unlock and ore-rank scope; actual input and output rank, completed operations and separate active Crushing from Prospect.",
+    "T0040/T0007/T0008/T0009/T0010/T0011/T0012/T0048: post-hotfix rank-specific ore/herb and gear DE source receipts, actual completed casts, hits, units, zeros, histogram and profile/refunds."
   ],
-  "source_branch_head_reviewed": "0742b5882486f5cbcc2d02bac5e4d9b4b35967ec",
-  "source_policy": "Owner coordination receipt reports CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources; existing scoped decisions reused. New sources blizzforum:1976354 and blizzforum:1944417 absent from cutoff manifest and prior owned status. No independent recatalogue.",
+  "source_branch_head_reviewed": "ea37c3e95948514b933ddd1ad9d5c02833aa86c8",
+  "source_policy": "Owner coordination receipt CLOSED_VERIFIED_CURRENT_PIPELINE, 731 cutoff sources. Source absence from cutoff manifest is not proof of novelty: direct current-branch evidence files and default-branch search checked; prior records reused without editing them. No cutoff recatalogue.",
   "study_backlog_triage": [
     {
       "status": "admitted",
@@ -609,24 +612,27 @@
       "exact_inputs": "Unnamed green blacksmith hammers, blue gear, crafted bracers; item/bonus IDs unresolved",
       "outputs": "Storm Dust or Gleaming Shard families; ranks unknown",
       "reason": "Firsthand conflicting rarity claims, no actual cast or output ledger. Approximate dozen refers to bracer crafts, not proven DE N. No hard eligibility or rate."
+    },
+    {
+      "status": "duplicate",
+      "source": "https://eu.forums.blizzard.com/en/wow/t/jewlecrafting-in-tww-crushed-gemstones-are-a-problem/533588",
+      "original_cohort": "Ereios 2024-09-02 passive Crushed Gemstones approximate per-input mean",
+      "exact_inputs": "Khaz Algar ore species/rank unknown; Bismuth belongs to separate active Crushing recipe",
+      "outputs": "Crushed Gemstones, actual rank unknown (family 213219/213220/213221)",
+      "reason": "Exact same author's approximate 3 per 100 ore recorded in war-within-20261107-2326-010 and war-within-20261114-1230-001 under different studyKeys. Conditions 011 and 002 also share this provenance. Do not count as independent or add third record. Actual casts/hits/zeros/refunds unknown. Existing records are reference-only. Master can verify scoped deduplication if needed."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 7,
     "held": 48,
-    "duplicate": 3
+    "duplicate": 4
   },
   "newly_verified_fields": [
     {
-      "field": "method separation and profile",
-      "value": "Oct 4 author reports skill 98 and max DE tree; approximate 80% R1 dust observation explicitly concerns shattering, not direct DE. Rank-stratified denominator and shatter profile unknown.",
-      "source": "https://us.forums.blizzard.com/en/wow/t/storm-dust-is-too-rare/1976354"
-    },
-    {
-      "field": "historical rarity/gear-source scope",
-      "value": "Sept 4 commenters report green crafted hammers and mixed rare-gear outcomes; crafted bracers claimed only blue material; no exact item/variant or completed operations.",
-      "source": "https://us.forums.blizzard.com/en/wow/t/storm-dust/1944417"
+      "field": "original-cohort duplicate identity",
+      "value": "war-within-20261107-2326-010 and war-within-20261114-1230-001 both cite the same original Ereios report; both reference-only, different studyKeys; conditions -011/-002 are same-source context.",
+      "source": "https://eu.forums.blizzard.com/en/wow/t/jewlecrafting-in-tww-crushed-gemstones-are-a-problem/533588"
     }
   ],
   "newly_verified_cohorts": [],
@@ -638,15 +644,16 @@
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://us.forums.blizzard.com/en/wow/t/storm-dust-is-too-rare/1976354",
-    "https://us.forums.blizzard.com/en/wow/t/storm-dust/1944417"
+    "https://eu.forums.blizzard.com/en/wow/t/jewlecrafting-in-tww-crushed-gemstones-are-a-problem/533588",
+    "https://www.wowhead.com/news/recent-prospecting-changes-wowhead-economy-weekly-wrap-up-351-349956",
+    "https://overgear.com/guides/wow/the-war-within-jewelcrafting-guide/"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-23T1920-aqirite-r1-original-op-rank-correction.jsonl",
-  "verified_commit_sha": "d496f2065356c507c9a542679ba4a904583abd23",
-  "verification": "Previous owned status commit confirmed via commit fetch. Current status-only commit read-back verified externally using returned SHA; a commit cannot contain its own SHA.",
+  "verified_commit_sha": "969cdf4ff636aca3235a9d32215bbcf09c384192",
+  "verification": "Previous owned status commit fetched and verified to touch only this path. Current write uses freshly fetched blob SHA and will be read back by returned commit SHA; own commit SHA cannot be embedded in itself.",
   "blockers": [
-    "No independently grounded new completed operation/output ledger or per-input/cast mean identified this run.",
-    "Historical shatter observation does not identify rank-specific denominators or measured hit rate; rare DE reports lack item/bonus, skill, output rank and quantity."
+    "No new independent named rank/profile-specific output and completed-operation ledger; current rank-specific fields remain unknown.",
+    "Same-source reference duplicate uses different studyKeys; no claim of estimator double-counting or implementation defect. Request Master check only if scoped source identity is not already deduplicated."
   ],
   "exhausted_sources": [
     "2026-11-20: Reddit 1ftqzxp historical shatter original/commenter estimates inspected; new but unfit for direct DE numeric admission without distinct recipe method/raw ledger; do not scrape it repeatedly without author export.",
@@ -692,40 +699,28 @@
     "2026-11-23T18:24:23.662Z: Screened non-catalogued 2025-09 Reddit 1nmnuc2: author gives AH cost comparisons for self-milled pigments (4.75g/6.6g) but no per-herb/rank/output quantities, completed mill operations, skill/spec/refunds, zero outcomes, or evidence separating 222618/222619. Economic inputs never enter frozen research EV. Original 2024 queue 1g8kbaq, mixed-herb 1fvhzy0, and 2025 Apr R2 profitability 1k78h4v all pre-reviewed and cannot count as new numerical studies. Keep searches targeted to actual post-hotfix operation receipts.",
     "2026-11-23T20:24:51.786Z: Screened guide plus Feb 16 forum and January Reddit conditional knowledge discussion; no exact per-rarity ledger. Existing PeaEsk, 1fisfkn, 1g350pq, 1fmu18u and LotzBoi sources are cutoff-reviewed; no independent re-catalogue. March 31 2025 1jnvht8 now indexed in fuller thread, still no named output counts or author-confirmed completed N for 600 R1 Ironclaw / 117 prospects.",
     "2026-11-23T21:20:53.505Z: Opened 1jc2ya5 and 1ih5m78 originals; no numerical receipt. Previously screened 2080583, 1l3uqnw, 1neicjm, 1k78h4v, 1oa7vn1, 1l91chl, 1jnvht8 not re-transcribed. 1958838 cutoff-catalogued.",
-    "2026-11-23T22:21:25.185Z: New searches across Reddit, Blizzard forums and Wowhead for post-hotfix Bismuth/Ironclaw/Aqirite and Khaz Algar herbs and DE receipts. 1fisfkn, 1g350pq, 1f3qf96, 1fmrp4z, 1f5rsk5, 1fspqym cutoff-reviewed; 1f117id, 1jnvht8 and 2083666 previously screened; LotzBoi copies not independent. 1ewrk5a/1gabkel/1fqov94 indexed only, direct open disabled, no usable independent DE ledger. 1976354 and 1944417 original forums opened and held; do not repeatedly search unless exact logs emerge."
+    "2026-11-23T22:21:25.185Z: New searches across Reddit, Blizzard forums and Wowhead for post-hotfix Bismuth/Ironclaw/Aqirite and Khaz Algar herbs and DE receipts. 1fisfkn, 1g350pq, 1f3qf96, 1fmrp4z, 1f5rsk5, 1fspqym cutoff-reviewed; 1f117id, 1jnvht8 and 2083666 previously screened; LotzBoi copies not independent. 1ewrk5a/1gabkel/1fqov94 indexed only, direct open disabled, no usable independent DE ledger. 1976354 and 1944417 original forums opened and held; do not repeatedly search unless exact logs emerge.",
+    "2026-11-23T23:21:26.641Z: 533588 directly opened, confirmed in two existing evidence files; 349956 hotfix/secondary discussion and Overgear rank-20 node source already present in repo (Nov 17 worker/Master rank gate). 1g9s48p, 1fdmzwy, 1g350pq, 1fisfkn, 1f83cnd, 1968257 and 538682 are previously recorded; do not retranscribe. 1g4qyr4 indexed only, direct Reddit blocked; discusses active crushing and economics, not usable prospect ledger. 2075361 original March 2025 shatter discussion lacks actual rank/operations and is not gear DE. Search results for housing pigments and Midnight milling not Khaz Algar numeric data."
   ],
-  "next_concrete_step": "Seek new independent original rank-specific post-Oct25 processing exports or named gear/bonus DE receipts; prioritize per-cast zero-inclusive logs. Revisit held historical sources only with exact original item identity, denominators, skill/spec or original output receipts.",
-  "previous_status_updated_at": "2026-11-23T21:20:53.505Z",
+  "next_concrete_step": "Seek genuinely new original published exports or logs for specific War Within gear bonus/rarity/skill and post-Oct-25 rank-specific prospect/mill operations. Avoid exhausted reference sources and cutoff corpus; revisit only with new raw counts or exact identity/profile context.",
+  "previous_status_updated_at": "2026-11-23T22:21:25.185Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "date": "2026-11-23T22:21:25.185Z",
-    "method": "Read current v3 instructions/queue and owner manifest; search Reddit, Blizzard forum and Wowhead; directly opened two new primary forums, checked prior status and cutoff key exclusions.",
+    "date": "2026-11-23T23:21:26.641Z",
+    "method": "Read current branch rules, worker role, queue, mechanics, evidence format, owner manifest, condition registry; searched Reddit, Blizzard forums, Wowhead, and profession guides; directly opened candidate primary source and fetched both duplicate evidence files on research branch.",
     "source_checked": [
-      "https://us.forums.blizzard.com/en/wow/t/storm-dust-is-too-rare/1976354",
-      "https://us.forums.blizzard.com/en/wow/t/storm-dust/1944417",
-      "https://www.reddit.com/r/woweconomy/comments/1ewrk5a",
-      "https://www.reddit.com/r/woweconomy/comments/1gabkel",
-      "https://www.reddit.com/r/woweconomy/comments/1fqov94"
-    ],
-    "cutoff_keys_checked": [
-      "blizzforum:1976354",
-      "blizzforum:1944417",
-      "reddit:1ewrk5a",
-      "reddit:1gabkel",
-      "reddit:1fqov94",
-      "reddit:1f5rsk5",
-      "reddit:1fspqym"
-    ],
-    "cutoff_keys_found": [
-      "reddit:1f5rsk5",
-      "reddit:1fspqym"
+      "https://eu.forums.blizzard.com/en/wow/t/jewlecrafting-in-tww-crushed-gemstones-are-a-problem/533588",
+      "https://us.forums.blizzard.com/en/wow/t/refulgent-crystal-shatter/2075361",
+      "https://www.wowhead.com/news/recent-prospecting-changes-wowhead-economy-weekly-wrap-up-351-349956",
+      "https://overgear.com/guides/wow/the-war-within-jewelcrafting-guide/",
+      "https://www.reddit.com/r/woweconomy/comments/1g4qyr4"
     ],
     "independent_new_yield_cohorts": 0,
-    "status": "Two new historical contextual sources held; no numerical admission."
+    "status": "One existing duplicate source identity verified, no new independent yields."
   },
   "source_integrity_findings": [
     {
@@ -1790,6 +1785,40 @@
       "build": null,
       "resourcefulness_refund_basis": null,
       "detail": "Nightlighter reports green crafted blacksmith hammers yielding dust with green-DE investment; Baltharian reports unidentified blues yielding dust while KingLeonidas reports crafted approximately a dozen bracers and only blue material. Other replies dispute blue dust. Counts of crafted bracers are not completed DE N. No exact item ID, bonus, expansion for each blue variant, per-output rank or ledger, so no guaranteed rare shard/green dust rule or numeric admission."
+    },
+    {
+      "date": "2026-11-23",
+      "checked_at_utc": "2026-11-23T23:21:26.641Z",
+      "status": "duplicate-existing-reference-no-new-study",
+      "source": "https://eu.forums.blizzard.com/en/wow/t/jewlecrafting-in-tww-crushed-gemstones-are-a-problem/533588",
+      "original_publication": "2024-09-02",
+      "author": "Ereios",
+      "method": "Prospect",
+      "inputItemID": null,
+      "inputRank": null,
+      "outputItemID": null,
+      "outputRank": null,
+      "output_family_possible_ids": [
+        213219,
+        213220,
+        213221
+      ],
+      "source_reported_approx_units": 3,
+      "source_reported_per_input_basis": 100,
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": "30 KP pathway reported, exact profile unknown",
+      "resourcefulness_refund_basis": null,
+      "build": null,
+      "existing_record_ids": [
+        "war-within-20261107-2326-010",
+        "war-within-20261114-1230-001"
+      ],
+      "detail": "Exact same author's approximate 3 per 100 ore recorded in war-within-20261107-2326-010 and war-within-20261114-1230-001 under different studyKeys. Conditions 011 and 002 also share this provenance. Do not count as independent or add third record. Actual casts/hits/zeros/refunds unknown. Existing records are reference-only. Master can verify scoped deduplication if needed."
     }
   ],
   "last_source_commit_pending": false
