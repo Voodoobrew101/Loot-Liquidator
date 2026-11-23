@@ -1,20 +1,20 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-23T21:38:22.378Z",
-  "status": "Active; no newly admissible per-item numeric evidence. Found one held historical pooled milling lead, not a current Retail cohort.",
+  "updated_at": "2026-11-23T22:41:56.468Z",
+  "status": "Active; no newly admissible legacy numeric evidence. Alternate recorder and source-profile lanes checked; no original target operation log.",
   "task_ids": [
     "T0047",
     "T0052",
     "T0022",
     "T0044",
     "T0042",
-    "T0021"
+    "T0050"
   ],
   "exact_gaps_targeted": [
-    "24995 Warmaul Legplates / TBC armor and weapons: exact current variant eligibility and completed DE outcomes (22445,22446,22447,22449).",
-    "36909 Cobalt, 23424 Fel Iron and 36910 Titanium: new actual prospect operation counts, named outputs, zero bins, quantity/hit counts, source profile and refunds.",
-    "T0042: independent legacy milling source with exact per-item counts, distinguish pooled total and nominal equivalents from actual operations."
+    "24995 Warmaul Legplates and similar TBC armor/weapon groups: exact Retail itemLink, eligibility, output IDs 22445/22446/22447/22449, completed casts, hits, total units and joint/zero histograms.",
+    "36909 Cobalt and 23424 Fel Iron: independent original completed-operation ledger with named gems, actual inputs/refunds, hit counts and zero bins; alternate public export tools.",
+    "13866 Runecloth Headband: independent versioned material identity and source profile; 156930/16204 remain distinct. T0053 token 45661 is queue done; no duplicate reward research."
   ],
   "newly_verified_fields_cohorts": [],
   "source_urls": [
@@ -104,15 +104,25 @@
     "https://www.reddit.com/r/woweconomy/comments/k99p76",
     "https://www.wowhead.com/item=36910/titanium-ore",
     "https://wowwiki-archive.fandom.com/wiki/Prospecting",
-    "https://www.wow-professions.com/guides/wow-disenchanting-guide"
+    "https://www.wow-professions.com/guides/wow-disenchanting-guide",
+    "https://www.wowhead.com/tbc/guide/enchanting-leveling-1-375",
+    "https://eu.forums.blizzard.com/en/wow/t/how-do-professions-work-in-chromie-time/360427",
+    "https://www.wowhead.com/ru/item=156930",
+    "https://www.wowhead.com/tbc/forums/topic/inks-bulk-profession-macros-193012",
+    "https://www.curseforge.com/wow/addons/grind-log",
+    "https://www.curseforge.com/wow/addons/my-loot-history",
+    "https://www.curseforge.com/wow/addons/wow-legacy-ledger",
+    "https://www.curseforge.com/wow/addons/profitprophet/files/9007250",
+    "https://www.curseforge.com/wow/addons/prospectmate",
+    "https://github.com/Somora/EasyDisenchant"
   ],
-  "numeric_summary": "No newly admissible per-input or per-cast fields. One original historical pooled milling claim (884144): 200 herbs each, 1200 total, 510 pigments, 20-herb mass recipe; no individual input partition or completed operation ledger. No inferred chances, casts, zeros, confidence or prices.",
+  "numeric_summary": "No newly admissible numeric or identity corrections. Retail item-side and player comments found in translated mirrors are already archived or lack exact item/operation scope. Recent public addon listings offer loot/aggregate tracking but no published original target completed-operation rows. TBC Classic level rule is flavor-specific, not Retail eligibility. No invented values or duplicate cohorts.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-23T1944-chromie-time-disenchant-eligibility-hotfix.jsonl",
-  "preserved_prior_status_summary": "No new measured casts, hits, zero outcomes, quantities, histograms, confidence or gold EV. One dated official historical eligibility hotfix; two static Retail ore item profiles (23424 ilvl 15, 36909 ilvl 20, both Common and labelled Prospectable). Titanium 36910 -> 46849 x143 per nominal 1000 ore (Globalmenace, Retail 12.0.5) already in queue and 2026-11-02T0043; no duplicate.",
-  "verified_parent_sha": "8204a4164aa979d803bf36def541e3dac95515fa",
+  "preserved_prior_status_summary": "No newly admissible per-input or per-cast fields. One original historical pooled milling claim (884144): 200 herbs each, 1200 total, 510 pigments, 20-herb mass recipe; no individual input partition or completed operation ledger. No inferred chances, casts, zeros, confidence or prices.",
+  "verified_parent_sha": "d5e455b45dbbe1bc1106370f51c0177933e230e8",
   "verified_commit_sha": null,
-  "commit_note": "Observed branch head before owned status CAS update; actual commit and changed file read-back verified separately. Self SHA cannot be embedded in its own content.",
+  "commit_note": "Pinned current research branch head for status read, then existing owned blob SHA checked by contents update; actual resulting commit verified by separate read-back. Self SHA cannot be embedded in its own content.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -405,6 +415,23 @@
       "source": "https://www.wowhead.com/spell=190382/mass-mill-fireweed",
       "disposition": "held-pooled-original-historical-WoD-mass-mill-not-item-specific-or-current-Retail",
       "reason": "Wowhead original commenter 884144 reports 200 of each herb, 1200 total and 510 pigments pooled, 20 herbs per mass-mill recipe. No individual herb pigment total, explicit completed operations, hits, zeros, output link in the reported result, exact patch/build/skill or refunds. Recipe identifies Cerulean Pigment 114931 as context; do not assign pooled 510 units to Fireweed 109125 or other individual herbs (109124,109126–109129), nor infer actual completed casts from 1200/20. Live and PTR pages repeat the same comment, not two cohorts. Commenter 516803 six separate 2000-herb totals already archived in 2026-10-28 legacy milling batch01 and M06 report; no duplication. Default-branch code search found no 884144 match but full assigned-sources catalogue could not be retrieved via file API, so independent cutoff attribution remains unverified. Preserve lead here only; no new JSONL or numeric admission."
+    },
+    {
+      "task": "T0047/T0052/T0022/T0044/T0042/T0050",
+      "source": [
+        "https://www.wowhead.com/tbc/guide/enchanting-leveling-1-375",
+        "https://eu.forums.blizzard.com/en/wow/t/how-do-professions-work-in-chromie-time/360427",
+        "https://www.wowhead.com/ru/item=156930",
+        "https://www.wowhead.com/tbc/forums/topic/inks-bulk-profession-macros-193012",
+        "https://www.curseforge.com/wow/addons/grind-log",
+        "https://www.curseforge.com/wow/addons/my-loot-history",
+        "https://www.curseforge.com/wow/addons/wow-legacy-ledger",
+        "https://www.curseforge.com/wow/addons/profitprophet/files/9007250",
+        "https://www.curseforge.com/wow/addons/prospectmate",
+        "https://github.com/Somora/EasyDisenchant"
+      ],
+      "disposition": "no-new-numeric-admission; alternate acquisition lanes / already reviewed",
+      "reason": "Coldbear Aug 30 2026 TBC Classic skill rule is not a Retail held-item eligibility receipt; EU 2022 Chromie Time forum describes profession UI/learning, not item 24995 outcomes. Runecloth vikn and Zulatomten translated comments already documented in legacy November 1 and Master November 9/13. Ink macro groups two ores together and has no operations or per-ore yields. Grind Log tracks mobs, My Loot History exports general item totals, Wow Legacy Ledger tracks farm inventory deltas rather than completed operations; no published target cast ledger in listings. ProfitProphet independent-rate claim and ProspectMate aggregate limitations already documented by other roles; EasyDisenchant selection tool previously searched. Do not count any of these as source operations, or repeat them absent new raw exports."
     }
   ],
   "blockers": [
@@ -436,10 +463,11 @@
     "2026-11-23 18:44Z original account dedupe: ozzieem EVIAN/HASKINA/OZZIEEM preserve one already-reported 36909 40 detected-capture/57-unit aggregate, not 3 cohorts; 55689639#1 ELLIOTTCABLE duplicate empty 182-byte file. Contemporary Retail 24995 and 23424/36909 raw zero-inclusive processing samples not found in targeted new-source searches; no evidence JSONL.",
     "2026-11-23: Official Oct14 2020 Timewalking Campaign eligibility restoration and forum complaint checked; no exact item or measured rates. New ore API-derived profile pages contain eligibility label only; Retail Titanium Globalmenace is already recorded. Do not repeat unchanged sources.",
     "2026-11-23 20:40Z: fresh post-cutoff targeted searches returned historical table/mirror, current generic spell, game-flavor-specific recorder description and BfA/Shadowlands pre-cutoff original means already studied or without new event fields. Do not revisit without newly published raw source or new scoped fields.",
-    "2026-11-23: Targeted recent and alternative WoD milling searches: 884144 pooled original lacks item-specific output distribution; 516803 and derivative BfA/Shadowlands calculators already source-reviewed; no new target 24995/36909/23424/36910 Retail event receipts. Do not repeat unchanged pages."
+    "2026-11-23: Targeted recent and alternative WoD milling searches: 884144 pooled original lacks item-specific output distribution; 516803 and derivative BfA/Shadowlands calculators already source-reviewed; no new target 24995/36909/23424/36910 Retail event receipts. Do not repeat unchanged pages.",
+    "2026-11-23 22:4xZ: alternative current addon recorder search (Grind Log, My Loot History, Wow Legacy Ledger) and historical profile/macro sources yielded no original per-input cast/zero data; existing ProfitProphet/ProspectMate/EasyDisenchant and translated Runecloth cohorts suppressed. Do not repeat unchanged listings."
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Seek a newly accessible original per-operation ledger or genuinely new identity/profile correction, prioritizing exact Retail 24995 held itemLink or 36909/23424 logs. For historical 884144, only follow up if an original per-herb partition/operation ledger appears; do not re-search unchanged comment. Leave catalogue and implementation to owners.",
+  "next_concrete_step": "Seek new published original zero-inclusive operations from a versioned Retail player export, prioritizing 24995 exact held itemLink or 23424/36909. Avoid unchanged loot-only addon listings and known macro/model tables; retain Master variant and recorder schema blockers.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -448,18 +476,19 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://www.wowhead.com/spell=190382/mass-mill-fireweed",
-    "https://www.wowhead.com/ptr/spell=190382/mass-mill-fireweed",
-    "https://www.wowhead.com/ptr/item=128412/technique-mass-mill-starflower",
-    "https://www.wowhead.com/news/wow-economy-weekly-wrap-up-8-1-5-final-prep-effective-token-usage-milling-290611",
-    "https://www.reddit.com/r/woweconomy/comments/u0f32m",
-    "https://www.reddit.com/r/woweconomy/comments/k99p76",
-    "https://www.wowhead.com/item=36910/titanium-ore",
-    "https://wowwiki-archive.fandom.com/wiki/Prospecting",
-    "https://www.wow-professions.com/guides/wow-disenchanting-guide"
+    "https://www.wowhead.com/tbc/guide/enchanting-leveling-1-375",
+    "https://eu.forums.blizzard.com/en/wow/t/how-do-professions-work-in-chromie-time/360427",
+    "https://www.wowhead.com/ru/item=156930",
+    "https://www.wowhead.com/tbc/forums/topic/inks-bulk-profession-macros-193012",
+    "https://www.curseforge.com/wow/addons/grind-log",
+    "https://www.curseforge.com/wow/addons/my-loot-history",
+    "https://www.curseforge.com/wow/addons/wow-legacy-ledger",
+    "https://www.curseforge.com/wow/addons/profitprophet/files/9007250",
+    "https://www.curseforge.com/wow/addons/prospectmate",
+    "https://github.com/Somora/EasyDisenchant"
   ],
   "latest_run_source_date": "2026-11-23",
-  "latest_run": "Recent targeted DE/prospect and alternative legacy milling searches returned no newly published raw Retail operation ledger. WoD 884144 pooled original held for missing per-herb attribution. 516803, Canadia_TV BfA calculator and First Flower original are prior evidence/derivative sources; historical Titanium comment 378183 is already documented. No cutoff re-catalogue.",
+  "latest_run": "Read current shared instructions and queue. Searched recent and alternate recorder/source-profile lanes; no new qualifying exact legacy operations or source correction; T0053 already marked done. No evidence JSONL.",
   "new_evidence_file_this_run": null,
-  "next": "Seek a newly accessible original per-operation ledger or genuinely new identity/profile correction, prioritizing exact Retail 24995 held itemLink or 36909/23424 logs. For historical 884144, only follow up if an original per-herb partition/operation ledger appears; do not re-search unchanged comment. Leave catalogue and implementation to owners."
+  "next": "Seek new published original zero-inclusive operations from a versioned Retail player export, prioritizing 24995 exact held itemLink or 23424/36909. Avoid unchanged loot-only addon listings and known macro/model tables; retain Master variant and recorder schema blockers."
 }
