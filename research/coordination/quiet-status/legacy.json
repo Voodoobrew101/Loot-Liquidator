@@ -1,22 +1,20 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-23T20:41:05.413Z",
-  "status": "Active; post-cutoff source search yielded no qualifying new independent Retail cohort or identity correction. Existing scoped decisions retained.",
+  "updated_at": "2026-11-23T21:38:22.378Z",
+  "status": "Active; no newly admissible per-item numeric evidence. Found one held historical pooled milling lead, not a current Retail cohort.",
   "task_ids": [
     "T0047",
     "T0052",
     "T0022",
     "T0044",
     "T0042",
-    "T0021",
-    "T0053"
+    "T0021"
   ],
   "exact_gaps_targeted": [
-    "24995 Warmaul Legplates and TBC armor/weapon group: exact Retail held item variant, actual eligibility, completed casts and material units/hit histograms.",
-    "36909 Cobalt, 23424 Fel Iron and 36910 Titanium: independent actual completed prospect operations, material hit counts, zero bins and refunds.",
-    "T0042 legacy milling: fresh original per-operation data and profile instead of duplicated historical per-input means.",
-    "T0053 reward identity task is done; no repeat catalogue."
+    "24995 Warmaul Legplates / TBC armor and weapons: exact current variant eligibility and completed DE outcomes (22445,22446,22447,22449).",
+    "36909 Cobalt, 23424 Fel Iron and 36910 Titanium: new actual prospect operation counts, named outputs, zero bins, quantity/hit counts, source profile and refunds.",
+    "T0042: independent legacy milling source with exact per-item counts, distinguish pooled total and nominal equivalents from actual operations."
   ],
   "newly_verified_fields_cohorts": [],
   "source_urls": [
@@ -97,15 +95,24 @@
     "https://www.reddit.com/r/woweconomy/comments/t8lubc",
     "https://www.wowhead.com/spell=13262/disenchanted-items",
     "https://www.wowhead.com/forever/spell=13262/disenchanted-items",
-    "https://www.curseforge.com/wow/addons/disenchant-queue"
+    "https://www.curseforge.com/wow/addons/disenchant-queue",
+    "https://www.wowhead.com/spell=190382/mass-mill-fireweed",
+    "https://www.wowhead.com/ptr/spell=190382/mass-mill-fireweed",
+    "https://www.wowhead.com/ptr/item=128412/technique-mass-mill-starflower",
+    "https://www.wowhead.com/news/wow-economy-weekly-wrap-up-8-1-5-final-prep-effective-token-usage-milling-290611",
+    "https://www.reddit.com/r/woweconomy/comments/u0f32m",
+    "https://www.reddit.com/r/woweconomy/comments/k99p76",
+    "https://www.wowhead.com/item=36910/titanium-ore",
+    "https://wowwiki-archive.fandom.com/wiki/Prospecting",
+    "https://www.wow-professions.com/guides/wow-disenchanting-guide"
   ],
-  "numeric_summary": "No newly verified numeric fields, independent cohorts, or exact-item Retail eligibility. All unknown cast/hit/zero/quantity fields remain unknown. No new evidence JSONL.",
+  "numeric_summary": "No newly admissible per-input or per-cast fields. One original historical pooled milling claim (884144): 200 herbs each, 1200 total, 510 pigments, 20-herb mass recipe; no individual input partition or completed operation ledger. No inferred chances, casts, zeros, confidence or prices.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-23T1944-chromie-time-disenchant-eligibility-hotfix.jsonl",
   "preserved_prior_status_summary": "No new measured casts, hits, zero outcomes, quantities, histograms, confidence or gold EV. One dated official historical eligibility hotfix; two static Retail ore item profiles (23424 ilvl 15, 36909 ilvl 20, both Common and labelled Prospectable). Titanium 36910 -> 46849 x143 per nominal 1000 ore (Globalmenace, Retail 12.0.5) already in queue and 2026-11-02T0043; no duplicate.",
-  "verified_parent_sha": "b6e0ce843483faab15685791fd6c2ad09a62808c",
+  "verified_parent_sha": "8204a4164aa979d803bf36def541e3dac95515fa",
   "verified_commit_sha": null,
-  "commit_note": "Owned status-only update via GitHub contents API with checked prior blob SHA; actual commit SHA is verified by read-back externally (self-SHA cannot be embedded).",
+  "commit_note": "Observed branch head before owned status CAS update; actual commit and changed file read-back verified separately. Self SHA cannot be embedded in its own content.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -392,6 +399,12 @@
           "details": "WotLK Classic table is modeled guide, not newly collected actual hits or completed operations."
         }
       ]
+    },
+    {
+      "task": "T0042",
+      "source": "https://www.wowhead.com/spell=190382/mass-mill-fireweed",
+      "disposition": "held-pooled-original-historical-WoD-mass-mill-not-item-specific-or-current-Retail",
+      "reason": "Wowhead original commenter 884144 reports 200 of each herb, 1200 total and 510 pigments pooled, 20 herbs per mass-mill recipe. No individual herb pigment total, explicit completed operations, hits, zeros, output link in the reported result, exact patch/build/skill or refunds. Recipe identifies Cerulean Pigment 114931 as context; do not assign pooled 510 units to Fireweed 109125 or other individual herbs (109124,109126–109129), nor infer actual completed casts from 1200/20. Live and PTR pages repeat the same comment, not two cohorts. Commenter 516803 six separate 2000-herb totals already archived in 2026-10-28 legacy milling batch01 and M06 report; no duplication. Default-branch code search found no 884144 match but full assigned-sources catalogue could not be retrieved via file API, so independent cutoff attribution remains unverified. Preserve lead here only; no new JSONL or numeric admission."
     }
   ],
   "blockers": [
@@ -422,10 +435,11 @@
     "2026-11-23: Eight checked SHA-pinned original Enchantrix accounts had empty local processing counters; DOOMAGE original Ghost Iron 72092 total=27 is already recorded twice under original account, not a fresh operation cohort. Historic BC 2.4.3 game-data model at legacyofwarcraft.com was previously documented in legacy evidence; no duplicate numeric reference row.",
     "2026-11-23 18:44Z original account dedupe: ozzieem EVIAN/HASKINA/OZZIEEM preserve one already-reported 36909 40 detected-capture/57-unit aggregate, not 3 cohorts; 55689639#1 ELLIOTTCABLE duplicate empty 182-byte file. Contemporary Retail 24995 and 23424/36909 raw zero-inclusive processing samples not found in targeted new-source searches; no evidence JSONL.",
     "2026-11-23: Official Oct14 2020 Timewalking Campaign eligibility restoration and forum complaint checked; no exact item or measured rates. New ore API-derived profile pages contain eligibility label only; Retail Titanium Globalmenace is already recorded. Do not repeat unchanged sources.",
-    "2026-11-23 20:40Z: fresh post-cutoff targeted searches returned historical table/mirror, current generic spell, game-flavor-specific recorder description and BfA/Shadowlands pre-cutoff original means already studied or without new event fields. Do not revisit without newly published raw source or new scoped fields."
+    "2026-11-23 20:40Z: fresh post-cutoff targeted searches returned historical table/mirror, current generic spell, game-flavor-specific recorder description and BfA/Shadowlands pre-cutoff original means already studied or without new event fields. Do not revisit without newly published raw source or new scoped fields.",
+    "2026-11-23: Targeted recent and alternative WoD milling searches: 884144 pooled original lacks item-specific output distribution; 516803 and derivative BfA/Shadowlands calculators already source-reviewed; no new target 24995/36909/23424/36910 Retail event receipts. Do not repeat unchanged pages."
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Pivot to newly published Retail raw processing logs and exact itemLink/operation receipts, including an independent legacy milling event-ledger with explicit operation counts. T0053 is done; leave current client QA to implementation. No repeated unchanged historical tables, no code/schema edits or cutoff recatalogue.",
+  "next_concrete_step": "Seek a newly accessible original per-operation ledger or genuinely new identity/profile correction, prioritizing exact Retail 24995 held itemLink or 36909/23424 logs. For historical 884144, only follow up if an original per-herb partition/operation ledger appears; do not re-search unchanged comment. Leave catalogue and implementation to owners.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -434,17 +448,18 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://www.wowhead.com/ptr/item=22445/arcane-dust",
-    "https://www.wowhead.com/item=153669/viridescent-pigment",
-    "https://www.reddit.com/r/woweconomy/comments/k12a5o",
-    "https://www.reddit.com/r/woweconomy/comments/t8lubc",
-    "https://www.wowhead.com/spell=13262/disenchanted-items",
-    "https://www.wowhead.com/forever/spell=13262/disenchanted-items",
-    "https://www.curseforge.com/wow/addons/disenchant-queue",
-    "https://www.wow-professions.com/wotlk/prospecting-table-wotlk-classic"
+    "https://www.wowhead.com/spell=190382/mass-mill-fireweed",
+    "https://www.wowhead.com/ptr/spell=190382/mass-mill-fireweed",
+    "https://www.wowhead.com/ptr/item=128412/technique-mass-mill-starflower",
+    "https://www.wowhead.com/news/wow-economy-weekly-wrap-up-8-1-5-final-prep-effective-token-usage-milling-290611",
+    "https://www.reddit.com/r/woweconomy/comments/u0f32m",
+    "https://www.reddit.com/r/woweconomy/comments/k99p76",
+    "https://www.wowhead.com/item=36910/titanium-ore",
+    "https://wowwiki-archive.fandom.com/wiki/Prospecting",
+    "https://www.wow-professions.com/guides/wow-disenchanting-guide"
   ],
   "latest_run_source_date": "2026-11-23",
-  "latest_run": "Targeted post-cutoff searches for Retail Warmaul/Bloodfist/Arcane Dust and Cobalt/Fel Iron/Titanium plus legacy milling did not locate new source-specific operations. BfA Jakebees, Baadkitty and Kidneph are already source-reviewed; Shadowlands per-input tables predate cutoff and contain no new event fields. WoW Forever recorder description is not Retail data. T0053 remains done for reward identities.",
+  "latest_run": "Recent targeted DE/prospect and alternative legacy milling searches returned no newly published raw Retail operation ledger. WoD 884144 pooled original held for missing per-herb attribution. 516803, Canadia_TV BfA calculator and First Flower original are prior evidence/derivative sources; historical Titanium comment 378183 is already documented. No cutoff re-catalogue.",
   "new_evidence_file_this_run": null,
-  "next": "Pivot to newly published Retail raw processing logs and exact itemLink/operation receipts, including an independent legacy milling event-ledger with explicit operation counts. T0053 is done; leave current client QA to implementation. No repeated unchanged historical tables, no code/schema edits or cutoff recatalogue."
+  "next": "Seek a newly accessible original per-operation ledger or genuinely new identity/profile correction, prioritizing exact Retail 24995 held itemLink or 36909/23424 logs. For historical 884144, only follow up if an original per-herb partition/operation ledger appears; do not re-search unchanged comment. Leave catalogue and implementation to owners."
 }
