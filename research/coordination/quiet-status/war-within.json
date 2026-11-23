@@ -1,22 +1,22 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-23T07:18:37.500Z",
-  "status": "New independently corroborated Blizzard March 13, 2026 Crate of Battlefield Goods DE output-expansion eligibility boundary recorded as source-only rateChange: newly issued crate gear acquired at levels 10-79 -> TWW materials, 80-90 -> Midnight. No material quantity, hit rate, item identity or new sample cohort inferred. Current role queue and evidence/mechanics instructions reviewed; original 731-source Codex catalogue was not recatalogued. No runtime change, PR, merge or release.",
+  "updated_at": "2026-11-23T08:18:24.165Z",
+  "status": "Two original TWW source leads outside the 731-source cutoff registry checked: patch 11.2 K'aresh Desolate Talus/Phantom Bloom trade-only processing boundary with exact rank item IDs, and first-person Mycobloom Create All stopping after a single mill despite ample banked herbs. Both are eligibility/denominator provenance, NOT new empirical per-material yield cohorts or current-client proof. No numeric rates, castsWithDrop, zero histograms or estimator admission inferred. No evidence JSONL fabricated; Codex catalogue, other roles, runtime and schedules unchanged.",
   "task_ids": [
-    "T0048",
-    "T0009",
     "T0010",
     "T0011",
-    "T0007",
     "T0040",
-    "T0008"
+    "T0009",
+    "T0007",
+    "T0008",
+    "T0048"
   ],
   "exact_gaps_targeted": [
     "Ironclaw R2 210937, Aqirite R2 210934 and Bismuth R2 210931: ranked, post-2024-10-25 original completed prospect operations and 212495/212498/212505/212508/212511/213398/213399 per-output 0..N logs and refunds missing.",
     "Mycobloom 210796/210797/210798 -> Nacreous 222618/222619: herb/rank, output quality, actual 10-herb casts, hit/zero histogram and independently verified skill/spec/refund profiles missing.",
     "T0048 TWW DE: gear-item/bonus, armor-vs-weapon, skill/spec/build and independent output-rank material histograms for 219946..219955 still incomplete; avoid mistaking alchemical Storm Dust for DE yields."
   ],
-  "source_branch_head_reviewed": "e716c98fe793ba9bce3879d1ab820b3b819d5fa7",
+  "source_branch_head_reviewed": "1891e910f06eb93f5b933e3116ca1a62e1f76507",
   "source_policy": "READ current research/v3 README/evidence-format/mechanics/worker/queue before search. Source cutoff catalogue CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources incl six recovered; reuse 12,222 scoped decisions; do not recatalogue Codex backlog. Review/admission merged to main in PR #82 but worker branch remains evidence-only; no release asserted.",
   "study_backlog_triage": [
     {
@@ -551,21 +551,64 @@
   },
   "newly_verified_fields": [
     {
-      "field": "disenchant material-expansion eligibility conditional on crate gear acquisition level",
-      "context": "Newly created Crate of Battlefield Goods, March 13 2026 official hotfix",
-      "acquisition_levels": "10-79",
-      "material_expansion": "The War Within",
-      "exact_gear_item_ids": null,
+      "field": "Patch 11.2 K'aresh trade-only gathering input method identity",
+      "input_ranks": [
+        {
+          "name": "Desolate Talus",
+          "rank_to_item_id": {
+            "1": 238201,
+            "2": 238212,
+            "3": 238213
+          },
+          "method": "Prospect",
+          "original_source_status": "2025-08-09 firsthand forum reports cannot prospect new ore"
+        },
+        {
+          "name": "Phantom Bloom",
+          "rank_to_item_id": {
+            "1": 239690,
+            "2": 239691,
+            "3": 239692
+          },
+          "method": "Mill",
+          "original_source_status": "2025-08-09 firsthand forum reports cannot mill new herbs; Wowhead spell says no Algari recipes"
+        }
+      ],
+      "source": "https://us.forums.blizzard.com/en/wow/t/gathering-in-season-3/2145981",
+      "corroboration": [
+        "https://www.wowhead.com/spell=1250314/phantom-bloom",
+        "https://www.wowhead.com/guide/the-war-within/professions/herbalism-overview",
+        "https://www.wowhead.com/item=238201/desolate-talus",
+        "https://www.wowhead.com/item=238212/desolate-talus",
+        "https://www.wowhead.com/item=238213/desolate-talus",
+        "https://www.wowhead.com/item=239690/phantom-bloom",
+        "https://www.wowhead.com/item=239691/phantom-bloom",
+        "https://www.wowhead.com/item=239692/phantom-bloom"
+      ],
+      "patch": "11.2.0",
+      "live_2026_client_check": null,
       "output_item_ids": null,
-      "measured_yield": null
+      "measured_processing_denominator": null,
+      "actual_vendor_ratio": "varies by date according to profession-spell text; do not hardcode dated guide rates",
+      "status": "source-backed 2025 eligibility lead; not numeric yield evidence"
     },
     {
-      "field": "crate-derived output material-expansion negative boundary",
-      "context": "Same March 13 2026 official hotfix",
-      "acquisition_levels": "80-90",
-      "material_expansion": "Midnight",
-      "exact_gear_item_ids": null,
-      "measured_yield": null
+      "field": "Mycobloom completed mill count vs nominal herbs in Create All interface",
+      "source": "https://us.forums.blizzard.com/en/wow/t/anyone-else-having-issues-getting-mycobloom-to-mill-via-create-all/1944679",
+      "original_author": "Feaver-2895603",
+      "original_post_date": "2024-09-05",
+      "source_reported_initial_herbs": 1000,
+      "source_reported_success": "sometimes one successful mill then 'Requires 10 Mycobloom' while 990+ herbs still in reagent bag",
+      "source_reported_recipe_units": 10,
+      "source_reported_material": "Nacreous Pigment; output quality/itemID and units unknown",
+      "input_rank": null,
+      "output_rank": null,
+      "source_reported_full_session_casts": null,
+      "source_reported_hits": null,
+      "source_reported_zero_histogram": null,
+      "source_reported_skill_spec_build": null,
+      "resourcefulness_refunds": null,
+      "observation": "Do not derive completion N from Create All requested operations, starting herbs/10, or reagent-bag inventory; one-then-stop is the author's example, not a 100-cast dataset"
     }
   ],
   "newly_verified_cohorts": [],
@@ -574,17 +617,17 @@
   "new_no_disenchant_records": 0,
   "new_condition_records": 0,
   "numeric_fields_advanced": [],
-  "evidence_file": "research/v3/evidence/war-within/2026-11-23T0718-battlefield-crate-disenchant-material-epoch.jsonl",
-  "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-23T0718-battlefield-crate-disenchant-material-epoch.jsonl"
-  ],
+  "evidence_file": null,
+  "evidence_files": [],
   "evidence_source_links": [
-    "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
-    "https://warcraft.wiki.gg/wiki/Crate_of_Battlefield_Goods"
+    "https://us.forums.blizzard.com/en/wow/t/gathering-in-season-3/2145981",
+    "https://www.wowhead.com/spell=1250314/phantom-bloom",
+    "https://www.wowhead.com/guide/the-war-within/professions/herbalism-overview",
+    "https://us.forums.blizzard.com/en/wow/t/anyone-else-having-issues-getting-mycobloom-to-mill-via-create-all/1944679"
   ],
-  "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-22T2221-original-2024-DE-cohort-rank-context.jsonl",
+  "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-23T0718-battlefield-crate-disenchant-material-epoch.jsonl",
   "verified_commit_sha": "e716c98fe793ba9bce3879d1ab820b3b819d5fa7",
-  "verification": "Pre-write audited branch head e716c98fe793ba9bce3879d1ab820b3b819d5fa7 and owned status blob 2b631aa19851f251298031ae2ad687495eb1ae84. New atomic commit with one new evidence JSONL and owned quiet status; branch/contents post-write read-back required. New commit SHA cannot be self-embedded in its own status JSON.",
+  "verification": "Pre-write branch head 1891e910f06eb93f5b933e3116ca1a62e1f76507 and owned status blob f4e82fa8eed77640b441a4de7d3bff4af7feafdb verified. GitHub Contents API status-only update with blob SHA guard; post-write branch and file read-back required. Commit SHA cannot self-embed into same single commit; current branch ref is authoritative.",
   "blockers": [
     "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
     "Cumulative PTR Looter display rows contain repeated material names with linked rank IDs unavailable; no per-row independent study and no safe current-Retail rank-specific mapping.",
@@ -663,36 +706,47 @@
     "2026-11-23 recheck: original 1fspqym and 1fmrp4z disenchant studies, original 1fdmzwy Mycobloom per-input means, 1jnvht8 600-Ironclaw anecdote and 1k78h4v R2 ore forecast are already preserved in research/cutoff catalogue or worker originals. Do not re-transcribe or convert means or initial ore into P(hit) and actual completed operations.",
     "2026-11-23T02:18:57.171Z: New 2026-08-25 ProfitProphet release claim and original 2024-08-26 Blizzard Aqirite cast-stop discussion checked as provenance leads. Neither yields a new independent per-cast material study. Revisit only for first-person saved variables/complete operation/refund logs or exact linked study data; otherwise seek new samples rather than re-cataloguing unchanged Codex cutoff.",
     "2026-11-23T03:25:26.016Z: Newly inspected GatheringTracker pinned b856083, FarmIt2 pinned 301c81 and AVGExport pinned 09e4389 public item templates. Only R1/R2/R3 identities and AH-defaults, no independent TWW 0..N completed-cast ledger; do not revisit unchanged template files unless actual raw player exports appear.",
-    "2026-11-23: Somora/EasyDisenchant 1.0.17 released Nov 21 2026 offers Retail DE/Mill/Prospect action UI and SavedVariables settings only, not a per-cast original yield/refund ledger. No new usable numerical evidence; do not re-audit unless it gains documented original result exports. Recent searches again returned existing cutoff cohorts 1fisfkn/1fpswuz/1fmrp4z, LotzBoi Mycobloom guides and economics examples; no duplication."
+    "2026-11-23: Somora/EasyDisenchant 1.0.17 released Nov 21 2026 offers Retail DE/Mill/Prospect action UI and SavedVariables settings only, not a per-cast original yield/refund ledger. No new usable numerical evidence; do not re-audit unless it gains documented original result exports. Recent searches again returned existing cutoff cohorts 1fisfkn/1fpswuz/1fmrp4z, LotzBoi Mycobloom guides and economics examples; no duplication.",
+    "2026-11-23T08:18:24.165Z: Patch 11.2 K'aresh forums 2145981 and historical Mycobloom Create All forum 1944679 have no actual 0..N processing yields, output qualities, or character profile; do not treat as samples or reopen absent original logs/current-client verification."
   ],
-  "next_concrete_step": "Find exact post-March 13, 2026 Retail reward-gear input IDs/bonuses and source acquisition-level metadata for newly created Crate of Battlefield Goods; obtain original zero-inclusive Disenchant output/skill logs before any rate-based admission. Continue seeking TWW rank-resolved Bismuth 210931/Ironclaw 210937/Aqirite 210934 and Mycobloom 210796-210798 complete prospect/mill casts and refunds; preserve Codex catalogue ownership.",
-  "previous_status_updated_at": "2026-11-23T06:24:09.983Z",
+  "next_concrete_step": "Seek original successful Prospect/Mill/DE zero-inclusive operation logs and refunded-input ledgers for Ironclaw R2 210937, Aqirite R2 210934, Bismuth R2 210931 and Mycobloom 210796-210798; verify output IDs/qualities and full skill/spec/build. Ask Master to assess whether the new 2025 K'aresh rank-specific noProspect/noMill eligibility lead merits a schema/rule outside this worker's scope. Only revisit new original sources or actual logs, not cutoff catalogue.",
+  "previous_status_updated_at": "2026-11-23T07:18:37.500Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "at_utc": "2026-11-23T07:18:37.500Z",
-    "focus": "T0048 current-Retail TWW disenchant material-family eligibility and source-era boundaries; secondary search for original TWW prospect/mill/DE 0..N operation logs",
+    "at_utc": "2026-11-23T08:18:24.165Z",
+    "focus": "New original TWW patch-11.2 ranked processing eligibility and historical Mycobloom successful-operation denominator caveat, avoiding 731-source cutoff assigned to Codex",
     "checks": [
       {
-        "source": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
-        "date": "2026-03-13",
-        "result": "Original Blizzard hotfix states only newly created Crate of Battlefield Goods gear acquired levels 10-79 disenchants into TWW materials; at 80-90 into Midnight. Source-only rateChange, no item IDs/rates."
+        "source": "https://us.forums.blizzard.com/en/wow/t/gathering-in-season-3/2145981",
+        "date": "2025-08-09",
+        "result": "First-person forum distinction says Desolate Talus cannot be prospected, new herbs cannot be milled, with exchange as alternative; no output yields or current-client proof"
       },
       {
-        "source": "https://warcraft.wiki.gg/wiki/Crate_of_Battlefield_Goods",
-        "date": "2026-03-13",
-        "result": "Independent Warcraft Wiki patch-history corroborates event date, context and exact level brackets; not an independent sample cohort."
+        "source": "https://www.wowhead.com/spell=1250314/phantom-bloom",
+        "date": "2025-08",
+        "result": "In-game descriptive text says Phantom Bloom impossible to incorporate into Algari recipes, exchanged instead; market exchange rates change daily"
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1g6jcfr",
-        "date": "2024-10-18",
-        "result": "Original milling calculator is a modeled spreadsheet tool, not a publicly verified individual 10-herb zero-inclusive per-cast Nacreous Pigment ledger. No numerical yield admission."
+        "source": "https://www.wowhead.com/guide/the-war-within/professions/herbalism-overview",
+        "date": "2025-08-03",
+        "result": "Patch 11.2 guide confirms Phantom Bloom no use in recipes and historical exchanges; do not freeze published rates"
+      },
+      {
+        "source": "https://us.forums.blizzard.com/en/wow/t/anyone-else-having-issues-getting-mycobloom-to-mill-via-create-all/1944679",
+        "date": "2024-09-05",
+        "result": "Author saw one Mycobloom mill then Create All stop with 990+ of original 1000 herbs available; confirms 10-herb recipe requirement but no numeric pigment output ledger"
+      },
+      {
+        "source": "research/coordination/backlog-catalogue-20261120.json",
+        "date": "2026-11-20",
+        "result": "Both first-person forum thread IDs 2145981 and 1944679 absent from 731-source cutoff sourceKey listing; no assigned catalogue rows re-reviewed"
       }
     ],
-    "admission": "One new official eligibility/hotfix evidence row, zero new sample/hit/zero/quantity records. Not to be mixed into old TWW gear-cohort rates."
+    "admission": "Zero numerical study entries; two source-integrity findings only. Current 2026 client eligibility and stats not observed."
   },
   "source_integrity_findings": [
     {
@@ -1335,6 +1389,36 @@
       "exact_gear_item_ids": null,
       "output_quality_ids": null,
       "detail": "Primary Blizzard dated hotfix: only newly created Crate of Battlefield Goods gear acquired levels 10-79 yields TWW disenchant materials; gear acquired levels 80-90 yields Midnight materials. Not all gear at those levels, and no recipe rates, per-output item IDs, armor/weapon cohort counts, zero histories or skill profiles are provided. Do not use source as a drop-rate sample."
+    },
+    {
+      "date": "2026-11-23",
+      "checked_at_utc": "2026-11-23T08:18:24.165Z",
+      "source": "https://us.forums.blizzard.com/en/wow/t/gathering-in-season-3/2145981",
+      "original_publication": "2025-08-09",
+      "corroboration": [
+        "https://www.wowhead.com/spell=1250314/phantom-bloom",
+        "https://www.wowhead.com/guide/the-war-within/professions/herbalism-overview"
+      ],
+      "status": "new-noncutoff-patch11.2-TWW-rank-exact-method-exclusion-reference-only",
+      "desolate_talus_ids_by_rank": [
+        238201,
+        238212,
+        238213
+      ],
+      "phantom_bloom_ids_by_rank": [
+        239690,
+        239691,
+        239692
+      ],
+      "detail": "Original Teishoku forum reply says new K'aresh ore cannot be prospected and new herbs cannot be milled. Wowhead Phantom Bloom profession-spell describes impossible Algari recipe usage and changing exchange prices. Exact rank item IDs verified from named item pages; no Retail 2026 game-client test or permanent vendor rate. Do not invent source method records, yield=0, failed cast denominators or known vendor conversion odds. Schema currently has no explicit noProspect/noMill record; Master/runtime scope if guard is needed."
+    },
+    {
+      "date": "2026-11-23",
+      "checked_at_utc": "2026-11-23T08:18:24.165Z",
+      "source": "https://us.forums.blizzard.com/en/wow/t/anyone-else-having-issues-getting-mycobloom-to-mill-via-create-all/1944679",
+      "original_publication": "2024-09-05",
+      "status": "new-noncutoff-original-Mycobloom-mill-CreateAll-interruption-denominator-caveat",
+      "detail": "Feaver firsthand reports attempting Create All with 1,000 Mycobloom, observing one successful craft of unspecified Nacreous Pigment then Requires 10 Mycobloom despite 990+ herbs in reagent bag; reply suggests first-stack issue. Full session completed mills, output units, ranks, hits, zero outcomes, skill/spec and resourcefulness missing. Cannot equate nominal herbal inventory or requested Create All with successful cast N. No new yield study admitted."
     }
   ],
   "last_source_commit_pending": true
