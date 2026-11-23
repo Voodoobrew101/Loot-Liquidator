@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-23T17:43:57.848Z",
-  "status": "Active. Current queue/instructions refreshed. No new independently supported Retail 12.x completed casts, output counts, hit counts or zero-inclusive histograms; a freshly checked 2026-maintained disenchant-predictor page explicitly cautions that predicted reagent displays do not prove item eligibility. Historical model caveat only; no new evidence cohort, no JSONL.",
+  "updated_at": "2026-11-23T18:45:31.754Z",
+  "status": "Active; instruction/queue refresh and primary source deduplication complete. OZZIEEM Cobalt counters were already captured and instrument-audited; no new post-cutoff independent Retail 12.x item-specific completed disenchant or prospect events, hits, zeros, quantity histograms, source-certain profiles or yield statistics. No new evidence JSONL.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -11,24 +11,45 @@
     "T0050"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995: Retail 12.x full itemLink/bonus variant, client build, actual DE eligibility and output event ledger; historical 2068 Looter snapshot has no per-hit quantities",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424: independently published (prefer post-2026-11-20) operation-level prospect logs with exact inputs, outputs, actual operations, skill/build and zero/hit/quantity bins",
-    "Burning Crusade armor/weapon DE model-versus-eligibility: historical reference predictions are not proof of current Retail possible operations"
+    "Warmaul Legplates 24995: current Retail 12.x itemLink/bonus, actual eligibility, skill/build, per-event disenchant output 22445/22446/22447/22449 and 0..N stack histograms absent.",
+    "Cobalt Ore 36909 and Fel Iron Ore 23424: independently new original current-Retail processing logs with completed operation denominators, material hit counts/zeros, quantity histogram, refund/skill/spec/build; preserve source-era separation.",
+    "Historical 2007-2016 SavedVariables cohort aliases and instrumentation semantics must not become additional Retail measurements or 0-outcome casts."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "type": "independent documentation/context, no observed operations",
-      "source": "https://cdn.wowinterface.com/downloads/info27230-GFW_DisenchantPredictor.html",
-      "checked_on": "2026-11-23",
-      "publisher_update": "2026-09-30",
-      "source_release_version": "6.0",
-      "finding": "GFW DisenchantPredictor's publisher describes output predictions as rule-based and explicitly warns that its display is not a reliable indicator that an item can be disenchanted. Version history notes retained predicted reagents for items later rejected by game. Do not use a predicted 24995 output pool as proof of current Retail eligibility.",
-      "inputItemID": 24995,
-      "outputItemIDs": null,
-      "casts": null,
+      "type": "independent read-back of previously admitted source (not a new cohort)",
+      "source": "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/OZZIEEM/SavedVariables/Enchantrix.lua",
+      "source_blob_sha": "237c16bb26b63edbeb6cc8f733ffd149e0d514fb",
+      "existing_evidence": "research/v3/evidence/legacy/20261116T0446-ozzieem-cobalt-saronite-verified-local-counters.jsonl",
+      "inputItemID": 36909,
+      "logged_loot_window_capture_increments": 40,
+      "observed_output_units_by_itemID": {
+        "36917": 10,
+        "36918": 2,
+        "36920": 14,
+        "36923": 6,
+        "36926": 10,
+        "36929": 13,
+        "36932": 2
+      },
+      "actual_complete_operation_denominator": null,
       "castsWithDrop": null,
       "zeroOutcomes": null,
-      "totalQuantity": null
+      "retail_build": null,
+      "notes": "EVIAN and HASKINA files carry identical [36909] capture counters; 3 account-path copies, ONE cohort. Original code confirms output IDs map to units, not hit events, and capture count is loot-window observations, not necessarily all successful prospects. Already documented and Master-audited 2026-11-16; no numeric new record."
+    },
+    {
+      "type": "new source-path elimination",
+      "source": "https://github.com/ELLIOTTCABLE/Warcrack/blob/04e75a363d06caaafac078e76a83eb68b3506a4a/WTF/Account/55689639%231/SavedVariables/Enchantrix.lua",
+      "source_blob_sha": "2b42071932958bb80ecc8583bca283f1c7fd9494",
+      "inputItemIDs": [
+        24995,
+        36909,
+        23424
+      ],
+      "casts": null,
+      "outputItemIDs": null,
+      "notes": "Newly inspected original 55689639#1 account file consists of empty EnchantedLocal/ProspectedLocal/MillingLocal; byte-identical to already-reviewed 84813902#1/#2 backups. Empty SavedVariables do NOT represent observed zero outputs."
     }
   ],
   "source_urls": [
@@ -90,15 +111,20 @@
     "https://legacyofwarcraft.com/db/tbc/professions/disenchanting.html",
     "https://cdn.wowinterface.com/downloads/info27230-GFW_DisenchantPredictor.html",
     "https://www.wowhead.com/tbc/item=24243/adamantite-powder",
-    "https://www.warcrafttavern.com/tbc/guides/prospecting/"
+    "https://www.warcrafttavern.com/tbc/guides/prospecting/",
+    "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/OZZIEEM/SavedVariables/Enchantrix.lua",
+    "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/EVIAN/SavedVariables/Enchantrix.lua",
+    "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/HASKINA/SavedVariables/Enchantrix.lua",
+    "https://github.com/ELLIOTTCABLE/Warcrack/blob/04e75a363d06caaafac078e76a83eb68b3506a4a/WTF/Account/55689639%231/SavedVariables/Enchantrix.lua",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261116T0505-enchantrix-saved-counter-instrumentation-gate.md"
   ],
-  "numeric_summary": "This run: new actual casts=0, per-output hits=0, reported zero outcomes=0, observed material units=0, new input/output IDs=0; no rates or EV calculated. Existing historical 24995/23424/36909 cohorts preserved, not re-added.",
+  "numeric_summary": "Newly advanced empirical fields this run: 0 inputs, 0 outputs, 0 novel completed cast denominators, 0 hit counts, 0 observed zero bins, 0 quantity histograms. Rechecked previously documented historical Cobalt 36909 40 capture increments, seven material-unit aggregates (57 total units) without re-admission; Fel Iron 23424 found only as static cache in OZZIEEM account, not a prospect log; 24995 absent.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-23T1643-patch-2010-bc-disenchant-eligibility.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "f1b3b3e5c2c01a2b25ab875e4cf15be6c1b11e6c",
+  "verified_parent_sha": "9bb58c1a70563295878eb357bda1d6419d4b71f5",
   "verified_commit_sha": null,
-  "commit_note": "This status embeds the pre-write branch head; the resulting commit SHA is verified through GitHub's commit response and subsequent ref read-back, since a commit cannot contain its own SHA.",
+  "commit_note": "One owned quiet-status update; no evidence JSONL because no new independent qualified observations. Self-referential commit SHA cannot be embedded into same atomic commit; verify branch head and read-back after write.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -310,6 +336,18 @@
       "source": "GFW DisenchantPredictor v6.0 publisher description + archived v5.0.0 notes (WoWInterface page updated 2026-09-30)",
       "disposition": "context-only-held-not-cast-or-current-eligibility",
       "reason": "Publisher's explicit limitations show reagent prediction and actual item-specific eligibility are distinct. Cannot validate current Retail Warmaul 24995 eligibility or current output pools. No actual cast operation/zero-inclusive events or source output quantities; no basis to create a numeric JSONL. WoWHead historical ore comments and guide tables encountered this run were pre-cutoff reference/known-cohort sources, not new observations."
+    },
+    {
+      "task": "T0022/T0044/T0047 original-account alias QA 2026-11-23T18:44Z",
+      "source": [
+        "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/OZZIEEM/SavedVariables/Enchantrix.lua",
+        "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/EVIAN/SavedVariables/Enchantrix.lua",
+        "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/HASKINA/SavedVariables/Enchantrix.lua",
+        "https://github.com/ELLIOTTCABLE/Warcrack/blob/04e75a363d06caaafac078e76a83eb68b3506a4a/WTF/Account/55689639%231/SavedVariables/Enchantrix.lua",
+        "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261116T0505-enchantrix-saved-counter-instrumentation-gate.md"
+      ],
+      "disposition": "duplicate-existing-source-cohort-and-empty-export; no-numeric-admission",
+      "reason": "Original OZZIEEM/EVIAN/HASKINA share same Cobalt 36909 40 capture increments, 7 output-unit totals. Canonical original already preserved in Nov16 evidence and independently checked via original EnxMain/EnxStorage instrumentation gate; these are not three cohorts. Newly inspected ELLIOTTCABLE 55689639#1 is an empty 182-byte log, identical blob to 84813902#1/#2; no target operation observed. Current Retail exact 24995 eligible variant and zero-inclusive event log still missing."
     }
   ],
   "blockers": [
@@ -337,10 +375,11 @@
     "2026-11-23 ~11:40 UTC: new searches for Warmaul 24995 modern DE and Cobalt/Fel Iron Retail observed prospecting surfaced only already-reviewed old Wowhead/Thottbot mirrors, Classic/TBC Anniversary models, generic profiles and no exact 12.x operation receipts. Patch-3.0.2 obsolete Fel Iron Powder item 24242 was already Master-documented Nov 19; duplicate was suppressed. Do not re-search same sources absent new cast log.",
     "2026-11-23: Fresh noncohort search (Warmaul Legplates and Cobalt/Fel Iron first-hand processing + exact ProspectedLocal/ProspectMeDB code keys) returned already-reviewed historical DE model tables, Classic/WotLK reference chances, market item profiles, unrelated Roblox data and no independent exact target operation exports. No raw recorded Retail operations or event zeros; do not turn tables into measured rates.",
     "2026-11-23: Newly discovered pinned Enchantrix original-account exports BestLanguage/157763925#1 (primary and backup), Industrial/2NDUSTRIAL and ingshtrom/AVIDGAMER123 all have empty EnchantedLocal, ProspectedLocal, MillingLocal and NonDisenchantablesLocal; empty tracking tables are not measured zero-output operations. Distinct source and blob references in sources_reviewed_this_run. Revisit only if fresh versions add real recorded operations.",
-    "2026-11-23: Eight checked SHA-pinned original Enchantrix accounts had empty local processing counters; DOOMAGE original Ghost Iron 72092 total=27 is already recorded twice under original account, not a fresh operation cohort. Historic BC 2.4.3 game-data model at legacyofwarcraft.com was previously documented in legacy evidence; no duplicate numeric reference row."
+    "2026-11-23: Eight checked SHA-pinned original Enchantrix accounts had empty local processing counters; DOOMAGE original Ghost Iron 72092 total=27 is already recorded twice under original account, not a fresh operation cohort. Historic BC 2.4.3 game-data model at legacyofwarcraft.com was previously documented in legacy evidence; no duplicate numeric reference row.",
+    "2026-11-23 18:44Z original account dedupe: ozzieem EVIAN/HASKINA/OZZIEEM preserve one already-reported 36909 40 detected-capture/57-unit aggregate, not 3 cohorts; 55689639#1 ELLIOTTCABLE duplicate empty 182-byte file. Contemporary Retail 24995 and 23424/36909 raw zero-inclusive processing samples not found in targeted new-source searches; no evidence JSONL."
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Seek original post-cutoff Retail 12.x actual operation logs for Warmaul Legplates 24995 (full variant/itemLink, bonus, build and successful disenchant) or Cobalt Ore 36909/Fel Iron Ore 23424 (per-input/cast denominators, output IDs, hits, quantity and zero histogram). Keep 2007 patch eligibility separate; do not infer current eligibility. Secondary 45661 identity completed.",
+  "next_concrete_step": "Seek post-cutoff primary Retail 12.x item-specific completed disenchant receipt of Warmaul Legplates 24995 (exact itemLink, bonusIDs, ilvl, success, outputs, stack count, build, Enchanting skill/spec), or zero-inclusive event-ledger prospect exports for Cobalt Ore 36909 and Fel Iron Ore 23424; only add genuine new source cohorts/corrections. Preserve 731-source catalogue decisions and original statuses.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -349,17 +388,16 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://cdn.wowinterface.com/downloads/info27230-GFW_DisenchantPredictor.html",
-    "https://wotlk.evowow.com/?item=24995",
-    "https://www.wowhead.com/tbc/item=24995/warmaul-legplates",
-    "https://www.wowhead.com/mop-classic/item=36909/cobalt-ore",
-    "https://www.wowhead.com/tbc/item=24243/adamantite-powder",
-    "https://www.wowhead.com/tbc/item=23424/fel-iron-ore",
-    "https://www.warcrafttavern.com/tbc/guides/prospecting/",
-    "https://www.wow-professions.com/wotlk/prospecting-table-wotlk-classic"
+    "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/OZZIEEM/SavedVariables/Enchantrix.lua",
+    "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/EVIAN/SavedVariables/Enchantrix.lua",
+    "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/HASKINA/SavedVariables/Enchantrix.lua",
+    "https://github.com/ELLIOTTCABLE/Warcrack/blob/04e75a363d06caaafac078e76a83eb68b3506a4a/WTF/Account/55689639%231/SavedVariables/Enchantrix.lua",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261116T0505-enchantrix-saved-counter-instrumentation-gate.md",
+    "https://www.wowhead.com/mop-classic/tw/item=36909/%E9%88%B7%E8%97%8D%E7%A4%A6%E7%9F%B3",
+    "https://www.wowhead.com/tbc/spell=31252/prospecting"
   ],
   "latest_run_source_date": "2026-11-23",
-  "latest_run": "2026-11-23: source-verified Blizzard 2.0.10 historical DE enablement for item 27988 and item 28258 from contemporary patch-note mirror + item IDs and build corroboration; inspected 9 pinned original Enchantrix exports (8 empty local operation tables; DOOMAGE positive 72092 already in old evidence). TBC 2.4.3 102–120 uncommon DE model is already recorded in existing legacy files, so no duplicate reference rows.",
-  "new_evidence_file_this_run": "research/v3/evidence/legacy/2026-11-23T1643-patch-2010-bc-disenchant-eligibility.jsonl",
-  "next": "Seek an independently published Retail 12.x event-level DE capture for Warmaul Legplates 24995 or nonempty ProspectMe/other per-event result-export for Fel Iron 23424/Cobalt 36909, after 2026-11-20 if available. Record exact itemLinks, operation count, output IDs, zero/hit/quantity distributions, skill/spec/build/hotfix; do not infer chances from tooltips or historical category models. Keep the 731-source Codex catalogue untouched."
+  "latest_run": "Verified OZZIEEM 36909 40 logged prospect-capture counters and 7 material-unit totals against canonical 2026-11-16 evidence and addon instrumentation: identical EVIAN/HASKINA snapshots, not independent operations; Fel Iron 23424 only static cache, 24995 absent. Additional ELLIOTTCABLE 55689639#1 is byte-identical empty logger from already-reviewed aliases; no evidence file created. New empirical fields = zero.",
+  "new_evidence_file_this_run": null,
+  "next": "Seek post-cutoff primary Retail 12.x item-specific completed disenchant receipt of Warmaul Legplates 24995 (exact itemLink, bonusIDs, ilvl, success, outputs, stack count, build, Enchanting skill/spec), or zero-inclusive event-ledger prospect exports for Cobalt Ore 36909 and Fel Iron Ore 23424; only add genuine new source cohorts/corrections. Preserve 731-source catalogue decisions and original statuses."
 }
