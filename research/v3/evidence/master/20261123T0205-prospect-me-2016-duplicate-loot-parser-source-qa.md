@@ -1,0 +1,14 @@
+# Source-code QA: historical Prospect Me input-equivalent counter and duplicate-result assignment
+
+Checked at UTC 2026-11-23T02:05Z. Scope: source-code semantics only; NOT a new observed Retail conversion cohort, not a runtime reproduction, and not an audit of Codex's pinned catalogue.
+
+**Original, immutable source:** [ProspectMe.lua @ f9b6c0305908 (2016-11-28)](https://repos.curseforge.com/wow/prospect-me/file/f9b6c0305908/ProspectMe.lua). This is the source version surfaced in the Legacy worker's 2026-11-23T01:39:59.803Z checkpoint; its exact release/epoch is historical Legion, not current 12.x.
+
+**Independently checked code paths**
+- BeginCapture lines 119–124 assigns MassMultiplier=1 for ordinary Prospect/Mill and =4 for Mass Prospect Felslate/Leystone and Mass Mill Yseralline. EndCapture lines 145–148 passes multiplier to AddEntry; AddEntry lines 158–179 increments the saved `TimesProspected` counter by that multiplier, not always by one executed craft. The counter is a *base-equivalent counter*, not always a raw executed-operation count. Historical compatibility is source-specific.
+- In GetResults lines 189–210, the per-capture table uses `Results[ItemID] = Quantity` for both CHAT_MSG_LOOT and LOOT_OPENED rather than accumulating repeated identical ItemIDs. Thus, **if the same output ItemID appears more than once within one processing capture**, a later message/loot slot can replace an earlier quantity. The *potential* loss is before AddEntry adds per-capture results into the saved cumulative table. Neither the source code nor this review establishes that such duplicate intra-capture events occurred in any particular player dataset.
+- AddEntry aggregates quantities by output ItemID across captures, but it stores no per-output observed hit/zero histogram, refund ledger, on-cast skill/spec/item rank or actual client build. These missing fields cannot be recovered by dividing nominal ore or multiplying a displayed percentage by the aggregate counter.
+
+**Disposition:** retain and label any original saved-variable totals according to versioned counter semantics, with possible capture-level censoring flagged for review only if an affected source's original raw event receipts establish it. Do not claim a measured per-output P(hit), completed casts or universal yield from this code. Do not create duplicate pre-cutoff source-catalogue rows or change any existing data/adapters on owner or Codex branches.
+
+**Why this matters:** a seemingly valid `TimesProspected` counter can be expressed in normal-operation equivalents while material totals may be sensitive to capture-event multiplicity. Reviewer should check source-native event structure before using it to calibrate a yield model. This code inspection adds an import-interpretation warning, **0 new samples, 0 new priceable quantities, 0 supported gold decisions**.
