@@ -1,62 +1,24 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-23T19:46:14.957Z",
-  "status": "Active; one new original historical eligibility hotfix verified, no new independent numerical cohort. Current Retail exact-item eligibility and operation-level yield gaps remain open.",
+  "updated_at": "2026-11-23T20:41:05.413Z",
+  "status": "Active; post-cutoff source search yielded no qualifying new independent Retail cohort or identity correction. Existing scoped decisions retained.",
   "task_ids": [
     "T0047",
     "T0052",
-    "T0042",
     "T0022",
     "T0044",
-    "T0021"
+    "T0042",
+    "T0021",
+    "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 and matching TBC armor/weapon groups: expansion/scaling-dependent disenchant eligibility, exact held itemLink, patch and material outcome ledger.",
-    "Cobalt Ore 36909, Fel Iron Ore 23424: independent current Retail actual prospect operations, hits, zero bins, yield totals/histograms and refunds.",
-    "Titanium Ore 36910: new named output and operation-count source beyond the already catalogued Globalmenace 12.0.5 cohort."
+    "24995 Warmaul Legplates and TBC armor/weapon group: exact Retail held item variant, actual eligibility, completed casts and material units/hit histograms.",
+    "36909 Cobalt, 23424 Fel Iron and 36910 Titanium: independent actual completed prospect operations, material hit counts, zero bins and refunds.",
+    "T0042 legacy milling: fresh original per-operation data and profile instead of duplicated historical per-input means.",
+    "T0053 reward identity task is done; no repeat catalogue."
   ],
-  "newly_verified_fields_cohorts": [
-    {
-      "type": "historical official eligibility hotfix; no numeric cohort",
-      "date": "2020-10-14",
-      "patch": "9.0.1",
-      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23277654/hotfixes-april-28-2020",
-      "corroboration": [
-        "https://www.bluetracker.gg/wow/topic/us-en/23277654-hotfixes-october-16-2020/",
-        "https://www.wowhead.com/ptr/news/shadowlands-pre-patch-hotfixes-for-october-14th-mechagnomes-dont-require-rep-318555",
-        "https://us.forums.blizzard.com/en/wow/t/cannot-disenchant-gear/676920"
-      ],
-      "affectedScope": "Characters leveling through different expansions in Timewalking Campaigns (Chromie Time); historical eligibility restoration, exact items unspecified",
-      "inputItemIDs": null,
-      "outputItemIDs": null,
-      "casts": null,
-      "castsWithDrop": null,
-      "totalQuantity": null,
-      "histogram": null,
-      "notes": "Historical Outland-specific player complaint corroborates existence of a pre-fix eligibility problem, not the cause or current status of Warmaul 24995. Official note restores eligibility while leveling in Timewalking Campaigns; no material/rate/skill values."
-    },
-    {
-      "type": "secondary static Retail identity corroboration only",
-      "source": "https://legacyofwarcraft.com/db/retail/item/23424.html",
-      "inputItemID": 23424,
-      "itemLevel": 15,
-      "quality": "Common",
-      "prospectableLabel": true,
-      "casts": null,
-      "notes": "Site attributes data to Blizzard Game Data API; no source build, direct client operation or yield evidence."
-    },
-    {
-      "type": "secondary static Retail identity corroboration only",
-      "source": "https://legacyofwarcraft.com/db/retail/item/36909.html",
-      "inputItemID": 36909,
-      "itemLevel": 20,
-      "quality": "Common",
-      "prospectableLabel": true,
-      "casts": null,
-      "notes": "Same data provider; not independent measured prospect observations."
-    }
-  ],
+  "newly_verified_fields_cohorts": [],
   "source_urls": [
     "https://www.wowhead.com/wotlk/item=24995/warmaul-legplates",
     "https://warcraft.wiki.gg/wiki/Warmaul_Legplates",
@@ -128,15 +90,22 @@
     "https://us.forums.blizzard.com/en/wow/t/cannot-disenchant-gear/676920",
     "https://legacyofwarcraft.com/db/retail/item/23424.html",
     "https://legacyofwarcraft.com/db/retail/item/36909.html",
-    "https://www.wowhead.com/item=46849/titanium-powder"
+    "https://www.wowhead.com/item=46849/titanium-powder",
+    "https://www.wowhead.com/ptr/item=22445/arcane-dust",
+    "https://www.wowhead.com/item=153669/viridescent-pigment",
+    "https://www.reddit.com/r/woweconomy/comments/k12a5o",
+    "https://www.reddit.com/r/woweconomy/comments/t8lubc",
+    "https://www.wowhead.com/spell=13262/disenchanted-items",
+    "https://www.wowhead.com/forever/spell=13262/disenchanted-items",
+    "https://www.curseforge.com/wow/addons/disenchant-queue"
   ],
-  "numeric_summary": "No new measured casts, hits, zero outcomes, quantities, histograms, confidence or gold EV. One dated official historical eligibility hotfix; two static Retail ore item profiles (23424 ilvl 15, 36909 ilvl 20, both Common and labelled Prospectable). Titanium 36910 -> 46849 x143 per nominal 1000 ore (Globalmenace, Retail 12.0.5) already in queue and 2026-11-02T0043; no duplicate.",
-  "evidence_file": "research/v3/evidence/legacy/2026-11-23T1944-chromie-time-disenchant-eligibility-hotfix.jsonl",
-  "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-23T1643-patch-2010-bc-disenchant-eligibility.jsonl",
-  "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "7beacef82d3182b876a021aeb053beb060e3db4a",
+  "numeric_summary": "No newly verified numeric fields, independent cohorts, or exact-item Retail eligibility. All unknown cast/hit/zero/quantity fields remain unknown. No new evidence JSONL.",
+  "evidence_file": null,
+  "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-23T1944-chromie-time-disenchant-eligibility-hotfix.jsonl",
+  "preserved_prior_status_summary": "No new measured casts, hits, zero outcomes, quantities, histograms, confidence or gold EV. One dated official historical eligibility hotfix; two static Retail ore item profiles (23424 ilvl 15, 36909 ilvl 20, both Common and labelled Prospectable). Titanium 36910 -> 46849 x143 per nominal 1000 ore (Globalmenace, Retail 12.0.5) already in queue and 2026-11-02T0043; no duplicate.",
+  "verified_parent_sha": "b6e0ce843483faab15685791fd6c2ad09a62808c",
   "verified_commit_sha": null,
-  "commit_note": "Atomic owned evidence + quiet status commit, non-force compare-and-swap from verified parent; commit SHA verified externally after write (cannot embed own SHA in same commit).",
+  "commit_note": "Owned status-only update via GitHub contents API with checked prior blob SHA; actual commit SHA is verified by read-back externally (self-SHA cannot be embedded).",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -381,6 +350,48 @@
       ],
       "disposition": "static identity corroboration and known duplicate cohort",
       "reason": "No complete operation logs or new material counts; Titanium 143/1000 already catalogued. No new numeric row."
+    },
+    {
+      "task": "T0047/T0052/T0022/T0044/T0042/T0021/T0053",
+      "source": [
+        "https://www.wowhead.com/ptr/item=22445/arcane-dust",
+        "https://www.wowhead.com/item=153669/viridescent-pigment",
+        "https://www.reddit.com/r/woweconomy/comments/k12a5o",
+        "https://www.reddit.com/r/woweconomy/comments/t8lubc",
+        "https://www.wowhead.com/spell=13262/disenchanted-items",
+        "https://www.wowhead.com/forever/spell=13262/disenchanted-items",
+        "https://www.curseforge.com/wow/addons/disenchant-queue",
+        "https://www.wow-professions.com/wotlk/prospecting-table-wotlk-classic"
+      ],
+      "disposition": "no new qualifying evidence; no recatalogue",
+      "reason": "Jakebees BfA 9 mixed green items -> 19 Arcane Dust and 11 Netherweave Bracers -> 16 Arcane Dust already covered by Nov 1/2/14 legacy evidence and Master Nov14 QA. Item-side cumulative Looter material lists supply no new independent post-cutoff casts or dated variant-specific logs. Baadkitty 200 of each of 7 herbs and Kidneph lots of 1000 are already source-reviewed (Master 20261119T0004 and 2026-11-20-kidneph-per-input-prior-preservation). No event-level hits or zero bins in the viewed source; do not recatalogue. 2020 Shadowlands reported per-herb mean and 2022 First Flower totals; no operation-level histograms or current Retail version. Do not add rows from cutoff without new fields. Retail Disenchant spell 13262 generic description cannot establish exact item eligibility. WoW Forever is a separate game flavor; Disenchant Queue describes learning from personal results but provides no raw cohort or Retail item-specific operations. Do not admit Forever or Classic reference data as Retail. WotLK Classic table is modeled guide, not newly collected actual hits or completed operations.",
+      "checks": [
+        {
+          "source": "https://www.wowhead.com/ptr/item=22445/arcane-dust",
+          "disposition": "duplicate historical cohort or cumulative database",
+          "details": "Jakebees BfA 9 mixed green items -> 19 Arcane Dust and 11 Netherweave Bracers -> 16 Arcane Dust already covered by Nov 1/2/14 legacy evidence and Master Nov14 QA. Item-side cumulative Looter material lists supply no new independent post-cutoff casts or dated variant-specific logs."
+        },
+        {
+          "source": "https://www.wowhead.com/item=153669/viridescent-pigment",
+          "disposition": "duplicate existing BfA milling sources",
+          "details": "Baadkitty 200 of each of 7 herbs and Kidneph lots of 1000 are already source-reviewed (Master 20261119T0004 and 2026-11-20-kidneph-per-input-prior-preservation). No event-level hits or zero bins in the viewed source; do not recatalogue."
+        },
+        {
+          "source": "https://www.reddit.com/r/woweconomy/comments/k12a5o ; https://www.reddit.com/r/woweconomy/comments/t8lubc",
+          "disposition": "pre-cutoff historical means; not new measurement",
+          "details": "2020 Shadowlands reported per-herb mean and 2022 First Flower totals; no operation-level histograms or current Retail version. Do not add rows from cutoff without new fields."
+        },
+        {
+          "source": "https://www.wowhead.com/spell=13262/disenchanted-items ; https://www.wowhead.com/forever/spell=13262/disenchanted-items ; https://www.curseforge.com/wow/addons/disenchant-queue",
+          "disposition": "game-flavor separation and current generic spell facts only",
+          "details": "Retail Disenchant spell 13262 generic description cannot establish exact item eligibility. WoW Forever is a separate game flavor; Disenchant Queue describes learning from personal results but provides no raw cohort or Retail item-specific operations. Do not admit Forever or Classic reference data as Retail."
+        },
+        {
+          "source": "https://www.wow-professions.com/wotlk/prospecting-table-wotlk-classic",
+          "disposition": "historical guide prior",
+          "details": "WotLK Classic table is modeled guide, not newly collected actual hits or completed operations."
+        }
+      ]
     }
   ],
   "blockers": [
@@ -410,10 +421,11 @@
     "2026-11-23: Newly discovered pinned Enchantrix original-account exports BestLanguage/157763925#1 (primary and backup), Industrial/2NDUSTRIAL and ingshtrom/AVIDGAMER123 all have empty EnchantedLocal, ProspectedLocal, MillingLocal and NonDisenchantablesLocal; empty tracking tables are not measured zero-output operations. Distinct source and blob references in sources_reviewed_this_run. Revisit only if fresh versions add real recorded operations.",
     "2026-11-23: Eight checked SHA-pinned original Enchantrix accounts had empty local processing counters; DOOMAGE original Ghost Iron 72092 total=27 is already recorded twice under original account, not a fresh operation cohort. Historic BC 2.4.3 game-data model at legacyofwarcraft.com was previously documented in legacy evidence; no duplicate numeric reference row.",
     "2026-11-23 18:44Z original account dedupe: ozzieem EVIAN/HASKINA/OZZIEEM preserve one already-reported 36909 40 detected-capture/57-unit aggregate, not 3 cohorts; 55689639#1 ELLIOTTCABLE duplicate empty 182-byte file. Contemporary Retail 24995 and 23424/36909 raw zero-inclusive processing samples not found in targeted new-source searches; no evidence JSONL.",
-    "2026-11-23: Official Oct14 2020 Timewalking Campaign eligibility restoration and forum complaint checked; no exact item or measured rates. New ore API-derived profile pages contain eligibility label only; Retail Titanium Globalmenace is already recorded. Do not repeat unchanged sources."
+    "2026-11-23: Official Oct14 2020 Timewalking Campaign eligibility restoration and forum complaint checked; no exact item or measured rates. New ore API-derived profile pages contain eligibility label only; Retail Titanium Globalmenace is already recorded. Do not repeat unchanged sources.",
+    "2026-11-23 20:40Z: fresh post-cutoff targeted searches returned historical table/mirror, current generic spell, game-flavor-specific recorder description and BfA/Shadowlands pre-cutoff original means already studied or without new event fields. Do not revisit without newly published raw source or new scoped fields."
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Seek genuinely independent post-cutoff Retail item-specific or event-ledger sources for 24995, 23424 and 36909. Master should preserve 2020-10-14 historical eligibility boundary without converting it to current item eligibility or rate-change magnitude. Do not reopen cutoff catalogue or revisit unchanged mirrors.",
+  "next_concrete_step": "Pivot to newly published Retail raw processing logs and exact itemLink/operation receipts, including an independent legacy milling event-ledger with explicit operation counts. T0053 is done; leave current client QA to implementation. No repeated unchanged historical tables, no code/schema edits or cutoff recatalogue.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -422,16 +434,17 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://worldofwarcraft.blizzard.com/en-us/news/23277654/hotfixes-april-28-2020",
-    "https://www.bluetracker.gg/wow/topic/us-en/23277654-hotfixes-october-16-2020/",
-    "https://www.wowhead.com/ptr/news/shadowlands-pre-patch-hotfixes-for-october-14th-mechagnomes-dont-require-rep-318555",
-    "https://us.forums.blizzard.com/en/wow/t/cannot-disenchant-gear/676920",
-    "https://legacyofwarcraft.com/db/retail/item/23424.html",
-    "https://legacyofwarcraft.com/db/retail/item/36909.html",
-    "https://www.wowhead.com/item=46849/titanium-powder"
+    "https://www.wowhead.com/ptr/item=22445/arcane-dust",
+    "https://www.wowhead.com/item=153669/viridescent-pigment",
+    "https://www.reddit.com/r/woweconomy/comments/k12a5o",
+    "https://www.reddit.com/r/woweconomy/comments/t8lubc",
+    "https://www.wowhead.com/spell=13262/disenchanted-items",
+    "https://www.wowhead.com/forever/spell=13262/disenchanted-items",
+    "https://www.curseforge.com/wow/addons/disenchant-queue",
+    "https://www.wow-professions.com/wotlk/prospecting-table-wotlk-classic"
   ],
   "latest_run_source_date": "2026-11-23",
-  "latest_run": "No new measured casts, hits, zero outcomes, quantities, histograms, confidence or gold EV. One dated official historical eligibility hotfix; two static Retail ore item profiles (23424 ilvl 15, 36909 ilvl 20, both Common and labelled Prospectable). Titanium 36910 -> 46849 x143 per nominal 1000 ore (Globalmenace, Retail 12.0.5) already in queue and 2026-11-02T0043; no duplicate.",
-  "new_evidence_file_this_run": "research/v3/evidence/legacy/2026-11-23T1944-chromie-time-disenchant-eligibility-hotfix.jsonl",
-  "next": "Seek genuinely independent post-cutoff Retail item-specific or event-ledger sources for 24995, 23424 and 36909. Master should preserve 2020-10-14 historical eligibility boundary without converting it to current item eligibility or rate-change magnitude. Do not reopen cutoff catalogue or revisit unchanged mirrors."
+  "latest_run": "Targeted post-cutoff searches for Retail Warmaul/Bloodfist/Arcane Dust and Cobalt/Fel Iron/Titanium plus legacy milling did not locate new source-specific operations. BfA Jakebees, Baadkitty and Kidneph are already source-reviewed; Shadowlands per-input tables predate cutoff and contain no new event fields. WoW Forever recorder description is not Retail data. T0053 remains done for reward identities.",
+  "new_evidence_file_this_run": null,
+  "next": "Pivot to newly published Retail raw processing logs and exact itemLink/operation receipts, including an independent legacy milling event-ledger with explicit operation counts. T0053 is done; leave current client QA to implementation. No repeated unchanged historical tables, no code/schema edits or cutoff recatalogue."
 }
