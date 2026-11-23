@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-23T12:21:23.451Z",
-  "status": "Located an unlisted original 2024 TWW Pioneer's Cloth Cuffs disenchanting operations source with 7,652 self-reported cuffs disenchanted and an identified gear item (222833). No linked material output ledger, rank distribution, 0..N results or complete build/bonus profile; hold as source-only input/operation provenance, not measured drop rates. Targeted 2025-26 ore/herb and DE searches found no new qualifying raw output/refund cohorts. No evidence JSONL or numeric baseline admission.",
+  "updated_at": "2026-11-23T13:27:26.404Z",
+  "status": "New independent March 18, 2026 first-person report identifies Midnight wand 259349 (Blossoming Rootwarden's Focus) as historically producing TWW enchanting reagents/knowledge in BOTH Rare and Epic item versions. Blizzard's same-day hotfix says the item should yield Midnight materials. Post time is not disenchant event time; no proven post-fix regression or TWW-gear baseline. No material rank/units, operation counts, 0..N logs, or numeric admission; all earlier catalogued sources remain Codex-owned.",
   "task_ids": [
     "T0048",
     "T0009",
@@ -17,8 +17,8 @@
     "Mycobloom 210796/210797/210798 -> Nacreous 222618/222619: herb/rank, output quality, actual 10-herb casts, hit/zero histogram and independently verified skill/spec/refund profiles missing.",
     "T0048 TWW DE: gear-item/bonus, armor-vs-weapon, skill/spec/build and independent output-rank material histograms for 219946..219955 still incomplete; avoid mistaking alchemical Storm Dust for DE yields."
   ],
-  "source_branch_head_reviewed": "1746f224c99d2732483f31e45a29d9877db5b71b",
-  "source_policy": "READ current research/v3 README/evidence-format/mechanics/worker/queue before search. Source cutoff catalogue CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources incl six recovered; reuse 12,222 scoped decisions; do not recatalogue Codex backlog. Review/admission merged to main in PR #82 but worker branch remains evidence-only; no release asserted.",
+  "source_branch_head_reviewed": "9b042cf04aa503212e2b08b688c7fa633482165a",
+  "source_policy": "Current owner 2026-11-20 cutoff 725 source assignment (now 731 indexed including recovered) is CLOSED_VERIFIED_CURRENT_PIPELINE; do not recatalogue or modify Codex branches. Evidence only when independent source-supported field advances. The March-18 independent rare+epic input-profile source is held as cross-era eligibility context, not as TWW numerical yield or a claimed post-hotfix failure.",
   "study_backlog_triage": [
     {
       "status": "admitted",
@@ -572,11 +572,21 @@
   "newly_verified_fields": [
     {
       "taskID": "T0048",
-      "field": "source-reported total original DE operations, input ID cross-reference",
-      "inputItemID": 222833,
-      "value": 7652,
-      "source": "https://www.reddit.com/r/woweconomy/comments/1g9l8t8",
-      "qualification": "source-only; material outputs and game-item bonus unknown; not an eligible output cohort"
+      "field": "historical disenchant eligibility anomaly by rare/epic item version",
+      "inputItemID": 259349,
+      "inputName": "Blossoming Rootwarden's Focus",
+      "inputExpansion": "Midnight",
+      "itemQualities": [
+        "Rare",
+        "Epic"
+      ],
+      "outputFamily": "The War Within enchanting materials, exact ranked output IDs unknown",
+      "source": "https://us.forums.blizzard.com/en/wow/t/getting-tww-enchant-materials-from-one-specific-item/2275046",
+      "sourceAuthor": "Beggetable-turalyon",
+      "sourcePublished": "2026-03-18",
+      "officialPatchSource": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+      "officialHotfixDate": "2026-03-18",
+      "qualification": "Source-only historical cross-era identity/profile context; no measured TWW material yield and no verified post-hotfix regression."
     }
   ],
   "newly_verified_cohorts": [],
@@ -588,16 +598,14 @@
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1g9l8t8",
-    "https://www.wowhead.com/item=222833/pioneers-cloth-cuffs"
+    "https://us.forums.blizzard.com/en/wow/t/getting-tww-enchant-materials-from-one-specific-item/2275046",
+    "https://www.wowhead.com/item=259349/blossoming-rootwardens-focus",
+    "https://worldofwarcraft.blizzard.com/en-us/news/24266320"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-23T0718-battlefield-crate-disenchant-material-epoch.jsonl",
-  "verified_commit_sha": "e716c98fe793ba9bce3879d1ab820b3b819d5fa7",
-  "verification": "Read current branch README/evidence-format/mechanics/roles/worker/queue; checked owner 731-source manifest; preserved other workers and cutoff. Updating only owned quiet status from verified blob 9c457820d873d1fc0a128df50040f83d7966c376; post-write read-back pending.",
+  "verified_commit_sha": "9b042cf04aa503212e2b08b688c7fa633482165a",
+  "verification": "Read refreshed branch head and required research/v3 README/evidence-format/mechanics/roles/worker/queue, checked owner 731-source cutoff manifest and prior owned status. Updated owned status from original blob f56fc56f42b68be2d2b8474816c4a9e3d62253a9; new commit SHA and read-back to be confirmed by the runner following the write.",
   "blockers": [
-    "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
-    "Cumulative PTR Looter display rows contain repeated material names with linked rank IDs unavailable; no per-row independent study and no safe current-Retail rank-specific mapping.",
-    "No independently verified post-2024-10-25 original TWW cast logs with completed operations, output-quality IDs, 0..N histograms, skill/spec/build and resourcefulness basis. Kaychak May-2025 named original XLSX is Patreon-locked; Jan-2026 advertised free workbook not retrieved, and neither is presently verified as an original measured yield study.",
     "2025-06-21 'Prospecting Shattering Cheat Sheet.xlsx' is shown as a Patreon attachment but access is join/login-gated; no original workbook bytes or raw cast rows to audit.",
     "2025-03-31 R1 Ironclaw anecdote has no output ledger and cannot support any drop-rate or totalQuantity field.",
     "Direct Wowhead item-side raw HTML is now independently retrievable and rank-ID/stack distributions for seven preexisting cohorts were checked on 2026-11-21. STILL unresolved: original addon client builds, individual input bonus/ilvl variants, Looter sample dates, player skill/spec, and whether aggregated source rows reflect truly independent completed casts or post-hotfix eligible Retail source; Reddit source access is intermittent. Do not convert source histogram validation into a new cohort or live-current estimate.",
@@ -635,12 +643,10 @@
     "ProfitProphet v2.10.2 (2026-08-25) asserts prospecting/milling rates cross-checked against measured samples, but provides none of the original source logs, item-specific N, output quality IDs, 0..N histograms, skill/build or refund ledgers. Source is compiled secondary reference only; no chance or yield admission.",
     "Craft Resume v0.5.0 public source has no identifiable original player TWW raw SavedVariables/CSV sample in scoped searches; CSV export omits per-operation output item IDs, while DE source-gear ID/bonus and zero-material completed disenchants are not tracked, precluding DE denominator/rarity/slot and no-drop probability admission. See pinned source code in last_source_scan.",
     "Official March 13, 2026 Crate of Battlefield Goods eligibility change is verified but no exact crate-derived gear itemIDs/bonus versions, rarity/slot, logged character acquisition level, output rank IDs, complete casts/zeros or yield histograms; downstream per-item runtime gate needs independent implementation review by Master.",
-    "TWW herb-rank quantity effect unresolved: Method's prelaunch Aug 10 2024 assertion (herb rank does not increase count) versus Sept 10 2024 uncontrolled Mycobloom 1.15/1.35 per-gross-herb means (20k+ herbs pooled across ranks and unknown skill/refunds). Do not fit herb-rank quantity coefficient without matched original operation/zero/refund profiles; seek Master review, not worker schema edit."
+    "TWW herb-rank quantity effect unresolved: Method's prelaunch Aug 10 2024 assertion (herb rank does not increase count) versus Sept 10 2024 uncontrolled Mycobloom 1.15/1.35 per-gross-herb means (20k+ herbs pooled across ranks and unknown skill/refunds). Do not fit herb-rank quantity coefficient without matched original operation/zero/refund profiles; seek Master review, not worker schema edit.",
+    "New source 2275046 reports both Rare and Epic versions of 259349 but supplies no exact material ID/rank/units, actual event date, game build, character skill/spec, number of disenchants or 0..N yield; cannot identify an eligible TWW input cohort or claim the March 18 hotfix failed."
   ],
   "exhausted_sources": [
-    "Previously indexed 1f83cnd, 1g350pq, PeaEsk/434018, 1fdmzwy and 1f3qf96 already provide historical studies; source duplicates not re-imported.",
-    "Previously checked 2024-12-28 Tomasz unpublished worksheet, 2025 YouTube 50k input description, 2025-06-09 1l3uqnw joint milling sample, and 229330/224758 PTR Looter snapshots yield no new eligible independent data.",
-    "2026-11-20 new spreadsheet discovery checked Kaychak 2025-05-06 locked XLSX, Jan-2026 public announcement, SemiCollin Oct-2024 video, and 2025 community references; none exposed original operation logs. Reused Reddit 1f5rsk5 and Wowhead 223548 have existing records. Avoid recycling these as new studies.",
     "2026-11-20: Reddit 1ftqzxp historical shatter original/commenter estimates inspected; new but unfit for direct DE numeric admission without distinct recipe method/raw ledger; do not scrape it repeatedly without author export.",
     "2026-11-20: Liqourice5 original 2024 TWW crafting workbook now retrieved from the author's directly linked Google Drive original, and its prospecting/milling formula and source-date cells audited. Not a new empirical study; do not revisit without the author’s original cast logs or source recipe table lineage.",
     "2026-11-20 11:22Z follow-up: April-2025 gem production economics, September-2024 Mycobloom Create-All bug, November-2025 housing dyes and previously indexed LotzBoi/Aqirite studies offer no new eligible post-hotfix 0..N material-yield cohorts. Revisit only on original per-operation logs.",
@@ -678,35 +684,36 @@
     "2026-11-23T09:20:22.983Z: New post-cutoff TWW original-cast search across Reddit, Blizzard forums, Wowhead, Method, Google-hosted spreadsheet queries, and GitHub returned existing source cohorts/guide formulas but no new logged operation/zero histograms. Method 2024-08-10 herb-rank quantity claim is pre-release guide, not a measured 2025/2026 cohort; WoW Forever 2026-11-20 hotfix is wrong game flavor. Do not repeat without an independent original export.",
     "2026-11-23T10:29:03.964Z: orangeboom 2024 launch-era Wowhead 10-herb milling recipe comment is non-catalogue context with no actual Mycobloom cast/quality/refund ledger. New searches for ranked 2025/2026 ore/herb studies returned existing sources, guides, method-mismatched Shatter or static item lists. Do not repeat these unchanged sources absent original logs.",
     "2026-11-23T11:27:17.830Z: 2025+ searches for source-linked R2 Ironclaw/Aqirite prospecting, Mycobloom milling and TWW disenchant raw logs across Reddit, Blizzard forums, Wowhead and GitHub yielded commercial gold anecdotes (e.g. 2025-06-11 Reddit 1l91chl), previous raw source cohorts or guide expectations. Gold expenses/returns and posted guide quantities are not material units or completed operation counts. Revisit only with original output and refund ledger.",
-    "2026-11-23T12 UTC: Reddit 1g9l8t8 original 7,652 cuff disenchants provide denominator and skill profile but no accessible raw output ledger, 0..N outcomes or bonus/ilvl. Alternative Reddit JSON and Firecrawl retrieval blocked; revisit only for author raw output export. 2025+ R2 ore/herb searches returned prior studies, locked spreadsheets, guides or gold anecdotes."
+    "2026-11-23T12 UTC: Reddit 1g9l8t8 original 7,652 cuff disenchants provide denominator and skill profile but no accessible raw output ledger, 0..N outcomes or bonus/ilvl. Alternative Reddit JSON and Firecrawl retrieval blocked; revisit only for author raw output export. 2025+ R2 ore/herb searches returned prior studies, locked spreadsheets, guides or gold anecdotes.",
+    "2026-11-23: Rechecked 2024-26 Bismuth/Ironclaw/Aqirite/Mycobloom and disenchant forum/Reddit originals; sources 1958379, 1966222, 1fisfkn, 1g350pq, 1f3qf96, 1fmrp4z and 1s7nfcw already in the 731-source Codex cutoff; no new post-Oct-25 rank/skill/profile per-output cast/hit/zero ledger found."
   ],
-  "next_concrete_step": "Seek author-supplied 1g9l8t8 complete original material receipt (item 222833 to ranked 219946/219947/219948 or other actually observed IDs), exact output units and per-cast zeros/histogram, item bonus and client build before T0048 output admission; continue R2 Ironclaw/Aqirite/Khaz Algar herb rank original completed-operation logs. Do not duplicate Codex cutoff or infer P(drop) from total 7,652.",
-  "previous_status_updated_at": "2026-11-23T11:27:17.830Z",
+  "next_concrete_step": "Find new post-2024-10-25 Retail R2 Bismuth 210931, Ironclaw 210937 and Aqirite 210934 completed 5-ore-cast logs or Khaz Algar Mycobloom 210796/210797/210798 completed 10-herb mills with named material rank, zero-inclusive histograms, actual skill/spec, operation counts and Resourcefulness/refund ledger; for TWW Disenchant target 222833/232446 original material-output receipts. Avoid all 731 catalogued source keys. No new addon runtime/PR changes.",
+  "previous_status_updated_at": "2026-11-23T12:21:23.451Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "at_utc": "2026-11-23T12:21:23.451Z",
-    "focus": "T0048 independent gear-input/cast denominator vs output-ledger gap; parallel T0009/T0008/T0010/T0011 rank- and skill-specific raw receipts",
+    "at_utc": "2026-11-23T13:27:26.404Z",
+    "focus": "Post-cutoff original source provenance for TWW materials emitted by Midnight weapons; concurrent search for rank-stratified prospect/mill/DE original operations",
     "checks": [
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1g9l8t8",
-        "original_publication": "2024-10-22",
-        "result": "Source reports 7,652 Pioneer's Cloth Cuffs disenchanted, 7,250 base tailoring crafts plus 402 additional tailoring crafts from Resourcefulness; TWW input item 222833 cross-matched to Wowhead. No original output material quantities/ranks or 0..N material outcomes in accessible indexed source; held."
+        "source": "https://us.forums.blizzard.com/en/wow/t/getting-tww-enchant-materials-from-one-specific-item/2275046",
+        "original_publication": "2026-03-18",
+        "result": "Beggetable first-hand reports TWW mats plus old knowledge/acuity on both Rare and Epic variants of a specifically named wand; number of operations, source event timestamp, output item IDs, quantities and ranks unknown. Owner manifest blizzforum:2275046 absent."
       },
       {
-        "source": "https://www.wowhead.com/item=222833/pioneers-cloth-cuffs",
-        "result": "Named Retail TWW crafted cloth wrist item 222833; current displayed versions are not verified bonus/ilvl of October 2024 original DE casts."
+        "source": "https://www.wowhead.com/item=259349/blossoming-rootwardens-focus",
+        "result": "Independently identifies named item 259349 as Midnight (patch 12.0.0) wand; do not treat as TWW gear."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1f9qado",
-        "result": "Preexisting 2024 green-disenchant source already in owner cutoff; not duplicated."
+        "source": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+        "result": "Blizzard March 18 hotfix: Blossoming Rootwarden's Focus should now disenchant into Midnight materials. Same-day report cannot establish post-fix regression without original event timestamp."
       },
       {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1fdqzep",
-        "result": "Preexisting 2024 Gleaming Shatter cohorts; Shatter is not Disenchant and method schema lacks Shatter. Not transcribed."
+        "source": "https://www.reddit.com/r/woweconomy/comments/1f3qf96",
+        "result": "Original preexisting TWW rank distribution source in current catalogue; excluded from re-catalogue."
       }
     ]
   },
@@ -1484,6 +1491,39 @@
       "per_cast_histogram": null,
       "game_build": null,
       "detail": "The original first-person post explicitly reports a final 7,652 disenchanted wrist count, distinct from 7,250 initial and 402 Resourcefulness-enabled additional TAILORING crafts. Named input 222833 independently corroborated in Wowhead. This is not 7,652 validated output-specific drop events or a numeric dust/shard/crystal yield: the available indexed post excerpt does not include a complete material ledger, raw positive hits/zeros, per-cast histogram or item bonus/ilvl at disenchanted time. Do not treat tailoring Resourcefulness as a disenchant refund statistic, nor assign the displayed Wowhead item's current tooltip variant as the original crafted/DE variant. Source ID not found in owner cutoff manifest (not sufficient proof of cohort independence); no estimator admission. Revisit only for original raw material receipt/cast ledger."
+    },
+    {
+      "date": "2026-11-23",
+      "checked_at_utc": "2026-11-23T13:27:26.404Z",
+      "status": "new-postcutoff-firsthand-cross-expansion-rare-and-epic-version-eligibility-HOLD-no-TWW-baseline",
+      "source": "https://us.forums.blizzard.com/en/wow/t/getting-tww-enchant-materials-from-one-specific-item/2275046",
+      "author": "Beggetable-turalyon",
+      "original_publication": "2026-03-18",
+      "source_key": "blizzforum:2275046",
+      "cutoff_catalogue_presence": "not present among 731 source keys",
+      "method": "Disenchant",
+      "input_item_id": 259349,
+      "input_item_name": "Blossoming Rootwarden's Focus",
+      "input_expansion": "Midnight",
+      "input_quality_variants": [
+        "Rare",
+        "Epic"
+      ],
+      "output_expansion_reported": "The War Within",
+      "output_material_item_ids": null,
+      "output_ranks": null,
+      "output_total_units": null,
+      "completed_operations": null,
+      "castsWithDrop": null,
+      "zero_outcomes": null,
+      "per_cast_histogram": null,
+      "skill": null,
+      "specialization": null,
+      "resourcefulness_refund_basis": null,
+      "game_build": null,
+      "official_hotfix_date": "2026-03-18",
+      "official_hotfix_source": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+      "detail": "Distinct first-hand author's source adds reported Rare+Epic version scope to existing March 17/19 context. Official same-day fix to Midnight materials means historical aberration only; cannot infer a post-fix regression from publication timing. Source text does not identify actual output ranks/quantities, event timing or operations. Not a TWW input, so no TWW numerical baseline or drop-rate admission."
     }
   ],
   "last_source_commit_pending": true
