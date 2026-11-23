@@ -7,6 +7,7 @@ import unittest
 sys.path.insert(0, 'tools')
 import disenchant_categories as categories
 import evidence_check
+import reviewed_disenchant_capture
 
 
 def mapping(item, rarity=3, class_id=4, expansion=11):
@@ -154,6 +155,19 @@ class DisenchantCategoryTests(unittest.TestCase):
         self.assertEqual(sum(record['categoryObservedCasts'] for record in ordinary),
                          sum(cohort['completedCastsReported'] for cohort in data['cohorts']
                              if cohort['studyKey'].startswith('wowhead-looter-')))
+        # The production entry point appends the separately reviewed retained
+        # capture cohorts after these original23-input artifact checks.
+        captured = reviewed_disenchant_capture.compile_records()
+        self.assertEqual(len(captured), 4)
+        self.assertEqual({row['gearKey']: row['observedOperations'] for row in captured},
+                         {'gear:9:4:armor': 66, 'gear:9:4:weapon': 17,
+                          'gear:11:4:armor': 9, 'gear:11:4:weapon': 1})
+        self.assertEqual(sum(len(row['materials']) for row in captured), 6)
+        operation_ids = [operation for row in captured for operation in row['sourceRecordIDs']]
+        self.assertEqual(len(operation_ids), 93)
+        self.assertEqual(len(set(operation_ids)), 93)
+        self.assertEqual({row['baselineProfile']['effectiveSkill'] for row in captured}, {51, 104})
+        records.extend(captured)
         self.assertEqual(categories.OUTPUT.read_text(), categories.render(records))
 
 
