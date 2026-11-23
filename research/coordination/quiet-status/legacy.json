@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-23T08:39:34.576Z",
-  "status": "New independently published 2026 Retail-facing item-catalogue context for Warmaul Legplates 24995: BootyBayBroker's Nov 11 auction scan page labels the 24995 generic listing item level 31, while TSM Retail labels 24995 item level 74 and Wowhead shows 14/74. This corroborates a material profile/display inconsistency, NOT a full observed in-game itemLink/bonus or verified Disenchant eligibility and not a numeric processing cohort. Targeted original-source searches for 24995, 23424 and 36909 found no newly verifiable Retail 12.x completed operation logs, named per-output hit counts/zeros/histograms, or refund-aware material totals. Historic 2007 prospecting spreadsheet links were discovered in copied comments but their original sheets are inaccessible; source rows and catalogue decisions remain Codex-owned. No new qualifying evidence JSONL.",
+  "updated_at": "2026-11-23T09:39:03.714Z",
+  "status": "Fresh primary-source HTML verification: Wowhead Retail 24995 embedded disenchanting Listview directly reports 2,068 historical cumulative item operations and four source-linked material positive-hit rows (22445 1,559; 22446 417; 22447 7; 22449 48) with pctstack distributions. All numbers exactly match existing Nov 1 source transcriptions and Nov 15 Master-derived positive-stack histogram audit; no independent new cohort or measured counts. Same source page presents generic metadata item level 31 but selected ?bonus=6654 tooltip level 74, without identifying each uploaded item's bonus or actual 12.x eligibility. Original Cobalt 36909 and Fel Iron 23424 HTML likewise match previously captured Nov 13 Looter aggregates (91,628 and 101,408 nominal 'oreprospected' denominators respectively), not verified Retail completed operation N. No new eligible numeric evidence JSONL; no duplicate source reimport.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -18,25 +18,51 @@
   ],
   "newly_verified_fields_cohorts": [
     {
-      "type": "published-item-profile-context-only",
+      "type": "primary-source-original-html-readback-no-new-independent-cohort",
       "inputItemID": 24995,
       "inputName": "Warmaul Legplates",
-      "displayedItemLevel": 74,
-      "quality": "uncommon",
-      "gameFlavor": "Retail TSM page",
-      "source": "https://tradeskillmaster.com/retail/us/items/24995",
-      "limitations": "No actual game build, full itemLink/bonuses, completed disenchants or eligibility proof. Does not override existing level-14/31/74 variants."
+      "source": "https://www.wowhead.com/item=24995/warmaul-legplates?bonus=6654#disenchanting",
+      "sourceReadOn": "2026-11-23",
+      "sourceReportedTotalDisenchants": 2068,
+      "sourceReportedOutputPositiveHits": {
+        "22445": 1559,
+        "22446": 417,
+        "22447": 7,
+        "22449": 48
+      },
+      "sourceRawConditionalPctstack": {
+        "22445": {
+          "2": 21.873,
+          "3": 23.669,
+          "4": 26.0423,
+          "5": 27.7742,
+          "6": 0.641437
+        },
+        "22446": {
+          "1": 35.9712,
+          "2": 61.3909,
+          "3": 2.63789
+        },
+        "22447": {
+          "2": 28.5714,
+          "3": 71.4286
+        },
+        "22449": null
+      },
+      "sourceDisplayContext": "Original current Wowhead metadata labels item level 31, but its page auto-routes to ?bonus=6654 and renders a level-74 tooltip; this does not establish historical Looter input bonus or contemporaneous retail eligibility.",
+      "status": "verifies-existing-originals-only; Master 2026-11-15 already independently reconstructed bins (e.g. 22445 5638 units) and flagged record-ID collisions; do not duplicate or replace by ID",
+      "unknowns": "Original collection patch and game flavor, each input itemLink/bonus, actual 12.x completed DE eligibility, skill/spec, joint zero-output outcomes and original per-event logs remain unknown"
     },
     {
-      "type": "independent-published-retail-item-profile-context-only",
-      "inputItemID": 24995,
-      "inputName": "Warmaul Legplates",
-      "displayedItemLevel": 31,
-      "quality": "uncommon",
-      "source": "https://bootybaybroker.com/item/24995/warmaul-legplates/us/anubarak",
-      "sourceScanAtUTC": "2026-11-11T15:00:00Z",
-      "sourceType": "third-party auction-page generic item-profile label",
-      "limitations": "Listing scan is dated, but generic item-level presentation is not an item-specific live loot/Disenchant receipt or full itemLink/bonus/scaled variant. Does not establish game build, actual DE eligibility or resulting materials. Conflicts with Retail TSM level-74 generic listing; record as profile inconsistency, not a new gear group or observation."
+      "type": "primary-source-ore-looter-html-readback-no-new-independent-cohort",
+      "source": "https://www.wowhead.com/item=36909/cobalt-ore#prospecting",
+      "inputItemID": 36909,
+      "sourceReportedOreprospectedTotal": 91628,
+      "otherSource": "https://www.wowhead.com/item=23424/fel-iron-ore#prospecting",
+      "otherInputItemID": 23424,
+      "otherSourceReportedOreprospectedTotal": 101408,
+      "status": "matches existing 2026-11-13 exact gem ID/output-count and conditional positive-stack source transcriptions, no new independent dated study",
+      "unknowns": "Actual completed operations vs nominal/pooled source metric, eligible player game edition/build, source cohort overlap, input quality, per-operation hits/zeros/refunds"
     }
   ],
   "source_urls": [
@@ -60,15 +86,18 @@
     "https://www.wowhead.com/ptr/item=36909/cobalt-ore",
     "https://www.wowhead.com/tbc/tw/item=23425",
     "https://spreadsheets.google.com/pub?key=psIASZENHDoAuNVBoXtbcXw",
-    "https://spreadsheets.google.com/pub?key=pdr-MibcRlh8wIv3SUuWxKw"
+    "https://spreadsheets.google.com/pub?key=pdr-MibcRlh8wIv3SUuWxKw",
+    "https://www.wowhead.com/item=24995/warmaul-legplates?bonus=6654#disenchanting",
+    "https://www.wowhead.com/item=36909/cobalt-ore#prospecting",
+    "https://www.wowhead.com/item=23424/fel-iron-ore#prospecting"
   ],
-  "numeric_summary": "New actual completed processing operations=0; new verified per-output hit counts=0; new zero events=0; new material totals=0; new 0/1/2+ histograms=0; new processing input/output IDs=0. Newly corroborated 24995 third-party generic Retail item-level label 31 (BootyBayBroker listing page scanned Nov 11 2026), versus Retail TSM 74; profile context only, not measured disenchant and not a demonstrated physical item-variant. No gold values retained.",
-  "evidence_file": "research/v3/evidence/legacy/2026-11-23T0340-tbc243-game-data-de-priors.jsonl",
+  "numeric_summary": "New independently verified completed processing operations=0; new independent per-output hits=0; new zero-event counts=0; new source-cohort totals/histograms=0; new exact processing input/output IDs=0. Existing source-original 24995 2,068 cumulative operation claim, positive-hit rows 22445=1,559, 22446=417, 22447=7, 22449=48, and source conditional stack percentages were independently read back and agree with prior records. Existing 36909 source _totalCount=91,628; 23424=101,408; neither can be promoted to current Retail actual completed operation counts. Source-only historical information, no gold EV.",
+  "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "0e56ed2cbbf991b8be44d092b23541f0937fee4b",
-  "verified_commit_sha": "0e56ed2cbbf991b8be44d092b23541f0937fee4b",
-  "commit_note": "Status-only one-file update; verified_commit_sha names the checked pre-write branch revision (self-referential post-write commit SHA cannot be embedded). New GitHub revision and read-back verified externally. No new evidence JSONL was justified.",
+  "verified_parent_sha": "069eec086da3cd4e4585d779fad7c938d8f37fa8",
+  "verified_commit_sha": "069eec086da3cd4e4585d779fad7c938d8f37fa8",
+  "commit_note": "Status-only single-file commit (source read-back verification, duplicate-safe); verified_commit_sha is checked pre-write branch head because its own post-write SHA cannot be embedded. No evidence JSONL or other worker/production changes.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -363,6 +392,18 @@
       "source": "https://www.wowhead.com/tbc/tw/item=23425",
       "disposition": "held-inaccessible-original-primary-spreadsheet-not-new-measured-cohort",
       "reason": "Original first-person 2007-2008 Adamantite Ore thread links spreadsheets with keys psIASZENHDoAuNVBoXtbcXw and pdr-MibcRlh8wIv3SUuWxKw; original spreadsheet contents not retrievable by available web access. Reposted >5000-stack claim and aggregate '1 in 4.46 prospects' are not a verified row-level cast/hit/zero ledger, and may already be mirrored in cutoff. No numeric row added or duplicate cohort."
+    },
+    {
+      "task": "T0047 source-original HTML verification",
+      "source": "https://www.wowhead.com/item=24995/warmaul-legplates?bonus=6654#disenchanting",
+      "disposition": "duplicate-existing-Looter-cohort-original-HTML-directly-verified",
+      "reason": "2,068 cumulative operations, four material IDs/hits and raw pctstack confirm existing Nov 1 worker rows and Nov 15 Master histogram reconstruction. No new dated 12.x source. Source page simultaneously has OG iLvl31 and auto selected ?bonus=6654 iLvl74; neither tells historical uploaded item variants. A colliding recordID across Warmaul and Netherweave files makes unscoped replaces unsafe. No new JSONL."
+    },
+    {
+      "task": "T0022/T0044 source-original HTML verification",
+      "source": "https://www.wowhead.com/item=36909/cobalt-ore#prospecting ; https://www.wowhead.com/item=23424/fel-iron-ore#prospecting",
+      "disposition": "duplicate-existing-cumulative-reference-scope",
+      "reason": "Original HTML _totalCount 91,628 Cobalt and 101,408 Fel Iron and exact gem links/pctstack match Nov13 worker. Do not equate source oreprospected aggregate to confirmed actual 12.x casts, nor reimport already-catalogued cohorts."
     }
   ],
   "blockers": [
@@ -383,35 +424,32 @@
     "2026-11-23: New TBC Anniversary Playhub prospector table and ProspectBuddy addon are WoW-Professions-derived historical references, not new Retail measured samples; source independent numeric claims held. The identified 1115352 Runecloth 5-DE post is already transcribed three times; do not publish as a new cohort.",
     "2026-11-23 06:xx UTC: Targeted Warmaul Legplates DE and Fel Iron/Cobalt 2026 empirical source search returned historical duplicate Wowhead/Classic tables, current guide priors, mining (not prospecting) results, and a new TBC Anniversary 72k-ore gold-only self-report. No qualified raw Retail source. Do not revisit the unchanged historical sources again absent new original fields.",
     "2026-11-23: Targeted original Retail 24995 disenchant and Fel Iron 23424/Cobalt 36909 cast-ledger search produced live catalog profiles, old Classic/Allakhazam mirrored comments, and reference model guides, but no new source with material event log, actual completed operations, zero bins or patch/profile. Do not re-search unchanged mirrors absent original linked evidence.",
-    "2026-11-23: Searched 24995 Retail and TBC disenchant, 36909 Cobalt and 23424 Fel Iron with web and code/SavedVariables-index combinations; new accessible pages were third-party generic profiles or historical source mirrors, not independent completed-operation logs. Two published 2007 prospecting Google spreadsheet URLs return inaccessible responses; do not infer unviewed raw rows or repeat without accessible original."
+    "2026-11-23: Searched 24995 Retail and TBC disenchant, 36909 Cobalt and 23424 Fel Iron with web and code/SavedVariables-index combinations; new accessible pages were third-party generic profiles or historical source mirrors, not independent completed-operation logs. Two published 2007 prospecting Google spreadsheet URLs return inaccessible responses; do not infer unviewed raw rows or repeat without accessible original.",
+    "2026-11-23 fresh primary HTML direct access: original Wowhead 24995 2068/Looter row counts/pctstack, Cobalt 91628 and Fel Iron 101408 source aggregates exactly match existing Nov1/Nov13/Nov15 research. The prior source-inaccessible note is superseded for these three original HTML pages; all remain existing cumulative cohorts, not new independent Retail measurements. Do not repeat absent new source-version/itemLink/cast logs."
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Seek independent published 12.x full 24995 itemLink/bonus and successful/rejected DE event + skill/build, then 36909/23424 0/1/2+ per-operation raw exports with explicit actual operations and refunds. Do not re-catalogue Codex's 731 sources, repeat inaccessible 2007 spreadsheets, infer Retail rates from historical reference tables, or edit runtime.",
+  "next_concrete_step": "Seek a NEW independently published 12.x Warmaul Legplates full itemLink with bonus, actual success/failure DE event, skill/build/outputs or 36909/23424 complete post-cutoff raw per-operation exports including successes, material zeros and refunds; skip already captured pooled Wowhead Looter and owner Codex 731-source catalogue. Master owns collision-safe corrections and runtime.",
   "coordination_cutoff": "Cutoff 0cd0bad8867e7a8d909b4ecae74f6136a3e23d42. Repository README and manifest now report CLOSED_VERIFIED_CURRENT_PIPELINE: 731 sources (713 original + 12 addendum + six recovered); Codex/direct reviewers own source decisions, build/database/tooltip verification. No recataloguing/branch changes.",
   "sources_reviewed_this_run": [
-    "https://bootybaybroker.com/item/24995/warmaul-legplates/us/anubarak",
-    "https://bootybaybroker.com/item/24995/warmaul-legplates/us/alleria",
-    "https://tradeskillmaster.com/retail/us/items/24995",
-    "https://www.wowhead.com/item=24995/warmaul-legplates",
-    "https://www.wowhead.com/ptr/item=36909/cobalt-ore",
-    "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
-    "https://www.wowhead.com/tbc/tw/item=23425",
-    "https://spreadsheets.google.com/pub?key=psIASZENHDoAuNVBoXtbcXw",
-    "https://spreadsheets.google.com/pub?key=pdr-MibcRlh8wIv3SUuWxKw"
+    "https://www.wowhead.com/item=24995/warmaul-legplates?bonus=6654#disenchanting",
+    "https://www.wowhead.com/item=36909/cobalt-ore#prospecting",
+    "https://www.wowhead.com/item=23424/fel-iron-ore#prospecting",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261115T0155-warmaul-rounded-stacks-and-scoped-correction-gate.md",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-13T1741-tbc-matched-stacks-and-legacy-ore-reference.jsonl"
   ],
   "latest_run_source_date": "2026-11-23",
   "latest_run": {
-    "at_utc": "2026-11-23T08:39:34.576Z",
-    "branch_head_reviewed": "0e56ed2cbbf991b8be44d092b23541f0937fee4b",
-    "source_count": 9,
+    "at_utc": "2026-11-23T09:39:03.714Z",
+    "branch_head_reviewed": "069eec086da3cd4e4585d779fad7c938d8f37fa8",
+    "source_count": 3,
     "new_measured_studies": 0,
     "new_completed_operations_verified": 0,
     "new_exact_input_ids": [],
     "new_exact_output_ids": [],
     "new_reference_group_rows": 0,
     "new_evidence_jsonl": null,
-    "scope": "Found new independent dated Retail-facing generic profile evidence for 24995 level 31; reconciled with already known 74 display without claiming full variant or DE eligibility. Archived original TBC spreadsheet links inaccessible; source material not counted. No new Retail raw operation data."
+    "scope": "Verified source-original live HTML of Warmaul 24995 2068 historical Looter row and pctstack and Cobalt/Fel Iron ore Looter aggregates; matched pre-existing records, no duplicate JSONL. Found same-page item-level display contrast 31 vs selected bonus6654 74, not physical itemLink/eligibility."
   },
   "new_evidence_file_this_run": null,
-  "next": "Seek independent published 12.x full 24995 itemLink/bonus and successful/rejected DE event + skill/build, then 36909/23424 0/1/2+ per-operation raw exports with explicit actual operations and refunds. Do not re-catalogue Codex's 731 sources, repeat inaccessible 2007 spreadsheets, infer Retail rates from historical reference tables, or edit runtime."
+  "next": "Seek a NEW independently published 12.x Warmaul Legplates full itemLink with bonus, actual success/failure DE event, skill/build/outputs or 36909/23424 complete post-cutoff raw per-operation exports including successes, material zeros and refunds; skip already captured pooled Wowhead Looter and owner Codex 731-source catalogue. Master owns collision-safe corrections and runtime."
 }
