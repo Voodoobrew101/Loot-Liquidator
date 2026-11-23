@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-23T09:39:03.714Z",
-  "status": "Fresh primary-source HTML verification: Wowhead Retail 24995 embedded disenchanting Listview directly reports 2,068 historical cumulative item operations and four source-linked material positive-hit rows (22445 1,559; 22446 417; 22447 7; 22449 48) with pctstack distributions. All numbers exactly match existing Nov 1 source transcriptions and Nov 15 Master-derived positive-stack histogram audit; no independent new cohort or measured counts. Same source page presents generic metadata item level 31 but selected ?bonus=6654 tooltip level 74, without identifying each uploaded item's bonus or actual 12.x eligibility. Original Cobalt 36909 and Fel Iron 23424 HTML likewise match previously captured Nov 13 Looter aggregates (91,628 and 101,408 nominal 'oreprospected' denominators respectively), not verified Retail completed operation N. No new eligible numeric evidence JSONL; no duplicate source reimport.",
+  "updated_at": "2026-11-23T10:44:41.940Z",
+  "status": "Newly recovered first-party historical developer rule: in patch 7.3.5, disenchant material expansion-family selection changed to follow an item's source expansion rather than its scaled item level (official WarcraftDevs response archived in BlueTracker). Added one source-preserving rateChange evidence record; this is NOT a Warmaul Legplates 24995 live eligibility or yield test. Targeted new 12.x Warmaul/Cobalt/Fel Iron original-operation searches surfaced existing static profile/mirror/reference sources, not a new complete measured processing ledger. No new Retail casts, output hits, zeros, quantities or price evidence.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -11,58 +11,28 @@
     "T0050"
   ],
   "exact_gaps_targeted": [
-    "24995 Warmaul Legplates: Retail 12.x physical item instance full itemLink including bonus/scaling, patch/client and Enchanting skill; successful or rejected Disenchant with exact 22445/22446/22447/22449 material stack events, actual N and zeros. Current third-party level 31/74 catalog labels conflict.",
-    "36909 Cobalt Ore: independent current Retail completed prospects, material IDs 36917/36920/36923/36926/36929/36932 and rare outputs, exact per-material 0/1/2+ event counts, skill/patch and input refund handling.",
-    "23424 Fel Iron Ore: independent current Retail completed prospects and output material IDs, quantities, zero events, patch/skill; do not transform historical '565 ore' into a zero-inclusive N.",
-    "13866 Runecloth Headband: Master/Codex check three mirrored five-cast transcription keys for effective build-consumer de-duplication."
+    "T0047 Warmaul Legplates 24995 itemLink/bonus/12.x disenchant eligibility, actual casts and full per-output histograms",
+    "T0042/T0022/T0044 36909 Cobalt and 23424 Fel Iron complete original 12.x processing logs (real operations, material hits, zeros, refunds)",
+    "Historical patch-7.3.5 disenchant-material family and scaled itemLevel applicability to TBC group; current version remains untested",
+    "T0050 Runecloth original cohort alias collision still Master/Codex owned"
   ],
   "newly_verified_fields_cohorts": [
     {
-      "type": "primary-source-original-html-readback-no-new-independent-cohort",
-      "inputItemID": 24995,
-      "inputName": "Warmaul Legplates",
-      "source": "https://www.wowhead.com/item=24995/warmaul-legplates?bonus=6654#disenchanting",
-      "sourceReadOn": "2026-11-23",
-      "sourceReportedTotalDisenchants": 2068,
-      "sourceReportedOutputPositiveHits": {
-        "22445": 1559,
-        "22446": 417,
-        "22447": 7,
-        "22449": 48
-      },
-      "sourceRawConditionalPctstack": {
-        "22445": {
-          "2": 21.873,
-          "3": 23.669,
-          "4": 26.0423,
-          "5": 27.7742,
-          "6": 0.641437
-        },
-        "22446": {
-          "1": 35.9712,
-          "2": 61.3909,
-          "3": 2.63789
-        },
-        "22447": {
-          "2": 28.5714,
-          "3": 71.4286
-        },
-        "22449": null
-      },
-      "sourceDisplayContext": "Original current Wowhead metadata labels item level 31, but its page auto-routes to ?bonus=6654 and renders a level-74 tooltip; this does not establish historical Looter input bonus or contemporaneous retail eligibility.",
-      "status": "verifies-existing-originals-only; Master 2026-11-15 already independently reconstructed bins (e.g. 22445 5638 units) and flagged record-ID collisions; do not duplicate or replace by ID",
-      "unknowns": "Original collection patch and game flavor, each input itemLink/bonus, actual 12.x completed DE eligibility, skill/spec, joint zero-output outcomes and original per-event logs remain unknown"
-    },
-    {
-      "type": "primary-source-ore-looter-html-readback-no-new-independent-cohort",
-      "source": "https://www.wowhead.com/item=36909/cobalt-ore#prospecting",
-      "inputItemID": 36909,
-      "sourceReportedOreprospectedTotal": 91628,
-      "otherSource": "https://www.wowhead.com/item=23424/fel-iron-ore#prospecting",
-      "otherInputItemID": 23424,
-      "otherSourceReportedOreprospectedTotal": 101408,
-      "status": "matches existing 2026-11-13 exact gem ID/output-count and conditional positive-stack source transcriptions, no new independent dated study",
-      "unknowns": "Actual completed operations vs nominal/pooled source metric, eligible player game edition/build, source cohort overlap, input quality, per-operation hits/zeros/refunds"
+      "type": "source-supported-developer-mechanic-not-processing-cohort",
+      "patch": "7.3.5",
+      "effectivePatchDate": "2018-01-16",
+      "developerReplyDate": "2018-01-26",
+      "source": "https://twitter.com/WarcraftDevs/status/957000982184968192",
+      "archivedAt": "https://www.bluetracker.gg/wow/topic/gb-en/17616702842-updates-from-warcraftdevs-patch-735-bfa-beta/",
+      "mechanic": "Disenchant material family follows source expansion, not scaled item level",
+      "affectedContext": "Burning Crusade gear as a group; not a verified 24995 modern operation",
+      "sourceConfidence": "first-party historical developer wording reproduced in archived Blue Tracker",
+      "measuredCompletedOperations": null,
+      "perOutputHits": null,
+      "zeroEvents": null,
+      "rawOutputTotals": null,
+      "liveEligibility": null,
+      "scope": "historical rule context, Master review needed for current runtime"
     }
   ],
   "source_urls": [
@@ -89,15 +59,19 @@
     "https://spreadsheets.google.com/pub?key=pdr-MibcRlh8wIv3SUuWxKw",
     "https://www.wowhead.com/item=24995/warmaul-legplates?bonus=6654#disenchanting",
     "https://www.wowhead.com/item=36909/cobalt-ore#prospecting",
-    "https://www.wowhead.com/item=23424/fel-iron-ore#prospecting"
+    "https://www.wowhead.com/item=23424/fel-iron-ore#prospecting",
+    "https://twitter.com/WarcraftDevs/status/957000982184968192",
+    "https://www.bluetracker.gg/wow/topic/gb-en/17616702842-updates-from-warcraftdevs-patch-735-bfa-beta/",
+    "https://warcraft.wiki.gg/wiki/Patch_7.3.5_%28undocumented_changes%29",
+    "https://us.forums.blizzard.com/en/wow/t/stop-giving-me-illusion-dust/1567522"
   ],
-  "numeric_summary": "New independently verified completed processing operations=0; new independent per-output hits=0; new zero-event counts=0; new source-cohort totals/histograms=0; new exact processing input/output IDs=0. Existing source-original 24995 2,068 cumulative operation claim, positive-hit rows 22445=1,559, 22446=417, 22447=7, 22449=48, and source conditional stack percentages were independently read back and agree with prior records. Existing 36909 source _totalCount=91,628; 23424=101,408; neither can be promoted to current Retail actual completed operation counts. Source-only historical information, no gold EV.",
-  "evidence_file": null,
+  "numeric_summary": "New independently verified completed processing operations=0; new source-backed material hit counts=0; new full zero-event cohorts=0; new unconditional item quantities=0; new exact input/output IDs=0. One newly recorded source-supported 2018 patch-7.3.5 material-family mechanic, with no numeric yield or rate. No gold EV.",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-23T1045-patch-735-expansion-disenchant-mechanic.jsonl",
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "069eec086da3cd4e4585d779fad7c938d8f37fa8",
-  "verified_commit_sha": "069eec086da3cd4e4585d779fad7c938d8f37fa8",
-  "commit_note": "Status-only single-file commit (source read-back verification, duplicate-safe); verified_commit_sha is checked pre-write branch head because its own post-write SHA cannot be embedded. No evidence JSONL or other worker/production changes.",
+  "verified_parent_sha": "ad40d502ba0c297c7a2c0735afadba0448334ea2",
+  "verified_commit_sha": "ad40d502ba0c297c7a2c0735afadba0448334ea2",
+  "commit_note": "Single atomic 2-path commit of one newly independently documented historical mechanic JSONL and owned quiet status. verified_commit_sha denotes pre-write checked branch parent: the final status commit cannot embed its own SHA. Post-write read-back verified separately.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -404,6 +378,13 @@
       "source": "https://www.wowhead.com/item=36909/cobalt-ore#prospecting ; https://www.wowhead.com/item=23424/fel-iron-ore#prospecting",
       "disposition": "duplicate-existing-cumulative-reference-scope",
       "reason": "Original HTML _totalCount 91,628 Cobalt and 101,408 Fel Iron and exact gem links/pctstack match Nov13 worker. Do not equate source oreprospected aggregate to confirmed actual 12.x casts, nor reimport already-catalogued cohorts."
+    },
+    {
+      "task": "T0047 historical DE scaling rule",
+      "source": "https://twitter.com/WarcraftDevs/status/957000982184968192",
+      "archive": "https://www.bluetracker.gg/wow/topic/gb-en/17616702842-updates-from-warcraftdevs-patch-735-bfa-beta/",
+      "disposition": "new-first-party-source-supported-mechanic-for-Master-review-no-numeric-admission",
+      "reason": "2018 developer explained expansion-family output independent of scaled ilvl; cannot establish current 24995 eligible input or infer historical hit probabilities for Retail."
     }
   ],
   "blockers": [
@@ -425,31 +406,34 @@
     "2026-11-23 06:xx UTC: Targeted Warmaul Legplates DE and Fel Iron/Cobalt 2026 empirical source search returned historical duplicate Wowhead/Classic tables, current guide priors, mining (not prospecting) results, and a new TBC Anniversary 72k-ore gold-only self-report. No qualified raw Retail source. Do not revisit the unchanged historical sources again absent new original fields.",
     "2026-11-23: Targeted original Retail 24995 disenchant and Fel Iron 23424/Cobalt 36909 cast-ledger search produced live catalog profiles, old Classic/Allakhazam mirrored comments, and reference model guides, but no new source with material event log, actual completed operations, zero bins or patch/profile. Do not re-search unchanged mirrors absent original linked evidence.",
     "2026-11-23: Searched 24995 Retail and TBC disenchant, 36909 Cobalt and 23424 Fel Iron with web and code/SavedVariables-index combinations; new accessible pages were third-party generic profiles or historical source mirrors, not independent completed-operation logs. Two published 2007 prospecting Google spreadsheet URLs return inaccessible responses; do not infer unviewed raw rows or repeat without accessible original.",
-    "2026-11-23 fresh primary HTML direct access: original Wowhead 24995 2068/Looter row counts/pctstack, Cobalt 91628 and Fel Iron 101408 source aggregates exactly match existing Nov1/Nov13/Nov15 research. The prior source-inaccessible note is superseded for these three original HTML pages; all remain existing cumulative cohorts, not new independent Retail measurements. Do not repeat absent new source-version/itemLink/cast logs."
+    "2026-11-23 fresh primary HTML direct access: original Wowhead 24995 2068/Looter row counts/pctstack, Cobalt 91628 and Fel Iron 101408 source aggregates exactly match existing Nov1/Nov13/Nov15 research. The prior source-inaccessible note is superseded for these three original HTML pages; all remain existing cumulative cohorts, not new independent Retail measurements. Do not repeat absent new source-version/itemLink/cast logs.",
+    "2026-11-23 targeted recent 24995 Warmaul, 36909 Cobalt and 23424 Fel Iron Retail operation search returned old profiles, auction listings, Classic/Anniversary guides, copied references, mining not prospecting, and no new independent zero-inclusive per-operation logs. Pivot rather than re-query the same original Wowhead Looter pools."
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Seek a NEW independently published 12.x Warmaul Legplates full itemLink with bonus, actual success/failure DE event, skill/build/outputs or 36909/23424 complete post-cutoff raw per-operation exports including successes, material zeros and refunds; skip already captured pooled Wowhead Looter and owner Codex 731-source catalogue. Master owns collision-safe corrections and runtime.",
+  "next_concrete_step": "Request Master to review recovered official WarcraftDevs 7.3.5 expansion-based material-family rule for 24995 version/eligibility matching without equating ilvl to DE output pool. Independently seek a NEW post-cutoff Retail 12.x Warmaul complete itemLink and successful/failing DE result, or 36909/23424 actual per-operation addon exports with output IDs, quantities, zeros, skill and refunds; avoid 731 assigned catalogue sources and historical pooled mirrors.",
   "coordination_cutoff": "Cutoff 0cd0bad8867e7a8d909b4ecae74f6136a3e23d42. Repository README and manifest now report CLOSED_VERIFIED_CURRENT_PIPELINE: 731 sources (713 original + 12 addendum + six recovered); Codex/direct reviewers own source decisions, build/database/tooltip verification. No recataloguing/branch changes.",
   "sources_reviewed_this_run": [
-    "https://www.wowhead.com/item=24995/warmaul-legplates?bonus=6654#disenchanting",
-    "https://www.wowhead.com/item=36909/cobalt-ore#prospecting",
-    "https://www.wowhead.com/item=23424/fel-iron-ore#prospecting",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261115T0155-warmaul-rounded-stacks-and-scoped-correction-gate.md",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-13T1741-tbc-matched-stacks-and-legacy-ore-reference.jsonl"
+    "https://twitter.com/WarcraftDevs/status/957000982184968192",
+    "https://www.bluetracker.gg/wow/topic/gb-en/17616702842-updates-from-warcraftdevs-patch-735-bfa-beta/",
+    "https://warcraft.wiki.gg/wiki/Patch_7.3.5_%28undocumented_changes%29",
+    "https://us.forums.blizzard.com/en/wow/t/stop-giving-me-illusion-dust/1567522",
+    "https://warcraft.wiki.gg/wiki/Enchanting",
+    "https://www.wow-anniversary.fi/en/professions/jewelcrafting/"
   ],
   "latest_run_source_date": "2026-11-23",
   "latest_run": {
-    "at_utc": "2026-11-23T09:39:03.714Z",
-    "branch_head_reviewed": "069eec086da3cd4e4585d779fad7c938d8f37fa8",
-    "source_count": 3,
+    "at_utc": "2026-11-23T10:44:41.940Z",
+    "branch_head_reviewed": "ad40d502ba0c297c7a2c0735afadba0448334ea2",
+    "source_count": 4,
     "new_measured_studies": 0,
     "new_completed_operations_verified": 0,
     "new_exact_input_ids": [],
     "new_exact_output_ids": [],
     "new_reference_group_rows": 0,
-    "new_evidence_jsonl": null,
-    "scope": "Verified source-original live HTML of Warmaul 24995 2068 historical Looter row and pctstack and Cobalt/Fel Iron ore Looter aggregates; matched pre-existing records, no duplicate JSONL. Found same-page item-level display contrast 31 vs selected bonus6654 74, not physical itemLink/eligibility."
+    "new_rate_change_records": 1,
+    "new_evidence_jsonl": "research/v3/evidence/legacy/2026-11-23T1045-patch-735-expansion-disenchant-mechanic.jsonl",
+    "scope": "First-party archived 2018 patch 7.3.5 expansion-material-family source rediscovered; search for independent new Retail target logs did not yield denominators, hits, zeros, quantities or validated eligibility."
   },
-  "new_evidence_file_this_run": null,
-  "next": "Seek a NEW independently published 12.x Warmaul Legplates full itemLink with bonus, actual success/failure DE event, skill/build/outputs or 36909/23424 complete post-cutoff raw per-operation exports including successes, material zeros and refunds; skip already captured pooled Wowhead Looter and owner Codex 731-source catalogue. Master owns collision-safe corrections and runtime."
+  "new_evidence_file_this_run": "research/v3/evidence/legacy/2026-11-23T1045-patch-735-expansion-disenchant-mechanic.jsonl",
+  "next": "Request Master to review recovered official WarcraftDevs 7.3.5 expansion-based material-family rule for 24995 version/eligibility matching without equating ilvl to DE output pool. Independently seek a NEW post-cutoff Retail 12.x Warmaul complete itemLink and successful/failing DE result, or 36909/23424 actual per-operation addon exports with output IDs, quantities, zeros, skill and refunds; avoid 731 assigned catalogue sources and historical pooled mirrors."
 }
