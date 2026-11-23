@@ -131,22 +131,65 @@ end
 -- each cast. Keep the index out of SavedVariables; resetting/replacing a ledger
 -- naturally starts a new index and old ledgers can be garbage collected.
 local contextIndexes=setmetatable({}, {__mode="k"})
+local function referencedContexts(d)
+    local references,visited={},{}
+    local function visit(value)
+        if type(value)=="string" then
+            if d.contexts[value]~=nil and not references[value] then
+                references[value]=true;visit(d.contexts[value])
+            end
+        elseif type(value)=="table" and value~=d.contexts and not visited[value] then
+            visited[value]=true
+            for key,child in pairs(value) do visit(key);visit(child) end
+        end
+    end
+    visit(d)
+    return references
+end
 local function contextID(self,context)
     local d=ledger(self);local signature=identity(context)
     local index=contextIndexes[d.contexts]
     if not index then
-        index={identities={},count=0}
+        index={identities={},signatures={},count=0,sequence=finite(d.contextSequence) and d.contextSequence or 0}
         for id,c in pairs(d.contexts) do
-            index.identities[identity(c)]=id;index.count=index.count+1
+            local signature=identity(c)
+            index.identities[signature]=id;index.signatures[id]=signature;index.count=index.count+1
+            local sequence=type(id)=="string" and tonumber(id:match('^context:(%d+)$'))
+            if finite(sequence) then index.sequence=math.max(index.sequence,sequence) end
         end
         contextIndexes[d.contexts]=index
     end
     local existing=index.identities[signature]
     if existing then return existing end
-    if index.count>=256 then return nil end
-    local id="context:"..(index.count+1)
+    local sequence=math.floor(index.sequence)+1
+    if sequence<=index.sequence or sequence>9007199254740991 then
+        return nil,"Recorded context IDs are exhausted; existing research is preserved"
+    end
+    local id=("context:%.0f"):format(sequence)
+    -- IDs are never recycled: an older export may still refer to a reclaimed
+    -- snapshot. The live table alone remains bounded at 256 contexts.
+    local reclaim={}
+    if index.count>=256 then
+        local references=referencedContexts(d)
+        for candidate in pairs(d.contexts) do
+            if not references[candidate] then reclaim[#reclaim+1]=candidate end
+        end
+        if #reclaim==0 then
+            return nil,"Context capacity reached; all 256 contexts are still referenced by saved research. Exporting keeps them saved"
+        end
+    end
+    if #reclaim>0 then
+        -- Sweep once at capacity, so every subsequent new context does not
+        -- retraverse the same full cast history to free one more orphan.
+        for _,oldID in ipairs(reclaim) do
+            d.contexts[oldID]=nil;index.signatures[oldID]=nil;index.count=index.count-1
+        end
+        index.identities={}
+        for existingID,existingSignature in pairs(index.signatures) do index.identities[existingSignature]=existingID end
+    end
     d.contexts[id]=copy(context)
-    index.identities[signature]=id;index.count=index.count+1
+    d.contextSequence=sequence;index.sequence=sequence
+    index.identities[signature]=id;index.signatures[id]=signature;index.count=index.count+1
     return id
 end
 function LL:ValidateCraftObservation(r)
@@ -177,17 +220,26 @@ function LL:RecordCraftObservation(record)
     local ok,reason=self:ValidateCraftObservation(record);if not ok then return false,reason end
     local d=ledger(self)
     for _,r in ipairs(d.records) do if r.operationID==record.operationID then return false,"Duplicate operation" end end
+    local study=d.activeStudy
+    if not study then
+        -- Starting a study can call Invalidate. Finish that callback before
+        -- allocating a context that is not yet rooted by its saved record.
+        study,reason=self:StartCraftStudy()
+        if not study then return false,reason end
+        if self.db.craftResearch~=d or d.activeStudy~=study then return false,"Recording study changed before this observation was saved" end
+        for _,r in ipairs(d.records) do if r.operationID==record.operationID then return false,"Duplicate operation" end end
+    end
     local measured=copy(record.context);measured.inputIdentity={}
     for _,item in ipairs(record.nominalInputs or record.inputs) do
         measured.inputIdentity[#measured.inputIdentity+1]={itemID=item.itemID,qualityRank=item.qualityRank,rarity=item.rarity,quantity=item.quantity,
             itemLevel=(item.classID==2 or item.classID==4 or item.classID==19) and item.itemLevel or nil,
             hyperlink=(item.classID==2 or item.classID==4 or item.classID==19) and item.hyperlink or nil}
     end
-    local id=contextID(self,measured);if not id then return false,"Context capacity reached; export research before continuing" end
+    local id,contextIssue=contextID(self,measured);if not id then return false,contextIssue end
     local r=copy(record);r.context=nil;r.contextID=id;r.schemaVersion=SCHEMA;r.recorderRevision=RECORDER_REVISION
     r.clientVersion=GetBuildInfo and select(1,GetBuildInfo()) or nil
     r.addonCommit=self.buildInfo and (self.buildInfo.headCommit or self.buildInfo.commit)
-    r.studyID=d.activeStudy or self:StartCraftStudy();r.recordedAt=stamp()
+    r.studyID=study;r.recordedAt=stamp()
     r.provenance={sampleKind="RAW_CAST_LOG",source="measured-addon-capture",independentReview="PENDING",
         numericTransformValidated=false,applyPolicy="NO_NUMERIC_TRANSFORM",registryContract="profession-mechanics/0.2"}
     d.records[#d.records+1]=r

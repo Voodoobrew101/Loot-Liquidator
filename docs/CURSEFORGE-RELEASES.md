@@ -1,29 +1,37 @@
-# CurseForge version-tag releases
+# CurseForge builds and explicit publishing
 
 Destination: [Loot Liquidator by Voodoobrew](https://www.curseforge.com/wow/addons/loot-liquidator), project **1760478**.
 
+Normal builds do not upload to CurseForge. A version-tag push, pull-request validation, or default manual run builds and verifies an artifact only. The existing public release and installed CurseForge copy remain unchanged until an explicit publishing run succeeds.
+
 ## One-time credential setup
 
-1. Open **API Tokens** in your [CurseForge Authors account](https://authors.curseforge.com/) and generate an upload API token using the account that can upload to project 1760478.
-2. Open [repository Actions secrets](https://github.com/Voodoobrew101/Loot-Liquidator/settings/secrets/actions) and add a repository secret named `CURSEFORGE_API_TOKEN` with that token. Do not put the token in source files or chat.
-3. Merge the publishing workflow before creating a release tag. The tag must point to a commit containing `.github/workflows/curseforge.yml`.
+1. Generate an upload API token in your [CurseForge Authors account](https://authors.curseforge.com/) using an account permitted to upload to project 1760478.
+2. Add it to [repository Actions secrets](https://github.com/Voodoobrew101/Loot-Liquidator/settings/secrets/actions) as `CURSEFORGE_API_TOKEN`. Do not put the token in source or chat.
+3. The selected release tag must contain the workflow with the explicit `publish` input. Older tags are not changed or recreated to add that option.
 
-## Publishing
+## Build and test without publishing
 
-After owner review and the existing Retail QA/release gates, push a version tag on the approved commit, for example `git push origin v0.12.42` after creating that tag locally. Creating a tag only on your computer does not trigger GitHub Actions.
+Push a supported version tag, or manually run the CurseForge build workflow with a valid `version` and leave **publish unchecked** (the default is false). Pull requests changing the workflow or its release tests also validate without uploading. No CurseForge token is passed to these build-only runs.
 
-Supported tags: `v0.12.42` or `0.12.42` (release), `v0.12.42-alpha.1` (alpha), `v0.12.42-beta.1` (beta), and `v0.12.42-rc.1` (beta). Other suffixes fail validation. Choose a new version for every upload.
+The workflow compiles the committed research snapshot without refreshing it, runs the full addon suite, stamps the build-workspace version, packages only manifest-declared addon files, verifies ZIP checksums, and saves an artifact. It does not commit generated data or version changes. The artifact includes `LootLiquidator.zip`, its SHA256 checksum and release metadata; tests and raw research are excluded from the installable ZIP.
 
-The workflow compiles the committed research snapshot, runs the full addon suite, stamps the TOC and runtime version from the tag in the build workspace, packages only manifest-declared files, verifies ZIP checksums, saves a build artifact, and uploads that ZIP. It does not refresh research or commit generated files/version changes back to GitHub. Existing PR version bumps and manual distribution builds continue independently.
+## Publish deliberately
 
-Supported WoW versions are resolved from the tagged TOC's Retail `## Interface` numbers against CurseForge's versions API; a missing or ambiguous match stops the upload. Keep the tagged TOC current for the client versions you have tested. The upload uses `CHANGELOG.md` from that tag if present, otherwise a short version/tag note. CurseForge approval still controls when the file becomes available.
+After owner approval and the existing QA/release gates:
 
-## Validation and recovery
+1. Create and push a **new version tag** on the exact approved commit. The tag must already exist remotely, point to a commit on main, and contain this opt-in workflow. Its push builds/tests an artifact; it does not publish.
+2. Manually run the workflow **from that tag**, using the same exact text in the `version` input. For a future approved tag `v1.0.1`, select `v1.0.1` as the workflow ref and enter `v1.0.1` as the version. GitHub's workflow-dispatch API/CLI can select a tag if the UI ref picker does not show it.
+3. Explicitly check **publish**. A checked request from a branch, or a version that differs from the selected tag, fails before the build/upload proceeds.
 
-Pull requests changing the release workflow/helper/tests run the complete build without uploading. In Actions, manually run **Publish version tag to CurseForge** with a version to perform the same validation without uploading; manual runs never publish. The artifact includes `LootLiquidator.zip`, its SHA256 checksum, and upload metadata. No CurseForge token is needed for either validation path.
+Only a manual dispatch with `publish=true` on the matching tagged ref can reach the upload step, after all mandatory build/tests/package checks pass. Checkout remains on the dispatch tag, so the actual source commit, version, pinned research and build provenance agree. No source branch or alternate checkout is substituted for that tag.
 
-Only a tag push reaches the upload step. Missing credentials, failed tests, packaging errors, or an unknown game version stop publishing. A successful upload prints the returned CurseForge file ID and file URL in the job summary. The upload POST is never automatically retried. If an upload fails after being sent, inspect the project's files before rerunning the job to avoid a duplicate. Recreating or force-pushing an existing tag can also duplicate an upload; use a new version instead.
+Supported versions include `v1.0.1` or `1.0.1` (release), `v1.0.1-alpha.1` (alpha), `v1.0.1-beta.1` (beta), and `v1.0.1-rc.1` (beta). Other suffixes fail validation. Use a new version for every upload; the examples do not authorize creating a release.
 
-GitHub Actions does not normally start another workflow for tags created using a workflow's default `GITHUB_TOKEN`. Push the tag yourself using normal Git credentials. Existing `build-*` prerelease tags are excluded.
+Supported WoW versions are resolved from the tagged TOC's Retail `## Interface` values against CurseForge's versions API. A missing or ambiguous match stops upload. The changelog comes from that tag's `CHANGELOG.md` when present. CurseForge approval controls when an uploaded file becomes available.
 
-API reference: [CurseForge Upload API](https://support.curseforge.com/support/solutions/articles/9000197321-curseforge-upload-api).
+## Failure and recovery
+
+Missing credentials, failed tests, packaging/checksum errors or an unknown game version stop publishing. A successful upload prints the returned CurseForge file ID and URL in the job summary. The upload POST is sent once and is never automatically retried. If a request fails after being sent, inspect the project's files before another explicit publishing run to avoid duplicate uploads. Do not force-push/recreate a released tag.
+
+References: [GitHub workflow dispatch and inputs](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#onworkflow_dispatch), [CurseForge Upload API](https://support.curseforge.com/support/solutions/articles/9000197321-curseforge-upload-api).

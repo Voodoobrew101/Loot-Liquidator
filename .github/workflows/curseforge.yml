@@ -1,4 +1,4 @@
-name: Publish version tag to CurseForge
+name: Build addon and optionally publish to CurseForge
 
 on:
   push:
@@ -8,12 +8,19 @@ on:
       - '.github/workflows/curseforge.yml'
       - 'tools/curseforge_release.py'
       - 'tests/test_curseforge_release.py'
+      - 'tests/test_curseforge_workflow_policy.py'
+      - 'docs/CURSEFORGE-RELEASES.md'
   workflow_dispatch:
     inputs:
       version:
-        description: Version to validate without uploading (for example v0.12.41)
+        description: Version to build (for publishing, select this exact existing tag under Use workflow from)
         required: true
         type: string
+      publish:
+        description: Publish this existing release tag to CurseForge after all checks pass
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -34,8 +41,30 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
+      - name: Validate explicit publication target
+        if: github.event_name == 'workflow_dispatch' && inputs.publish == true
+        env:
+          REQUESTED_VERSION: ${{ inputs.version }}
+        run: |
+          python3 - <<'PY'
+          import os, subprocess, sys
+          sys.path.insert(0, 'tools')
+          from curseforge_release import release_version
+          tag = os.environ['REQUESTED_VERSION']
+          release_version(tag)
+          ref = 'refs/tags/' + tag
+          if os.environ['GITHUB_REF'] != ref:
+              raise SystemExit('To publish, select the same existing release tag under Use workflow from and Version.')
+          head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          tagged = subprocess.check_output(['git', 'rev-parse', '--verify', ref + '^{commit}'], text=True).strip()
+          if head != tagged:
+              raise SystemExit('The checkout does not match the selected release tag.')
+          subprocess.run(['git', 'merge-base', '--is-ancestor', head, 'origin/main'], check=True)
+          PY
       - name: Test release metadata and upload handling
-        run: python3 tests/test_curseforge_release.py -v
+        run: |
+          python3 tests/test_curseforge_release.py -v
+          python3 tests/test_curseforge_workflow_policy.py -v
       - name: Install Lua 5.1
         run: sudo apt-get update -qq && sudo apt-get install -y lua5.1
       - name: Review studies and compile the build database
@@ -63,8 +92,8 @@ jobs:
           path: dist/
           if-no-files-found: error
       - name: Upload verified version tag to CurseForge
-        # PRs and manual runs validate/build only. No secret is passed to them.
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') && github.event.deleted == false
+        # Builds and tag pushes never publish. Publishing is a separate, explicit manual choice.
+        if: github.event_name == 'workflow_dispatch' && inputs.publish == true && startsWith(github.ref, 'refs/tags/') && inputs.version == github.ref_name
         env:
           CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
         run: python3 tools/curseforge_release.py upload

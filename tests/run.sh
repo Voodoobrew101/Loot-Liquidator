@@ -51,6 +51,7 @@ python3 tests/test_profession_output_clauses.py
 python3 tests/test_assemble_source_catalogue.py
 python3 tests/test_processing_source_fact_translation.py
 python3 tests/test_curseforge_release.py
+python3 tests/test_curseforge_workflow_policy.py
 python3 tests/test_profession_study_admission.py
 python3 tests/test_shatter_quality_models.py
 python3 tests/test_published_milling_priors.py
@@ -112,6 +113,7 @@ python3 tests/test_token_import.py "$compiled_dir"
 "$lua_bin" tests/test_profession_projection.lua
 "$lua_bin" tests/test_research_profiles.lua "$compiled_dir"
 "$lua_bin" tests/test_craft_recording.lua
+"$lua_bin" tests/test_recorder_context_capacity.lua
 "$lua_bin" tests/test_craft_allocation_diagnostics.lua
 "$lua_bin" tests/test_craft_allocation_compatibility.lua
 python3 tests/test_craft_allocation_diagnostics.py

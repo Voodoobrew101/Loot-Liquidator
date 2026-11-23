@@ -1,3 +1,8 @@
+# Unreleased
+
+- Reclaim recorder context slots that no retained history references, keeping saved casts and live context identities intact without increasing the memory bound.
+- Make CurseForge uploads an explicit manual choice. Normal builds and version-tag pushes produce verified artifacts without publishing.
+
 # Loot Liquidator 1.0.0
 
 - Share reviewed statistics from 93 recorded disenchants in four ordinary gear-category and measured-profile cohorts. Preserve the remaining observations as research without inventing missing profiles or recurring knowledge-item value.
