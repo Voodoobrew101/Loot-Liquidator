@@ -2,8 +2,8 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-23T22:30:51.440Z",
-  "status": "research-active; post-cutoff publication watch; no new independent cohort or correction",
+  "updated_at": "2026-11-23T23:31:33.595Z",
+  "status": "research-active; pinned client-data rank corroboration; no new measured cohort",
   "task_ids": [
     "T0020",
     "T0018",
@@ -18,7 +18,138 @@
     "Saxifrage rank-specific milling and Draconium/Serevite/Khaz'gorite/Prismatic event data; stage separation and profile",
     "Gear disenchant per-output stack counts and exact operation denominator"
   ],
-  "newly_verified_fields": [],
+  "newly_verified_fields": [
+    {
+      "type": "client-data identity corroboration (not measured processing)",
+      "build": "12.1.5.70783",
+      "source_commit": "06185cb997bdcabeee4b554f8b2b88429d4708e2",
+      "source_blob": "750ba58091a7911299f6a0759a23d06d21dc10ea",
+      "quality_table_blob": "5541ac461b5a777f35a047aeb79b5e4018e74f90",
+      "join": "ModifiedCraftingItem.CraftingQualityID -> CraftingQuality.ID -> QualityTier",
+      "verified_item_count": 66,
+      "rank_by_modified_crafting_reagent_family": {
+        "94": {
+          "1": 189143,
+          "2": 188658,
+          "3": 190311
+        },
+        "95": {
+          "1": 190312,
+          "2": 190313,
+          "3": 190314
+        },
+        "96": {
+          "1": 190395,
+          "2": 190396,
+          "3": 190394
+        },
+        "106": {
+          "1": 191460,
+          "2": 191461,
+          "3": 191462
+        },
+        "110": {
+          "1": 191467,
+          "2": 191468,
+          "3": 191469
+        },
+        "111": {
+          "1": 191470,
+          "2": 191471,
+          "3": 191472
+        },
+        "112": {
+          "1": 191464,
+          "2": 191465,
+          "3": 191466
+        },
+        "178": {
+          "1": 192843,
+          "2": 192844,
+          "3": 192845
+        },
+        "179": {
+          "1": 192837,
+          "2": 192838,
+          "3": 192839
+        },
+        "180": {
+          "1": 192840,
+          "2": 192841,
+          "3": 192842
+        },
+        "181": {
+          "1": 192846,
+          "2": 192847,
+          "3": 192848
+        },
+        "182": {
+          "1": 192849,
+          "2": 192850,
+          "3": 192851
+        },
+        "183": {
+          "1": 192859,
+          "2": 192860,
+          "3": 192861
+        },
+        "184": {
+          "1": 192852,
+          "2": 192853,
+          "3": 192855
+        },
+        "185": {
+          "1": 192856,
+          "2": 192857,
+          "3": 192858
+        },
+        "186": {
+          "1": 192862,
+          "2": 192863,
+          "3": 192865
+        },
+        "187": {
+          "1": 192866,
+          "2": 192867,
+          "3": 192868
+        },
+        "188": {
+          "1": 192869,
+          "2": 192870,
+          "3": 192871
+        },
+        "246": {
+          "1": 198412,
+          "2": 198413,
+          "3": 198414
+        },
+        "247": {
+          "1": 198418,
+          "2": 198419,
+          "3": 198420
+        },
+        "248": {
+          "1": 198415,
+          "2": 198416,
+          "3": 198417
+        },
+        "249": {
+          "1": 198421,
+          "2": 198422,
+          "3": 198423
+        }
+      },
+      "source_links": [
+        "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/enUS/modifiedcraftingitem.csv",
+        "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/enUS/craftingquality.csv",
+        "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/README.md",
+        "https://github.com/ThingEngineering/wow-dumps/commit/06185cb997bdcabeee4b554f8b2b88429d4708e2",
+        "https://github.com/adavak/wow_db_csv_diff/blob/0a9afa50fefcf89e028f843b7fe28a890ecb3877/same/modifiedcraftingitem.csv",
+        "https://github.com/wowdev/WoWDBDefs/blob/3a7954cfb8ee4f1132c83cd1859753294ee8964b/definitions/ModifiedCraftingItem.dbd"
+      ],
+      "caveat": "No historical patch attribution or measured yields; source mirror has identical blob; current catalogue already uses native DB2 quality joins; no changes requested to production."
+    }
+  ],
   "newly_verified_cohorts": [],
   "new_numerical_measurements": [],
   "numerical_fields_improved": [],
@@ -70,15 +201,20 @@
   "current_run_evidence_file": null,
   "evidence_file": null,
   "source_links": [
-    "https://www.wowhead.com/it/item%3D192871/diamante-illimitato",
-    "https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight",
-    "https://www.wowhead.com/guide/professions/mining/overview-leveling-dragonflight",
-    "https://www.wowhead.com/guide/professions/enchanting/leveling-dragonflight",
-    "https://worldofwarcraft.blizzard.com/en-us/news/23876529/dragonflight-making-it-with-professions",
-    "https://worldofwarcraft.blizzard.com/en-us/news/24315281/wow-forever-hotfixes-november-10-2026"
+    "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/enUS/modifiedcraftingitem.csv",
+    "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/enUS/craftingquality.csv",
+    "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/README.md",
+    "https://github.com/ThingEngineering/wow-dumps/commit/06185cb997bdcabeee4b554f8b2b88429d4708e2",
+    "https://github.com/adavak/wow_db_csv_diff/blob/0a9afa50fefcf89e028f843b7fe28a890ecb3877/same/modifiedcraftingitem.csv",
+    "https://github.com/wowdev/WoWDBDefs/blob/3a7954cfb8ee4f1132c83cd1859753294ee8964b/definitions/ModifiedCraftingItem.dbd",
+    "https://us.forums.blizzard.com/en/blizzard/t/dragonflight-items-api-endpoint-item-quality/43038",
+    "https://github.com/Noshei/GatheringTracker/blob/b856083f3b64c2c237fb74abd505b8a105ca92b4/Constants.lua",
+    "https://www.youtube.com/watch?v=VBeLq0NbvZ4",
+    "https://www.wowhead.com/item=198412/serene-pigment",
+    "https://www.curseforge.com/wow/addons/prospectmate"
   ],
-  "verified_parent_sha": "969cdf4ff636aca3235a9d32215bbcf09c384192",
-  "verified_commit_sha": "8204a4164aa979d803bf36def541e3dac95515fa",
+  "verified_parent_sha": "494c1d4183d5e294e687031aa0ab985c651d5140",
+  "verified_commit_sha": "d5e455b45dbbe1bc1106370f51c0177933e230e8",
   "commit_sha_scope": "verified_commit_sha is the previous owned status commit verified from branch path history; verified_parent_sha is the branch head checked before write. The new commit is verified by external read-back; a commit cannot embed its own SHA.",
   "blockers": [
     "No independent retail R1 Draconium 189143 prospecting batch with actual completed operations and named gem rank outcomes.",
@@ -893,17 +1029,35 @@
         "https://worldofwarcraft.blizzard.com/en-us/news/23876529/dragonflight-making-it-with-professions",
         "https://worldofwarcraft.blizzard.com/en-us/news/24315281/wow-forever-hotfixes-november-10-2026"
       ]
+    },
+    {
+      "at": "2026-11-23T23:31:33.595Z",
+      "scope": "Client-extracted rank mapping and fresh original processing-source discovery",
+      "reason": "New external client-data identity provenance: join ModifiedCraftingItem.ItemID -> CraftingQualityID -> CraftingQuality.QualityTier in pinned enUS hotfixed DB2 CSV dump, build label 12.1.5.70783, commit dated 2026-11-17. 66 IDs across 22 three-rank reagent families verified; mirrors share the identical blob, so count once. R1/2/3 Draconium 189143/188658/190311; Serevite 190395/190396/190394; Khaz'gorite 190312/190313/190314; Bubble Poppy 191467/191468/191469; Saxifrage 191464/191465/191466; Serene Pigment 198412/198413/198414; Eternity Amber 192849/192850/192851. This is client identity metadata, not a Dragonflight-era sample, historical skill or measured yield. Current owner catalogue already uses native DB2 rank joins (processing-review-reproducer.md and profession_profile_rules.py); no conflicting rank or numeric correction established. Preserve this independent-of-market-metadata corroboration in status; no evidence JSONL with unsupported identity record type. Six name-first original-study queries returned prior video, Wowhead comments, ProspectMate documentation and old studies; no new accessible event ledger. Wago tools CSV endpoints inaccessible. Do not re-admit identical mirrored rows.",
+      "whereLooked": [
+        "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/enUS/modifiedcraftingitem.csv",
+        "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/enUS/craftingquality.csv",
+        "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/README.md",
+        "https://github.com/ThingEngineering/wow-dumps/commit/06185cb997bdcabeee4b554f8b2b88429d4708e2",
+        "https://github.com/adavak/wow_db_csv_diff/blob/0a9afa50fefcf89e028f843b7fe28a890ecb3877/same/modifiedcraftingitem.csv",
+        "https://github.com/wowdev/WoWDBDefs/blob/3a7954cfb8ee4f1132c83cd1859753294ee8964b/definitions/ModifiedCraftingItem.dbd",
+        "https://us.forums.blizzard.com/en/blizzard/t/dragonflight-items-api-endpoint-item-quality/43038",
+        "https://github.com/Noshei/GatheringTracker/blob/b856083f3b64c2c237fb74abd505b8a105ca92b4/Constants.lua",
+        "https://www.youtube.com/watch?v=VBeLq0NbvZ4",
+        "https://www.wowhead.com/item=198412/serene-pigment",
+        "https://www.curseforge.com/wow/addons/prospectmate"
+      ]
     }
   ],
-  "next_concrete_step": "Monitor for genuinely new original processing publications or materially revised source attachments; prioritize R1 Draconium 189143 and Bubble Poppy 191467 completed-operation/output/refund ledgers and exact rank/profile evidence. Do not reopen unchanged historical search hits or Forever/other-expansion hotfixes; no new in-game operations.",
+  "next_concrete_step": "Use the pinned client-data identity cross-check only where an actual source reports the matching item or rank; do not assign exact rank to pooled historical outputs. Seek genuinely new R1 Draconium 189143 and Bubble Poppy 191467 original completed-operation / output / refund logs; no in-game operations. Manager may reuse the external DB2 corroboration if needed without reopening cutoff catalogue.",
   "validation": {
-    "repository_read": "Required branch instructions, queue, prior own status and owner catalogue receipt/registry/manifest read",
-    "source_dedupe": "Historical Bugy mirror and old profession references screened; no new source or revised attachment",
-    "numeric_integrity": "No inferred casts, hits, zeros, yields or confidence",
+    "repository_read": "Required branch instructions, queue, owned status, owner receipt, catalogue registry and manifest read",
+    "source_dedupe": "Identical mirror blob SHA verified; historical video and Wowhead author families previously indexed; current catalogue native joins already exist",
+    "numeric_integrity": "22 groups x 3 exact ID/rank pairs verified; no inferred casts/hits/zeros/yields/confidence",
     "paths": [
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "evidence": "No new eligible record; no empty JSONL",
+    "evidence": "No new eligible measurement or correction; status only",
     "commit": "External read-back required after write",
     "production": "No addon/build/schema/PR/release changes"
   },
@@ -915,9 +1069,9 @@
   "backlog_triage": "Read-only owner catalogue receipt CLOSED_VERIFIED_CURRENT_PIPELINE, sourceCount 731. Reused existing decisions; no catalogue reopen or branch change.",
   "current_run_context_checks": {
     "branch": "implementation/five-agent-completion",
-    "checked_at_utc": "2026-11-23T22:30:51.440Z",
-    "verified_status_blob_before_write": "9a447ea7eb2b61614314f50cd4a16c398d92c91d",
-    "verified_branch_head_before_write": "969cdf4ff636aca3235a9d32215bbcf09c384192",
+    "checked_at_utc": "2026-11-23T23:31:33.595Z",
+    "verified_status_blob_before_write": "2987c289afce3bb651413e4d6cf3c92164ab5bf3",
+    "verified_branch_head_before_write": "494c1d4183d5e294e687031aa0ab985c651d5140",
     "files_read": [
       "research/v3/README.md",
       "research/v3/evidence-format.md",
@@ -941,7 +1095,7 @@
     "original_duplicate_prevention": true,
     "new_original_numeric_rows": 0,
     "no_casts_or_rates_inferred": true,
-    "evidence_result": "No new independent measured source or supported correction; status only."
+    "evidence_result": "Pinned DB2 identity corroboration only; no new measured processing cohort or correction."
   },
   "pipeline_catalogue_receipt": {
     "path": "research/coordination/backlog-catalogue-20261120.json",
@@ -950,30 +1104,36 @@
     "scope": "Read-only owner/Codex receipt; no independent build/runtime claim."
   },
   "catalogue_coordination_check": {
-    "as_of": "2026-11-23T22:30:51.440Z",
+    "as_of": "2026-11-23T23:31:33.595Z",
     "manifest": "research/coordination/backlog-catalogue-20261120.json",
     "state": "CLOSED_VERIFIED_CURRENT_PIPELINE",
     "source_count": 731,
     "scope": "Read-only owner receipt; no independent build/runtime claim."
   },
   "last_search_review": {
-    "at": "2026-11-23T22:30:51.440Z",
-    "conclusion": "Post-cutoff publication watch (after Nov 19; seven-day freshness window) across six name-first processing queries and targeted Reddit, Blizzard US/EU forum and official hotfix searches found no qualifying new original or materially revised Dragonflight Retail source. Search indexing returned historical Bugy six-cohort Italian Wowhead mirror, old 5-herb recipe reference, mining/leveling guides, and recent Forever rules rather than Retail Dragonflight changes. The historical Bugy table is not a fresh publication; the Italian mirror is not independent, and nominal ore counts remain distinct from casts. No independent new ranked operation/output/refund ledger, zeros, profile or identity correction; no new JSONL. Do not infer a lack of all possible sources from search indexing.",
+    "at": "2026-11-23T23:31:33.595Z",
+    "conclusion": "New external client-data identity provenance: join ModifiedCraftingItem.ItemID -> CraftingQualityID -> CraftingQuality.QualityTier in pinned enUS hotfixed DB2 CSV dump, build label 12.1.5.70783, commit dated 2026-11-17. 66 IDs across 22 three-rank reagent families verified; mirrors share the identical blob, so count once. R1/2/3 Draconium 189143/188658/190311; Serevite 190395/190396/190394; Khaz'gorite 190312/190313/190314; Bubble Poppy 191467/191468/191469; Saxifrage 191464/191465/191466; Serene Pigment 198412/198413/198414; Eternity Amber 192849/192850/192851. This is client identity metadata, not a Dragonflight-era sample, historical skill or measured yield. Current owner catalogue already uses native DB2 rank joins (processing-review-reproducer.md and profession_profile_rules.py); no conflicting rank or numeric correction established. Preserve this independent-of-market-metadata corroboration in status; no evidence JSONL with unsupported identity record type. Six name-first original-study queries returned prior video, Wowhead comments, ProspectMate documentation and old studies; no new accessible event ledger. Wago tools CSV endpoints inaccessible. Do not re-admit identical mirrored rows.",
     "sourcesChecked": [
-      "https://www.wowhead.com/it/item%3D192871/diamante-illimitato",
-      "https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight",
-      "https://www.wowhead.com/guide/professions/mining/overview-leveling-dragonflight",
-      "https://www.wowhead.com/guide/professions/enchanting/leveling-dragonflight",
-      "https://worldofwarcraft.blizzard.com/en-us/news/23876529/dragonflight-making-it-with-professions",
-      "https://worldofwarcraft.blizzard.com/en-us/news/24315281/wow-forever-hotfixes-november-10-2026"
+      "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/enUS/modifiedcraftingitem.csv",
+      "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/enUS/craftingquality.csv",
+      "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/README.md",
+      "https://github.com/ThingEngineering/wow-dumps/commit/06185cb997bdcabeee4b554f8b2b88429d4708e2",
+      "https://github.com/adavak/wow_db_csv_diff/blob/0a9afa50fefcf89e028f843b7fe28a890ecb3877/same/modifiedcraftingitem.csv",
+      "https://github.com/wowdev/WoWDBDefs/blob/3a7954cfb8ee4f1132c83cd1859753294ee8964b/definitions/ModifiedCraftingItem.dbd",
+      "https://us.forums.blizzard.com/en/blizzard/t/dragonflight-items-api-endpoint-item-quality/43038",
+      "https://github.com/Noshei/GatheringTracker/blob/b856083f3b64c2c237fb74abd505b8a105ca92b4/Constants.lua",
+      "https://www.youtube.com/watch?v=VBeLq0NbvZ4",
+      "https://www.wowhead.com/item=198412/serene-pigment",
+      "https://www.curseforge.com/wow/addons/prospectmate"
     ],
     "siteCoverage": [
+      "GitHub public client data exports and schema",
+      "Blizzard developer forum",
       "Wowhead",
-      "WoW-Professions",
-      "Reddit",
-      "Blizzard US/EU forums and official news"
+      "YouTube",
+      "CurseForge"
     ],
     "newOriginalNumericalCohorts": 0,
-    "doNotReimport": "Historical Bugy mirror and previously reviewed references; Forever hotfixes are not Retail evidence."
+    "doNotReimport": "Identical DB2 mirror; already catalogued Wowhead and video leads."
   }
 }
