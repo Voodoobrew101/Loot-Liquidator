@@ -1,16 +1,16 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-23T15:22:41.855Z",
-  "status": "Refreshed authorized research head and all five required v3 instructions/queue; targeted NEW post-cutoff original TWW ranked ore prospect, milling, and DE evidence. Screened newly found March-31-2025 Ironclaw R1 original commenter and source-method/flavor false positives. The indexed commenter discusses 600 R1 Ironclaw ore and another reply says 117 prospects, but does not provide a linked per-output material receipt/cast ledger, skill/spec, refund counts or confirmed same-author join; held as context only. Independently checked GitHub indexed item-ID pairings yielded static item tables, not observed processing casts. No new verified numeric cohort; do not create empty JSONL or duplicate 731-source owner catalogue. No PR, runtime/build, merge, game action or release.",
+  "updated_at": "2026-11-23T16:25:01.305Z",
+  "status": "Refreshed five required v3 files and the current queued TWW scopes; searched independent ranked Bismuth/Ironclaw/Aqirite prospecting, Mycobloom milling and gear DE originals. No newly verified post-Oct-2024 prospecting/DE or current Mycobloom per-rank output/cast ledger outside the owner-reviewed cutoff; no new admissible numeric cohort. Identified a separately sourced 2025 beta Mycobloom -> housing dye pigment pathway, subsequently superseded in 12.1-era reports by direct 10-herb -> housing dye crafting. This is a METHOD/EPOCH exclusion, not a Nacreous Pigment result or a current retail recipe verification. No empty JSONL; no PR/merge/release.",
   "task_ids": [
-    "T0048",
     "T0009",
-    "T0008",
     "T0010",
     "T0011",
-    "T0040",
     "T0007",
-    "T0012"
+    "T0040",
+    "T0008",
+    "T0012",
+    "T0048"
   ],
   "exact_gaps_targeted": [
     "Ironclaw R2 210937, Aqirite R2 210934 and Bismuth R2 210931: ranked, post-2024-10-25 original completed prospect operations and 212495/212498/212505/212508/212511/213398/213399 per-output 0..N logs and refunds missing.",
@@ -18,7 +18,7 @@
     "T0048 TWW DE: gear-item/bonus, armor-vs-weapon, skill/spec/build and independent output-rank material histograms for 219946..219955 still incomplete; avoid mistaking alchemical Storm Dust for DE yields."
   ],
   "source_branch_head_reviewed": "4bfcd500554fe2109166cd3835aaee46ed659477",
-  "source_policy": "Current owner 2026-11-20 cutoff 725 source assignment (now 731 indexed including recovered) is CLOSED_VERIFIED_CURRENT_PIPELINE; do not recatalogue or modify Codex branches. Evidence only when independent source-supported field advances. The March-18 independent rare+epic input-profile source is held as cross-era eligibility context, not as TWW numerical yield or a claimed post-hotfix failure.",
+  "source_policy": "Owner 2026-11-20 cutoff 725 plus six recovered (731) fully catalogued by Codex; do not re-review its sources or edit integration branches. This run's new independent housing dye identity observation is held outside native TWW milling models and does not change source admission.",
   "study_backlog_triage": [
     {
       "status": "admitted",
@@ -588,51 +588,16 @@
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1kfbbdd"
+    "https://www.reddit.com/r/wow/comments/1pa98qw/player_housing_herbs/",
+    "https://www.wowhead.com/item=274474/white-housing-dye",
+    "https://www.reddit.com/r/WoWHousing/comments/1unedar/121_housing_dye_reference_77_shades_9_families/"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-23T0718-battlefield-crate-disenchant-material-epoch.jsonl",
-  "verified_commit_sha": "4bfcd500554fe2109166cd3835aaee46ed659477",
-  "verification": "Fetched branch head 4bfcd500554fe2109166cd3835aaee46ed659477 and read README/evidence-format/mechanics/roles/worker/queue plus owner 731-source manifest and preexisting quiet status. No new estimator-supported evidence. Source screening remains indexed-only where original Reddit open is blocked; parent head verified before this status update. Verify returned commit and remote file after write.",
+  "verified_commit_sha": null,
+  "verification": "pending write/read-back",
   "blockers": [
-    "2025-06-21 'Prospecting Shattering Cheat Sheet.xlsx' is shown as a Patreon attachment but access is join/login-gated; no original workbook bytes or raw cast rows to audit.",
-    "2025-03-31 R1 Ironclaw anecdote has no output ledger and cannot support any drop-rate or totalQuantity field.",
-    "Direct Wowhead item-side raw HTML is now independently retrievable and rank-ID/stack distributions for seven preexisting cohorts were checked on 2026-11-21. STILL unresolved: original addon client builds, individual input bonus/ilvl variants, Looter sample dates, player skill/spec, and whether aggregated source rows reflect truly independent completed casts or post-hotfix eligible Retail source; Reddit source access is intermittent. Do not convert source histogram validation into a new cohort or live-current estimate.",
-    "The research drop method enum lacks Shatter; shattering results must not be added as Disenchant. Master/reviewer decision required if original 2024 shatter output-quality shares become admissible.",
-    "Cross-file duplicate original cohort: DobberSH one Null Stone 210939 prospect is recorded twice in 2026-11-02T0918 and 20261117T1130 (four material rows each); source studyKey strings differ. Admission deduplication belongs to Master/build reviewer.",
-    "Several older queue/status descriptions incorrectly say the gem-rate buff occurred October 16, 2024; official Blizzard running-list section and shared rate-changes.jsonl date it August 29, 2024. Master owns queue text reconciliation; do not misclassify September cohorts as pre-buff.",
-    "Milling guidance inconsistency is SOURCE-RESOLVED as to nominal recipe units: live-indexed Khaz Algar Milling spell 444181 explicitly states 10 herbs and salvage effect value 10 (https://www.wowhead.com/spell=444181/khaz-algar-milling). Wowhead 2025 leveling shopping list says 35 crafts/175 herbs (5 each), incompatible with its own referenced spell. DO NOT derive operation denominators from that guide, and do not assume any source's purchased herbs equal completed casts, especially with Resourcefulness or Create All failures. No new numeric yield evidence.",
-    "Original CraftSim PRs #892/#894 (merged 2025-10-10): pre-20.3.0 advanced craft-log denominators could miscount completed operations; crushing-gem API returns can omit saved gems in Bismuth refund events. Historic CraftSim exports require explicit addon version, independently checked completed-operation counts, reagent/refund ledger and method identity; no invented TWW baseline rates. Master/reviewer owns schema and admission changes.",
-    "Original Liqourice5 6.0 MB macro-enabled source workbook is now accessible externally but raw supporting prospecting trial sheets and exact cast denominators are absent. Audit performed on OOXML cell values/formulas without executing VBA; '10K prospects' is general coverage claim, NOT a per-item measured cohort count. Master/reviewer must separately assess reference-only rows if desired.",
-    "2025-03-21 original Ironclaw player reports Prospect All ending after two attempts despite 1,000 ore owned; UI nominal craft count may differ from successful operations even without a logged Resourcefulness proc. Any sample based on ore/5 without independent completed-operation confirmation remains held.",
-    "2026-08-02 scaling-gear wrong-expansion-mats report lacks original item IDs/bonus, loot-family and observed output IDs/counts. Obtain firsthand exact IDs and link current retail patch before any TWW disenchant estimate.",
-    "2026-11-20: Source https://www.wowhead.com/item=224759/pirates-bracers (patch 11.0.5) reports 23 item-side Looter disenchants, including both Large Brilliant Shard and rank-unknown Storm Dust, without item bonus/run context or linked material rank IDs in indexed output; output occurrence rows sum above denominator. Hold any numerical admission and request individual item-version/quality/output hyperlinks. Companion legacy item 7230 similarly mixes eras in Looter tables (https://www.wowhead.com/item=7230/smites-mighty-hammer).",
-    "219474 Tracker's Chitin Cuffs: Jan 2025 firsthand cuff disenchants and Sept 2025 macro/1,428 planned inputs conflict with current WoWDB 'Cannot be disenchanted'; do not infer successful casts from intended count, attribute the author's >120 total to cuffs, infer ordinary material zeros from gated Shimmering Dust, or seed live Retail DE without exact item version/bonus and per-cast material output IDs.",
-    "Four separate studyKey rows for the same Golgoth Specular Rainbowfish original three-unit anecdote could inflate totals under studyKey-only admission; output 222618 is link identity, not independently verified receipt quality. Codex owner reviewers must dedupe by original author/source before any build-time ingestion.",
-    "Focused provenance flag: Elfshinobi1 450 Ironclaw ore / 10 Radiant Ruby original is duplicated across war-within-20261031-132410 and war-within-20261101-021724 with distinct studyKeys. Codex owner catalogue/build reviewer must admit once; do not independently rewrite original evidence or inflate operations.",
-    "Mycobloom 210796 author observed pigment-quality change after removing Silver Tongue's Quill 222574 (+18 skill); no exact before/after character skill, specialization, comparable raw casts/quantities, output item hyperlinks, or refund ledger. Preserve as historical source context only; require source logs before inferring a threshold or quality-dependent yield.",
-    "New 227659 Wowhead Looter table claims disenchant samples of a knowledge consumable with cross-era outputs; input/loot direction and eligibility uncertain; held pending original client logs or Master source parser review.",
-    "2026-11-21 verify: tools/research_build_review.py and tools/prepare_build_research.py exist on main, while still absent on research branch (expected separation); owner catalogue receipt says MERGED_MAIN at 3f7323db, local regression PASS, CI PASS, publication workflow pending. Do not mistake research branch 404 for pipeline deployment failure or independently edit implementation.",
-    "Algari Crushing (spell 434020) original author per-craft output vs resourcefulness-rolled per-start-craft means (2025-10-18, reddit 1oa7vn1) are held: worker evidence-format drop.method lacks Crush; exact raw gems, study N, observed output units, skill/spec, batch/refund ledgers unavailable. Ask Master to decide separate method modeling; do not change schema/runtime independently.",
-    "2026-11-21 new DE logging lead: EnchantLens Retail screenshots/description expose observation-statistics capability, but no independently shared existing SavedVariables/export or original TWW-specific item+bonus, output IDs, cast totals, 0..N event ledger, build or skill; cannot use demo claims as a numeric cohort.",
-    "2026-11-21 guide conflict: Method claims mill herb rank affects pigment quality rather than amount, whereas LotzBoi rank/skill nominal range and Sept 2024 quill removal imply profile-dependent output behavior. Contradiction requires original controlled current-Retail 10-herb completion logs; Master owns mechanics/schema decisions.",
-    "New Aendri 2024 mean has no original cast denominator, rank-linked dust ID, input-item identity, gear type or skill/spec: cannot be treated as a current ranked TWW disenchant baseline or measured hit rate.",
-    "2026-03-17/19 original cross-era Refulgent Crystal eyewitness reports identify a Midnight wand, not TWW gear; output ID/rank, event date versus Mar18 hotfix, item bonuses, client build and skill/spec missing. No current TWW numeric cohort.",
-    "Raw Wowhead Looter IDs recovered for inputs 219208/237999/238002, but this does not establish homogeneous independent client measurements or live-client PTR validity; all 13 replacements remain sourceKind=reference, no build-specific estimate/tooltip admission. 237999 older Nov16 records duplicate Nov17 source rows and require Codex terminal dedup.",
-    "2026-11-21 newly acquired live-page Lamplighter Looter items 229158 and 229159 both report N=38 and identical shard hits Q1/Q2/Q3=22/8/6; independent sample provenance is unproven. These source-original cumulative reference rows must not contribute to estimator, be added as independent casts, or license an uncommon-to-shard rule without original item-version/client-log review.",
-    "2026-11-22 T0048: independently checked LIVE WoWDB 229154/229158/229159 BoP ilvl545 templates explicitly say Cannot be disenchanted, while older Wowhead Looter item-side reference samples claim 31/38/38 results. Item ID alone insufficient for eligibility; at-cast full itemLink/bonus/version and current live client need verification by owner reviewer before any unconditional DE badge.",
-    "Historical 259349 Focus->Gleaming Shard report has no output quality ID, item bonuses, skill or at-cast build; official 2026-03-18 fix prevents use for current TWW yields. No new post-2024-10-25 TWW complete operation log found.",
-    "2026-11-22 targeted data search: public results inspected do not expose NEW, independently attributable post-Oct-25-2024 TWW completed per-rank operation/output/refund ledgers. No cross-cast denominator or quality-linked 0..N histogram obtained; do not invent P(hit).",
-    "v3 evidence format lacks a noProspect/noMill method-specific, build/epoch-scoped eligibility type, and vendor exchange rates may vary daily. Master/reviewer should decide representation before runtime edits; no worker schema change.",
-    "Canadiatv 2024-10-28 first-person post-hotfix ~50,000-ore prospecting data is behind a paid gateway sheet; observed output totals/casts/hit-zero histograms/rank allocation/refunds/character contexts are NOT present in public post. Keep as held source lead; do not buy access, impute operations or import generic model rates.",
-    "2026-11-21 OxedHub Disenchant Info exposes TWW static 0.50/0.35/0.15 rank probabilities without original measured casts, and tracks only positive bag material outcomes in pooled expansion+gear-quality buckets. No independent per-operation zero/histogram, TWW skill, armor/weapon, exact source ID/bonus, client build, or accessible player export. Do NOT import its rates as measured baselines.",
-    "Eyan R1 Aqirite 50k post-Oct25 2024 original report now has source-stated 1,482 Onyx 212511; actual completed successful prospect operations, material hits/zeros, input refunded/reprospected, source build and exact skill points are NOT verified. Source calculator workbook was overwritten/redirected to unrelated routes; no old revision accessible. Do not derive probabilities.",
-    "The 2024-10-27 irdoz Glass post follows the October 25 hotfix, but has no stated operation collection dates. Corrected note removes erroneous 'pre-Oct30' label without claiming the observations were actually post-hotfix; build admission must not infer epoch from publication date.",
-    "For the new Reddit early-TWW DE cohorts, missing original gear IDs (rarity/armor/weapon and bonus), ranked dust output material ID links, whether reported quality percentages are per output unit/event/disenchant, exact completed operation log and four undisclosed results from 10-DE sample; source test overlap and patch/build remain unknown. No rank P(drop), histogram, or live-2026 coefficient should be produced.",
-    "ProfitProphet v2.10.2 (2026-08-25) asserts prospecting/milling rates cross-checked against measured samples, but provides none of the original source logs, item-specific N, output quality IDs, 0..N histograms, skill/build or refund ledgers. Source is compiled secondary reference only; no chance or yield admission.",
-    "Craft Resume v0.5.0 public source has no identifiable original player TWW raw SavedVariables/CSV sample in scoped searches; CSV export omits per-operation output item IDs, while DE source-gear ID/bonus and zero-material completed disenchants are not tracked, precluding DE denominator/rarity/slot and no-drop probability admission. See pinned source code in last_source_scan.",
-    "Official March 13, 2026 Crate of Battlefield Goods eligibility change is verified but no exact crate-derived gear itemIDs/bonus versions, rarity/slot, logged character acquisition level, output rank IDs, complete casts/zeros or yield histograms; downstream per-item runtime gate needs independent implementation review by Master.",
-    "TWW herb-rank quantity effect unresolved: Method's prelaunch Aug 10 2024 assertion (herb rank does not increase count) versus Sept 10 2024 uncontrolled Mycobloom 1.15/1.35 per-gross-herb means (20k+ herbs pooled across ranks and unknown skill/refunds). Do not fit herb-rank quantity coefficient without matched original operation/zero/refund profiles; seek Master review, not worker schema edit.",
-    "New source 2275046 reports both Rare and Epic versions of 259349 but supplies no exact material ID/rank/units, actual event date, game build, character skill/spec, number of disenchants or 0..N yield; cannot identify an eligible TWW input cohort or claim the March 18 hotfix failed."
+    "No new independent original TWW output receipts with matching completed operations, output item/rank IDs, zero-inclusive histograms and skill/refund context. Existing 731-source cutoff is Codex-reviewed and cannot be recatalogued.",
+    "Housing dye 2025 beta and 12.1-era PTR/Wowhead descriptions are distinct historical crafting pathways; 2026 live game current recipe/cast observation not verified. No impact on Nacreous milling estimates."
   ],
   "exhausted_sources": [
     "2026-11-20: Reddit 1ftqzxp historical shatter original/commenter estimates inspected; new but unfit for direct DE numeric admission without distinct recipe method/raw ledger; do not scrape it repeatedly without author export.",
@@ -676,39 +641,28 @@
     "2026-11-23: Rechecked 2024-26 Bismuth/Ironclaw/Aqirite/Mycobloom and disenchant forum/Reddit originals; sources 1958379, 1966222, 1fisfkn, 1g350pq, 1f3qf96, 1fmrp4z and 1s7nfcw already in the 731-source Codex cutoff; no new post-Oct-25 rank/skill/profile per-output cast/hit/zero ledger found.",
     "2026-11-23T15:22:41.855Z: March 31 2025 Reddit 1jnvht8 rank-1 Ironclaw source indexed ore/prospect/profit anecdote only; original thread opening blocked, no measured material ledger. Search term cross-pairs on GitHub found static mappings rather than completed Retail logs; Forever-only n/N drop tracker excluded. Revisit only with original per-cast output/refund export."
   ],
-  "next_concrete_step": "Seek post-Oct-25-2024 ORIGINAL Retail TWW saved logs or spreadsheets joining (i) ranked 210931 Bismuth / 210937 Ironclaw / 210934 Aqirite or 210796-210798 Mycobloom input itemLink, (ii) actual 5/10-input operation completion, (iii) per-output ID/rank positive and zero 0..N receipts, (iv) skill/spec/client-build and Resourcefulness refund/reprocessing. For DE seek output receipts for existing 222833 cuffs and 232446 rifle with exact item variants. For 1jnvht8 only revisit if original operation/outcome report becomes accessible; do not infer from 600 ore or 117 mention.",
-  "previous_status_updated_at": "2026-11-23T14:26:39.549Z",
+  "next_concrete_step": "Seek new original Retail 11.x TWW rank-specific prospecting/milling and item-specific DE exports beyond the 731-source cutoff, preferably with per-operation 0/1/2+ receipt rows, input/output rank IDs, batch/skill/spec, and refund ledger. Exclude housing dye conversions and owner-catalogued same-URL commenter copies.",
+  "previous_status_updated_at": "2026-11-23T15:22:41.855Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "at_utc": "2026-11-23T15:22:41.855Z",
-    "focus": "Only post-cutoff original Retail TWW ranked ore/herb processing, DE numeric receipts and source method validity; skip exhausted cohorts and 731 owner catalogue sources",
-    "checks": [
-      {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
-        "original_publication": "2025-03-31",
-        "result": "Original indexed comment: 600 R1 Ironclaw ore with reference to 117 prospects and a 150g loss, but successful operation join and all material outcomes unavailable; original Reddit direct open blocked. HOLD, no estimator casts/hit probability."
-      },
-      {
-        "source": "https://www.curseforge.com/wow/addons/oddsandends",
-        "result": "Published Nov 21 2026 but flavor explicitly WoW Forever (1.60.1), not Retail 12.x. Despite marketing of disenchant/prospect/mill sample n/N, cannot import as TWW Retail source."
-      },
-      {
-        "source": "https://github.com/ProfessionsForever/Professions_Forever/blob/main/Core/DisenchantRecord.lua",
-        "result": "Code explicitly WoW Forever source using class:quality:ilvl stats; not Retail TWW sampled loot, exclude as wrong flavor."
-      },
-      {
-        "source": "https://www.curseforge.com/wow/addons/disenqueue",
-        "result": "Retail/MoP interface queue only; no raw original completed-cast output/refund ledger found in published feature description."
-      },
-      {
-        "source": "GitHub code index paired-item ID scans 210937+212511;210934+212498;222619+210796;219948+222833",
-        "result": "Relevant public code matches were ingredient/rank lists, seeded AH templates, addon category tables or project's existing research; no new independent CSV/SavedVariables with completed operations and exact per-output yield."
-      }
-    ]
+    "date": "2026-11-23T16:25:01.305Z",
+    "method": "new independent source search and owner-cutoff key comparison",
+    "source_checked": [
+      "https://www.reddit.com/r/wow/comments/1pa98qw/player_housing_herbs/",
+      "https://www.wowhead.com/item=274474/white-housing-dye",
+      "https://www.reddit.com/r/WoWHousing/comments/1unedar/121_housing_dye_reference_77_shades_9_families/"
+    ],
+    "cutoff_keys_checked": [
+      "reddit:1pa98qw",
+      "reddit:1unedar",
+      "wowhead:item=274474"
+    ],
+    "cutoff_keys_found": 0,
+    "independent_new_yield_cohorts": 0
   },
   "source_integrity_findings": [
     {
@@ -1541,7 +1495,38 @@
         "build": null
       },
       "detail": "Two adjacent public indexed comments mention 600 R1 Ironclaw and 117 prospects and economic loss. Direct original Reddit page did not open. The latter may be another writer's analytic reference; no independently joined raw operations ledger. ID 210936 is family rank mapping from separate static sources, not author-provided itemLink. Held as a lead, not evidence for sample N/drop chance, cast-to-input denominator or gold EV. Source is not in the owner 731-source cutoff manifest. Do not run in-game experiment or recatalogue cutoff sources."
+    },
+    {
+      "date": "2026-11-23",
+      "checked_at_utc": "2026-11-23T16:25:01.305Z",
+      "source": "https://www.reddit.com/r/wow/comments/1pa98qw/player_housing_herbs/",
+      "later_patch_source": "https://www.wowhead.com/item=274474/white-housing-dye",
+      "corroboration": "https://www.reddit.com/r/WoWHousing/comments/1unedar/121_housing_dye_reference_77_shades_9_families/",
+      "original_publication": "2025-11-30",
+      "source_patch_comment_date": "2026-08-15",
+      "status": "new-uncatalogued-TWW-Mycobloom-housing-dye-path-era-identity-exclusion-NOT-standard-Algari-milling",
+      "input_item_ids": [
+        210796,
+        210797,
+        210798
+      ],
+      "input_family": "Mycobloom",
+      "output_family_prior": "Housing White/Brown Dye Pigment (2025 beta, distinct from Nacreous 222618/222619)",
+      "output_family_later": "White/Brown Housing Dye (12.1-era dye-station crafting, no intermediary pigment)",
+      "later_white_dye_item_id": 274474,
+      "source_stated_input_count": 10,
+      "source_stated_output_count": 1,
+      "completed_operations": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "input_rank_stratified_logs": null,
+      "per_cast_histogram": null,
+      "skill": null,
+      "specialization": null,
+      "resourcefulness_refunds": null,
+      "basis": "Late-2025 firsthand beta contributor reported 10 of any listed Mycobloom to one housing pigment (color pathway); July-2026 12.1 PTR report says direct dye replace pigment and test crafting was not yet functional; Aug-2026 Wowhead comment describes direct 10 herb to 1 dye at dye station. No source-proven present-day Retail recipe transaction or original per-cast yield cohort. Both housing pathways must be segregated from 2024/2025 Khaz Algar Nacreous Pigment milling and the current T0010/T0011/T0012 rank-specific nulls; 2025 beta conversion obsolete as a prospective current recipe. No evidence/recipe admission or runtime assertion."
     }
   ],
-  "last_source_commit_pending": false
+  "last_source_commit_pending": true
 }
