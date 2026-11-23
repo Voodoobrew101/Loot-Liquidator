@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-23T05:37:42.769Z",
-  "status": "New original-source screening completed; zero new qualifying Retail-era measured casts, hit counts or exact material quantities. Historical Adamantite prospect report on Golden Draenite output page names 7 units from five ore stacks but its wowhead:item=23112 source key is already assigned to Codex cutoff catalogue; no redundant source import or inferred 20 completed casts. Reconfirmed three 1115352 Runecloth mirror rows share only five historical disenchants and implementation-side alias guard presently names two of their three study keys. Master/Codex owns code and source-scope decision.",
+  "updated_at": "2026-11-23T06:43:05.265Z",
+  "status": "Fresh Warmaul/TBC and Cobalt/Fel Iron original-source screening completed. No new verified Retail 12.x completed operations, output hits, zeros, quantity totals, or exact variant profiles; no qualifying new JSONL. Located a separately published May 2026 TBC Anniversary prospecting claim, but it gives no exact ore identity, per-operation count, output item IDs or yields and is not Retail evidence. Pre-existing 565-Fel-Iron-ore/113-powder historical Wowhead original belongs to the Codex-reviewed cutoff source key; preserve original scope decision rather than re-import. Current catalogue receipt is CLOSED_VERIFIED_CURRENT_PIPELINE for 731 cutoff sources; this does not resolve item-specific live 24995 eligibility or the Runecloth mirror dedupe concern.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -11,9 +11,10 @@
     "T0050"
   ],
   "exact_gaps_targeted": [
-    "24995 current Retail 12.x disenchant eligibility and variant-specific operation receipt: still no exact itemLink, bonus IDs, profession skill, actual cast, per-output hits, or total quantities.",
-    "23424 Fel Iron and 36909 Cobalt prospecting original 12.x zero-inclusive cast logs: missing real completed N, named-material hits and stack histograms.",
-    "13866 Runecloth Headband historical 1115352 five-cast mirrored comments: need Master/Codex verify three distinct studyKeys collapse to single original cohort in effective build ingestion."
+    "24995 Warmaul Legplates Retail 12.x exact itemLink/bonus variant and client eligibility; actual completed DE casts, 22445/22446/22447/22449 hits with exact quantities/histograms and 0 outcomes, skill/spec, patch.",
+    "23424 Fel Iron Ore current Retail prospecting actual completed operations and refund-aware consumption, exact per-material 0/1/2+ outcome logs; historic 565-ore original cannot establish modern N.",
+    "36909 Cobalt Ore new version-specific actual completed prospect ledger with exact 36917/36920/36923/36926/36929/36932 and rare IDs, positive counts and zeros.",
+    "13866 Runecloth Headband author 1115352 five-cast mirror transcriptions: check effective build ingestion dedupes all three keys, not 15 casts."
   ],
   "newly_verified_fields_cohorts": [],
   "source_urls": [
@@ -23,15 +24,20 @@
     "https://www.wowhead.com/item=36909/cobalt-ore",
     "https://www.wowhead.com/item=23112/golden-draenite",
     "https://www.wowhead.com/wotlk/spell=31252/prospecting",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/tools/research_v3_evidence.py"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/tools/research_v3_evidence.py",
+    "https://www.wowhead.com/tbc/item=23424/fel-iron-ore",
+    "https://www.wowhead.com/mop-classic/item=36909/cobalt-ore",
+    "https://warcraft.wiki.gg/wiki/Cobalt_Ore",
+    "https://www.reddit.com/r/classicwow/comments/1t0og68/tbc_anniversary_economy_does_not_make_sense_to_me/",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/coordination/backlog-catalogue-20261120.json"
   ],
-  "numeric_summary": "This run: +0 measured casts, +0 per-output hits/zeros, +0 source output totals/histograms, +0 new material/input IDs, +0 independent reference group rows. Commenter 1115352 observed 5 total 13866 disenchants (16204 hit 4; 16203 hit 1), verified already recorded in three legacy source-mirror transcriptions; these are NOT 15 casts. Previous run's six patch-2.4.3 TBC reference rows remain preserved in original evidence_file and are NOT measured Retail rates.",
+  "numeric_summary": "This run +0 new measured DE/prospect operations; +0 independently grounded hit/zero bins, +0 total material units or histograms, +0 newly verified input/output IDs. Historical Wowhead Fel Iron 23424 commenter reports 565 input ore and 113 powder units plus gems, but the source is pre-3.0.2/Classic-era and already assigned to cutoff catalogue, so it does not establish completed Retail 12.x operations or a new cohort. An independent 2026 TBC Anniversary commenter mentions 72,000 prospecting ore inputs without naming exact ore, output IDs or yield totals; source lead only, no v3 drop evidence.",
   "evidence_file": "research/v3/evidence/legacy/2026-11-23T0340-tbc243-game-data-de-priors.jsonl",
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-21T0038-dmitry-new-source-native-positives.jsonl",
   "preserved_prior_status_summary": "110 new exact input/material source rows; 59 item IDs, 16 material IDs, 375 material-positive sightings, 736 material units; all casts and zero events unknown; no measured chances or EV.",
-  "verified_parent_sha": "cf6dbe0b475e0a958bcce29e404116db1d4008bf",
+  "verified_parent_sha": "610fc737ba5abac9fab376653ac0385bbfe3bab8",
   "verified_commit_sha": "16b957f6f59895a09d5b75fe341ec4130c31e205",
-  "commit_note": "One status-only commit; no new JSONL. verified_commit_sha retains prior verified revision; current commit read-back is verified externally after writing.",
+  "commit_note": "Status-only commit (no new qualifying independent JSONL). Commit SHA is verified externally after update; embedded verified_commit_sha retains preceding verified revision because a file cannot embed its own Git commit hash. No other paths edited.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -296,6 +302,12 @@
       "source": "https://www.wowhead.com/item=23112/golden-draenite",
       "disposition": "held-Codex-owned-cutoff-source-no-new-independent-admission",
       "reason": "First-person report: five stacks Adamantite Ore 23425 yielded Golden Draenite 23112 x7 and 12+ unspecified gems; no direct logged completed cast count, zero observations, patch, skill/gear or independent 12.x version. Manifest already assigns wowhead:item=23112 six scoped reviews. Not a new unassigned source or Retail probability; no duplicate evidence."
+    },
+    {
+      "task": "T0044/T0022 2026-original-lead",
+      "source": "https://www.reddit.com/r/classicwow/comments/1t0og68/tbc_anniversary_economy_does_not_make_sense_to_me/",
+      "disposition": "held-new-independent-comment-no-output-measurements-not-Retail",
+      "reason": "May 1 2026 TBC Anniversary commenter claims to have tracked 72,000 ore inputs from prospecting; exact ore identity/item ID, operation ledger, input quality, exact output IDs and quantities, successes and zero-event histogram, and character patch/skill are absent. Gold profit is not empirical output. Do not infer 14,400 completed casts or use the claim as Retail baseline; only pursue if a linked original 0..N log or identities are published."
     }
   ],
   "blockers": [
@@ -312,33 +324,35 @@
     "2026-11-22 targeted current sources and GitHub SavedVariables code index yielded only known/static or empty Enchantrix prospect logs; previously enumerated original saved-variable paths were not reimported.",
     "2026-11-23: Eleven SHA-pinned original public Enchantrix SavedVariables revisions reviewed (source links in sources_reviewed_this_run): 10 distinct SHA blobs, all empty ProspectedLocal/MillingLocal, no target 24995 EnchantedLocal. One positive-only CYBERUKE source already documented before cutoff; no double count or new evidence file.",
     "2026-11-23: Search for public Prospect Me SavedVariables with TimesProspected and exact legacy 23424/36909 led to original addon code and guide/reference pages only, no independently verifiable raw target ledger; pivot to newly published actual 12.x operations rather than repeated historical reference tables.",
-    "2026-11-23: New TBC Anniversary Playhub prospector table and ProspectBuddy addon are WoW-Professions-derived historical references, not new Retail measured samples; source independent numeric claims held. The identified 1115352 Runecloth 5-DE post is already transcribed three times; do not publish as a new cohort."
+    "2026-11-23: New TBC Anniversary Playhub prospector table and ProspectBuddy addon are WoW-Professions-derived historical references, not new Retail measured samples; source independent numeric claims held. The identified 1115352 Runecloth 5-DE post is already transcribed three times; do not publish as a new cohort.",
+    "2026-11-23 06:xx UTC: Targeted Warmaul Legplates DE and Fel Iron/Cobalt 2026 empirical source search returned historical duplicate Wowhead/Classic tables, current guide priors, mining (not prospecting) results, and a new TBC Anniversary 72k-ore gold-only self-report. No qualified raw Retail source. Do not revisit the unchanged historical sources again absent new original fields."
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Seek public original 12.x inventory 24995 itemLink plus completed/denied Disenchant receipt (skill/build/outputs), then new Cobalt 36909/Fel Iron 23424 consumed-operation ledgers with real N, per-output quantities/hits and zeros. Master/Codex only: verify all three 1115352 mirror studyKeys yield one historical 5-operation cohort in actual compiled consumer. Avoid cutoff re-catalogue, data-only PRs and invented measurements.",
+  "next_concrete_step": "Prioritize NEW 2026 Retail 12.x original raw record with Warmaul 24995 itemLink/bonus, client DE eligibility or denial and output event ledger (skill/build). Then obtain actual prospect operation-count and per-gem zero-inclusive 0/1/2+ logs for Cobalt 36909 and Fel Iron 23424; treat ore inputs and refund accounting separately. Master/Codex to verify 13866 mirror dedupe in actual merged ingestion, no worker code edits.",
   "coordination_cutoff": "Cutoff 0cd0bad8867e7a8d909b4ecae74f6136a3e23d42. Repository README and manifest now report CLOSED_VERIFIED_CURRENT_PIPELINE: 731 sources (713 original + 12 addendum + six recovered); Codex/direct reviewers own source decisions, build/database/tooltip verification. No recataloguing/branch changes.",
   "sources_reviewed_this_run": [
-    "https://www.wowhead.com/wotlk/item=24995/warmaul-legplates",
-    "https://warcraft.wiki.gg/wiki/Warmaul_Legplates",
+    "https://www.wowhead.com/tbc/item=23424/fel-iron-ore",
     "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
-    "https://www.wowhead.com/item=36909/cobalt-ore",
-    "https://www.wowhead.com/item=23112/golden-draenite",
+    "https://www.wowhead.com/mop-classic/item=36909/cobalt-ore",
+    "https://warcraft.wiki.gg/wiki/Cobalt_Ore",
     "https://www.wowhead.com/wotlk/spell=31252/prospecting",
+    "https://www.reddit.com/r/classicwow/comments/1t0og68/tbc_anniversary_economy_does_not_make_sense_to_me/",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/coordination/backlog-catalogue-20261120.json",
     "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/tools/research_v3_evidence.py"
   ],
   "latest_run_source_date": "2026-11-23",
   "latest_run": {
-    "at_utc": "2026-11-23T05:37:42.769Z",
-    "branch_head_reviewed": "cf6dbe0b475e0a958bcce29e404116db1d4008bf",
-    "source_count": 7,
+    "at_utc": "2026-11-23T06:43:05.265Z",
+    "branch_head_reviewed": "610fc737ba5abac9fab376653ac0385bbfe3bab8",
+    "source_count": 8,
     "new_measured_studies": 0,
     "new_completed_operations_verified": 0,
     "new_exact_input_ids": [],
     "new_exact_output_ids": [],
     "new_reference_group_rows": 0,
     "new_evidence_jsonl": null,
-    "scope": "Original source check of 24995, 23424, 36909, plus Adamantite 23425 -> Golden Draenite 23112 commenter 329944. Five stacks purchased/prospected yielded seven named gems and 12+ other unnamed gems, but no actual prospect ledger/zeros; sourceKey wowhead:item=23112 already belongs to 731-source Codex cutoff. Single Runecloth 13866 commenter 1115352 shown in three legacy JSONLs: two recognized in main deduper, third studyKey unlisted. No new qualified evidence."
+    "scope": "Warmaul 24995 Retail DE and matching TBC source context; 23424 Fel Iron and 36909 Cobalt origination, modern event logs, 2026 Anniversary TBC source screen. No original zero-inclusive operations; existing Fel Iron 565-ore original already in Codex 731-source corpus. 1115352 Runecloth dedupe issue unchanged. Catalogue manifest verification reports current completed cutoff review (731) but does not imply live 24995 eligibility."
   },
   "new_evidence_file_this_run": null,
-  "next": "Seek public original 12.x inventory 24995 itemLink plus completed/denied Disenchant receipt (skill/build/outputs), then new Cobalt 36909/Fel Iron 23424 consumed-operation ledgers with real N, per-output quantities/hits and zeros. Master/Codex only: verify all three 1115352 mirror studyKeys yield one historical 5-operation cohort in actual compiled consumer. Avoid cutoff re-catalogue, data-only PRs and invented measurements."
+  "next": "Prioritize NEW 2026 Retail 12.x original raw record with Warmaul 24995 itemLink/bonus, client DE eligibility or denial and output event ledger (skill/build). Then obtain actual prospect operation-count and per-gem zero-inclusive 0/1/2+ logs for Cobalt 36909 and Fel Iron 23424; treat ore inputs and refund accounting separately. Master/Codex to verify 13866 mirror dedupe in actual merged ingestion, no worker code edits."
 }
