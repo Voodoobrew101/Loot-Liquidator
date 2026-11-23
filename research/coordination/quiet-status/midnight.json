@@ -1,14 +1,14 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-23T04:09:59.570Z",
-  "status": "Read current branch README, evidence schema, mechanics, worker role and queue. Checked current Retail Midnight disenchant, Umbral Tin/other ore prospecting and milling source leads against the owned backlog and recent public discussions. No genuinely new independently measured source with original operation-level input/output denominators, zeros, histograms or skill/spec/build was recovered; no numeric fields advanced. Search-index Wowhead item 248059 cumulative 11/11 dust entry is mutable, lacks new-operation timestamp/variant/profile/zero evidence and was not admitted. WoW-Professions Glimmering Powder rarity estimates and conditional unlock are already present in original midnight files 2026-11-14 and 2026-11-18; duplicate, not recopied. No new JSONL, prices, estimated chances, build tooling, PR or addon changes.",
+  "updated_at": "2026-11-23T05:13:56.003Z",
+  "status": "Refreshed implementation/five-agent-completion and reread the current README, evidence format, mechanics, worker role, and queue. Screened independent November 2026 enchanting guide and separate Midnight prospecting guide for post-cutoff original numeric data; neither publishes raw Retail per-operation input/output events, denominators, per-output hits/zeros, ranked yields, skill/spec/build or refunds. Earlier 272246 actual-ilvl 305/292 captures remain narrow historical eligibility evidence only. No new evidence admitted or numeric fields advanced; no extra JSONL, snapshot, PR, merge, release, game operations or runtime changes.",
   "task_ids": [
-    "T0049",
     "T0026",
     "T0005",
     "T0039",
     "T0003",
-    "T0002"
+    "T0002",
+    "T0049"
   ],
   "exact_gaps_targeted": [
     "272246 Miststalker's Wristbands: historical direct build70783 successful at-cast ilvl305 (censored) and ilvl292 (bonus-linked) reverified from original exports. Remaining: present-client eligibility, 305 bonus details, per-gear distribution by rarity/skill/spec/build, source censorship and 140-operation Looter cohort provenance; no 2/2 inferred rate.",
@@ -1535,9 +1535,8 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-06-disenchants/observations.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-07-pr49-mixed-rarity-41-disenchants/export-page-1.json",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/c400d8ae12a5147b49fe1273ac85184f2cc3a69b/research/v3/evidence/master/2026-11-13T0710-midnight-272246-retail-capture-eligibility-reconciliation.md"
+    "https://lfcarry.com/guides/wow-midnight-enchanting-leveling",
+    "https://www.rappy-world.com/guide/world_of_warcraft_jewelcrafting_and_gem_guide_cutting_and_socketing"
   ],
   "blockers": [
     "272246: archived Retail build70783 direct successful casts ilvl305 (censored) and 292 (full original item link) are verified. No present-build client check; 305 bonus/skill/spec, 140-row Looter sample versions, source censorship and representative per-output distributions remain unresolved.",
@@ -1746,11 +1745,11 @@
       "reason": "Season 2 and 12.1.5 economic/patch-context summary, not an original Retail disenchant/prospecting/milling yield experiment; prices and profitability not source material for processing rates."
     }
   ],
-  "next_concrete_step": "Seek only a new independent post-cutoff Retail event-level export: 272246 actual at-cast ilvl/bonus, skill/spec/build and each DE output/zero; 237362/237363 true completed prospects, resourcefulness refund separate from input, rank-specific output IDs, Diamond ore-node and full 0/1/2+ output histograms; then 237359/237365 and 10-herb Midnight milling. Do not re-transcribe Glimmering Powder guide, mutable cumulative Looter counts or assigned 725 cutoff catalogue.",
-  "verified_base_commit_sha": "635b2ddb9a2e4b102d6afcd3328d41a5da7e706d",
+  "next_concrete_step": "Acquire one new independently published Retail Midnight event-level report after cutoff: for 272246 capture item instance actual at-cast ilvl/bonus, build, profession skill/spec and disenchanted material ID/quality/quantity and genuine zeros; for 237362 ranked Umbral Tin require actual completed prospects (not nominal 4000/5), ore-level Diamond unlock, per-output rank/count and full zero-inclusive histograms, separating saved ore from materials; then 237359/237365 and 10-herb mills. Skip old guides, mutable Looter aggregates and assigned 731-source catalogue.",
+  "verified_base_commit_sha": "ccf10aa86a3461c5c77c733c952aa79bbb28ee19",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Status-only independent-source screening, no new qualifying numeric evidence. Branch head captured before write; GitHub contents update is a single commit; read-back and file-diff verification follow.",
+  "commit_note": "Status-only screening. Exact branch head captured before write; GitHub contents update is a single commit. Commit hash and one-path diff verified by separate connector read-back after write; self-referential commit hash is not embedded in its own file.",
   "new_leads_screened": [
     {
       "category": "live_wowhead_looter_mutable_item_side",
@@ -1777,6 +1776,20 @@
       "source": "https://us.forums.blizzard.com/en/wow/c/gameplay/professions/38",
       "disposition": "no_eligible_retail_numeric_cohort",
       "reason": "As of Nov 22 recent threads concern orders, concentration and gathering, with no dated original Retail DE/prospect/milling outcomes by exact input/output and cast."
+    },
+    {
+      "category": "independent_2026_november_leveling_guide_screen",
+      "source": "https://lfcarry.com/guides/wow-midnight-enchanting-leveling",
+      "published": "2026-11-03",
+      "disposition": "held_secondary_not_numeric_source",
+      "reason": "Lists Eversinging Dust, Radiant Shard and Dawn Crystal families and Disenchanting Delegate skill context, but contains no original itemID/at-cast-ilvl keyed disenchant trial, material units, hit/zero histogram or skill-stratified output ledger; no unique new yield cohort."
+    },
+    {
+      "category": "midnight_prospecting_guide_screen",
+      "source": "https://www.rappy-world.com/guide/world_of_warcraft_jewelcrafting_and_gem_guide_cutting_and_socketing",
+      "published": null,
+      "disposition": "held_secondary_not_numeric_source",
+      "reason": "Summarizes five-ore prospects, two common byproducts and Eversong Diamond specialization, all previously known mechanics; provides no source-defined ranked ore output counts, actual completed cast/zero series, Diamond unlock cohort, or Resourcefulness return ledger."
     }
   ],
   "catalogue_checkpoint": {
