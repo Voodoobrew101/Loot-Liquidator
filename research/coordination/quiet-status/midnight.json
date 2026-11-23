@@ -1,17 +1,17 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-23T01:10:38.088Z",
-  "status": "Refreshed implementation/five-agent-completion and all five required v3 instructions/queue files; searched for fresh original Retail Midnight event-level disenchanting (including 272246 ilvl-305 variant), Umbral Tin 237362 prospecting, Eversong Diamond rank/unlock, and ten-herb milling cohorts. GitHub and current web searches yielded no independent post-cutoff original operation/zero-inclusive dataset. Evaluated ProspectMate's actual accumulator code: inventory net-consumption and result totals are stored per reagent, but true completed cast counts, per-output hit/zero histograms, refund events and skill/spec/build/at-cast version aren't retained in published source, and no participant export is published. Earlier code (June 2026) is not a new study and was not recopied from Codex-owned catalogue. No numeric fields advanced; no synthetic JSONL. Quiet status only.",
+  "updated_at": "2026-11-23T02:13:13.276Z",
+  "status": "Read current branch and required README, evidence-format, mechanics, worker role and queue. Independently reverified two *existing* archived original Retail build 70783 disenchant records for 272246: ilvl305 (source censored) and ilvl292 (full bonus-linked item instance); both show successful 243605 Dawn Crystal rank1 x1. Prior quiet status claiming no at-cast ilvl305 proof was stale. Current-client eligibility, 140-source Looter distribution and yield generalization remain held. Searches for fresh post-cutoff Midnight DE/prospect/mill operation/hit/zero logs did not find an independent original numeric cohort. No new study/evidence file/rate/PR/addon change; status-only correction.",
   "task_ids": [
-    "T0026",
     "T0049",
+    "T0026",
     "T0005",
     "T0039",
     "T0003",
     "T0002"
   ],
   "exact_gaps_targeted": [
-    "272246 Miststalker's Wristbands: event-linked at-disenchant bonus IDs and actual ilvl (305 selected page is not event proof), real eligibility, gear rarity and player skill/spec/build, ranked 243599/243600/243602/243603/243605/243606 outcome event counts.",
+    "272246 Miststalker's Wristbands: historical direct build70783 successful at-cast ilvl305 (censored) and ilvl292 (bonus-linked) reverified from original exports. Remaining: present-client eligibility, 305 bonus details, per-gear distribution by rarity/skill/spec/build, source censorship and 140-operation Looter cohort provenance; no 2/2 inferred rate.",
     "237362/237363 Umbral Tin; 237359/237361 Refulgent Copper; 237364/237365 Brilliant Silver: actual completed five-ore operations vs nominal inputs/refunds, per-rank exact input/output IDs, per-output units/hits/zeros/0-1-2+ histograms, 242608/242712 Diamond node, build/skill/spec.",
     "Midnight Milling 10-herb casts for 236761/236767/236770/236771/236776/236777/236778/236779: source original per-operation counts, exact pigment 245807/245803/245867 etc rank IDs, observed quantities/zeros/refunds, profession profile/patch."
   ],
@@ -111,7 +111,7 @@
       "hold_reason": "No per-output zeros or rank-family completeness; 671 glass of exact rank item 242787 does not mean 129 zero-glass operations."
     },
     {
-      "category": "held_eligibility_conflict",
+      "category": "historical_retail_eligibility_partially_resolved_rate_held",
       "input_id": 272246,
       "source": "https://www.wowhead.com/item=272246/miststalkers-wristbands#disenchanting",
       "secondary_source": "https://www.wowdb.com/items/272246-miststalkers-wristbands",
@@ -139,8 +139,14 @@
             "hits": 2
           }
         ],
-        "actual_at_cast_ilvl": null,
-        "actual_at_cast_bonus": null,
+        "actual_at_cast_ilvl": [
+          305,
+          292
+        ],
+        "actual_at_cast_bonus": {
+          "ilvl305": null,
+          "ilvl292": "item:272246::::::::90:104::177:5:12833:6652:13696:11215:13662:1:28:6015"
+        },
         "confirmed_live_de_eligibility": null,
         "public_305_tooltip_selected_variant": {
           "url": "https://www.wowhead.com/item=272246/miststalkers-wristbands?bonus=6652:13696:12841:13662&ilvl=305&spec=102",
@@ -149,10 +155,34 @@
           "displayed_spec_query": "102",
           "provenance": "Wowhead public selected variant only; NOT an item link from any disenchant operation",
           "verified_on_utc": "2026-11-21T07:08:49.698Z"
-        }
+        },
+        "verified_build70783_successful_events": [
+          {
+            "operationID": "Cast-3-3134-3043-103393-13262-00006E9735",
+            "itemID": 272246,
+            "itemLevel": 305,
+            "outputItemID": 243605,
+            "outputRank": 1,
+            "outputQuantity": 1,
+            "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-06-disenchants/observations.jsonl",
+            "study_censored": true,
+            "baseline_eligible": false
+          },
+          {
+            "operationID": "Cast-3-3883-0-108241-13262-002AF010D6",
+            "itemID": 272246,
+            "itemLevel": 292,
+            "outputItemID": 243605,
+            "outputRank": 1,
+            "outputQuantity": 1,
+            "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-07-pr49-mixed-rarity-41-disenchants/export-page-1.json",
+            "independent_review": "PENDING"
+          }
+        ]
       },
-      "disposition": "held; do not admit to present-build rate/EV",
-      "hold_reason": "WoWDB says cannot be disenchanted; Wowhead aggregate may reflect other versions or semantics; generic item level206 and tooltip selected305 do not establish at-cast item level."
+      "disposition": "Build70783 direct eligibility confirmed for variants ilvl305 and 292; 140-row Looter aggregate and current-client eligibility/rates held",
+      "hold_reason": "WoWDB base206 cannot-disenchant entry is not universal across variants. Existing 305/292 captures prove narrow historical successful events only; censored source and pending independent review prevent generalizing or numerical admission.",
+      "original_verification": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/c400d8ae12a5147b49fe1273ac85184f2cc3a69b/research/v3/evidence/master/2026-11-13T0710-midnight-272246-retail-capture-eligibility-reconciliation.md"
     },
     {
       "category": "admitted_existing_reviewed_local_export",
@@ -301,7 +331,7 @@
       "hold_reason": "Looter cohort overlap and at-cast variant unresolved; observed units of each rank cannot be treated as occurrence counts, and bonus reagent totals are not mutually exclusive outputs"
     },
     {
-      "category": "reviewable_limited_live_variant_identity_not_disenchant_proof",
+      "category": "historical_retail_eligibility_partially_resolved_rate_held",
       "input_id": 272246,
       "source": "https://www.wowhead.com/item=272246/miststalkers-wristbands",
       "secondary_source": "https://gamgem.com/world-of-warcraft/items/miststalkers-wristbands",
@@ -314,10 +344,43 @@
         "census_window": "2026-10-27/2026-11-01",
         "actual_at_disenchant_ilvl": null,
         "confirmed_current_client_disenchant_eligibility": null,
-        "raw_player_item_links": null
+        "raw_player_item_links": null,
+        "actual_at_cast_ilvl": [
+          305,
+          292
+        ],
+        "actual_at_cast_bonus": {
+          "ilvl305": null,
+          "ilvl292": "item:272246::::::::90:104::177:5:12833:6652:13696:11215:13662:1:28:6015"
+        },
+        "confirmed_live_de_eligibility": null,
+        "verified_build70783_successful_events": [
+          {
+            "operationID": "Cast-3-3134-3043-103393-13262-00006E9735",
+            "itemID": 272246,
+            "itemLevel": 305,
+            "outputItemID": 243605,
+            "outputRank": 1,
+            "outputQuantity": 1,
+            "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-06-disenchants/observations.jsonl",
+            "study_censored": true,
+            "baseline_eligible": false
+          },
+          {
+            "operationID": "Cast-3-3883-0-108241-13262-002AF010D6",
+            "itemID": 272246,
+            "itemLevel": 292,
+            "outputItemID": 243605,
+            "outputRank": 1,
+            "outputQuantity": 1,
+            "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-07-pr49-mixed-rarity-41-disenchants/export-page-1.json",
+            "independent_review": "PENDING"
+          }
+        ]
       },
-      "disposition": "identity-only corroboration: an item of this ID appears in live equipped-player census and multiple tooltip versions; neither establishes at-cast bonus or disenchant eligibility",
-      "hold_reason": "WoWDB Retail and PTR list Cannot be disenchanted; Wowhead Looter table remains an unresolved table semantics/version conflict. Third-party character census is not a disenchant event study."
+      "disposition": "Build70783 direct eligibility confirmed for variants ilvl305 and 292; 140-row Looter aggregate and current-client eligibility/rates held",
+      "hold_reason": "WoWDB base206 cannot-disenchant entry is not universal across variants. Existing 305/292 captures prove narrow historical successful events only; censored source and pending independent review prevent generalizing or numerical admission.",
+      "original_verification": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/c400d8ae12a5147b49fe1273ac85184f2cc3a69b/research/v3/evidence/master/2026-11-13T0710-midnight-272246-retail-capture-eligibility-reconciliation.md"
     },
     {
       "category": "duplicate_existing_knowledge_only_study",
@@ -589,7 +652,7 @@
       "hold_reason": "Public repository contains addon code but not consented original SavedVariables study. Source groups multiple itemIDs/item levels/armor and weapons by rarity and coarse skill tier. Bag-delta attribution can be confounded by unrelated transactions; missing known outputs do not increment attempts. Even a real export requires event-completeness, overlap, version/skill-profile verification before per-output rates. Static DisenchantData.lua probability tables are labeled approximate NEEDS DATA, not observed. No source for item 272246's true eligibility or at-cast bonus."
     },
     {
-      "category": "reviewable_272246_exact_bonus_305_live_preview_and_armory_variants_20261120",
+      "category": "historical_retail_eligibility_partially_resolved_rate_held",
       "input_id": 272246,
       "named_input": "Miststalker's Wristbands",
       "source": "https://www.wowhead.com/item=272246/miststalkers-wristbands?bonus=6652:13696:12841:13662&ilvl=305&spec=102",
@@ -626,10 +689,43 @@
         "raw_140_looter_operations": null,
         "raw_looter_output_hits": null,
         "raw_looter_output_total_quantities": null,
-        "per_cast_zero_histograms": null
+        "per_cast_zero_histograms": null,
+        "actual_at_cast_ilvl": [
+          305,
+          292
+        ],
+        "actual_at_cast_bonus": {
+          "ilvl305": null,
+          "ilvl292": "item:272246::::::::90:104::177:5:12833:6652:13696:11215:13662:1:28:6015"
+        },
+        "confirmed_live_de_eligibility": null,
+        "verified_build70783_successful_events": [
+          {
+            "operationID": "Cast-3-3134-3043-103393-13262-00006E9735",
+            "itemID": 272246,
+            "itemLevel": 305,
+            "outputItemID": 243605,
+            "outputRank": 1,
+            "outputQuantity": 1,
+            "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-06-disenchants/observations.jsonl",
+            "study_censored": true,
+            "baseline_eligible": false
+          },
+          {
+            "operationID": "Cast-3-3883-0-108241-13262-002AF010D6",
+            "itemID": 272246,
+            "itemLevel": 292,
+            "outputItemID": 243605,
+            "outputRank": 1,
+            "outputQuantity": 1,
+            "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-07-pr49-mixed-rarity-41-disenchants/export-page-1.json",
+            "independent_review": "PENDING"
+          }
+        ]
       },
-      "disposition": "reviewable NEW exact-input-ID 305 bonus-render identity link; supports variant-context problem, not item-level-305 disenchant sample or real-time eligibility override",
-      "hold_reason": "Wowhead query specifies a hypothetical/rendered bonus/ilvl context, not an observed disenchant event. Blizzard Armory indexed character snapshots corroborate variable equipped item level by name but indexed text does not expose stable item ID/bonus IDs or any DE event; WoWDB base flag says cannot disenchant. Need raw at-cast itemLink and live eligibility plus original 140-event Looter provenance before yield admission."
+      "disposition": "Build70783 direct eligibility confirmed for variants ilvl305 and 292; 140-row Looter aggregate and current-client eligibility/rates held",
+      "hold_reason": "WoWDB base206 cannot-disenchant entry is not universal across variants. Existing 305/292 captures prove narrow historical successful events only; censored source and pending independent review prevent generalizing or numerical admission.",
+      "original_verification": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/c400d8ae12a5147b49fe1273ac85184f2cc3a69b/research/v3/evidence/master/2026-11-13T0710-midnight-272246-retail-capture-eligibility-reconciliation.md"
     },
     {
       "category": "held_out_of_scope_historical_mass_mill",
@@ -1258,7 +1354,7 @@
       "hold_reason": "No at-cast gear variant, output item links, source operations, measured hits, zero outcomes, histogram, data date or controlled comparison. Same author's similar ~2/3 claim in https://www.reddit.com/r/woweconomy/comments/1rw85fa/my_predictions_for_some_price_spikes/ is not an independent study."
     },
     {
-      "category": "reviewable_post_cutoff_official_armory_equipped_variant_identity_not_processing",
+      "category": "historical_retail_eligibility_partially_resolved_rate_held",
       "input_id": 272246,
       "input_name": "Miststalker's Wristbands",
       "source": "https://worldofwarcraft.blizzard.com/en-us/worldsoul/eu/armory/character/grim-batol/mistyweave/",
@@ -1290,10 +1386,43 @@
         "observed_disenchant_eligibility": null,
         "observed_outputs": null,
         "player_profession_skill": null,
-        "actual_item_equipped_snapshot_time": null
+        "actual_item_equipped_snapshot_time": null,
+        "actual_at_cast_ilvl": [
+          305,
+          292
+        ],
+        "actual_at_cast_bonus": {
+          "ilvl305": null,
+          "ilvl292": "item:272246::::::::90:104::177:5:12833:6652:13696:11215:13662:1:28:6015"
+        },
+        "confirmed_live_de_eligibility": null,
+        "verified_build70783_successful_events": [
+          {
+            "operationID": "Cast-3-3134-3043-103393-13262-00006E9735",
+            "itemID": 272246,
+            "itemLevel": 305,
+            "outputItemID": 243605,
+            "outputRank": 1,
+            "outputQuantity": 1,
+            "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-06-disenchants/observations.jsonl",
+            "study_censored": true,
+            "baseline_eligible": false
+          },
+          {
+            "operationID": "Cast-3-3883-0-108241-13262-002AF010D6",
+            "itemID": 272246,
+            "itemLevel": 292,
+            "outputItemID": 243605,
+            "outputRank": 1,
+            "outputQuantity": 1,
+            "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-07-pr49-mixed-rarity-41-disenchants/export-page-1.json",
+            "independent_review": "PENDING"
+          }
+        ]
       },
-      "disposition": "Independent Blizzard-hosted character-armory search-index excerpts corroborate that the named gear occurs as actually equipped at multiple displayed levels (292, 305, 321). Identity context only; no new event-linked disenchant study or live DE-eligibility proof.",
-      "hold_reason": "Search results identify equipped gear by name, not item ID or full instance bonus string; direct armory fetch returns HTTP 403. An equipped item is not necessarily disenchanted or eligible, and page crawl time is not operation time. Never feed the item levels into an event-linked disenchant sample."
+      "disposition": "Build70783 direct eligibility confirmed for variants ilvl305 and 292; 140-row Looter aggregate and current-client eligibility/rates held",
+      "hold_reason": "WoWDB base206 cannot-disenchant entry is not universal across variants. Existing 305/292 captures prove narrow historical successful events only; censored source and pending independent review prevent generalizing or numerical admission.",
+      "original_verification": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/c400d8ae12a5147b49fe1273ac85184f2cc3a69b/research/v3/evidence/master/2026-11-13T0710-midnight-272246-retail-capture-eligibility-reconciliation.md"
     },
     {
       "category": "verified_duplicate_unchanged_cutoff_processing_seed_20261121",
@@ -1400,18 +1529,42 @@
       "numeric_fields_new": null
     }
   ],
-  "newly_verified_fields_or_cohorts": [],
+  "newly_verified_fields_or_cohorts": [
+    {
+      "kind": "source_reverification_not_new_cohort",
+      "inputItemID": 272246,
+      "gameMode": "RETAIL",
+      "build": 70783,
+      "original_operation_ids": [
+        "Cast-3-3134-3043-103393-13262-00006E9735",
+        "Cast-3-3883-0-108241-13262-002AF010D6"
+      ],
+      "observed_item_levels": [
+        305,
+        292
+      ],
+      "outputItemID": 243605,
+      "outputRank": 1,
+      "observed_output_quantity_per_event": 1,
+      "original_sources": [
+        "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-06-disenchants/observations.jsonl",
+        "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-07-pr49-mixed-rarity-41-disenchants/export-page-1.json"
+      ],
+      "manager_review": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/c400d8ae12a5147b49fe1273ac85184f2cc3a69b/research/v3/evidence/master/2026-11-13T0710-midnight-272246-retail-capture-eligibility-reconciliation.md",
+      "admission": "historical identity and eligibility only; no new numeric study or baseline"
+    }
+  ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": [],
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua",
-    "https://www.curseforge.com/wow/addons/disenchanting-advisor",
-    "https://www.reddit.com/r/woweconomy/comments/1rtqxbr/any_prospecting_sheet_out_there/"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-06-disenchants/observations.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-07-pr49-mixed-rarity-41-disenchants/export-page-1.json",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/c400d8ae12a5147b49fe1273ac85184f2cc3a69b/research/v3/evidence/master/2026-11-13T0710-midnight-272246-retail-capture-eligibility-reconciliation.md"
   ],
   "blockers": [
-    "272246: actual disenchantable item bonus/at-cast ilvl 305 itemLink and correlated original DE output are not published; generic 206 cannot-be-disenchanted catalog conflicts with aggregate 140-row Looter display.",
+    "272246: archived Retail build70783 direct successful casts ilvl305 (censored) and 292 (full original item link) are verified. No present-build client check; 305 bonus/skill/spec, 140-row Looter sample versions, source censorship and representative per-output distributions remain unresolved.",
     "237362: 4000 nominal ore with Resourcefulness 39.6% are not 800 actual completed prospects; missing cast count, rank/identity-complete receipts, 0/1/2+ output histograms, refunds and ore-specific Diamond specialization state.",
     "237359/237361 and 237363/237364/237365: no independently new Retail actual operation counts and per-output zero/hit stacks; previously preserved JD3K/Cardinalai original sources must not be duplicated.",
     "Midnight milling 10 herbs per operation: no independently new source with completed mills, observed pigment totals by exact rank/ID, zero outcomes, refunds and skill/spec/patch.",
@@ -1609,65 +1762,41 @@
       "reason": "Retail addon claims skill-aware self-learned DE but no participant export, item-version event, actual cast/zero histogram or 272246 output is published. No new source cohort."
     }
   ],
-  "next_concrete_step": "Seek an actually NEW publicly released Retail processing export or original study after the 2026-11-20 cutoff with event-linked input itemLink/bonus/ilvl (272246), completed operations, skill/spec/build, exact rank/quality output item IDs, output hit/zero histograms and separate refund ledger; next 237362 Tin-vestigator and Eversong Diamond unlock, then 237359/237365 and 10-herb 236761/236770 milling. Skip pre-cutoff collector descriptions unless they publish genuinely new raw sample data.",
-  "verified_base_commit_sha": "7b8bc04dc3dd2b1b58a5b66620a645b5407e5654",
+  "next_concrete_step": "Seek newly published post-2026-11-20 original 272246 present-build complete event exports with exact itemLink/ilvl, skill/spec and output/zero records; next 237362 Umbral Tin true completed prospects, refunds, ranked gem/diamond unlock/hit histograms; then 237359/237365 ores and 10-herb milling. Do not re-catalogue cut-off data or conduct in-game operations.",
+  "verified_base_commit_sha": "c400d8ae12a5147b49fe1273ac85184f2cc3a69b",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Owned quiet-status-only checkpoint; no new empirical cohort justifies a JSONL. Actual commit SHA cannot self-embed within its own file; confirm via GitHub read-back and commit diff.",
+  "commit_note": "Status-only correction with direct raw archive read-back; no new evidence JSONL justified. SHA intentionally not self-embedded.",
   "new_leads_screened": [
     {
-      "category": "older_public_collector_code_acquisition_only_not_study",
-      "source": "https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua",
-      "source_commit": "2d8d2f2a268fef68d9cae6996c4cc5ede7db622b",
-      "source_last_commit_utc": "2026-06-17T00:50:36Z",
-      "target_task_ids": [
-        "T0005",
-        "T0039",
-        "T0003",
-        "T0002"
+      "category": "existing_archived_original_cast_reverified",
+      "source": [
+        "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-06-disenchants/observations.jsonl",
+        "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-07-pr49-mixed-rarity-41-disenchants/export-page-1.json",
+        "https://github.com/Voodoobrew101/Loot-Liquidator/blob/c400d8ae12a5147b49fe1273ac85184f2cc3a69b/research/v3/evidence/master/2026-11-13T0710-midnight-272246-retail-capture-eligibility-reconciliation.md"
       ],
-      "observed_exact_inputs": [
-        237359,
-        237361,
-        237362,
-        237363,
-        237364,
-        237365
+      "inputItemID": 272246,
+      "operation_ids": [
+        "Cast-3-3134-3043-103393-13262-00006E9735",
+        "Cast-3-3883-0-108241-13262-002AF010D6"
       ],
-      "observed_recipe_spell_ids": [
-        1231127,
-        1269575
+      "at_cast_ilvl": [
+        305,
+        292
       ],
-      "observation": "ProspectMate 2.0.4 client code collects per-session inventory before/after deltas and accumulates reagent consumed and output quantities; its published database stores cumulative consumed and results keyed by input item ID. No actual castN, per-output hits/zeros/stack histogram, separately labeled Resourcefulness refunds, skill/spec/patch or original participant raw operation files appear. Do not convert reagent consumption/5 to completed casts. GitHub repo last pushed June 17 2026 (pre-cutoff); no independent study and no re-catalogue.",
-      "disposition": "held_pre_cutoff_collector_capability_only_no_original_observed_data",
-      "completed_casts": null,
-      "castsWithDrop": null,
-      "zero_histogram": null,
-      "output_quantity_sample": null
-    },
-    {
-      "category": "pre_cutoff_original_post_no_saved_100k_cohort",
-      "source": "https://www.reddit.com/r/woweconomy/comments/1rtqxbr/any_prospecting_sheet_out_there/",
-      "target_task_ids": [
-        "T0005",
-        "T0039"
+      "actual_output": [
+        {
+          "itemID": 243605,
+          "rank": 1,
+          "units": 1
+        },
+        {
+          "itemID": 243605,
+          "rank": 1,
+          "units": 1
+        }
       ],
-      "observation": "March 14 2026 Reddit author claimed prospecting >100,000 ore but explicitly said their results were not saved. March 16 commenter links a 1,000-ore image without rank/operation facts in surfaced excerpt; pre-cutoff original belongs to existing Codex catalogue, not fresh evidence. No public newly dated event ledger recovered.",
-      "disposition": "pre_cutoff_not_independently_retranscribed",
-      "completed_casts": null,
-      "per_output_hit_counts": null
-    },
-    {
-      "category": "retail_addon_tracking_feature_no_exported_original_sample",
-      "source": "https://www.curseforge.com/wow/addons/disenchanting-advisor",
-      "target_task_ids": [
-        "T0026",
-        "T0049"
-      ],
-      "observation": "Disenchanting Advisor describes a live self-learning disenchant tracker that considers character skill, but publicly visible page supplies no sample participant event export, true cast denominator, 272246 item link/ilvl at DE, or ranked output counts.",
-      "disposition": "held_feature_description_not_empirical_evidence",
-      "completed_casts": null,
-      "at_cast_itemlink": null
+      "disposition": "historical eligibility narrow confirmed; no new cohort"
     }
   ],
   "catalogue_checkpoint": {
