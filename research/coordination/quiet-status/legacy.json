@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-24T14:41:09.209Z",
-  "status": "Active; screened two post-cutoff Forever-only sources; no qualifying new Retail processing observations.",
+  "updated_at": "2026-11-24T15:40:54.281Z",
+  "status": "Active; screened new post-cutoff market-data release and non-Retail source; no qualifying new Retail processing observations.",
   "task_ids": [
     "T0047",
     "T0052",
@@ -19,24 +19,25 @@
   ],
   "newly_verified_fields_cohorts": [
     {
-      "disposition": "held as acquisition-method context only; Forever-only, not Retail evidence; no new numerical cohort",
-      "summary": "New acquisition leads: Rat Pack 1.3.5 (Nov 23, file 9782814) author documentation explicitly requires Forever 1.60.1 and membership in Rats Den guild. It describes per-item observed disenchant logs, guild pooled counts by item kind/level and separate Arcane Salvager buff profiles, with estimates using Classic tables until enough guild observations exist; it is not a public Retail dataset. No original target rows, zero-inclusive denominator or code verified, and no access/contact attempted. Craft Flip Forever 1.1.0 (Nov 22, file 9760030) likewise explicitly Forever 1.60.1; its release notes describe reading existing AH Flip Forever and EzDisenchant observations and blending with a prior, not an independent cohort. No public target raw rows or supported Retail means in either listing. Both names absent from prior legacy status and cutoff manifest. Exact-name searches across Wowhead, Reddit, Blizzard forums and broader web for Warmaul Legplates, Cobalt Ore, Fel Iron Ore and Runecloth Headband surfaced previously covered historical references/comments, catalog profiles and unrelated farming or market entries, not a new independent processing cohort. No new IDs, completed casts, output hits/units, zero bins, skill/spec/build linkage, refunds or measured means; no prices or duplicated rows retained."
+      "disposition": "held acquisition context only; non-Retail references excluded",
+      "summary": "New independent acquisition screen: TheWoWDB Companion Retail 0.20.3 (Nov 23, file 9781573, versions 12.1.0/12.0.7) author listing documents AH scans, market history and patron order cost estimates, not a public processing-result ledger. The public desktop client README describes download-only market refresh, not uploads of game files. The separate 0.19.0 release notes describe Forever creature-drop counts keyed to kills, not disenchant casts; its site enchanting guide (checked Oct 5) explicitly uses Forever beta and Classic reference data, not Retail measurements. No target operation exports located; no addon code or private data inspected. Separate April 15-16 Turtle WoW original discussion reports Runecloth Belt and White Bandit Mask conditional ranges, but explicitly private-server flavor, no actual N, hits, units, zeros or exact linked IDs; not eligible Retail evidence. Both source names/URL IDs absent from prior owned status and cutoff manifest text. Fresh searches by target names and source discovery on Wowhead, Reddit, Blizzard forums and GitHub returned known item profiles, previously screened recorders and unrelated posts, not new independent target processing measurements. No prices retained; no new casts, output IDs, hits, quantities, zero bins, skill profiles or means. T0053 identity remains done."
     }
   ],
   "source_urls": [
-    "https://www.curseforge.com/wow/addons/rat-pack",
-    "https://www.curseforge.com/wow/addons/rat-pack/files/9782814",
-    "https://www.curseforge.com/wow/addons/craft-flip-forever/files/9760030",
-    "https://www.wowhead.com/item=24995/warmaul-legplates",
-    "https://www.wowhead.com/item=13866/runecloth-headband"
+    "https://www.curseforge.com/wow/addons/thewowdb-companion",
+    "https://www.curseforge.com/wow/addons/thewowdb-companion/files/9781573",
+    "https://github.com/Chrisl252/thewowdb-client",
+    "https://www.curseforge.com/wow/addons/thewowdb-companion/files/9637355",
+    "https://thewowdb.com/wow-forever/guides/professions/enchanting/",
+    "https://www.reddit.com/r/turtlewow/comments/1slzb4s/mass_crafting_to_disenchant_for_profit/"
   ],
-  "numeric_summary": "No new numerical baseline fields. All target measurements remain unknown where not already supported by existing evidence.",
+  "numeric_summary": "No new numeric baseline fields; unknown target measurements remain unknown.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-23T1944-chromie-time-disenchant-eligibility-hotfix.jsonl",
-  "preserved_prior_status_summary": "Active; screened new GatherValue session-tracking lead and two selection helpers; no qualifying target processing observations.",
+  "preserved_prior_status_summary": "Active; screened two post-cutoff Forever-only sources; no qualifying new Retail processing observations.",
   "verified_parent_sha": null,
-  "verified_commit_sha": "05f662cfc84af8e263f7c5bca8874b8dc93af46a",
-  "commit_note": "Prior status blob verified exactly at 05f662c. Current update uses current owned blob SHA; exact current commit read-back and changed-file verification follow externally (self SHA cannot be embedded).",
+  "verified_commit_sha": "18cd481d631666ef03066ac4c589335f3ea8c322",
+  "commit_note": "Previous status read back exactly at 18cd481; current status uses latest owned blob SHA. Current commit read-back and changed-file verification follow externally (self SHA cannot be embedded).",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -572,10 +573,11 @@
     "2026-11-24T11:40:59.470Z: New source-acquisition review: Gold Forever v0.24.2 (Nov 20, Retail/Forever) release tag addon-v0.24.2 resolved to 8614a7b1754e326185f4da3aef24acda7787d8ef. Loot.lua associates spell 13262 success with a bag-click item ID captured within 2 seconds of cast start and a loot source within 5 seconds of success; records a d<itemId> loot row on loot-window close per source, with material counts and timestamp. No saved spellcast-success event or cast GUID in this collector, no input bonusIDs/itemLink, no completed-cast denominator independent of loot-window capture, and an empty captured window is not a confirmed zero-yield operation. Disenchant.lua is explicitly a Classic Era model, not measured Retail rates. Its comment describes two Forever beta disenchants, including an unnamed blue yielding 3 Strange Dust (10940); input ID, level, skill and exact build unknown, wrong flavor. Lazy Disenchanter (Krathe) 1.1 onward advertises a persistent item/material/rank session log, latest 1.2.1 June 20 Retail 12.0.7, but no original public target export or verified zero/cast linkage found; code not inspected. Both source names absent from cutoff catalogue manifest and prior owned status. Exact target-name searches returned existing references, no new independent numerical evidence. No prices or duplicated rows retained.",
     "2026-11-24T12:41:28.654Z: Previously unscreened GatherValue 1.1.0 (Oct 2, 2026, file 9041348, Retail 12.1.0) author description tracks received transformation loot and consumed inputs as session cost, with pause/reload and aggregated session/profession statistics. The changelog reports inventory rescan changes but unchanged harvest counting. Neither listing nor accessible comments exposes a target operation dataset, actual cast IDs, variant identities, refund handling or zero-inclusive histograms. GitHub GatherValueDB and GatherValue.lua searches returned no indexed files; direct CDN package retrieval failed DNS, so no claim about implementation or whether its saved format retains event-level data. Quick DE (Oct 3, Retail/Forever) lists candidate gear by rarity/item level/binding and supports selection and blacklist; the author description does not expose a result ledger. Easy Disenchant Revamped 1.4.0 (Sep 4, Retail 12.1.0) author describes item selection and blacklist history, not observed yield logs. These names were absent from prior legacy quiet status and cutoff source manifest. Targeted searches for Warmaul Legplates, Cobalt Ore, Fel Iron Ore and public GitHub results yielded prior repository evidence/historical references or unrelated material; no new qualifying exact target cohort or reported mean. No prices or synthetic examples retained.",
     "2026-11-24T13:41:06.677Z: New source acquisition screen: Dustwise 0.3.2 (Nov 23, 2026) is explicitly Forever 1.60.1 only. Its persistent count tracks AH purchases, not completed DE casts; expected values are a model, not an original cohort. xanMortarPestle v4.5 (Nov 11 2022 Retail 10.0.0, discontinued Nov 13) original code blob 7f1b81d07457d7830a5c8ebb02a640928be8a5ea lines 167-169, 221, 326-337 stores a boolean base-item failure blacklist XMP_DB on SPELL_FAILED_CANT_BE_DISENCHANTED, not result quantities; its itemDB.lua blob d0b7fa65b0dc965884405347fa9169965460c86c lines 131/134 merely lists Fel Iron 23424 and Cobalt 36909 as prospect candidates, not operations or yields. These historical eligibility hints are not current held-item eligibility or zero-output events. GonzoInc Disenchanter v1.13.8 (Jul 21 2025 Retail 11.1.7, repository archived Jun 23 2026) core.lua blob 29e7b2f1e986924ed745a6a304cdf2973be97c7c lines 40-71 looks up expansion and quality to display a material family, not measured observations. Author acknowledges Timewalking gear predictions are incorrect and skill/rank mechanics are not modeled. Accessible comments page provides no comment bodies. These source names were absent from the owned status and cutoff manifest; no new independent target processing data. Fresh exact-name searches across Wowhead, Reddit, Blizzard forums and other sites returned previously known historical tables/cohorts or irrelevant listings; no qualifying new target cast, hit, unit, zero, histogram, profile, refund or supported mean. No prices retained. T0053 remains closed; no duplicate evidence or cutoff recatalogue.",
-    "2026-11-24T14:41:09.209Z: New acquisition leads: Rat Pack 1.3.5 (Nov 23, file 9782814) author documentation explicitly requires Forever 1.60.1 and membership in Rats Den guild. It describes per-item observed disenchant logs, guild pooled counts by item kind/level and separate Arcane Salvager buff profiles, with estimates using Classic tables until enough guild observations exist; it is not a public Retail dataset. No original target rows, zero-inclusive denominator or code verified, and no access/contact attempted. Craft Flip Forever 1.1.0 (Nov 22, file 9760030) likewise explicitly Forever 1.60.1; its release notes describe reading existing AH Flip Forever and EzDisenchant observations and blending with a prior, not an independent cohort. No public target raw rows or supported Retail means in either listing. Both names absent from prior legacy status and cutoff manifest. Exact-name searches across Wowhead, Reddit, Blizzard forums and broader web for Warmaul Legplates, Cobalt Ore, Fel Iron Ore and Runecloth Headband surfaced previously covered historical references/comments, catalog profiles and unrelated farming or market entries, not a new independent processing cohort. No new IDs, completed casts, output hits/units, zero bins, skill/spec/build linkage, refunds or measured means; no prices or duplicated rows retained."
+    "2026-11-24T14:41:09.209Z: New acquisition leads: Rat Pack 1.3.5 (Nov 23, file 9782814) author documentation explicitly requires Forever 1.60.1 and membership in Rats Den guild. It describes per-item observed disenchant logs, guild pooled counts by item kind/level and separate Arcane Salvager buff profiles, with estimates using Classic tables until enough guild observations exist; it is not a public Retail dataset. No original target rows, zero-inclusive denominator or code verified, and no access/contact attempted. Craft Flip Forever 1.1.0 (Nov 22, file 9760030) likewise explicitly Forever 1.60.1; its release notes describe reading existing AH Flip Forever and EzDisenchant observations and blending with a prior, not an independent cohort. No public target raw rows or supported Retail means in either listing. Both names absent from prior legacy status and cutoff manifest. Exact-name searches across Wowhead, Reddit, Blizzard forums and broader web for Warmaul Legplates, Cobalt Ore, Fel Iron Ore and Runecloth Headband surfaced previously covered historical references/comments, catalog profiles and unrelated farming or market entries, not a new independent processing cohort. No new IDs, completed casts, output hits/units, zero bins, skill/spec/build linkage, refunds or measured means; no prices or duplicated rows retained.",
+    "2026-11-24T15:40:54.281Z: New independent acquisition screen: TheWoWDB Companion Retail 0.20.3 (Nov 23, file 9781573, versions 12.1.0/12.0.7) author listing documents AH scans, market history and patron order cost estimates, not a public processing-result ledger. The public desktop client README describes download-only market refresh, not uploads of game files. The separate 0.19.0 release notes describe Forever creature-drop counts keyed to kills, not disenchant casts; its site enchanting guide (checked Oct 5) explicitly uses Forever beta and Classic reference data, not Retail measurements. No target operation exports located; no addon code or private data inspected. Separate April 15-16 Turtle WoW original discussion reports Runecloth Belt and White Bandit Mask conditional ranges, but explicitly private-server flavor, no actual N, hits, units, zeros or exact linked IDs; not eligible Retail evidence. Both source names/URL IDs absent from prior owned status and cutoff manifest text. Fresh searches by target names and source discovery on Wowhead, Reddit, Blizzard forums and GitHub returned known item profiles, previously screened recorders and unrelated posts, not new independent target processing measurements. No prices retained; no new casts, output IDs, hits, quantities, zero bins, skill profiles or means. T0053 identity remains done."
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Seek publicly released original Retail exact-item logs or independently supported per-input/operation means, including scoped profile corrections; avoid guild-private or Forever-only collectors, derived bridges and unchanged cutoff sources. T0053 identity remains done.",
+  "next_concrete_step": "Seek new publicly released Retail original exact-item processing exports or independently supported per-input/operation means; avoid unchanged recorder documentation, market data, Forever/private-server sources and cutoff cohort duplicates.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -584,14 +586,15 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://www.curseforge.com/wow/addons/rat-pack",
-    "https://www.curseforge.com/wow/addons/rat-pack/files/9782814",
-    "https://www.curseforge.com/wow/addons/craft-flip-forever/files/9760030",
-    "https://www.wowhead.com/item=24995/warmaul-legplates",
-    "https://www.wowhead.com/item=13866/runecloth-headband"
+    "https://www.curseforge.com/wow/addons/thewowdb-companion",
+    "https://www.curseforge.com/wow/addons/thewowdb-companion/files/9781573",
+    "https://github.com/Chrisl252/thewowdb-client",
+    "https://www.curseforge.com/wow/addons/thewowdb-companion/files/9637355",
+    "https://thewowdb.com/wow-forever/guides/professions/enchanting/",
+    "https://www.reddit.com/r/turtlewow/comments/1slzb4s/mass_crafting_to_disenchant_for_profit/"
   ],
   "latest_run_source_date": "2026-11-23",
-  "latest_run": "Refreshed branch instructions and queue; screened Rat Pack and Craft Flip Forever post-cutoff releases. No new qualifying Retail numerical evidence; no evidence JSONL.",
+  "latest_run": "Read branch instructions and queue; screened TheWoWDB Companion and original Turtle WoW discussion; no qualifying new Retail numerical evidence; no JSONL.",
   "new_evidence_file_this_run": null,
-  "next": "Seek publicly released original Retail exact-item logs or independently supported per-input/operation means, including scoped profile corrections; avoid guild-private or Forever-only collectors, derived bridges and unchanged cutoff sources. T0053 identity remains done."
+  "next": "Seek new publicly released Retail original exact-item processing exports or independently supported per-input/operation means; avoid unchanged recorder documentation, market data, Forever/private-server sources and cutoff cohort duplicates."
 }
