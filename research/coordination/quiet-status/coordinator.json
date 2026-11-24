@@ -1,128 +1,158 @@
 {
   "role": "research-manager",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-24T13:02:28.846Z",
-  "status": "active; new source-lineage corroboration for 244175 low-skill rod dust reference budget, not an independent measured cohort",
+  "updated_at": "2026-11-24T14:03:04.744Z",
+  "status": "active; direct build-pinned Item/CraftingQuality joins corroborate Midnight rank identity, TWW worker spot check, precise mapping adapter gap; no new numerical cohort",
   "task_ids": [
-    "T0026",
-    "T0025"
+    "T0005",
+    "T0001",
+    "T0039",
+    "T0040",
+    "T0010",
+    "T0011",
+    "T0012"
   ],
   "exact_gaps_targeted": [
-    "Distinguish vendor Refulgent Copper Rod 244174 from crafted Runed Refulgent Copper Rod 244175, and recover source basis for approximate rank-unspecified dust expectation during skill 1–25 leveling.",
-    "Corroborate exact Silver/Gold enchanting material identities using linked datamine-backed pages without treating prices, rank, or guide assumptions as measured yields."
+    "Direct build-pinned rank metadata for Crystalline Glass, Dusk-Shrouded Stone and Umbral Tin; resolve foreign-key versus tier and reverse-ID order.",
+    "Independently check worker's Orbinid reverse-rank evidence; distinguish current skill-rule mapping from missing explicit rank-family adapter entries."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "type": "source-lineage and reference mean review; not a new observed cohort",
-      "inputItemID": 244175,
-      "recipeSpellID": 1236486,
-      "distinctNonDisenchantInput": 244174,
-      "outputName": "Eversinging Dust",
-      "outputRank": null,
-      "outputRankAlternatives": [
-        243599,
-        243600
+      "type": "direct extracted client-data rank identity corroboration",
+      "build": "12.1.5.70961",
+      "qualityJoin": {
+        "13": 1,
+        "14": 2
+      },
+      "items": [
+        {
+          "name": "Crystalline Glass",
+          "itemID": 242787,
+          "rank": 1,
+          "family": 593,
+          "craftingQualityID": 13
+        },
+        {
+          "name": "Crystalline Glass",
+          "itemID": 242786,
+          "rank": 2,
+          "family": 593,
+          "craftingQualityID": 14
+        },
+        {
+          "name": "Dusk-Shrouded Stone",
+          "itemID": 242788,
+          "rank": 1,
+          "family": 594,
+          "craftingQualityID": 13
+        },
+        {
+          "name": "Dusk-Shrouded Stone",
+          "itemID": 242789,
+          "rank": 2,
+          "family": 594,
+          "craftingQualityID": 14
+        },
+        {
+          "name": "Umbral Tin Ore",
+          "itemID": 237362,
+          "rank": 1,
+          "family": 555,
+          "craftingQualityID": 13
+        },
+        {
+          "name": "Umbral Tin Ore",
+          "itemID": 237363,
+          "rank": 2,
+          "family": 555,
+          "craftingQualityID": 14
+        }
       ],
-      "sourceSkillWindow": [
-        1,
-        25
-      ],
-      "proposedRods": 30,
-      "proposedDustCost": 150,
-      "approximateGuideReturnFraction": 0.5,
-      "approximateGuideReturnedUnits": 75,
-      "derivedReferenceMeanPerRod": 2.5,
       "casts": null,
       "totalQuantity": null,
       "castsWithDrop": null,
       "histogram": null,
       "confidence": null,
-      "sourceKind": "reference",
-      "existingRecordID": "midnight-20261108-1520-002",
-      "conclusion": "WoW-Professions explicitly describes approximately half of the 150 dust used for 30 proposed crafted rods returning during disenchant-based leveling. WoW-God guide repeats the same route, gross dust 412, 30 rods, 150 dust and nearly identical macro text, and expresses the implied return as about 75; probable shared lineage, not a second study. Existing Nov 8 record already preserves WoW-God approximation. 2.5 is a defensible scoped guide-budget reference candidate (75/30 or 5×0.5), NOT source-audited observed mean, measured casts, a rank-specific mean, a confidence score, or a max-skill model. New LFCarry Nov 18 patch 12.1.5 guide corroborates crafted-rod eligibility but no numerical yield. Wowhead spell and item pages distinguish the crafted item from the vendor tool which has explicit no-disenchant flag. Keep candidate in review metadata rather than create duplicate numeric cohort or claim admission; a new scoped reference proposal must not overwrite existing supported values."
+      "conclusion": "Existing rank identities now corroborated by direct build-pinned DB2 source. No new measured cohort, no new historical rate or live-client verification."
     },
     {
-      "type": "secondary linked item identity corroboration",
-      "source": "WoW Gold Farms guide updated 2026-10-08, source states datamine build 12.1.0.69933; site banner later build 12.1.5.70961",
-      "rankPairs": [
+      "type": "independent worker spot check",
+      "build": "11.2.7.65299",
+      "itemFamily": "Orbinid Pigment",
+      "items": [
         {
-          "name": "Eversinging Dust",
-          "silver": 243599,
-          "gold": 243600
+          "itemID": 224802,
+          "rank": 1,
+          "family": 499,
+          "craftingQualityID": 1
         },
         {
-          "name": "Radiant Shard",
-          "silver": 243602,
-          "gold": 243603
-        },
-        {
-          "name": "Dawn Crystal",
-          "silver": 243605,
-          "gold": 243606
+          "itemID": 224800,
+          "rank": 3,
+          "family": 499,
+          "craftingQualityID": 3
         }
       ],
-      "conclusion": "All six explicit linked item IDs resolve on TheWoWDB. Guide explicitly states DE yields are not measured; no price snapshots imported, no yield or skill curve established. Corroboration of known identities only."
+      "conclusion": "Both exact Item rows and joined quality table matched TWW worker's report. Other 16 worker-reported identities not independently re-read this run."
+    },
+    {
+      "type": "static adapter review",
+      "main": "3e814929ecffc2c2a282fddaead2012e5b44e9a9",
+      "conclusion": "Existing glass/stone skill-quality order correct; rank-families map lacks explicit verifiedRanks for these two and lacks Luredrop/Orbinid/Blossom Pigment families. resolve_ranked_outputs uses explicit verifiedRanks only. Specific adapter metadata gap, not established live regression, reachable source loss or new EV."
     }
   ],
   "source_links": [
-    "https://www.wow-professions.com/guides/wow-enchanting-leveling-guide",
-    "https://wow-god.com/guides/enchanting-leveling",
-    "https://development.wow-god.com/guides/enchanting-leveling",
-    "https://lfcarry.com/guides/wow-midnight-enchanting-leveling",
-    "https://www.wowhead.com/spell=1236486/runed-refulgent-copper-rod",
-    "https://www.wowhead.com/item=244174/refulgent-copper-rod",
-    "https://www.wowhead.com/item=244175/runed-refulgent-copper-rod",
-    "https://wowgoldfarms.com/guides/retail/enchanting-gold-midnight/",
-    "https://thewowdb.com/item/eversinging-dust-243599/",
-    "https://thewowdb.com/item/eversinging-dust-243600/",
-    "https://thewowdb.com/item/radiant-shard-243602/",
-    "https://thewowdb.com/item/radiant-shard-243603/",
-    "https://thewowdb.com/item/dawn-crystal-243605/",
-    "https://thewowdb.com/item/dawn-crystal-243606/"
+    "https://wago.tools/db2/Item?build=12.1.5.70961&filter%5BID%5D=exact%3A242786",
+    "https://wago.tools/db2/Item?build=12.1.5.70961&filter%5BID%5D=exact%3A242787",
+    "https://wago.tools/db2/Item?build=12.1.5.70961&filter%5BID%5D=exact%3A242788",
+    "https://wago.tools/db2/Item?build=12.1.5.70961&filter%5BID%5D=exact%3A242789",
+    "https://wago.tools/db2/Item?build=12.1.5.70961&filter%5BID%5D=exact%3A237362",
+    "https://wago.tools/db2/Item?build=12.1.5.70961&filter%5BID%5D=exact%3A237363",
+    "https://wago.tools/db2/CraftingQuality?build=12.1.5.70961",
+    "https://wago.tools/db2/Item?build=11.2.7.65299&filter%5BID%5D=exact%3A224802",
+    "https://wago.tools/db2/Item?build=11.2.7.65299&filter%5BID%5D=exact%3A224800",
+    "https://wago.tools/db2/CraftingQuality?build=11.2.7.65299"
   ],
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-08T1520-runed-rod-de-context.jsonl (read only, original retained)"
+    "research/v3/evidence/master/20261124T1402-build-pinned-crafting-quality-rank-review.md",
+    "research/coordination/quiet-status/war-within.json (read only)"
   ],
   "worker_reports_verified": [
     {
       "role": "midnight",
-      "checkpoint": "4c4ca4848cb6e62df100f38dee14b56e074cc243",
-      "result": "Four Forever leads excluded, 272246 variant corroboration; no new cohort",
-      "automation": "completed 1b03e965-2fb8-8328-b1a9-b52e83a1293a"
+      "result": "no new independent numerical cohort",
+      "automation": "completed dec7031b-f724-8333-9d0f-14ba7cb0a026"
     },
     {
       "role": "war-within",
-      "checkpoint": "b1275e8b3eeb5326430385da7e82dbdf2ed8b950",
-      "result": "222612–222614 same icon; icon not quality evidence",
-      "automation": "completed ea0bd7c0-eba4-8327-a99f-50935c229e58"
+      "result": "18 build-pinned historical rank identities; two independently spot checked",
+      "automation": "completed c38aaa17-4890-8332-82ec-fe76cad7e99e"
     },
     {
       "role": "dragonflight",
-      "checkpoint": "a9e9832c1480846c66a61e8c3efa0c4357160a74",
-      "result": "Surveying diamond hotfix mining only, no Multicraft admission",
-      "automation": "completed f63b578a-d980-8326-90e6-9db714344b48"
+      "result": "tracker/source scope screen; no new cohort",
+      "automation": "completed b752a3c1-a500-8331-89c1-038b171e6208"
     },
     {
       "role": "legacy",
-      "checkpoint": "a1eb4d8c6718f8413c0011b8bfb8b74785aaf168",
-      "result": "GatherValue and selection helpers screened; no qualifying measurement",
-      "automation": "completed 47161ef0-6cb0-8323-a08d-d6bffaae9c09"
+      "result": "historical helper screening; no qualifying new observations",
+      "automation": "completed bcf7d480-8240-832e-b693-de4150995325"
     }
   ],
-  "verified_commit_sha": "a1eb4d8c6718f8413c0011b8bfb8b74785aaf168",
-  "checked_research_branch_head_before_status_write": "a1eb4d8c6718f8413c0011b8bfb8b74785aaf168",
+  "verified_commit_sha": "a66ccc4bfe5b53387fc64d673932b194893d3c32",
+  "checked_research_branch_head_before_status_write": "a66ccc4bfe5b53387fc64d673932b194893d3c32",
   "main_head_checked": "3e814929ecffc2c2a282fddaead2012e5b44e9a9",
   "owner_three_pass_head_checked": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "owner_catalogue_manifest_branch_head_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
   "owner_catalogue_pipeline_branch_checked": "a23e65d784f0c36833df0ad903d817d10d2f2ae3",
   "validation_this_run": {
-    "sourceCatalogue": "Verified current receipt CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources; PR82 merged per receipt, exact verified research 858b6c1bda7994c0d29f6f3d93df30f0a9b9674f, implementation a23e65d784f0c36833df0ad903d817d10d2f2ae3. No catalogue reopened.",
-    "CI": "Combined status and PR-triggered workflow lookups returned empty arrays for checked main and research a1eb4d8; no fresh CI conclusion.",
-    "automation": "Four latest completed runs verified by per-task peek and pinned branch role statuses; all five enabled on list; no schedule changes. Direct get endpoint unavailable.",
-    "managerTests": "Compared original guide wording, linked exact identities and pinned previous record; inspected current baseline adapter rank-family fallback, batch and overlap gates and automatic admission. No runtime or live-client tests; no admission claim.",
+    "sourceCatalogue": "Current durable receipt CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources; not reopened.",
+    "CI": "Main 3e814929 passed Validate consolidated addon run 45124264797; prewrite research 05f662c passed Verify five-agent completion run 45405988702. New evidence/status CI not yet checked.",
+    "automation": "Four latest runs completed per individual task lookup; all five enabled on list, no changes.",
+    "managerTests": "Eight bounded static assertions passed on pinned main; source Item/CraftingQuality exact field joins and evidence readback completed. No compiler, runtime, synthetic-price or live-client tests.",
     "newIndependentCohorts": 0,
     "newSupportedGoldDecisions": 0,
-    "dashboard": "No new measured KPI; unchanged."
+    "dashboard": "No new measured KPI, unchanged."
   },
   "blockers": [
     "Goldsmith full source receipt and cast/refund reconciliation absent; pooled bag decreases and three-second gains cannot establish complete operation or reliable net-input mean.",
@@ -131,7 +161,8 @@
     "Runecloth third-copy compiled contribution remains unverified; need consumer attribution, not repeated source scan.",
     "Prior alipica source's stored rank unsupported; exact historical rank remains unresolved. Review note only, no runtime correction or production impact established.",
     "T0049: base no-DE flag versus historical Looter observations unresolved; neither current census nor selected tooltip identifies an attempted disenchant or actual bonus/ilvl. Direct raw Looter table not exposed.",
-    "244175: source approximate low-skill reference budget is potentially usable as a pooled expected-unit prior; no original operation ledger, exact output rank or evidence of independence. Existing WoW-God reference row has no numerical fields or batch scope; current baseline requires supported batch and counted row or scoped reviewed proposal. Do not fake a study or promote to universal profile. Actual compiled consumer not verified."
+    "244175: source approximate low-skill reference budget is potentially usable as a pooled expected-unit prior; no original operation ledger, exact output rank or evidence of independence. Existing WoW-God reference row has no numerical fields or batch scope; current baseline requires supported batch and counted row or scoped reviewed proposal. Do not fake a study or promote to universal profile. Actual compiled consumer not verified.",
+    "Verified build-pinned identities currently stored in metadata, not automatic numeric rows. Existing rank-family adapter lacks explicit verifiedRanks for glass/stone and three TWW pigment families; only reachable source-level correction and consumer tests can establish actual valuation/tooltip impact. No code modification authorized in routine research."
   ],
   "exhausted_sources": [
     "2026-11-21 Disenchantry release is a recheck of already-documented 2026-11-19 stats instrumentation lead; no public original Retail events or authoritative per-item DE rates found. Avoid repeated release-description scrapes.",
@@ -165,16 +196,17 @@
     "2026-11-24 10Z Goldsmith Oct13 and later tour table verified; no repeat unless original salvageRuns/receipts appear. Additional ten raw scopes preserved; no cast denominators. Wowhead alipica report already archived; davenrothz historical source preserved, revisit only rank/profile/dedup or scoped adapter verification.",
     "2026-11-24 11Z: potion rank alternatives verified, direct 241339 Wowhead blocked but paired Retail listing available; unchanged historical reports lack actual ranks. Do not revisit unchanged pages or add cohorts.",
     "2026-11-24 12Z: T0049 GamGem 272246 Nov 7 item page, indexed Hero 6/6 Wowhead tooltip, live/PTR WoWDB base flag and broad current processing searches checked. Census is equipped gear only; no operation events. Do not revisit these unchanged pages unless event-linked bonus IDs, an original Looter record or independently published eligibility result emerges.",
-    "2026-11-24 13Z: WoW-Professions and WoW-God (live/development same route) 30-rod/150 dust/rough half (~75) leveling budget examined; approximate 2.5 per rod is reference-only, not a new measurement. LFCarry Nov18 corroborates eligibility; WoW Gold Farms Oct8 explicitly lacks yield observations, six linked rank IDs verified. No repeat absent new ledger/rank breakdown, or scoped admission/consumer work."
+    "2026-11-24 13Z: WoW-Professions and WoW-God (live/development same route) 30-rod/150 dust/rough half (~75) leveling budget examined; approximate 2.5 per rod is reference-only, not a new measurement. LFCarry Nov18 corroborates eligibility; WoW Gold Farms Oct8 explicitly lacks yield observations, six linked rank IDs verified. No repeat absent new ledger/rank breakdown, or scoped admission/consumer work.",
+    "2026-11-24 14Z direct DB2 exact rank joins for 242786/242787/242788/242789/237362/237363 and TWW 224802/224800 verified. No repeat source identity scan absent changed build or new field; avoid treating prior identity evidence as new numerical cohorts."
   ],
-  "next_concrete_step": "Seek newly published original rank-aware operation ledgers or source-stated means. Preserve 244175 low-skill 2.5 family reference candidate for scoped gap-only review if existing supported model absent; no duplicate guide cohort or unchanged source re-screen. Respect worker roles and no routine PRs.",
+  "next_concrete_step": "Use build-pinned joins for genuinely unresolved rank identities; prioritize new original completed-operation ledgers or source-stated scoped means. Preserve source scope, verify reachable rank metadata through authorized mapping/consumer work, and avoid rechecking already-established exact item identities.",
   "production_main_changes": false,
   "addon_changes": false,
   "routine_research_prs": 0,
   "merge_or_release": false,
   "new_schedules": 0,
   "role_schedules_unchanged": true,
-  "prior_status_blob_sha": "d783897072908ed2e20babb10fa91e176914fafa",
-  "previous_checkpoint": "8f0a1a82f28a5db32cb3009d55600592c524e7a4",
-  "previous_status_updated_at": "2026-11-24T12:01:39.290Z"
+  "prior_status_blob_sha": "3cb474427af9ae47502b6534e60efd831e061b56",
+  "previous_checkpoint": "86c6100eb8feed9c6152ac18fd94d39c24c77c6c",
+  "previous_status_updated_at": "2026-11-24T13:02:28.846Z"
 }
