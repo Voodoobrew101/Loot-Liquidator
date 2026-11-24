@@ -1,6 +1,6 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-24T14:11:23.951Z",
+  "updated_at": "2026-11-24T15:11:23.479Z",
   "status": "active__no_new_independent_numeric_cohort",
   "task_ids": [
     "T0026",
@@ -2135,14 +2135,14 @@
   "newly_verified_fields_or_cohorts": [],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": [
-    "None. Existing 22 Goldsmith raw output totals and historical 272246 observations preserved; no new measured denominator or cast/rank/profile cohort."
+    "None. No newly published independent Retail processing receipts or actual completed denominators found; existing held quantities preserved."
   ],
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/nyxnightfire/ProfessionTrackerForever/blob/main/README.md",
-    "https://github.com/TheGnare/SimpleSkillWatch/blob/main/README.md",
-    "https://www.curseforge.com/wow/addons/grimlight-enchanting"
+    "https://www.curseforge.com/wow/addons/disenchantrix",
+    "https://www.curseforge.com/wow/addons/disenchanter-plus",
+    "https://www.curseforge.com/wow/addons/foreverforge-auction"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -2654,47 +2654,43 @@
     {
       "url": "https://www.curseforge.com/wow/addons/grimlight-enchanting",
       "reason": "Publisher describes item-linked DE observations and local CSV exports but expressly targets Forever interface 16001 and excludes other editions; no transferable Retail observations. Search listing reports Nov 24 update, direct page snapshot is older Oct 15; no claim about exact current release."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/disenchantrix",
+      "reason": "New Nov 24 1.0.0 publisher release, explicitly Forever 1.60.1; local item-level/material history and Classic-through-Mists tables, no public Retail player receipts. No transferable observations."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/disenchanter-plus",
+      "reason": "Publisher explicitly lists Forever, Classic and Classic TBC only. Tracks material outcomes but no independent Midnight cohort. Category index lists Nov 24 Classic TBC 2.5.6; direct snapshot Nov 21, so exact newest release not asserted."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/foreverforge-auction",
+      "reason": "Nov 24 publisher update explicitly Forever auction/DE value estimates, not original Retail processing data."
     }
   ],
   "next_concrete_step": "Seek new original Retail source receipts or updated independent datasets; prioritize completed cast denominator with per-event item instances, rank/profile/build and zero inclusion. For unresolved material identity use build-matched DB2 joins only when accessible, avoiding already verified manager pairs. No rescreen of unchanged Forever-only or collector-only leads.",
-  "verified_base_commit_sha": "0cfad64e9799ff20762369290c67351f0c37e8b2",
+  "verified_base_commit_sha": "2c59d0b6d62a9c813d05ac3b71556704f21edfeb",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Status-only update guarded by current blob SHA; exact commit read-back required; self-hash cannot be embedded. No new evidence file, catalogue or baseline edits.",
+  "commit_note": "Owned status-only update guarded by current blob SHA; exact commit read-back required; self-hash cannot be embedded. No evidence file, catalogue or baseline edits.",
   "new_leads_screened": [
     {
-      "category": "new_external_collector_leads",
+      "category": "new_external_disenchant_leads",
       "sources": [
         {
-          "url": "https://github.com/nyxnightfire/ProfessionTrackerForever/blob/main/README.md",
-          "readme_blob_sha": "5c06f6cb2fa2964c1eb96d375b390ee94c503102",
-          "reason": "New repository lead from Nov 23+ pushed search. Explicit WoW Forever; gathers skill-up observations, not Retail Midnight processing receipts."
+          "url": "https://www.curseforge.com/wow/addons/disenchantrix",
+          "reason": "New Nov 24 1.0.0 publisher release, explicitly Forever 1.60.1; local item-level/material history and Classic-through-Mists tables, no public Retail player receipts. No transferable observations."
         },
         {
-          "url": "https://github.com/TheGnare/SimpleSkillWatch/blob/main/README.md",
-          "readme_blob_sha": "a4ea4280c47e73eee87480ed5450463c0a1f931a",
-          "reason": "Newly screened skill tracking repository explicitly for WoW Forever, not a Retail processing cohort."
+          "url": "https://www.curseforge.com/wow/addons/disenchanter-plus",
+          "reason": "Publisher explicitly lists Forever, Classic and Classic TBC only. Tracks material outcomes but no independent Midnight cohort. Category index lists Nov 24 Classic TBC 2.5.6; direct snapshot Nov 21, so exact newest release not asserted."
         },
         {
-          "url": "https://www.curseforge.com/wow/addons/grimlight-enchanting",
-          "reason": "Publisher describes item-linked DE observations and local CSV exports but expressly targets Forever interface 16001 and excludes other editions; no transferable Retail observations. Search listing reports Nov 24 update, direct page snapshot is older Oct 15; no claim about exact current release."
+          "url": "https://www.curseforge.com/wow/addons/foreverforge-auction",
+          "reason": "Nov 24 publisher update explicitly Forever auction/DE value estimates, not original Retail processing data."
         }
       ],
-      "disposition": "No independent Retail data. Fresh searches for ranked ore, herb milling and skill-specific DE produced existing pre-cutoff sources or collector descriptions only. No re-transcription."
-    },
-    {
-      "category": "branch_and_identity_boundary",
-      "sources": [
-        {
-          "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/0cfad64e9799ff20762369290c67351f0c37e8b2/research/v3/evidence/master/20261124T1402-build-pinned-crafting-quality-rank-review.md",
-          "reason": "Coordinator independently documents build 70961 Item/CraftingQuality join: 237362/237363 R1/R2, 242787/242786 R1/R2, 242788/242789 R1/R2. This is existing manager work, not worker evidence or observed rates."
-        },
-        {
-          "url": "https://wago.tools/db2/Item?build=12.1.5.70961&filter%5BID%5D=exact%3A245807",
-          "reason": "Direct access failed for 245807 and 245808 and same-build quality table; no new independent rank assertion."
-        }
-      ],
-      "disposition": "Comparison from previous owned checkpoint 50cffc3e to initial read 0cfad64e: other role statuses plus manager rank review only. Main head 3e814929 unchanged from prior captured source review. Do not duplicate manager identity work or claim numeric admission."
+      "disposition": "Excluded non-Retail sources; no baseline changes. Fresh original-result searches across Reddit, Blizzard forums, Wowhead, profession guides and public repositories surfaced existing sources or non-Retail collectors only. Known Cardinalai and David111 studies not re-transcribed. Prior GitHub lead URLs already exhausted and not re-opened."
     }
   ],
   "catalogue_checkpoint": {
