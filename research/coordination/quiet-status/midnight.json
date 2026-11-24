@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-24T11:11:02.113Z",
-  "status": "active__identity_corroboration_no_new_numeric_cohort",
+  "updated_at": "2026-11-24T12:11:14.912Z",
+  "status": "active__no_new_independent_numeric_cohort",
   "task_ids": [
     "T0026",
     "T0049",
@@ -2134,38 +2134,27 @@
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "category": "secondary_identity_corroboration_only",
+      "category": "selected_item_variant_metadata_only",
       "input_ids": [
-        237362,
-        237363,
-        237359,
-        237361,
-        237364,
-        237365
+        272246
       ],
-      "output_ids": [
-        242608,
-        242712
-      ],
-      "source": "https://goldcap.gg/retail/us/items/242712",
-      "rank1_source": "https://goldcap.gg/retail/us/items/242608",
-      "alternative_quality_label_source": "https://wowpricehub.com/eu/commodity/item/Eversong%20Diamond-242712",
-      "verified_fields": "Existing Eversong Diamond identity crosswalk: 242608 rank 1 of 2, 242712 rank 2 of 2. Alternate site's TIER_5 icon is not evidence of an additional rank. No unlock-state, occurrence, or yield data.",
-      "disposition": "Corroboration only; no new evidence record or baseline change."
+      "source": "https://www.wowhead.com/item=272246/miststalkers-wristbands?bonus=6652:13696:13662:12846&ilvl=321&spec=269",
+      "verified_fields": "Direct live selected tooltip ilvl321; bonus query 6652:13696:13662:12846. Not a new observed disenchant event or proof of eligibility; actual at-cast ilvl305 remains historical only.",
+      "disposition": "No new numerical cohort or evidence file."
     }
   ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": [
-    "None; original operation counts, per-output hits, zeros and histograms remain unknown where held. Existing 22 Goldsmith source totals unchanged."
+    "None: no new independent Retail completed operations, hits, quantities, zeros or distributions. Existing held Goldsmith 22 totals unchanged."
   ],
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://www.curseforge.com/wow/addons/disenchant-helper/files/9751151",
-    "https://www.curseforge.com/wow/addons/blackthornes-tradeskills",
-    "https://goldcap.gg/retail/us/items/242712",
-    "https://wowpricehub.com/eu/commodity/item/Eversong%20Diamond-242712",
-    "https://goldcap.gg/retail/us/items/242608"
+    "https://github.com/sjdodge123/mailworthy/blob/main/README.md",
+    "https://github.com/SAquante/ah-flip/blob/master/README.md",
+    "https://github.com/j1d2/wow-addons/blob/main/README.md",
+    "https://github.com/Shweep8/bagsmith/blob/main/README.md",
+    "https://www.wowhead.com/item=272246/miststalkers-wristbands?bonus=6652:13696:13662:12846&ilvl=321&spec=269"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -2630,35 +2619,69 @@
     {
       "url": "https://wowpricehub.com/eu/commodity/item/Eversong%20Diamond-242712",
       "reason": "Direct same-ID commodity page labels crafting-quality icon TIER_5 rather than user-facing rank 2. This is source presentation metadata, not a fifth Midnight material rank or a measured outcome. Retain established rank mapping; no numeric cohort."
+    },
+    {
+      "url": "https://github.com/sjdodge123/mailworthy/blob/main/README.md",
+      "readme_blob_sha": "b8c4d04c7a5eeacc1032b88fe1f499d46b8fbe16",
+      "reason": "New repository lead from Nov 23+ updated repository search. README expressly WoW Forever, uses separate personal DE addon or era tables for valuation, not Midnight observed casts or output totals."
+    },
+    {
+      "url": "https://github.com/SAquante/ah-flip/blob/master/README.md",
+      "readme_blob_sha": "ed4aa9a87178f312e684858626b00b23ed1424ff",
+      "reason": "Explicit Forever auction Android app; receives already-calculated ROI and market data from Booty Bay Broker, not Retail original processing receipts."
+    },
+    {
+      "url": "https://github.com/j1d2/wow-addons/blob/main/README.md",
+      "readme_blob_sha": "3ba0adc9e3a1e6298095389d022d958bd61025f5",
+      "reason": "Unmaker and HouseLedger explicitly Forever interface 16001. No transferable Retail Midnight outcomes."
+    },
+    {
+      "url": "https://github.com/Shweep8/bagsmith/blob/main/README.md",
+      "readme_blob_sha": "c1e52162948a2fab245e733e323f57be505656d5",
+      "reason": "Explicit Forever inventory and disenchant helper. Mock-client tests not measured Retail outcomes."
     }
   ],
-  "next_concrete_step": "Seek a newly published consented original processing receipt export with actual successful operation counts and full output attribution, starting with 272246 at-cast instance/bonus and rare/uncommon armor or weapon skill anchors, then rank-specific ores and 10-herb milling. Do not revisit these unchanged market pages, tracker descriptions or the existing Goldsmith aggregate.",
-  "verified_base_commit_sha": "58c44cf9491d64e1f5a698a997cf01350664c5ec",
+  "next_concrete_step": "Prioritize newly published Retail original receipt exports or updated source datasets with item instance links, confirmed completed operation counts, ranked output attribution, skill and build. Search only newly published or changed sources; do not revisit unchanged market/tooltip variants, known Forever repositories, old comments or Goldsmith aggregate without new raw receipts.",
+  "verified_base_commit_sha": "8f0a1a82f28a5db32cb3009d55600592c524e7a4",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Owned status-only update with current blob SHA guard; exact-SHA read-back after write. Self-hash cannot be embedded. No evidence file, baseline or catalogue modification.",
+  "commit_note": "Owned status-only update using current blob SHA guard; verify by exact commit read-back. No evidence, baseline or catalogue modification. Self-hash cannot be embedded.",
   "new_leads_screened": [
     {
-      "category": "post_cutoff_releases_and_rank_identity",
+      "category": "new_repository_leads",
       "sources": [
         {
-          "url": "https://www.curseforge.com/wow/addons/disenchant-helper/files/9751151",
-          "reason": "Direct Nov 22 2026 release 2.1.1 supports Retail 12.1.5 and Forever 1.60.1, fixes learned results/statistics and auto-blacklisting. No public original player receipts, item-instance links, effective skill/build, or zero-inclusive observations. Comments and source landing pages expose no raw ledger. A tracker fix is not a measured sample."
+          "url": "https://github.com/sjdodge123/mailworthy/blob/main/README.md",
+          "readme_blob_sha": "b8c4d04c7a5eeacc1032b88fe1f499d46b8fbe16",
+          "reason": "New repository lead from Nov 23+ updated repository search. README expressly WoW Forever, uses separate personal DE addon or era tables for valuation, not Midnight observed casts or output totals."
         },
         {
-          "url": "https://www.curseforge.com/wow/addons/blackthornes-tradeskills",
-          "reason": "Nov 24 v1.42.0 is explicitly Forever 1.60.1 only, including its disenchanting tab and sales/profit stats; not transferable Retail Midnight observations."
+          "url": "https://github.com/SAquante/ah-flip/blob/master/README.md",
+          "readme_blob_sha": "ed4aa9a87178f312e684858626b00b23ed1424ff",
+          "reason": "Explicit Forever auction Android app; receives already-calculated ROI and market data from Booty Bay Broker, not Retail original processing receipts."
         },
         {
-          "url": "https://goldcap.gg/retail/us/items/242712",
-          "reason": "Direct Retail commodity page labels exact Eversong Diamond 242712 rank 2 of 2 and links separately to rank 1 item 242608. Independent secondary corroboration of existing identity only; listing/sales numbers are not processing outcomes or casts. No new unlock or occurrence evidence."
+          "url": "https://github.com/j1d2/wow-addons/blob/main/README.md",
+          "readme_blob_sha": "3ba0adc9e3a1e6298095389d022d958bd61025f5",
+          "reason": "Unmaker and HouseLedger explicitly Forever interface 16001. No transferable Retail Midnight outcomes."
         },
         {
-          "url": "https://wowpricehub.com/eu/commodity/item/Eversong%20Diamond-242712",
-          "reason": "Direct same-ID commodity page labels crafting-quality icon TIER_5 rather than user-facing rank 2. This is source presentation metadata, not a fifth Midnight material rank or a measured outcome. Retain established rank mapping; no numeric cohort."
+          "url": "https://github.com/Shweep8/bagsmith/blob/main/README.md",
+          "readme_blob_sha": "c1e52162948a2fab245e733e323f57be505656d5",
+          "reason": "Explicit Forever inventory and disenchant helper. Mock-client tests not measured Retail outcomes."
         }
       ],
-      "disposition": "No qualifying new independent Retail numerical cohort. Current branch delta since previous checkpoint contained no new Midnight original exports. Main's Nov 22 reviewed subset is already inspected; no re-cataloguing."
+      "disposition": "All four newly identified repositories explicitly concern Forever; not transferable. Recent Reddit and US/EU forum queries restricted to after Nov 20 returned no matching Midnight posts. No new original exports in research branch delta after previous checkpoint."
+    },
+    {
+      "category": "selected_variant_metadata",
+      "sources": [
+        {
+          "url": "https://www.wowhead.com/item=272246/miststalkers-wristbands?bonus=6652:13696:13662:12846&ilvl=321&spec=269",
+          "reason": "Direct live page renders ilvl321 with bonus query 6652:13696:13662:12846. This is a selected tooltip variant, not an observed item instance at disenchant time; no source operation counts or output data. Same item/source family, no new independent cohort; no re-cataloguing."
+        }
+      ],
+      "disposition": "Selected tooltip metadata only; not new event evidence."
     }
   ],
   "catalogue_checkpoint": {
