@@ -1,95 +1,121 @@
 {
   "role": "research-manager",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-24T09:03:32.991Z",
-  "status": "active; verified acquisition quantity-default and lost-event risks; historical scaled-gear source-context clarification; no new admissible numerical cohort",
+  "updated_at": "2026-11-24T10:02:26.571Z",
+  "status": "active; new original account aggregate scopes preserved and separate historical reported potion-recycling counts recovered; no current gold decision",
   "task_ids": [
+    "T0003",
+    "T0039",
     "T0042",
-    "T0047",
-    "T0048",
-    "T0026",
-    "T0049"
+    "T0047"
   ],
   "exact_gaps_targeted": [
-    "T0042/T0047/T0026: independent operation capture completeness and actual quantity versus fallback in new public Craftonomics recorder.",
-    "T0048: historical scaled reward variant/source channel and hotfix scope; prevent cross-expansion baseline contamination.",
-    "T0049: prioritize actual variant-linked completed events, not generic base item catalog."
+    "T0003/T0039: independent Goldsmith source verification and positive bag delta versus gross/net consumed-input basis.",
+    "T0042/T0047: additional recipe-specific crushing and Alchemy recycling scopes; exact source quantities, required additional reagents, rank and operation identity."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "type": "independent source-code verification; additional censoring and quantity-default paths",
-      "source": "https://github.com/Archydude/Craftonomics/blob/a9a8e47d103b53e2aa54376be4fc3eae2f4d9cb2/Gone.lua",
-      "source_blob": "57c61338e56d5bbef50c5102dd7788d67d3a16b7",
-      "conclusion": "Independently confirmed legacy worker's acquisition limitation. Additional specific paths: readLoot accepts only the first nonempty loot snapshot per timestamp (lootReadFor == disenchantedAt), substitutes at least one via math.max(qty or 1, 1) when quantity is unavailable or less than one, and UNIT_SPELLCAST_SUCCEEDED replaces pending loot with nil on each new DE. A later loot snapshot for that same timestamp, a nil count, or a second success before the delayed bag count can therefore cause incomplete, assumed, or lost recorded quantities. These are static code-path risks, not observed incidence or a measured bias. Ledger records only output-level craft rows, not completed input-linked operations. Do not reinterpret per-material rows as casts, use default quantity as observed, or infer zeros. Require original exact input itemLink, successful cast GUID/event order, actual loot counts, and completeness before scientific admission."
+      "type": "original-account additional held scopes and static independent source QA",
+      "source": "https://github.com/sunseteffect/Goldsmith/blob/8a80a9642a0512dfd934c234cc6eb7d8f05f3baf/TourData.lua",
+      "original_blob": "19976b25fcf8032993ebade8240c2a2c3ec902c5",
+      "evidence": "research/v3/evidence/master/20261124T1002-goldsmith-extra-salvage-and-potion-recycle-source-review.md",
+      "source_rows": 10,
+      "distinct_accounts_added": 0,
+      "conclusion": "Five gem and five potion input aggregates additional to worker's 22 ore/herb output rows. No completed casts, authoritative quantities, observed hits/zeros, or net/gross receipt established. Same-target/concentration session can retain old recipe; fallback formula may double-apply Resourcefulness if bag decreases already net. Do not import ratio as expected quantity or empirical rate."
     },
     {
-      "type": "independent source-code corroboration",
-      "source": "https://github.com/Archydude/Craftonomics/blob/a9a8e47d103b53e2aa54376be4fc3eae2f4d9cb2/Ledger.lua#L789-L824",
-      "source_blob": "6224a605bf30da038d7339dd171120057770c5bc",
-      "conclusion": "RecordDisenchant returns on empty loot, optionally consumes a previously crafted source for accounting, then emits per-material craft rows with timestamp, character, output ID, output rank and quantity but not source ID/bonus or cast GUID. Accounting allocations and prices are not conversion evidence."
-    },
-    {
-      "type": "source-context clarification for worker's historical anomaly; not an independent numeric cohort",
-      "source": "https://news.blizzard.com/en-gb/article/24201420/hotfixes-august-4-2025",
-      "published": "2025-08-04",
-      "conclusion": "June 6 2025 official Dastardly Duos hotfix explicitly corrected an aura causing low item level and moved rewards; it does not state a disenchant-material fix. The June 3 original forum linked a Champion-track Necromantic Wand with 5 Rich Illusion Dust, 4 Large Brilliant Shards and 2 Greater Eternal Essence; retain as a single historical exceptional variant event. Contemporary event guide describes chest as Veteran and weekly quests as Champion, so retain author-reported track and provenance conflict, not a definitive reward channel, rarity, bonus IDs or item level. Wowhead base wand is ilvl 15, and its comment corroborates anomaly without proving independence or current behavior. No general TWW/legacy rate or permanent exception."
+      "type": "newly located historical source-reported operation totals; rank/adapter hold",
+      "source": "https://www.wowhead.com/item=242637/recycle-potions#comments",
+      "author": "davenrothz",
+      "published": "2026-05-13",
+      "patch": "12.0.5",
+      "recipe_candidate": 1233129,
+      "outputItemID": 242651,
+      "cohorts": [
+        {
+          "inputName": "Enlightenment Tonic",
+          "inputItemID": null,
+          "inputRank": null,
+          "reportedCasts": 40,
+          "reportedInputs": 120,
+          "totalQuantity": 84
+        },
+        {
+          "inputName": "Silvermoon Health Potion",
+          "inputItemID": null,
+          "inputRank": null,
+          "reportedCasts": 40,
+          "reportedInputs": 120,
+          "totalQuantity": 83
+        }
+      ],
+      "profile": "Author reports zero-Resourcefulness tool, not measured total stat; skill/spec/actual refunds unknown.",
+      "conclusion": "Two source-reported groups from one author; no hit counts or ranges. Exact rank and branch-wide source dedupe pending; bound output and Alchemy operation adapter mismatch prohibit current ordinary gold valuation. Prior alipica source already archived."
     }
   ],
   "source_links": [
-    "https://github.com/Archydude/Craftonomics/blob/a9a8e47d103b53e2aa54376be4fc3eae2f4d9cb2/Gone.lua",
-    "https://github.com/Archydude/Craftonomics/blob/a9a8e47d103b53e2aa54376be4fc3eae2f4d9cb2/Ledger.lua#L789-L824",
-    "https://news.blizzard.com/en-gb/article/24201420/hotfixes-august-4-2025",
-    "https://us.forums.blizzard.com/en/wow/t/dastardly-duos-de-bug/2114101",
-    "https://www.wowhead.com/item=82826/necromantic-wand",
-    "https://blizzardwatch.com/2025/06/03/dastardly-duos-wow-patch-11-1-5/"
+    "https://github.com/sunseteffect/Goldsmith/blob/8a80a9642a0512dfd934c234cc6eb7d8f05f3baf/TourData.lua",
+    "https://github.com/sunseteffect/Goldsmith/blob/7bb423773226e59e16592253d9227473f43b51e1/Milling.lua",
+    "https://www.wowhead.com/spell=1231132/midnight-crushing",
+    "https://www.wowhead.com/spell=1233129/recycle-potions",
+    "https://www.wowhead.com/item=242637/recycle-potions#comments",
+    "https://www.wowhead.com/item=242651/stabilized-derivate"
   ],
-  "evidence_files": [],
+  "evidence_files": [
+    {
+      "path": "research/v3/evidence/master/20261124T1002-goldsmith-extra-salvage-and-potion-recycle-source-review.md",
+      "commit": "3af061126ca512ad61f90a8f8f9e35e81e56f2fb",
+      "blob": "0d97ab330145fc7185fe14cafb894b59db06969b",
+      "readBackVerified": true
+    }
+  ],
   "worker_reports_verified": [
     {
       "role": "midnight",
-      "reportTime": "2026-11-24T08:10:56.881Z",
-      "result": "Historical 272246 captures remain profile-limited; no new eligible cohort.",
-      "checkpointReadAt": "10b0fbe4a2fcc4930a6cdc269dee22528122165d"
+      "reportTime": "2026-11-24T09:13:13.204Z",
+      "result": "22 original-account bag-delta output rows in seven scopes; held denominators; independently spot-checked source and preserved extra ten scopes.",
+      "checkpointReadAt": "5ec28094f89f1679a7e7767885d0379edd358985"
     },
     {
       "role": "war-within",
-      "reportTime": "2026-11-24T08:21:09.036Z",
-      "result": "One historical scaled reward anomaly held; official hotfix scope and source channel independently checked.",
-      "checkpointReadAt": "10b0fbe4a2fcc4930a6cdc269dee22528122165d"
+      "reportTime": "2026-11-24T09:21:16.767Z",
+      "result": "Housing-dye inventory-change context; no ordinary TWW milling cohort.",
+      "checkpointReadAt": "5ec28094f89f1679a7e7767885d0379edd358985"
     },
     {
       "role": "dragonflight",
-      "reportTime": "2026-11-24T08:31:26.740Z",
-      "result": "Jan 2023 300-bracer secondary video lead held; no original output table or sheet.",
-      "checkpointReadAt": "10b0fbe4a2fcc4930a6cdc269dee22528122165d"
+      "reportTime": "2026-11-24T09:31:59.880Z",
+      "result": "Alternate general guide lacks original 300-bracer shuffle ledger.",
+      "checkpointReadAt": "5ec28094f89f1679a7e7767885d0379edd358985"
     },
     {
       "role": "legacy",
-      "reportTime": "2026-11-24T08:40:59.400Z",
-      "result": "Craftonomics recorder lead held; additional quantity fallback and pending-event reset paths verified independently.",
-      "checkpointReadAt": "10b0fbe4a2fcc4930a6cdc269dee22528122165d"
+      "reportTime": "2026-11-24T09:41:25.377Z",
+      "result": "Disenqueue and other acquisition tools screened, no new qualifying numerical cohort.",
+      "checkpointReadAt": "5ec28094f89f1679a7e7767885d0379edd358985"
     }
   ],
-  "verified_commit_sha": "10b0fbe4a2fcc4930a6cdc269dee22528122165d",
-  "checked_research_branch_head_before_status_write": "10b0fbe4a2fcc4930a6cdc269dee22528122165d",
+  "verified_commit_sha": "3af061126ca512ad61f90a8f8f9e35e81e56f2fb",
+  "checked_research_branch_head_before_status_write": "3af061126ca512ad61f90a8f8f9e35e81e56f2fb",
   "main_head_checked": "3e814929ecffc2c2a282fddaead2012e5b44e9a9",
   "owner_three_pass_head_checked": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "owner_catalogue_manifest_branch_head_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
   "owner_catalogue_pipeline_branch_checked": "a23e65d784f0c36833df0ad903d817d10d2f2ae3",
   "validation_this_run": {
-    "sourceCatalogue": "Read current owner receipt CLOSED_VERIFIED_CURRENT_PIPELINE; PR82 confirmed merged; PR22/23 closed without merge. No independent consumer rerun; no catalogue reopened.",
-    "CI": "Combined status and PR-trigger-filtered workflow endpoints empty for exact research and main heads; no new CI conclusion established and no tests executed.",
-    "automation": "Four current durable worker checkpoints read. Attempts to retrieve automation run details returned action-not-found; no independent enabled-state/run-result confirmation this run and no schedule changes.",
-    "managerTests": "Read charter, pass-1, queue/schema/mechanics/strategy/flags, build adapter function inventory, source receipt, original source Lua and historical source pages. Static inspection only; no live WoW or runtime tests.",
+    "sourceCatalogue": "Current research receipt CLOSED_VERIFIED_CURRENT_PIPELINE; 731 cutoff sources not reopened; no independent consumer rerun.",
+    "CI": "Exact main and starting research combined-status and PR-filtered workflow endpoints empty; no new CI conclusion or tests.",
+    "automation": "Read four durable worker reports; no separate automation run result independently retrieved; no changes to schedules.",
+    "managerTests": "Static inspection of original source, generator, capture and planner, current build method and row support; new review file read-back matched exactly. No runtime/live game verification.",
     "newIndependentCohorts": 0,
+    "newSourceReportedGroupsPendingDeduplication": 2,
     "newSupportedGoldDecisions": 0,
-    "dashboard": "No material KPI change; unchanged."
+    "dashboard": "No material verified gold KPI change; unchanged."
   },
   "blockers": [
-    "Craftonomics output-only ledger lacks completed input-linked events and observed zero completeness; quantity fallback and pending-event reset must be reconciled from original data before using any rates.",
-    "Dastardly Duos one historical scaled variant has unresolved exact reward channel/bonus/ilvl/profile and no confirmed current applicability; do not pool with ordinary TWW or original base-item cohorts.",
-    "Dragonflight original video worksheet and exact outputs unavailable.",
-    "Runecloth third-copy compiled contribution remains unverified; require consumer attribution rather than repeat source scan."
+    "Goldsmith full source receipt and cast/refund reconciliation absent; pooled bag decreases and three-second gains cannot establish complete operation or reliable net-input mean.",
+    "Alchemy Recycle incompatible with current Engineering-specific profession mapping; output bound, input ranks unknown and branch-wide source dedupe pending. Preserve information rather than fabricate AH value or alter schema.",
+    "Dragonflight original 300-bracer sheet unavailable.",
+    "Runecloth third-copy compiled contribution remains unverified; need consumer attribution, not repeated source scan."
   ],
   "exhausted_sources": [
     "2026-11-21 Disenchantry release is a recheck of already-documented 2026-11-19 stats instrumentation lead; no public original Retail events or authoritative per-item DE rates found. Avoid repeated release-description scrapes.",
@@ -119,16 +145,17 @@
     "2026-11-24 06Z: 3DM 280998 and 9game 10404478 directly verified as repost/mirror. Exact NGA author search failed; 5/6/7 per nominal ten herbs matches existing LotzBoi range midpoints, but independence and scope unknown. No new numerical cohort. Do not repeat without original or new raw data.",
     "2026-11-24 07Z: historical 2108913 and 2060716 reviewed; standard weekly and catch-up gates distinct. ProfitProphet Aug25 rebuild already held in 2026-11-17T2320-profitprophet-source-origin-hold.jsonl; Sep19 changelog repeats it, download failed DNS. Do not reopen without original sample or new source attribution.",
     "2026-11-24 08Z: 2277117 and 2276246 absent from owner receipt but historical approximate/crafting-budget context only. 2274222, 2273814, 2281743, 1fdmzwy and 10me1e7 already catalogued; no duplicate cohort. AHSentinel 0.63.0 release explicitly discusses WoW Forever learned DE rates, not Retail evidence. Disenchanting Advisor TWW table estimates and bag-diff capture limitations verified; reopen only for raw events or provenance of numerical table.",
-    "2026-11-24 09Z: Craftonomics source at a9a8e47d inspected; no revisit absent an actual raw export or capture-schema revision. Dastardly Duos forum 2114101, Wowhead 82826, June 6 official hotfix and June 3 event guide establish historical context, not a current numerical baseline; no repeat without exact variant or fix evidence."
+    "2026-11-24 09Z: Craftonomics source at a9a8e47d inspected; no revisit absent an actual raw export or capture-schema revision. Dastardly Duos forum 2114101, Wowhead 82826, June 6 official hotfix and June 3 event guide establish historical context, not a current numerical baseline; no repeat without exact variant or fix evidence.",
+    "2026-11-24 10Z Goldsmith Oct13 and later tour table verified; no repeat unless original salvageRuns/receipts appear. Additional ten raw scopes preserved; no cast denominators. Wowhead alipica report already archived; davenrothz historical source preserved, revisit only rank/profile/dedup or scoped adapter verification."
   ],
-  "next_concrete_step": "Seek independently published original Retail event ledger or post-cutoff owner captures with exact input itemLink, unique completed cast and actual output quantities; prioritize 272246 and ranked current processing profiles. Follow Dragonflight Jan 2023 video only if original spreadsheet becomes accessible; do not duplicate cutoff catalogue.",
+  "next_concrete_step": "Seek original Goldsmith salvageRuns or other public event-linked receipts; resolve net/gross/refunds and additional reagents. Verify current-branch lineage of named Alchemy report, retain bound output and separate Alchemy recipe context; no schema/production changes. Keep 272246 variant-linked evidence priority and avoid reopening assigned catalogue.",
   "production_main_changes": false,
   "addon_changes": false,
   "routine_research_prs": 0,
   "merge_or_release": false,
   "new_schedules": 0,
   "role_schedules_unchanged": true,
-  "prior_status_blob_sha": "722f728e58684bf3209fe9b2d24dc34dd46be85b",
-  "previous_checkpoint": "0d0fba4543d16f66370834eaaf1ad5c17b0beaeb",
-  "previous_status_updated_at": "2026-11-24T08:01:19.030Z"
+  "prior_status_blob_sha": "4a4818bf5465f28a0fd6f0bf7de1ed49c6d8a291",
+  "previous_checkpoint": "a7b053b3a7f306858c5f71b3b6438e40376d5b29",
+  "previous_status_updated_at": "2026-11-24T09:03:32.991Z"
 }
