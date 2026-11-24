@@ -1,13 +1,18 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-24T01:11:37.710Z",
-  "status": "active__post_cutoff_owner_capture_verified_no_duplicate",
+  "updated_at": "2026-11-24T02:11:17.244Z",
+  "status": "active__new_source_acquisition_no_eligible_cohort",
   "task_ids": [
     "T0026",
     "T0049",
     "T0005",
+    "T0001",
+    "T0030",
     "T0039",
     "T0003",
+    "T0004",
+    "T0002",
+    "T0006",
     "T0045"
   ],
   "exact_gaps_targeted": [
@@ -1816,21 +1821,19 @@
       "hold_reason": "Need independent current-build 272246 at-cast link and complete outcome; unknown relevant profession profile prevents using held group as normal-era rates. No extrapolation of 9/9 or 1/1 to general probabilities."
     }
   ],
-  "newly_verified_fields_or_cohorts": [
-    {
-      "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/3e814929ecffc2c2a282fddaead2012e5b44e9a9/research/integration/measured-captures/2026-11-22-reviewed-disenchant-subset/source-transfer.json",
-      "review": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/3e814929ecffc2c2a282fddaead2012e5b44e9a9/research/integration/measured-captures/2026-11-22-reviewed-disenchant-subset/coverage-review.json",
-      "fields": "Decoded 119 unique retained receipts; exact 10 approved Midnight epic inputs and ranked outputs, 5 held inputs, skill104/no specialization; 272246 absent from retained records; no new admission.",
-      "details_in": "triage.post_cutoff_owner_capture_already_reviewed_subset_no_duplicate"
-    }
-  ],
+  "newly_verified_fields_or_cohorts": [],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": [],
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/3e814929ecffc2c2a282fddaead2012e5b44e9a9/research/integration/measured-captures/2026-11-22-reviewed-disenchant-subset/source-transfer.json",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/3e814929ecffc2c2a282fddaead2012e5b44e9a9/research/integration/measured-captures/2026-11-22-reviewed-disenchant-subset/coverage-review.json"
+    "https://github.com/Pirson-s-Addons/MillHelper/blob/HEAD/README.md",
+    "https://github.com/Pirson-s-Addons/ProspectHelper/blob/HEAD/README.md",
+    "https://github.com/GauteR/simple-disenchant-tooltip/blob/HEAD/README.md",
+    "https://github.com/RobinLanderloos/DustOrGold/blob/HEAD/README.md",
+    "https://github.com/PsiGaming/ProfitCraft/blob/HEAD/README.md",
+    "https://github.com/d1verseTI/GoblinLedger/blob/HEAD/README.md",
+    "https://github.com/EvilTactician/wow-mod-retail-professions/blob/HEAD/README.md"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -2107,24 +2110,94 @@
       "url": "https://www.curseforge.com/wow/addons/disenqueue",
       "reason": "Retail/Classic queue addon describes processing controls but no public original input/output/zero ledger, ore ranks or refund basis. Its generic 5+ herb stack threshold cannot establish Midnight 10-herb batch or observed yield; pre-cutoff, no new cohort."
     },
-    {}
-  ],
-  "next_concrete_step": "Find new independent original event exports with exact 272246 instance/build/profile or rank-specific ore and milling receipts. Do not duplicate Nov22 reviewed subset; only consider held rows if missing profile is independently resolved and owner review allows it.",
-  "verified_base_commit_sha": "94874709252339ce2b3b0c0211d3f28231a5b278",
-  "commit_sha": null,
-  "verified_commit_sha": null,
-  "commit_note": "Owned status only; read-back at returned commit. Source transfer and review blob verified against main; no changes to numerical baselines, evidence, other roles or code.",
-  "new_leads_screened": [
     {
-      "category": "post_cutoff_original_owner_capture_readback",
-      "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/3e814929ecffc2c2a282fddaead2012e5b44e9a9/research/integration/measured-captures/2026-11-22-reviewed-disenchant-subset/source-transfer.json",
-      "review": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/3e814929ecffc2c2a282fddaead2012e5b44e9a9/research/integration/measured-captures/2026-11-22-reviewed-disenchant-subset/coverage-review.json",
-      "disposition": "Already reviewed by existing integration; no duplicate evidence."
+      "url": "https://github.com/Pirson-s-Addons/MillHelper/blob/HEAD/README.md",
+      "readme_blob_sha": "18f58631a2a8179a99e75c431a6c7d643bc7d8b7",
+      "reason": "Classic through Mists milling UI; README describes five-unit threshold, not Retail ten-herb milling or measured player outcomes. Nov 23 head b3085bf209809327bcaf6df97088bc12e0ba6661 changes gamepad shortcuts only."
     },
     {
-      "category": "fresh_web_discovery",
-      "scope": "Nov 20 onward original Retail DE, prospecting and milling across Reddit, Blizzard forums and indexed guides",
-      "disposition": "No new independent source cohort located; earlier guides and Forever posts not re-recorded."
+      "url": "https://github.com/Pirson-s-Addons/ProspectHelper/blob/HEAD/README.md",
+      "readme_blob_sha": "070d86fb0ee17615e150ad334fbdb0b2299ae170",
+      "reason": "Classic and TBC Anniversary prospecting UI; no Retail player input-output receipts or cast/zero/refund distribution."
+    },
+    {
+      "url": "https://github.com/GauteR/simple-disenchant-tooltip/blob/HEAD/README.md",
+      "readme_blob_sha": "ee75a341f77a909af3030c59e103a034efe85d0b",
+      "reason": "Explicit Forever 1.60.x interface; not Retail Midnight. No transferable observed current Retail yield sample."
+    },
+    {
+      "url": "https://github.com/RobinLanderloos/DustOrGold/blob/HEAD/README.md",
+      "readme_blob_sha": "987a24b9ce85d5b3e79dcb2f50aeda68f30fd3ba",
+      "reason": "Explicit Forever; advertises results log but README contains no published Retail event records."
+    },
+    {
+      "url": "https://github.com/PsiGaming/ProfitCraft/blob/HEAD/README.md",
+      "readme_blob_sha": "dfb60975687ba470dead96f4a6a6bc470cea237a",
+      "reason": "Forever-only; explicitly uses Classic reference tables, not measured Retail rates."
+    },
+    {
+      "url": "https://github.com/d1verseTI/GoblinLedger/blob/HEAD/README.md",
+      "readme_blob_sha": "3954503f828239a6f6b5d7ad878e7a453cf2706a",
+      "reason": "Forever client; price and vendor records are not Retail processing event counts."
+    },
+    {
+      "url": "https://github.com/EvilTactician/wow-mod-retail-professions/blob/HEAD/README.md",
+      "readme_blob_sha": "dd033dd2cc0bcf9896436af893ff1877968b0483",
+      "reason": "Retail-style UI for AzerothCore WotLK 3.3.5a, not Blizzard Retail Midnight; custom server crafting mechanics cannot be imported."
+    }
+  ],
+  "next_concrete_step": "Prioritize genuinely new consented original player export or changed source with a raw operation ledger for 272246 current build, rank-specific Tin/Copper/Silver and ten-herb milling. Avoid rescreening unchanged collector releases, old guide/search snippets, Forever/Classic and custom-server repositories. Reuse existing reviewed source scopes; do not duplicate Nov 22 approved subset. Reopen a held field only on independent missing-context evidence.",
+  "verified_base_commit_sha": "0d81075b24b5eb4fd68f69e77ac34131ad091a0b",
+  "commit_sha": null,
+  "verified_commit_sha": null,
+  "commit_note": "Status only; current commit is verified by read-back at the returned commit SHA (a commit cannot embed its own hash). No evidence or numerical baseline changes. Preserve prior verified catalogue checkpoint and other roles.",
+  "new_leads_screened": [
+    {
+      "category": "new_public_repository_screen",
+      "search": "GitHub repository search, pushed >= 2026-11-20, WoW disenchant/prospecting/milling/profession trackers",
+      "sources": [
+        {
+          "url": "https://github.com/Pirson-s-Addons/MillHelper/blob/HEAD/README.md",
+          "readme_blob_sha": "18f58631a2a8179a99e75c431a6c7d643bc7d8b7",
+          "reason": "Classic through Mists milling UI; README describes five-unit threshold, not Retail ten-herb milling or measured player outcomes. Nov 23 head b3085bf209809327bcaf6df97088bc12e0ba6661 changes gamepad shortcuts only."
+        },
+        {
+          "url": "https://github.com/Pirson-s-Addons/ProspectHelper/blob/HEAD/README.md",
+          "readme_blob_sha": "070d86fb0ee17615e150ad334fbdb0b2299ae170",
+          "reason": "Classic and TBC Anniversary prospecting UI; no Retail player input-output receipts or cast/zero/refund distribution."
+        },
+        {
+          "url": "https://github.com/GauteR/simple-disenchant-tooltip/blob/HEAD/README.md",
+          "readme_blob_sha": "ee75a341f77a909af3030c59e103a034efe85d0b",
+          "reason": "Explicit Forever 1.60.x interface; not Retail Midnight. No transferable observed current Retail yield sample."
+        },
+        {
+          "url": "https://github.com/RobinLanderloos/DustOrGold/blob/HEAD/README.md",
+          "readme_blob_sha": "987a24b9ce85d5b3e79dcb2f50aeda68f30fd3ba",
+          "reason": "Explicit Forever; advertises results log but README contains no published Retail event records."
+        },
+        {
+          "url": "https://github.com/PsiGaming/ProfitCraft/blob/HEAD/README.md",
+          "readme_blob_sha": "dfb60975687ba470dead96f4a6a6bc470cea237a",
+          "reason": "Forever-only; explicitly uses Classic reference tables, not measured Retail rates."
+        },
+        {
+          "url": "https://github.com/d1verseTI/GoblinLedger/blob/HEAD/README.md",
+          "readme_blob_sha": "3954503f828239a6f6b5d7ad878e7a453cf2706a",
+          "reason": "Forever client; price and vendor records are not Retail processing event counts."
+        },
+        {
+          "url": "https://github.com/EvilTactician/wow-mod-retail-professions/blob/HEAD/README.md",
+          "readme_blob_sha": "dd033dd2cc0bcf9896436af893ff1877968b0483",
+          "reason": "Retail-style UI for AzerothCore WotLK 3.3.5a, not Blizzard Retail Midnight; custom server crafting mechanics cannot be imported."
+        }
+      ],
+      "disposition": "Seven new acquisition leads screened. All non-Retail game modes or custom server; no numeric admission."
+    },
+    {
+      "category": "fresh_date_bounded_public_search",
+      "scope": "Retail DE gear/skill and Dawn Crystal; Umbral Tin, Copper, Silver and Eversong Diamond, Tranquility Bloom/pigments, Reddit, Blizzard forums, Wowhead, GitHub and video search",
+      "disposition": "No new original eligible post-cutoff cohort. Prior Cardinalai/JD3K samples and guide estimates returned; not re-transcribed or reopened. Older guide budgets and static equipment counts not processing evidence."
     }
   ],
   "catalogue_checkpoint": {
