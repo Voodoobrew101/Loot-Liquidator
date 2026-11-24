@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-24T07:41:00.839Z",
-  "status": "Active; screened previously unreviewed public community loot dataset; no new qualifying target measurements.",
+  "updated_at": "2026-11-24T08:40:59.400Z",
+  "status": "Active; new recorder source screened; no new qualifying target measurement.",
   "task_ids": [
     "T0047",
     "T0052",
@@ -11,31 +11,29 @@
     "T0042"
   ],
   "exact_gaps_targeted": [
-    "24995 and related BC armor/weapon itemLink profiles, completed casts, hits and quantities for 22445/22446/22447/22449",
-    "36909 and 23424 completed prospects, exact output counts, histograms, refunds",
-    "New public source with operation-level capture rather than zone/session aggregate"
+    "24995 and matching BC gear exact input identity and completed operations, hits, quantities, zero bins for 22445/22446/22447/22449",
+    "36909 and 23424 actual prospects, output totals and histograms",
+    "New public exact-input processing ledger"
   ],
   "newly_verified_fields_cohorts": [
     {
-      "disposition": "new acquisition lead screened; public aggregate unsuitable for target numerical evidence",
-      "summary": "New acquisition path: Haul 2026.11.19.1 author release (Nov 19) tracks loot by farming session, not documented exact processing operation. Public GEC community atlas exposes aggregate zone loot, fishing, kills and skill-ups; Retail/Forever filtering exists, but its displayed counts/percentages are zone aggregates, not completed target operations. Searches within the public Haul atlas for Disenchant, Cobalt Ore and Arcane Dust found no matching text. Individual synced data is private by default according to the data project and Uplink author README. The Nov 19 release corrects handling of protected profession skill-up messages; it does not document a new processing measurement. Earlier July author changelog reports possible repeated tracked events fixed July 25; Sep 30 notes prior pause/merge undercount and that previously saved totals remained unchanged. No accessible target input-linked operation ledger, raw output histogram, casts, zeros, refunds, skill/spec/build context, or independently supported per-operation mean. No new Retail cohort or numeric baseline fields. Fresh source searches using Outland material names and Cobalt/Fel Iron yielded historical references and previously covered recorders, not new original measurements. No price data retained."
+      "disposition": "new recorder acquisition lead held; missing input-linked events and zeros",
+      "summary": "New post-cutoff acquisition path: Craftonomics 5.14.0, Nov 23 (CurseForge file 9779904), Retail 12.1.5 and Forever. Original source pinned at a9a8e47d103b53e2aa54376be4fc3eae2f4d9cb2: Gone.lua lines 17-31, 55-108 and 132-137 correlates successful spell 13262 with loot within a three-second window and identifies at most the first decreased item among previously crafted item IDs, not an arbitrary dropped item's exact itemLink. Ledger.lua lines 789-824 skips empty loot and writes one craft entry per material, with output item ID, quantity and rank, not an input-linked completed-operation record; same-second entries are not unique cast IDs. A disappeared crafted item with unobserved loot is merely marked used. The README confirms DE material entries and unobserved-loot limitation; displayed Retail estimates come from TSM/Auctionator, not a new source of rates. No public target operation export or supported new mean was found. New searches for exact-name Warmaul, Fel Iron, Cobalt and Arcane Dust returned old references and other-flavor material, not independent current target measurements. No prices retained."
     }
   ],
   "source_urls": [
-    "https://www.wowinterface.com/downloads/info27172-2026.09.30.2.html",
-    "https://goblineng.co/addons/haul",
-    "https://goblineng.co/data",
-    "https://goblineng.co/data/zones?src=Haul",
-    "https://goblineng.co/data/zones?flavor=retail&src=Haul",
-    "https://github.com/Goblin-Engineering-Company/uplink/blob/main/README.md"
+    "https://www.curseforge.com/wow/addons/craftonomics/files/9779904",
+    "https://github.com/Archydude/Craftonomics/blob/a9a8e47d103b53e2aa54376be4fc3eae2f4d9cb2/Gone.lua",
+    "https://github.com/Archydude/Craftonomics/blob/a9a8e47d103b53e2aa54376be4fc3eae2f4d9cb2/Ledger.lua",
+    "https://github.com/Archydude/Craftonomics"
   ],
-  "numeric_summary": "No new measured fields, identities, independent cohorts or source-supported per-operation means. Public aggregate loot counts are not processing operations.",
+  "numeric_summary": "No newly verified empirical fields, item identities, independent cohorts or supported per-operation means.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-23T1944-chromie-time-disenchant-eligibility-hotfix.jsonl",
-  "preserved_prior_status_summary": "Disenchant Helper 2.1.1 and Disenchantry 1.3.0 screened previously; no new target ledger.",
-  "verified_parent_sha": "d5a953271219e4b8ea16617529750aacd8523702",
-  "verified_commit_sha": "e8aa7fc7d5feb32c72ae14d13bc42e3207d62586",
-  "commit_note": "verified_commit_sha records the previous owned status commit with exact blob read-back checked this run; this update is committed once and verified afterwards.",
+  "preserved_prior_status_summary": "Active; screened previously unreviewed public community loot dataset; no new qualifying target measurements.",
+  "verified_parent_sha": "21854ad7ce79d6ce773a5b312f4799ac83af0046",
+  "verified_commit_sha": "0d0fba4543d16f66370834eaaf1ad5c17b0beaeb",
+  "commit_note": "Previous owned status commit exact blob verified; this status-only commit is verified after writing.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -513,10 +511,11 @@
     "2026-11-24T04:41:24.955Z: New recorder acquisition screen: EasyDestroy retail 12.1.5 release 3.3.0 (Nov 5) listing and original SHA-pinned Main.lua initialize filters/options/blacklist. Five actual public retail configuration snapshots (three primary and two backups, distinct blob SHAs 99d3051abfe8d60250c69757cc581e29ea18b9c6, 61cedd8e01d3a8b1e7140ec0f74cc9b6ab89a5c5, f9e2a5e073235e4790ec4d8b73cdec8ebdefce3c, c6bc50d0ac1d608a7a6056748371066f30e0e291, ca5eec58b614a42b0eb182a1a5fd9df4322e79f7) contain settings, filters and blacklists, no target processing records; no inference of zero operations. Everloot original pinned README explicitly targets Forever, build 71037, and keeps last 500 personal disenchant history entries per character outside uploaded records; retention cap is not sample N. Craft Ladder 1.11.4 Nov 21 (Forever 1.60.1.71037) reports earlier missed instant/autoloot disenchant captures and correction of shields/offhands from weapon to armor model (453 items reclassified, 72 newly included); these are author-reported software changes, not measurements or Retail mechanics. ShardHappens and Disenchant Deals are Forever-only. Exclude all from Retail numeric baseline. Fresh targeted Warmaul/Bloodfist group and Cobalt/Fel Iron searches returned known historical tables and guides, not new independently grounded exact target operation logs. No new source means, hits, casts, quantities, zeros, ranks, or refunds. No prices retained.",
     "2026-11-24T05:40:58.478Z: Goblinomics 1.3.0 (Nov 8) original source at a5c8cfdaed0bee823685f29e1a67d802f1c42fbc: Disenchant.Flush drops operations with no recorded outputs; successful spell event is correlated to loot in a 3-second window, input can be unknown/incomplete, and raw record stores one captured operation and output item-key quantities. Salvage.Rows pools base item across bonus variants; aggregate cannot establish variant-specific yields. Tests use mocked events and fictional items, not empirical samples. Source search located existing Midnight 2026-11-15 raw-capture-constraints record in snapshot, so this method source is already covered and not new independent evidence; no public original target export found in search. ReavyTools 1.4.6 (Nov 19) is explicitly Forever 1.60.1, not Retail. Fresh target searches surfaced no independently grounded current Retail target operations. No new IDs, casts, hits, quantities, zero bins, skill/spec or refund observations. No prices retained.",
     "2026-11-24T06:41:53.673Z: Post-cutoff recorder screening: Rokzan Disenchant Helper 2.1.1, published Nov 22 (file 9751151), supports Retail 12.1.5 and Forever 1.60.1. Author distinguishes manual successful casts from helper activity and stores learned predictions/statistics locally; predictions combine reference and personal data. Changelog reports fixes to learning, statistics and automatic blacklist. Neither description nor accessible source page supplies raw target operations, exact item variants, zero-inclusive outcomes or pre/post-fix data. No GitHub DisenchantHelperDB or DisenchantHelper.lua matches in this search. Disenchantry 1.3.0 (Nov 23, file 9770384) advertises Retail plus several other flavors; no changelog and comments not exposed. Existing Midnight Nov16 source already documents third-party CraftWise reader's Forever-only learned sample key and aggregate count/total/hits/min/max. Do not treat current cross-flavor package availability as confirmation of Retail capture or import old Forever samples; no new public original target export found. Fresh exact-name post-cutoff searches for Warmaul Legplates, Cobalt and Fel Iron returned prior reference tables, market categories and unrelated Forever discussion. No new input/output identities, observed casts, hits, quantities, zeros, skill/spec, refunds or means; no prices retained.",
-    "2026-11-24T07:41:00.839Z: New acquisition path: Haul 2026.11.19.1 author release (Nov 19) tracks loot by farming session, not documented exact processing operation. Public GEC community atlas exposes aggregate zone loot, fishing, kills and skill-ups; Retail/Forever filtering exists, but its displayed counts/percentages are zone aggregates, not completed target operations. Searches within the public Haul atlas for Disenchant, Cobalt Ore and Arcane Dust found no matching text. Individual synced data is private by default according to the data project and Uplink author README. The Nov 19 release corrects handling of protected profession skill-up messages; it does not document a new processing measurement. Earlier July author changelog reports possible repeated tracked events fixed July 25; Sep 30 notes prior pause/merge undercount and that previously saved totals remained unchanged. No accessible target input-linked operation ledger, raw output histogram, casts, zeros, refunds, skill/spec/build context, or independently supported per-operation mean. No new Retail cohort or numeric baseline fields. Fresh source searches using Outland material names and Cobalt/Fel Iron yielded historical references and previously covered recorders, not new original measurements. No price data retained."
+    "2026-11-24T07:41:00.839Z: New acquisition path: Haul 2026.11.19.1 author release (Nov 19) tracks loot by farming session, not documented exact processing operation. Public GEC community atlas exposes aggregate zone loot, fishing, kills and skill-ups; Retail/Forever filtering exists, but its displayed counts/percentages are zone aggregates, not completed target operations. Searches within the public Haul atlas for Disenchant, Cobalt Ore and Arcane Dust found no matching text. Individual synced data is private by default according to the data project and Uplink author README. The Nov 19 release corrects handling of protected profession skill-up messages; it does not document a new processing measurement. Earlier July author changelog reports possible repeated tracked events fixed July 25; Sep 30 notes prior pause/merge undercount and that previously saved totals remained unchanged. No accessible target input-linked operation ledger, raw output histogram, casts, zeros, refunds, skill/spec/build context, or independently supported per-operation mean. No new Retail cohort or numeric baseline fields. Fresh source searches using Outland material names and Cobalt/Fel Iron yielded historical references and previously covered recorders, not new original measurements. No price data retained.",
+    "2026-11-24T08:40:59.400Z: New post-cutoff acquisition path: Craftonomics 5.14.0, Nov 23 (CurseForge file 9779904), Retail 12.1.5 and Forever. Original source pinned at a9a8e47d103b53e2aa54376be4fc3eae2f4d9cb2: Gone.lua lines 17-31, 55-108 and 132-137 correlates successful spell 13262 with loot within a three-second window and identifies at most the first decreased item among previously crafted item IDs, not an arbitrary dropped item's exact itemLink. Ledger.lua lines 789-824 skips empty loot and writes one craft entry per material, with output item ID, quantity and rank, not an input-linked completed-operation record; same-second entries are not unique cast IDs. A disappeared crafted item with unobserved loot is merely marked used. The README confirms DE material entries and unobserved-loot limitation; displayed Retail estimates come from TSM/Auctionator, not a new source of rates. No public target operation export or supported new mean was found. New searches for exact-name Warmaul, Fel Iron, Cobalt and Arcane Dust returned old references and other-flavor material, not independent current target measurements. No prices retained."
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Seek independently published exact-input processing logs or a new scoped identity/profile/mean receipt; do not recheck Haul public atlas or unchanged recorder listings without a new operation-level dataset or documented schema. Preserve closed catalogue decisions.",
+  "next_concrete_step": "Seek a newly published raw event export with input itemLink, explicit completed casts and output units; do not revisit Craftonomics absent new capture schema or actual export. Keep cutoff catalogue closed and seek independent post-cutoff evidence.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -525,15 +524,13 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://www.wowinterface.com/downloads/info27172-2026.09.30.2.html",
-    "https://goblineng.co/addons/haul",
-    "https://goblineng.co/data",
-    "https://goblineng.co/data/zones?src=Haul",
-    "https://goblineng.co/data/zones?flavor=retail&src=Haul",
-    "https://github.com/Goblin-Engineering-Company/uplink/blob/main/README.md"
+    "https://www.curseforge.com/wow/addons/craftonomics/files/9779904",
+    "https://github.com/Archydude/Craftonomics/blob/a9a8e47d103b53e2aa54376be4fc3eae2f4d9cb2/Gone.lua",
+    "https://github.com/Archydude/Craftonomics/blob/a9a8e47d103b53e2aa54376be4fc3eae2f4d9cb2/Ledger.lua",
+    "https://github.com/Archydude/Craftonomics"
   ],
-  "latest_run_source_date": "2026-11-19",
-  "latest_run": "Read required branch instructions and queue; screened new Haul community data source and targeted material-name searches. No new evidence JSONL. Token T0053 remains done.",
+  "latest_run_source_date": "2026-11-23",
+  "latest_run": "Read current instructions and queue; screened Craftonomics original source and recent exact-name searches. T0053 remains done. No new evidence JSONL.",
   "new_evidence_file_this_run": null,
-  "next": "Seek independently published exact-input processing logs or a new scoped identity/profile/mean receipt; do not recheck Haul public atlas or unchanged recorder listings without a new operation-level dataset or documented schema. Preserve closed catalogue decisions."
+  "next": "Seek a newly published raw event export with input itemLink, explicit completed casts and output units; do not revisit Craftonomics absent new capture schema or actual export. Keep cutoff catalogue closed and seek independent post-cutoff evidence."
 }
