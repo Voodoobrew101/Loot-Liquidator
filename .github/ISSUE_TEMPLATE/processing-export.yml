@@ -8,7 +8,7 @@ body:
       value: |
         Help improve Loot Liquidator with your recorded results. Small, complete batches are welcome.
         Read the [contribution guide](https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/docs/community-research.md).
-        Open /ll → Community research on the first settings tab and use Export all, or attach every page from Export pages.
+        Open /ll → Community research on the first settings tab and use Export all, then copy and paste the result below. For Export pages, paste every page.
         This issue and its attachments will be public. Compact exports are compressed, not anonymized.
   - type: input
     id: version
@@ -41,9 +41,10 @@ body:
   - type: textarea
     id: exports
     attributes:
-      label: Export files
-      description: Attach the complete .txt/.json export here. Use .txt if .json is rejected. Include every page from one snapshot; do not combine pages copied before and after recording more results. Short exports may be pasted inside a fenced code block. Never attach your entire SavedVariables file.
-      placeholder: Drag your export files here, or paste the complete short JSON inside a code block.
+      label: Paste your export
+      description: Copy the complete export from the addon and paste it here. No file is required. For a paged export, paste every page from the same snapshot, separated by a blank line. Do not record more results between copying pages. If the export exceeds GitHub's text limit, attach it as a .txt file instead. Never share your entire SavedVariables file.
+      placeholder: Paste the complete text copied from the addon's export window here.
+      render: json
     validations:
       required: true
   - type: textarea
