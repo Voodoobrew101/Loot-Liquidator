@@ -1,6 +1,6 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-24T22:10:52.250Z",
+  "updated_at": "2026-11-24T23:10:56.370Z",
   "status": "active__no_new_independent_numeric_cohort",
   "task_ids": [
     "T0026",
@@ -2132,19 +2132,16 @@
     }
   ],
   "newly_verified_fields_or_cohorts": [
-    "Gold Forever original recorder and companion spec clarify evidence acquisition limits: item-ID/time correlation, positive receipt attribution and authenticated upload are not a zero-inclusive Retail DE cohort. No measured fields advanced."
+    "No newly measured fields. Three previously unlisted source leads screened; leveling budgets, explicitly unmeasured yields and a Forever-specific addon article are not Retail observations."
   ],
   "newly_verified_cohorts": [],
-  "numeric_fields_advanced": [
-    "None; no new independent processing counts, quantity distributions, probabilities or at-cast profiles."
-  ],
+  "numeric_fields_advanced": [],
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://www.curseforge.com/wow/addons/gold-forever/files/9719862/dependencies",
-    "https://github.com/gold-forever/addon/blob/main/GoldForever/Recording/Loot.lua",
-    "https://github.com/gold-forever/companion/blob/main/internal/server/openapi.yaml",
-    "https://www.curseforge.com/wow/addons/ka0s-loot-history"
+    "https://lorewoven.net/wow-midnight-herbalism-inscription-raiders-guide/",
+    "https://wowgoldfarms.com/guides/retail/zulaman-mining-midnight/",
+    "https://wowforeveraddons.com/articles/disenchant-addons-wow-forever"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -2773,37 +2770,43 @@
     {
       "url": "https://www.curseforge.com/wow/addons/ka0s-loot-history",
       "reason": "Retail Midnight publisher documentation describes CSV loot export, Certain/Inferred attribution, quality and source filters, and Refund separately. May be related to previous LootHistory lead; no independence asserted. Project page supplies no original operation ledger, rank-linked at-cast inputs, zeros or completed counts. No new numerical admission."
+    },
+    {
+      "url": "https://lorewoven.net/wow-midnight-herbalism-inscription-raiders-guide/",
+      "reason": "Original Mar 11 2026 guide by Novalith; 360 Tranquility Bloom, 100 Argentleaf, 90 Mana Lily, 90 Sanguithorn (640 herbs) are explicitly a leveling shopping budget and instruction to mill, not observed completed operations, output quantities or refund ledger. No new post-cutoff cohort; no re-catalogue."
+    },
+    {
+      "url": "https://wowgoldfarms.com/guides/retail/zulaman-mining-midnight/",
+      "reason": "Oct 8 guide by Christopher Lucas explicitly states prospecting yields have not been measured. Ranked ore/price and zone data are not original processing results; no completed casts, ranked output hits or histograms. Pre-cutoff reference; no new cohort."
+    },
+    {
+      "url": "https://wowforeveraddons.com/articles/disenchant-addons-wow-forever",
+      "reason": "Nov 21 article specifically covers WoW Forever and says DisenchantBuddy uses Classic Era tables on Forever. Molinari is a casting convenience, not a published cohort. No Retail Midnight player event ledger or rates."
     }
   ],
-  "next_concrete_step": "Seek newly published original Retail processing receipts or owner-consented exports with joined true operations; for Gold Forever require original item-instance/operation linkage, actual zero-inclusive denominator, skill/spec/build, and stable event-level dedup across saves. Do not recheck unchanged collector pages or try private endpoints. Continue 272246, 237362/237363, Copper/Silver and herb profile gaps.",
-  "verified_base_commit_sha": "961e3934b29aca708204d2c5938ee3f1d8d2fb5b",
+  "next_concrete_step": "Check only new original Retail processing receipts, consented owner/community exports or source revisions with materially new observations. Prioritize exact 272246 at-cast variant/profile and complete retained event outcome; then rank-specific ore and herb operation/refund ledgers. Avoid rechecking unchanged guide pages, cutoff material and private endpoints. Existing holds unchanged.",
+  "verified_base_commit_sha": "a70fb426d61dd17aee01f801b603e4f6dbfc1fd0",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Status-only update guarded by prior owned blob SHA. A commit cannot embed its own SHA; exact commit/blob read-back required. No evidence or baseline changes.",
+  "commit_note": "Status-only update guarded by owned blob SHA. Previous status exact commit read back and matches current owned blob. This commit's SHA cannot be embedded in its own content; verify exact commit/blob after update.",
   "new_leads_screened": [
     {
-      "category": "new_public_collector_source_and_protocol_audit",
+      "category": "additional_source_screening_no_new_cohort",
       "sources": [
         {
-          "url": "https://www.curseforge.com/wow/addons/gold-forever/files/9719862/dependencies",
-          "reason": "Retail-compatible release 0.24.2 Nov 20, 2026; changelog for Nov 15 0.22.0 explicitly describes uploading item-linked DE loot and pooling by expansion. New source acquisition lead, not a numerical study. Public website and privacy URL inaccessible in web retrieval, no original participant cohort or published aggregate denominator retrieved."
+          "url": "https://lorewoven.net/wow-midnight-herbalism-inscription-raiders-guide/",
+          "reason": "Original Mar 11 2026 guide by Novalith; 360 Tranquility Bloom, 100 Argentleaf, 90 Mana Lily, 90 Sanguithorn (640 herbs) are explicitly a leveling shopping budget and instruction to mill, not observed completed operations, output quantities or refund ledger. No new post-cutoff cohort; no re-catalogue."
         },
         {
-          "url": "https://github.com/gold-forever/addon/blob/main/GoldForever/Recording/Loot.lua",
-          "blob_sha": "0cf6b54a2dc7908f7ed0ec6531894c5ee0d1e31d",
-          "reason": "Inspected original recorder: last clicked bag item within 2 seconds of spell start (13262), successful cast then loot-source association within 5 seconds; writes d<itemId> when source matches or is missing. This is a timed attribution rule, not guaranteed item-instance identity. The shown DE path retains only ID/time, not at-cast ilvl/bonus/skill/spec or a standalone zero-inclusive operation ledger. Do not interpret positive loot events as complete casts. Separate Disenchant.lua blob 77d498c01bd66b4750ddadc67106dec737d3cacb is a Classic Era reference table, not Retail observations."
+          "url": "https://wowgoldfarms.com/guides/retail/zulaman-mining-midnight/",
+          "reason": "Oct 8 guide by Christopher Lucas explicitly states prospecting yields have not been measured. Ranked ore/price and zone data are not original processing results; no completed casts, ranked output hits or histograms. Pre-cutoff reference; no new cohort."
         },
         {
-          "url": "https://github.com/gold-forever/companion/blob/main/internal/server/openapi.yaml",
-          "blob_sha": "224ab963ba28ad74cf42ad8df363a3b58fb94f2c",
-          "reason": "Original companion API spec lists save upload, prices, shared state, device and companion routes, no documented public DE cohort download. PROTOCOL.md blob 7adc7a7cfe4cfb0eb394168d8843d1f6af02100d describes authenticated save uploads, game-interface separation, content-hash dedup (not proof of cross-snapshot operation dedup). No auth attempt or upload made. tests/realsave.md blob e4ee21dcfa921547a062c9715950694f9dc3ffaa describes an October 24 real Retail save tested locally, but does not publish it; golden/generated test saves are not source observations."
-        },
-        {
-          "url": "https://www.curseforge.com/wow/addons/ka0s-loot-history",
-          "reason": "Retail Midnight publisher documentation describes CSV loot export, Certain/Inferred attribution, quality and source filters, and Refund separately. May be related to previous LootHistory lead; no independence asserted. Project page supplies no original operation ledger, rank-linked at-cast inputs, zeros or completed counts. No new numerical admission."
+          "url": "https://wowforeveraddons.com/articles/disenchant-addons-wow-forever",
+          "reason": "Nov 21 article specifically covers WoW Forever and says DisenchantBuddy uses Classic Era tables on Forever. Molinari is a casting convenience, not a published cohort. No Retail Midnight player event ledger or rates."
         }
       ],
-      "disposition": "Gold Forever is a new candidate for consented original exports, not a presently accessible measured cohort. The actual capture semantics and missing public API prohibit importing its reference table or treating positive loot receipts as operation denominators. Ka0s page not assumed independent of existing LootHistory. Fresh named DE, ore and milling searches returned previously screened sources and non-Midnight matches; no recataloguing or new evidence file."
+      "disposition": "No independent original processing ledger from fresh date-scoped forum, Reddit, GitHub or named-material searches. Existing 272246 historical variant evidence, Cardinalai tin/silver data, Goldsmith raw bag-delta aggregates and collector holds unchanged. No cutoff recataloguing, inferred rates or empty evidence file."
     }
   ],
   "catalogue_checkpoint": {
@@ -2818,5 +2821,6 @@
     "main_commit": "3f7323db7b28d822d7c1a89d2d48ee15dbfc5b36",
     "release_status": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending",
     "worker_recataloguing": "not performed"
-  }
+  },
+  "previous_verified_status_commit_sha": "3b701879365d91e97656d895c061b8385a9ac0dc"
 }
