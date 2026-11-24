@@ -1,9 +1,6 @@
 # Daily community research review
 
-This is the maintainer runbook for the daily community-export task. The scheduled
-agent runs as a standalone local task at **09:00 America/Los_Angeles**. Its machine,
-Codex app, repository access and credentials must be available. This is not a
-GitHub-hosted unattended research runner.
+The community-export review is scheduled in ChatGPT at **09:00 America/Los_Angeles** daily. The hosted task coordinates review through connected GitHub tools. Trusted GitHub Actions perform release build, test, packaging and publication. The maintainer's PC and Codex app can be closed.
 
 The owner's November 23, 2026 request authorizes this task to review crowdsourced
 exports, integrate supported shared-data improvements into the most recent
@@ -15,8 +12,9 @@ secrets, or publishing unreviewed submissions.
 
 ## Start from current production and inspect all updates
 
-1. Fetch the newest `origin/main` and release tags. Create an isolated working
-   branch/worktree from that exact main commit. Never build on yesterday's branch
+1. Read the newest GitHub `main` and release tags. Create an isolated review
+   branch from that exact main commit and check it out in a managed cloud runner
+   when executing intake or build commands. Never build on yesterday's branch
    or overwrite another worker's changes. Pin and record the starting SHA.
 2. Read this runbook, `docs/community-research.md`, the current capture validator,
    community adapter, official build pipeline, release documentation and relevant
@@ -26,7 +24,7 @@ secrets, or publishing unreviewed submissions.
    exists. Reconcile any outstanding publication before starting another release.
 4. Search issues with label `community-research` **or** title `[Processing export]`.
    Inspect edited issue bodies and all comments for new or replaced attachments,
-   including previously held or closed submissions. Do not use a created-since
+   including hub #91 and previously held or closed submissions. Do not use a created-since
    cutoff: an old issue can contain today's new export. Compare content/attachment
    hashes with the state, not just titles, creation times or signed download URLs.
 
@@ -41,12 +39,12 @@ Download only the expected JSON/text exports from GitHub HTTPS attachment
 locations, such as `github.com/user-attachments/files/` and GitHub's attachment
 storage hosts. Inspect redirects and restrict the final HTTPS host; never follow
 an arbitrary contributor-supplied website or forward credentials to attachment
-hosts. Bound downloads to **16 MiB per file and 64 MiB per export**. Do not unpack
+hosts. Bound downloads to **16 MiB per file and 64 MiB per snapshot**. Do not unpack
 arbitrary archives. A compact `cast-transfer` JSON document is supported by the
 trusted validator; it is not a general archive or an executable program.
 
 Save each attachment to a temporary intake directory. For pasted JSON, extract
-only the complete JSON document to a local file. Preserve its original bytes and
+only the complete JSON document to a file in the cloud intake workspace. Preserve its original bytes and
 the issue/comment source link. Never rewrite character, study, context, cast,
 input or output identities to make validation pass.
 
@@ -113,7 +111,7 @@ Multi-input crafts and casts with input refunds currently require a separate
 reviewed valuation adapter. Refunded captures stay staged: their measured net
 consumption must never be discarded while using the nominal batch for gold value.
 
-Create a local review JSON using the exact `submissionSHA256` from `submission.json`
+Create a review JSON in the cloud intake workspace using the exact `submissionSHA256` from `submission.json`
 and `communityCohortID` values from `staged-baselines.json`. Select only whole
 eligible cohorts. Classify **every observed output** in each selected cohort:
 
@@ -203,10 +201,16 @@ path. A metadata/status-only change does not justify an addon release.
    checksum. An upload awaiting CurseForge processing is not yet a confirmed
    public listing. Do not claim live WoW testing unless it was actually performed.
 
-Credentials stay in the approved credential provider/Actions secret. GitHub API
-access may use an in-memory credential; never print its value, commit it, place it
-in issue comments or forward it to another host. The trusted publisher uses the
-existing `CURSEFORGE_API_TOKEN` Actions secret.
+Use the connected GitHub tools for issue and repository work. Use an authorized
+managed cloud checkout or trusted GitHub Actions for execution, and require
+logs and receipts for the exact commit. The GitHub connector can read run metadata
+and logs. Tag creation and workflow dispatch require an authorized GitHub surface
+that supports those operations. If that surface is unavailable, record the
+blocked stage and continue any independent review work. For publication, use
+the authenticated GitHub Actions interface or an authorized Actions API and
+verify the run's exact tag, source SHA and publish input. The trusted publisher
+uses the existing `CURSEFORGE_API_TOKEN` Actions secret. Keep credentials out
+of prompts, commits, issue comments and attachment requests.
 
 ## Durable state, issue feedback and uncertain uploads
 
