@@ -1,14 +1,14 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-24T03:11:04.574Z",
+  "updated_at": "2026-11-24T04:11:11.466Z",
   "status": "active__new_source_acquisition_no_eligible_cohort",
   "task_ids": [
     "T0026",
     "T0049",
     "T0005",
     "T0001",
-    "T0030",
     "T0039",
+    "T0030",
     "T0003",
     "T0004",
     "T0002",
@@ -65,7 +65,7 @@
         ]
       },
       "disposition": "reviewable; existing linked identities need authorized correction/normalization, not new study",
-      "hold_reason": "4000 nominal ore divided by recipe 5 is only 800 nominal ore-equivalent casts; original source does not establish 800 actual operations or output hit histograms. Queue T0005/T0039 incorrectly says 800 completed; request Master correction."
+      "hold_reason": "4000 nominal ore divided by recipe 5 is only 800 nominal ore-equivalent casts; original source does not establish 800 actual operations or output hit histograms. Current queue T0005/T0039 explicitly corrects prior nominal/actual confusion; no new correction requested."
     },
     {
       "category": "admitted_existing_cohort",
@@ -1827,9 +1827,11 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1sn8jth/low_value_plants/",
-    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/bonechewer/treedaygrace/",
-    "https://www.wow.gg/professions/midnight/inscription"
+    "https://www.curseforge.com/wow/addons/jukes-loot-audit",
+    "https://www.curseforge.com/wow/addons/anvilbook-export",
+    "https://everloot.app/",
+    "https://eu.forums.blizzard.com/en/wow/t/item-restoration-not-working/613254",
+    "https://haggleworks.com/share"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -2152,52 +2154,79 @@
     {
       "url": "https://www.wow.gg/professions/midnight/inscription",
       "reason": "November 18 guide lists 360 Tranquility Bloom, 100 Argentleaf, 90 Mana Lily and 90 Sanguithorn as leveling shopping quantities, not an observed milling ledger. No completed ten-herb operations, outputs, ranks, skill profile, refund or zeros. Pre-cutoff; no new cohort."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/jukes-loot-audit",
+      "reason": "Original Nov 22 release explicitly Forever 1.60.1 only. Tracks loot sources including disenchant, but no Retail Midnight original named input-instance operation ledger or measured outputs/zeros."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/anvilbook-export",
+      "reason": "Original Nov 11 release explicitly Forever 1.60.1. Self-learning DE recorder description is not Retail Midnight source data; no independently published Retail events."
+    },
+    {
+      "url": "https://everloot.app/",
+      "reason": "Publisher's Nov 23 19:31 UTC coverage snapshot expressly build 1.60.1.71037 WoW Forever. Coverage/fact counts and installs are not Retail completed processing casts."
+    },
+    {
+      "url": "https://eu.forums.blizzard.com/en/wow/t/item-restoration-not-working/613254",
+      "reason": "Original March 28 post describes one Retail epic Mythic+ item disenchanted March 26, but author expressly cannot recall Dawn Crystal rank; both ranks were held in inventory. No named gear ID, actual ilvl, output quantity, skill/spec/build or complete output ledger. Pre-cutoff qualitative anecdote, not a new eligible numerical cohort; do not re-catalogue or infer a rank."
+    },
+    {
+      "url": "https://haggleworks.com/share",
+      "reason": "Public opt-in sharing interface explicitly for WoW Forever; not a Retail Midnight yield dataset. No transferable counts."
     }
   ],
-  "next_concrete_step": "Look for a changed original capture or newly published participant operation log with 272246 current-build item-instance metadata, rank-specific Tin/Copper/Silver output events and ten-herb milling. Reopen a specific held field only when new original evidence supplies the missing context; do not repeat unchanged search snippets, collector code or cutoff catalogue work.",
-  "verified_base_commit_sha": "87b7fa0fcb63331f6a8cf5bc48254341580b84d0",
+  "next_concrete_step": "Seek a newly published original Retail participant export or changed original capture, particularly item 272246 joined variant/build and rank-specific ore and ten-herb operation ledgers; skip unchanged tracker pages and the closed cutoff catalogue.",
+  "verified_base_commit_sha": "ac5dd089b55dfc179fab2900d634386b74cc83c5",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Status only; resulting commit verified by exact-SHA read-back (a commit cannot embed its own hash). No evidence or numerical baseline changes.",
+  "commit_note": "Status only; resulting commit requires exact-SHA read-back (a commit cannot embed its own hash). No evidence or numerical baseline changes.",
   "new_leads_screened": [
     {
       "category": "new_source_screen",
       "task_ids": [
         "T0026",
-        "T0049",
-        "T0045"
+        "T0049"
       ],
       "sources": [
         {
-          "url": "https://www.reddit.com/r/woweconomy/comments/1sn8jth/low_value_plants/",
-          "reason": "Original April 16 discussion opened directly: SvN-213 describes 12k worth of Tranquility Bloom into 14k pigments in a profit/sale context. The inputs explicitly use a value basis; output figure has ambiguous monetary/quantity unit. Neither is a verified item count. No herb rank, completed mills, material item IDs, per-output hits/zeros, refunds, skill or build. Other authors describe crafting/DE chains without linked outcome counts. Pre-cutoff source; do not assign new cohort or re-catalogue."
+          "url": "https://www.curseforge.com/wow/addons/jukes-loot-audit",
+          "reason": "Original Nov 22 release explicitly Forever 1.60.1 only. Tracks loot sources including disenchant, but no Retail Midnight original named input-instance operation ledger or measured outputs/zeros."
         },
         {
-          "url": "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/bonechewer/treedaygrace/",
-          "reason": "New indexed equipped-name display shows Miststalker's Wristbands ilvl289; direct retrieval returns 403. Exact 272246 link/bonus, snapshot time, actual disenchant and profession profile unverified. Equipment display only, not an eligibility or yield observation."
+          "url": "https://www.curseforge.com/wow/addons/anvilbook-export",
+          "reason": "Original Nov 11 release explicitly Forever 1.60.1. Self-learning DE recorder description is not Retail Midnight source data; no independently published Retail events."
         },
         {
-          "url": "https://www.wow.gg/professions/midnight/inscription",
-          "reason": "November 18 guide lists 360 Tranquility Bloom, 100 Argentleaf, 90 Mana Lily and 90 Sanguithorn as leveling shopping quantities, not an observed milling ledger. No completed ten-herb operations, outputs, ranks, skill profile, refund or zeros. Pre-cutoff; no new cohort."
+          "url": "https://everloot.app/",
+          "reason": "Publisher's Nov 23 19:31 UTC coverage snapshot expressly build 1.60.1.71037 WoW Forever. Coverage/fact counts and installs are not Retail completed processing casts."
+        },
+        {
+          "url": "https://eu.forums.blizzard.com/en/wow/t/item-restoration-not-working/613254",
+          "reason": "Original March 28 post describes one Retail epic Mythic+ item disenchanted March 26, but author expressly cannot recall Dawn Crystal rank; both ranks were held in inventory. No named gear ID, actual ilvl, output quantity, skill/spec/build or complete output ledger. Pre-cutoff qualitative anecdote, not a new eligible numerical cohort; do not re-catalogue or infer a rank."
+        },
+        {
+          "url": "https://haggleworks.com/share",
+          "reason": "Public opt-in sharing interface explicitly for WoW Forever; not a Retail Midnight yield dataset. No transferable counts."
         }
       ],
-      "disposition": "No source-denominated numerical observations; no new independent cohort."
+      "disposition": "No new independently grounded Retail Midnight numerical cohort; no evidence append."
     },
     {
-      "category": "date_bounded_and_multilingual_search",
+      "category": "source_acquisition_cross_check",
       "task_ids": [
         "T0005",
         "T0001",
+        "T0039",
+        "T0030",
         "T0003",
         "T0004",
         "T0002",
         "T0006",
-        "T0030",
-        "T0039",
         "T0045"
       ],
-      "scope": "English/French/German public search, EU/US Blizzard forums, Reddit, Wowhead, and GitHub exact material-name source search. Existing JD3K translated table and earlier samples, recipes and guide references were not re-transcribed.",
-      "disposition": "No new original Retail cohort, unlock-linked outcome, or newly supportable numeric field."
+      "scope": "Date-bounded public searches, original forum discussions and alternative Wago/CurseForge acquisition channels. ProspectMate code and earlier Cardinalai/April tables remain known; no new original ranked participant logs. Latest main commits through 3e814929ecffc2c2a282fddaead2012e5b44e9a9 show no newer capture than previously screened November 22 data.",
+      "disposition": "No new cast denominator, hit, quantity, zero, skill or unlock field; no duplicate cutoff evidence."
     }
   ],
   "catalogue_checkpoint": {
