@@ -18,6 +18,7 @@ python3 tools/disenchant_categories.py --check
 python3 tools/capture_observations.py --check
 python3 tools/community_research.py --check
 python3 tests/test_community_research.py
+python3 tests/test_community_release_bridge.py
 python3 tools/recycling_capture_baselines.py --check
 python3 tests/test_recycling_zero_prior.py
 python3 tests/test_build_info.py

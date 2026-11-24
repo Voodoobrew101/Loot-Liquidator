@@ -1,0 +1,40 @@
+name: Community release bridge
+on:
+  workflow_run:
+    workflows: ['Community release request']
+    types: [completed]
+    branches: ['automation/community-release-request-*']
+permissions:
+  contents: read
+concurrency:
+  group: community-release-bridge
+  cancel-in-progress: false
+jobs:
+  bridge:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_repository.id == github.event.repository.id && github.event.workflow_run.actor.id == 28468053 && github.event.workflow_run.triggering_actor.id == 28468053
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Test trusted validator
+        run: python3 tests/test_community_release_bridge.py -v
+      - name: Validate and execute request using trusted main code only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/community_release_bridge.py
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: community-release-bridge-receipt
+          path: dist/community-release-bridge.json
+          if-no-files-found: ignore

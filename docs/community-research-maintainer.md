@@ -201,13 +201,19 @@ path. A metadata/status-only change does not justify an addon release.
    checksum. An upload awaiting CurseForge processing is not yet a confirmed
    public listing. Do not claim live WoW testing unless it was actually performed.
 
+For cloud publication, use the owner-approved [release bridge](community-release-bridge.md).
+After integration, full main validation and a durable publication intent, the daily
+agent creates a one-file release-request branch with its existing GitHub connector.
+The trusted main-branch bridge creates the new tag and starts the existing publisher
+automatically. No local machine or direct tag/dispatch connector operation is needed.
+Read the bridge protocol for the exact schema, source/review proofs and replay rules.
+
 Use the connected GitHub tools for issue and repository work. Use an authorized
 managed cloud checkout or trusted GitHub Actions for execution, and require
 logs and receipts for the exact commit. The GitHub connector can read run metadata
-and logs. Tag creation and workflow dispatch require an authorized GitHub surface
-that supports those operations. If that surface is unavailable, record the
-blocked stage and continue any independent review work. For publication, use
-the authenticated GitHub Actions interface or an authorized Actions API and
+and logs. The release bridge supplies the narrowly authorized tag/dispatch surface.
+If its validation or permissions fail, record the blocked stage and continue
+independent review without bypassing the checks. For publication,
 verify the run's exact tag, source SHA and publish input. The trusted publisher
 uses the existing `CURSEFORGE_API_TOKEN` Actions secret. Keep credentials out
 of prompts, commits, issue comments and attachment requests.

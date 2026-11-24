@@ -1,0 +1,13 @@
+name: Community release request
+on:
+  push:
+    branches: ['automation/community-release-request-*']
+    paths: ['research/community/release-request.json']
+permissions:
+  contents: read
+jobs:
+  received:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Signal request receipt without executing request code
+        run: echo 'Request received; the trusted main-branch bridge performs validation.'
