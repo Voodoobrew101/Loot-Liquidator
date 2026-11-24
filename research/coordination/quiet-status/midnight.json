@@ -1,6 +1,6 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-24T15:11:23.479Z",
+  "updated_at": "2026-11-24T16:11:07Z",
   "status": "active__no_new_independent_numeric_cohort",
   "task_ids": [
     "T0026",
@@ -2135,14 +2135,14 @@
   "newly_verified_fields_or_cohorts": [],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": [
-    "None. No newly published independent Retail processing receipts or actual completed denominators found; existing held quantities preserved."
+    "None. No new independent Retail Midnight output quantities, completed operation counts, hit/zero histograms or rank/profile fields verified."
   ],
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://www.curseforge.com/wow/addons/disenchantrix",
-    "https://www.curseforge.com/wow/addons/disenchanter-plus",
-    "https://www.curseforge.com/wow/addons/foreverforge-auction"
+    "https://www.curseforge.com/wow/addons/pro-enchanters",
+    "https://www.curseforge.com/wow/addons/ackis-recipe-list-classic-enchanting",
+    "https://www.curseforge.com/wow/addons/profession-shopping-list"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -2666,31 +2666,43 @@
     {
       "url": "https://www.curseforge.com/wow/addons/foreverforge-auction",
       "reason": "Nov 24 publisher update explicitly Forever auction/DE value estimates, not original Retail processing data."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/pro-enchanters",
+      "reason": "Direct publisher Nov 22 2026 ProEnchanters12.3.6 explicitly Forever 1.60.1; supported flavors Forever, Classic, Classic TBC, not Retail. No transferable Midnight measured processing cohort."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/ackis-recipe-list-classic-enchanting",
+      "reason": "Publisher snapshot Nov 20 release 12.0.7 targets Forever 1.60.1, with other Classic flavors only. Recipe list not a DE result ledger. Index lists a Nov 23 update but direct snapshot is older; no assertion of exact newest version."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/profession-shopping-list",
+      "reason": "Direct Nov 23 v246 Retail-compatible release describes recipe/material requirements, cooldowns, knowledge and order reward tracking; no publicly presented original per-operation prospect/mill/DE outcome counts or ranked zero-inclusive ledger. Do not infer rates from recipe bills or order values."
     }
   ],
   "next_concrete_step": "Seek new original Retail source receipts or updated independent datasets; prioritize completed cast denominator with per-event item instances, rank/profile/build and zero inclusion. For unresolved material identity use build-matched DB2 joins only when accessible, avoiding already verified manager pairs. No rescreen of unchanged Forever-only or collector-only leads.",
-  "verified_base_commit_sha": "2c59d0b6d62a9c813d05ac3b71556704f21edfeb",
+  "verified_base_commit_sha": "8c30075cc43c817fdccdb4e7fc29e534ec46586c",
   "commit_sha": null,
   "verified_commit_sha": null,
   "commit_note": "Owned status-only update guarded by current blob SHA; exact commit read-back required; self-hash cannot be embedded. No evidence file, catalogue or baseline edits.",
   "new_leads_screened": [
     {
-      "category": "new_external_disenchant_leads",
+      "category": "new_external_processing_leads",
       "sources": [
         {
-          "url": "https://www.curseforge.com/wow/addons/disenchantrix",
-          "reason": "New Nov 24 1.0.0 publisher release, explicitly Forever 1.60.1; local item-level/material history and Classic-through-Mists tables, no public Retail player receipts. No transferable observations."
+          "url": "https://www.curseforge.com/wow/addons/pro-enchanters",
+          "reason": "Direct publisher Nov 22 2026 ProEnchanters12.3.6 explicitly Forever 1.60.1; supported flavors Forever, Classic, Classic TBC, not Retail. No transferable Midnight measured processing cohort."
         },
         {
-          "url": "https://www.curseforge.com/wow/addons/disenchanter-plus",
-          "reason": "Publisher explicitly lists Forever, Classic and Classic TBC only. Tracks material outcomes but no independent Midnight cohort. Category index lists Nov 24 Classic TBC 2.5.6; direct snapshot Nov 21, so exact newest release not asserted."
+          "url": "https://www.curseforge.com/wow/addons/ackis-recipe-list-classic-enchanting",
+          "reason": "Publisher snapshot Nov 20 release 12.0.7 targets Forever 1.60.1, with other Classic flavors only. Recipe list not a DE result ledger. Index lists a Nov 23 update but direct snapshot is older; no assertion of exact newest version."
         },
         {
-          "url": "https://www.curseforge.com/wow/addons/foreverforge-auction",
-          "reason": "Nov 24 publisher update explicitly Forever auction/DE value estimates, not original Retail processing data."
+          "url": "https://www.curseforge.com/wow/addons/profession-shopping-list",
+          "reason": "Direct Nov 23 v246 Retail-compatible release describes recipe/material requirements, cooldowns, knowledge and order reward tracking; no publicly presented original per-operation prospect/mill/DE outcome counts or ranked zero-inclusive ledger. Do not infer rates from recipe bills or order values."
         }
       ],
-      "disposition": "Excluded non-Retail sources; no baseline changes. Fresh original-result searches across Reddit, Blizzard forums, Wowhead, profession guides and public repositories surfaced existing sources or non-Retail collectors only. Known Cardinalai and David111 studies not re-transcribed. Prior GitHub lead URLs already exhausted and not re-opened."
+      "disposition": "Fresh post-cutoff searches on Reddit, Blizzard, Wowhead, public GitHub and CurseForge returned existing studies, cumulative mutable Looter tables with unresolved original epoch/rank/cohort, or collectors/reference-only addons. No re-catalogue, no repeated transcription or new baseline. Prior identical MillHelper/GoblinLedger README blobs and already logged Disenchantry/What to Disenchant releases are not new."
     }
   ],
   "catalogue_checkpoint": {
