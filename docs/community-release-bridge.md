@@ -6,7 +6,7 @@ The owner explicitly approved the persistent bridge's tag-creation and workflow-
 
 `community-release-request.yml` receives a push to `automation/community-release-request-*` with **read-only** permissions and runs no branch code. Its successful completion triggers `community-release-bridge.yml` via `workflow_run`. That privileged workflow lives on default main, checks out **main**, and executes only trusted main code. It never downloads request-run artifacts or executes request-branch scripts. It accepts requests only from repository owner ID 28468053, in this repository, including the re-run actor. The request commit must add/change only `research/community/release-request.json` in one commit above the selected production source.
 
-The bridge has `contents: write` for new tags and the publication ledger, and `actions: write` for the existing publisher dispatch. The CurseForge token remains exclusively in the existing publisher. GitHub Actions-created tag events do not recursively trigger another build; the bridge explicitly dispatches the publisher instead.
+The bridge has `contents: write` for new tags and the publication ledger, and `actions: write` for the existing publisher dispatch. Only ledger metadata may have advanced on main after the selected production SHA; newer code, data or policy stops an outdated request. The CurseForge token remains exclusively in the existing publisher. GitHub Actions-created tag events do not recursively trigger another build; the bridge explicitly dispatches the publisher instead.
 
 ## Publish protocol
 

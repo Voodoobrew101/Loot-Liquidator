@@ -155,6 +155,8 @@ def ledger_entry(request, ledger):
 
 def source_checks(request, api):
     source = request['sourceSHA']
+    advanced = set(git('diff', '--name-only', source, 'HEAD').splitlines())
+    require(advanced <= {LEDGER}, 'Production advanced beyond this source; only later ledger metadata may differ')
     toc = git('show', source + ':LootLiquidator/LootLiquidator.toc')
     core = git('show', source + ':LootLiquidator/Core.lua')
     v = request['version'][1:]

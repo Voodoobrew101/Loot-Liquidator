@@ -119,6 +119,7 @@ class BridgeTests(unittest.TestCase):
     def test_source_checks_reject_version_ci_tag_and_no_data_change(self):
         req = request(); api = FakeAPI(req)
         def git(*args):
+            if args[0] == 'diff': return ''
             ref = args[1]
             if ref.endswith('LootLiquidator.toc'): return '## Version: 1.0.2'
             if ref.endswith('Core.lua'): return 'LA.version = "1.0.2"'
@@ -132,6 +133,8 @@ class BridgeTests(unittest.TestCase):
             with patch.object(api, 'pages', return_value=iter([])):
                 with self.assertRaisesRegex(ValueError, 'full main validation'): bridge.source_checks(req, api)
         with patch.object(bridge, 'git', return_value='wrong'):
+            with self.assertRaisesRegex(ValueError, 'Production advanced'): bridge.source_checks(req, api)
+        with patch.object(bridge, 'git', side_effect=lambda *args: '' if args[0] == 'diff' else 'wrong'):
             with self.assertRaisesRegex(ValueError, 'version mismatch'): bridge.source_checks(req, api)
         self.assertEqual(api.mutations, [])
 
@@ -159,6 +162,7 @@ class BridgeTests(unittest.TestCase):
                 'submissionSHA256':manifest['submissionSHA256'], 'reviewSHA256':intake.hashed(review)}]
             api = FakeAPI(req)
             def source_git(*args):
+                if args[0] == 'diff': return ''
                 ref = args[1]
                 if ref.endswith('LootLiquidator.toc'): return '## Version: 1.0.2'
                 if ref.endswith('Core.lua'): return 'LA.version = "1.0.2"'
