@@ -1,13 +1,14 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-24T21:41:23.737Z",
-  "status": "Active; new historical prospecting model alias and non-Retail recorder source screened; no independently grounded new Retail numeric cohort.",
+  "updated_at": "2026-11-24T22:41:11.104Z",
+  "status": "Active; new Shatter and EventHelper Sync acquisition paths screened; no independent qualifying Retail processing cohort.",
   "task_ids": [
     "T0047",
     "T0042",
     "T0022",
     "T0044",
+    "T0050",
     "T0052"
   ],
   "exact_gaps_targeted": [
@@ -18,60 +19,25 @@
   ],
   "newly_verified_fields_cohorts": [
     {
-      "disposition": "held historical model; duplicate vectors; excluded Forever measurements",
-      "summary": "New source/provenance screen: GnomeWorks (2012-09-30, source lines 41–83 and 262–275) and DugiWorkshop (2018-08-19, lines 51–93 and 207–215) have exactly identical 12-output vectors for each of 23424 and 36909. Code uses these values as modeled material quantities in a five-ore pseudo-recipe, not explicit per-cast hit probabilities. No originating observations, N, version at data collection, histograms, player profiles or refund semantics supplied. Treat as a single historical model family of unknown upstream provenance, not two cohorts, and hold from new evidence ingestion pending provenance reconciliation with already-catalogued historical models. Both names absent from prior legacy status and 731-source manifest; default-branch code search returned no source-name hits. BestSkillUp's Nov 23 author handoff documents original Green Iron Bracers Soul Dust positive samples (23 unboosted, 24 boosted) and Dream Dust boosted 1 occurrence of quantity 6 among 18; author explicitly uses WoW Forever, interface 16001, and its dev recorder omits casts with no captured loot (lines 178, 256–259). Do not transfer its recorded results or model to Retail, or invent complete-operation denominators. AuctionSuite Nov 20 v0.2.4 code explicitly uses Forever required-level estimates, not Retail observed yields. DisenchanterPlus inspected cast/loot handling is a selection/control path, not a recovered public original material observation export. Additional targeted Warmaul/Arcane Dust, Cobalt and Fel Iron searches returned familiar cumulative data, historical tables, mining (not prospecting) and unrelated modern Midnight reports; no independent current target observations. T0053 done; no new game operations, prices, code, schema or data changes.",
-      "raw_model_coefficients": {
-        "23424": {
-          "21929": 0.183,
-          "23077": 0.185,
-          "23079": 0.183,
-          "23107": 0.183,
-          "23112": 0.189,
-          "23117": 0.178,
-          "23436": 0.012,
-          "23437": 0.012,
-          "23438": 0.012,
-          "23439": 0.013,
-          "23440": 0.012,
-          "23441": 0.012
-        },
-        "36909": {
-          "36917": 0.244,
-          "36918": 0.012,
-          "36920": 0.246,
-          "36921": 0.012,
-          "36923": 0.248,
-          "36924": 0.012,
-          "36926": 0.254,
-          "36927": 0.012,
-          "36929": 0.255,
-          "36930": 0.014,
-          "36932": 0.246,
-          "36933": 0.013
-        }
-      },
-      "model_unit": "Source-code pseudo-recipe material quantities per five ore; not measured averages or hit probabilities",
+      "disposition": "excluded non-Retail logger and non-processing export",
+      "summary": "New source-acquisition screen: Shatter original pinned 2026-11-21 commit 62465e8829fcd632461b95a9d5008d09f746ed9a README explicitly targets Forever 1.60.1/interface 16001; its old TBC Anniversary version is frozen at v0.1.22-alpha. Author describes counting only disenchants whose loot window is read, grouped by quality/kind/ilvl; excludes Arcane Salvager buff and blends with Vanilla reference once 20 observations exist. This is a description of a logger/model, not a published actual count, zero-inclusive ledger or Retail evidence. The SPEC explicitly distinguishes simulated fake results, prior TBC design and current Forever; pinned tree exposes tests/model tables, no identified original target ledger. EventHelper Sync original README at 07872d64805e6850ffa6df5bbc0fe9b783bb692c documents raid award-history exports from RCLootCouncil/Gargul and explicitly excludes items assigned to disenchanting from loot-history ingestion. Not a processing recorder. Both repository names absent from previous status and current catalogue manifest text; no assigned corpus re-reviewed. Exact-name web searches and public original-file code discovery for Warmaul, Arcane Dust, Cobalt, Fel Iron and Runecloth Headband returned known historical cohorts, static profile data and already-reviewed Enchantrix exports; no independent target measurements. T0053 stays done. No prices, simulated records or fabricated denominator retained.",
       "casts": null,
       "hits": null,
       "zeros": null
     }
   ],
   "source_urls": [
-    "https://github.com/remcoros/gnomeworks/blob/10f08f0527e8117ca3a02b89d0f7976c2daabfab/PseudoTrades/Prospecting.lua",
-    "https://github.com/JackTrapper/DugiWorkshop/blob/f2f65db529db7923c0268e47c76d1a9d5131cfd7/pricingSupport/prospecting_support.lua",
-    "https://github.com/Aganmar/BestSkillUp/blob/36d4f6ea6c7469e896be64d5acc62d6873c52ff4/HANDOFF.md",
-    "https://github.com/Aganmar/BestSkillUp/blob/36d4f6ea6c7469e896be64d5acc62d6873c52ff4/Dev/BestSkillUp_Dev/DisenchantLog.lua",
-    "https://github.com/Aganmar/BestSkillUp/blob/36d4f6ea6c7469e896be64d5acc62d6873c52ff4/Dev/BestSkillUp_Dev/BestSkillUp_Dev.toc",
-    "https://github.com/JoeSwindell/AuctionSuite/blob/8a440c58a7e226c2b6c1c960052a92646de9c13d/AuctionSuite_Disenchant/Disenchant.lua",
-    "https://github.com/osilvay/DisenchanterPlus/blob/2053573b04439138798563b6c79cb3f3166f312b/Modules/Disenchant/DisenchantProcess.lua"
+    "https://github.com/Spotnick2/Shatter/blob/62465e8829fcd632461b95a9d5008d09f746ed9a/README.md",
+    "https://github.com/Spotnick2/Shatter/blob/62465e8829fcd632461b95a9d5008d09f746ed9a/SPEC.md",
+    "https://github.com/mst1987/eventhelper-addon/blob/07872d64805e6850ffa6df5bbc0fe9b783bb692c/README.md"
   ],
-  "numeric_summary": "24 exact historical modeled output coefficients preserved in status, shared across two source files; no new measured target casts/hits/units/zeros/histograms, no independent model admission or current Retail profile.",
+  "numeric_summary": "No new exact target output IDs, measured casts/hits/units/zeros/histograms, refunds, build/profile linkage or independently supported means.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-23T1944-chromie-time-disenchant-eligibility-hotfix.jsonl",
-  "preserved_prior_status_summary": "Active; screened historical forum guide, dated video lead and Classic model; no new qualifying processing measurements.",
-  "verified_parent_sha": "7b57757541a18e74e5836ddf98fabb2cc0059d6e",
-  "verified_commit_sha": "7e027eb209dad12ac22224832318dae710cc035f",
-  "commit_note": "Previous owned status commit verified; current status-only commit SHA verified after write externally (a file cannot embed its own commit SHA). Observed branch head before write; file blob guarded by contents API.",
+  "preserved_prior_status_summary": "Active; new historical prospecting model alias and non-Retail recorder source screened; no independently grounded new Retail numeric cohort.",
+  "verified_parent_sha": "dc7553dd152450bf1d46630b00d1c8d185d8712e",
+  "verified_commit_sha": "ee1bd58f5296ee2eca12a8eca3b715e38d23d4d4",
+  "commit_note": "Previous owned status blob confirmed at its exact commit and current branch head; current status commit to be independently read back after fast-forward lease update; self SHA cannot be embedded.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -669,10 +635,11 @@
     "2026-11-24T18:41:36.309Z: Two additional previously unexamined original public Enchantrix SavedVariables source files were inspected at exact commits: burned05/Classic-Addons account 54989383#5 (blob 3bbcef7a2cc440c9c9a2a51bb63eb1ecb9a8bcbe) and stevehulme/classic-era-config THELASTPOET (blob 5a80949d728d20aa69996f096dbbef70298b2428). Each has empty EnchantedLocal, ProspectedLocal, MillingLocal and NonDisenchantablesLocal tables; distinct blobs, no target operations and no observed zero-output events. Classic-oriented repos are not evidence of current Retail; no private data sought. New search terms targeted original per-input means and raw results for Outland DE and Cobalt/Fel Iron across blogs, Reddit, forums, Wowhead and GitHub; returned already reviewed cohorts, old priors, PTR item profiles and farming counts (not processing). Current PTR Warmaul profile repeats 14/74 level labels, not new eligibility or actual output evidence. No new independent numeric or identity fields, no duplicate catalogue work, no evidence JSONL or price data.",
     "2026-11-24T19:41:01.267Z: New acquisition paths: Forever Stats 0.63.0 (Oct 30 2026, Retail 12.1.7 and Forever 1.60.1) documents profession exports and gathering categories including disenchant/prospect/mill; current 0.88.3 (Nov 23) supports both flavors. Public code search for ForeverStatsDB returned a pinned original research log in gewey/gewey.github.io, explicitly from Forever 1.60.1.70790 (wowf), describing combat/meter data, not an independent Retail target processing cohort. No Retail event export or raw target rows recovered. Ka0s Loot History author documentation describes positive received-item rows with optional quality thresholds, source muting, blacklists and source attribution certainty, plus separate Refund category and CSV export (1.2.0 Jul 26; latest listed 1.5.0 Oct 9 Retail 12.1.0). Its sample/test dataset is synthetic. No evidence of a complete consumed-input/cast/zero-inclusive ledger in the documentation or public release discussion, and no original target CSV recovered. Code not inspected; no claim about undocumented internals. Names absent from prior status and coordination manifest. Goblinomics already screened, not re-catalogued. Targeted searches for Warmaul Legplates, Arcane Dust, Cobalt Ore and Fel Iron Ore yielded already-known historical tables and market listings, not new independent Retail measurements. No prices, new identities, casts, hit counts, total units, zeros, profile or supported means retained. Token 45661 identity task remains done.",
     "2026-11-24T20:41:07.488Z: New historical source screen: Quintessence's EU forum guide (archived by Blue Tracker, first post Dec 20 2006, internally updated at least Aug 6 2007) gives required-level Outland bands 57–63 and 64–70 with dust/essence/shard families, broad 4–5% shard reference for greens, and says the underlying grouping is item level rather than required level. It credits Enchantrix and supplies no cast counts, raw observations, per-output quantities or independently measured probabilities. Blizzard forum moderator's Aug 1 2007 sticky acknowledgement is not verification of measurements. No historical or current target cohort admitted. A Dec 29 2023 mining/prospecting video by WoW-Gold-Addiction (MJNAry6rr54) has indexed chapter descriptions for Fel Iron (6:40–8:05), Cobalt (8:43–9:54), and prospecting rates (17:19–19:05); direct page retrieval failed, no transcript or frames verified, so no rates or results extracted. Loot2Dust v1.2 (Dec 11 2025, file 7318707, Classic 1.15.8; later 1.5.0 Classic/TBC 2.5.5) describes corrected model brackets and planned TBC tables, not Retail observations. Millenium's WotLK Classic guide repeats familiar percentage reference tables, with no raw denominator or new original cohort. German/French/Russian and English exact-name searches yielded previously covered 814846, Strikk3r, Thottbot, and Netherweave darkmagi91/tarsakh cohorts; repository search confirms the latter in Nov 6/16 legacy records and master epoch gate. No independent new Retail target casts, hits, total units, observed zeros, skill/variant linkage, refund data or supported mean. No price data retained. T0053 stays done.",
-    "2026-11-24T21:41:23.737Z: New source/provenance screen: GnomeWorks (2012-09-30, source lines 41–83 and 262–275) and DugiWorkshop (2018-08-19, lines 51–93 and 207–215) have exactly identical 12-output vectors for each of 23424 and 36909. Code uses these values as modeled material quantities in a five-ore pseudo-recipe, not explicit per-cast hit probabilities. No originating observations, N, version at data collection, histograms, player profiles or refund semantics supplied. Treat as a single historical model family of unknown upstream provenance, not two cohorts, and hold from new evidence ingestion pending provenance reconciliation with already-catalogued historical models. Both names absent from prior legacy status and 731-source manifest; default-branch code search returned no source-name hits. BestSkillUp's Nov 23 author handoff documents original Green Iron Bracers Soul Dust positive samples (23 unboosted, 24 boosted) and Dream Dust boosted 1 occurrence of quantity 6 among 18; author explicitly uses WoW Forever, interface 16001, and its dev recorder omits casts with no captured loot (lines 178, 256–259). Do not transfer its recorded results or model to Retail, or invent complete-operation denominators. AuctionSuite Nov 20 v0.2.4 code explicitly uses Forever required-level estimates, not Retail observed yields. DisenchanterPlus inspected cast/loot handling is a selection/control path, not a recovered public original material observation export. Additional targeted Warmaul/Arcane Dust, Cobalt and Fel Iron searches returned familiar cumulative data, historical tables, mining (not prospecting) and unrelated modern Midnight reports; no independent current target observations. T0053 done; no new game operations, prices, code, schema or data changes."
+    "2026-11-24T21:41:23.737Z: New source/provenance screen: GnomeWorks (2012-09-30, source lines 41–83 and 262–275) and DugiWorkshop (2018-08-19, lines 51–93 and 207–215) have exactly identical 12-output vectors for each of 23424 and 36909. Code uses these values as modeled material quantities in a five-ore pseudo-recipe, not explicit per-cast hit probabilities. No originating observations, N, version at data collection, histograms, player profiles or refund semantics supplied. Treat as a single historical model family of unknown upstream provenance, not two cohorts, and hold from new evidence ingestion pending provenance reconciliation with already-catalogued historical models. Both names absent from prior legacy status and 731-source manifest; default-branch code search returned no source-name hits. BestSkillUp's Nov 23 author handoff documents original Green Iron Bracers Soul Dust positive samples (23 unboosted, 24 boosted) and Dream Dust boosted 1 occurrence of quantity 6 among 18; author explicitly uses WoW Forever, interface 16001, and its dev recorder omits casts with no captured loot (lines 178, 256–259). Do not transfer its recorded results or model to Retail, or invent complete-operation denominators. AuctionSuite Nov 20 v0.2.4 code explicitly uses Forever required-level estimates, not Retail observed yields. DisenchanterPlus inspected cast/loot handling is a selection/control path, not a recovered public original material observation export. Additional targeted Warmaul/Arcane Dust, Cobalt and Fel Iron searches returned familiar cumulative data, historical tables, mining (not prospecting) and unrelated modern Midnight reports; no independent current target observations. T0053 done; no new game operations, prices, code, schema or data changes.",
+    "2026-11-24T22:41:11.104Z: New source-acquisition screen: Shatter original pinned 2026-11-21 commit 62465e8829fcd632461b95a9d5008d09f746ed9a README explicitly targets Forever 1.60.1/interface 16001; its old TBC Anniversary version is frozen at v0.1.22-alpha. Author describes counting only disenchants whose loot window is read, grouped by quality/kind/ilvl; excludes Arcane Salvager buff and blends with Vanilla reference once 20 observations exist. This is a description of a logger/model, not a published actual count, zero-inclusive ledger or Retail evidence. The SPEC explicitly distinguishes simulated fake results, prior TBC design and current Forever; pinned tree exposes tests/model tables, no identified original target ledger. EventHelper Sync original README at 07872d64805e6850ffa6df5bbc0fe9b783bb692c documents raid award-history exports from RCLootCouncil/Gargul and explicitly excludes items assigned to disenchanting from loot-history ingestion. Not a processing recorder. Both repository names absent from previous status and current catalogue manifest text; no assigned corpus re-reviewed. Exact-name web searches and public original-file code discovery for Warmaul, Arcane Dust, Cobalt, Fel Iron and Runecloth Headband returned known historical cohorts, static profile data and already-reviewed Enchantrix exports; no independent target measurements. T0053 stays done. No prices, simulated records or fabricated denominator retained."
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Seek independently published Retail event exports with operation/variant identity and complete loot capture; compare new GnomeWorks/DugiWorkshop modeled quantity vector provenance only if its original study is recovered. Do not revisit excluded Forever logs or identical historical tables.",
+  "next_concrete_step": "Prioritize newly published real Retail event exports with original input variants, completed-operation linkage and complete loot capture. No further screening of Shatter/EventHelper or known empty Enchantrix files unless genuinely new original data emerges; retain held model lineage until original provenance is published.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -681,16 +648,12 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://github.com/remcoros/gnomeworks/blob/10f08f0527e8117ca3a02b89d0f7976c2daabfab/PseudoTrades/Prospecting.lua",
-    "https://github.com/JackTrapper/DugiWorkshop/blob/f2f65db529db7923c0268e47c76d1a9d5131cfd7/pricingSupport/prospecting_support.lua",
-    "https://github.com/Aganmar/BestSkillUp/blob/36d4f6ea6c7469e896be64d5acc62d6873c52ff4/HANDOFF.md",
-    "https://github.com/Aganmar/BestSkillUp/blob/36d4f6ea6c7469e896be64d5acc62d6873c52ff4/Dev/BestSkillUp_Dev/DisenchantLog.lua",
-    "https://github.com/Aganmar/BestSkillUp/blob/36d4f6ea6c7469e896be64d5acc62d6873c52ff4/Dev/BestSkillUp_Dev/BestSkillUp_Dev.toc",
-    "https://github.com/JoeSwindell/AuctionSuite/blob/8a440c58a7e226c2b6c1c960052a92646de9c13d/AuctionSuite_Disenchant/Disenchant.lua",
-    "https://github.com/osilvay/DisenchanterPlus/blob/2053573b04439138798563b6c79cb3f3166f312b/Modules/Disenchant/DisenchantProcess.lua"
+    "https://github.com/Spotnick2/Shatter/blob/62465e8829fcd632461b95a9d5008d09f746ed9a/README.md",
+    "https://github.com/Spotnick2/Shatter/blob/62465e8829fcd632461b95a9d5008d09f746ed9a/SPEC.md",
+    "https://github.com/mst1987/eventhelper-addon/blob/07872d64805e6850ffa6df5bbc0fe9b783bb692c/README.md"
   ],
   "latest_run_source_date": "2026-11-24",
-  "latest_run": "Read branch instructions, evidence format, mechanics, worker role, current queue and source catalogue manifest; screened new source-code provenance and target source searches. No new JSONL.",
+  "latest_run": "Read current pinned research instructions, queue, owned status and catalogue manifest; inspected two new source acquisition paths and targeted public source searches. No evidence JSONL.",
   "new_evidence_file_this_run": null,
-  "next": "Seek independently published Retail event exports with operation/variant identity and complete loot capture; compare new GnomeWorks/DugiWorkshop modeled quantity vector provenance only if its original study is recovered. Do not revisit excluded Forever logs or identical historical tables."
+  "next": "Prioritize newly published real Retail event exports with original input variants, completed-operation linkage and complete loot capture. No further screening of Shatter/EventHelper or known empty Enchantrix files unless genuinely new original data emerges; retain held model lineage until original provenance is published."
 }
