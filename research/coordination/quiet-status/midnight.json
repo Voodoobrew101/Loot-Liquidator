@@ -1,6 +1,6 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-24T04:11:11.466Z",
+  "updated_at": "2026-11-24T05:10:59.010Z",
   "status": "active__new_source_acquisition_no_eligible_cohort",
   "task_ids": [
     "T0026",
@@ -1827,11 +1827,10 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://www.curseforge.com/wow/addons/jukes-loot-audit",
-    "https://www.curseforge.com/wow/addons/anvilbook-export",
-    "https://everloot.app/",
-    "https://eu.forums.blizzard.com/en/wow/t/item-restoration-not-working/613254",
-    "https://haggleworks.com/share"
+    "https://wowgoldfarms.com/guides/retail/harandar-mining-midnight/",
+    "https://github.com/claytonkimber/Wise/blob/main/AGENTS.md",
+    "https://github.com/xIGBClutchIx/ForeverPlusPlus/blob/main/docs/forever-api.md",
+    "https://lfcarry.com/guides/wow-midnight-enchanting-leveling"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -2174,10 +2173,26 @@
     {
       "url": "https://haggleworks.com/share",
       "reason": "Public opt-in sharing interface explicitly for WoW Forever; not a Retail Midnight yield dataset. No transferable counts."
+    },
+    {
+      "url": "https://wowgoldfarms.com/guides/retail/harandar-mining-midnight/",
+      "reason": "October 8 Retail guide expressly says its prospecting yields were not measured; proposed 100-ore comparison is an instruction, not completed operations. No ranks/hits/zeros."
+    },
+    {
+      "url": "https://github.com/claytonkimber/Wise/blob/main/AGENTS.md",
+      "reason": "Retail and Forever addon development instructions; no published participant processing events or material totals."
+    },
+    {
+      "url": "https://github.com/xIGBClutchIx/ForeverPlusPlus/blob/main/docs/forever-api.md",
+      "reason": "Explicit Forever product wowf build 70755; disenchant table based on Classic 1.x rules and unverified for Forever. Not Retail Midnight evidence."
+    },
+    {
+      "url": "https://lfcarry.com/guides/wow-midnight-enchanting-leveling",
+      "reason": "November 3 guide on 12.1.5 gives leveling and specialization advice; no material yield sample, named gear, completed operation denominator or output rank distribution."
     }
   ],
-  "next_concrete_step": "Seek a newly published original Retail participant export or changed original capture, particularly item 272246 joined variant/build and rank-specific ore and ten-herb operation ledgers; skip unchanged tracker pages and the closed cutoff catalogue.",
-  "verified_base_commit_sha": "ac5dd089b55dfc179fab2900d634386b74cc83c5",
+  "next_concrete_step": "Seek new post-cutoff Retail participant event exports, especially current-build item 272246 and rank-linked ore/milling ledgers; avoid unchanged guides and closed catalogue.",
+  "verified_base_commit_sha": "ff9b3225ce2e42c8239b109d901495618b918f22",
   "commit_sha": null,
   "verified_commit_sha": null,
   "commit_note": "Status only; resulting commit requires exact-SHA read-back (a commit cannot embed its own hash). No evidence or numerical baseline changes.",
@@ -2186,47 +2201,40 @@
       "category": "new_source_screen",
       "task_ids": [
         "T0026",
-        "T0049"
-      ],
-      "sources": [
-        {
-          "url": "https://www.curseforge.com/wow/addons/jukes-loot-audit",
-          "reason": "Original Nov 22 release explicitly Forever 1.60.1 only. Tracks loot sources including disenchant, but no Retail Midnight original named input-instance operation ledger or measured outputs/zeros."
-        },
-        {
-          "url": "https://www.curseforge.com/wow/addons/anvilbook-export",
-          "reason": "Original Nov 11 release explicitly Forever 1.60.1. Self-learning DE recorder description is not Retail Midnight source data; no independently published Retail events."
-        },
-        {
-          "url": "https://everloot.app/",
-          "reason": "Publisher's Nov 23 19:31 UTC coverage snapshot expressly build 1.60.1.71037 WoW Forever. Coverage/fact counts and installs are not Retail completed processing casts."
-        },
-        {
-          "url": "https://eu.forums.blizzard.com/en/wow/t/item-restoration-not-working/613254",
-          "reason": "Original March 28 post describes one Retail epic Mythic+ item disenchanted March 26, but author expressly cannot recall Dawn Crystal rank; both ranks were held in inventory. No named gear ID, actual ilvl, output quantity, skill/spec/build or complete output ledger. Pre-cutoff qualitative anecdote, not a new eligible numerical cohort; do not re-catalogue or infer a rank."
-        },
-        {
-          "url": "https://haggleworks.com/share",
-          "reason": "Public opt-in sharing interface explicitly for WoW Forever; not a Retail Midnight yield dataset. No transferable counts."
-        }
-      ],
-      "disposition": "No new independently grounded Retail Midnight numerical cohort; no evidence append."
-    },
-    {
-      "category": "source_acquisition_cross_check",
-      "task_ids": [
+        "T0049",
         "T0005",
         "T0001",
         "T0039",
-        "T0030",
         "T0003",
         "T0004",
         "T0002",
         "T0006",
         "T0045"
       ],
-      "scope": "Date-bounded public searches, original forum discussions and alternative Wago/CurseForge acquisition channels. ProspectMate code and earlier Cardinalai/April tables remain known; no new original ranked participant logs. Latest main commits through 3e814929ecffc2c2a282fddaead2012e5b44e9a9 show no newer capture than previously screened November 22 data.",
-      "disposition": "No new cast denominator, hit, quantity, zero, skill or unlock field; no duplicate cutoff evidence."
+      "sources": [
+        {
+          "url": "https://wowgoldfarms.com/guides/retail/harandar-mining-midnight/",
+          "reason": "October 8 Retail guide expressly says its prospecting yields were not measured; proposed 100-ore comparison is an instruction, not completed operations. No ranks/hits/zeros."
+        },
+        {
+          "url": "https://github.com/claytonkimber/Wise/blob/main/AGENTS.md",
+          "reason": "Retail and Forever addon development instructions; no published participant processing events or material totals."
+        },
+        {
+          "url": "https://github.com/xIGBClutchIx/ForeverPlusPlus/blob/main/docs/forever-api.md",
+          "reason": "Explicit Forever product wowf build 70755; disenchant table based on Classic 1.x rules and unverified for Forever. Not Retail Midnight evidence."
+        },
+        {
+          "url": "https://lfcarry.com/guides/wow-midnight-enchanting-leveling",
+          "reason": "November 3 guide on 12.1.5 gives leveling and specialization advice; no material yield sample, named gear, completed operation denominator or output rank distribution."
+        }
+      ],
+      "disposition": "No original measured Retail material yield observations; no evidence appended."
+    },
+    {
+      "category": "source_acquisition_cross_check",
+      "scope": "Fresh date-bounded participant searches across web, Reddit, guides and GitHub; results otherwise returned known Cardinalai, old price discussions, current PTR tooltip without operation observations, and known guides. Main still 3e814929ecffc2c2a282fddaead2012e5b44e9a9; compare from previous main is identical. Research branch compare from prior checked base showed only role status files, no new original capture.",
+      "disposition": "No new numerical field; do not duplicate cutoff catalogue."
     }
   ],
   "catalogue_checkpoint": {
