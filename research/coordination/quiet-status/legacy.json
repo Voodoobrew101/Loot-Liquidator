@@ -1,40 +1,40 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-24T10:40:54.821Z",
-  "status": "Active; inspected new public original farming export; no qualifying target processing observations.",
+  "updated_at": "2026-11-24T11:40:59.470Z",
+  "status": "Active; screened Gold Forever original collector and Lazy Disenchanter; no new qualifying Retail processing observations.",
   "task_ids": [
     "T0047",
     "T0052",
+    "T0042",
     "T0022",
-    "T0044",
-    "T0042"
+    "T0044"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 and matching TBC gear: linked completed disenchant operations, exact outputs, units, zeros and source profiles",
-    "Cobalt 36909 / Fel Iron 23424: actual prospecting operations, conditional quantities and known zeros",
-    "Public original source dataset: discriminate farming-session acquisition from processing outcomes"
+    "Warmaul Legplates 24995 and matching BC gear: exact item variant, completed disenchants, material IDs, units, hit and zero counts",
+    "Cobalt Ore 36909 / Fel Iron Ore 23424: independent original processing operations and output quantities",
+    "New public source acquisition path: distinguish captured loot rows and modeled probabilities from completed operations"
   ],
   "newly_verified_fields_cohorts": [
     {
-      "disposition": "new acquisition lead screened; original farming totals are not processing evidence",
-      "summary": "Screened a previously unreviewed publicly shared original SavedVariables-derived dataset: WoW-General-Gold-Tracker Data/CraftingFarmingLearned.lua pinned at d46061eb412f73432e27fba71a915b07f9514fee, dataVersion=3, sourceNote names WoWGeneralGoldTrackerDB export. Its Fel Iron Ore 23424 row reports quantity=5, durationSeconds=5528, sessionCount=3; these are farming-session acquisition totals, not five prospecting inputs or completed operations. No Warmaul 24995, Cobalt 36909, or target enchanting-material 22445/22446/22449 rows appear in the file; no cast-level output ledger or supported per-operation yield. The documented exporter path returned 404 at the pinned commit, so no claims about exporter implementation. DataTracker author README documents Shadowlands mob loot/kill and zone counters, not linked processing events. LootTrackr 2.0.0 (Oct 13, Retail 12.1.5/12.1.0) release describes raid/general loot history, no original target processing dataset exposed. ForeverDB author README explicitly targets Forever interface 16001; exclude its observations from Retail. These acquisition leads were absent by name from cutoff source manifest; no assigned source re-catalogued. Current exact-name target searches and GitHub/Reddit discovery found no independent completed-target operation logs or new eligible means. No prices retained."
+      "disposition": "new recorder methodology, no qualifying Retail cohort",
+      "summary": "New source-acquisition review: Gold Forever v0.24.2 (Nov 20, Retail/Forever) release tag addon-v0.24.2 resolved to 8614a7b1754e326185f4da3aef24acda7787d8ef. Loot.lua associates spell 13262 success with a bag-click item ID captured within 2 seconds of cast start and a loot source within 5 seconds of success; records a d<itemId> loot row on loot-window close per source, with material counts and timestamp. No saved spellcast-success event or cast GUID in this collector, no input bonusIDs/itemLink, no completed-cast denominator independent of loot-window capture, and an empty captured window is not a confirmed zero-yield operation. Disenchant.lua is explicitly a Classic Era model, not measured Retail rates. Its comment describes two Forever beta disenchants, including an unnamed blue yielding 3 Strange Dust (10940); input ID, level, skill and exact build unknown, wrong flavor. Lazy Disenchanter (Krathe) 1.1 onward advertises a persistent item/material/rank session log, latest 1.2.1 June 20 Retail 12.0.7, but no original public target export or verified zero/cast linkage found; code not inspected. Both source names absent from cutoff catalogue manifest and prior owned status. Exact target-name searches returned existing references, no new independent numerical evidence. No prices or duplicated rows retained."
     }
   ],
   "source_urls": [
-    "https://github.com/meltiseugen/WoW-General-Gold-Tracker/blob/d46061eb412f73432e27fba71a915b07f9514fee/Data/CraftingFarmingLearned.lua#L23-L65",
-    "https://github.com/meltiseugen/WoW-General-Gold-Tracker",
-    "https://github.com/Gartenschlaeger/DataTracker",
-    "https://github.com/Imemoth/wow-foreverdb/blob/main/README.md",
-    "https://www.curseforge.com/wow/addons/loottrackr/files/9166658"
+    "https://github.com/gold-forever/addon/blob/8614a7b1754e326185f4da3aef24acda7787d8ef/GoldForever/Recording/Loot.lua",
+    "https://github.com/gold-forever/addon/blob/8614a7b1754e326185f4da3aef24acda7787d8ef/GoldForever/Recording/Disenchant.lua",
+    "https://www.curseforge.com/wow/addons/gold-forever",
+    "https://www.curseforge.com/wow/addons/lazy-disenchanter",
+    "https://www.curseforge.com/wow/addons/lazy-disenchanter/files/7967404"
   ],
-  "numeric_summary": "New original export shows Fel Iron 23424 farming acquisition quantity 5 across 3 sessions (5528 seconds), not a prospecting cohort. No new eligible input/output pair, completed casts, hits, zeros, yields, histograms, skill or profile measurements.",
+  "numeric_summary": "No new eligible target input/output pair, operations, hits, zeros, yields, or skill/profile measurements. Gold Forever source timing constants 2 s and 5 s are capture windows only. Its unnamed Forever beta rare input -> 10940 x3 is not admissible Retail evidence.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-23T1944-chromie-time-disenchant-eligibility-hotfix.jsonl",
-  "preserved_prior_status_summary": "Active; screened additional public processing tools; no new qualifying Retail numerical evidence.",
-  "verified_parent_sha": "eb359def0d767ba075bf786c2824b042ad2e1e7e",
-  "verified_commit_sha": "5ec28094f89f1679a7e7767885d0379edd358985",
-  "commit_note": "Prior owned status commit changed only this file and exact blob verified against current branch. Current status-only commit to be verified on read-back; self SHA cannot be embedded in its own content.",
+  "preserved_prior_status_summary": "Active; inspected new public original farming export; no qualifying target processing observations.",
+  "verified_parent_sha": "7aeead24fa4cbbaedaa518baed2b5a16192f5ae5",
+  "verified_commit_sha": "79ccccb0d20f617f5af1e585b375ba15bc87d334",
+  "commit_note": "Previous status-only commit changed only owned status and exact blob verified against current branch. Current status-only commit verified externally after write; self SHA cannot be embedded.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -494,6 +494,18 @@
       ],
       "disposition": "held non-processing original source; Forever excluded",
       "reason": "Screened a previously unreviewed publicly shared original SavedVariables-derived dataset: WoW-General-Gold-Tracker Data/CraftingFarmingLearned.lua pinned at d46061eb412f73432e27fba71a915b07f9514fee, dataVersion=3, sourceNote names WoWGeneralGoldTrackerDB export. Its Fel Iron Ore 23424 row reports quantity=5, durationSeconds=5528, sessionCount=3; these are farming-session acquisition totals, not five prospecting inputs or completed operations. No Warmaul 24995, Cobalt 36909, or target enchanting-material 22445/22446/22449 rows appear in the file; no cast-level output ledger or supported per-operation yield. The documented exporter path returned 404 at the pinned commit, so no claims about exporter implementation. DataTracker author README documents Shadowlands mob loot/kill and zone counters, not linked processing events. LootTrackr 2.0.0 (Oct 13, Retail 12.1.5/12.1.0) release describes raid/general loot history, no original target processing dataset exposed. ForeverDB author README explicitly targets Forever interface 16001; exclude its observations from Retail. These acquisition leads were absent by name from cutoff source manifest; no assigned source re-catalogued. Current exact-name target searches and GitHub/Reddit discovery found no independent completed-target operation logs or new eligible means. No prices retained."
+    },
+    {
+      "task": "T0047/T0052/T0042/T0022/T0044",
+      "source": [
+        "https://github.com/gold-forever/addon/blob/8614a7b1754e326185f4da3aef24acda7787d8ef/GoldForever/Recording/Loot.lua",
+        "https://github.com/gold-forever/addon/blob/8614a7b1754e326185f4da3aef24acda7787d8ef/GoldForever/Recording/Disenchant.lua",
+        "https://www.curseforge.com/wow/addons/gold-forever",
+        "https://www.curseforge.com/wow/addons/lazy-disenchanter",
+        "https://www.curseforge.com/wow/addons/lazy-disenchanter/files/7967404"
+      ],
+      "disposition": "held recorder methodology; Classic model and Forever beta excluded from Retail",
+      "reason": "New source-acquisition review: Gold Forever v0.24.2 (Nov 20, Retail/Forever) release tag addon-v0.24.2 resolved to 8614a7b1754e326185f4da3aef24acda7787d8ef. Loot.lua associates spell 13262 success with a bag-click item ID captured within 2 seconds of cast start and a loot source within 5 seconds of success; records a d<itemId> loot row on loot-window close per source, with material counts and timestamp. No saved spellcast-success event or cast GUID in this collector, no input bonusIDs/itemLink, no completed-cast denominator independent of loot-window capture, and an empty captured window is not a confirmed zero-yield operation. Disenchant.lua is explicitly a Classic Era model, not measured Retail rates. Its comment describes two Forever beta disenchants, including an unnamed blue yielding 3 Strange Dust (10940); input ID, level, skill and exact build unknown, wrong flavor. Lazy Disenchanter (Krathe) 1.1 onward advertises a persistent item/material/rank session log, latest 1.2.1 June 20 Retail 12.0.7, but no original public target export or verified zero/cast linkage found; code not inspected. Both source names absent from cutoff catalogue manifest and prior owned status. Exact target-name searches returned existing references, no new independent numerical evidence. No prices or duplicated rows retained."
     }
   ],
   "blockers": [
@@ -540,10 +552,11 @@
     "2026-11-24T07:41:00.839Z: New acquisition path: Haul 2026.11.19.1 author release (Nov 19) tracks loot by farming session, not documented exact processing operation. Public GEC community atlas exposes aggregate zone loot, fishing, kills and skill-ups; Retail/Forever filtering exists, but its displayed counts/percentages are zone aggregates, not completed target operations. Searches within the public Haul atlas for Disenchant, Cobalt Ore and Arcane Dust found no matching text. Individual synced data is private by default according to the data project and Uplink author README. The Nov 19 release corrects handling of protected profession skill-up messages; it does not document a new processing measurement. Earlier July author changelog reports possible repeated tracked events fixed July 25; Sep 30 notes prior pause/merge undercount and that previously saved totals remained unchanged. No accessible target input-linked operation ledger, raw output histogram, casts, zeros, refunds, skill/spec/build context, or independently supported per-operation mean. No new Retail cohort or numeric baseline fields. Fresh source searches using Outland material names and Cobalt/Fel Iron yielded historical references and previously covered recorders, not new original measurements. No price data retained.",
     "2026-11-24T08:40:59.400Z: New post-cutoff acquisition path: Craftonomics 5.14.0, Nov 23 (CurseForge file 9779904), Retail 12.1.5 and Forever. Original source pinned at a9a8e47d103b53e2aa54376be4fc3eae2f4d9cb2: Gone.lua lines 17-31, 55-108 and 132-137 correlates successful spell 13262 with loot within a three-second window and identifies at most the first decreased item among previously crafted item IDs, not an arbitrary dropped item's exact itemLink. Ledger.lua lines 789-824 skips empty loot and writes one craft entry per material, with output item ID, quantity and rank, not an input-linked completed-operation record; same-second entries are not unique cast IDs. A disappeared crafted item with unobserved loot is merely marked used. The README confirms DE material entries and unobserved-loot limitation; displayed Retail estimates come from TSM/Auctionator, not a new source of rates. No public target operation export or supported new mean was found. New searches for exact-name Warmaul, Fel Iron, Cobalt and Arcane Dust returned old references and other-flavor material, not independent current target measurements. No prices retained.",
     "2026-11-24T09:41:25.377Z: Newly screened acquisition lead Disenqueue: author repository pinned at c9ed4e3c4c6f7c2c4df46ee236d84993091d43dc (July 22, 2026; CurseForge Retail 12.0.7 / MoP Classic 5.5.4). Core.lua 950-1095 registers successful/failed/interrupted spell events separately and advances the queue on tracked success, but has no loot outcome event registration in that handler. Failure/rejection writes protectedItemIDs, with manual locks also possible; locked lists therefore cannot prove completed zero-output casts or definitive item-level eligibility. Core.lua 738-767 and ui/Export.lua show that export is the locked-item list, not a processing study. No original target event cohort or supported mean exposed. Anvilbook's Nov 11 0.8.1 author description explicitly records input item/level/quality/materials in SavedVariables, but only for Forever client 1.60.1, not Retail. SKTools author description advertises batch milling/prospecting and gathering summaries, not a public per-operation processing ledger; held without claiming code-level absence. Current exact-name searches for Warmaul, Cobalt, Fel Iron and Arcane Dust returned historical references and already-reviewed item profile pages, no new empirical measurements. All three acquisition leads absent by name from 731-source manifest; no re-catalogue. No prices retained.",
-    "2026-11-24T10:40:54.821Z: Screened a previously unreviewed publicly shared original SavedVariables-derived dataset: WoW-General-Gold-Tracker Data/CraftingFarmingLearned.lua pinned at d46061eb412f73432e27fba71a915b07f9514fee, dataVersion=3, sourceNote names WoWGeneralGoldTrackerDB export. Its Fel Iron Ore 23424 row reports quantity=5, durationSeconds=5528, sessionCount=3; these are farming-session acquisition totals, not five prospecting inputs or completed operations. No Warmaul 24995, Cobalt 36909, or target enchanting-material 22445/22446/22449 rows appear in the file; no cast-level output ledger or supported per-operation yield. The documented exporter path returned 404 at the pinned commit, so no claims about exporter implementation. DataTracker author README documents Shadowlands mob loot/kill and zone counters, not linked processing events. LootTrackr 2.0.0 (Oct 13, Retail 12.1.5/12.1.0) release describes raid/general loot history, no original target processing dataset exposed. ForeverDB author README explicitly targets Forever interface 16001; exclude its observations from Retail. These acquisition leads were absent by name from cutoff source manifest; no assigned source re-catalogued. Current exact-name target searches and GitHub/Reddit discovery found no independent completed-target operation logs or new eligible means. No prices retained."
+    "2026-11-24T10:40:54.821Z: Screened a previously unreviewed publicly shared original SavedVariables-derived dataset: WoW-General-Gold-Tracker Data/CraftingFarmingLearned.lua pinned at d46061eb412f73432e27fba71a915b07f9514fee, dataVersion=3, sourceNote names WoWGeneralGoldTrackerDB export. Its Fel Iron Ore 23424 row reports quantity=5, durationSeconds=5528, sessionCount=3; these are farming-session acquisition totals, not five prospecting inputs or completed operations. No Warmaul 24995, Cobalt 36909, or target enchanting-material 22445/22446/22449 rows appear in the file; no cast-level output ledger or supported per-operation yield. The documented exporter path returned 404 at the pinned commit, so no claims about exporter implementation. DataTracker author README documents Shadowlands mob loot/kill and zone counters, not linked processing events. LootTrackr 2.0.0 (Oct 13, Retail 12.1.5/12.1.0) release describes raid/general loot history, no original target processing dataset exposed. ForeverDB author README explicitly targets Forever interface 16001; exclude its observations from Retail. These acquisition leads were absent by name from cutoff source manifest; no assigned source re-catalogued. Current exact-name target searches and GitHub/Reddit discovery found no independent completed-target operation logs or new eligible means. No prices retained.",
+    "2026-11-24T11:40:59.470Z: New source-acquisition review: Gold Forever v0.24.2 (Nov 20, Retail/Forever) release tag addon-v0.24.2 resolved to 8614a7b1754e326185f4da3aef24acda7787d8ef. Loot.lua associates spell 13262 success with a bag-click item ID captured within 2 seconds of cast start and a loot source within 5 seconds of success; records a d<itemId> loot row on loot-window close per source, with material counts and timestamp. No saved spellcast-success event or cast GUID in this collector, no input bonusIDs/itemLink, no completed-cast denominator independent of loot-window capture, and an empty captured window is not a confirmed zero-yield operation. Disenchant.lua is explicitly a Classic Era model, not measured Retail rates. Its comment describes two Forever beta disenchants, including an unnamed blue yielding 3 Strange Dust (10940); input ID, level, skill and exact build unknown, wrong flavor. Lazy Disenchanter (Krathe) 1.1 onward advertises a persistent item/material/rank session log, latest 1.2.1 June 20 Retail 12.0.7, but no original public target export or verified zero/cast linkage found; code not inspected. Both source names absent from cutoff catalogue manifest and prior owned status. Exact target-name searches returned existing references, no new independent numerical evidence. No prices or duplicated rows retained."
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Seek original public Retail processing event exports with input itemLink and completed-operation identity, or a specific unresolved profile/identity correction. Skip farming-session aggregates, protected-list tools, and previously screened sources unless new raw fields are published.",
+  "next_concrete_step": "Seek public original Retail event exports with actual completed-operation linkage and exact input variant, or genuinely new scoped identity/profile corrections; skip Gold Forever loot-window aggregates, Classic model and already-screened recorders unless original target data appears.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -552,14 +565,14 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://github.com/meltiseugen/WoW-General-Gold-Tracker/blob/d46061eb412f73432e27fba71a915b07f9514fee/Data/CraftingFarmingLearned.lua#L23-L65",
-    "https://github.com/meltiseugen/WoW-General-Gold-Tracker",
-    "https://github.com/Gartenschlaeger/DataTracker",
-    "https://github.com/Imemoth/wow-foreverdb/blob/main/README.md",
-    "https://www.curseforge.com/wow/addons/loottrackr/files/9166658"
+    "https://github.com/gold-forever/addon/blob/8614a7b1754e326185f4da3aef24acda7787d8ef/GoldForever/Recording/Loot.lua",
+    "https://github.com/gold-forever/addon/blob/8614a7b1754e326185f4da3aef24acda7787d8ef/GoldForever/Recording/Disenchant.lua",
+    "https://www.curseforge.com/wow/addons/gold-forever",
+    "https://www.curseforge.com/wow/addons/lazy-disenchanter",
+    "https://www.curseforge.com/wow/addons/lazy-disenchanter/files/7967404"
   ],
-  "latest_run_source_date": "2026-10-13",
-  "latest_run": "Refreshed required research instructions and queue at exact branch head; reviewed original pinned farming export and new recorder leads; no new JSONL. T0053 remains done.",
+  "latest_run_source_date": "2026-11-20",
+  "latest_run": "Refreshed required research documents and queue, screened new original collector and author session-log description; no new evidence JSONL. T0053 remains done.",
   "new_evidence_file_this_run": null,
-  "next": "Seek original public Retail processing event exports with input itemLink and completed-operation identity, or a specific unresolved profile/identity correction. Skip farming-session aggregates, protected-list tools, and previously screened sources unless new raw fields are published."
+  "next": "Seek public original Retail event exports with actual completed-operation linkage and exact input variant, or genuinely new scoped identity/profile corrections; skip Gold Forever loot-window aggregates, Classic model and already-screened recorders unless original target data appears."
 }
