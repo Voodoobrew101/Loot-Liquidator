@@ -92,6 +92,10 @@ LL:StartCraftStudy('failure');bags=bag({[10]=5});local n=#d.records
 sent('failed');emit('UNIT_SPELLCAST_FAILED','player','failed',1231127);bags=bag({});advance(14);eq(#d.records,n)
 -- Another unit cannot complete this player's cast, nor can a mismatched GUID.
 bags=bag({[10]=5});sent('actual');bags=bag({[20]=2})
+local beforePendingReset=LL.db.craftResearch
+eq(LL:ResetRecordedResults(),false,'reset refuses an unsettled cast')
+eq(LL.db.craftResearch,beforePendingReset,'failed reset preserves every retained batch')
+eq(LL.db.recordedResultsBackup,nil,'failed reset must not replace or create a backup')
 emit('UNIT_SPELLCAST_SUCCEEDED','party1','actual',1231127);success('wrong-guid');emit('LOOT_CLOSED');advance(2);eq(#d.records,n)
 success('actual');advance(2);eq(#d.records,n+1)
 -- Overlap never turns two simultaneous bag deltas into one operation.

@@ -3,6 +3,15 @@
 - Reclaim recorder context slots that no retained history references, keeping saved casts and live context identities intact without increasing the memory bound.
 - Make CurseForge uploads an explicit manual choice. Normal builds and version-tag pushes produce verified artifacts without publishing.
 
+# Loot Liquidator 1.0.1
+
+- Add community research instructions, copyable submission links, full-history export, paged export, new batch and confirmed recording reset controls to the first settings tab.
+- Open a GitHub submission form for player processing exports and document recording, public sharing and safe resets.
+- Add daily review instructions and a repeatable intake pipeline with immutable source files, complete-page validation, operation deduplication and explicit source-bound reviews.
+- Compile reviewed complete community cohorts through the existing evidence calculations, preserving their measured character profile and client build. Unknown context and unresolved outputs remain research.
+- Protect recorded yields from repeated skill scaling and prevent personal/shared operations from being counted twice. Keep unobserved possible outputs uncertain.
+- Preserve confirmation safeguards: unavailable confirmation dialogs cannot erase recordings or imports.
+
 # Loot Liquidator 1.0.0
 
 - Share reviewed statistics from 93 recorded disenchants in four ordinary gear-category and measured-profile cohorts. Preserve the remaining observations as research without inventing missing profiles or recurring knowledge-item value.

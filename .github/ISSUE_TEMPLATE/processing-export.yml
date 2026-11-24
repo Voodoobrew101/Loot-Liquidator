@@ -1,0 +1,67 @@
+name: Share processing results
+description: Contribute a recorded processing export to improve low-confidence estimates.
+title: "[Processing export]: "
+labels: ["community-research"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Help improve Loot Liquidator with your recorded results. Small, complete batches are welcome.
+        Read the [contribution guide](https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/docs/community-research.md).
+        Open /ll → Community research on the first settings tab and use Export all, or attach every page from Export pages.
+        This issue and its attachments will be public. Compact exports are compressed, not anonymized.
+  - type: input
+    id: version
+    attributes:
+      label: Addon version
+      description: The Loot Liquidator version used when recording. Leave unknown if you cannot verify it.
+      placeholder: "For example: 1.0.1"
+    validations:
+      required: true
+  - type: dropdown
+    id: game-mode
+    attributes:
+      label: Game mode
+      options:
+        - Retail
+        - PTR or beta
+        - Classic
+        - Private server or other
+        - Unknown
+    validations:
+      required: true
+  - type: textarea
+    id: session
+    attributes:
+      label: What did you record?
+      description: Method, input item names, approximate capture date and any interruptions, gear changes, respecs or unusual conditions. No calculated percentages needed.
+      placeholder: "For example: disenchanted epic armor on Retail, November 23; no gear or specialization changes during the batch."
+    validations:
+      required: true
+  - type: textarea
+    id: exports
+    attributes:
+      label: Export files
+      description: Attach the complete .txt/.json export here. Use .txt if .json is rejected. Include every page from one snapshot; do not combine pages copied before and after recording more results. Short exports may be pasted inside a fenced code block. Never attach your entire SavedVariables file.
+      placeholder: Drag your export files here, or paste the complete short JSON inside a code block.
+    validations:
+      required: true
+  - type: textarea
+    id: overlap
+    attributes:
+      label: Earlier submissions or overlapping exports
+      description: Link any earlier issue containing these same operations. A full-history export may overlap an earlier batch; this helps avoid double counting.
+      placeholder: "None, or links to earlier submissions."
+    validations:
+      required: false
+  - type: checkboxes
+    id: sharing
+    attributes:
+      label: Public sharing and completeness
+      options:
+        - label: I understand that exports can include character/realm identifiers, GUIDs, timestamps, profession context, equipment and item/results data, and this GitHub submission is public.
+          required: true
+        - label: These are my recordings, and I allow Loot Liquidator to use the submitted data for research and shipped shared statistics.
+          required: true
+        - label: I copied the complete export, or attached all pages from the same snapshot, without changing recorded values or operation IDs.
+          required: true

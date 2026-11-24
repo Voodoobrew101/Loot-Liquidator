@@ -88,6 +88,7 @@ GameFontHighlightSmall='GameFontHighlightSmall';CLOSE='Close'
 time=function()return 1000 end
 GetTime=function()return 100 end
 GetBuildInfo=function()return 'test','70783' end
+wipe=function(values)for key in pairs(values)do values[key]=nil end;return values end
 local LL={db={characters={},recordDisenchants=true,recordConversions=true}}
 for _,name in ipairs({'Core.lua','CraftRecording.lua','ImportedResults.lua','Settings.lua'}) do
     assert(loadfile('LootLiquidator/'..name))('LootLiquidator',LL)
@@ -307,4 +308,63 @@ LL:ShowRecordedResultsExport()
 check(#f.edit:GetText()<=LL.MaxCopyTextBytes,'missing native codec cannot expose an oversized copy widget')
 eq(#captured.records,683,'fallback does not remove older results')
 print('PASS: latest-batch export, bounded compact copy, all-history preservation and native text cleanup')
+
+-- The first settings page's contribution buttons route to the real serializer
+-- and require confirmation before resetting any retained research.
+local communityButtons={}
+CreateSettingsButtonInitializer=function(name,label,click,help)
+    return {name=name,label=label,click=click,help=help}
+end
+LL:AddCommunityResearchSettings({}, {AddInitializer=function(_,initializer)
+    communityButtons[initializer.name]=initializer
+end})
+check(communityButtons['Help improve low-confidence estimates'])
+communityButtons['Help improve low-confidence estimates'].click()
+check(f.contents:find('GitHub submissions are public.',1,true),'privacy notice is visible before posting')
+check(f.contents:find('skill, equipment and specializations',1,true),'instructions request measured player context')
+check(f.contents:find('submit every page together',1,true),'paged submissions must retain complete denominators')
+communityButtons['Submit recorded results on GitHub'].click()
+eq(f.contents,'https://github.com/Voodoobrew101/Loot-Liquidator/issues/new?template=processing-export.yml')
+communityButtons['Contribution guide'].click()
+eq(f.contents,'https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/docs/community-research.md')
+LL.db.craftResearch=source
+local original=LL:ExportCraftResearch('all')
+communityButtons['Export recorded results'].click()
+local shared=assert(LL.DecodeImportJSON(f.contents))
+eq(#shared.records,#source.records,'root export includes every retained batch')
+check(same(shared.records,source.records) and same(shared.contexts,source.contexts),'root export preserves captured metadata')
+eq(LL:ExportCraftResearch('all'),original,'export never resets saved observations')
+communityButtons['Export recorded results as pages'].click()
+shared=assert(LL.DecodeImportJSON(f.contents))
+eq(#shared.records,25);eq(shared.pages,3)
+f.next.scripts.OnClick(f.next)
+shared=assert(LL.DecodeImportJSON(f.contents));eq(shared.page,2);eq(#shared.records,25)
+f.next.scripts.OnClick(f.next)
+shared=assert(LL.DecodeImportJSON(f.contents));eq(shared.page,3);eq(#shared.records,#source.records-50)
+eq(LL:ExportCraftResearch('all'),original,'paging never clears results')
+local imported={keep=true};LL.db.importedResults=imported
+LL.db.enabled=true;LL.db.recordedResultsBackup={keepPrevious=true}
+StaticPopupDialogs=nil;StaticPopup_Show=nil
+communityButtons['Reset recorded results'].click()
+eq(LL.db.craftResearch,source,'missing confirmation UI cannot clear recordings')
+check(LL.db.recordedResultsBackup.keepPrevious,'missing confirmation UI cannot replace the backup')
+StaticPopupDialogs={}
+local shownPopup
+StaticPopup_Show=function(key)shownPopup=key end
+communityButtons['Reset recorded results'].click()
+eq(shownPopup,'LOOTLIQUIDATOR_RESET_RESULTS')
+eq(LL.db.craftResearch,source,'opening/canceling the reset leaves saved data intact')
+check(StaticPopupDialogs[shownPopup].text:find('Export and submit',1,true),'reset reminds users to submit first')
+StaticPopupDialogs[shownPopup].OnAccept()
+eq(LL.db.craftResearch,nil)
+eq(LL.db.recordedResultsBackup.craftResearch,source,'confirmed reset keeps exactly the former research ledger')
+eq(LL.db.importedResults,imported,'reset leaves other players results intact')
+check(LL.db.enabled,'reset leaves addon settings intact')
+communityButtons['Start new recording batch'].click()
+eq(shownPopup,'LOOTLIQUIDATOR_NEW_BATCH')
+eq(LL.db.craftResearch,nil,'starting a batch also waits for confirmation')
+StaticPopupDialogs[shownPopup].OnAccept()
+check(LL.db.craftResearch and LL.db.craftResearch.activeStudy,'confirmed batch starts a fresh study')
+eq(LL.db.recordedResultsBackup.craftResearch,source,'new batch preserves the preceding reset backup')
+print('PASS: community links, full export, paging, confirmation, reset backup and settings/import isolation')
 print('PASS: '..checks..' native export dialog, literal JSON, importer, snapshot paging and optional skin assertions')

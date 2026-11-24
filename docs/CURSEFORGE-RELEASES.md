@@ -20,6 +20,13 @@ The workflow compiles the committed research snapshot without refreshing it, run
 
 After owner approval and the existing QA/release gates:
 
+The owner's community-research request supplies standing approval for the scoped
+daily task in [the maintainer runbook](community-research-maintainer.md): reviewed
+player evidence may be integrated into the newest production addon and published
+as a new tested patch when shared data changes. That task still makes the explicit
+matching-tag `publish=true` dispatch below. Ordinary builds and tag pushes remain
+build-only, and unrelated changes do not inherit this approval.
+
 1. Create and push a **new version tag** on the exact approved commit. The tag must already exist remotely, point to a commit on main, and contain this opt-in workflow. Its push builds/tests an artifact; it does not publish.
 2. Manually run the workflow **from that tag**, using the same exact text in the `version` input. For a future approved tag `v1.0.1`, select `v1.0.1` as the workflow ref and enter `v1.0.1` as the version. GitHub's workflow-dispatch API/CLI can select a tag if the UI ref picker does not show it.
 3. Explicitly check **publish**. A checked request from a branch, or a version that differs from the selected tag, fails before the build/upload proceeds.
