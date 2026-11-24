@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-24T17:41:43.041Z",
-  "status": "Active; screened three new acquisition paths; no new eligible Retail processing observations.",
+  "updated_at": "2026-11-24T18:41:36.309Z",
+  "status": "Active; two additional original exports inspected; no eligible new processing observations.",
   "task_ids": [
     "T0047",
     "T0052",
@@ -19,27 +19,24 @@
   ],
   "newly_verified_fields_cohorts": [
     {
-      "disposition": "held source-acquisition context only; no original target processing cohort",
-      "summary": "New source-acquisition screen: My Loot History v2.8.0 (author source pinned 27a4f5d1d807de84d19b5c67b2f7e5ec6b4634af; TOC interfaces 120105 and 16001) stores received item chat events, not completed processing operations. Core.lua lines 148-162 captures output link/quantity; data/Source.lua 99-150 assigns loot-window source or chat message kind, drops source GUID in returned source, and does not associate processing spell or input itemLink. Database.lua 270-312 groups loot by output ID, preserving changed output variants, not consumed input variant. Export.lua creates aggregated CSV with output totals and source tallies; no completed cast denominator or per-input outcomes/zeros. GitHub MyLootHistoryDB search returned only addon source and a source-code demo report, no public original observation export. Breakables pinned b8c2b04c3c45f049094022837ad8701fc29a67a3 supports Retail 120105/120107 and other flavors; Breakables.lua 537-559 and 646-664 show that its successful spellcast handler is specifically for pick-lock refresh, not processing measurements; README screenshot shows available prospects, not completed operations. DestroyusPro 2.0.1 (Jan 30 2023, Retail 10.0.5) author listing describes selection and blacklist/whitelist, not public outcome logs; code not inspected. These three acquisition paths were absent by name from previous owned status and owner coordination source manifest. Exact-name Warmaul, Cobalt and Fel Iron web and code searches surfaced existing item profiles, prior cohorts, static eligibility/skill tables and irrelevant mining references; no new independent target measurements. No prices, synthetic records, or nominal equivalents retained. T0053 remains done."
+      "disposition": "exhausted empty original processing tables, not measured zeros",
+      "summary": "Two additional previously unexamined original public Enchantrix SavedVariables source files were inspected at exact commits: burned05/Classic-Addons account 54989383#5 (blob 3bbcef7a2cc440c9c9a2a51bb63eb1ecb9a8bcbe) and stevehulme/classic-era-config THELASTPOET (blob 5a80949d728d20aa69996f096dbbef70298b2428). Each has empty EnchantedLocal, ProspectedLocal, MillingLocal and NonDisenchantablesLocal tables; distinct blobs, no target operations and no observed zero-output events. Classic-oriented repos are not evidence of current Retail; no private data sought. New search terms targeted original per-input means and raw results for Outland DE and Cobalt/Fel Iron across blogs, Reddit, forums, Wowhead and GitHub; returned already reviewed cohorts, old priors, PTR item profiles and farming counts (not processing). Current PTR Warmaul profile repeats 14/74 level labels, not new eligibility or actual output evidence. No new independent numeric or identity fields, no duplicate catalogue work, no evidence JSONL or price data."
     }
   ],
   "source_urls": [
-    "https://github.com/RustyDaemon/MyLootHistory/blob/27a4f5d1d807de84d19b5c67b2f7e5ec6b4634af/MyLootHistory.toc",
-    "https://github.com/RustyDaemon/MyLootHistory/blob/27a4f5d1d807de84d19b5c67b2f7e5ec6b4634af/Core.lua#L148-L162",
-    "https://github.com/RustyDaemon/MyLootHistory/blob/27a4f5d1d807de84d19b5c67b2f7e5ec6b4634af/data/Source.lua#L99-L150",
-    "https://github.com/RustyDaemon/MyLootHistory/blob/27a4f5d1d807de84d19b5c67b2f7e5ec6b4634af/data/Database.lua#L270-L312",
-    "https://github.com/RustyDaemon/MyLootHistory/blob/27a4f5d1d807de84d19b5c67b2f7e5ec6b4634af/data/Export.lua",
-    "https://github.com/parnic/breakables/blob/b8c2b04c3c45f049094022837ad8701fc29a67a3/Breakables.lua#L537-L559",
-    "https://github.com/parnic/breakables/blob/b8c2b04c3c45f049094022837ad8701fc29a67a3/Breakables.lua#L646-L664",
-    "https://www.curseforge.com/wow/addons/destroyuspro"
+    "https://github.com/burned05/Classic-Addons/blob/25d399efa097776c83da577f15907ec90e557301/WTF/Account/54989383%235/SavedVariables/Enchantrix.lua",
+    "https://github.com/stevehulme/classic-era-config/blob/366d5f684087fd9bd98952937d7ae3a46c13e6f3/Account/THELASTPOET/SavedVariables/Enchantrix.lua",
+    "https://www.wowhead.com/ptr-2/item=24995/warmaul-legplates",
+    "https://www.wowhead.com/ptr/item=23424/fel-iron-ore",
+    "https://www.wowhead.com/ptr/item=36909/cobalt-ore"
   ],
-  "numeric_summary": "No new eligible input/output identity, completed operation counts, hits, quantities, zeros, histograms, profiles, refunds or supported means. No evidence JSONL.",
+  "numeric_summary": "No new qualifying input/output identities, completed casts, hits, material quantities, observed zeros, histograms, supported means or profiles.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-23T1944-chromie-time-disenchant-eligibility-hotfix.jsonl",
   "preserved_prior_status_summary": "Active; screened one original public non-Retail export and three acquisition leads; no new qualifying Retail processing evidence.",
-  "verified_parent_sha": "97b1cfac0d8999488a9bbc2bf5c3e5a3c5a69c8e",
-  "verified_commit_sha": "32bd51b0cabf48a6e6f7475909dcf4d56231fd50",
-  "commit_note": "Previous owned status commit 32bd51b verified pinned blob equality and sole changed file. Current commit verified externally after write (self SHA cannot be embedded).",
+  "verified_parent_sha": "0ba0cd822c071b0d6cf798e8fd95910e0d4f19b7",
+  "verified_commit_sha": "495ca6ba50a3e1e2bbc8cde91745fc4d4c53528a",
+  "commit_note": "Current write to owned status only; exact commit and changed-file verification performed after write, not embedded as self-referential SHA.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -531,6 +528,15 @@
       "source": "https://github.com/ExcEssIv3/profit/blob/bbf0b653f8c14544e77d261fc2cb8b4606656b69/export/recorded.json",
       "disposition": "excluded-forever-original-export-not-retail",
       "reason": "Single non-target row 5207 -> 10978; client flavor explicitly Forever. No target input records, no Retail admission."
+    },
+    {
+      "task": "T0047/T0042/T0022/T0044",
+      "source": [
+        "https://github.com/burned05/Classic-Addons/blob/25d399efa097776c83da577f15907ec90e557301/WTF/Account/54989383%235/SavedVariables/Enchantrix.lua",
+        "https://github.com/stevehulme/classic-era-config/blob/366d5f684087fd9bd98952937d7ae3a46c13e6f3/Account/THELASTPOET/SavedVariables/Enchantrix.lua"
+      ],
+      "disposition": "exhausted two distinct empty original exports; not evidence of zero outcomes",
+      "reason": "Two additional previously unexamined original public Enchantrix SavedVariables source files were inspected at exact commits: burned05/Classic-Addons account 54989383#5 (blob 3bbcef7a2cc440c9c9a2a51bb63eb1ecb9a8bcbe) and stevehulme/classic-era-config THELASTPOET (blob 5a80949d728d20aa69996f096dbbef70298b2428). Each has empty EnchantedLocal, ProspectedLocal, MillingLocal and NonDisenchantablesLocal tables; distinct blobs, no target operations and no observed zero-output events. Classic-oriented repos are not evidence of current Retail; no private data sought. New search terms targeted original per-input means and raw results for Outland DE and Cobalt/Fel Iron across blogs, Reddit, forums, Wowhead and GitHub; returned already reviewed cohorts, old priors, PTR item profiles and farming counts (not processing). Current PTR Warmaul profile repeats 14/74 level labels, not new eligibility or actual output evidence. No new independent numeric or identity fields, no duplicate catalogue work, no evidence JSONL or price data."
     }
   ],
   "blockers": [
@@ -584,10 +590,11 @@
     "2026-11-24T14:41:09.209Z: New acquisition leads: Rat Pack 1.3.5 (Nov 23, file 9782814) author documentation explicitly requires Forever 1.60.1 and membership in Rats Den guild. It describes per-item observed disenchant logs, guild pooled counts by item kind/level and separate Arcane Salvager buff profiles, with estimates using Classic tables until enough guild observations exist; it is not a public Retail dataset. No original target rows, zero-inclusive denominator or code verified, and no access/contact attempted. Craft Flip Forever 1.1.0 (Nov 22, file 9760030) likewise explicitly Forever 1.60.1; its release notes describe reading existing AH Flip Forever and EzDisenchant observations and blending with a prior, not an independent cohort. No public target raw rows or supported Retail means in either listing. Both names absent from prior legacy status and cutoff manifest. Exact-name searches across Wowhead, Reddit, Blizzard forums and broader web for Warmaul Legplates, Cobalt Ore, Fel Iron Ore and Runecloth Headband surfaced previously covered historical references/comments, catalog profiles and unrelated farming or market entries, not a new independent processing cohort. No new IDs, completed casts, output hits/units, zero bins, skill/spec/build linkage, refunds or measured means; no prices or duplicated rows retained.",
     "2026-11-24T15:40:54.281Z: New independent acquisition screen: TheWoWDB Companion Retail 0.20.3 (Nov 23, file 9781573, versions 12.1.0/12.0.7) author listing documents AH scans, market history and patron order cost estimates, not a public processing-result ledger. The public desktop client README describes download-only market refresh, not uploads of game files. The separate 0.19.0 release notes describe Forever creature-drop counts keyed to kills, not disenchant casts; its site enchanting guide (checked Oct 5) explicitly uses Forever beta and Classic reference data, not Retail measurements. No target operation exports located; no addon code or private data inspected. Separate April 15-16 Turtle WoW original discussion reports Runecloth Belt and White Bandit Mask conditional ranges, but explicitly private-server flavor, no actual N, hits, units, zeros or exact linked IDs; not eligible Retail evidence. Both source names/URL IDs absent from prior owned status and cutoff manifest text. Fresh searches by target names and source discovery on Wowhead, Reddit, Blizzard forums and GitHub returned known item profiles, previously screened recorders and unrelated posts, not new independent target processing measurements. No prices retained; no new casts, output IDs, hits, quantities, zero bins, skill profiles or means. T0053 identity remains done.",
     "2026-11-24T16:41:06.293Z: New source acquisition screen: actual public Profit export/recorded.json at bbf0b653f8c14544e77d261fc2cb8b4606656b69 (blob 66e4fd7aecd8a11aed6eab4574631d724dd3a353) contains one disenchant input row 5207, q=2, il=20, c=2, n=1, build=70245, seen=1791390719, output 10978 n=1,total=1,min=1,max=1. README explicitly targets Forever and TOC interface 16001; these raw fields are not eligible for Retail and their event/zero semantics were not independently verified. No target item IDs in export. Disenchantrix 1.0.0 (Nov 24) listing explicitly Forever 1.60.1 only; no Retail sample. DisenchantInfo (Oct 26, Retail 12.1.7) describes tooltip valuation, not an original public processing cohort. ShatterBar 0.1.14 (Oct 23, Retail and other flavors) describes item/batch availability and bundled Molinari data, not actual processing outcome measurements; available batch counts are not casts. No code-level claims for these listings. All four source names absent from prior owned status and cutoff manifest. Targeted Warmaul, Cobalt, Fel Iron and Arcane Dust searches returned already-covered historical tables and comment cohorts (including Strikk3r and Thottbot) or catalog profiles; no new independent Retail denominator, quantity, hit count, zero bin, profile, refund or supported mean. No prices retained. T0053 remains done.",
-    "2026-11-24T17:41:43.041Z: New source-acquisition screen: My Loot History v2.8.0 (author source pinned 27a4f5d1d807de84d19b5c67b2f7e5ec6b4634af; TOC interfaces 120105 and 16001) stores received item chat events, not completed processing operations. Core.lua lines 148-162 captures output link/quantity; data/Source.lua 99-150 assigns loot-window source or chat message kind, drops source GUID in returned source, and does not associate processing spell or input itemLink. Database.lua 270-312 groups loot by output ID, preserving changed output variants, not consumed input variant. Export.lua creates aggregated CSV with output totals and source tallies; no completed cast denominator or per-input outcomes/zeros. GitHub MyLootHistoryDB search returned only addon source and a source-code demo report, no public original observation export. Breakables pinned b8c2b04c3c45f049094022837ad8701fc29a67a3 supports Retail 120105/120107 and other flavors; Breakables.lua 537-559 and 646-664 show that its successful spellcast handler is specifically for pick-lock refresh, not processing measurements; README screenshot shows available prospects, not completed operations. DestroyusPro 2.0.1 (Jan 30 2023, Retail 10.0.5) author listing describes selection and blacklist/whitelist, not public outcome logs; code not inspected. These three acquisition paths were absent by name from previous owned status and owner coordination source manifest. Exact-name Warmaul, Cobalt and Fel Iron web and code searches surfaced existing item profiles, prior cohorts, static eligibility/skill tables and irrelevant mining references; no new independent target measurements. No prices, synthetic records, or nominal equivalents retained. T0053 remains done."
+    "2026-11-24T17:41:43.041Z: New source-acquisition screen: My Loot History v2.8.0 (author source pinned 27a4f5d1d807de84d19b5c67b2f7e5ec6b4634af; TOC interfaces 120105 and 16001) stores received item chat events, not completed processing operations. Core.lua lines 148-162 captures output link/quantity; data/Source.lua 99-150 assigns loot-window source or chat message kind, drops source GUID in returned source, and does not associate processing spell or input itemLink. Database.lua 270-312 groups loot by output ID, preserving changed output variants, not consumed input variant. Export.lua creates aggregated CSV with output totals and source tallies; no completed cast denominator or per-input outcomes/zeros. GitHub MyLootHistoryDB search returned only addon source and a source-code demo report, no public original observation export. Breakables pinned b8c2b04c3c45f049094022837ad8701fc29a67a3 supports Retail 120105/120107 and other flavors; Breakables.lua 537-559 and 646-664 show that its successful spellcast handler is specifically for pick-lock refresh, not processing measurements; README screenshot shows available prospects, not completed operations. DestroyusPro 2.0.1 (Jan 30 2023, Retail 10.0.5) author listing describes selection and blacklist/whitelist, not public outcome logs; code not inspected. These three acquisition paths were absent by name from previous owned status and owner coordination source manifest. Exact-name Warmaul, Cobalt and Fel Iron web and code searches surfaced existing item profiles, prior cohorts, static eligibility/skill tables and irrelevant mining references; no new independent target measurements. No prices, synthetic records, or nominal equivalents retained. T0053 remains done.",
+    "2026-11-24T18:41:36.309Z: Two additional previously unexamined original public Enchantrix SavedVariables source files were inspected at exact commits: burned05/Classic-Addons account 54989383#5 (blob 3bbcef7a2cc440c9c9a2a51bb63eb1ecb9a8bcbe) and stevehulme/classic-era-config THELASTPOET (blob 5a80949d728d20aa69996f096dbbef70298b2428). Each has empty EnchantedLocal, ProspectedLocal, MillingLocal and NonDisenchantablesLocal tables; distinct blobs, no target operations and no observed zero-output events. Classic-oriented repos are not evidence of current Retail; no private data sought. New search terms targeted original per-input means and raw results for Outland DE and Cobalt/Fel Iron across blogs, Reddit, forums, Wowhead and GitHub; returned already reviewed cohorts, old priors, PTR item profiles and farming counts (not processing). Current PTR Warmaul profile repeats 14/74 level labels, not new eligibility or actual output evidence. No new independent numeric or identity fields, no duplicate catalogue work, no evidence JSONL or price data."
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Prioritize actual publicly shared original input-linked processing logs or dated independent per-input means, rather than further unchanged recorder listings; seek exact itemLink/build and positive-event histograms for legacy targets, avoiding exhausted sources and cutoff decisions.",
+  "next_concrete_step": "Seek independent published player result logs or dated supported per-operation/input means via newly published sources; avoid already exhausted empty exports, unchanged recorder listings, known historical mirrors and cutoff decisions. Keep current Retail variant and eligibility gaps explicit.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -596,17 +603,14 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://github.com/RustyDaemon/MyLootHistory/blob/27a4f5d1d807de84d19b5c67b2f7e5ec6b4634af/MyLootHistory.toc",
-    "https://github.com/RustyDaemon/MyLootHistory/blob/27a4f5d1d807de84d19b5c67b2f7e5ec6b4634af/Core.lua#L148-L162",
-    "https://github.com/RustyDaemon/MyLootHistory/blob/27a4f5d1d807de84d19b5c67b2f7e5ec6b4634af/data/Source.lua#L99-L150",
-    "https://github.com/RustyDaemon/MyLootHistory/blob/27a4f5d1d807de84d19b5c67b2f7e5ec6b4634af/data/Database.lua#L270-L312",
-    "https://github.com/RustyDaemon/MyLootHistory/blob/27a4f5d1d807de84d19b5c67b2f7e5ec6b4634af/data/Export.lua",
-    "https://github.com/parnic/breakables/blob/b8c2b04c3c45f049094022837ad8701fc29a67a3/Breakables.lua#L537-L559",
-    "https://github.com/parnic/breakables/blob/b8c2b04c3c45f049094022837ad8701fc29a67a3/Breakables.lua#L646-L664",
-    "https://www.curseforge.com/wow/addons/destroyuspro"
+    "https://github.com/burned05/Classic-Addons/blob/25d399efa097776c83da577f15907ec90e557301/WTF/Account/54989383%235/SavedVariables/Enchantrix.lua",
+    "https://github.com/stevehulme/classic-era-config/blob/366d5f684087fd9bd98952937d7ae3a46c13e6f3/Account/THELASTPOET/SavedVariables/Enchantrix.lua",
+    "https://www.wowhead.com/ptr-2/item=24995/warmaul-legplates",
+    "https://www.wowhead.com/ptr/item=23424/fel-iron-ore",
+    "https://www.wowhead.com/ptr/item=36909/cobalt-ore"
   ],
   "latest_run_source_date": "2026-11-24",
-  "latest_run": "Read current instructions, queue and catalogue coordination; reviewed MyLootHistory and Breakables original code and DestroyusPro listing. No new qualifying observations; no JSONL.",
+  "latest_run": "Read current instructions and queue; inspected two new original public SavedVariables files, both empty processing tables. No JSONL.",
   "new_evidence_file_this_run": null,
-  "next": "Prioritize actual publicly shared original input-linked processing logs or dated independent per-input means, rather than further unchanged recorder listings; seek exact itemLink/build and positive-event histograms for legacy targets, avoiding exhausted sources and cutoff decisions."
+  "next": "Seek independent published player result logs or dated supported per-operation/input means via newly published sources; avoid already exhausted empty exports, unchanged recorder listings, known historical mirrors and cutoff decisions. Keep current Retail variant and eligibility gaps explicit."
 }
