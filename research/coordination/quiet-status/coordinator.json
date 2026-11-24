@@ -1,104 +1,92 @@
 {
   "role": "research-manager",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-24T11:02:29.576Z",
-  "status": "active; four exact potion rank identities verified; historical input-rank attribution correction reviewed, no new gold decision",
+  "updated_at": "2026-11-24T12:01:39.290Z",
+  "status": "active; T0049 current equipment-census corroboration and explicit distinction between base and selected Hero item variants; no new numerical cohort",
   "task_ids": [
-    "T0039",
     "T0049",
-    "Alchemy recipe scope follow-up"
+    "T0026"
   ],
   "exact_gaps_targeted": [
-    "Named potion rank alternatives for previously preserved May 13 source and Goldsmith exact IDs.",
-    "Unsupported rank-specific attribution in historical alipica exchange record; nominal extra input and adapter scope."
+    "272246 Miststalker's Wristbands base-item eligibility versus historical Looter source; item-level/bonus/variant linkage and actual disenchant-time context"
   ],
   "newly_verified_fields_cohorts": [
     {
-      "type": "Retail item identity corroboration",
-      "inputAlternatives": {
-        "Silvermoon Health Potion": {
-          "1": 241305,
-          "2": 241304
-        },
-        "Enlightenment Tonic": {
-          "1": 241339,
-          "2": 241338
-        }
+      "type": "secondary item-context corroboration; not an operation cohort",
+      "itemID": 272246,
+      "sourceReadDate": "2026-11-24",
+      "baseItemLevel": 206,
+      "baseRequiredLevel": 78,
+      "selectedTooltipItemLevel": 321,
+      "selectedTooltipRequiredLevel": 90,
+      "selectedTooltipTrack": "Hero 6/6",
+      "sourceReportedCensus": {
+        "readDate": "2026-11-01",
+        "charactersWithGearData": 11153,
+        "charactersWearingItem": 43
       },
-      "historicalActualRank": null,
-      "conclusion": "Both pairs have reverse ID order. Goldsmith exact 241305 and 241339 are rank 1; no cast reconciliation."
-    },
-    {
-      "type": "source-scope correction review",
-      "recordID": "midnight-20261031-1007",
-      "source": "https://www.wowhead.com/item=242651/stabilized-derivate#comments",
-      "conclusion": "Original alipica report does not specify quality; stored 241304 R2 is unsupported for that report. Retain named family with candidate IDs, do not duplicate cohort; 1.93 reported approximate average is not independently recorded N. Original row unchanged; no automatic override."
+      "actualDisenchantItemLevel": null,
+      "actualDisenchantBonusIDs": null,
+      "actualDisenchantEligibility": null,
+      "completedCastsNew": null,
+      "conclusion": "GamGem Nov 7 dated page reports Blizzard Item API base preview and its own Nov 1 equipment census; corroborates the item is worn in current-season content, not that it can be disenchanted. Indexed Wowhead explicitly separates base ilvl 206/level 78 from selected Hero 6/6 ilvl 321/level 90 tooltip; selected preview is not an observed item instance or the 140-operation cohort's actual level. Direct Wowhead text returned only base tooltip, without raw Looter rows. Both live and PTR WoWDB show base no-DE flag; shared catalogue data are not two independent attempted disenchants. No new quantity, probability, eligibility change, or valuation. GamGem source absent from cutoff catalogue receipt; no claim of exhaustive post-cutoff dedupe. Preserve as context here rather than create a numerical record."
     }
   ],
   "source_links": [
-    "https://goldcap.gg/retail/us/items/241305",
-    "https://goldcap.gg/retail/us/items/241304",
-    "https://goldcap.gg/retail/us/items/241339",
-    "https://goldcap.gg/retail/us/items/241338",
-    "https://www.wowhead.com/item=241305/silvermoon-health-potion",
-    "https://www.wowhead.com/item=242651/stabilized-derivate#comments",
-    "https://www.wowhead.com/spell=1233129/recycle-potions"
+    "https://gamgem.com/world-of-warcraft/items/miststalkers-wristbands",
+    "https://www.wowhead.com/item=272246/miststalkers-wristbands",
+    "https://www.wowdb.com/items/272246-miststalkers-wristbands",
+    "https://ptr.wowdb.com/items/272246-miststalkers-wristbands"
   ],
-  "evidence_files": [
-    {
-      "path": "research/v3/evidence/master/20261124T1100-potion-rank-identity-and-source-scope.md",
-      "commit": "1959123c25b7540360e98316732dec1bef4e525e",
-      "blob": "c6aa57c191ee7b5c112d6d9694cdba6050525f79",
-      "readBackVerified": true
-    }
-  ],
+  "evidence_files": [],
   "worker_reports_verified": [
     {
       "role": "midnight",
-      "checkpoint": "7c90a9c1a1963ca630df8c0c1855106f167686af",
-      "result": "Goldsmith completed-cast tracking methodology; no public receipts",
-      "automation": "completed; matching latest result"
+      "checkpoint": "a848c0b91e8f12f2a95d7efb2bc5865917216671",
+      "result": "Eversong Diamond R1/R2 identities corroborated, no new numerical cohort",
+      "automation": "completed; matching result 54be1bbd-7fd4-8331-8d37-7f1dd6cd36da"
     },
     {
       "role": "war-within",
-      "checkpoint": "6fe190dccbbac81e23866da94eb6d6e0f9cbbcff",
-      "result": "15 herb/pigment rank identities corroborated; no new yield",
-      "automation": "completed; matching latest result"
+      "checkpoint": "fe168cb570bd0f9e2c204f990482692a2512aa68",
+      "result": "Historical base skill 98 versus 100 qualitative DE comparison, no threshold or coefficient",
+      "automation": "completed; matching result cabd80a8-0fbc-8330-8e00-b5643f82c5ed"
     },
     {
       "role": "dragonflight",
-      "checkpoint": "eb359def0d767ba075bf786c2824b042ad2e1e7e",
-      "result": "Historical eligibility context only",
-      "automation": "completed; matching latest result"
+      "checkpoint": "7aeead24fa4cbbaedaa518baed2b5a16192f5ae5",
+      "result": "Linked calculator lacks independent operation ledger",
+      "automation": "completed; matching result 4063ee6d-fdd4-832f-af6e-e5435373acfc"
     },
     {
       "role": "legacy",
-      "checkpoint": "79ccccb0d20f617f5af1e585b375ba15bc87d334",
-      "result": "Original farming acquisition totals not processing observations",
-      "automation": "completed; matching latest result"
+      "checkpoint": "a6be4cd675093292f14c74b8c19831c9fe51d134",
+      "result": "Gold Forever and Lazy Disenchanter recorder screen; no qualifying Retail cohorts",
+      "automation": "completed; matching result 947a8a72-9008-832c-b0a9-2938fc17344b"
     }
   ],
-  "verified_commit_sha": "1959123c25b7540360e98316732dec1bef4e525e",
-  "checked_research_branch_head_before_status_write": "1959123c25b7540360e98316732dec1bef4e525e",
+  "verified_commit_sha": "a6be4cd675093292f14c74b8c19831c9fe51d134",
+  "checked_research_branch_head_before_status_write": "a6be4cd675093292f14c74b8c19831c9fe51d134",
   "main_head_checked": "3e814929ecffc2c2a282fddaead2012e5b44e9a9",
   "owner_three_pass_head_checked": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "owner_catalogue_manifest_branch_head_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
   "owner_catalogue_pipeline_branch_checked": "a23e65d784f0c36833df0ad903d817d10d2f2ae3",
   "validation_this_run": {
-    "sourceCatalogue": "CLOSED_VERIFIED_CURRENT_PIPELINE receipt: 731 sources, 0 reopened scopes, merged main per receipt. No catalogue work repeated.",
-    "CI": "Research 79ccccb0d20f617f5af1e585b375ba15bc87d334 success run 45377093823; main 3e814929ecffc2c2a282fddaead2012e5b44e9a9 success runs 45124264797 and 45122982951. Not run by manager; no CI claim for new evidence commit.",
-    "automation": "Four matching completed run IDs/results checked directly and durable worker reports read. No schedules changed.",
-    "managerTests": "Source item-page cross-check, static recipe scope and original row comparison, exact new evidence read-back. No runtime tests.",
+    "sourceCatalogue": "Read current closed verified receipt and v3 README; no cutoff catalogue reopened or repeated.",
+    "CI": "Combined status and PR-triggered workflow lookup returned empty arrays for checked main and research head a6be4cd; no fresh CI conclusion, no tests run. Prior checkpoint is historical only.",
+    "automation": "Read matching latest completed run and status for four workers; no changes.",
+    "managerTests": "Read original dated item context and independent indexed tooltip, compared base vs selected preview; no live client or runtime tests.",
     "newIndependentCohorts": 0,
     "newSupportedGoldDecisions": 0,
-    "dashboard": "No new gold KPI; unchanged."
+    "dashboard": "No new gold KPI or material dashboard change."
   },
   "blockers": [
     "Goldsmith full source receipt and cast/refund reconciliation absent; pooled bag decreases and three-second gains cannot establish complete operation or reliable net-input mean.",
     "Alchemy Recycle incompatible with current Engineering-specific profession mapping; output bound, input ranks unknown and branch-wide source dedupe pending. Preserve information rather than fabricate AH value or alter schema.",
     "Dragonflight original 300-bracer sheet unavailable.",
     "Runecloth third-copy compiled contribution remains unverified; need consumer attribution, not repeated source scan.",
-    "Prior alipica source's stored rank unsupported; exact historical rank remains unresolved. Review note only, no runtime correction or production impact established."
+    "Prior alipica source's stored rank unsupported; exact historical rank remains unresolved. Review note only, no runtime correction or production impact established.",
+    "T0049: base no-DE flag versus historical Looter observations unresolved; neither current census nor selected tooltip identifies an attempted disenchant or actual bonus/ilvl. Direct raw Looter table not exposed."
   ],
   "exhausted_sources": [
     "2026-11-21 Disenchantry release is a recheck of already-documented 2026-11-19 stats instrumentation lead; no public original Retail events or authoritative per-item DE rates found. Avoid repeated release-description scrapes.",
@@ -130,16 +118,17 @@
     "2026-11-24 08Z: 2277117 and 2276246 absent from owner receipt but historical approximate/crafting-budget context only. 2274222, 2273814, 2281743, 1fdmzwy and 10me1e7 already catalogued; no duplicate cohort. AHSentinel 0.63.0 release explicitly discusses WoW Forever learned DE rates, not Retail evidence. Disenchanting Advisor TWW table estimates and bag-diff capture limitations verified; reopen only for raw events or provenance of numerical table.",
     "2026-11-24 09Z: Craftonomics source at a9a8e47d inspected; no revisit absent an actual raw export or capture-schema revision. Dastardly Duos forum 2114101, Wowhead 82826, June 6 official hotfix and June 3 event guide establish historical context, not a current numerical baseline; no repeat without exact variant or fix evidence.",
     "2026-11-24 10Z Goldsmith Oct13 and later tour table verified; no repeat unless original salvageRuns/receipts appear. Additional ten raw scopes preserved; no cast denominators. Wowhead alipica report already archived; davenrothz historical source preserved, revisit only rank/profile/dedup or scoped adapter verification.",
-    "2026-11-24 11Z: potion rank alternatives verified, direct 241339 Wowhead blocked but paired Retail listing available; unchanged historical reports lack actual ranks. Do not revisit unchanged pages or add cohorts."
+    "2026-11-24 11Z: potion rank alternatives verified, direct 241339 Wowhead blocked but paired Retail listing available; unchanged historical reports lack actual ranks. Do not revisit unchanged pages or add cohorts.",
+    "2026-11-24 12Z: T0049 GamGem 272246 Nov 7 item page, indexed Hero 6/6 Wowhead tooltip, live/PTR WoWDB base flag and broad current processing searches checked. Census is equipped gear only; no operation events. Do not revisit these unchanged pages unless event-linked bonus IDs, an original Looter record or independently published eligibility result emerges."
   ],
-  "next_concrete_step": "Seek new original event-linked 272246 item-instance/bonus/ilvl and ranked DE outcomes, or a new processing receipt with verified casts, actual inputs/refunds and per-output hits. Avoid further repeated Goldsmith/potion catalogue checks unless raw receipts or new source evidence appear.",
+  "next_concrete_step": "Prioritize genuinely new zero-inclusive operation exports, source-reported per-operation means with verified scope, or exact instance-linked eligibility records; use T0049 only when event-linked item context emerges. Keep worker ownership and skip unchanged sources.",
   "production_main_changes": false,
   "addon_changes": false,
   "routine_research_prs": 0,
   "merge_or_release": false,
   "new_schedules": 0,
   "role_schedules_unchanged": true,
-  "prior_status_blob_sha": "93e96666211eb24b06f84642fdc1e7cb96c95127",
-  "previous_checkpoint": "79ccccb0d20f617f5af1e585b375ba15bc87d334",
-  "previous_status_updated_at": "2026-11-24T10:02:26.571Z"
+  "prior_status_blob_sha": "5e52444cd328e44a5d33af18ece15af63e6498b6",
+  "previous_checkpoint": "58c44cf9491d64e1f5a698a997cf01350664c5ec",
+  "previous_status_updated_at": "2026-11-24T11:02:29.576Z"
 }
