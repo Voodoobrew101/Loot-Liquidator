@@ -6,6 +6,14 @@ It only gives advice. It never sells, mails, crafts or destroys anything for you
 
 > **Release:** 1.0.0. Back up your `WTF/Account/<name>/SavedVariables/LootLiquidator.lua` before installing.
 
+## Help improve low-confidence estimates
+
+Share your recorded disenchanting, milling, prospecting, smelting, crafting or Recycling results. Small, complete batches help too: the export includes measured profession context so we can distinguish skill, specialization and quality differences.
+
+Open **/ll → Community research** on the first settings tab for instructions, **Export all**, **Export pages**, **Start new batch** and **Reset recordings**. Save the copied export as a `.txt` or `.json` file, then [submit a processing export](https://github.com/Voodoobrew101/Loot-Liquidator/issues/new?template=processing-export.yml). Read the [contribution guide](docs/community-research.md) before posting: exports contain character/realm identifiers and measured gameplay data, and GitHub submissions are public.
+
+Submissions are reviewed daily. Complete, independent evidence can be included in a validated update to the latest production addon and published to CurseForge. Duplicate, incomplete or incompatible records remain held; submitting a file does not automatically raise confidence. Exporting never clears your history. Reset only after you have saved and checked your copy.
+
 ## The letters
 
 | Letter | What to do |

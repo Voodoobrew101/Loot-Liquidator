@@ -32,6 +32,16 @@ Disenchant, mill, prospect and smelt values show a **confidence** percentage, so
 - Counts your **alts** for transmog and processing, but only for items you can actually send them.
 - Can **record your own** disenchant/mill/prospect/smelt results, so the numbers become yours. Export them to share with friends, and import theirs.
 
+### Help improve low-confidence estimates
+
+Share recorded disenchanting, milling, prospecting, smelting, crafting or Recycling results. Open **/ll → Community research** on the first settings tab for instructions, **Export all**, **Export pages**, **Start new batch** and **Reset recordings**.
+
+[Submit a processing export on GitHub](https://github.com/Voodoobrew101/Loot-Liquidator/issues/new?template=processing-export.yml) · [Read the contribution guide](https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/docs/community-research.md)
+
+Save the copied export as `.txt` or `.json` and attach it to the submission. If you use pages, include every page from the same export. Exports contain character/realm identifiers and measured gameplay data; GitHub submissions are public. Exporting never clears history. Reset only after saving and checking your copy.
+
+Submissions are reviewed daily. Complete, independent evidence can be included in a validated update to the latest production addon and published here. Duplicate, incomplete or incompatible records remain held; confidence does not increase merely because a file was submitted.
+
 ### Requirements
 
 - **TradeSkillMaster** for Auction House prices (without it, only vendor values are compared).

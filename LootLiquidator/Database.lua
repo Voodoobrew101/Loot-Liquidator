@@ -240,6 +240,61 @@ local function operationIDs(ids,count)
     end
     return n==count and seen or nil
 end
+local function communityProfileKnown(profile,method)
+    if type(profile)~='table' or profile.simulated==true or profile.profileKind~='measured'
+        or type(profile.profession)~='string' or not finite(profile.effectiveSkill)
+        or not finite(profile.baseSkill) or not finite(profile.bonusSkill) or profile.specializationKnown~=true
+        or type(profile.specializationPoints)~='table' or profile.buffsKnown~=true
+        or type(profile.buffs)~='table' or type(profile.fieldStatus)~='table'
+        or profile.fieldStatus.baseSkill~='measured' or profile.fieldStatus.bonusSkill~='measured'
+        or profile.fieldStatus.effectiveSkill~='measured' or profile.fieldStatus.specialization~='measured' then return false end
+    -- Processing stats are captured evidence, never the implicit zero defaults
+    -- of the profession calculator. DE has no generic craft-stat multiplier.
+    if method~='Disenchant' and not (type(profile.operationStats)=='table'
+        and profile.fieldStatus.operationStats=='measured') then return false end
+    return true
+end
+local function activeValues(values,stacks)
+    local result={}
+    for id,value in pairs(values or {}) do
+        if value and value~=0 then result[tostring(id)]=stacks and (stacks[id] or stacks[tostring(id)] or stacks[tonumber(id)] or 1) or value end
+    end
+    return result
+end
+local function communityProfileMatches(record,ctx,build)
+    local source=record.communityMeasuredProfile
+    if not source then return record.sourceKind~='reviewed-community-player-capture' end
+    if not communityProfileKnown(source,record.method) or type(ctx)~='table'
+        or ctx.stale or ctx.incomplete or not finite(ctx.effectiveSkill) or ctx.effectiveSkill~=source.effectiveSkill
+        or ctx.fieldStatus and ctx.fieldStatus.effectiveSkill=='unknown'
+        or ctx.profession~=source.profession or ctx.buffsKnown~=true
+        or not (ctx.specializationKnown==true or record.method=='Disenchant' and ctx.disenchantSpecializationKnown==true)
+        or not record.patchBuild or tostring(record.patchBuild)~=tostring(build)
+        or tostring(record.targetBuild)~=tostring(build)
+        or not GetBuildInfo or GetBuildInfo()~=record.clientVersion then return false end
+    if source.skillLineID~=nil and source.skillLineID~=ctx.skillLineID then return false end
+    if record.method~='Disenchant' and (type(ctx.operationStats)~='table'
+        or ctx.fieldStatus and ctx.fieldStatus.operationStats=='unknown') then return false end
+    local points=ctx.specializationPoints or (record.method=='Disenchant' and ctx.disenchantSpecializationPoints)
+    local learned=ctx.learnedSpecializations or (record.method=='Disenchant' and ctx.disenchantLearnedSpecializations)
+    if type(points)~='table' or type(ctx.buffs)~='table' then return false end
+    if not same(activeValues(source.specializationPoints),activeValues(points))
+        or not same(activeValues(source.learnedSpecializations),activeValues(learned))
+        or not same(activeValues(source.buffs,source.buffStacks),activeValues(ctx.buffs,ctx.buffStacks)) then return false end
+    for _,field in ipairs({'operationStats','stats'}) do
+        if not same(source[field] or {},ctx[field] or {}) then return false end
+    end
+    for _,field in ipairs({'operationStatsIncludeSpecialization','skillIncludesSpecialization',
+        'craftingQuality','baseDifficulty','bonusDifficulty','lowerSkillThreshold','upperSkillTreshold'}) do
+        if source[field]~=nil and not same(source[field],ctx[field]) then return false end
+    end
+    if source.applyConcentration~=nil then
+        local concentration=ctx.applyConcentration
+        if concentration==nil then concentration=ctx.concentrationApplied end
+        if source.applyConcentration~=concentration then return false end
+    end
+    return true
+end
 function LL:ValidateItemDB(db)
     if type(db)~='table' or db.schemaVersion~=1 or type(db.processing)~='table' then
         return false,'Unsupported itemdb schema'
@@ -274,6 +329,36 @@ function LL:ValidateItemDB(db)
             or type(r.studyID)~='string' or type(r.source)~='string'
             or type(r.materials)~='table' then return false,'Invalid or duplicate record identity' end
         ids[r.recordID]=true
+        if r.communityMeasuredProfile~=nil or r.sourceKind=='reviewed-community-player-capture' then
+            if r.sourceKind~='reviewed-community-player-capture' or r.sourceKey~='itemdb'
+                or not finite(r.inputItemID) or not r.fixedReference
+                or not communityProfileKnown(r.communityMeasuredProfile,r.method)
+                or not same(r.communityMeasuredProfile,r.baselineProfile)
+                or r.communityMeasuredProfile.expansionID~=r.expansionID
+                or not operationIDs(r.sourceRecordIDs,r.observedOperations)
+                or not tonumber(r.patchBuild) or tostring(r.patchBuild)~=tostring(r.targetBuild)
+                or type(r.clientVersion)~='string' or not r.clientVersion:match('^%d+%.%d+%.%d+$')
+                or type(r.sourceSHA256)~='string' or #r.sourceSHA256~=64 or r.sourceSHA256:find('[^0-9a-f]')
+                or type(r.sourceReviewSHA256)~='string' or #r.sourceReviewSHA256~=64 or r.sourceReviewSHA256:find('[^0-9a-f]')
+                or r.method=='Disenchant' and (not finite(r.categoryItemLevelMin) or r.categoryItemLevelMin<1
+                    or r.categoryItemLevelMin~=r.categoryItemLevelMax) then
+                return false,'Invalid reviewed community capture cohort'
+            end
+            if r.communityNonEconomicOutputItemIDs~=nil and type(r.communityNonEconomicOutputItemIDs)~='table' then
+                return false,'Invalid reviewed community non-economic output identities'
+            end
+            local excluded={}
+            for key,id in pairs(r.communityNonEconomicOutputItemIDs or {}) do
+                if type(key)~='number' or key%1~=0 or key<1 or key>#r.communityNonEconomicOutputItemIDs
+                    or not finite(id) or id<1 or id%1~=0 or excluded[id] then
+                    return false,'Invalid reviewed community non-economic output identities'
+                end
+                excluded[id]=true
+            end
+            for _,material in ipairs(r.materials) do
+                if excluded[material.id] then return false,'Community output is both economic and non-economic' end
+            end
+        end
         if r.retainedSourceProfileKey~=nil or r.sourceKind=='reviewed-player-retained-subset' then
             if r.sourceKind~='reviewed-player-retained-subset'
                 or r.method~='Disenchant' or r.recipeID~=13262 or r.inputCount~=1 or r.sourceKey~='itemdb'
@@ -742,6 +827,13 @@ local function buildSourceModel(self,f,option,r,projectionMemo)
     if r.reviewedPublishedPrior and r.operationUnverified and r.quantityBasis=='per-input' then
         model.adjustment='Published per-input reference'
     end
+    if r.communityMeasuredProfile then
+        -- Eligibility already proves the exact recorded target profile. These
+        -- observed units need neither inverse normalization nor forward scaling.
+        model.adjustment='Reviewed community recorded profile'
+        model.projectedContext=copyReference(projectionMemo and projectionMemo.categoryContext)
+        return model
+    end
     if self.ProjectReviewedDisenchantPrior and r.reviewedDisenchantProjection then
         model=self:ProjectReviewedDisenchantPrior(f,option,model)
     end
@@ -1066,7 +1158,8 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             and (r.inputClassID==nil or r.inputClassID==f.classID) and bandMatches
             and userWeight(self,r.sourceKey,mode)>0 and (not r.recipeID or r.recipeID==option.recipeID)
             and (not r.inputQualityRank or r.inputQualityRank==ctx.inputQuality)
-            and (not r.expansionID or r.expansionID==f.expansionID) and retainedProfileMatches(r) then
+            and (not r.expansionID or r.expansionID==f.expansionID) and retainedProfileMatches(r)
+            and communityProfileMatches(r,ctx,build) then
         local model=sourceModel(self,f,option,r,projectionMemo)
         local hasMean=false
         for i,material in ipairs(model.materials) do
@@ -1092,6 +1185,25 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             hasEligibleSalvage=hasEligibleSalvage or r.salvage==true
         end
         end
+    end
+    -- A complete observed distribution at this exact target profile is its
+    -- own reference, not a zero-profile baseline awaiting specialization.
+    -- Keep ordinary references as fallbacks for profiles without a matching
+    -- community cohort; never fuse their unnormalized units into this one.
+    local communityReferenceExcluded,communityNonEconomicOutputs={},{}
+    local hasCommunityReference=false
+    for _,record in ipairs(eligible) do
+        if record.communityMeasuredProfile and hasExpected[record] then hasCommunityReference=true;break end
+    end
+    if hasCommunityReference then
+        local scoped={}
+        for _,record in ipairs(eligible) do
+            if record.communityMeasuredProfile then
+                scoped[#scoped+1]=record
+                for _,id in ipairs(record.communityNonEconomicOutputItemIDs or {}) do communityNonEconomicOutputs[id]=true end
+            else communityReferenceExcluded[#communityReferenceExcluded+1]=record end
+        end
+        eligible=scoped
     end
     if personal and personal.observationContext and ctx.simulated and self.ProjectPersonalEstimate then
         personal=self:ProjectPersonalEstimate(f,option,personal,ctx,build)
@@ -1141,23 +1253,23 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             end
         end
     end
-    -- Only explicit retained-source cohorts use this overlap contract. Do not
+    -- Only explicit retained-source and community cohorts use this contract. Do not
     -- pool overlapping aggregates or infer a union from their reported means.
     local candidates,personalRecord={},nil
     for _,record in ipairs(eligible) do
         if record.sourceKey=='personal' then personalRecord=record end
-        if record.retainedSourceProfileKey or record.sourceKey=='personal' then
+        if record.retainedSourceProfileKey or record.communityMeasuredProfile or record.sourceKey=='personal' then
             local set=operationIDs(record.sourceRecordIDs,record.observedOperations)
             if set then candidates[#candidates+1]={record=record,set=set,count=record.observedOperations} end
         end
     end
     local overlapExcluded={}
-    if personalRecord and #candidates>1 then
+    if #candidates>1 then
         -- An exact raw personal category need not carry the projection flag.
         -- Only proven overlap with this reviewed, exact-profile cohort allows
         -- its fresh wrapper to fuse with the ordinary category anchor. Never
         -- alter the original personal estimate or relax other personal paths.
-        local source=personal and personal.observationContext
+        local source=personalRecord and personal and personal.observationContext
         if source and source.buffsKnown==true
             and (source.specializationKnown==true or source.disenchantSpecializationKnown==true)
             and self.DisenchantObservationProfileKey then
@@ -1189,12 +1301,19 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         end)
         local kept={}
         for _,candidate in ipairs(candidates) do
-            local overlaps=false
+            local overlaps,winner=false,nil
             for _,previous in ipairs(kept) do
                 for id in pairs(candidate.set) do if previous.set[id] then overlaps=true;break end end
-                if overlaps then break end
+                if overlaps then winner=previous;break end
             end
-            if overlaps then overlapExcluded[candidate.record]=true else kept[#kept+1]=candidate end
+            if overlaps then
+                overlapExcluded[candidate.record]=true
+                if candidate.record.communityMeasuredProfile and winner.record==personalRecord then
+                    -- A larger surviving local aggregate contains this exact
+                    -- reviewed cohort. Keep its observed profile unscaled too.
+                    personalRecord.communityMeasuredWinner=true
+                end
+            else kept[#kept+1]=candidate end
         end
         local unique={}
         for _,record in ipairs(eligible) do if not overlapExcluded[record] then unique[#unique+1]=record end end
@@ -1314,6 +1433,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
     for record in pairs(overlapExcluded) do
         result.excludedSources[#result.excludedSources+1]=record.sourceKey..': operation overlap; larger retained cohort used'
     end
+    for _,record in ipairs(communityReferenceExcluded) do
+        result.excludedSources[#result.excludedSources+1]=record.sourceKey..': exact measured community profile used as reference'
+    end
     if anchor.sourceReferenceOnly then
         result.sourceReferenceOnly=true
         result.sourceReference={recordID=anchor.recordID,sourcePatchBuild=anchor.patchBuild,
@@ -1375,7 +1497,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
     for _,r in ipairs(eligible) do
         local compatible=sameContext(r)
         if anchor.isDisenchantCategory and r.sourceKey==anchor.sourceKey and r.inputItemID
-            and not itemCategoryException(r) then
+            and not r.communityMeasuredProfile and not itemCategoryException(r) then
             result.excludedSources[#result.excludedSources+1]=r.sourceKey..': source study represented by disenchant category'
         elseif not compatible and (not r.fixedReference or anchor.categoryReferenceOnly) then
             -- An explicitly selected source cohort keeps its own distribution.
@@ -1550,6 +1672,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                             c=math.min(c,metadata.modelConfidenceCap)
                         end
                         if field=='expectedQuantity' then
+                            if r.communityMeasuredProfile or r.communityMeasuredWinner then result.communityMeasuredReference=true end
                             local retainedProfile=r.retainedSourceProfileKey or r.retainedOverlapProfileKey
                             if retainedProfile and retainedProfile==retainedKey then
                                 result.retainedDisenchantProfileKey=retainedProfile
@@ -1784,6 +1907,45 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         b.boundsRecordID=nil
         result.materials[#result.materials+1]=b
     end
+    -- A small measured batch proves the quantities it observed. It does not
+    -- prove that another researched material can never drop. Retain those
+    -- possible identities with unknown quantities, never a fabricated zero
+    -- or an unnormalized canonical mean from another source profile.
+    if hasCommunityReference then
+        local seen={}
+        for _,material in ipairs(result.materials) do
+            seen[material.id]=true
+            for _,id in ipairs(material.rankIDs or {}) do seen[id]=true end
+        end
+        for _,record in ipairs(communityReferenceExcluded) do
+            local source=transformed[record]
+            for _,material in ipairs(source and source.materials or record.materials) do
+                if material.economicPolicy~='nontradable' then
+                    for _,id in ipairs(material.rankIDs or {material.id}) do
+                        if not seen[id] and not communityNonEconomicOutputs[id] then
+                            seen[id]=true
+                            result.materials[#result.materials+1]={id=id,confidence=0,communityPossibleOutput=true,
+                                sourceContributions={},sourceEstimates={},
+                                unavailableReason='Possible researched output not observed in the reviewed community cohort; quantity and chance unknown'}
+                            result.unknownOutputs=true;result.communityOutputCoverageUnknown=true
+                        end
+                    end
+                end
+            end
+            if source and (source.unknownOutputs or #(source.namedOutputs or {})>0) then
+                result.unknownOutputs=true;result.unknownOutputIdentities=true;result.communityOutputCoverageUnknown=true
+                result.namedOutputs=result.namedOutputs or {}
+                for _,named in ipairs(source.namedOutputs or {}) do
+                    local found=false
+                    for _,old in ipairs(result.namedOutputs) do if same(old,named) then found=true;break end end
+                    if not found then result.namedOutputs[#result.namedOutputs+1]=copyReference(named) end
+                end
+            end
+        end
+        if result.communityOutputCoverageUnknown then
+            result.communityOutputCoverageReason='Other possible outputs remain unknown; this estimate values known outputs only.'
+        end
+    end
     for key,v in pairs(result.sources) do result.sources[key]=v/math.max(1,totalContribution) end
     result.reviewedPublishedPriorOnly=acceptedReviewedPrior and not acceptedOtherQuantity or nil
     if personal and (result.sources.personal or 0)>0 then
@@ -1866,10 +2028,15 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
         if cache.count>=256 and not cache[key] and oldestKey then cache[oldestKey]=nil;cache.count=cache.count-1 end
     end
     local model,reason,retry=self:ComputeEvidenceModel(f,option,personal,mode,ctx,nil,importedRecords)
-    if self.ApplyDisenchantBaseline then model=self:ApplyDisenchantBaseline(f,option,model,ctx,mode) end
-    if model and self.ApplyGeneralProfessionAdditions then model=self:ApplyGeneralProfessionAdditions(f,option,model,ctx) end
-    if model and self.ApplyGeneralProfessionQuality then model=self:ApplyGeneralProfessionQuality(f,option,model,ctx) end
-    if model and not model.disenchantBaselineApplied then
+    -- Complete community quantities already describe this exact measured
+    -- target profile. Applying a talent or quality projection again would
+    -- change the observations. Access/output eligibility still runs below.
+    if not (model and model.communityMeasuredReference) then
+        if self.ApplyDisenchantBaseline then model=self:ApplyDisenchantBaseline(f,option,model,ctx,mode) end
+        if model and self.ApplyGeneralProfessionAdditions then model=self:ApplyGeneralProfessionAdditions(f,option,model,ctx) end
+        if model and self.ApplyGeneralProfessionQuality then model=self:ApplyGeneralProfessionQuality(f,option,model,ctx) end
+    end
+    if model and not model.disenchantBaselineApplied and not model.communityMeasuredReference then
         if model.generalProfessionApplied and model.projectedContext then ctx=model.projectedContext end
         if self.ApplySkillQualityModel then model=self:ApplySkillQualityModel(f,option,model,ctx) end
         if self.ApplySpecializationEffects then model=self:ApplySpecializationEffects(f,option,model,ctx) end

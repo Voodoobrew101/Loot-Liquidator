@@ -21,7 +21,8 @@ import research_v3_to_baselines as v3
 ROOT = Path(__file__).resolve().parent.parent
 GENERATORS = ('import_midnight_enchanting.py', 'reference_calculators.py', 'skill_quality_to_rules.py',
               'specialization_effects.py', 'research_v3_to_baselines.py', 'evidence_to_baselines.py',
-              'capture_observations.py', 'att_token_references.py', 'disenchant_categories.py')
+              'capture_observations.py', 'att_token_references.py', 'disenchant_categories.py',
+              'community_research.py')
 
 
 def command_plan(python=sys.executable):

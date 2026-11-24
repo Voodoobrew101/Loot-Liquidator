@@ -1019,22 +1019,73 @@ function LL:ShowRecordedResultsExport(paged,allBatches)
     show(1)
 end
 local function Confirm(key,text,accept)
-    if not StaticPopupDialogs or not StaticPopup_Show then accept();return end
+    -- A missing popup must never turn a destructive button into immediate deletion.
+    if not StaticPopupDialogs or not StaticPopup_Show then
+        Notify("Confirmation is unavailable. No recorded or imported results were changed.")
+        return false
+    end
     StaticPopupDialogs[key]=StaticPopupDialogs[key] or {
         text=text,button1=YES or "Yes",button2=NO or "No",
         timeout=0,whileDead=true,hideOnEscape=true,preferredIndex=3}
     StaticPopupDialogs[key].OnAccept=accept
     StaticPopup_Show(key)
+    return true
 end
 function LL:ConfirmResetRecordedResults()
     local n=self.RecordedResultsCount and self:RecordedResultsCount() or 0
     Confirm("LOOTLIQUIDATOR_RESET_RESULTS",
-        "Reset all recorded results?\n\nThe previous set is kept as one backup until the next reset.",
+        "Reset all recorded results?\n\nExport and submit your results first. Exporting alone does not submit them.\n\nThe previous set is kept as one backup until the next reset. Settings and imported results are kept.",
         function()
             local _,message=LL:ResetRecordedResults()
             Notify(message)
         end)
     return n
+end
+
+local COMMUNITY_SUBMIT_URL="https://github.com/Voodoobrew101/Loot-Liquidator/issues/new?template=processing-export.yml"
+local COMMUNITY_GUIDE_URL="https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/docs/community-research.md"
+function LL:ShowCommunityResearchInstructions()
+    local text=table.concat({
+        "Help improve low-confidence processing estimates",
+        "",
+        "1. In Processing Research, enable recording for disenchanting and/or crafting and processing. Open your own profession window so skill, equipment and specializations can be captured.",
+        "2. Start a new batch, then process items normally. Let results settle; avoid unrelated looting, trading, mailing or bank transfers during a batch. Unknown or delayed results must not be called zero.",
+        "3. Stop processing, check Recording status, then use Export all here. Copy the complete text with Ctrl+C. Export pages is a fallback; submit every page together. Processing Research also offers an export of only your latest batch.",
+        "4. Open the submission link in your browser, attach the export saved as a .txt file (or paste it), and answer the form. A GitHub account is needed. Keep your original export until the submission is reviewed.",
+        "",
+        "GitHub submissions are public. Exports include character/realm identifiers, cast and item GUIDs, timestamps, client build, profession skill/equipment/specializations, and recorded item results. Review before posting. Share only the export, not your entire SavedVariables file.",
+        "",
+        "Exporting does not upload or clear anything. Reset recordings asks for confirmation, keeps one backup until the next reset, and leaves settings and imported results intact. Start new batch keeps older recordings.",
+        "",
+        "Submissions are checked for complete results, matching context and duplicates. They improve shared estimates only after review and a validated addon update.",
+        "",
+        "Submit: "..COMMUNITY_SUBMIT_URL,
+        "Guide: "..COMMUNITY_GUIDE_URL,
+    },"\n")
+    if self.ShowCopy then self:ShowCopy("Community research - how to contribute",text) end
+end
+function LL:AddCommunityResearchSettings(_,layout)
+    Section(layout,"Community research")
+    if not CreateSettingsButtonInitializer or not layout or not layout.AddInitializer then return end
+    local function button(label,text,click,help)
+        layout:AddInitializer(CreateSettingsButtonInitializer(label,text,click,help,false))
+    end
+    button("Help improve low-confidence estimates","Instructions",function() LL:ShowCommunityResearchInstructions() end,
+        "Record real processing results with your measured skill and specialization, then share an export. Read the recording, submission and privacy instructions.")
+    button("Submit recorded results on GitHub","Copy link",function()
+        if LL.ShowCopy then LL:ShowCopy("Public GitHub submission - copy link",COMMUNITY_SUBMIT_URL) end
+    end,"Copy the public submission link with Ctrl+C, then open it in your browser. A GitHub account is needed. Nothing is uploaded by the addon.")
+    button("Contribution guide","Copy link",function()
+        if LL.ShowCopy then LL:ShowCopy("Community research guide - copy link",COMMUNITY_GUIDE_URL) end
+    end,"Copy the guide link with Ctrl+C for recording and export instructions. Exports contain character/realm identifiers and measured profession context; GitHub submissions are public.")
+    button("Export recorded results","Export all",function() LL:ShowRecordedResultsExport(false,true) end,
+        "Copy all retained batches, including their skill and specialization context. Exporting keeps recordings saved and does not submit them to GitHub.")
+    button("Export recorded results as pages","Export pages",function() LL:ShowRecordedResultsExport(true,true) end,
+        "Copy all retained batches in smaller pages. Submit every page together; exports never clear your recordings.")
+    button("Start new recording batch","Start new batch",function() LL:ConfirmStartNewBatch() end,
+        "Start a separate batch after changing equipment or specialization. Older recordings remain saved. Asks first and waits for any pending cast.")
+    button("Reset recorded results","Reset recordings",function() LL:ConfirmResetRecordedResults() end,
+        "Export and submit first. Asks before clearing recordings and keeps one backup until the next reset. Settings and imported results are kept; recording must finish first.")
 end
 function LL:ConfirmStartNewBatch()
     Confirm("LOOTLIQUIDATOR_NEW_BATCH","Start a new batch of recorded results?",function()
@@ -1101,6 +1152,7 @@ function LL:RegisterNativeSettings()
     Checkbox(general,"enabled","Enable Loot Liquidator",
         "Analyze items and recommend the most valuable available action.",true)
     Section(generalLayout,"Use the pages on the left for badge appearance, tooltips, pricing, and addon integrations.")
+    self:AddCommunityResearchSettings(general,generalLayout)
 
     -- B8a: native vertical page (was a hand-placed canvas).
     local appearance,appearanceLayout=Settings.RegisterVerticalLayoutSubcategory(general,"Badges & Colors")

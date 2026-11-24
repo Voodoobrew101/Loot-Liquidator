@@ -13,7 +13,8 @@ GENERATED_RESEARCH_PATHS = {
     *('database/' + name + '.lua' for name in (
         'profession-profile-rules', 'reference-calculator-baselines',
         'skill-quality-rules', 'specialization-effects', 'research-v3-baselines',
-        'evidence-baselines', 'capture-observations', 'att-token-baselines', 'disenchant-category-baselines')),
+        'evidence-baselines', 'capture-observations', 'att-token-baselines', 'disenchant-category-baselines',
+        'community-capture-baselines')),
     *('database/research/' + name for name in (
         'build-study-review.json', 'build-study-review.lua', 'source-catalogue-build-review.json',
         'profession-profile-rule-coverage.json',
@@ -29,6 +30,8 @@ def generated_research_hashes(root=Path('.')):
     paths.update(path.relative_to(root).as_posix() for path in snapshot.rglob('*') if path.is_file())
     reviewed = root / 'research/integration/measured-captures/2026-11-22-reviewed-disenchant-subset'
     paths.update(path.relative_to(root).as_posix() for path in reviewed.glob('*.json') if path.is_file())
+    community = root / 'research/community/submissions'
+    paths.update(path.relative_to(root).as_posix() for path in community.rglob('*.json') if path.is_file())
     return {path: hashlib.sha256((root / path).read_bytes()).hexdigest()
             for path in sorted(paths) if (root / path).is_file()}
 

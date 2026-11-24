@@ -551,6 +551,13 @@ for _,r in ipairs(additions.processing or {}) do db.processing[#db.processing+1]
 -- This adapter carries no numerical rates, bounds, confidence or mechanics.
 local captures=assert(loadfile('database/capture-observations.lua'))()
 local recycling=assert(loadfile('database/recycling-capture-baselines.lua'))()
+local community=assert(loadfile('database/community-capture-baselines.lua'))()
+assert(community.schemaVersion==1 and type(community.processing)=='table','Unsupported community captures')
+for _,r in ipairs(community.processing) do
+    assert(r.sourceKind=='reviewed-community-player-capture' and type(r.communityMeasuredProfile)=='table'
+        and type(r.sourceRecordIDs)=='table' and #r.sourceRecordIDs>0,'Community captures need reviewed source profiles')
+    db.processing[#db.processing+1]=r
+end
 assert(recycling.schemaVersion==1,'Unsupported reviewed Recycling captures')
 db.captureCoverageReviews=recycling.coverageReviews
 for _,r in ipairs(recycling.processing) do db.processing[#db.processing+1]=r end

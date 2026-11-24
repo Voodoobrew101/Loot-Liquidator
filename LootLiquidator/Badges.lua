@@ -739,6 +739,12 @@ end
 function LA:TooltipMaterialDisplayFields(material,model,option,facts)
     if type(material)~='table' or not positiveInteger(material.id) then return material end
     if material.structuralZero==true and material.probabilityBasis=='specialization-eligibility-zero' then return material end
+    if material.communityPossibleOutput and material.expectedQuantity==nil then
+        local unknown={}
+        for key,value in pairs(material) do unknown[key]=value end
+        unknown.tooltipUnknownChance=true;unknown.tooltipUnknownRange=true
+        return unknown
+    end
     local display=BaselineTooltipMaterialFields(self,material,model,option,facts)
     local chance,lo,hi=display.chance,display.minQuantity,display.maxQuantity
     local hasChance=finiteNonnegative(chance) and chance<=1
@@ -1012,8 +1018,13 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     if finiteNonnegative(confidence) and confidence<=100 and not model.confidenceUnscored then
                         label=label..(' (Confidence %d%%)'):format(math.floor(confidence+.5))
                     end
+                    local communityPartial=model and model.communityOutputCoverageUnknown and model.unknownOutputs
+                    if communityPartial then label=label..' (partial estimate)' end
                     two(label,type(option.value)=='number' and LA:Money(option.value) or '',option.letter or 'D')
                     ShowMaterials(option,model,prepared)
+                    if communityPartial then
+                        tooltip:AddLine(model.communityOutputCoverageReason or 'Other possible outputs remain unknown; value includes known outputs only.',.95,.68,.35,true)
+                    end
                 end
             end
         end

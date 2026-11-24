@@ -16,6 +16,8 @@ python3 tools/import_midnight_enchanting.py --check
 python3 tools/evidence_to_baselines.py --check  # D1b: generated baselines are current
 python3 tools/disenchant_categories.py --check
 python3 tools/capture_observations.py --check
+python3 tools/community_research.py --check
+python3 tests/test_community_research.py
 python3 tools/recycling_capture_baselines.py --check
 python3 tests/test_recycling_zero_prior.py
 python3 tests/test_build_info.py
@@ -87,6 +89,7 @@ python3 tests/validate_package.py
 "$lua_bin" tests/test_guild_bank_budget.lua
 "$lua_bin" tests/test_native_visibility.lua
 "$lua_bin" tests/test_settings.lua
+"$lua_bin" tests/test_community_capture_runtime.lua
 "$lua_bin" tests/test_native_stat_reference_receipt.lua
 "$lua_bin" tests/test_published_milling_runtime.lua
 "$lua_bin" tests/test_published_per_input_runtime.lua
