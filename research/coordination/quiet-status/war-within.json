@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-24T20:21:33.281Z",
-  "status": "New original 17k-DE spreadsheet lead held (no public item quantities); August 2025 catch-up profile reports held separately. Verified precise aggregate-versus-operation distinction in CraftSim's historical logging fix; no new independent yield cohort.",
+  "updated_at": "2026-11-24T21:22:32.420Z",
+  "status": "Two new original item-restoration reports identify exact gear and distinguish historical seasonal DE material evidence from knowledge-tracker restoration requirements; held as indirect evidence. No new measured yield cohort.",
   "task_ids": [
     "T0048",
     "T0040",
@@ -10,11 +10,11 @@
     "T0011"
   ],
   "exact_gaps_targeted": [
-    "Exact DE input/output rank, completed-operation count and profile from independently published original logs",
-    "Per-operation grouping and refund attribution in historical processing-log sources, without treating aggregated result objects as cast histograms"
+    "DE expansion/variant identity and epic cloth vs shield evidence",
+    "Named original completed-operation ledgers for TWW milling and prospecting"
   ],
-  "source_branch_head_reviewed": "a32d5a9c55d5d204e484c595a87890542a6d8f9c",
-  "source_policy": "Current research rules, queue, status and cutoff catalogue receipt read. Checked candidate URLs against owned status and catalogue; 1fjx2r4 and 1mns7u7 absent in both. CraftSim #892 already recorded; only new code-level aggregation detail retained, not a second source cohort. No cutoff catalogue changes.",
+  "source_branch_head_reviewed": "2e153d5c95b28abd42bfcef6cfa1fbc48387d170",
+  "source_policy": "Read current README, worker, mechanics, evidence format, queue, status and catalogue receipt/registry. Both forum IDs absent from owned status and cutoff manifest; no re-catalogue. Previously covered sources not retranscribed.",
   "study_backlog_triage": [
     {
       "status": "admitted",
@@ -1200,20 +1200,90 @@
       "original_cohort": "Separate Aug 2025 catch-up reports",
       "source": "https://www.reddit.com/r/woweconomy/comments/1mns7u7",
       "reason": "Approximate KP statement and crafted cuffs from different comments; no paired material data or exact DE denominator."
+    },
+    {
+      "status": "held",
+      "scope": "indirect restoration reference",
+      "original_cohort": "Acidslough Bulwark first-person restoration report 2024-12-11",
+      "source": "https://us.forums.blizzard.com/en/wow/t/told-to-make-bug-report-de-given-skill-items-cant-restore-if-accident-de/2027260",
+      "existing_ids": null,
+      "exact_inputs": [
+        178712
+      ],
+      "outputs": [
+        {
+          "name": "Refulgent Crystal",
+          "itemID": null,
+          "quantity": 1,
+          "rank": null
+        },
+        {
+          "name": "Writhing Sample",
+          "itemID": 213611,
+          "quantity": 2
+        },
+        {
+          "name": "Fleeting Arcane Manifestation",
+          "itemID": 227659,
+          "quantity": 1
+        },
+        {
+          "name": "11.0 Professions - Tracker - Weekly Enchanting Knowledge",
+          "itemID": null,
+          "quantity": 1
+        }
+      ],
+      "reason": "First-person original restoration COD list, not a raw loot log. Preserve exact requested quantities as restoration requirements only, not verified direct material yield. The old base item ID can occur in TWW seasonal content, and this report names TWW materials; do not universally infer DE output expansion from original item expansion. The weekly knowledge tracker is not an independently verified tradable output. Exact crystal rank, actual item bonus, full direct output, source epoch/character and duplicate overlap are unresolved; hold from estimator."
+    },
+    {
+      "status": "held",
+      "scope": "indirect restoration reference",
+      "original_cohort": "Confessor's Unshakable Mitts first-person restoration report 2025-07-08",
+      "source": "https://us.forums.blizzard.com/en/wow/t/item-restoration-not-working-due-to-profession/2129316",
+      "existing_ids": null,
+      "exact_inputs": [
+        229335
+      ],
+      "outputs": [
+        {
+          "name": "Refulgent Crystal",
+          "itemID": null,
+          "quantity": null,
+          "rank": null
+        },
+        {
+          "name": "Fleeting Arcane Manifestation",
+          "itemID": 227659,
+          "quantity": null
+        },
+        {
+          "name": "11.0 Professions - Tracker - Weekly Enchanting Knowledge",
+          "itemID": null,
+          "quantity": null
+        }
+      ],
+      "reason": "Original player report names the accidentally disenchanted tier gloves and required restoration material names, but no explicit amounts/rank or direct operation log. Not a new measured material cohort; knowledge reward not normal tradable DE material."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 10,
-    "held": 68,
+    "held": 70,
     "duplicate": 4
   },
   "newly_verified_fields": [
     {
-      "field": "CraftSim aggregate logging provenance",
-      "source": "https://github.com/derfloh205/CraftSim/pull/892",
-      "commit": "89728a1546bed7ecc20c8544e7583f1667bdeb05",
-      "detail": "Extends already-recorded logging caveat with actual merged patch mechanics: craftCount counts matching player UNIT_SPELLCAST_SUCCEEDED; session and recipe numCrafts increment by craftCount, but session craftResults appends a single collected CraftResult object, possibly spanning multiple operations. Refunds are deduplicated using operationID, with cache cleared after >5 seconds. Thus counting aggregate craftResults objects or using their combined quantities as one per-cast histogram is not justified even after fix. Need raw operation-associated output rows; no evidence that any particular prior cohort is affected. This is source-integrity metadata, not numerical yield."
+      "field": "input identity and restoration requirements (not direct DE totals)",
+      "detail": "178712 shield: reported COD list 1 unspecified-rank crystal, 2 Writhing Sample 213611, 1 Fleeting Arcane Manifestation 227659, 1 named tracker (ID unknown); 229335 epic cloth hands: named crystal, knowledge consumable and tracker, quantities/rank unstated. Shadowlands-origin 178712 has TWW S1 dungeon context; exact bonus/acquisition unknown.",
+      "sources": [
+        "https://us.forums.blizzard.com/en/wow/t/told-to-make-bug-report-de-given-skill-items-cant-restore-if-accident-de/2027260",
+        "https://us.forums.blizzard.com/en/wow/t/item-restoration-not-working-due-to-profession/2129316",
+        "https://www.wowhead.com/item=178712/acidslough-bulwark",
+        "https://legacyofwarcraft.com/db/retail/item/229335.html",
+        "https://worldofwarcraft.blizzard.com/en-us/news/24137817",
+        "https://www.wowhead.com/item=213611/writhing-sample",
+        "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation"
+      ]
     }
   ],
   "newly_verified_cohorts": [],
@@ -1222,23 +1292,26 @@
   "new_no_disenchant_records": 0,
   "new_condition_records": 0,
   "numeric_fields_advanced": [
-    "No yield fields admitted; exact logger semantics verified, original DE ledger lead identified."
+    "Two exact input identity leads and restoration-only numeric quantities, no directly verified yield totals or hit denominators."
   ],
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1fjx2r4",
-    "https://www.reddit.com/r/woweconomy/comments/1mns7u7",
-    "https://github.com/derfloh205/CraftSim/pull/892",
-    "https://www.curseforge.com/wow/addons/craftsim/files/7092169"
+    "https://us.forums.blizzard.com/en/wow/t/told-to-make-bug-report-de-given-skill-items-cant-restore-if-accident-de/2027260",
+    "https://us.forums.blizzard.com/en/wow/t/item-restoration-not-working-due-to-profession/2129316",
+    "https://www.wowhead.com/item=178712/acidslough-bulwark",
+    "https://legacyofwarcraft.com/db/retail/item/229335.html",
+    "https://worldofwarcraft.blizzard.com/en-us/news/24137817",
+    "https://www.wowhead.com/item=213611/writhing-sample",
+    "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-24T1822-pioneer-cloth-raw-looter-single-stack-reference.jsonl",
-  "verified_commit_sha": "a32d5a9c55d5d204e484c595a87890542a6d8f9c",
-  "verification": "Read branch head a32d5a9c55d5d204e484c595a87890542a6d8f9c and current status blob e77e800286575d34a62eb5743a049e952588100d; new commit will be independently read back. Self commit SHA cannot be embedded in same commit.",
+  "verified_commit_sha": "2e153d5c95b28abd42bfcef6cfa1fbc48387d170",
+  "verification": "Read branch head 2e153d5c95b28abd42bfcef6cfa1fbc48387d170, status blob c00a171d1e14d0546b178ab532e5437254d052b1; this commit will be independently read back. Self SHA cannot be embedded in same commit.",
   "blockers": [
-    "17k DE spreadsheet not publicly linked in indexed source; exact item IDs, ranked material quantities, actual operations, skill points, and overlap unknown.",
-    "No original per-operation output rows to separate hits, zero buckets or histograms from combined CraftSim result objects.",
-    "August 2025 catch-up comments do not pair exact output item identities, weekly state and completed operations. No new measured yield, skill coefficient, or probability."
+    "No direct material loot log or exact rank/bonus/skill/patch for restoration cases; no estimator admission.",
+    "Raw per-operation milling/prospecting data still absent; previously documented sources not reused.",
+    "17k DE sheet remains unlinked; no new public ledger recovered."
   ],
   "exhausted_sources": [
     "2026-11-20: Reddit 1ftqzxp historical shatter original/commenter estimates inspected; new but unfit for direct DE numeric admission without distinct recipe method/raw ledger; do not scrape it repeatedly without author export.",
@@ -1305,29 +1378,32 @@
     "2026-11-24T17:21:49.338Z: Older 1BhCv workbook Jewelcrafting Data gid 49584767 retrieved; other older sheet/tab combinations returned How To. Do not repeat failed name/gid guesses or count old and new samples as independent until source confirms. Video comments expose profile but no operation ledger.",
     "2026-11-24T18:22:35.879Z: Prior known Reddit 1f3qf96, 1f8pc9q, 1fspqym, 1fmrp4z and LotzBoi, plus Kalimdor Hold Em/QueenBaeX were already covered; no new independent data from these. Pioneer's three exact live tables captured once; do not replay unless new raw context or explicit overlap resolution.",
     "2026-11-24T19:21:33.527Z: Existing F004 records cover gem substitution trait IDs 98659–98662; not re-transcribed. New October 13 2024 Reddit 1g2qvia workbook referral lacks visible destinations and direct retrieval is unsupported; revisit only with original worksheet URL. March 2026 1rtqxbr/1rteoqr are Midnight-era discussions, not TWW studies. Existing 1fdmzwy, 1f5rby5, PeaEsk, Canadiatv and 1neicjm not recycled. Three method-specific profession equipment effects preserved as reference metadata only.",
-    "2026-11-24T20:21:33.281Z: Previously covered SemiCollin, PeaEsk, LotzBoi, 1g9l8t8, 1fmrp4z, 1fspqym, 1fpswuz, 1g6mmqf, 1f9qado, 565405, 1g8kbaq, 1neicjm and 1g2qvia not re-transcribed; do not repeat unchanged searches. 1fjx2r4 and 1mns7u7 checked; no linked exact output ledger. CraftSim #892 existing source supplemented only with code-level aggregation detail."
+    "2026-11-24T20:21:33.281Z: Previously covered SemiCollin, PeaEsk, LotzBoi, 1g9l8t8, 1fmrp4z, 1fspqym, 1fpswuz, 1g6mmqf, 1f9qado, 565405, 1g8kbaq, 1neicjm and 1g2qvia not re-transcribed; do not repeat unchanged searches. 1fjx2r4 and 1mns7u7 checked; no linked exact output ledger. CraftSim #892 existing source supplemented only with code-level aggregation detail.",
+    "2026-11-24T21:22:32.420Z: Named searches across Reddit, Blizzard, Wowhead and wiki found previously covered 1fmrp4z, 1f5rby5, 1fdmzwy, 1jc2ya5, 1iaamax, 2083666, 1m0dvk9, 1nqwdhf, Canadiatv, PeaEsk and dye-only 1pa98qw. No new independent numeric cohort. Wowhead output-side 219954 snippet has class-variant same-name rows; direct page did not expose underlying IDs/stack distributions, so no rows imported. Restoration reports are new but indirect."
   ],
-  "next_concrete_step": "Look for independently published DE spreadsheet or raw per-operation export tied to 17k commenter, or another exact-item post-hotfix cohort. For any CraftSim source, verify addon version and whether output records retain operation IDs; do not count aggregated craftResults as individual casts. Avoid repeat searches of unchanged sources.",
-  "previous_status_updated_at": "2026-11-24T19:21:33.527Z",
+  "next_concrete_step": "Seek directly logged exact-item seasonal DE data with bonus IDs and output rank, especially 178712 or other returning-dungeon gear; compare original per-item material output with expansion/variant metadata, not restoration COD. Seek independent post-hotfix ore/herb source logs with completed operations and separate refunds; avoid previously exhausted links.",
+  "previous_status_updated_at": "2026-11-24T20:21:33.281Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "date": "2026-11-24T20:21:33.281Z",
-    "method": "Named original-source searches across Reddit, Blizzard forums, Wowhead, addon release and primary merged code; deduplicated against current status and catalogue.",
+    "date": "2026-11-24T21:22:32.420Z",
+    "method": "Named searches across Reddit, Blizzard, Wowhead and wiki; checked source IDs against owned status and cutoff manifest; confirmed item identities, seasonal dungeon context and material IDs.",
     "source_checked": [
-      "https://www.reddit.com/r/woweconomy/comments/1fjx2r4",
-      "https://www.reddit.com/r/woweconomy/comments/1mns7u7",
-      "https://github.com/derfloh205/CraftSim/pull/892",
-      "https://www.curseforge.com/wow/addons/craftsim/files/7092169",
-      "https://www.reddit.com/r/woweconomy/comments/1g9l8t8",
-      "https://eu.forums.blizzard.com/en/wow/t/disenchanting-shard-quality/565405"
+      "https://us.forums.blizzard.com/en/wow/t/told-to-make-bug-report-de-given-skill-items-cant-restore-if-accident-de/2027260",
+      "https://us.forums.blizzard.com/en/wow/t/item-restoration-not-working-due-to-profession/2129316",
+      "https://www.wowhead.com/item=178712/acidslough-bulwark",
+      "https://legacyofwarcraft.com/db/retail/item/229335.html",
+      "https://worldofwarcraft.blizzard.com/en-us/news/24137817",
+      "https://www.wowhead.com/item=213611/writhing-sample",
+      "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation",
+      "https://www.wowhead.com/item=219954/refulgent-crystal"
     ],
     "new_numeric_cohorts": 0,
     "new_reference_cohorts": 0,
-    "new_method_scope_facts": 1
+    "new_identity_leads": 2
   },
   "source_integrity_findings": [
     {
@@ -3938,6 +4014,108 @@
       "castsWithDrop": null,
       "totalQuantity": null,
       "histogram": null
+    },
+    {
+      "checked_at_utc": "2026-11-24T21:22:32.420Z",
+      "status": "held-original-restoration-ledger-cross-expansion-identity",
+      "method": "Disenchant",
+      "source": "https://us.forums.blizzard.com/en/wow/t/told-to-make-bug-report-de-given-skill-items-cant-restore-if-accident-de/2027260",
+      "published": "2024-12-11",
+      "identity_sources": [
+        "https://www.wowhead.com/item=178712/acidslough-bulwark",
+        "https://worldofwarcraft.blizzard.com/en-us/news/24137817",
+        "https://www.wowhead.com/item=213611/writhing-sample",
+        "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation"
+      ],
+      "inputItemID": 178712,
+      "inputName": "Acidslough Bulwark",
+      "input_variant": null,
+      "gear_kind": "shield",
+      "gear_rarity": null,
+      "original_item_expansion": "Shadowlands",
+      "source_context": "TWW Season 1 forum report; Blizzard confirmed Mists of Tirna Scithe in S1 rotation; actual acquisition mode and bonus IDs unknown",
+      "reported_restoration_requirements": [
+        {
+          "name": "Refulgent Crystal",
+          "itemID": null,
+          "quantity": 1,
+          "rank": null
+        },
+        {
+          "name": "Writhing Sample",
+          "itemID": 213611,
+          "quantity": 2
+        },
+        {
+          "name": "Fleeting Arcane Manifestation",
+          "itemID": 227659,
+          "quantity": 1
+        },
+        {
+          "name": "11.0 Professions - Tracker - Weekly Enchanting Knowledge",
+          "itemID": null,
+          "quantity": 1
+        }
+      ],
+      "reported_disenchanted_items": 1,
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "zero_outcomes": null,
+      "skill": null,
+      "specialization": null,
+      "patch": null,
+      "build": null,
+      "refund_basis": null,
+      "detail": "First-person original restoration COD list, not a raw loot log. Preserve exact requested quantities as restoration requirements only, not verified direct material yield. The old base item ID can occur in TWW seasonal content, and this report names TWW materials; do not universally infer DE output expansion from original item expansion. The weekly knowledge tracker is not an independently verified tradable output. Exact crystal rank, actual item bonus, full direct output, source epoch/character and duplicate overlap are unresolved; hold from estimator."
+    },
+    {
+      "checked_at_utc": "2026-11-24T21:22:32.420Z",
+      "status": "held-original-restoration-ledger-epic-cloth",
+      "method": "Disenchant",
+      "source": "https://us.forums.blizzard.com/en/wow/t/item-restoration-not-working-due-to-profession/2129316",
+      "published": "2025-07-08",
+      "identity_sources": [
+        "https://legacyofwarcraft.com/db/retail/item/229335.html",
+        "https://warcraft.wiki.gg/wiki/Confessor%27s_Unshakable_Mitts",
+        "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation"
+      ],
+      "inputItemID": 229335,
+      "inputName": "Confessor's Unshakable Mitts",
+      "gear_kind": "cloth armor hands",
+      "gear_rarity": "epic",
+      "input_variant": null,
+      "reported_restoration_requirements": [
+        {
+          "name": "Refulgent Crystal",
+          "itemID": null,
+          "quantity": null,
+          "rank": null
+        },
+        {
+          "name": "Fleeting Arcane Manifestation",
+          "itemID": 227659,
+          "quantity": null
+        },
+        {
+          "name": "11.0 Professions - Tracker - Weekly Enchanting Knowledge",
+          "itemID": null,
+          "quantity": null
+        }
+      ],
+      "reported_disenchanted_items": 1,
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "zero_outcomes": null,
+      "skill": null,
+      "specialization": null,
+      "patch": null,
+      "build": null,
+      "refund_basis": null,
+      "detail": "Original player report names the accidentally disenchanted tier gloves and required restoration material names, but no explicit amounts/rank or direct operation log. Not a new measured material cohort; knowledge reward not normal tradable DE material."
     }
   ],
   "last_source_commit_pending": false
