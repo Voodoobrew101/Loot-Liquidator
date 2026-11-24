@@ -1,84 +1,128 @@
 {
   "role": "research-manager",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-24T12:01:39.290Z",
-  "status": "active; T0049 current equipment-census corroboration and explicit distinction between base and selected Hero item variants; no new numerical cohort",
+  "updated_at": "2026-11-24T13:02:28.846Z",
+  "status": "active; new source-lineage corroboration for 244175 low-skill rod dust reference budget, not an independent measured cohort",
   "task_ids": [
-    "T0049",
-    "T0026"
+    "T0026",
+    "T0025"
   ],
   "exact_gaps_targeted": [
-    "272246 Miststalker's Wristbands base-item eligibility versus historical Looter source; item-level/bonus/variant linkage and actual disenchant-time context"
+    "Distinguish vendor Refulgent Copper Rod 244174 from crafted Runed Refulgent Copper Rod 244175, and recover source basis for approximate rank-unspecified dust expectation during skill 1–25 leveling.",
+    "Corroborate exact Silver/Gold enchanting material identities using linked datamine-backed pages without treating prices, rank, or guide assumptions as measured yields."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "type": "secondary item-context corroboration; not an operation cohort",
-      "itemID": 272246,
-      "sourceReadDate": "2026-11-24",
-      "baseItemLevel": 206,
-      "baseRequiredLevel": 78,
-      "selectedTooltipItemLevel": 321,
-      "selectedTooltipRequiredLevel": 90,
-      "selectedTooltipTrack": "Hero 6/6",
-      "sourceReportedCensus": {
-        "readDate": "2026-11-01",
-        "charactersWithGearData": 11153,
-        "charactersWearingItem": 43
-      },
-      "actualDisenchantItemLevel": null,
-      "actualDisenchantBonusIDs": null,
-      "actualDisenchantEligibility": null,
-      "completedCastsNew": null,
-      "conclusion": "GamGem Nov 7 dated page reports Blizzard Item API base preview and its own Nov 1 equipment census; corroborates the item is worn in current-season content, not that it can be disenchanted. Indexed Wowhead explicitly separates base ilvl 206/level 78 from selected Hero 6/6 ilvl 321/level 90 tooltip; selected preview is not an observed item instance or the 140-operation cohort's actual level. Direct Wowhead text returned only base tooltip, without raw Looter rows. Both live and PTR WoWDB show base no-DE flag; shared catalogue data are not two independent attempted disenchants. No new quantity, probability, eligibility change, or valuation. GamGem source absent from cutoff catalogue receipt; no claim of exhaustive post-cutoff dedupe. Preserve as context here rather than create a numerical record."
+      "type": "source-lineage and reference mean review; not a new observed cohort",
+      "inputItemID": 244175,
+      "recipeSpellID": 1236486,
+      "distinctNonDisenchantInput": 244174,
+      "outputName": "Eversinging Dust",
+      "outputRank": null,
+      "outputRankAlternatives": [
+        243599,
+        243600
+      ],
+      "sourceSkillWindow": [
+        1,
+        25
+      ],
+      "proposedRods": 30,
+      "proposedDustCost": 150,
+      "approximateGuideReturnFraction": 0.5,
+      "approximateGuideReturnedUnits": 75,
+      "derivedReferenceMeanPerRod": 2.5,
+      "casts": null,
+      "totalQuantity": null,
+      "castsWithDrop": null,
+      "histogram": null,
+      "confidence": null,
+      "sourceKind": "reference",
+      "existingRecordID": "midnight-20261108-1520-002",
+      "conclusion": "WoW-Professions explicitly describes approximately half of the 150 dust used for 30 proposed crafted rods returning during disenchant-based leveling. WoW-God guide repeats the same route, gross dust 412, 30 rods, 150 dust and nearly identical macro text, and expresses the implied return as about 75; probable shared lineage, not a second study. Existing Nov 8 record already preserves WoW-God approximation. 2.5 is a defensible scoped guide-budget reference candidate (75/30 or 5×0.5), NOT source-audited observed mean, measured casts, a rank-specific mean, a confidence score, or a max-skill model. New LFCarry Nov 18 patch 12.1.5 guide corroborates crafted-rod eligibility but no numerical yield. Wowhead spell and item pages distinguish the crafted item from the vendor tool which has explicit no-disenchant flag. Keep candidate in review metadata rather than create duplicate numeric cohort or claim admission; a new scoped reference proposal must not overwrite existing supported values."
+    },
+    {
+      "type": "secondary linked item identity corroboration",
+      "source": "WoW Gold Farms guide updated 2026-10-08, source states datamine build 12.1.0.69933; site banner later build 12.1.5.70961",
+      "rankPairs": [
+        {
+          "name": "Eversinging Dust",
+          "silver": 243599,
+          "gold": 243600
+        },
+        {
+          "name": "Radiant Shard",
+          "silver": 243602,
+          "gold": 243603
+        },
+        {
+          "name": "Dawn Crystal",
+          "silver": 243605,
+          "gold": 243606
+        }
+      ],
+      "conclusion": "All six explicit linked item IDs resolve on TheWoWDB. Guide explicitly states DE yields are not measured; no price snapshots imported, no yield or skill curve established. Corroboration of known identities only."
     }
   ],
   "source_links": [
-    "https://gamgem.com/world-of-warcraft/items/miststalkers-wristbands",
-    "https://www.wowhead.com/item=272246/miststalkers-wristbands",
-    "https://www.wowdb.com/items/272246-miststalkers-wristbands",
-    "https://ptr.wowdb.com/items/272246-miststalkers-wristbands"
+    "https://www.wow-professions.com/guides/wow-enchanting-leveling-guide",
+    "https://wow-god.com/guides/enchanting-leveling",
+    "https://development.wow-god.com/guides/enchanting-leveling",
+    "https://lfcarry.com/guides/wow-midnight-enchanting-leveling",
+    "https://www.wowhead.com/spell=1236486/runed-refulgent-copper-rod",
+    "https://www.wowhead.com/item=244174/refulgent-copper-rod",
+    "https://www.wowhead.com/item=244175/runed-refulgent-copper-rod",
+    "https://wowgoldfarms.com/guides/retail/enchanting-gold-midnight/",
+    "https://thewowdb.com/item/eversinging-dust-243599/",
+    "https://thewowdb.com/item/eversinging-dust-243600/",
+    "https://thewowdb.com/item/radiant-shard-243602/",
+    "https://thewowdb.com/item/radiant-shard-243603/",
+    "https://thewowdb.com/item/dawn-crystal-243605/",
+    "https://thewowdb.com/item/dawn-crystal-243606/"
   ],
-  "evidence_files": [],
+  "evidence_files": [
+    "research/v3/evidence/midnight/2026-11-08T1520-runed-rod-de-context.jsonl (read only, original retained)"
+  ],
   "worker_reports_verified": [
     {
       "role": "midnight",
-      "checkpoint": "a848c0b91e8f12f2a95d7efb2bc5865917216671",
-      "result": "Eversong Diamond R1/R2 identities corroborated, no new numerical cohort",
-      "automation": "completed; matching result 54be1bbd-7fd4-8331-8d37-7f1dd6cd36da"
+      "checkpoint": "4c4ca4848cb6e62df100f38dee14b56e074cc243",
+      "result": "Four Forever leads excluded, 272246 variant corroboration; no new cohort",
+      "automation": "completed 1b03e965-2fb8-8328-b1a9-b52e83a1293a"
     },
     {
       "role": "war-within",
-      "checkpoint": "fe168cb570bd0f9e2c204f990482692a2512aa68",
-      "result": "Historical base skill 98 versus 100 qualitative DE comparison, no threshold or coefficient",
-      "automation": "completed; matching result cabd80a8-0fbc-8330-8e00-b5643f82c5ed"
+      "checkpoint": "b1275e8b3eeb5326430385da7e82dbdf2ed8b950",
+      "result": "222612–222614 same icon; icon not quality evidence",
+      "automation": "completed ea0bd7c0-eba4-8327-a99f-50935c229e58"
     },
     {
       "role": "dragonflight",
-      "checkpoint": "7aeead24fa4cbbaedaa518baed2b5a16192f5ae5",
-      "result": "Linked calculator lacks independent operation ledger",
-      "automation": "completed; matching result 4063ee6d-fdd4-832f-af6e-e5435373acfc"
+      "checkpoint": "a9e9832c1480846c66a61e8c3efa0c4357160a74",
+      "result": "Surveying diamond hotfix mining only, no Multicraft admission",
+      "automation": "completed f63b578a-d980-8326-90e6-9db714344b48"
     },
     {
       "role": "legacy",
-      "checkpoint": "a6be4cd675093292f14c74b8c19831c9fe51d134",
-      "result": "Gold Forever and Lazy Disenchanter recorder screen; no qualifying Retail cohorts",
-      "automation": "completed; matching result 947a8a72-9008-832c-b0a9-2938fc17344b"
+      "checkpoint": "a1eb4d8c6718f8413c0011b8bfb8b74785aaf168",
+      "result": "GatherValue and selection helpers screened; no qualifying measurement",
+      "automation": "completed 47161ef0-6cb0-8323-a08d-d6bffaae9c09"
     }
   ],
-  "verified_commit_sha": "a6be4cd675093292f14c74b8c19831c9fe51d134",
-  "checked_research_branch_head_before_status_write": "a6be4cd675093292f14c74b8c19831c9fe51d134",
+  "verified_commit_sha": "a1eb4d8c6718f8413c0011b8bfb8b74785aaf168",
+  "checked_research_branch_head_before_status_write": "a1eb4d8c6718f8413c0011b8bfb8b74785aaf168",
   "main_head_checked": "3e814929ecffc2c2a282fddaead2012e5b44e9a9",
   "owner_three_pass_head_checked": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "owner_catalogue_manifest_branch_head_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
   "owner_catalogue_pipeline_branch_checked": "a23e65d784f0c36833df0ad903d817d10d2f2ae3",
   "validation_this_run": {
-    "sourceCatalogue": "Read current closed verified receipt and v3 README; no cutoff catalogue reopened or repeated.",
-    "CI": "Combined status and PR-triggered workflow lookup returned empty arrays for checked main and research head a6be4cd; no fresh CI conclusion, no tests run. Prior checkpoint is historical only.",
-    "automation": "Read matching latest completed run and status for four workers; no changes.",
-    "managerTests": "Read original dated item context and independent indexed tooltip, compared base vs selected preview; no live client or runtime tests.",
+    "sourceCatalogue": "Verified current receipt CLOSED_VERIFIED_CURRENT_PIPELINE, 731 sources; PR82 merged per receipt, exact verified research 858b6c1bda7994c0d29f6f3d93df30f0a9b9674f, implementation a23e65d784f0c36833df0ad903d817d10d2f2ae3. No catalogue reopened.",
+    "CI": "Combined status and PR-triggered workflow lookups returned empty arrays for checked main and research a1eb4d8; no fresh CI conclusion.",
+    "automation": "Four latest completed runs verified by per-task peek and pinned branch role statuses; all five enabled on list; no schedule changes. Direct get endpoint unavailable.",
+    "managerTests": "Compared original guide wording, linked exact identities and pinned previous record; inspected current baseline adapter rank-family fallback, batch and overlap gates and automatic admission. No runtime or live-client tests; no admission claim.",
     "newIndependentCohorts": 0,
     "newSupportedGoldDecisions": 0,
-    "dashboard": "No new gold KPI or material dashboard change."
+    "dashboard": "No new measured KPI; unchanged."
   },
   "blockers": [
     "Goldsmith full source receipt and cast/refund reconciliation absent; pooled bag decreases and three-second gains cannot establish complete operation or reliable net-input mean.",
@@ -86,7 +130,8 @@
     "Dragonflight original 300-bracer sheet unavailable.",
     "Runecloth third-copy compiled contribution remains unverified; need consumer attribution, not repeated source scan.",
     "Prior alipica source's stored rank unsupported; exact historical rank remains unresolved. Review note only, no runtime correction or production impact established.",
-    "T0049: base no-DE flag versus historical Looter observations unresolved; neither current census nor selected tooltip identifies an attempted disenchant or actual bonus/ilvl. Direct raw Looter table not exposed."
+    "T0049: base no-DE flag versus historical Looter observations unresolved; neither current census nor selected tooltip identifies an attempted disenchant or actual bonus/ilvl. Direct raw Looter table not exposed.",
+    "244175: source approximate low-skill reference budget is potentially usable as a pooled expected-unit prior; no original operation ledger, exact output rank or evidence of independence. Existing WoW-God reference row has no numerical fields or batch scope; current baseline requires supported batch and counted row or scoped reviewed proposal. Do not fake a study or promote to universal profile. Actual compiled consumer not verified."
   ],
   "exhausted_sources": [
     "2026-11-21 Disenchantry release is a recheck of already-documented 2026-11-19 stats instrumentation lead; no public original Retail events or authoritative per-item DE rates found. Avoid repeated release-description scrapes.",
@@ -119,16 +164,17 @@
     "2026-11-24 09Z: Craftonomics source at a9a8e47d inspected; no revisit absent an actual raw export or capture-schema revision. Dastardly Duos forum 2114101, Wowhead 82826, June 6 official hotfix and June 3 event guide establish historical context, not a current numerical baseline; no repeat without exact variant or fix evidence.",
     "2026-11-24 10Z Goldsmith Oct13 and later tour table verified; no repeat unless original salvageRuns/receipts appear. Additional ten raw scopes preserved; no cast denominators. Wowhead alipica report already archived; davenrothz historical source preserved, revisit only rank/profile/dedup or scoped adapter verification.",
     "2026-11-24 11Z: potion rank alternatives verified, direct 241339 Wowhead blocked but paired Retail listing available; unchanged historical reports lack actual ranks. Do not revisit unchanged pages or add cohorts.",
-    "2026-11-24 12Z: T0049 GamGem 272246 Nov 7 item page, indexed Hero 6/6 Wowhead tooltip, live/PTR WoWDB base flag and broad current processing searches checked. Census is equipped gear only; no operation events. Do not revisit these unchanged pages unless event-linked bonus IDs, an original Looter record or independently published eligibility result emerges."
+    "2026-11-24 12Z: T0049 GamGem 272246 Nov 7 item page, indexed Hero 6/6 Wowhead tooltip, live/PTR WoWDB base flag and broad current processing searches checked. Census is equipped gear only; no operation events. Do not revisit these unchanged pages unless event-linked bonus IDs, an original Looter record or independently published eligibility result emerges.",
+    "2026-11-24 13Z: WoW-Professions and WoW-God (live/development same route) 30-rod/150 dust/rough half (~75) leveling budget examined; approximate 2.5 per rod is reference-only, not a new measurement. LFCarry Nov18 corroborates eligibility; WoW Gold Farms Oct8 explicitly lacks yield observations, six linked rank IDs verified. No repeat absent new ledger/rank breakdown, or scoped admission/consumer work."
   ],
-  "next_concrete_step": "Prioritize genuinely new zero-inclusive operation exports, source-reported per-operation means with verified scope, or exact instance-linked eligibility records; use T0049 only when event-linked item context emerges. Keep worker ownership and skip unchanged sources.",
+  "next_concrete_step": "Seek newly published original rank-aware operation ledgers or source-stated means. Preserve 244175 low-skill 2.5 family reference candidate for scoped gap-only review if existing supported model absent; no duplicate guide cohort or unchanged source re-screen. Respect worker roles and no routine PRs.",
   "production_main_changes": false,
   "addon_changes": false,
   "routine_research_prs": 0,
   "merge_or_release": false,
   "new_schedules": 0,
   "role_schedules_unchanged": true,
-  "prior_status_blob_sha": "5e52444cd328e44a5d33af18ece15af63e6498b6",
-  "previous_checkpoint": "58c44cf9491d64e1f5a698a997cf01350664c5ec",
-  "previous_status_updated_at": "2026-11-24T11:02:29.576Z"
+  "prior_status_blob_sha": "d783897072908ed2e20babb10fa91e176914fafa",
+  "previous_checkpoint": "8f0a1a82f28a5db32cb3009d55600592c524e7a4",
+  "previous_status_updated_at": "2026-11-24T12:01:39.290Z"
 }
