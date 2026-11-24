@@ -1,20 +1,20 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-24T19:21:33.527Z",
-  "status": "Verified three new method-scoped profession equipment tooltip/effect identities; no new independent TWW processing yield cohort. Historical public workbook referral held; outbound links unavailable.",
+  "updated_at": "2026-11-24T20:21:33.281Z",
+  "status": "New original 17k-DE spreadsheet lead held (no public item quantities); August 2025 catch-up profile reports held separately. Verified precise aggregate-versus-operation distinction in CraftSim's historical logging fix; no new independent yield cohort.",
   "task_ids": [
-    "T0032",
-    "T0040",
     "T0048",
+    "T0040",
+    "T0009",
     "T0010",
     "T0011"
   ],
   "exact_gaps_targeted": [
-    "Distinguish Algari Crushing maximum output modifier from ore prospecting talent outputs; keep Shatter Essence stat boosts and Darkmoon card transcription bonuses outside direct DE/milling baselines.",
-    "Seek independent historical prospecting workbook and actual per-rank operation/refund denominator."
+    "Exact DE input/output rank, completed-operation count and profile from independently published original logs",
+    "Per-operation grouping and refund attribution in historical processing-log sources, without treating aggregated result objects as cast histograms"
   ],
-  "source_branch_head_reviewed": "c017d20fe2b37d553058c2e5eb6e20e489b55993",
-  "source_policy": "Current branch-pinned README, evidence-format, mechanics, worker and queue read; current cutoff catalogue receipt consulted for source deduplication. Exact bag/effect IDs absent from owned status, cutoff coordination manifest and targeted default-branch code search. Existing gem substitution trait IDs 98659–98662 found in F004 and specialization-effects; no duplicate records. New tooltip scope facts are metadata only, not actual server execution proof.",
+  "source_branch_head_reviewed": "a32d5a9c55d5d204e484c595a87890542a6d8f9c",
+  "source_policy": "Current research rules, queue, status and cutoff catalogue receipt read. Checked candidate URLs against owned status and catalogue; 1fjx2r4 and 1mns7u7 absent in both. CraftSim #892 already recorded; only new code-level aggregation detail retained, not a second source cohort. No cutoff catalogue changes.",
   "study_backlog_triage": [
     {
       "status": "admitted",
@@ -1186,47 +1186,34 @@
       ],
       "outputs": "15 ranked shard/crystal occurrence rows with count/outof and stack=[1,1]",
       "reason": "No source profile or epoch, no independent per-cast ledger or proof of snapshot/reverse-tab independence; exact source-derived counts preserved only as reference."
+    },
+    {
+      "status": "held",
+      "scope": "original-ledger-lead",
+      "original_cohort": "Approximate 17,000 historical DEs, unidentified inputs and materials",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1fjx2r4",
+      "reason": "No public source sheet, exact completed N, material counts or overlap check."
+    },
+    {
+      "status": "held",
+      "scope": "profile-only",
+      "original_cohort": "Separate Aug 2025 catch-up reports",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1mns7u7",
+      "reason": "Approximate KP statement and crafted cuffs from different comments; no paired material data or exact DE denominator."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 10,
-    "held": 66,
+    "held": 68,
     "duplicate": 4
   },
   "newly_verified_fields": [
     {
-      "itemID": 222867,
-      "itemName": "Jeweler's Purse",
-      "effectSpellID": 454803,
-      "field": "maximumYieldBonus",
-      "value": 1,
-      "scope": "Algari Crushing only, Crushed Gemstones; not stated for Algari Prospecting",
-      "requires": "Khaz Algar Jewelcrafting 1",
-      "source": "https://www.wowhead.com/item=222867/jewelers-purse",
-      "effectSource": "https://www.wowhead.com/spell=454803/jewelcrafting-bag"
-    },
-    {
-      "itemID": 222862,
-      "itemName": "Magically \"Infinite\" Messenger",
-      "effectSpellID": 456873,
-      "field": "Shatter Essence granted stat rating bonus",
-      "value": 20,
-      "scope": "Resourcefulness, Ingenuity, Multicraft provided by Shatter Essence; no direct DE yield modifier stated",
-      "requires": "Khaz Algar Enchanting 1",
-      "source": "https://www.wowhead.com/item=222862/magically-infinite-messenger",
-      "effectSource": "https://www.wowhead.com/spell=456873/magically-infinite-messenger"
-    },
-    {
-      "itemID": 222864,
-      "itemName": "Darkmoon Duffle",
-      "effectSpellID": 455664,
-      "field": "tooltip extra card chance percent",
-      "value": 5,
-      "scope": "Transcribing Khaz Algar Darkmoon Cards; not milling or disenchanting",
-      "requires": "Khaz Algar Inscription 1",
-      "source": "https://www.wowhead.com/item=222864/darkmoon-duffle",
-      "effectSource": "https://www.wowhead.com/spell=455664/darkmoon-duffle"
+      "field": "CraftSim aggregate logging provenance",
+      "source": "https://github.com/derfloh205/CraftSim/pull/892",
+      "commit": "89728a1546bed7ecc20c8544e7583f1667bdeb05",
+      "detail": "Extends already-recorded logging caveat with actual merged patch mechanics: craftCount counts matching player UNIT_SPELLCAST_SUCCEEDED; session and recipe numCrafts increment by craftCount, but session craftResults appends a single collected CraftResult object, possibly spanning multiple operations. Refunds are deduplicated using operationID, with cache cleared after >5 seconds. Thus counting aggregate craftResults objects or using their combined quantities as one per-cast histogram is not justified even after fix. Need raw operation-associated output rows; no evidence that any particular prior cohort is affected. This is source-integrity metadata, not numerical yield."
     }
   ],
   "newly_verified_cohorts": [],
@@ -1235,26 +1222,23 @@
   "new_no_disenchant_records": 0,
   "new_condition_records": 0,
   "numeric_fields_advanced": [
-    "No measured rates or yields. Three source-stated equipment effects with item/spell ID and narrow operation scope; not evidence of measured probabilities or transferable yield multipliers."
+    "No yield fields admitted; exact logger semantics verified, original DE ledger lead identified."
   ],
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://www.wowhead.com/item=222867/jewelers-purse",
-    "https://www.wowhead.com/spell=454803/jewelcrafting-bag",
-    "https://www.wowhead.com/item=222862/magically-infinite-messenger",
-    "https://www.wowhead.com/spell=456873/magically-infinite-messenger",
-    "https://www.wowhead.com/item=222864/darkmoon-duffle",
-    "https://www.wowhead.com/spell=455664/darkmoon-duffle",
-    "https://www.reddit.com/r/woweconomy/comments/1g2qvia/"
+    "https://www.reddit.com/r/woweconomy/comments/1fjx2r4",
+    "https://www.reddit.com/r/woweconomy/comments/1mns7u7",
+    "https://github.com/derfloh205/CraftSim/pull/892",
+    "https://www.curseforge.com/wow/addons/craftsim/files/7092169"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-24T1822-pioneer-cloth-raw-looter-single-stack-reference.jsonl",
-  "verified_commit_sha": "c017d20fe2b37d553058c2e5eb6e20e489b55993",
-  "verification": "Read branch head c017d20fe2b37d553058c2e5eb6e20e489b55993 and prior status blob 7ca9afac4651859a257dd86c74dd9a974820c915; new status commit will use existing blob SHA and be verified by immutable-commit read-back. Self SHA cannot be embedded in same commit.",
+  "verified_commit_sha": "a32d5a9c55d5d204e484c595a87890542a6d8f9c",
+  "verification": "Read branch head a32d5a9c55d5d204e484c595a87890542a6d8f9c and current status blob e77e800286575d34a62eb5743a049e952588100d; new commit will be independently read back. Self commit SHA cannot be embedded in same commit.",
   "blockers": [
-    "No actual completed operations, per-output hits, zero buckets, skill/spec, refund or historical client build for any new processing cohort.",
-    "Bag tooltips identify method scope, not proof of server behavior; no transfer of listed modifiers to prospecting, milling or direct gear DE.",
-    "October 13 2024 Reddit workbook referral has two outbound links redacted in indexed result; direct retrieval unsupported. No source workbook identity, independent cohort, or actual denominator verified."
+    "17k DE spreadsheet not publicly linked in indexed source; exact item IDs, ranked material quantities, actual operations, skill points, and overlap unknown.",
+    "No original per-operation output rows to separate hits, zero buckets or histograms from combined CraftSim result objects.",
+    "August 2025 catch-up comments do not pair exact output item identities, weekly state and completed operations. No new measured yield, skill coefficient, or probability."
   ],
   "exhausted_sources": [
     "2026-11-20: Reddit 1ftqzxp historical shatter original/commenter estimates inspected; new but unfit for direct DE numeric admission without distinct recipe method/raw ledger; do not scrape it repeatedly without author export.",
@@ -1320,34 +1304,30 @@
     "2026-11-24T15:21:17.549Z: PeaEsk rank-2 prospect totals, LotzBoi milling table, Distinction Arathor's Spear March 2025 duplicate and previously held Oct 2025/Apr 2025 JC discussions are already covered; no new denominator. Nov 8 2024 glass discussion contains no observed operations; do not reinterpret claim as measured P. SemiCollin Oct 30/Oct 11 video metadata only, direct fetch failed; seek original sheet link instead of repeating title searches.",
     "2026-11-24T17:21:49.338Z: Older 1BhCv workbook Jewelcrafting Data gid 49584767 retrieved; other older sheet/tab combinations returned How To. Do not repeat failed name/gid guesses or count old and new samples as independent until source confirms. Video comments expose profile but no operation ledger.",
     "2026-11-24T18:22:35.879Z: Prior known Reddit 1f3qf96, 1f8pc9q, 1fspqym, 1fmrp4z and LotzBoi, plus Kalimdor Hold Em/QueenBaeX were already covered; no new independent data from these. Pioneer's three exact live tables captured once; do not replay unless new raw context or explicit overlap resolution.",
-    "2026-11-24T19:21:33.527Z: Existing F004 records cover gem substitution trait IDs 98659–98662; not re-transcribed. New October 13 2024 Reddit 1g2qvia workbook referral lacks visible destinations and direct retrieval is unsupported; revisit only with original worksheet URL. March 2026 1rtqxbr/1rteoqr are Midnight-era discussions, not TWW studies. Existing 1fdmzwy, 1f5rby5, PeaEsk, Canadiatv and 1neicjm not recycled. Three method-specific profession equipment effects preserved as reference metadata only."
+    "2026-11-24T19:21:33.527Z: Existing F004 records cover gem substitution trait IDs 98659–98662; not re-transcribed. New October 13 2024 Reddit 1g2qvia workbook referral lacks visible destinations and direct retrieval is unsupported; revisit only with original worksheet URL. March 2026 1rtqxbr/1rteoqr are Midnight-era discussions, not TWW studies. Existing 1fdmzwy, 1f5rby5, PeaEsk, Canadiatv and 1neicjm not recycled. Three method-specific profession equipment effects preserved as reference metadata only.",
+    "2026-11-24T20:21:33.281Z: Previously covered SemiCollin, PeaEsk, LotzBoi, 1g9l8t8, 1fmrp4z, 1fspqym, 1fpswuz, 1g6mmqf, 1f9qado, 565405, 1g8kbaq, 1neicjm and 1g2qvia not re-transcribed; do not repeat unchanged searches. 1fjx2r4 and 1mns7u7 checked; no linked exact output ledger. CraftSim #892 existing source supplemented only with code-level aggregation detail."
   ],
-  "next_concrete_step": "Seek a publicly accessible original workbook link behind the Oct 13 referral via creator publications or an independent exact-item/player-profile operation export; do not repeat inaccessible thread fetches or unchanged profession trait/gear tables. Preserve separate method and refund scopes.",
-  "previous_status_updated_at": "2026-11-24T18:22:35.879Z",
+  "next_concrete_step": "Look for independently published DE spreadsheet or raw per-operation export tied to 17k commenter, or another exact-item post-hotfix cohort. For any CraftSim source, verify addon version and whether output records retain operation IDs; do not count aggregated craftResults as individual casts. Avoid repeat searches of unchanged sources.",
+  "previous_status_updated_at": "2026-11-24T19:21:33.527Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "date": "2026-11-24T19:21:33.527Z",
-    "method": "Named original-source searches, live item/effect tooltips, cutoff receipt and default-branch dedup checks",
+    "date": "2026-11-24T20:21:33.281Z",
+    "method": "Named original-source searches across Reddit, Blizzard forums, Wowhead, addon release and primary merged code; deduplicated against current status and catalogue.",
     "source_checked": [
-      "https://www.wowhead.com/item=222867/jewelers-purse",
-      "https://www.wowhead.com/spell=454803/jewelcrafting-bag",
-      "https://www.wowhead.com/item=222862/magically-infinite-messenger",
-      "https://www.wowhead.com/spell=456873/magically-infinite-messenger",
-      "https://www.wowhead.com/item=222864/darkmoon-duffle",
-      "https://www.wowhead.com/spell=455664/darkmoon-duffle",
-      "https://www.reddit.com/r/woweconomy/comments/1g2qvia/",
-      "https://www.wowhead.com/profession-trait/ruby-98660",
-      "https://www.wowhead.com/profession-trait/sapphire-98659",
-      "https://www.wowhead.com/profession-trait/onyx-98661",
-      "https://www.wowhead.com/profession-trait/emerald-98662"
+      "https://www.reddit.com/r/woweconomy/comments/1fjx2r4",
+      "https://www.reddit.com/r/woweconomy/comments/1mns7u7",
+      "https://github.com/derfloh205/CraftSim/pull/892",
+      "https://www.curseforge.com/wow/addons/craftsim/files/7092169",
+      "https://www.reddit.com/r/woweconomy/comments/1g9l8t8",
+      "https://eu.forums.blizzard.com/en/wow/t/disenchanting-shard-quality/565405"
     ],
     "new_numeric_cohorts": 0,
     "new_reference_cohorts": 0,
-    "new_method_scope_facts": 3
+    "new_method_scope_facts": 1
   },
   "source_integrity_findings": [
     {
@@ -3904,6 +3884,60 @@
       "casts": null,
       "castsWithDrop": null,
       "totalQuantity": null
+    },
+    {
+      "checked_at_utc": "2026-11-24T20:21:33.281Z",
+      "status": "held-original-unpublished-17000-disenchant-ledger-lead",
+      "method": "Disenchant",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1fjx2r4",
+      "published": "2024-09-19",
+      "reported_operations_approx": 17000,
+      "skill": "max tools and skill (self-reported; exact points unknown)",
+      "specialization": null,
+      "inputItemID": null,
+      "outputItemID": null,
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "minSeen": null,
+      "maxSeen": null,
+      "histogram": null,
+      "resourcefulness_refund_basis": null,
+      "detail": "First-person commenter explicitly reports a TSM spreadsheet covering 17k DEs; only gold profit summaries are public in the indexed comment, with no linked sheet or material counts. Do not convert rounded 17k to exact N or infer item/material identity from other commenters. Seek original public worksheet or source export; overlap with Sept 22 large DE studies unknown.",
+      "previous_status": {
+        "updated_at": "2026-11-24T19:21:33.527Z",
+        "status": "Verified three new method-scoped profession equipment tooltip/effect identities; no new independent TWW processing yield cohort. Historical public workbook referral held; outbound links unavailable.",
+        "base": "c017d20fe2b37d553058c2e5eb6e20e489b55993",
+        "prior_status_path": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/a32d5a9c55d5d204e484c595a87890542a6d8f9c/research/coordination/quiet-status/war-within.json"
+      }
+    },
+    {
+      "checked_at_utc": "2026-11-24T20:21:33.281Z",
+      "status": "held-knowledge-catchup-qualitative-profile-not-material-yield",
+      "method": "Disenchant",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1mns7u7",
+      "published": "2025-08-11/2025-08-14",
+      "detail": "Independent commenters discuss August 2025 disenchant catch-up knowledge, approximate 50% vs guaranteed from cards, and an alt made about 600 cuffs. No exact DE denominator, matched material or knowledge item ID, output totals or weekly catch-up state. Do not pool these as one study, identify knowledge item from assumption, or use knowledge chance as material yield.",
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "histogram": null
+    },
+    {
+      "checked_at_utc": "2026-11-24T20:21:33.281Z",
+      "status": "new-code-level-operation-vs-aggregate-result-provenance",
+      "method": "Prospect/Mill",
+      "source": "https://github.com/derfloh205/CraftSim/pull/892",
+      "source_commit": "89728a1546bed7ecc20c8544e7583f1667bdeb05",
+      "release_source": "https://www.curseforge.com/wow/addons/craftsim/files/7092169",
+      "published": "2025-10-10",
+      "detail": "Extends already-recorded logging caveat with actual merged patch mechanics: craftCount counts matching player UNIT_SPELLCAST_SUCCEEDED; session and recipe numCrafts increment by craftCount, but session craftResults appends a single collected CraftResult object, possibly spanning multiple operations. Refunds are deduplicated using operationID, with cache cleared after >5 seconds. Thus counting aggregate craftResults objects or using their combined quantities as one per-cast histogram is not justified even after fix. Need raw operation-associated output rows; no evidence that any particular prior cohort is affected. This is source-integrity metadata, not numerical yield.",
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null
     }
   ],
   "last_source_commit_pending": false
