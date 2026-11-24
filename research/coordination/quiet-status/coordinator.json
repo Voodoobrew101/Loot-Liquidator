@@ -1,144 +1,179 @@
 {
   "role": "research-manager",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-24T17:02:33.778Z",
-  "status": "active; recovered previously unassessed aggregate quantities from April 2025 TWW prospecting discussion; worker independently recovered original October workbook, denominator and profile pending; no new eligible per-item EV or measured cohort verified by manager",
+  "updated_at": "2026-11-24T18:02:52.267Z",
+  "status": "active; precise workbook normalization and admission-field review, rank corroboration; no new independent cohort or verified runtime gold decision",
   "task_ids": [
     "T0040",
-    "T0032"
+    "T0032",
+    "T0039"
   ],
   "exact_gaps_targeted": [
-    "Post-October-25 TWW rank-2 ore reference means; recover previously inaccessible original text and preserve gross/net and input/output identity uncertainties.",
-    "Cross-check newly recovered SemiCollin worksheet worker evidence for explicit rank block divisors, nominal quantity and profile semantics without duplicating worker extraction."
+    "Distinguish explicit worksheet input Qty from nominal recipe batch values; establish exact existing adapter fields necessary for any legitimate reference or nominal-input expected quantity without fabricating operation counts.",
+    "Check reversed TWW pigment rank ID ordering against independent Retail listings and preserve older same-author workbook as separate unresolved lineage."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "type": "newly accessible dimension of previously screened source; approximate aggregate reference only",
-      "source": "https://www.reddit.com/r/woweconomy/comments/1k78h4v",
-      "published": "2025-04-25",
-      "priorDisposition": "research/v3/migration/manifest/extraction/reddit-1k78h4v-ad9e4ac3.json recorded value-only 8% claim, direct retrieval blocked; absent from current 731-source catalogue manifest; not a new independent source identity",
-      "reportedInputQuantityApprox": 100000,
-      "inputRank": 2,
-      "inputItemID": null,
-      "inputSpeciesContext": "R2 Aqirite/R2 Ironclaw mentioned in surrounding comparison; allocation unspecified",
-      "reportedOutputQuantityApprox": 13500,
-      "outputName": "good gems (unnamed aggregate)",
-      "outputItemID": null,
-      "outputRank": null,
-      "derivedReferenceRatio": {
-        "value": 0.135,
-        "unit": "unnamed aggregate gem units per stated ore, approximate planning reference only",
-        "formula": "13500/100000"
-      },
-      "casts": null,
-      "castsWithDrop": null,
-      "histogram": null,
-      "skill": null,
-      "refundHandling": null,
-      "conclusion": "Indexed original text gives a projected approximate quantity, not an explicitly completed 100k-ore experiment. No split among inputs/outputs, no independently verified gross/net input or observed counts. Do not manufacture cast N, individual gem probabilities, family IDs or per-ore valuation. Earlier 8% is a value comparison, not yield increase."
-    },
-    {
-      "type": "additional source-reported net reagent budget, not output yield",
-      "source": "https://www.reddit.com/r/woweconomy/comments/1k78h4v",
-      "reportedMean": 4.1,
-      "units": "Bismuth per gem to crush",
-      "context": "R3 Bountiful potion; author describes a multi-stage crushing/crafting chain",
-      "inputItemID": null,
-      "inputRank": null,
-      "recipeSpellID": null,
-      "casts": null,
-      "refundHandling": null,
-      "conclusion": "Preserve stated effective reagent planning budget separately from fixed recipe inputs, chance, output quantities and resourcefulness coefficients. Exact ore rank, gem identity, potion effect and allocation unknown; no numerical admission."
-    },
-    {
-      "type": "worker-owned original workbook follow-up; independently read preserved evidence not live source bytes",
+      "type": "static source-field and arithmetic review of worker-owned post-cutoff evidence; not independent original workbook retrieval",
+      "evidence": "research/v3/evidence/war-within/2026-11-24T1620-semicollin-original-processing-worksheet.jsonl",
       "source": "https://docs.google.com/spreadsheets/d/15ccKSVVxD69L_hTFeMBn3PIKvceUb4rQ77ICxauzlSA/edit",
-      "workerCommit": "9c0b8fe8dcf4f5dad4c79fd82761b646dca0d946",
-      "evidenceFile": "research/v3/evidence/war-within/2026-11-24T1620-semicollin-original-processing-worksheet.jsonl",
-      "evidenceBlob": "5040caafd2c4d749986aefc7a095ff60d448e94e",
+      "groups": 17,
       "rows": 80,
-      "distinctStudyKeys": 17,
-      "prospectRows": 72,
-      "millRows": 8,
+      "explicit_qty_groups": [
+        210930,
+        210936,
+        210933
+      ],
+      "explicit_qty_rows": 24,
+      "source_qty_each": 5000,
+      "source_divisor_each": 1000,
+      "nominal_batch": 5,
+      "other_prospect_rows": 48,
+      "other_prospect_qty_cell": 5,
+      "mill_rows": 8,
+      "mill_qty_cell": 10,
+      "mill_divisors": [
+        1040,
+        520,
+        500,
+        1000
+      ],
       "example": {
-        "inputItemID": 210930,
-        "outputItemID": 213399,
-        "rawTotal": 362,
-        "worksheetDivisor": 1000,
-        "worksheetInputQty": 5000,
-        "formula": "I5/C3",
-        "normalizedWorksheetValue": 0.362
+        "input": 210930,
+        "output": 213399,
+        "total": 362,
+        "worksheet_ratio": 0.362,
+        "units_per_stated_qty": 0.0724,
+        "casts": null,
+        "probability": null
       },
-      "conclusion": "Worker transcribed exact source quantity and normalization formula; all 80 rows retain casts=null, averageShown=null. Source worksheet 1000 divisors and 5000 or 5 Qty cells differ by block and R3 Bismuth divisor is 400. The formula proves a worksheet-normalized value, not an independently logged operation denominator. Front-tab resourcefulness differs from raw-tab note. Original workbook direct web read was inaccessible to manager; no independent cohort or change to worker evidence. Clarify whether denominator is nominal operation equivalent, actual successful casts, or net inputs before scoped reference mean or study admission."
+      "conclusion": "Only the three R1 ore blocks explicitly have Qty=5000 matching divisor*5; later Qty=5 or 10 is a recipe-size cell, not independently stated total inputs. Do not populate inputsProcessed from divisor*batch. Even the R1 Qty requires confirmation whether initial, gross processed, or net consumed and whether refunds were reused. All rows have null averageShown and casts, no inputsProcessed. tools/research_v3_evidence.py lines 175–193 accepts reported unit_average or explicit inputsProcessed/recognized equivalent basis without claiming observed casts, but current raw rows supply neither. A valid source-reported reference mean with documented operation/input basis could use that existing path; no blanket schema deficiency and no need for fake casts. Direct workbook web opens failed; review is of worker-preserved source transcription only."
     },
     {
-      "type": "epoch corroboration; not new rate",
-      "source": "https://worldofwarcraft.blizzard.com/en-gb/news/24148555",
-      "conclusion": "Official entry dated October 25 2024, not October 30 as Wowhead comment title implies; existing rate-change registry correct. Byproducts collectively now drop every operation; wording does not prove each named byproduct individually has 100% probability. Separate amber capstone fix and gem/max-byproduct reductions. No changed mechanic or new rate."
+      "type": "identity corroboration, no new cohort",
+      "ranks": {
+        "Luredrop": [
+          {
+            "id": 222613,
+            "rank": 2
+          },
+          {
+            "id": 222614,
+            "rank": 3
+          }
+        ],
+        "Orbinid": [
+          {
+            "id": 224802,
+            "rank": 1
+          },
+          {
+            "id": 224801,
+            "rank": 2
+          },
+          {
+            "id": 224800,
+            "rank": 3
+          }
+        ],
+        "Blossom": [
+          {
+            "id": 224805,
+            "rank": 1
+          },
+          {
+            "id": 224804,
+            "rank": 2
+          },
+          {
+            "id": 224803,
+            "rank": 3
+          }
+        ]
+      },
+      "source": "https://goldcap.gg/retail/us/items/224800",
+      "conclusion": "Independent current Retail catalog corroborates nonascending Orbinid/Blossom rank IDs and Luredrop R2/R3; agrees with new worker worksheet transcription. Existing manager identity review already covers Orbinid R1/R3. Not a new source yield or observed skill effect. Build-pinned DB2 attempted but inaccessible this run; no claim of independent DB2 read."
+    },
+    {
+      "type": "worker report review; no independent extraction",
+      "source": "https://docs.google.com/spreadsheets/d/1BhCv15PAg6WFvX9ltCQx3-olj2MTcs_dhPVBqHfbzy0/edit?gid=49584767",
+      "workerCommit": "7acbc140575417310579f52a0c47092aa757f59a",
+      "reported_rows": 21,
+      "reported_groups": 3,
+      "conclusion": "Worker recovered earlier worksheet totals; all 21 compared cells differ from newer worksheet; absent Amber row is not zero. Publication on Oct11 and Oct30 is not proof of independent capture date or epoch. Retain hold pending source context; original sheet inaccessible to manager."
+    },
+    {
+      "type": "source context only; no new rate",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1s20lq4/mass_prospecting_issues/",
+      "conclusion": "March 2026 player reports bulk prospecting may stop before intended 200 operations due to bag-stack selection. Distinct source from older known Oct2024 discussion. Intended queue count is not completed count; anecdote cannot establish frequency or a universal bug, no observed material yields. Not in cutoff manifest."
     }
   ],
   "source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1k78h4v",
     "https://docs.google.com/spreadsheets/d/15ccKSVVxD69L_hTFeMBn3PIKvceUb4rQ77ICxauzlSA/edit",
-    "https://www.youtube.com/watch?v=ne_g7p_PHqw",
-    "https://worldofwarcraft.blizzard.com/en-gb/news/24148555"
+    "https://goldcap.gg/retail/us/items/224800",
+    "https://docs.google.com/spreadsheets/d/1BhCv15PAg6WFvX9ltCQx3-olj2MTcs_dhPVBqHfbzy0/edit?gid=49584767",
+    "https://www.reddit.com/r/woweconomy/comments/1s20lq4/mass_prospecting_issues/",
+    "https://goldcap.gg/retail/us/items/224801",
+    "https://goldcap.gg/retail/us/items/224802",
+    "https://goldcap.gg/retail/us/items/224803",
+    "https://goldcap.gg/retail/kr/items/224804",
+    "https://goldcap.gg/retail/us/items/224805",
+    "https://goldcap.gg/retail/us/items/222613",
+    "https://goldcap.gg/retail/us/items/222614",
+    "https://www.youtube.com/watch?v=nHiflpuHSgM",
+    "https://www.youtube.com/watch?v=ne_g7p_PHqw"
   ],
   "evidence_files": [
-    "research/v3/migration/manifest/extraction/reddit-1k78h4v-ad9e4ac3.json (read-only prior disposition)",
-    "research/v3/evidence/war-within/2026-11-24T1620-semicollin-original-processing-worksheet.jsonl (read-only worker evidence)",
-    "research/coordination/quiet-status/coordinator.json (owned review metadata)"
+    "research/v3/evidence/war-within/2026-11-24T1620-semicollin-original-processing-worksheet.jsonl (read-only)",
+    "research/coordination/quiet-status/war-within.json (read-only)",
+    "research/coordination/quiet-status/coordinator.json (owned review)"
   ],
   "worker_reports_verified": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-24T16:11:07Z",
-      "result": "completed; no new cohort"
+      "updated_at": "2026-11-24T17:10:58.735Z",
+      "result": "completed; no qualifying cohort"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-24T16:24:34.916Z",
-      "result": "completed; original workbook recovered, 80 totals, 17 rank blocks, denominators held"
+      "updated_at": "2026-11-24T17:21:49.338Z",
+      "result": "completed; 21 older workbook totals held"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-24T16:31:31.478Z",
-      "result": "completed; two historical skill-profile reports held"
+      "updated_at": "2026-11-24T17:31:50.487Z",
+      "result": "completed; secondary guide claims excluded"
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-24T16:41:06.293Z",
-      "result": "completed; public Forever export excluded, no new Retail numerical cohort"
+      "updated_at": "2026-11-24T17:41:43.041Z",
+      "result": "completed; new acquisition paths screened without target ledger"
     }
   ],
-  "verified_commit_sha": "32bd51b0cabf48a6e6f7475909dcf4d56231fd50",
-  "checked_research_branch_head_before_status_write": "32bd51b0cabf48a6e6f7475909dcf4d56231fd50",
-  "main_head_checked": "63f684b3fc84c0a1ee3113ac1dccb4c85c408d27",
+  "verified_commit_sha": "495ca6ba50a3e1e2bbc8cde91745fc4d4c53528a",
+  "checked_research_branch_head_before_status_write": "495ca6ba50a3e1e2bbc8cde91745fc4d4c53528a",
+  "main_head_checked": "2db9929050b8532645149dea5a3c5fa8aa0a035a",
   "owner_three_pass_head_checked": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "owner_catalogue_manifest_branch_head_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
   "owner_catalogue_pipeline_branch_checked": "a23e65d784f0c36833df0ad903d817d10d2f2ae3",
   "validation_this_run": {
-    "sourceCatalogue": "CLOSED_VERIFIED_CURRENT_PIPELINE receipt read: 731 sources, exact compiled receipt, PR82 merged. No reopening or recataloguing. Old 1k78h4v source absent from catalogue keys but present in historical migration extraction; new dimension review only.",
     "CI": {
-      "main": [
-        {
-          "id": 45443766463,
-          "status": "in_progress",
-          "conclusion": null,
-          "head": "63f684b3fc84c0a1ee3113ac1dccb4c85c408d27"
-        }
-      ],
-      "research": {
-        "head": "32bd51b0cabf48a6e6f7475909dcf4d56231fd50",
-        "run": 45439998226,
-        "result": "success"
+      "main": {
+        "id": 45452849366,
+        "conclusion": "success",
+        "head": "2db9929050b8532645149dea5a3c5fa8aa0a035a"
       },
-      "integrationPR82": "merged; PR22/23 closed unmerged; no actions"
+      "research": {
+        "id": 45451395449,
+        "conclusion": "success",
+        "head": "495ca6ba50a3e1e2bbc8cde91745fc4d4c53528a"
+      }
     },
-    "automation": "Manager and four research worker tasks enabled; community review also enabled. Four latest worker runs completed, actual results and status read. No schedule changes.",
-    "managerTests": "Static inspection of current main prepare/review pipeline, 80-row parse and 17-key grouping, formula/source scope checks, source search and official epoch read; no local or live runtime tests.",
+    "automation": "Four worker latest run IDs matched completed results; all six tasks enabled, no changes.",
+    "managerTests": "Read current charter and plans, queue, strategy, flags, worker reports; parsed 80 rows and 17 grouped source cells; inspected existing field support and review pipeline, independent public rank listings and new source-context report. No local compiler, runtime or live test executed. Main six-commit advance includes community release bridge only, not manager authorization.",
     "newIndependentCohorts": 0,
     "newSupportedGoldDecisions": 0,
-    "dashboard": "No KPI change; unchanged."
+    "dashboard": "No comparable coverage change measured; unchanged."
   },
   "blockers": [
     "Goldsmith full source receipt and cast/refund reconciliation absent; pooled bag decreases and three-second gains cannot establish complete operation or reliable net-input mean.",
@@ -151,7 +186,7 @@
     "Verified build-pinned identities currently stored in metadata, not automatic numeric rows. Existing rank-family adapter lacks explicit verifiedRanks for glass/stone and three TWW pigment families; only reachable source-level correction and consumer tests can establish actual valuation/tooltip impact. No code modification authorized in routine research.",
     "Canadiatv TWW prospecting calculator underlying sheets are paid-member-only; public Oct 28 source reports approximate aggregate ore volume but no input/rank breakdown, raw output quantities, casts/refunds or exact profile. Do not purchase or bypass access. Possible overlap with existing 50k-ore glass report unresolved.",
     "April 2025 projected good-gem aggregate and effective Bismuth-per-gem budget have unresolved identities, actual denominator, profile and refund allocation; no supported per-item consumer scope.",
-    "SemiCollin exact original worksheet recovered by worker; normalization divisor is not established as completed casts or net/gross input and exact revision/profile remain unresolved. Need original video/formula context and overlap checks; do not recopy 80 rows."
+    "SemiCollin: only 24 R1 ore rows explicitly state 5000 Qty; 56 other rows contain recipe-sized Qty only. Need original source basis and refund/profile context before admitting source mean or nominal-input values. Earlier same-author worksheet is not an independent measured cohort merely because totals differ."
   ],
   "exhausted_sources": [
     "2026-11-21 Disenchantry release is a recheck of already-documented 2026-11-19 stats instrumentation lead; no public original Retail events or authoritative per-item DE rates found. Avoid repeated release-description scrapes.",
@@ -189,16 +224,17 @@
     "2026-11-24 14Z direct DB2 exact rank joins for 242786/242787/242788/242789/237362/237363 and TWW 224802/224800 verified. No repeat source identity scan absent changed build or new field; avoid treating prior identity evidence as new numerical cohorts.",
     "2026-11-24 15Z: Pengu Scribd copy and separate AOEAH demonstration context read, both ItemSparse builds checked. Original YouTube video unavailable via web and direct retrieval timeout. Prior 180-bracer study (155 shard/304 dust) distinct; no duplicate transcription. Revisit only original workbook/formula or actual profile/ledger, not unchanged copies.",
     "2026-11-24 16Z: Canadiatv 112633785/114902932/120420069 author announcements reviewed; paid calculator underlying values unavailable. SemiCollin ne_g7p_PHqw public video index strips workbook URL. No repeat unchanged announcements, no purchase, no inferred casts. 232492 Gleaming Shatter already owner-catalogued; no re-transcription.",
-    "2026-11-24 17Z: 1k78h4v indexed original now exposes additional approximate 100k ore / 13.5k unnamed good gems and 4.1 Bismuth per gem crushing budget; historical migration extraction had no counts. No exact identity/ledger/profile; do not repeat unchanged page or treat planning example as measured cohort. 1l91chl already migration-screened; 1gmio0h already worker-screened, 1g350pq and 1g8kbaq known. Official Oct25 epoch registry correct."
+    "2026-11-24 17Z: 1k78h4v indexed original now exposes additional approximate 100k ore / 13.5k unnamed good gems and 4.1 Bismuth per gem crushing budget; historical migration extraction had no counts. No exact identity/ledger/profile; do not repeat unchanged page or treat planning example as measured cohort. 1l91chl already migration-screened; 1gmio0h already worker-screened, 1g350pq and 1g8kbaq known. Official Oct25 epoch registry correct.",
+    "2026-11-24 18Z: verified existing SemiCollin source transcription grouping and actual field-support adapter; direct workbook access failed, prior videos expose only title/description. 1g9s48p and 1fisfkn catalogued; 1g9l8t8 Pioneer Cuffs already archived despite absent manifest substring. 1s20lq4 context only. Do not repeat without newly accessible original source or verified denominator."
   ],
-  "next_concrete_step": "Use original SemiCollin source video/worksheet version context (worker ownership retained) to establish normalization unit and refund basis; seek independent source with exact input and output identities. No repeat 1k78h4v unless a newly accessible ledger or explicit scope resolves ambiguity.",
+  "next_concrete_step": "Seek original accessible author explanation of explicit Qty/divisor/refund interpretation or independent exact-item operation ledger; if not available move to novel gear-specific DE and reference mean source, rather than rechecking same workbook. Preserve worker ownership and no new catalogue or code edits.",
   "production_main_changes": false,
   "addon_changes": false,
   "routine_research_prs": 0,
   "merge_or_release": false,
   "new_schedules": 0,
   "role_schedules_unchanged": true,
-  "prior_status_blob_sha": "ec291934a826bae5f70edc5339a41787dfa81065",
-  "previous_checkpoint": "8c30075cc43c817fdccdb4e7fc29e534ec46586c",
-  "previous_status_updated_at": "2026-11-24T16:02:17.756Z"
+  "prior_status_blob_sha": "8a810d7e371f6e880bfd8dc03fbebd897fcb3fe3",
+  "previous_checkpoint": "50e4dd8da66cbbe68ee256f25af12747400b40d3",
+  "previous_status_updated_at": "2026-11-24T17:02:33.778Z"
 }
