@@ -1,6 +1,6 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-24T13:11:07.353Z",
+  "updated_at": "2026-11-24T14:11:23.951Z",
   "status": "active__no_new_independent_numeric_cohort",
   "task_ids": [
     "T0026",
@@ -2135,14 +2135,14 @@
   "newly_verified_fields_or_cohorts": [],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": [
-    "None; no qualifying new independent Retail event data. Previously preserved Goldsmith 22 output totals and existing 272246 observations unchanged."
+    "None. Existing 22 Goldsmith raw output totals and historical 272246 observations preserved; no new measured denominator or cast/rank/profile cohort."
   ],
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/Amoner/smoothbrain/blob/main/README.md",
-    "https://www.curseforge.com/wow/addons/de-scanner/files/9744386",
-    "https://www.curseforge.com/wow/addons/togprofessionmaster/files/9745274/additional-files"
+    "https://github.com/nyxnightfire/ProfessionTrackerForever/blob/main/README.md",
+    "https://github.com/TheGnare/SimpleSkillWatch/blob/main/README.md",
+    "https://www.curseforge.com/wow/addons/grimlight-enchanting"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -2640,32 +2640,61 @@
     {
       "url": "https://www.curseforge.com/wow/addons/togprofessionmaster/files/9745274/additional-files",
       "reason": "November 22 v1.11.3 multi-flavor release; documented recipe/skill/cooldown/specialization sharing and shopping list exports do not expose completed disenchant, prospect or mill operation receipts, rank-linked outputs, zeros or refund histograms. No public original cohort found."
+    },
+    {
+      "url": "https://github.com/nyxnightfire/ProfessionTrackerForever/blob/main/README.md",
+      "readme_blob_sha": "5c06f6cb2fa2964c1eb96d375b390ee94c503102",
+      "reason": "New repository lead from Nov 23+ pushed search. Explicit WoW Forever; gathers skill-up observations, not Retail Midnight processing receipts."
+    },
+    {
+      "url": "https://github.com/TheGnare/SimpleSkillWatch/blob/main/README.md",
+      "readme_blob_sha": "a4ea4280c47e73eee87480ed5450463c0a1f931a",
+      "reason": "Newly screened skill tracking repository explicitly for WoW Forever, not a Retail processing cohort."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/grimlight-enchanting",
+      "reason": "Publisher describes item-linked DE observations and local CSV exports but expressly targets Forever interface 16001 and excludes other editions; no transferable Retail observations. Search listing reports Nov 24 update, direct page snapshot is older Oct 15; no claim about exact current release."
     }
   ],
-  "next_concrete_step": "Prioritize newly published Retail original receipt exports or updated source datasets with item instance links, confirmed completed operation counts, ranked output attribution, skill and build. Search only newly published or changed sources; do not revisit unchanged market/tooltip variants, known Forever repositories, old comments or Goldsmith aggregate without new raw receipts.",
-  "verified_base_commit_sha": "86c6100eb8feed9c6152ac18fd94d39c24c77c6c",
+  "next_concrete_step": "Seek new original Retail source receipts or updated independent datasets; prioritize completed cast denominator with per-event item instances, rank/profile/build and zero inclusion. For unresolved material identity use build-matched DB2 joins only when accessible, avoiding already verified manager pairs. No rescreen of unchanged Forever-only or collector-only leads.",
+  "verified_base_commit_sha": "0cfad64e9799ff20762369290c67351f0c37e8b2",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Owned status-only update guarded by current blob SHA; verify exact commit read-back (self-hash cannot be embedded). No evidence, baseline or catalogue changes.",
+  "commit_note": "Status-only update guarded by current blob SHA; exact commit read-back required; self-hash cannot be embedded. No new evidence file, catalogue or baseline edits.",
   "new_leads_screened": [
     {
-      "category": "new_post_cutoff_addon_and_repository_leads",
+      "category": "new_external_collector_leads",
       "sources": [
         {
-          "url": "https://github.com/Amoner/smoothbrain/blob/main/README.md",
-          "readme_blob_sha": "c194b4651cd42ad9430db0d1e5beb0cc010a2e47",
-          "reason": "Newly identified repository from Nov 23+ pushed search. README explicitly WoW Forever only; disenchant valuation comes from TSM or Auctionator, not original Retail completed operation counts."
+          "url": "https://github.com/nyxnightfire/ProfessionTrackerForever/blob/main/README.md",
+          "readme_blob_sha": "5c06f6cb2fa2964c1eb96d375b390ee94c503102",
+          "reason": "New repository lead from Nov 23+ pushed search. Explicit WoW Forever; gathers skill-up observations, not Retail Midnight processing receipts."
         },
         {
-          "url": "https://www.curseforge.com/wow/addons/de-scanner/files/9744386",
-          "reason": "Exact November 22 initial release 1.0.0 is Forever 1.60.1 only. Publisher describes price estimates and Classic-era materials, not original Retail Midnight observations; no transferable counts."
+          "url": "https://github.com/TheGnare/SimpleSkillWatch/blob/main/README.md",
+          "readme_blob_sha": "a4ea4280c47e73eee87480ed5450463c0a1f931a",
+          "reason": "Newly screened skill tracking repository explicitly for WoW Forever, not a Retail processing cohort."
         },
         {
-          "url": "https://www.curseforge.com/wow/addons/togprofessionmaster/files/9745274/additional-files",
-          "reason": "November 22 v1.11.3 multi-flavor release; documented recipe/skill/cooldown/specialization sharing and shopping list exports do not expose completed disenchant, prospect or mill operation receipts, rank-linked outputs, zeros or refund histograms. No public original cohort found."
+          "url": "https://www.curseforge.com/wow/addons/grimlight-enchanting",
+          "reason": "Publisher describes item-linked DE observations and local CSV exports but expressly targets Forever interface 16001 and excludes other editions; no transferable Retail observations. Search listing reports Nov 24 update, direct page snapshot is older Oct 15; no claim about exact current release."
         }
       ],
-      "disposition": "Two Forever-only valuation tools and one multi-flavor recipe/profile sharing tool; no qualifying Retail Midnight numeric study. Recent searches by named materials/processing method across web, community forums, Reddit, YouTube, CurseForge and GitHub returned no newly published original cohort. Branch comparison from previous owned checkpoint 4c4ca4848cb6e62df100f38dee14b56e074cc243 showed only other roles' quiet-status changes."
+      "disposition": "No independent Retail data. Fresh searches for ranked ore, herb milling and skill-specific DE produced existing pre-cutoff sources or collector descriptions only. No re-transcription."
+    },
+    {
+      "category": "branch_and_identity_boundary",
+      "sources": [
+        {
+          "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/0cfad64e9799ff20762369290c67351f0c37e8b2/research/v3/evidence/master/20261124T1402-build-pinned-crafting-quality-rank-review.md",
+          "reason": "Coordinator independently documents build 70961 Item/CraftingQuality join: 237362/237363 R1/R2, 242787/242786 R1/R2, 242788/242789 R1/R2. This is existing manager work, not worker evidence or observed rates."
+        },
+        {
+          "url": "https://wago.tools/db2/Item?build=12.1.5.70961&filter%5BID%5D=exact%3A245807",
+          "reason": "Direct access failed for 245807 and 245808 and same-build quality table; no new independent rank assertion."
+        }
+      ],
+      "disposition": "Comparison from previous owned checkpoint 50cffc3e to initial read 0cfad64e: other role statuses plus manager rank review only. Main head 3e814929 unchanged from prior captured source review. Do not duplicate manager identity work or claim numeric admission."
     }
   ],
   "catalogue_checkpoint": {
