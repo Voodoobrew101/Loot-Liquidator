@@ -16,11 +16,12 @@ Submit Retail results as Retail. Clearly label Classic, PTR, beta or private-ser
 
 ## Export and submit
 
-1. Under **Community research** on the first tab, click **Export all**. Copy the entire text from the copy window into a plain text editor and save it as `processing-export.txt` or `processing-export.json`. A compact export is supported; copy it unchanged. For only your newest batch, use **Export** in Processing Research instead.
-2. If the addon uses pages, or you choose **Export pages**, save **every page from the same export snapshot**, for example `processing-export-page-1.txt`, `processing-export-page-2.txt`. Do not record more results between copying pages. If anything changes, start the export again and replace the whole set.
-3. Open the [submission form](https://github.com/Voodoobrew101/Loot-Liquidator/issues/new?template=processing-export.yml), sign in to GitHub, and attach the file(s) in **Export files**. `.txt` is the fallback if GitHub will not accept a `.json` attachment. For a short export, paste the complete JSON in a fenced code block instead. Do not paste screenshots of JSON.
-4. State the method and input items, addon version, game mode, approximate capture date and any unusual conditions. Most technical context is already recorded; unknown information should stay unknown.
-5. Submit the issue, then check that the attachment opens and all pages are present. Keep your local copy. If you already submitted these operations, link that issue rather than submitting them as new measurements. A later full-history export can overlap an earlier one; tell us so it can be deduplicated.
+1. Under **Community research** on the first tab, click **Export all**. Copy the entire text from the export window with **Ctrl+C**. A compact export is supported; copy it unchanged. For only your newest batch, use **Export** in Processing Research instead.
+2. Open the [submission form](https://github.com/Voodoobrew101/Loot-Liquidator/issues/new?template=processing-export.yml), sign in to GitHub, and **paste directly into “Paste your export” with Ctrl+V**. No file or manual code-block formatting is required.
+3. For **Export pages**, copy and paste **every page from the same snapshot**, separated by a blank line. Do not record more results between copying pages. If anything changes, start the export again and replace the whole set.
+4. Fill in the method/input items, addon version, game mode, capture date and unusual conditions. Submit the issue and check that the complete export and every page are present. Keep a local copy before resetting. Link earlier submissions containing the same operations so they are not counted twice.
+
+**Optional file alternative:** If the export exceeds GitHub's text limit, paste it into a plain text editor, save as `processing-export.txt`, and attach it to the issue. For pages, save and attach each page. A `.json` file is also acceptable if GitHub accepts it. Screenshots cannot replace the copied export.
 
 ## Before posting publicly
 
