@@ -27,7 +27,7 @@ local function context()
 end
 local ctx=context()
 local option={name=row.method,profession=profile.profession,recipeID=row.recipeID,inputCount=row.inputCount}
-local facts={id=row.inputItemID,classID=row.inputClassID,quality=row.inputRarity,expansionID=row.expansionID,
+local facts={id=row.inputItemID or 250001,classID=row.inputClassID,quality=row.inputRarity,expansionID=row.expansionID,
  itemLevel=row.categoryItemLevelMin,count=row.inputCount}
 local LL={db={source_itemdb_enabled=true,source_personal_enabled=true,source_legacy_enabled=false,
  source_reference_enabled=false,source_imported_enabled=false,minPersonalSamples=1},
@@ -60,6 +60,21 @@ local function assertMeasured(model)
  check(LL.db.craftResearch==nil,'another player needs no private source ledger')
 end
 assertMeasured(result())
+if row.communityCategoryCapture then
+ -- Replay against an actual installed-source category so the older owner
+ -- hotfix cannot filter future contributors out before community selection.
+ local shipped={};assert(loadfile('LootLiquidator/ItemDBRuntime.lua'))('LL',shipped)
+ local owner
+ for _,r in ipairs(shipped.ItemDB.processing)do
+  if r.sharedCategoryCapture and r.gearKey==row.gearKey then owner=r;break end
+ end
+ check(owner,'actual corpus contains the prior shared owner category')
+ LL.ItemDB.processing={owner,row};check(LL:InitializeItemDB())
+ local combined=result()
+ check(combined and combined.communityMeasuredReference,'reviewed community pool survives older shared-category priority')
+ assertMeasured(combined)
+ LL.ItemDB.processing={row};check(LL:InitializeItemDB())
+end
 for _,name in ipairs({'ApplyDisenchantBaseline','ApplyGeneralProfessionAdditions','ApplyGeneralProfessionQuality',
  'ApplySkillQualityModel','ApplySpecializationEffects'})do LL[name]=LL.ApplyGeneralProfessionModel end
 local gated=0
@@ -81,9 +96,17 @@ for _,change in ipairs({
  ctx=context();change(ctx);eq(result(),nil,'different or unknown profile is not an assumed zero profile')
 end
 ctx=context();build='70962';eq(result(),nil,'another patch build cannot borrow a captured cohort');build='70961'
-for _,change in ipairs({
- function(f)f.itemLevel=f.itemLevel+1 end,function(f)f.quality=3 end,
- function(f)f.classID=2 end,function(f)f.id=f.id+1 end,function(f)f.expansionID=10 end})do
+if row.communityCategoryCapture then
+ for _,change in ipairs({function(f)f.itemLevel=168 end,function(f)f.id=244752 end})do
+  local old=copy(facts);change(facts);assertMeasured(result());facts=old
+ end
+end
+local wrongScope={function(f)f.quality=3 end,function(f)f.classID=2 end,function(f)f.expansionID=10 end}
+if not row.communityCategoryCapture then
+ wrongScope[#wrongScope+1]=function(f)f.itemLevel=f.itemLevel+1 end
+ wrongScope[#wrongScope+1]=function(f)f.id=f.id+1 end
+end
+for _,change in ipairs(wrongScope)do
  local old=copy(facts);change(facts);eq(result(),nil,'exact input variant scope is preserved');facts=old
 end
 ctx=context();ctx.effectiveSkill=0
@@ -174,6 +197,8 @@ end
 -- Typed operation stats, including an explicitly measured empty stat list,
 -- are required for non-DE cohorts; absent stats must never become zero stats.
 local nonDE=copy(row)
+nonDE.communityCategoryCapture=nil;nonDE.isDisenchantCategory=nil;nonDE.gearKey=nil
+nonDE.inputItemID=250001
 nonDE.recordID=nonDE.recordID..':prospect';nonDE.method='Prospect';nonDE.recipeID=1231127;nonDE.inputCount=5
 nonDE.categoryItemLevelMin=nil;nonDE.categoryItemLevelMax=nil;nonDE.inputClassID=nil;nonDE.inputRarity=nil
 for _,c in ipairs({nonDE.communityMeasuredProfile,nonDE.baselineProfile})do

@@ -969,17 +969,12 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         local function PrepareMaterials(option,model,inputFacts)
             local list=model and model.materials
             if type(list)~='table' then return nil end
-            local prepared,confidence={}
+            local prepared={}
             for _,material in ipairs(list) do
                 local display=LA:TooltipMaterialDisplayFields(material,model,option,inputFacts)
                 prepared[#prepared+1]=display
-                for _,field in pairs(display.tooltipFieldEvidence or {}) do
-                    if finiteNonnegative(field.confidence) and field.confidence<=100 then
-                        confidence=math.min(confidence or 100,field.confidence)
-                    end
-                end
             end
-            return LA:SortedTooltipMaterials(prepared),confidence
+            return LA:SortedTooltipMaterials(prepared)
         end
         local function ShowMaterials(option,model,list)
             if detail<3 then return end
@@ -1004,9 +999,11 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     or (methodName=="Disenchant"
                     and decision.disenchantEligible)
                     or methodName=="Smelt" then
-                    local prepared,fieldConfidence=PrepareMaterials(option,model,f)
+                    local prepared=PrepareMaterials(option,model,f)
                     local confidence=model and (model.valueConfidence or model.confidence)
-                    if fieldConfidence and finiteNonnegative(confidence) then confidence=math.min(confidence,fieldConfidence) end
+                    -- Presentation guesses for P(hit) or a bracketed range
+                    -- cannot erase support for the independently valued mean.
+                    -- Their field-level uncertainty remains on the display copy.
                     local label=names[methodName] or methodName
                     local profileLabel=option.tooltipProfileLabel
                         or model and model.context and model.context.character or option.character

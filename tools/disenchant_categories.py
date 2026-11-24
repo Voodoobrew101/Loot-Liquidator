@@ -244,6 +244,8 @@ def main(argv=None):
                            evidence_check.check_folder(args.evidence_folder))
     from reviewed_disenchant_capture import compile_records
     records.extend(compile_records())
+    from shared_disenchant_captures import compile_records as shared_records
+    records.extend(shared_records())
     generated = render(records)
     if args.check:
         if not args.output.exists() or args.output.read_text() != generated:

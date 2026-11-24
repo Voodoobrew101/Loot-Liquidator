@@ -265,7 +265,11 @@ def check_review(manifest, staged, review):
             if decision['decision'] == 'non-economic':
                 require(decision.get('verifiedNonEconomic') is True,
                         'Non-economic output needs explicit verifiedNonEconomic confirmation and source-backed reason')
-        require(any(v['decision'] == 'material' for v in outputs.values()), 'Cohort has no reviewed economic material')
+        # A verified empty Disenchant result is useful denominator evidence.
+        # Keep it until a compatible category sample identifies an output.
+        empty_disenchant = by_id[identity]['method'] == 'Disenchant' and not expected
+        require(empty_disenchant or any(v['decision'] == 'material' for v in outputs.values()),
+                'Cohort has no reviewed economic material')
         approved[identity] = choice
     return approved
 
@@ -363,6 +367,25 @@ def native_records(manifest, records, staged, review):
                 'castsWithDrop': sum(n for q, n in histogram.items() if int(q) > 0),
                 'totalQuantity': sum(int(q) * n for q, n in histogram.items()),
                 'min': min(positive), 'max': max(positive)})
+        if baseline['method'] == 'Disenchant':
+            require(type(item.get('itemLevel')) is int and item['itemLevel'] >= 1,
+                    'Captured disenchant item level is required for category provenance')
+            require(type(item.get('rarity')) is int and item.get('classID') in (2, 4, 19)
+                    and item['quantity'] == 1, 'Captured disenchant category must identify rarity, gear class and one input')
+            # Counts are pooled BEFORE invoking the evidence compiler. Averaging
+            # separately computed small-sample confidence scores cannot grow
+            # precision as independent submissions accumulate.
+            result.append({'disenchantContribution': True, 'source': source,
+                'sourceRecordIDs': sorted(baseline['sourceRecordIDs']),
+                'observedOperations': baseline['operations'],
+                'patchBuild': str(baseline['patchBuild']), 'clientVersion': source['patch'],
+                'sourceSHA256': manifest['submissionSHA256'], 'sourceReviewSHA256': hashed(review),
+                'histograms': {m['outputItemID']: m['quantityHistogramIncludingZero']
+                               for m in baseline['materials']
+                               if approved[identity]['outputs'][str(m['outputItemID'])]['decision'] == 'material'},
+                'nonEconomic': sorted(int(item_id) for item_id, decision in approved[identity]['outputs'].items()
+                                      if decision['decision'] == 'non-economic')})
+            continue
         reasons = evidence_check.check_evidence(source)
         require(not reasons, 'Invalid reviewed community evidence: ' + '; '.join(reasons))
         compiled, notes = evidence_to_baselines.build({'usable': [{'kind': 'evidence', 'id': identity, 'record': source}]})
@@ -391,6 +414,83 @@ def native_records(manifest, records, staged, review):
     return result
 
 
+def pool_disenchant_contributions(contributions):
+    """Pool exact-compatible category counts; batch size is never a hold rule."""
+    groups = collections.defaultdict(list)
+    for row in contributions:
+        source = row['source']
+        kind = {2: 'weapon', 4: 'armor', 19: 'profession'}[source['inputClassID']]
+        category = f"gear:{source['expansionID']}:{source['inputRarity']}:{kind}"
+        profile = copy.deepcopy(source['baselineProfile'])
+        # Input identity is provenance; it does not change a gear category.
+        for field in ('operationInputItemID', 'operationInputQualityRank', 'inputIdentity'):
+            profile.pop(field, None)
+        key = canonical({'category': category, 'profile': profile,
+                         'build': row['patchBuild'], 'clientVersion': row['clientVersion']})
+        groups[key].append(row)
+    pooled, pending = [], []
+    for key, rows in sorted(groups.items()):
+        scope = json.loads(key)
+        operations = [op for row in rows for op in row['sourceRecordIDs']]
+        require(len(operations) == len(set(operations)), 'Overlapping community category observations')
+        n = len(operations)
+        require(n == sum(row['observedOperations'] for row in rows), 'Community category denominator mismatch')
+        material_ids = {item for row in rows for item in row['histograms']}
+        non_economic = {item for row in rows for item in row['nonEconomic']}
+        require(not material_ids & non_economic, 'Community category output has conflicting economic classifications')
+        identity = 'community-category:' + hashed(scope)[:24]
+        if not material_ids:
+            pending.append({'category': scope['category'], 'observedOperations': n,
+                            'sourceRecordIDs': sorted(operations),
+                            'reason': 'Verified empty casts retained pending a compatible material-positive sample'})
+            continue
+        source = copy.deepcopy(rows[0]['source'])
+        source.update(input=scope['category'], inputPerCast=1, casts=n, outputs=[],
+                      lineage=identity, referenceContextID=identity,
+                      baselineProfile=scope['profile'],
+                      source='; '.join(sorted({row['source']['source'] for row in rows})))
+        source.pop('inputQualityRank', None)
+        histograms = {}
+        for item in sorted(material_ids):
+            histogram = collections.Counter()
+            for row in rows:
+                values = row['histograms'].get(item, {'0': row['observedOperations']})
+                require(sum(values.values()) == row['observedOperations'], 'Community output histogram denominator mismatch')
+                histogram.update(values)
+            histograms[item] = dict(sorted(histogram.items()))
+            positive = [int(q) for q in histogram if int(q) > 0]
+            source['outputs'].append({'item': item,
+                'castsWithDrop': sum(count for q, count in histogram.items() if int(q) > 0),
+                'totalQuantity': sum(int(q) * count for q, count in histogram.items()),
+                'min': min(positive), 'max': max(positive)})
+        reasons = evidence_check.check_evidence(source)
+        require(not reasons, 'Invalid pooled community category: ' + '; '.join(reasons))
+        compiled, notes = evidence_to_baselines.build({'usable': [
+            {'kind': 'evidence', 'id': identity, 'record': source}]})
+        require(len(compiled) == 1 and notes['used'] == 1, 'Community category did not compile')
+        record = compiled[0]
+        record.update(recordID='evidence:' + identity, studyID=identity,
+            sourceKind='reviewed-community-player-capture', communityCategoryCapture=True,
+            isDisenchantCategory=True, categoryReferenceOnly=False,
+            categoryItemLevelMin=1, categoryItemLevelMax=999,
+            observedOperations=n, categoryObservedCasts=n, sourceRecordIDs=sorted(operations),
+            patchBuild=scope['build'], targetBuild=scope['build'], clientVersion=scope['clientVersion'],
+            fixedReference=True, communityMeasuredProfile=scope['profile'],
+            communityNonEconomicOutputItemIDs=sorted(non_economic),
+            sourceSHA256=hashed(sorted({row['sourceSHA256'] for row in rows})),
+            sourceReviewSHA256=hashed(sorted({row['sourceReviewSHA256'] for row in rows})),
+            communitySourceProofs=[{'submissionSHA256': submission, 'reviewSHA256': review}
+                for submission, review in sorted({(row['sourceSHA256'], row['sourceReviewSHA256']) for row in rows})],
+            communitySourceStudyIDs=sorted({row['source']['lineage'] for row in rows}),
+            baselineStatus='Pooled independent complete community category observations; measured profile and build preserved')
+        record.pop('inputItemID', None)
+        for material in record['materials']:
+            material['quantityCounts'] = histograms[material['id']]
+            material['boundsBasis'] = 'observed-positive-range-not-guaranteed'
+        pooled.append(record)
+    return pooled, pending
+
+
 def compile_reviewed(root):
     known = existing_operations(root)
     rows = []
@@ -405,7 +505,13 @@ def compile_reviewed(root):
                 require(op not in known, 'Approved cohort overlaps other capture evidence: ' + op)
                 known[op] = {signatures[op]}
         rows.extend(compiled)
-    return {'schemaVersion': 1, 'processing': sorted(rows, key=lambda row: row['recordID'])}
+    pooled, pending = pool_disenchant_contributions([r for r in rows if r.get('disenchantContribution')])
+    result = {'schemaVersion': 1, 'processing': sorted(
+        [r for r in rows if not r.get('disenchantContribution')] + pooled,
+        key=lambda row: row['recordID'])}
+    if pending:
+        result['pendingZeroOutputCohorts'] = pending
+    return result
 
 
 def write_json(path, value):

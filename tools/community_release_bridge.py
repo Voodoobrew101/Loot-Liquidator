@@ -204,7 +204,11 @@ def source_checks(request, api):
             require(manifest['submissionSHA256'] == proof['submissionSHA256'] and intake.hashed(review) == proof['reviewSHA256'], 'Review/source proof mismatch')
             old_path = previous_sha + ':research/community/submissions/' + proof['submissionKey'] + '/review.json'
             require(subprocess.run(['git', 'cat-file', '-e', old_path], capture_output=True).returncode != 0, 'Review was already in prior release')
-            require(any(r.get('sourceReviewSHA256') == proof['reviewSHA256'] for r in compiled['processing']), 'Review contributes no shared numerical data')
+            require(any(r.get('sourceReviewSHA256') == proof['reviewSHA256'] or any(
+                source.get('submissionSHA256') == proof['submissionSHA256']
+                and source.get('reviewSHA256') == proof['reviewSHA256']
+                for source in r.get('communitySourceProofs', []))
+                for r in compiled['processing']), 'Review contributes no shared numerical data')
     return previous_sha
 
 

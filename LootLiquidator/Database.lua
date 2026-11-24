@@ -329,9 +329,23 @@ function LL:ValidateItemDB(db)
             or type(r.studyID)~='string' or type(r.source)~='string'
             or type(r.materials)~='table' then return false,'Invalid or duplicate record identity' end
         ids[r.recordID]=true
+        if r.sharedCategoryCapture~=nil then
+            if r.sharedCategoryCapture~=true or r.sourceKey~='itemdb' or not r.fixedReference
+                or not r.isDisenchantCategory
+                or r.categoryReferenceOnly~=false or r.inputItemID~=nil
+                or r.categoryObservedCasts~=r.observedOperations
+                or not operationIDs(r.sourceRecordIDs,r.observedOperations)
+                or type(r.sharedSourceProfiles)~='table' or #r.sharedSourceProfiles==0 then
+                return false,'Invalid shared disenchant category capture'
+            end
+        end
         if r.communityMeasuredProfile~=nil or r.sourceKind=='reviewed-community-player-capture' then
             if r.sourceKind~='reviewed-community-player-capture' or r.sourceKey~='itemdb'
-                or not finite(r.inputItemID) or not r.fixedReference
+                or (not finite(r.inputItemID) and not (r.communityCategoryCapture==true
+                    and r.isDisenchantCategory and r.method=='Disenchant' and r.inputItemID==nil
+                    and r.categoryReferenceOnly==false and r.categoryItemLevelMin==1 and r.categoryItemLevelMax==999))
+                or (r.communityCategoryCapture~=nil and r.communityCategoryCapture~=true)
+                or not r.fixedReference
                 or not communityProfileKnown(r.communityMeasuredProfile,r.method)
                 or not same(r.communityMeasuredProfile,r.baselineProfile)
                 or r.communityMeasuredProfile.expansionID~=r.expansionID
@@ -341,7 +355,7 @@ function LL:ValidateItemDB(db)
                 or type(r.sourceSHA256)~='string' or #r.sourceSHA256~=64 or r.sourceSHA256:find('[^0-9a-f]')
                 or type(r.sourceReviewSHA256)~='string' or #r.sourceReviewSHA256~=64 or r.sourceReviewSHA256:find('[^0-9a-f]')
                 or r.method=='Disenchant' and (not finite(r.categoryItemLevelMin) or r.categoryItemLevelMin<1
-                    or r.categoryItemLevelMin~=r.categoryItemLevelMax) then
+                    or (not r.communityCategoryCapture and r.categoryItemLevelMin~=r.categoryItemLevelMax)) then
                 return false,'Invalid reviewed community capture cohort'
             end
             if r.communityNonEconomicOutputItemIDs~=nil and type(r.communityNonEconomicOutputItemIDs)~='table' then
@@ -827,6 +841,10 @@ local function buildSourceModel(self,f,option,r,projectionMemo)
     if r.reviewedPublishedPrior and r.operationUnverified and r.quantityBasis=='per-input' then
         model.adjustment='Published per-input reference'
     end
+    if r.sharedCategoryCapture then
+        model.adjustment='Shared observed gear category'
+        return model
+    end
     if r.communityMeasuredProfile then
         -- Eligibility already proves the exact recorded target profile. These
         -- observed units need neither inverse normalization nor forward scaling.
@@ -1147,6 +1165,8 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         return retainedKey~=nil and retainedKey==record.retainedSourceProfileKey
     end
     local hasEligibleSalvage=false
+    local sharedCategoryEligible=ctx.simulated~=true and self.DisenchantObservationProfileKey
+        and self:DisenchantObservationProfileKey(ctx)~=nil
     for _,r in ipairs(records) do
         -- Input rarity can change on the same gear item ID (for example an
         -- upgraded Courtly Wrists). Mechanics must never normalize away that
@@ -1159,6 +1179,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             and userWeight(self,r.sourceKey,mode)>0 and (not r.recipeID or r.recipeID==option.recipeID)
             and (not r.inputQualityRank or r.inputQualityRank==ctx.inputQuality)
             and (not r.expansionID or r.expansionID==f.expansionID) and retainedProfileMatches(r)
+            -- Observations are the shared actual-category reference. A what-if
+            -- profile still uses the existing explicit simulation curves.
+            and (not r.sharedCategoryCapture or sharedCategoryEligible)
             and communityProfileMatches(r,ctx,build) then
         local model=sourceModel(self,f,option,r,projectionMemo)
         local hasMean=false
@@ -1185,6 +1208,25 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             hasEligibleSalvage=hasEligibleSalvage or r.salvage==true
         end
         end
+    end
+    -- Owner-approved category captures are the direct empirical reference for
+    -- this category, independent of the hovered item's catalog number. Keep
+    -- historical synthetic scenarios available when this source is disabled.
+    local hasSharedCategory=false
+    local hasExactRetained=false
+    for _,record in ipairs(eligible) do
+        if record.sharedCategoryCapture and hasExpected[record] then hasSharedCategory=true end
+        if record.retainedSourceProfileKey and hasExpected[record] then hasExactRetained=true end
+    end
+    if hasSharedCategory then
+        local scoped={}
+        for _,record in ipairs(eligible) do
+            if record.sharedCategoryCapture or record.communityMeasuredProfile
+                or (hasExactRetained and record.retainedSourceProfileKey) then
+                scoped[#scoped+1]=record
+            end
+        end
+        eligible=scoped
     end
     -- A complete observed distribution at this exact target profile is its
     -- own reference, not a zero-profile baseline awaiting specialization.
@@ -1258,7 +1300,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
     local candidates,personalRecord={},nil
     for _,record in ipairs(eligible) do
         if record.sourceKey=='personal' then personalRecord=record end
-        if record.retainedSourceProfileKey or record.communityMeasuredProfile or record.sourceKey=='personal' then
+        if record.retainedSourceProfileKey or record.communityMeasuredProfile or record.sharedCategoryCapture or record.sourceKey=='personal' then
             local set=operationIDs(record.sourceRecordIDs,record.observedOperations)
             if set then candidates[#candidates+1]={record=record,set=set,count=record.observedOperations} end
         end
@@ -1672,6 +1714,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                             c=math.min(c,metadata.modelConfidenceCap)
                         end
                         if field=='expectedQuantity' then
+                            if r.sharedCategoryCapture then result.sharedCategoryReference=true end
                             if r.communityMeasuredProfile or r.communityMeasuredWinner then result.communityMeasuredReference=true end
                             local retainedProfile=r.retainedSourceProfileKey or r.retainedOverlapProfileKey
                             if retainedProfile and retainedProfile==retainedKey then
@@ -2031,12 +2074,12 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
     -- Complete community quantities already describe this exact measured
     -- target profile. Applying a talent or quality projection again would
     -- change the observations. Access/output eligibility still runs below.
-    if not (model and model.communityMeasuredReference) then
+    if not (model and (model.communityMeasuredReference or model.sharedCategoryReference)) then
         if self.ApplyDisenchantBaseline then model=self:ApplyDisenchantBaseline(f,option,model,ctx,mode) end
         if model and self.ApplyGeneralProfessionAdditions then model=self:ApplyGeneralProfessionAdditions(f,option,model,ctx) end
         if model and self.ApplyGeneralProfessionQuality then model=self:ApplyGeneralProfessionQuality(f,option,model,ctx) end
     end
-    if model and not model.disenchantBaselineApplied and not model.communityMeasuredReference then
+    if model and not model.disenchantBaselineApplied and not model.communityMeasuredReference and not model.sharedCategoryReference then
         if model.generalProfessionApplied and model.projectedContext then ctx=model.projectedContext end
         if self.ApplySkillQualityModel then model=self:ApplySkillQualityModel(f,option,model,ctx) end
         if self.ApplySpecializationEffects then model=self:ApplySpecializationEffects(f,option,model,ctx) end

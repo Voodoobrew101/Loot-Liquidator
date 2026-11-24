@@ -44,6 +44,8 @@ python3 tests/test_reference_calculators.py
 python3 tests/test_skill_quality_pipeline.py
 python3 tests/test_midnight_enchanting_import.py
 python3 tests/test_disenchant_categories.py
+python3 tests/test_shared_disenchant_captures.py
+"$lua_bin" tests/test_shared_disenchant_runtime.lua
 python3 tests/test_specialization_effects_pipeline.py
 python3 tests/test_crystal_collector_extras_metadata.py
 python3 tests/test_build_research_pipeline.py

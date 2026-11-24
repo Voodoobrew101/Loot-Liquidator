@@ -48,6 +48,18 @@ Save and check your export before resetting. A backup in SavedVariables is not a
 
 A scheduled review checks submissions once a day. It validates complete exports/pages, identifies duplicate operations and overlapping studies, and checks item identities, output qualities, measured profession context and client applicability. Partial records remain research; unknowns do not become zeros. No minimum batch size alone grants approval or establishes a skill formula.
 
+There is also no minimum batch size for inclusion: a valid single completed
+cast is useful. After review, compatible Disenchant submissions are pooled by
+expansion, rarity and armor/weapon category, measured profession profile and
+client build. Item numbers and individual contributors do not split that
+category. Confidence is recalculated from the combined cast, hit and quantity
+counts, rather than averaged from the individual small-sample scores. Twenty
+compatible ten-cast submissions therefore supply 200 distinct observations.
+Different relevant profiles remain separate, and overlapping operations cannot
+count twice. A confirmed empty cast is preserved as denominator evidence; if
+there is not yet a compatible material-positive sample, it waits for one
+without being discarded or assigned an invented output.
+
 Usable independent records are reviewed through the existing capture and database pipeline against the latest production source. When they make a supported change to shared statistics, the addon is rebuilt, tested and versioned before publishing an update to CurseForge. No-change reviews do not create a release. Held submissions may need a follow-up question or another recording session; they are not automatically added to gold calculations.
 
 The addon does not upload data or download new research automatically. Install published updates to receive new shared statistics. Your personal history remains separate from the compiled shared database.
