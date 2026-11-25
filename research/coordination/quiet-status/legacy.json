@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-25T20:40:56.054Z",
-  "status": "New DE receipt-source context; no qualifying target measurements",
+  "updated_at": "2026-11-25T21:40:25.044Z",
+  "status": "New post-cutoff salvage recorder provenance; no qualifying target cohort",
   "task_ids": [
     "T0047",
     "T0052",
@@ -12,45 +12,30 @@
     "T0050"
   ],
   "exact_gaps_targeted": [
-    "24995/25003/30364 actual held-item variant, DE eligibility, original output hit counts and quantity histogram",
-    "36909/23424 prospecting completed operations and named output hits/quantities",
-    "13866 modern source-profile and original operation results"
+    "24995/25003/30364 exact Retail held variant and original disenchant outputs",
+    "36909/23424 true completed operations versus net consumption; output IDs, units, occurrence/zero data",
+    "13866 current profile and original operation outcomes"
   ],
   "newly_verified_fields_cohorts": [
     {
-      "source": "https://us.forums.blizzard.com/en/wow/t/getting-vanilla-dust-off-midnight-gear/2271802",
-      "disposition": "original historical cross-expansion mismatch report; source-method lead only",
-      "summary": "2026-03-14 Ceramicfire reports using existing item-restoration history to identify Midnight gear ilvl 159–192 that yielded Greater Eternal Essence (16203) and/or Rich Illusion Dust (156930); exact item IDs, per-item material attribution, counts, build and skill unavailable. 2026-03-18 Nambuhs independently reports TWW materials from blue Midnight items, no exact IDs or counts. No new 13866 observation; no numeric weighting or rule for other expansions. Potential read-only source of old completed DE receipts when a contributor has already captured them.",
-      "evidence": null
-    },
-    {
-      "source": "https://us.forums.blizzard.com/en/wow/t/disenchanting-into-wrong-mats/2032251",
-      "disposition": "original historical profile/acquisition mismatch; no cohort denominator",
-      "summary": "2024-12-21 posts 7–8: TwilightRose reports item-restoration history showing brilliant shards and rich illusion dust from gear acquired from Chromie-related chests; exact item and shard IDs not given. Durfus separately reports blue warbound ilvl 571–577 and 584, only the 584 items problematic; describes current-expansion sources including delves, rares or follower dungeons, explicitly not Chromie/timewalking chests. Do not combine the reports or infer universal eligibility, item identity, counts or probabilities.",
-      "evidence": null
-    },
-    {
-      "source": "https://www.reddit.com/r/wow/comments/1ulrmxh/is_the_item_restorarion_function_bugged/",
-      "disposition": "read-only historical receipt limitations",
-      "summary": "2026-07-02/03 participants report restoration UI listing required received materials but potentially omitting some knowledge items or exact quality-dependent requirements; not a complete zero-inclusive operation ledger. Corroborating July 23 2026 bug report 2329498 and July 29 2024 report 1905522 describe restoration errors and missing DE history respectively. No actual restoration, login, game action or account access attempted. Only existing published receipts with exact IDs/quantities can be considered, and selection/censoring prevents inferring global N, zeros or hit rate from restore entries.",
+      "source": "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
+      "disposition": "New source-method review; possible original aggregate run evidence if published, not an observation",
+      "summary": "New acquisition-path review: Goldsmith author release 2.10.0-beta, 2026-11-20, supports Retail and Forever; pinned public source 045d366a99ff207250d96e65ebd2d13c71e7ffdf (2026-11-24, TOC 2.11.0-beta, interfaces 120107/120105/120100/16001). Milling.lua blob c15c11eabfea7334a2d41351385296d24dd60130 lines 84–125, 139–214, 216–272, 924–931: salvageRuns stores recipeID, input itemID, net used, perCast, aggregate output IDs/units, start time, skill, quality and resourcefulness. Its cast counter increments on matching player UNIT_SPELLCAST_SUCCEEDED rather than net inputs divided by nominal batch size. However output attribution is bag gains in a three-second window after net consumption, not a cast-linked loot receipt; same-input gains are excluded and an operation with no net consumption may lack output attribution. No per-output hit counts, zeros, histograms, explicit per-run game build/flavor, or complete specialization profile. Same input/concentration session is reused without checking recipe or stats changes. The source also drops enchant-scroll contamination from both aggregate and run history (lines 887–909); corrections do not prove remaining output attribution is complete. 500 retained runs is a capacity, not a sample. Distinguish stored runs from cumulative milling aggregates and displayed fallback estimates, never count both or infer exact refund quantities without validated consumption accounting. Public searches for GoldsmithDB salvageRuns returned no original target data; source author name absent from prior owned status and cutoff coordination manifest, not an exhaustive catalogue check. German 4fansites Midnight-labelled guide still shows historical level bands and no measured denominators (direct page 429, indexed excerpt only), and Wowhead translated pages reproduce known English comments; do not promote these to new studies. Wowhead reverse spell aggregate page could not be opened beyond a rewritten summary; no reimport. Known Warmaul/Arcane Dust, Cobalt/Fel Iron historical results remain unchanged. No new qualifying 24995/25003/30364, 36909/23424 or 13866 operations, hits, units, zeros, histograms, refunds or supported means. T0053 remains done. No prices retained.",
       "evidence": null
     }
   ],
   "source_urls": [
-    "https://us.forums.blizzard.com/en/wow/t/getting-vanilla-dust-off-midnight-gear/2271802",
-    "https://us.forums.blizzard.com/en/wow/t/disenchanting-into-wrong-mats/2032251",
-    "https://www.reddit.com/r/wow/comments/1ulrmxh/is_the_item_restorarion_function_bugged/",
-    "https://us.forums.blizzard.com/en/wow/t/error-restoring-disenchanted-item/2329498",
-    "https://us.forums.blizzard.com/en/wow/t/disenchanted-an-item-and-its-not-in-my-restoration-options/1905522",
-    "https://us.forums.blizzard.com/en/wow/t/stop-giving-me-illusion-dust/1567522",
-    "https://us.battle.net/support/en/article/16572",
+    "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
+    "https://www.curseforge.com/wow/addons/goldsmith-crafting-profit-planner/files/9710300",
+    "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Goldsmith.toc",
+    "https://wow.4fansites.de/verzauberkunst.php",
+    "https://www.wowhead.com/spell=13262/disenchanted-items",
+    "https://www.wowhead.com/de/item=36909/kobalterz",
+    "https://www.wowhead.com/tbc/fr/item=21849/brassards-en-tisse-n%C3%A9ant",
     "https://www.wowhead.com/item=24995/warmaul-legplates",
-    "https://www.wowhead.com/item=25003/bloodfist-legplates",
-    "https://www.wowhead.com/item=13866/runecloth-headband",
-    "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
-    "https://www.wowhead.com/ptr/item=22445/arcane-dust"
+    "https://www.wowhead.com/mop-classic/it/item=23424/fel-iron-ore"
   ],
-  "numeric_summary": "New source-method lead: existing item-restoration records have been used by players to identify mismatched DE outcomes and item-level/acquisition context (2026-03-14 and 2024-12-21 reports). Such records are selective/incomplete and may omit knowledge items or whole events, so no observed zero-inclusive denominator or per-item output IDs/quantities are inferred. Official support article redirect-looped; no authentication or restore action attempted. Three primary reports and two corroborating failure reports absent by ID from prior owned status and compact coordination manifest; full cutoff catalogue novelty not established, retain context only. Historical 7.3.5 expansion-based rule already captured; do not duplicate. Exact-name target searches across Wowhead, Reddit, Blizzard forums and indexed blog results returned already-known or non-Retail references. No new independently attributable 24995/25003/30364 or 36909/23424/13866 completed casts, hits, units, zero bins, refunds, histograms or source-supported means. T0053 remains done. No prices retained.",
+  "numeric_summary": "New acquisition-path review: Goldsmith author release 2.10.0-beta, 2026-11-20, supports Retail and Forever; pinned public source 045d366a99ff207250d96e65ebd2d13c71e7ffdf (2026-11-24, TOC 2.11.0-beta, interfaces 120107/120105/120100/16001). Milling.lua blob c15c11eabfea7334a2d41351385296d24dd60130 lines 84–125, 139–214, 216–272, 924–931: salvageRuns stores recipeID, input itemID, net used, perCast, aggregate output IDs/units, start time, skill, quality and resourcefulness. Its cast counter increments on matching player UNIT_SPELLCAST_SUCCEEDED rather than net inputs divided by nominal batch size. However output attribution is bag gains in a three-second window after net consumption, not a cast-linked loot receipt; same-input gains are excluded and an operation with no net consumption may lack output attribution. No per-output hit counts, zeros, histograms, explicit per-run game build/flavor, or complete specialization profile. Same input/concentration session is reused without checking recipe or stats changes. The source also drops enchant-scroll contamination from both aggregate and run history (lines 887–909); corrections do not prove remaining output attribution is complete. 500 retained runs is a capacity, not a sample. Distinguish stored runs from cumulative milling aggregates and displayed fallback estimates, never count both or infer exact refund quantities without validated consumption accounting. Public searches for GoldsmithDB salvageRuns returned no original target data; source author name absent from prior owned status and cutoff coordination manifest, not an exhaustive catalogue check. German 4fansites Midnight-labelled guide still shows historical level bands and no measured denominators (direct page 429, indexed excerpt only), and Wowhead translated pages reproduce known English comments; do not promote these to new studies. Wowhead reverse spell aggregate page could not be opened beyond a rewritten summary; no reimport. Known Warmaul/Arcane Dust, Cobalt/Fel Iron historical results remain unchanged. No new qualifying 24995/25003/30364, 36909/23424 or 13866 operations, hits, units, zeros, histograms, refunds or supported means. T0053 remains done. No prices retained.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-25T1540-felslate-original-batch-species.jsonl",
   "preserved_prior_status_summary": [
@@ -144,11 +129,12 @@
       "summary": "Existing November 25 2020 Laestrite 171828 -> Angerseye 173109 report (1,600 ore, 168 units, 0.105 units/ore) rechecked only for source recovery; direct web open and independent page retrieval both fail; indexed discussion adds commenter-reported 524 combined output units, not an independently inspected table or species breakdown. Author and original linked table still unavailable, no new item-level observation, no verified completed casts or hits/zeros. Do not create a second row, infer missing species or treat pooled units as N. Other December 2020 Laestrite threads k6fuik/kadrxj already assigned in current catalogue; do not recatalogue.",
       "evidence": null
     },
-    "2026-11-25T19:37:58.623Z: New exact 25003 Retail listing-profile evidence: 14 explicit reported item levels (14,25,34,35,36,37,40,50,55,61,62,63,70,74) plus a character-dependent category, demonstrating why an item-ID-only/default-ilvl DE group is unsafe. Third-party listing profiles only, no eligible processing observations. 24995 NPC and detail views display differing ilvls within the same PTR version; no new cast cohort. Screened historical acquisition-related no-DE report. Post-cutoff name/date searches across Wowhead, forums, Reddit and indexed results yielded no new original 24995/25003/30364, 36909/23424 or 13866 processing logs; existing guide and Classic sources remain reference/duplicates. Prior Laestrite table not reopened without new path. T0053 remains done. No gold values retained, no new drop JSONL justified."
+    "2026-11-25T19:37:58.623Z: New exact 25003 Retail listing-profile evidence: 14 explicit reported item levels (14,25,34,35,36,37,40,50,55,61,62,63,70,74) plus a character-dependent category, demonstrating why an item-ID-only/default-ilvl DE group is unsafe. Third-party listing profiles only, no eligible processing observations. 24995 NPC and detail views display differing ilvls within the same PTR version; no new cast cohort. Screened historical acquisition-related no-DE report. Post-cutoff name/date searches across Wowhead, forums, Reddit and indexed results yielded no new original 24995/25003/30364, 36909/23424 or 13866 processing logs; existing guide and Classic sources remain reference/duplicates. Prior Laestrite table not reopened without new path. T0053 remains done. No gold values retained, no new drop JSONL justified.",
+    "2026-11-25T20:40:56.054Z: New source-method lead: existing item-restoration records have been used by players to identify mismatched DE outcomes and item-level/acquisition context (2026-03-14 and 2024-12-21 reports). Such records are selective/incomplete and may omit knowledge items or whole events, so no observed zero-inclusive denominator or per-item output IDs/quantities are inferred. Official support article redirect-looped; no authentication or restore action attempted. Three primary reports and two corroborating failure reports absent by ID from prior owned status and compact coordination manifest; full cutoff catalogue novelty not established, retain context only. Historical 7.3.5 expansion-based rule already captured; do not duplicate. Exact-name target searches across Wowhead, Reddit, Blizzard forums and indexed blog results returned already-known or non-Retail references. No new independently attributable 24995/25003/30364 or 36909/23424/13866 completed casts, hits, units, zero bins, refunds, histograms or source-supported means. T0053 remains done. No prices retained."
   ],
-  "verified_parent_sha": "083124df5e4a855dfe6a0bd4e00eab0613f80835",
-  "verified_commit_sha": "9173c6526ce4dffb5a13190dc697226b75ec3e17",
-  "commit_note": "Previous owned status commit exact changed-file verification passed. Current write uses current blob lease; verify returned commit and immutable read-back after write. No self-referential commit SHA.",
+  "verified_parent_sha": "2733232750db06a680784f1105742ed42c5e50ad",
+  "verified_commit_sha": "e9000305d372c1376ab583a8adb9ac35499f2151",
+  "commit_note": "Prior owned status immutable blob matched current branch; previous commit changed-file verification: [\"research/coordination/quiet-status/legacy.json\"]. Current status uses existing blob SHA lease; resulting commit will be read back independently. No self-referential SHA.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -912,6 +898,12 @@
       "source": "https://us.forums.blizzard.com/en/wow/t/cannot-be-disenchanted/1802829",
       "disposition": "historical qualitative acquisition/eligibility report; no observed completed DE or specific item IDs",
       "reason": "March 7 2024 original report IceWater says gear above level 100 is flagged cannot be disenchanted; shiv suggests vendor/timewalking/gear-update origin as possibilities and says equipped status alone normally does not prevent DE. No confirmation of acquisition route, no exact input IDs or build, no completed operations. Do not create blanket exclusion or zero-yield row. Thread ID absent in previous owned status and compact coordination manifest, not exhaustive."
+    },
+    {
+      "task": "T0022/T0044/T0042",
+      "source": "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
+      "disposition": "reviewable acquisition method, not numerical evidence",
+      "reason": "Per-session recipe/item IDs and actual spell-success counter, net inputs and aggregate output units; no original target run retrieved; attribution and profile limitations remain."
     }
   ],
   "blockers": [
@@ -1062,10 +1054,15 @@
       "source": "https://us.battle.net/support/en/article/16572",
       "disposition": "redirect loop; official page not independently retrieved",
       "reason": "No account or restoration action attempted; do not repeatedly reopen without new public access path."
+    },
+    {
+      "source": "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
+      "disposition": "Recorder methodology verified; no publicly located target operation export",
+      "reason": "Actual spell-success counter exists; bag-delta output capture is session-level and incomplete for hit/zero distributions. Reopen only for independently sourced original run records and Retail provenance."
     }
   ],
   "previous_verified_evidence_sha": "ff8c63d8157eb5e87cde9785c34677b0dc535694",
-  "next_concrete_step": "Seek new independently published exact input itemLink/bonus/build plus completed-operation output receipts, including already captured read-only restoration records if publicly contributed; require exact item/material IDs and quantities, preserve incomplete-list selection limitations, and never initiate a restoration, account access, purchase or new game experiment. For Cobalt/Fel Iron seek new original operation logs; do not rescrape known Looter snapshots or exhausted sources. Keep pending 171828 table closed until genuinely new access path.",
+  "next_concrete_step": "Seek already published GoldsmithDB.salvageRuns (not the aggregate milling table or estimates) with independently documented Retail build, exact target IDs, recipe, original completed counts, net consumption and output quantities; validate session boundaries, capture limitations and overlap before using any mean. Continue new original target DE receipt and legacy prospecting log searches; do not reopen exhausted Looter, translated mirrors, or Laestrite table without new access path.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -1074,21 +1071,18 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://us.forums.blizzard.com/en/wow/t/getting-vanilla-dust-off-midnight-gear/2271802",
-    "https://us.forums.blizzard.com/en/wow/t/disenchanting-into-wrong-mats/2032251",
-    "https://www.reddit.com/r/wow/comments/1ulrmxh/is_the_item_restorarion_function_bugged/",
-    "https://us.forums.blizzard.com/en/wow/t/error-restoring-disenchanted-item/2329498",
-    "https://us.forums.blizzard.com/en/wow/t/disenchanted-an-item-and-its-not-in-my-restoration-options/1905522",
-    "https://us.forums.blizzard.com/en/wow/t/stop-giving-me-illusion-dust/1567522",
-    "https://us.battle.net/support/en/article/16572",
+    "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
+    "https://www.curseforge.com/wow/addons/goldsmith-crafting-profit-planner/files/9710300",
+    "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Goldsmith.toc",
+    "https://wow.4fansites.de/verzauberkunst.php",
+    "https://www.wowhead.com/spell=13262/disenchanted-items",
+    "https://www.wowhead.com/de/item=36909/kobalterz",
+    "https://www.wowhead.com/tbc/fr/item=21849/brassards-en-tisse-n%C3%A9ant",
     "https://www.wowhead.com/item=24995/warmaul-legplates",
-    "https://www.wowhead.com/item=25003/bloodfist-legplates",
-    "https://www.wowhead.com/item=13866/runecloth-headband",
-    "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
-    "https://www.wowhead.com/ptr/item=22445/arcane-dust"
+    "https://www.wowhead.com/mop-classic/it/item=23424/fel-iron-ore"
   ],
-  "latest_run_source_date": "2026-11-25 access; 2024-12-21 to 2026-07-23 original historical reports",
-  "latest_run": "New source-method lead: existing item-restoration records have been used by players to identify mismatched DE outcomes and item-level/acquisition context (2026-03-14 and 2024-12-21 reports). Such records are selective/incomplete and may omit knowledge items or whole events, so no observed zero-inclusive denominator or per-item output IDs/quantities are inferred. Official support article redirect-looped; no authentication or restore action attempted. Three primary reports and two corroborating failure reports absent by ID from prior owned status and compact coordination manifest; full cutoff catalogue novelty not established, retain context only. Historical 7.3.5 expansion-based rule already captured; do not duplicate. Exact-name target searches across Wowhead, Reddit, Blizzard forums and indexed blog results returned already-known or non-Retail references. No new independently attributable 24995/25003/30364 or 36909/23424/13866 completed casts, hits, units, zero bins, refunds, histograms or source-supported means. T0053 remains done. No prices retained.",
+  "latest_run_source_date": "2026-11-25 access; source revision 2026-11-24; release 2026-11-20",
+  "latest_run": "New acquisition-path review: Goldsmith author release 2.10.0-beta, 2026-11-20, supports Retail and Forever; pinned public source 045d366a99ff207250d96e65ebd2d13c71e7ffdf (2026-11-24, TOC 2.11.0-beta, interfaces 120107/120105/120100/16001). Milling.lua blob c15c11eabfea7334a2d41351385296d24dd60130 lines 84–125, 139–214, 216–272, 924–931: salvageRuns stores recipeID, input itemID, net used, perCast, aggregate output IDs/units, start time, skill, quality and resourcefulness. Its cast counter increments on matching player UNIT_SPELLCAST_SUCCEEDED rather than net inputs divided by nominal batch size. However output attribution is bag gains in a three-second window after net consumption, not a cast-linked loot receipt; same-input gains are excluded and an operation with no net consumption may lack output attribution. No per-output hit counts, zeros, histograms, explicit per-run game build/flavor, or complete specialization profile. Same input/concentration session is reused without checking recipe or stats changes. The source also drops enchant-scroll contamination from both aggregate and run history (lines 887–909); corrections do not prove remaining output attribution is complete. 500 retained runs is a capacity, not a sample. Distinguish stored runs from cumulative milling aggregates and displayed fallback estimates, never count both or infer exact refund quantities without validated consumption accounting. Public searches for GoldsmithDB salvageRuns returned no original target data; source author name absent from prior owned status and cutoff coordination manifest, not an exhaustive catalogue check. German 4fansites Midnight-labelled guide still shows historical level bands and no measured denominators (direct page 429, indexed excerpt only), and Wowhead translated pages reproduce known English comments; do not promote these to new studies. Wowhead reverse spell aggregate page could not be opened beyond a rewritten summary; no reimport. Known Warmaul/Arcane Dust, Cobalt/Fel Iron historical results remain unchanged. No new qualifying 24995/25003/30364, 36909/23424 or 13866 operations, hits, units, zeros, histograms, refunds or supported means. T0053 remains done. No prices retained.",
   "new_evidence_file_this_run": null,
-  "next": "Seek new independently published exact input itemLink/bonus/build plus completed-operation output receipts, including already captured read-only restoration records if publicly contributed; require exact item/material IDs and quantities, preserve incomplete-list selection limitations, and never initiate a restoration, account access, purchase or new game experiment. For Cobalt/Fel Iron seek new original operation logs; do not rescrape known Looter snapshots or exhausted sources. Keep pending 171828 table closed until genuinely new access path."
+  "next": "Seek already published GoldsmithDB.salvageRuns (not the aggregate milling table or estimates) with independently documented Retail build, exact target IDs, recipe, original completed counts, net consumption and output quantities; validate session boundaries, capture limitations and overlap before using any mean. Continue new original target DE receipt and legacy prospecting log searches; do not reopen exhausted Looter, translated mirrors, or Laestrite table without new access path."
 }
