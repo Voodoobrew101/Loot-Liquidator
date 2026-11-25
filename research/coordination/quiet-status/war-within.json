@@ -1,22 +1,22 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-24T23:21:18.538Z",
-  "status": "Verified nine TWW client disenchant bracket rows (317–325) across three historical Retail builds; corrected lower item-level bound to 356 for those builds. No empirical yield admission.",
+  "updated_at": "2026-11-25T00:21:13.059Z",
+  "status": "Verified new Goldsmith salvage collector's run schema and completed-cast counting, with aggregate bag-attribution and profile limitations; no public TWW run recovered and no empirical yield admitted.",
   "task_ids": [
-    "T0048",
-    "T0040",
-    "T0007",
-    "T0008",
     "T0009",
     "T0010",
-    "T0011"
+    "T0011",
+    "T0007",
+    "T0040",
+    "T0008",
+    "T0048"
   ],
   "exact_gaps_targeted": [
-    "TWW DE rarity/class/item-level bracket identity and nominal skill gate versus player yield profile",
-    "Independent rank/skill-specific prospect and mill operation logs"
+    "Independent ranked TWW ore/herb operation logs with gross casts and net inputs separated",
+    "Collector source-integrity: avoid synthetic P(hit), pooled skill and refund denominators"
   ],
-  "source_branch_head_reviewed": "9902248639506ccbb9cf8a91b60cd017f7234d6b",
-  "source_policy": "Read current README, worker, mechanics, evidence format, queue and owned status; no cutoff recatalogue or independent admission. Current README states cutoff review completed at scoped level; no deployment claim. New original build-pinned client metadata only.",
+  "source_branch_head_reviewed": "1be7eea07a294947a39fd423b99df08a50173e78",
+  "source_policy": "Read current README, evidence format, mechanics, worker, queue and owned status. Consulted verified cutoff receipt and enabled registry; no recatalogue, runtime edits or new experiments.",
   "study_backlog_triage": [
     {
       "status": "admitted",
@@ -1275,14 +1275,12 @@
   },
   "newly_verified_fields": [
     {
-      "field": "Historical client DE bracket IDs, rarity, class and item-level range",
-      "detail": "317–319 Weapon; 320–322 Armor; 323–325 Profession; each ordered Uncommon/Rare/Epic. All rows: Subclass=-1, MinLevel=356, MaxLevel=999, SkillRequired=0, ExpansionID=10. Exact matches across three builds. No item-level permission or output yield inference.",
+      "field": "GoldsmithDB.salvageRuns source semantics",
+      "detail": "GoldsmithDB.salvageRuns stores exact itemID, recipeID, time, character, casts counted on matching player UNIT_SPELLCAST_SUCCEEDED, net used, perCast from schematic.quantityMax, aggregate output IDs and quantities, start-of-run skill/difficulty/quality/resourcefulness and concentration. It keeps at most 500 runs. Bag gains within three seconds after input disappearance are attributed to salvage; unrelated loot, delayed gains or net refunds can distort a run. Session only switches on input ID or concentration (not every same-input recipe or skill change). No per-cast output assignment, explicit hits/zeros/histogram, spec node state or per-run client build. Report.lua GetBuildInfo is report-time, not run-time. UI aggregates by item/character and uses last profile, falls back to net-input totals scaled by nominal batch size, and uses modeled refund save fraction; estimated milling synthesizes records for Midnight herbs. Do not treat these as independent empirical per-cast probabilities, direct measured refund procs or TWW data. No public TWW run export in inspected source; comments not visible in web extraction. Seek already-existing consented raw salvageRuns with capture build, stable profile, method/IDs and independently checked bag attribution; only then consider aggregate mean, not P(hit). No in-game operation requested.",
       "sources": [
-        "https://wago.tools/db2/ItemDisenchantLoot?build=11.0.2.56313&filter%5BExpansionID%5D=exact%3A10",
-        "https://wago.tools/db2/ItemDisenchantLoot?build=11.0.5.57212&filter%5BExpansionID%5D=exact%3A10",
-        "https://wago.tools/db2/ItemDisenchantLoot?build=11.2.7.65299&filter%5BExpansionID%5D=exact%3A10",
-        "https://wago.tools/db2/ItemClass?build=11.2.7.65299",
-        "https://github.com/wowdev/WoWDBDefs/blob/master/definitions/ItemDisenchantLoot.dbd"
+        "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
+        "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Goldsmith.toc",
+        "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Report.lua"
       ]
     }
   ],
@@ -1295,20 +1293,18 @@
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://wago.tools/db2/ItemDisenchantLoot?build=11.0.2.56313&filter%5BExpansionID%5D=exact%3A10",
-    "https://wago.tools/db2/ItemDisenchantLoot?build=11.0.5.57212&filter%5BExpansionID%5D=exact%3A10",
-    "https://wago.tools/db2/ItemDisenchantLoot?build=11.2.7.65299&filter%5BExpansionID%5D=exact%3A10",
-    "https://wago.tools/db2/ItemClass?build=11.2.7.65299",
-    "https://github.com/wowdev/WoWDBDefs/blob/master/definitions/ItemDisenchantLoot.dbd",
-    "https://warcraft.wiki.gg/wiki/Enum.ItemQuality",
-    "https://warcraft.wiki.gg/wiki/Public_client_builds"
+    "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
+    "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Goldsmith.toc",
+    "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Report.lua",
+    "https://www.curseforge.com/wow/addons/goldsmith-crafting-profit-planner/comments",
+    "https://github.com/sunseteffect/Goldsmith/issues"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-24T1822-pioneer-cloth-raw-looter-single-stack-reference.jsonl",
-  "verified_commit_sha": "9902248639506ccbb9cf8a91b60cd017f7234d6b",
-  "verification": "Read current branch commit 9902248639506ccbb9cf8a91b60cd017f7234d6b, owned status blob cbd840ba74cdbe271d4a2589382cc4b2aef32ced; own update commit SHA to be verified by external read-back (self SHA cannot be embedded in same commit).",
+  "verified_commit_sha": "1be7eea07a294947a39fd423b99df08a50173e78",
+  "verification": "Refreshed branch commit 1be7eea07a294947a39fd423b99df08a50173e78 and owned status blob 356a1afb3c509ac8277d029bba5e9e4391f8c8e0; new commit to be verified by read-back externally (self SHA cannot be embedded in same commit).",
   "blockers": [
-    "No per-operation original ranked ore/herb or gear DE log recovered; prior sources not recatalogued.",
-    "Client bracket metadata has no per-output material IDs, casts/hits/zeros, skill profile or server yield table. Master review required for any new bracket schema or runtime use."
+    "No independent original TWW ranked ore/herb or gear operation data recovered from these searches. Goldsmith code is collection metadata, not a study.",
+    "Goldsmith output gains are aggregate bag deltas; no per-operation histograms, full specialization state or per-run game build. Need existing raw export and corroboration; no schema changes made."
   ],
   "exhausted_sources": [
     "2026-11-20: Reddit 1ftqzxp historical shatter original/commenter estimates inspected; new but unfit for direct DE numeric admission without distinct recipe method/raw ledger; do not scrape it repeatedly without author export.",
@@ -1378,30 +1374,30 @@
     "2026-11-24T20:21:33.281Z: Previously covered SemiCollin, PeaEsk, LotzBoi, 1g9l8t8, 1fmrp4z, 1fspqym, 1fpswuz, 1g6mmqf, 1f9qado, 565405, 1g8kbaq, 1neicjm and 1g2qvia not re-transcribed; do not repeat unchanged searches. 1fjx2r4 and 1mns7u7 checked; no linked exact output ledger. CraftSim #892 existing source supplemented only with code-level aggregation detail.",
     "2026-11-24T21:22:32.420Z: Named searches across Reddit, Blizzard, Wowhead and wiki found previously covered 1fmrp4z, 1f5rby5, 1fdmzwy, 1jc2ya5, 1iaamax, 2083666, 1m0dvk9, 1nqwdhf, Canadiatv, PeaEsk and dye-only 1pa98qw. No new independent numeric cohort. Wowhead output-side 219954 snippet has class-variant same-name rows; direct page did not expose underlying IDs/stack distributions, so no rows imported. Restoration reports are new but indirect.",
     "2026-11-24T22:21:08.358Z: Named Reddit, Blizzard, Wowhead, Method and wiki searches returned earlier Aspalar, 1f8pc9q, 1g6jcfr, PeaEsk, Adreymar, LotzBoi, 1g350pq, 1958379, 1968257 and 565405 sources. Oct 3 1975800 cross-post has only aggregate range and possible same-author overlap; do not re-transcribe. Oct 25 hotfix confirmed by contemporary Oct 26 Reddit link; Wowhead Oct 30 comment references rolling article, not evidence of a separate epoch.",
-    "2026-11-24T23:21:18.538Z: Three historical ItemDisenchantLoot extracts and ItemClass identity table checked. No new empirical counts. Named searches returned existing LotzBoi, Method, 1jc2ya5, 1g6jcfr, and Arathor's Spear reports; beta 1ew3glf is qualitative and not a Retail cast cohort, not re-transcribed. No repeat of identical bracket scans unless relevant build or metadata differs."
+    "2026-11-24T23:21:18.538Z: Three historical ItemDisenchantLoot extracts and ItemClass identity table checked. No new empirical counts. Named searches returned existing LotzBoi, Method, 1jc2ya5, 1g6jcfr, and Arathor's Spear reports; beta 1ew3glf is qualitative and not a Retail cast cohort, not re-transcribed. No repeat of identical bracket scans unless relevant build or metadata differs.",
+    "2026-11-25T00:21:13.059Z: Named searches for Mycobloom, Blessing Blossom, Arathor's Spear, Aqirite, Ironclaw and Darkmoon Deck returned known 1fdmzwy, 1g350pq, 1fisfkn, 1k78h4v and Method or unrelated results. Goldgoblin milling guide has mappings, no empirical operation ledger. ProspectMate/Goblinomics already screened. New Goldsmith source code inspected at pinned commit; no public TWW cohort found, CurseForge comments unavailable in extracted page. Do not rescan unchanged code unless raw export or new capture changes emerge."
   ],
-  "next_concrete_step": "Seek exact bonus-linked seasonal gear DE operation logs or new rank-specific herb/ore operation/refund ledger; Master may review 317–325 profile metadata. Do not repeat identical bracket rows, existing studies or cutoff catalogue.",
-  "previous_status_updated_at": "2026-11-24T22:21:08.358Z",
+  "next_concrete_step": "Look for existing public raw Goldsmith salvageRuns or other independent logs with exact ranked item IDs, capture build and stable skill/spec; seek new DE gear operation evidence without repeating cutoff catalogue or exhausted sources.",
+  "previous_status_updated_at": "2026-11-24T23:21:18.538Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "date": "2026-11-24T23:21:18.538Z",
-    "method": "Original client DB2 exact expansion filter across three pinned builds, class lookup and schema; named original web searches for Luredrop, Arathor’s Spear, crystal DE and milling specialization.",
+    "date": "2026-11-25T00:21:13.059Z",
+    "method": "Named searches across Reddit, forums, guides, GitHub and CurseForge; code-level audit of newly surfaced collector at pinned commit.",
     "source_checked": [
-      "https://wago.tools/db2/ItemDisenchantLoot?build=11.0.2.56313&filter%5BExpansionID%5D=exact%3A10",
-      "https://wago.tools/db2/ItemDisenchantLoot?build=11.0.5.57212&filter%5BExpansionID%5D=exact%3A10",
-      "https://wago.tools/db2/ItemDisenchantLoot?build=11.2.7.65299&filter%5BExpansionID%5D=exact%3A10",
-      "https://wago.tools/db2/ItemClass?build=11.2.7.65299",
-      "https://github.com/wowdev/WoWDBDefs/blob/master/definitions/ItemDisenchantLoot.dbd",
-      "https://warcraft.wiki.gg/wiki/Enum.ItemQuality",
-      "https://warcraft.wiki.gg/wiki/Public_client_builds"
+      "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
+      "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Goldsmith.toc",
+      "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Report.lua",
+      "https://www.curseforge.com/wow/addons/goldsmith-crafting-profit-planner/comments",
+      "https://github.com/sunseteffect/Goldsmith/issues"
     ],
     "new_numeric_cohorts": 0,
     "new_reference_cohorts": 0,
-    "new_identity_leads": 9
+    "new_identity_leads": 0,
+    "new_source_integrity_findings": 1
   },
   "source_integrity_findings": [
     {
@@ -4292,6 +4288,53 @@
       "skill": null,
       "specialization": null,
       "detail": "All nine rows match exactly in three separately build-pinned client extracts. Resolves earlier secondary claim about bracket structure; historical TWW minimum is 356, not 1. IDs are DB2 bracket identifiers, NOT itemIDs. SkillRequired=0 is a bracket field, not a measured player skill, evidence that skill cannot affect output, or universal permission to DE every item. Subclass=-1 does not prove equal armor/weapon/Profession yield or absence of subclass-specific exceptions. No inference of server loot, output material ID, chance, yield, bonus-level treatment or current Midnight behavior. Master should review as profile/identity metadata, not numerical evidence; schema has no bracket record type."
+    },
+    {
+      "checked_at_utc": "2026-11-25T00:21:13.059Z",
+      "status": "new-collector-source-integrity-reviewable-no-export",
+      "method": "Prospect/Mill",
+      "source": "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
+      "source_commit": "045d366a99ff207250d96e65ebd2d13c71e7ffdf",
+      "source_blob_sha": "c15c11eabfea7334a2d41351385296d24edd60130",
+      "addon_version": "2.11.0-beta",
+      "source_release_date": "2026-11-24",
+      "source_lines": [
+        "12–37",
+        "84–125",
+        "136–269",
+        "398–409",
+        "469–565",
+        "595–635",
+        "876–931"
+      ],
+      "target_input_ids": [
+        210930,
+        210931,
+        210932,
+        210933,
+        210934,
+        210935,
+        210936,
+        210937,
+        210938,
+        210796,
+        210797,
+        210798
+      ],
+      "inputItemID": null,
+      "outputItemID": null,
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "minSeen": null,
+      "maxSeen": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": null,
+      "build": null,
+      "resourcefulness_refund_basis": null,
+      "detail": "GoldsmithDB.salvageRuns stores exact itemID, recipeID, time, character, casts counted on matching player UNIT_SPELLCAST_SUCCEEDED, net used, perCast from schematic.quantityMax, aggregate output IDs and quantities, start-of-run skill/difficulty/quality/resourcefulness and concentration. It keeps at most 500 runs. Bag gains within three seconds after input disappearance are attributed to salvage; unrelated loot, delayed gains or net refunds can distort a run. Session only switches on input ID or concentration (not every same-input recipe or skill change). No per-cast output assignment, explicit hits/zeros/histogram, spec node state or per-run client build. Report.lua GetBuildInfo is report-time, not run-time. UI aggregates by item/character and uses last profile, falls back to net-input totals scaled by nominal batch size, and uses modeled refund save fraction; estimated milling synthesizes records for Midnight herbs. Do not treat these as independent empirical per-cast probabilities, direct measured refund procs or TWW data. No public TWW run export in inspected source; comments not visible in web extraction. Seek already-existing consented raw salvageRuns with capture build, stable profile, method/IDs and independently checked bag attribution; only then consider aggregate mean, not P(hit). No in-game operation requested."
     }
   ],
   "last_source_commit_pending": true
