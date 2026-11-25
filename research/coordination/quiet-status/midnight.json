@@ -1,6 +1,6 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-25T10:06:42.221Z",
+  "updated_at": "2026-11-25T11:10:33.360Z",
   "status": "active_search_no_new_numeric_cohort",
   "task_ids": [
     "T0026",
@@ -2208,6 +2208,46 @@
       },
       "disposition": "Newly located original author comments; held in status only pending source deduplication and input/operation identity. No baseline admission.",
       "hold_reason": "Two sequential reported spending batches by one author, not independent players. The 10k amounts are conquest budgets, not casts. A separate May 19 post reports boxes at 375 conquest, but exact July box ID, actual boxes opened, gear obtained, complete disenchants and carryover are unknown. Do not infer casts as 26 or 27 from currency or positive output totals; second batch reports 27 crystals. Rank IDs are existing catalogue crosswalk, not source hyperlinks. Exact at-cast item IDs, armor/weapon mix, item levels, complete profile, all-output vector and zeros unknown. Main default-branch searches for thread ID and conquest crystals found no match; full assigned-sources file was not returned by connector, so cutoff-wide independence is unproven. No recataloguing."
+    },
+    {
+      "category": "held_new_indexed_ptr_aggregate_unverified_source_identity",
+      "task_id": "T0026",
+      "source": "https://www.wowhead.com/ptr/item=250047/blind-oaths-wraps",
+      "live_source": "https://www.wowhead.com/item=250047/blind-oaths-wraps",
+      "input_id": 250047,
+      "input_name": "Blind Oath's Wraps",
+      "screened_on": "2026-11-25T11:10:33.360Z",
+      "source_original": {
+        "page_flavor": "12.1.7 PTR",
+        "reported_aggregate_operations": 42,
+        "reported_positive_occurrences": [
+          {
+            "output_name": "Dawn Crystal",
+            "output_id": null,
+            "output_rank": null,
+            "hits": 22,
+            "percentShown": 52
+          },
+          {
+            "output_name": "Dawn Crystal",
+            "output_id": null,
+            "output_rank": null,
+            "hits": 20,
+            "percentShown": 48
+          }
+        ],
+        "completed_casts_verified": null,
+        "totalQuantity": null,
+        "zero_outcomes": null,
+        "histogram": null,
+        "at_cast_item_level": null,
+        "skill": null,
+        "specialization": null,
+        "actual_build": null,
+        "observation_date": null
+      },
+      "disposition": "held indexed lead only; no measured admission",
+      "reason": "New indexed 12.1.7 PTR item-side lead for 250047: reported aggregate 42 disenchants; two unlinked Dawn Crystal occurrences 22 and 20 (displayed 52%, 48%). Direct PTR and live page reads omit the actual table. Default-branch exact-ID search returns no match, not proof of disjointness from catalogue. No raw source links, ranks, actual at-cast ilvl, profile, build, units, or verified observation date. Hold in status only; no rate, zero or live eligibility inference."
     }
   ],
   "newly_verified_fields_or_cohorts": [],
@@ -2216,10 +2256,9 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://www.curseforge.com/wow/addons/goldcap-gg/files/9802269",
-    "https://www.curseforge.com/wow/addons/midnight-helper/files/9807222",
-    "https://www.curseforge.com/wow/addons/disenchant-deals/files/9685891",
-    "https://github.com/Imemoth/wow-foreverdb/blob/main/README.md"
+    "https://www.wowhead.com/ptr/item=250047/blind-oaths-wraps",
+    "https://www.wowhead.com/ptr/item=250046/blind-oaths-shroud",
+    "https://www.reddit.com/r/woweconomy/comments/1smgllg/prospecting_calculator/"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -3015,35 +3054,43 @@
     {
       "url": "https://github.com/Imemoth/wow-foreverdb/blob/main/README.md",
       "reason": "Publisher documentation describes observed disenchant source, material occurrence and quantity collection, but explicitly targets Forever interface 16001. No Retail Midnight cohort or transferable rates."
+    },
+    {
+      "url": "https://www.wowhead.com/ptr/item=250047/blind-oaths-wraps",
+      "reason": "New indexed 12.1.7 PTR item-side lead for 250047: reported aggregate 42 disenchants; two unlinked Dawn Crystal occurrences 22 and 20 (displayed 52%, 48%). Direct PTR and live page reads omit the actual table. Default-branch exact-ID search returns no match, not proof of disjointness from catalogue. No raw source links, ranks, actual at-cast ilvl, profile, build, units, or verified observation date. Hold in status only; no rate, zero or live eligibility inference."
+    },
+    {
+      "url": "https://www.wowhead.com/ptr/item=250046/blind-oaths-shroud",
+      "reason": "Indexed 12.1.7 PTR reports 44 with 29/15 same-name Dawn Crystal hits; 12.1.5 PTR reports 42 with 28/14. Exact input 250046 already present in 20261118T0814-blind-oath-cape-ptr-looter-rank-hold.jsonl on default branch. Mutable snapshots cannot be added or differenced as independent trials; no raw event IDs/rank or dated cohort join."
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1smgllg/prospecting_calculator/",
+      "reason": "Default-branch reconciliation explicitly confirms 17 existing held/reference rows midnight-20261101-19001..19017 covering the approximate ore rates and stone/glass means. No new original trial, no rank-linked operation counts; no re-transcription."
     }
   ],
-  "next_concrete_step": "Seek new public consented original Retail receipts or actual source dataset changes, not repeated release checks without changed processing collection. Prioritize current-build 272246 item-linked event ledger, rank-specific Tin/Copper/Silver completed operations, Diamond unlock and output histograms, then milling. GoldCap and TheWoWDB personal collector leads require an original published export. Existing evidence and held fields remain untouched; no game operations.",
-  "verified_base_commit_sha": "3651421e3e105663a36d87394ac6309b5bfc7e20",
+  "next_concrete_step": "Seek genuine new public Retail operation receipts or consented exports; do not repeat static item snapshots or known calculator sources. Prioritize item 272246 current-build at-cast variant and ranked DE outputs, Tin/Copper/Silver actual casts and refunds with Diamond unlock, then milling; for 250047 require actual source table and independent event/profile identity before use. Preserve existing reviewed and held fields.",
+  "verified_base_commit_sha": "b25144478f1dbb1dcb158f79c4e37f70364e894b",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Prior exact status blob matches a5715047. Current status cannot contain its own commit SHA; verify commit and exact status blob after write.",
+  "commit_note": "Prior status blob exact match at f66afa89a89edb78c67d247ac471ebf6e5936112. Current status cannot contain its own commit SHA; verify new commit and exact status blob after write.",
   "new_leads_screened": [
     {
-      "category": "new_release_delta_and_flavor_screen",
+      "category": "indexed_item_lead_and_duplicate_boundary",
       "sources": [
         {
-          "url": "https://www.curseforge.com/wow/addons/goldcap-gg/files/9802269",
-          "reason": "Nov 25 v0.37.0 changelog covers previously unscreened releases 0.32–0.37. New gear/tool version pricing requires five sales across three realms; that denominator is market transactions, not disenchant events. No published original Retail DE ledger, skill/spec/ilvl or output ranks; earlier learned personal DE functionality remains an acquisition lead only."
+          "url": "https://www.wowhead.com/ptr/item=250047/blind-oaths-wraps",
+          "reason": "New indexed 12.1.7 PTR item-side lead for 250047: reported aggregate 42 disenchants; two unlinked Dawn Crystal occurrences 22 and 20 (displayed 52%, 48%). Direct PTR and live page reads omit the actual table. Default-branch exact-ID search returns no match, not proof of disjointness from catalogue. No raw source links, ranks, actual at-cast ilvl, profile, build, units, or verified observation date. Hold in status only; no rate, zero or live eligibility inference."
         },
         {
-          "url": "https://www.curseforge.com/wow/addons/midnight-helper/files/9807222",
-          "reason": "Nov 25 Retail v5.9.1 release notes: new disenchant shortcut explicitly belongs to Forever, while Midnight changes are action-bar layouts. No independent Retail operation data or yield sample; no transfer of rates."
+          "url": "https://www.wowhead.com/ptr/item=250046/blind-oaths-shroud",
+          "reason": "Indexed 12.1.7 PTR reports 44 with 29/15 same-name Dawn Crystal hits; 12.1.5 PTR reports 42 with 28/14. Exact input 250046 already present in 20261118T0814-blind-oath-cape-ptr-looter-rank-hold.jsonl on default branch. Mutable snapshots cannot be added or differenced as independent trials; no raw event IDs/rank or dated cohort join."
         },
         {
-          "url": "https://www.curseforge.com/wow/addons/disenchant-deals/files/9685891",
-          "reason": "Nov 18 release explicitly Forever 1.60.1; price-derived deal estimates and item eligibility hide list, not a Retail event ledger. No numerical transfer or recatalogue."
-        },
-        {
-          "url": "https://github.com/Imemoth/wow-foreverdb/blob/main/README.md",
-          "reason": "Publisher documentation describes observed disenchant source, material occurrence and quantity collection, but explicitly targets Forever interface 16001. No Retail Midnight cohort or transferable rates."
+          "url": "https://www.reddit.com/r/woweconomy/comments/1smgllg/prospecting_calculator/",
+          "reason": "Default-branch reconciliation explicitly confirms 17 existing held/reference rows midnight-20261101-19001..19017 covering the approximate ore rates and stone/glass means. No new original trial, no rank-linked operation counts; no re-transcription."
         }
       ],
-      "disposition": "Refreshed branch, read README, evidence-format, mechanics, worker role and queue; searched new public DE, Tin/Copper/Silver prospecting and milling sources after cutoff. Results were mostly previously screened guides, Forever releases and market valuation data. GoldCap latest release adds version-specific sales pricing, not processing denominators; Midnight Helper DE feature is Forever only. No independently sourced numeric fields, no new evidence file, no assigned-corpus recatalogue."
+      "disposition": "Refreshed repository instructions and queue; branch comparison since prior status shows only other roles' status/evidence changes, and recent issue search shows community announcement #91 only. Broad fresh DE, rank-specific ore/diamond and milling searches return already reviewed sources, PTR summaries, price data, recipe budgets or unrelated client flavors. One newly screened indexed item lead retained in status, no genuine new independent cohort or baseline changes. No catalogue rework."
     }
   ],
   "catalogue_checkpoint": {
@@ -3059,5 +3106,5 @@
     "release_status": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending",
     "worker_recataloguing": "not performed"
   },
-  "previous_verified_status_commit_sha": "a5715047b394c81f0d379c095585e02d16b7eb66"
+  "previous_verified_status_commit_sha": "f66afa89a89edb78c67d247ac471ebf6e5936112"
 }
