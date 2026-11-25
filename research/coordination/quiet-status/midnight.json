@@ -1,6 +1,6 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-25T11:10:33.360Z",
+  "updated_at": "2026-11-25T12:09:11.685Z",
   "status": "active_search_no_new_numeric_cohort",
   "task_ids": [
     "T0026",
@@ -2256,9 +2256,10 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://www.wowhead.com/ptr/item=250047/blind-oaths-wraps",
-    "https://www.wowhead.com/ptr/item=250046/blind-oaths-shroud",
-    "https://www.reddit.com/r/woweconomy/comments/1smgllg/prospecting_calculator/"
+    "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
+    "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/TourData.lua",
+    "https://www.curseforge.com/wow/addons/craft-ladder/files/9771225",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/issues/91"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -3066,31 +3067,47 @@
     {
       "url": "https://www.reddit.com/r/woweconomy/comments/1smgllg/prospecting_calculator/",
       "reason": "Default-branch reconciliation explicitly confirms 17 existing held/reference rows midnight-20261101-19001..19017 covering the approximate ore rates and stone/glass means. No new original trial, no rank-linked operation counts; no re-transcription."
+    },
+    {
+      "url": "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
+      "blob_sha": "c15c11eabfea7334a2d41351385296d24dd60130",
+      "reason": "Latest public source independently inspected: session captures recipe ID, input item ID, successful matching spell events (UNIT_SPELLCAST_SUCCEEDED), perCast from schematic, cumulative net bag use, output item totals, effective skill, difficulty, quality and Resourcefulness at session start. Retains up to 500 sessions. Outputs still attributed to positive bag gains within 3 seconds of input decrease; no per-cast output/hit/zero ledger, build, unlock or full specialization allocation, and session is not split on recipe/profile change if same item/concentration. Potential consented aggregate mean source only after source review; no public session rows obtained."
+    },
+    {
+      "url": "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/TourData.lua",
+      "blob_sha": "066d4c16eae75ea26aabd0d8cd7c7b0ddb0bb12c",
+      "reason": "Latest public TourData blob exactly matches the already preserved Oct 13 account aggregate in 20261124T0913-goldsmith-original-bag-delta-totals.jsonl. Generator blob 2449c209cfecdc910ce01289f8d229da9bb7ac89 also unchanged. No new original session receipt or distinct cohort; never recount 22 existing output rows."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/craft-ladder/files/9771225",
+      "reason": "Nov 23 v1.11.6 release states the local collection retains 10,000 newest disenchanted items and gathering nodes, but client is explicitly Forever 1.60.1. Cap is retention policy, not observed sample size. No Retail data transfer."
     }
   ],
-  "next_concrete_step": "Seek genuine new public Retail operation receipts or consented exports; do not repeat static item snapshots or known calculator sources. Prioritize item 272246 current-build at-cast variant and ranked DE outputs, Tin/Copper/Silver actual casts and refunds with Diamond unlock, then milling; for 250047 require actual source table and independent event/profile identity before use. Preserve existing reviewed and held fields.",
-  "verified_base_commit_sha": "b25144478f1dbb1dcb158f79c4e37f70364e894b",
+  "next_concrete_step": "Seek new published original Retail operation receipts, particularly current-build 272246 and exact rank-specific prospecting/milling. Goldsmith current session schema may support reviewed per-operation or net-input means if a genuinely published original session export becomes available; its unchanged tour data cannot. Preserve actual successful casts, profile, output rank and refund basis; no per-cast hits/zeros inferred from aggregate totals. Do not repeat static indexed tables or unchanged source snapshots.",
+  "verified_base_commit_sha": "45fcb300bb9f51e068f028ed312bd81f064058c5",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Prior status blob exact match at f66afa89a89edb78c67d247ac471ebf6e5936112. Current status cannot contain its own commit SHA; verify new commit and exact status blob after write.",
+  "commit_note": "Previous status exact blob match at 9a19145f1b1b9c5cbc88952d1b17fab22768f69a. Current commit cannot contain its own SHA; exact read-back at returned commit required.",
   "new_leads_screened": [
     {
-      "category": "indexed_item_lead_and_duplicate_boundary",
+      "category": "collector_source_delta_and_unchanged_original_aggregate",
       "sources": [
         {
-          "url": "https://www.wowhead.com/ptr/item=250047/blind-oaths-wraps",
-          "reason": "New indexed 12.1.7 PTR item-side lead for 250047: reported aggregate 42 disenchants; two unlinked Dawn Crystal occurrences 22 and 20 (displayed 52%, 48%). Direct PTR and live page reads omit the actual table. Default-branch exact-ID search returns no match, not proof of disjointness from catalogue. No raw source links, ranks, actual at-cast ilvl, profile, build, units, or verified observation date. Hold in status only; no rate, zero or live eligibility inference."
+          "url": "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
+          "blob_sha": "c15c11eabfea7334a2d41351385296d24dd60130",
+          "reason": "Latest public source independently inspected: session captures recipe ID, input item ID, successful matching spell events (UNIT_SPELLCAST_SUCCEEDED), perCast from schematic, cumulative net bag use, output item totals, effective skill, difficulty, quality and Resourcefulness at session start. Retains up to 500 sessions. Outputs still attributed to positive bag gains within 3 seconds of input decrease; no per-cast output/hit/zero ledger, build, unlock or full specialization allocation, and session is not split on recipe/profile change if same item/concentration. Potential consented aggregate mean source only after source review; no public session rows obtained."
         },
         {
-          "url": "https://www.wowhead.com/ptr/item=250046/blind-oaths-shroud",
-          "reason": "Indexed 12.1.7 PTR reports 44 with 29/15 same-name Dawn Crystal hits; 12.1.5 PTR reports 42 with 28/14. Exact input 250046 already present in 20261118T0814-blind-oath-cape-ptr-looter-rank-hold.jsonl on default branch. Mutable snapshots cannot be added or differenced as independent trials; no raw event IDs/rank or dated cohort join."
+          "url": "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/TourData.lua",
+          "blob_sha": "066d4c16eae75ea26aabd0d8cd7c7b0ddb0bb12c",
+          "reason": "Latest public TourData blob exactly matches the already preserved Oct 13 account aggregate in 20261124T0913-goldsmith-original-bag-delta-totals.jsonl. Generator blob 2449c209cfecdc910ce01289f8d229da9bb7ac89 also unchanged. No new original session receipt or distinct cohort; never recount 22 existing output rows."
         },
         {
-          "url": "https://www.reddit.com/r/woweconomy/comments/1smgllg/prospecting_calculator/",
-          "reason": "Default-branch reconciliation explicitly confirms 17 existing held/reference rows midnight-20261101-19001..19017 covering the approximate ore rates and stone/glass means. No new original trial, no rank-linked operation counts; no re-transcription."
+          "url": "https://www.curseforge.com/wow/addons/craft-ladder/files/9771225",
+          "reason": "Nov 23 v1.11.6 release states the local collection retains 10,000 newest disenchanted items and gathering nodes, but client is explicitly Forever 1.60.1. Cap is retention policy, not observed sample size. No Retail data transfer."
         }
       ],
-      "disposition": "Refreshed repository instructions and queue; branch comparison since prior status shows only other roles' status/evidence changes, and recent issue search shows community announcement #91 only. Broad fresh DE, rank-specific ore/diamond and milling searches return already reviewed sources, PTR summaries, price data, recipe budgets or unrelated client flavors. One newly screened indexed item lead retained in status, no genuine new independent cohort or baseline changes. No catalogue rework."
+      "disposition": "Refreshed branch and read all five required documents. Compared prior checkpoint to refreshed branch: other-role status and Master legacy source-identity note only; no new Midnight evidence. Fresh DE, Tin/Copper/Silver/Diamond and milling searches yielded already screened guides, market pages or other client flavors. Community issue #91 has zero comments. No new qualifying cohort, no evidence file or numeric admission; no assigned catalogue work."
     }
   ],
   "catalogue_checkpoint": {
@@ -3106,5 +3123,5 @@
     "release_status": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending",
     "worker_recataloguing": "not performed"
   },
-  "previous_verified_status_commit_sha": "f66afa89a89edb78c67d247ac471ebf6e5936112"
+  "previous_verified_status_commit_sha": "9a19145f1b1b9c5cbc88952d1b17fab22768f69a"
 }
