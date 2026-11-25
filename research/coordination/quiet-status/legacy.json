@@ -1,22 +1,51 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-25T13:38:01.506Z",
-  "status": "Active; historical skill provenance clarified, no new qualifying target yield measurements.",
+  "updated_at": "2026-11-25T14:44:58.655Z",
+  "status": "New independent historical raw milling quantities preserved; no new qualified current Retail numeric admission",
   "task_ids": [
     "T0047",
-    "T0042",
+    "T0052",
     "T0022",
+    "T0044",
+    "T0042",
     "T0043",
-    "T0050",
-    "T0052"
+    "T0050"
   ],
   "exact_gaps_targeted": [
-    "24995/25003/30364 held-item profile and operation receipts",
-    "36909/23424 actual operations, yields and skill context",
-    "Legacy historical skill threshold provenance"
+    "24995 and matching TBC armor/weapon exact profile and completed operation receipts",
+    "36909 and 23424 original operation and output hit/quantity evidence",
+    "124102 direct milling versus downstream Nightmare Pod outputs"
   ],
   "newly_verified_fields_cohorts": [
+    {
+      "disposition": "reviewable historical raw totals; not current Retail rate admission",
+      "summary": "Avisay: 40600 purchased Dreamleaf 124102; direct 129032=17036, 129034=1815, 128304=1713, 136926=850; cumulative post-pod 129032=18988, 129034=4310, 128304=1905. Actual casts and consumed inputs unknown.",
+      "source": "https://www.reddit.com/r/woweconomy/comments/6tktrg/40600_dreamleaf_mass_mill_data/",
+      "evidence": "research/v3/evidence/legacy/2026-11-25T1444-dreamleaf-original-mass-mill-phases.jsonl"
+    },
+    {
+      "disposition": "reviewable historical raw totals; not current Retail rate admission",
+      "summary": "ghostmarble: 38180 purchased Dreamleaf 124102; direct 129032=16007, 129034=1746, 128304=1563, 136926=736; cumulative post-pod 129032=17759, 129034=3995, 128304=1723. Actual casts and consumed inputs unknown.",
+      "source": "https://www.reddit.com/r/woweconomy/comments/6tjjj2/mass_mill_data_38180_dreamleaf/",
+      "evidence": "research/v3/evidence/legacy/2026-11-25T1444-dreamleaf-original-mass-mill-phases.jsonl"
+    }
+  ],
+  "source_urls": [
+    "https://www.reddit.com/r/woweconomy/comments/6tktrg/40600_dreamleaf_mass_mill_data/",
+    "https://www.reddit.com/r/woweconomy/comments/6tjjj2/mass_mill_data_38180_dreamleaf/",
+    "https://www.wowhead.com/news/wow-economy-weekly-wrap-up-strategic-alts-sniping-battle-pets-crowdsourced-data-270116",
+    "https://www.wowhead.com/spell=209659/mass-mill-dreamleaf",
+    "https://www.wowhead.com/item=124102/dreamleaf",
+    "https://www.wowhead.com/item=129032/roseate-pigment",
+    "https://www.wowhead.com/item=129034/sallow-pigment",
+    "https://www.wowhead.com/item=128304/yseralline-seed",
+    "https://www.wowhead.com/item=136926/nightmare-pod"
+  ],
+  "numeric_summary": "Two independent August 2017 original Legion-era Dreamleaf 124102 mass-mill cohorts, 8 direct-output rows. Avisay: 40,600 purchased herbs; before pods 129032=17036, 129034=1815, 128304=1713, 136926=850; cumulative after opening 129032=18988, 129034=4310, 128304=1905. ghostmarble: 38,180 purchased herbs; before pods 129032=16007, 129034=1746, 128304=1563, 136926=736; cumulative after opening 129032=17759, 129034=3995, 128304=1723. Recipe 209659 requires 20 herbs; no independently confirmed consumed inputs, completed casts, hits, zeros, ranges, refunds, build, skill or specialization. Historical raw quantities reviewable, no current Retail admission or double-counting downstream pod totals. Original IDs absent from inspected cutoff manifest/default-branch code searches; no duplicate found (branch-wide search not exhaustive).",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-25T1444-dreamleaf-original-mass-mill-phases.jsonl",
+  "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-25T0541-twitchie-original-cataclysm-prospecting.jsonl",
+  "preserved_prior_status_summary": [
     {
       "disposition": "historical skill context only; no yield admission",
       "summary": "New historical skill context: Kaliope's Jan 18 2007 prospecting-level article lists Fel Iron Ore (23424) at JC 290, but in Jan 19 comments the author explicitly says they did not test Fel Iron. Independent commenter wandelaar on Jan 19 reports successful prospecting at 290; this establishes a reported sufficient skill, NOT a measured minimum or a yield cohort. Same article records author's Adamantite 23425 becoming available at 325; Wings Jan 22 reports Thorium 10620 error explicitly requiring JC 250. Warcraft Wiki gives previous Fel Iron JC threshold 275 but current threshold unknown; date/cause of the discrepancy unverified, no current Retail skill gate inferred. Wiki mining requirement is a separate skill and must not substitute for prospecting. Original Jan 18 article URL absent in prior owned status and current coordination manifest text, not exhaustive of scoped catalogue. Prior screened SimpleDisenchant listing was not treated as new; tag v1.7.5 TOC independently confirms Retail interfaces 120100/120105 and per-character SavedVariables name SimpleDisenchantDB, but this metadata does not establish any actual processing ledger or completed cast count. No target export available in materials inspected. Warmaul exact-name and Arcane Dust searches yielded known historical table and ilvl 14/74 tooltip, no new operation receipt; Cobalt/Fel Iron searches yielded already-known source-page cohorts and reference guides, no newly attributable measured casts, hits, quantities, zeros, histograms, refunds or supported means. T0053 remains done. No prices retained.",
@@ -24,25 +53,9 @@
       "evidence": null
     }
   ],
-  "source_urls": [
-    "https://kaliope.wordpress.com/2007/01/18/jc-prospecting-levels-for-ore/",
-    "https://warcraft.wiki.gg/wiki/Fel_Iron_Ore",
-    "https://github.com/florent-coulon-deville/SimpleDisenchant/blob/v1.7.5/SimpleDisenchant.toc"
-  ],
-  "numeric_summary": "Fel Iron 23424: historical reported sufficient JC skill 290, later reference threshold 275, current minimum unknown. Adamantite 23425: reported unlock at 325; Thorium 10620: reported error threshold 250. No new yield fields, verified operation counts or output IDs.",
-  "evidence_file": "research/v3/evidence/legacy/2026-11-25T0541-twitchie-original-cataclysm-prospecting.jsonl",
-  "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-25T0541-twitchie-original-cataclysm-prospecting.jsonl",
-  "preserved_prior_status_summary": [
-    {
-      "disposition": "historical qualitative context only; not an admitted cohort",
-      "summary": "New historical profile and capture context, not numeric evidence: June 15 2021 forum 998486, post 2 (sarahlogic) reports difficulty choosing legacy materials by auction-house ilvl after the Shadowlands squish and suggests crafted Woolen Shoulders from an unnamed Wowhead comment; post 3 (Brorn) describes expansion-specific DE behavior including a Cataclysm timewalking item-level 184 example, without an exact item ID, material ID, completed-operation receipt or counts. The two participants' model interpretations are qualitative; the proposed Chromie Time/normal dual profile is not a verified rule. Dec 2 2022 forum 1426369, post 1 (Healboi) reports loss of DE ability at skill 20 and subsequent restoration after re-enabling ElvUI bags and reloading; post 3 corroborates reload resolving a similar issue. Post 4's later ilvl>200 claim is unverified and concerns leveling Dragonflight enchanting, not a universal eligibility threshold. Distinguish UI/cast failures from server eligibility and completed zero output; no exact item IDs, observed successful casts or material counts reported. These two threads were absent by ID in prior own status and coordination manifest (not an exhaustive catalogue novelty check). Existing Haul/GEC atlas and Goblinomics pinned revision already screened, as were Ink bulk macros, ProfitProphet and historical Cobalt/Fel Iron references; no duplicated evidence. Warmaul exact-name and reverse material searches plus Cobalt/Fel Iron original blog searches led to known historical profiles/cohorts, not independently grounded new current Retail operations. No new numeric field, zero, refund, hit, distribution or supported mean advanced; no prices retained. T0053 already done. No new evidence file warranted.",
-      "source": "https://us.forums.blizzard.com/en/wow/t/what-determines-disenchanting-mats/998486",
-      "evidence": null
-    }
-  ],
-  "verified_parent_sha": "900f288416022a4e3e958d2ae73c51caf637b7ed",
-  "verified_commit_sha": "ef529cefba58bf63ab7dc61b02058edf03899c9c",
-  "commit_note": "Prior status blob verified at previous commit; new status-only commit is checked by exact read-back and changed-file comparison. No self-referential commit SHA.",
+  "verified_parent_sha": "4f3945ce374201b0a2aeb6815ee696fe87d6e6a8",
+  "verified_commit_sha": "62493450c4b5f87aeb72ccb563063435fd813a34",
+  "commit_note": "Previous status commit exact blob verified; current commit cannot self-reference. Current write restricted to this status and one evidence file; read-back and changed-file verification performed after non-force update.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -740,6 +753,18 @@
       "source": "https://kaliope.wordpress.com/2007/01/18/jc-prospecting-levels-for-ore/",
       "disposition": "historical skill context; no new numeric yield admission",
       "reason": "Author did not test Fel Iron; separate player reports success at 290, not minimum. Later wiki 275 is historical reference, current unknown."
+    },
+    {
+      "task": "T0042",
+      "source": "https://www.reddit.com/r/woweconomy/comments/6tktrg/40600_dreamleaf_mass_mill_data/",
+      "disposition": "reviewable historical direct quantities; current Retail admission held",
+      "reason": "Original distinct author cohort; purchased inputs only; direct versus cumulative pod-stage totals separated; actual operations and profile unknown."
+    },
+    {
+      "task": "T0042",
+      "source": "https://www.reddit.com/r/woweconomy/comments/6tjjj2/mass_mill_data_38180_dreamleaf/",
+      "disposition": "reviewable historical direct quantities; current Retail admission held",
+      "reason": "Original distinct author cohort; purchased inputs only; direct versus cumulative pod-stage totals separated; actual operations and profile unknown."
     }
   ],
   "blockers": [
@@ -813,10 +838,15 @@
     "2026-11-25T10:44:38.216Z: New acquisition/provenance screens: Grindstone (CrusaderHeimdall; Retail 9.2.0, 2022-05-30) author listing explicitly identifies its drop rates as placeholders and solicits data; describes item-selection and mass-processing UI, no public original observation export or measured rates. Jan 20–23 2023 r/woweconomy thread 10h29gf describes Prospect Me requiring user modifications before Dragonflight and a participant reporting that then-current CraftSim session logging did not expose the requested per-prospect results and skill/stat context; historical firsthand software limitation, not proof about current versions and not a measurement. Both URLs absent from the prior owned status and current 731-source coordination manifest. T0050 new non-Retail identity screen: ForeverDB 13866 labels its 75% x1–2 Illusion Dust, 20% x1–2 Greater Eternal Essence, 5% x1 Large Brilliant Shard explicitly Classic data, not observed Forever rates; AHledger 13866 displays the same reference and identifies Forever 1.60.1 build 70959, level 59, with no observed denominator or independent original cohort. Do not treat cross-site agreement as independent data or map it to Retail 12.x headband. Both domains/item URLs absent from the owned status and manifest for this item. Source 16088 on assigned wowhead:item=22445@mop-classic describes 147 crafted rings with 265 Arcane Dust, 31 Greater Planar Essence and 6 Small Prismatic Shard, but combines discussion of Fel Iron Blood Ring and Golden Draenite Ring and does not explicitly allocate item IDs or confirm completed operations; reuse existing scoped catalogue, no re-transcription or extra numeric weighting. The Cobalt 78894 comment references 2,000 database records and speculates about the chance, not a new original cohort; known Strikk3r and qoothecat sources remain duplicates. Target-name searches across Wowhead, Reddit, Warcraft Wiki and historical blogs found no newly attributable Retail target operations, output hit counts, total quantities, zero counts, histograms, refunds or supported means for 24995/25003/30364 or 36909/23424. T0053 remains done. No prices retained.",
     "2026-11-25T11:41:54.381Z: New source-method screen: Disenchanting Advisor v1.0.2 (Retail interface 120001, release 2026-02-23), pinned original repository 4a7903820d45262994ecd689dc4edbcf0235f8c8. Tracking.lua blob d8f9bee1a1a4b10819bc872b689506ba05106ad9 lines 372–553 uses bag snapshot differences, chooses first disappeared equippable, counts a record only when known material additions match within the same update or a 3-second pending-source window. It persists attempts, matTotals and matCounts by expansion/quality (Midnight additionally 25-point skill band); source item ID/link, ilvl and armor/weapon distinction are not retained in that bucket. matCounts increments per added item entry, not deduplicated per material per spell receipt; split stacks may count more than once. A disappearance with no captured known materials expires, so recorded attempts cannot establish completed zero-inclusive N. DisenchantData.lua blob 447080e47a780f8ea9ae80ccac1befbc45aec17c defines TWW/Midnight materials and no Arcane Dust/Planar Essence/Prismatic Shard IDs, thus this version is not a viable target legacy logger. The companion community-rate lookup exists but no public original companion data or SavedVariables export was recovered (repository search for companion name and code search for DisenchantingAdvisorDB returned no results; not exhaustive). Static modern tables explicitly describe prelaunch estimates; do not import them as observations or duplicate modern worker scopes. This source name absent in owned status, coordination manifest and default-branch search before this run. Exact-name Warmaul and reverse Arcane Dust/Greater Planar Essence searches, Cobalt/Fel Iron searches across Wowhead, Warcraft Wiki, Reddit/blog results returned previously reviewed source pages and reference tables. No new independently grounded 24995/25003/30364 or 36909/23424 observed operation counts, hits, quantities, zero bins, refund counts or eligible means. T0053 remains done; no new evidence JSONL or prices.",
     "2026-11-25T12:44:42.433Z: New historical profile and capture context, not numeric evidence: June 15 2021 forum 998486, post 2 (sarahlogic) reports difficulty choosing legacy materials by auction-house ilvl after the Shadowlands squish and suggests crafted Woolen Shoulders from an unnamed Wowhead comment; post 3 (Brorn) describes expansion-specific DE behavior including a Cataclysm timewalking item-level 184 example, without an exact item ID, material ID, completed-operation receipt or counts. The two participants' model interpretations are qualitative; the proposed Chromie Time/normal dual profile is not a verified rule. Dec 2 2022 forum 1426369, post 1 (Healboi) reports loss of DE ability at skill 20 and subsequent restoration after re-enabling ElvUI bags and reloading; post 3 corroborates reload resolving a similar issue. Post 4's later ilvl>200 claim is unverified and concerns leveling Dragonflight enchanting, not a universal eligibility threshold. Distinguish UI/cast failures from server eligibility and completed zero output; no exact item IDs, observed successful casts or material counts reported. These two threads were absent by ID in prior own status and coordination manifest (not an exhaustive catalogue novelty check). Existing Haul/GEC atlas and Goblinomics pinned revision already screened, as were Ink bulk macros, ProfitProphet and historical Cobalt/Fel Iron references; no duplicated evidence. Warmaul exact-name and reverse material searches plus Cobalt/Fel Iron original blog searches led to known historical profiles/cohorts, not independently grounded new current Retail operations. No new numeric field, zero, refund, hit, distribution or supported mean advanced; no prices retained. T0053 already done. No new evidence file warranted.",
-    "2026-11-25T13:38:01.506Z: New historical skill context: Kaliope's Jan 18 2007 prospecting-level article lists Fel Iron Ore (23424) at JC 290, but in Jan 19 comments the author explicitly says they did not test Fel Iron. Independent commenter wandelaar on Jan 19 reports successful prospecting at 290; this establishes a reported sufficient skill, NOT a measured minimum or a yield cohort. Same article records author's Adamantite 23425 becoming available at 325; Wings Jan 22 reports Thorium 10620 error explicitly requiring JC 250. Warcraft Wiki gives previous Fel Iron JC threshold 275 but current threshold unknown; date/cause of the discrepancy unverified, no current Retail skill gate inferred. Wiki mining requirement is a separate skill and must not substitute for prospecting. Original Jan 18 article URL absent in prior owned status and current coordination manifest text, not exhaustive of scoped catalogue. Prior screened SimpleDisenchant listing was not treated as new; tag v1.7.5 TOC independently confirms Retail interfaces 120100/120105 and per-character SavedVariables name SimpleDisenchantDB, but this metadata does not establish any actual processing ledger or completed cast count. No target export available in materials inspected. Warmaul exact-name and Arcane Dust searches yielded known historical table and ilvl 14/74 tooltip, no new operation receipt; Cobalt/Fel Iron searches yielded already-known source-page cohorts and reference guides, no newly attributable measured casts, hits, quantities, zeros, histograms, refunds or supported means. T0053 remains done. No prices retained."
+    "2026-11-25T13:38:01.506Z: New historical skill context: Kaliope's Jan 18 2007 prospecting-level article lists Fel Iron Ore (23424) at JC 290, but in Jan 19 comments the author explicitly says they did not test Fel Iron. Independent commenter wandelaar on Jan 19 reports successful prospecting at 290; this establishes a reported sufficient skill, NOT a measured minimum or a yield cohort. Same article records author's Adamantite 23425 becoming available at 325; Wings Jan 22 reports Thorium 10620 error explicitly requiring JC 250. Warcraft Wiki gives previous Fel Iron JC threshold 275 but current threshold unknown; date/cause of the discrepancy unverified, no current Retail skill gate inferred. Wiki mining requirement is a separate skill and must not substitute for prospecting. Original Jan 18 article URL absent in prior owned status and current coordination manifest text, not exhaustive of scoped catalogue. Prior screened SimpleDisenchant listing was not treated as new; tag v1.7.5 TOC independently confirms Retail interfaces 120100/120105 and per-character SavedVariables name SimpleDisenchantDB, but this metadata does not establish any actual processing ledger or completed cast count. No target export available in materials inspected. Warmaul exact-name and Arcane Dust searches yielded known historical table and ilvl 14/74 tooltip, no new operation receipt; Cobalt/Fel Iron searches yielded already-known source-page cohorts and reference guides, no newly attributable measured casts, hits, quantities, zeros, histograms, refunds or supported means. T0053 remains done. No prices retained.",
+    {
+      "source": "https://github.com/ELLIOTTCABLE/Warcrack/tree/04e75a363d06caaafac078e76a83eb68b3506a4a",
+      "disposition": "no new operation evidence",
+      "reason": "Separately inspected 55689639#2 Enchantrix.lua blob d830bf0360219837820e373e08622727221d305b; EnchantedLocal, ProspectedLocal, MillingLocal empty. Not measured zero. Other previously reviewed account exports share 2b42071932958bb80ecc8583bca283f1c7fd9494."
+    }
   ],
   "previous_verified_evidence_sha": "60d002c452ca908e8cfdb5bbf2746e92017b63ad",
-  "next_concrete_step": "Seek new published original per-operation or consumed-input receipts with exact held item variant and current Retail era; prioritize unreviewed original exports rather than repeating known static tables or historical skill posts. Master owns profile QA and schema changes. No experiments.",
+  "next_concrete_step": "Prioritize exact held Warmaul 24995 / matching TBC armor-weapon itemLink and current Retail independently completed disenchant receipts; Cobalt 36909 and Fel Iron 23424 original operation and hit/quantity logs. For new Dreamleaf cohorts seek original screenshots or separately counted consumed-input/pod-opening logs, never treat purchased quantity as verified consumed quantity. T0053 reward identities already complete; client eligibility QA belongs to implementation. Do not repeat cutoff catalogue.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -825,12 +855,18 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://kaliope.wordpress.com/2007/01/18/jc-prospecting-levels-for-ore/",
-    "https://warcraft.wiki.gg/wiki/Fel_Iron_Ore",
-    "https://github.com/florent-coulon-deville/SimpleDisenchant/blob/v1.7.5/SimpleDisenchant.toc"
+    "https://www.reddit.com/r/woweconomy/comments/6tktrg/40600_dreamleaf_mass_mill_data/",
+    "https://www.reddit.com/r/woweconomy/comments/6tjjj2/mass_mill_data_38180_dreamleaf/",
+    "https://www.wowhead.com/news/wow-economy-weekly-wrap-up-strategic-alts-sniping-battle-pets-crowdsourced-data-270116",
+    "https://www.wowhead.com/spell=209659/mass-mill-dreamleaf",
+    "https://www.wowhead.com/item=124102/dreamleaf",
+    "https://www.wowhead.com/item=129032/roseate-pigment",
+    "https://www.wowhead.com/item=129034/sallow-pigment",
+    "https://www.wowhead.com/item=128304/yseralline-seed",
+    "https://www.wowhead.com/item=136926/nightmare-pod"
   ],
-  "latest_run_source_date": "2026-11-25",
-  "latest_run": "Refreshed branch and all required instructions/queue; clarified historical skill provenance and checked prior recorder tag metadata; status only.",
-  "new_evidence_file_this_run": null,
-  "next": "Seek new published original per-operation or consumed-input receipts with exact held item variant and current Retail era; prioritize unreviewed original exports rather than repeating known static tables or historical skill posts. Master owns profile QA and schema changes. No experiments."
+  "latest_run_source_date": "2017-08-14",
+  "latest_run": "Two independent August 2017 original Legion-era Dreamleaf 124102 mass-mill cohorts, 8 direct-output rows. Avisay: 40,600 purchased herbs; before pods 129032=17036, 129034=1815, 128304=1713, 136926=850; cumulative after opening 129032=18988, 129034=4310, 128304=1905. ghostmarble: 38,180 purchased herbs; before pods 129032=16007, 129034=1746, 128304=1563, 136926=736; cumulative after opening 129032=17759, 129034=3995, 128304=1723. Recipe 209659 requires 20 herbs; no independently confirmed consumed inputs, completed casts, hits, zeros, ranges, refunds, build, skill or specialization. Historical raw quantities reviewable, no current Retail admission or double-counting downstream pod totals. Original IDs absent from inspected cutoff manifest/default-branch code searches; no duplicate found (branch-wide search not exhaustive). Warmaul/Cobalt/Fel Iron searches returned known references or cohorts, no new qualified current target measurement. No PRs, runtime changes, prices, experiments or schedule changes.",
+  "new_evidence_file_this_run": "research/v3/evidence/legacy/2026-11-25T1444-dreamleaf-original-mass-mill-phases.jsonl",
+  "next": "Prioritize exact held Warmaul 24995 / matching TBC armor-weapon itemLink and current Retail independently completed disenchant receipts; Cobalt 36909 and Fel Iron 23424 original operation and hit/quantity logs. For new Dreamleaf cohorts seek original screenshots or separately counted consumed-input/pod-opening logs, never treat purchased quantity as verified consumed quantity. T0053 reward identities already complete; client eligibility QA belongs to implementation. Do not repeat cutoff catalogue."
 }
