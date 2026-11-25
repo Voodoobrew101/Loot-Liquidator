@@ -1,6 +1,6 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-25T17:11:14.109Z",
+  "updated_at": "2026-11-25T18:13:07.988Z",
   "status": "active_search_no_new_numeric_cohort",
   "task_ids": [
     "T0026",
@@ -2256,12 +2256,10 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/crystaltech/GoldAdvisorMidnight/blob/5b0b253c7039b2379942951166b0cbb41b525fe3/GoldAdvisorMidnight/CraftStats.lua",
-    "https://github.com/crystaltech/GoldAdvisorMidnight/issues/13",
-    "https://github.com/crystaltech/GoldAdvisorMidnight/blob/5b0b253c7039b2379942951166b0cbb41b525fe3/GoldAdvisorMidnight/Data/RecipesGenerated.lua",
-    "https://github.com/Somora/EasyDisenchant/",
-    "https://github.com/Vystery/CraftShuffle",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/issues/91"
+    "https://www.curseforge.com/wow/addons/ezdisenchant/files/9760107",
+    "https://www.curseforge.com/wow/addons/my-loot-history/files/9770303",
+    "https://github.com/RustyDaemon/MyLootHistory/blob/main/data/Export.lua",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/issues/94"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -3170,41 +3168,45 @@
     {
       "url": "https://github.com/Vystery/CraftShuffle",
       "reason": "Publisher README explicitly targets WoW Forever; learned personal DE outcomes not transferable to Retail Midnight."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/ezdisenchant/files/9760107",
+      "reason": "Nov 22 Retail 12.1.5 + Forever 1.60.1 v1.2.3 release: unified candidate/material/history window, saved per-character filters, skippable candidates and protected equipment sets; user can clear character history. Candidate or session display not a complete cast ledger. No published exact input/variant, rank, output receipts, skill/spec/build or zero-inclusive records in release; public comments page exposed no comments. No data transfer across clients."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/my-loot-history/files/9770303",
+      "reason": "Nov 23 v2.8.0 release adds a Forever auction price provider; no new processing acquisition feature or measured cohort. Prior 2.7 CSV review not reopened as a study."
+    },
+    {
+      "url": "https://github.com/RustyDaemon/MyLootHistory/blob/main/data/Export.lua",
+      "blob_sha": "3f0465140143765fb34f23876c3be8c6a0719020",
+      "reason": "Checked only the 2.8 release delta: exported item report remains aggregated totalQuantity by item/source/character/zone plus values and first/last timestamps; no input-item instance, successful-operation join, zero ledger or gross inputs/refunds. No published participant receipt. Do not count output lines as completed casts."
     }
   ],
-  "next_concrete_step": "Seek published Retail raw successful-cast receipts with actual 272246 item variant/build, Tin/Copper/Silver rank and Diamond unlock, gross inputs and refunds, or ten-herb milling output vectors. GAM CraftStats requires separately verified complete cast and exact rank/ore/profile ledger; do not reuse unchanged March workbook projections or count positive results as N. Preserve existing holds.",
-  "verified_base_commit_sha": "3f94889e6b34f2e450578b429d4ecdeda448b634",
+  "next_concrete_step": "Prioritize genuinely new consented public Retail event exports or original post-cutoff recorded means with explicit denominator; exact 272246 at-cast link/build and normal material outcomes, rank-linked Tin/Copper/Silver gross operations and refunds, Eversong Diamond unlock, and ten-herb pigment output vector. Do not repeat unchanged collector/market/guide searches or duplicate issue #94 community review.",
+  "verified_base_commit_sha": "d11c09123a8042e9c0c14959af06e9c4fb9c7171",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Prior status blob verified against 3c717b3230a2d3eea013f808144329fbafe719d5; current commit SHA cannot be self-embedded; read back externally.",
+  "commit_note": "Prior owned status blob verified at 396313993be2b6dd0f215447679c46ee62bbace7; this status commit is verified externally by exact read-back, not self-embedded.",
   "new_leads_screened": [
     {
-      "category": "collector_and_workbook_provenance",
+      "category": "post_cutoff_collector_release_deltas",
       "sources": [
         {
-          "url": "https://github.com/crystaltech/GoldAdvisorMidnight/blob/5b0b253c7039b2379942951166b0cbb41b525fe3/GoldAdvisorMidnight/CraftStats.lua",
-          "blob_sha": "184460166eed25e75456187834801ed52bb5b2d2",
-          "reason": "New source-code inspection, not an observed cohort. Lines 128–278: recipe+build aggregate; OnCraftResult requires recognized positive output item before Operation and counts rated results only. UNIT_SPELLCAST_SUCCEEDED advances fallback serial but does not itself increment crafts. Pooled items across ranks/outputs and salvage input alternatives; concentration/unrated operations tracked separately and omitted from rated output totals. Refund quantities/procs separate, grouped by reagent slot; no zero-inclusive ranked per-operation ledger. Setup count tracks last profile per character, not separated output receipts. No publicly supplied player result rows."
+          "url": "https://www.curseforge.com/wow/addons/ezdisenchant/files/9760107",
+          "reason": "Nov 22 Retail 12.1.5 + Forever 1.60.1 v1.2.3 release: unified candidate/material/history window, saved per-character filters, skippable candidates and protected equipment sets; user can clear character history. Candidate or session display not a complete cast ledger. No published exact input/variant, rank, output receipts, skill/spec/build or zero-inclusive records in release; public comments page exposed no comments. No data transfer across clients."
         },
         {
-          "url": "https://github.com/crystaltech/GoldAdvisorMidnight/issues/13",
-          "reason": "Oct 4 release 2.3.1 describes craft result collector and 100-craft display verdict, account-wide patch resets. Threshold is not measured N. Public issue list contains release notes and UI reports rather than a new processing ledger."
+          "url": "https://www.curseforge.com/wow/addons/my-loot-history/files/9770303",
+          "reason": "Nov 23 v2.8.0 release adds a Forever auction price provider; no new processing acquisition feature or measured cohort. Prior 2.7 CSV review not reopened as a study."
         },
         {
-          "url": "https://github.com/crystaltech/GoldAdvisorMidnight/blob/5b0b253c7039b2379942951166b0cbb41b525fe3/GoldAdvisorMidnight/Data/RecipesGenerated.lua",
-          "blob_sha": "6c7f6e39659fc5b46e05d7c80e5b1f4afa228006",
-          "reason": "Existing source workbook 3-16-26-2.xlsx confirmed in header; default-branch exact filename search returns database/research/midnight-pigment-calculator-source.json and research/mechanics/midnight-pigment-totals-2026-11-06.json. Tin block lines 1398–1475 lists recipe 1231127, alternative input IDs 237362/237363 and default 3000 crafts from 15000 ore, projected formula yields, not completed trials. Do not treat defaultCrafts as N, project baseYield as measured unconditional P or duplicate known workbook. Actual original ledger absent."
-        },
-        {
-          "url": "https://github.com/Somora/EasyDisenchant/",
-          "reason": "Retail 12.1.5 and Forever-compatible README describes secure item selection, filters and destruction buttons; no published original player output records or cast denominator. UI utility only."
-        },
-        {
-          "url": "https://github.com/Vystery/CraftShuffle",
-          "reason": "Publisher README explicitly targets WoW Forever; learned personal DE outcomes not transferable to Retail Midnight."
+          "url": "https://github.com/RustyDaemon/MyLootHistory/blob/main/data/Export.lua",
+          "blob_sha": "3f0465140143765fb34f23876c3be8c6a0719020",
+          "reason": "Checked only the 2.8 release delta: exported item report remains aggregated totalQuantity by item/source/character/zone plus values and first/last timestamps; no input-item instance, successful-operation join, zero ledger or gross inputs/refunds. No published participant receipt. Do not count output lines as completed casts."
         }
       ],
-      "disposition": "Refreshed and read required instructions/queue. Recent searches surfaced existing market/guide/Forever pages. GAM workbook is already present; newly inspected collector source counts recognized positive results, not independently verified zero-inclusive cast cohorts. Issue 91 zero comments. No new admitted numeric fields, no assigned backlog recataloguing."
+      "disposition": "No new original numeric cohort. German Wowhead JD3K rank-2 tests already in 2026-11-01T0310-jd3k-rank2-prospecting.jsonl; no duplicate or inferred casts. Fresh issue search returned #94 with existing two attachment references and no comments; this is separately owner-assigned community review, not a new independent Midnight study or permission to double-count. Existing 731-source cutoff decisions preserved."
     }
   ],
   "catalogue_checkpoint": {
@@ -3220,5 +3222,5 @@
     "release_status": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending",
     "worker_recataloguing": "not performed"
   },
-  "previous_verified_status_commit_sha": "3c717b3230a2d3eea013f808144329fbafe719d5"
+  "previous_verified_status_commit_sha": "396313993be2b6dd0f215447679c46ee62bbace7"
 }
