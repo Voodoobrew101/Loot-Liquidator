@@ -3,7 +3,7 @@
 local LL={}
 CreateFrame=function()return {RegisterEvent=function()end,SetScript=function()end}end
 for _,name in ipairs({'CraftRecording.lua','ImportedResults.lua'})do assert(loadfile('LootLiquidator/'..name))('LL',LL)end
-local function read(name)local f=assert(io.open('/tmp/'..name,'rb'));local s=f:read('*a');f:close();return s end
+local function read(name)local f=assert(io.open((os.getenv('LOOT_TEST_TMPDIR') or '/tmp')..'/'..name,'rb'));local s=f:read('*a');f:close();return s end
 local raw,binary,encoded,wire=read('loot-latest-batch.json'),read('loot-transfer-zlib.bin'),
     read('loot-transfer-base64.txt'),read('loot-transfer-wire.json')
 C_EncodingUtil={

@@ -841,11 +841,15 @@ function LA:MakeReport()
 end
 
 LA.MaxCopyTextBytes=65536
+-- Complete research exports are already compressed and can be attached as one
+-- text file. Keep ordinary reports bounded independently of this copy path.
+LA.MaxResearchCopyTextBytes=500000
 function LA:ShowCopy(title, contents, options)
     contents=tostring(contents or '')
-    if #contents>self.MaxCopyTextBytes then
+    local limit=type(options)=='table' and options.researchExport and self.MaxResearchCopyTextBytes or self.MaxCopyTextBytes
+    if #contents>limit then
         title='Export too large to display safely'
-        contents='This export exceeds the safe copy-window size. Your recorded results are still saved. Use Export pages, or share LootLiquidator.lua from your SavedVariables folder.'
+        contents='This export exceeds the copy-window size. Use Export pages. Your recorded results are still saved.'
         options=nil
     end
     if not self.copyDialog then
@@ -960,7 +964,9 @@ function LA:ShowCopy(title, contents, options)
     f.previous:SetShown(paged); f.next:SetShown(paged); f.pageLabel:SetShown(paged)
     f.previous:SetEnabled(f.page > 1); f.next:SetEnabled(f.page < f.pages)
     f.pageLabel:SetText(("Page %d of %d"):format(f.page, f.pages))
-    f.help:SetText(paged and "Press Ctrl+C to copy this page. Use Previous and Next for the remaining pages."
+    f.help:SetText(options.researchExport and #contents>self.MaxCopyTextBytes
+        and "Press Ctrl+C, save the copied text as a .txt file, and attach that file to your submission. Every recorded result is included."
+        or paged and "Press Ctrl+C to copy this page. Use Previous and Next for the remaining pages."
         or "Press Ctrl+C to copy the selected text. Use Select all to select it again.")
     local anchor = SettingsPanel and SettingsPanel.IsShown and SettingsPanel:IsShown() and SettingsPanel or UIParent
     if not f:IsShown() or not f.opened then

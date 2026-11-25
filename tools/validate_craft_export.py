@@ -48,7 +48,7 @@ def unpack_transfer(page):
     size = page.get('uncompressedBytes')
     require(integer(size) and size <= 16777216, 'Invalid compact export length')
     payload = page.get('payload')
-    require(isinstance(payload, str) and len(payload) <= 65536, 'Invalid compact export payload')
+    require(isinstance(payload, str) and len(payload) <= 500000, 'Invalid compact export payload')
     try:
         compressed = base64.b64decode(payload, validate=True)
         decoder = zlib.decompressobj()
@@ -180,15 +180,26 @@ def validate(pages):
                 target.get('eligibilitySource') == 'C_TradeSkillUI.GetSalvagableItemIDs',
                 'Missing verified salvage target')
         batches[(r['studyID'], r['method'], r['recipeID'], batch_id)].append(r)
-    for (_, _, _, batch_id), members in batches.items():
+    for (study_id, _, _, batch_id), members in batches.items():
         evidence = members[0]['bagReconciliation']
-        require(len(members) == evidence['operations'] and batch_id in {r['operationID'] for r in members},
+        complete = len(members) == evidence['operations'] and batch_id in {r['operationID'] for r in members}
+        # The recorder's bounded history can evict the beginning of an old
+        # reconciliation batch. Preserve that explicitly truncated research
+        # without rejecting unrelated complete studies in the same export.
+        # coverage_reason still excludes the truncated study from rates.
+        require(complete or (studies[study_id].get('truncated') is True and len(members) < evidence['operations']),
                 'Missing salvage reconciliation casts')
         total_inputs, total_outputs = collections.Counter(), collections.Counter()
         for r in members:
             require(r['bagReconciliation'] == evidence, 'Conflicting salvage reconciliation evidence')
             total_inputs.update(vector(r['inputs'], allow_zero=True))
             total_outputs.update(vector(r['outputs']))
+        if not complete:
+            expected_inputs, expected_outputs = vector(evidence.get('inputs')), vector(evidence.get('outputs'))
+            require(all(quantity == 0 or (item in expected_inputs and quantity <= expected_inputs[item]) for item, quantity in total_inputs.items())
+                    and all(item in expected_outputs and quantity <= expected_outputs[item] for item, quantity in total_outputs.items()),
+                    'Retained salvage observations exceed the original batch inventory totals')
+            continue
         require({i: n for i, n in total_inputs.items() if n} == vector(evidence.get('inputs')) and
                 dict(total_outputs) == vector(evidence.get('outputs')), 'salvage batch inventory totals disagree')
     return records, contexts, studies

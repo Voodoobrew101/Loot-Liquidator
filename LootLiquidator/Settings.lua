@@ -1002,7 +1002,9 @@ function LL:ShowRecordedResultsExport(paged,allBatches)
     local function displayText(raw)
         local literal=raw:gsub('|','\\u007c')
         if #literal<=32768 then return literal end
-        return (self.PackCraftExport and self:PackCraftExport(raw)) or literal
+        local packed=self.PackCraftExport and self:PackCraftExport(raw)
+        if packed then return packed,true end
+        return literal
     end
     local function show(page)
         local title,_,current,pages=proxy:ExportRecordedResultsPage(page)
@@ -1010,9 +1012,10 @@ function LL:ShowRecordedResultsExport(paged,allBatches)
         if self.ShowCopy then self:ShowCopy(title,text,{page=current,pages=pages,onPage=show}) end
     end
     if not paged then
-        local text=displayText(proxy:ExportCraftResearch("all"))
-        if #text<=limit then
-            if self.ShowCopy then self:ShowCopy(allBatches and "Recorded results - all batches" or "Recorded results - latest batch",text) end
+        local text,compact=displayText(proxy:ExportCraftResearch("all"))
+        if #text<=limit or (compact and #text<=(self.MaxResearchCopyTextBytes or 500000)) then
+            if self.ShowCopy then self:ShowCopy(allBatches and "Recorded results - all batches" or "Recorded results - latest batch",
+                text,{researchExport=compact}) end
             return
         end
     end
@@ -1079,7 +1082,7 @@ function LL:AddCommunityResearchSettings(_,layout)
         if LL.ShowCopy then LL:ShowCopy("Community research guide - copy link",COMMUNITY_GUIDE_URL) end
     end,"Copy the guide link with Ctrl+C for recording and export instructions. Exports contain character/realm identifiers and measured profession context; GitHub submissions are public.")
     button("Export recorded results","Export all",function() LL:ShowRecordedResultsExport(false,true) end,
-        "Copy all retained batches, including their skill and specialization context. Exporting keeps recordings saved and does not submit them to GitHub.")
+        "Copy all retained batches as one compressed export. For a large export, save the copied text as a .txt file and attach it. All recorded details are kept; exporting does not submit them.")
     button("Export recorded results as pages","Export pages",function() LL:ShowRecordedResultsExport(true,true) end,
         "Copy all retained batches in smaller pages. Submit every page together; exports never clear your recordings.")
     button("Start new recording batch","Start new batch",function() LL:ConfirmStartNewBatch() end,
