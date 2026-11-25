@@ -1,6 +1,6 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-25T12:09:11.685Z",
+  "updated_at": "2026-11-25T13:10:41.192Z",
   "status": "active_search_no_new_numeric_cohort",
   "task_ids": [
     "T0026",
@@ -2256,9 +2256,10 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
-    "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/TourData.lua",
-    "https://www.curseforge.com/wow/addons/craft-ladder/files/9771225",
+    "https://www.curseforge.com/wow/addons/disenchantry/files/9807065",
+    "https://www.curseforge.com/wow/addons/goldstep-disenchant",
+    "https://www.curseforge.com/wow/addons/dustify",
+    "https://www.curseforge.com/wow/addons/disenchantry/comments",
     "https://github.com/Voodoobrew101/Loot-Liquidator/issues/91"
   ],
   "blockers": [
@@ -3081,33 +3082,43 @@
     {
       "url": "https://www.curseforge.com/wow/addons/craft-ladder/files/9771225",
       "reason": "Nov 23 v1.11.6 release states the local collection retains 10,000 newest disenchanted items and gathering nodes, but client is explicitly Forever 1.60.1. Cap is retention policy, not observed sample size. No Retail data transfer."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/disenchantry/files/9807065",
+      "reason": "New Nov 25 v1.3.1 release supports Retail 12.1.5 alongside other clients; no changelog. Publisher description documents character session/lifetime aggregate item quality and material receipts, but previews apply to supported Classic-era items. Public comments page exposed no comment bodies. No published current Retail participant operation ledger, item 272246 at-cast variant or output quality/profile/zeros. No numeric cohort; do not repeatedly screen unchanged project description."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/goldstep-disenchant",
+      "reason": "Nov 24 publisher release 1.2 explicitly Forever 1.60.1. Comparison of DE, vendor and auction value is not a Retail Midnight outcome ledger; no transferable rates."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/dustify",
+      "reason": "Nov 25 publisher release explicitly Forever 1.60.1, a queue/hotkey utility; no published Retail cast or outcome observations."
     }
   ],
-  "next_concrete_step": "Seek new published original Retail operation receipts, particularly current-build 272246 and exact rank-specific prospecting/milling. Goldsmith current session schema may support reviewed per-operation or net-input means if a genuinely published original session export becomes available; its unchanged tour data cannot. Preserve actual successful casts, profile, output rank and refund basis; no per-cast hits/zeros inferred from aggregate totals. Do not repeat static indexed tables or unchanged source snapshots.",
-  "verified_base_commit_sha": "45fcb300bb9f51e068f028ed312bd81f064058c5",
+  "next_concrete_step": "Prioritize genuinely new public original Retail receipts or owner-approved community processing exports, rather than unchanged indexed Looter tables or collector releases without underlying observations. For 272246 require current-build at-cast item link and complete ordinary material outcomes; for 237362/237363, Copper/Silver and Midnight milling preserve successful casts, net/gross input and refunds, output rank and skill/spec/unlock. Keep previously held source records and scoped catalogue decisions intact.",
+  "verified_base_commit_sha": "011cccbffeedf7fd4266941e0526d3b551d63aac",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Previous status exact blob match at 9a19145f1b1b9c5cbc88952d1b17fab22768f69a. Current commit cannot contain its own SHA; exact read-back at returned commit required.",
+  "commit_note": "Prior status exact blob matched cf516259fe23a46704be8ad6f3d91ecd837355c3. Current commit cannot contain its own SHA; verify exact committed content after write.",
   "new_leads_screened": [
     {
-      "category": "collector_source_delta_and_unchanged_original_aggregate",
+      "category": "new_release_delta_and_client_flavor_screen",
       "sources": [
         {
-          "url": "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
-          "blob_sha": "c15c11eabfea7334a2d41351385296d24dd60130",
-          "reason": "Latest public source independently inspected: session captures recipe ID, input item ID, successful matching spell events (UNIT_SPELLCAST_SUCCEEDED), perCast from schematic, cumulative net bag use, output item totals, effective skill, difficulty, quality and Resourcefulness at session start. Retains up to 500 sessions. Outputs still attributed to positive bag gains within 3 seconds of input decrease; no per-cast output/hit/zero ledger, build, unlock or full specialization allocation, and session is not split on recipe/profile change if same item/concentration. Potential consented aggregate mean source only after source review; no public session rows obtained."
+          "url": "https://www.curseforge.com/wow/addons/disenchantry/files/9807065",
+          "reason": "New Nov 25 v1.3.1 release supports Retail 12.1.5 alongside other clients; no changelog. Publisher description documents character session/lifetime aggregate item quality and material receipts, but previews apply to supported Classic-era items. Public comments page exposed no comment bodies. No published current Retail participant operation ledger, item 272246 at-cast variant or output quality/profile/zeros. No numeric cohort; do not repeatedly screen unchanged project description."
         },
         {
-          "url": "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/TourData.lua",
-          "blob_sha": "066d4c16eae75ea26aabd0d8cd7c7b0ddb0bb12c",
-          "reason": "Latest public TourData blob exactly matches the already preserved Oct 13 account aggregate in 20261124T0913-goldsmith-original-bag-delta-totals.jsonl. Generator blob 2449c209cfecdc910ce01289f8d229da9bb7ac89 also unchanged. No new original session receipt or distinct cohort; never recount 22 existing output rows."
+          "url": "https://www.curseforge.com/wow/addons/goldstep-disenchant",
+          "reason": "Nov 24 publisher release 1.2 explicitly Forever 1.60.1. Comparison of DE, vendor and auction value is not a Retail Midnight outcome ledger; no transferable rates."
         },
         {
-          "url": "https://www.curseforge.com/wow/addons/craft-ladder/files/9771225",
-          "reason": "Nov 23 v1.11.6 release states the local collection retains 10,000 newest disenchanted items and gathering nodes, but client is explicitly Forever 1.60.1. Cap is retention policy, not observed sample size. No Retail data transfer."
+          "url": "https://www.curseforge.com/wow/addons/dustify",
+          "reason": "Nov 25 publisher release explicitly Forever 1.60.1, a queue/hotkey utility; no published Retail cast or outcome observations."
         }
       ],
-      "disposition": "Refreshed branch and read all five required documents. Compared prior checkpoint to refreshed branch: other-role status and Master legacy source-identity note only; no new Midnight evidence. Fresh DE, Tin/Copper/Silver/Diamond and milling searches yielded already screened guides, market pages or other client flavors. Community issue #91 has zero comments. No new qualifying cohort, no evidence file or numeric admission; no assigned catalogue work."
+      "disposition": "Refreshed branch and read the five required instructions/queue. Current date-filtered searches for Miststalker's Wristbands, Umbral Tin, Brilliant Silver, Refulgent Copper, Eversong Diamond and Tranquility Bloom yielded only previously screened guides, market data or non-numeric item comments. Community issue 91 has zero comments. No genuinely new independent original receipt, rank identity or processing denominator recovered; no evidence file or baseline changes. Did not re-catalogue cutoff sources."
     }
   ],
   "catalogue_checkpoint": {
@@ -3123,5 +3134,5 @@
     "release_status": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending",
     "worker_recataloguing": "not performed"
   },
-  "previous_verified_status_commit_sha": "9a19145f1b1b9c5cbc88952d1b17fab22768f69a"
+  "previous_verified_status_commit_sha": "cf516259fe23a46704be8ad6f3d91ecd837355c3"
 }
