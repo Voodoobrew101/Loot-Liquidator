@@ -1,0 +1,24 @@
+# Twitchie original historical source and unit review — 2026-11-25
+
+Scope: post-cutoff original historical Retail (2010 live, not modern Classic). Worker-owned raw records unchanged: research/v3/evidence/legacy/2026-11-25T0541-twitchie-original-cataclysm-prospecting.jsonl, at 9476b5a6c45d23517d48b1e86e7d03206a6c8e1c. No new current Retail measurement or runtime admission.
+
+## Prospecting: independent arithmetic check of legacy report
+Original: https://twitchieenterprises.blogspot.com/2010/12/prospecting-in-cataclysm.html (2010-12-13).
+Obsidium 53038: 550 nominal ore, source labels 110 prospects. Named common output sum 167, rare 9. Published subtotals 138 and 37 conflict. However, 167/110 = 1.51818 and 9/110 = 0.081818, rounding exactly to the author's printed 1.52/0.08. Published subtotals instead imply 1.25455/0.33636, inconsistent with those yields. This supports a subtotal transcription/formula mistake hypothesis; retain both raw interpretations and hold rather than silently repair an original. Elementium 52185: 1080 nominal ore, source labels 216 prospects. Named 241 common and 62 rare agree with printed subtotals; 241/216=1.11574 and 62/216=0.287037 round to printed 1.12/0.29. For that historical nominal basis, reported named quantities /1080 are per nominal input means; /216 are per nominal five-ore equivalent. Not completed cast counts or current profile. No per-material hit probabilities or positive-stack ranges; two explicit zero output quantities in Obsidium are not overall zero-output operation counts. Source lineage deduplicated with worker; no additional cohort counted.
+
+## Newly recovered earlier companion milling article and comparison
+Original 2010-12-10: https://twitchieenterprises.blogspot.com/2010/12/cataclysm-milling.html (retrieved successfully in search; worker direct retrieval had failed).
+2010-12-18: https://twitchieenterprises.blogspot.com/2010/12/inscription-herb-comparison.html (original table and linked input IDs).
+Columns: input ID/name | Dec 10 sample-label mills, common ink/mill, rare ink/mill | Dec 18 sample-label mills, common ink/mill, rare ink/mill | Dec 18 conditional pigment equivalents per mill (not measurements).
+- 52983 Cinderbloom | 127, 1.20, 0.12 | 165, 1.21, 0.12 | 2.42, 0.24
+- 52986 Heartblossom | 266, 1.23, 0.13 | 310, 1.23, 0.13 | 2.46, 0.26
+- 52984 Stormvine | absent | 256, 1.25, 0.13 | 2.50, 0.26
+- 52985 Azshara's Veil | absent | 35, 1.29, 0.17 | 2.58, 0.34
+- 52988 Whiptail | absent | 34, 1.43, 0.26 | 2.86, 0.52
+- 52987 Twilight Jasmine | 36, 1.53, 0.26 | 72, 1.51, 0.26 | 3.02, 0.52
+
+Earlier 429 and later 872 sample-label mills (do not add: same author, increased labels for all three overlapping herbs, likely cumulative; exact overlap unknown). The author explicitly describes ink per mill rather than raw pigment, and discusses an ink exchange. Current Retail recipes https://www.wowhead.com/spell=86004/blackfallow-ink and https://www.wowhead.com/spell=86005/inferno-ink independently establish two Ashen Pigment 61979 per Blackfallow Ink 61978, and two Burning Embers 61980 per Inferno Ink 61981, respectively. Contemporary context https://www.engadget.com/2010-11-24-insider-trader-inscription-heads-into-cataclysm.html confirms pigment-to-ink pairing. Derived candidate pigment means = 2 * source ink/mill only IF the reported ink equivalents are pre-exchange, solely from the same milled pigments, and there is no unaccounted residue or external stock. These assumptions are not proven, source averages rounded, counts are source sample labels rather than independent event logs. Preserve original ink means and model transformation separately; do not write them as observed pigment totals or assign observed counts/hits/ranges. Current applicability and existing compiled gap-only support not tested. No prices preserved.
+
+The author's 2010 archive https://twitchieenterprises.blogspot.com/2010/ also indexes a Nov 16 Adder's Tongue source (382 mills, 1910 herbs, 1.48 Ink of the Sea and 0.25 Snowfall Ink per mill); direct article retrieval failed. Current Retail recipes 57715/57716 use two Azure/Icy pigments respectively; direct article or exact provenance and prior source dedup required before a separate numerical proposal. This is a lead, not a verified new cohort.
+
+Default-branch code search for twitchieenterprises and twitchie-2010 returned no hits; cutoff manifest has no Twitchie key, but search absence is not global dedup proof. Existing worker-owned historical prospecting raw file is the source anchor. This note is scoped review metadata, not a registered baseline admission or new compiled output. Build reviewer and prepare pipeline inspected at main 2db9929050b8532645149dea5a3c5fa8aa0a035a; no build execution or current runtime verification. Next: if original source supports pre-exchange pigment basis and exact epoch/scope, use gap-only reference pathway without duplicating extant values or creating a routine PR.
