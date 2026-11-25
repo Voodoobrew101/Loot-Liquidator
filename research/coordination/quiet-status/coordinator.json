@@ -1,158 +1,138 @@
 {
   "role": "research-manager",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-25T03:01:59.054Z",
-  "status": "Reviewed new post-cutoff Aevery’s Spare Gauntlets 229080 Looter reference; independently matched PTR table counts, checked all five histogram sums and corroborated variant context. Static pipeline distinguishes non-counted reference and exact-key bound fallback. No new current-profile baseline or independent cohort claimed.",
+  "updated_at": "2026-11-25T04:03:14.403Z",
+  "status": "Validated nine new post-cutoff TWW reference outcomes from two distinct item-side aggregates; source-context and collector version checks. No new independent measured cohort or production valuation claim.",
   "task_ids": [
     "T0048",
-    "T0039",
-    "T0047"
+    "T0040",
+    "T0039"
   ],
   "exact_gaps_targeted": [
-    "TWW 229080: distinguish source aggregate operation counts and rank-specific reported outcomes from executed rarity/bonus/item level, and prevent mirrored/overlapping cohorts from double counting.",
-    "Reference-only numeric admission and positive-range fallback at exact method/input/output/batch, not rarity-wide or universal skill profile."
+    "229085 and 232450 ranked DE reference histograms, variant/epoch and live/PTR overlap",
+    "CraftSim historical logged craft count and refund correctness by collector version; no blanket exclusion"
   ],
   "newly_verified_fields_cohorts": [
     {
-      "type": "post-cutoff worker evidence review; not a new manager-collected cohort",
-      "inputItemID": 229080,
-      "studyKey": "wowhead-looter-tww-229080-snapshot-2026-11-25",
-      "sourceReportedOperations": 82,
-      "sourceKind": "reference",
-      "workerEvidenceBlob": "4c8e46a8651d3158d0603a85d9ec521c4798d383",
-      "verifiedRows": [
+      "inputItemID": 229085,
+      "sourceReportedOperations": 83,
+      "outputs": [
         {
-          "outputItemID": 219946,
-          "rank": 1,
-          "N": 82,
-          "H": 2,
-          "Q": 4,
-          "conditionalOnCounterSemantics": true,
-          "arithmeticMatches": true,
-          "meanPerReportedOperation": 0.04878048780487805,
-          "positiveRange": [
-            1,
-            3
-          ]
+          "id": 219946,
+          "hits": 8,
+          "units": 11
         },
         {
-          "outputItemID": 219947,
-          "rank": 2,
-          "N": 82,
-          "H": 2,
-          "Q": 6,
-          "conditionalOnCounterSemantics": true,
-          "arithmeticMatches": true,
-          "meanPerReportedOperation": 0.07317073170731707,
-          "positiveRange": [
-            3,
-            3
-          ]
+          "id": 219948,
+          "hits": 1,
+          "units": 2
         },
         {
-          "outputItemID": 219949,
-          "rank": 1,
-          "N": 82,
-          "H": 52,
-          "Q": 52,
-          "conditionalOnCounterSemantics": true,
-          "arithmeticMatches": true,
-          "meanPerReportedOperation": 0.6341463414634146,
-          "positiveRange": [
-            1,
-            1
-          ]
+          "id": 219949,
+          "hits": 52,
+          "units": 52
         },
         {
-          "outputItemID": 219950,
-          "rank": 2,
-          "N": 82,
-          "H": 20,
-          "Q": 20,
-          "conditionalOnCounterSemantics": true,
-          "arithmeticMatches": true,
-          "meanPerReportedOperation": 0.24390243902439024,
-          "positiveRange": [
-            1,
-            1
-          ]
+          "id": 219950,
+          "hits": 20,
+          "units": 20
         },
         {
-          "outputItemID": 219951,
-          "rank": 3,
-          "N": 82,
-          "H": 6,
-          "Q": 6,
-          "conditionalOnCounterSemantics": true,
-          "arithmeticMatches": true,
-          "meanPerReportedOperation": 0.07317073170731707,
-          "positiveRange": [
-            1,
-            1
-          ]
+          "id": 219951,
+          "hits": 2,
+          "units": 2
         }
       ],
-      "detail": "PTR readable table independently states 82 disenchants and counts 52/20/6 shards, 2/2 dust, with dust positive stacks 1–3 and 3. Output rank IDs and exact dust 50/50 split are from worker raw source transcription, not independently retrieved raw HTML by manager. Live readable base page lacks the DE table; live/PTR equality is worker-reported, not independently confirmed this run. Five hit counts sum to 82 but this alone does not establish mutually exclusive or exhaustive results. Total reported listed output quantity 88; no omitted-output zeros or shared cast distribution inferred. Arithmetic means are source-context diagnostics only, conditional on counter and stack semantics; no admission or observed-sample confidence increase."
+      "disposition": "All five worker histogram totals/hits/denominators independently recomputed from saved evidence; mirror identical per worker; exact observed variant unknown. TSM public group classifies named item as green BoE and independent item list identifies uncommon mail, not execution rarity."
     },
     {
-      "type": "independent catalogue context",
-      "itemID": 229080,
-      "detail": "Wowhead live indexed page lists random-stat suffix versions and differing binding context, displayed item level 79; separate BootyBayBroker catalogue describes uncommon mail, item level 545, BoE. Neither identifies the actual executed item variant or proves that shard-heavy outcomes came from rare gear; no current profile or rarity remap."
+      "inputItemID": 232450,
+      "sourceReportedOperations": 97,
+      "outputs": [
+        {
+          "id": 219946,
+          "hits": 44,
+          "units": 92
+        },
+        {
+          "id": 219947,
+          "hits": 28,
+          "units": 57
+        },
+        {
+          "id": 219948,
+          "hits": 24,
+          "units": 38
+        },
+        {
+          "id": 219949,
+          "hits": 1,
+          "units": 1
+        }
+      ],
+      "disposition": "All four saved histogram arithmetic checks pass. Worker reports PTR 96 vs live 97, same other hits; do not add snapshots. Warcraft Wiki confirms 11.1.0 introduction Feb 25 2025, Split Venture reward, two-handed sword ilvl 600 historical tooltip; localized Wowhead current tooltip ilvl 86. Neither fixes execution build or variant; do not infer rate change from level display."
     },
     {
-      "type": "static pipeline audit",
-      "detail": "Main tools/research_v3_to_baselines.py is_counted excludes REFERENCE_KINDS. reference_ranges collects positive bounds by exact key and batch, and bound_field can use them only when an existing estimate lacks supported bounds; reference rows alone do not create new counted mean/chance models. tools/research_build_review.py reports PRESERVED_REFERENCE unless an exact reviewed published prior or scoped catalogue decision applies. Do not assume no possible display influence or that the new reference mean is automatically admitted; exact compiled consumer and source-profile applicability untested."
+      "source": "https://www.curseforge.com/wow/addons/craftsim/files/7092169",
+      "release": "20.3.0 (2025-10-10)",
+      "disposition": "Public release corroborates worker PR892 caveat: logged craft count could over/undercount depending on event timing/frame rate; PR894 corrects saved gem counts when crushing. Also documents stale recipe data after temporary stat changes, specifically Bountiful Phial seasonal Resourcefulness in salvage. Audit only sources actually relying on affected logger/version/stat path; no global exclusion or fabricated correction. No direct operation data."
+    },
+    {
+      "disposition": "Static current producer reference_ranges indexes positive min/max by exact resolved operation key and supported batch, skips superseded fields; not empirical count or guarantee of mean/tooltip admission. No current build executed."
     }
   ],
   "source_links": [
-    "https://www.wowhead.com/item=229080/aeverys-spare-gauntlets",
-    "https://www.wowhead.com/ptr/item=229080/aeverys-spare-gauntlets",
-    "https://bootybaybroker.com/item/229080/aeverys-spare-gauntlets/us/stormreaver",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/4e74c412e7cc04d92379f37e1fcf2433f95384e6/research/v3/evidence/war-within/2026-11-25T0222-aeverys-gauntlets-live-ptr-shared-looter-reference.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/2db9929050b8532645149dea5a3c5fa8aa0a035a/tools/research_v3_to_baselines.py",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/2db9929050b8532645149dea5a3c5fa8aa0a035a/tools/research_build_review.py"
+    "https://www.wowhead.com/item=229085/aeverys-spare-bracers",
+    "https://www.wowhead.com/item=232450/grateful-goblins-sword",
+    "https://warcraft.wiki.gg/wiki/Grateful_Goblin%27s_Sword",
+    "https://www.wowhead.com/fr/item%3D232450/%C3%A9p%C3%A9e-de-reconnaissance-gobeline",
+    "https://tradeskillmaster.com/retail/groups/01k2e62czbprf44136d7g9en61",
+    "https://bootybaybroker.com/item/244588/scouts-scaled-boots",
+    "https://www.curseforge.com/wow/addons/craftsim/files/7092169",
+    "https://github.com/derfloh205/CraftSim/pull/892",
+    "https://github.com/derfloh205/CraftSim/pull/894",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/2db9929050b8532645149dea5a3c5fa8aa0a035a/tools/research_v3_to_baselines.py"
   ],
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-25T0222-aeverys-gauntlets-live-ptr-shared-looter-reference.jsonl",
-    "research/coordination/quiet-status/war-within.json",
-    "research/coordination/quiet-status/coordinator.json"
+    "research/v3/evidence/war-within/2026-11-25T0320-aeverys-bracers-goblins-sword-looter-reference.jsonl",
+    "research/coordination/quiet-status/war-within.json"
   ],
   "worker_reports_verified": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-25T02:10:39.055Z",
+      "updated_at": "2026-11-25T03:10:38.908Z",
       "result": "No new independent numeric cohort; checkpoint read."
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-25T02:22:01.852Z",
-      "result": "Five ranked reference rows; exact evidence read and arithmetic checked."
+      "updated_at": "2026-11-25T03:20:10.812Z",
+      "result": "Nine rank-resolved reference rows; evidence arithmetic verified, source raw HTML not independently re-fetched."
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-25T02:34:56.702Z",
-      "result": "No new cohort; checkpoint read."
+      "updated_at": "2026-11-25T03:32:58.496Z",
+      "result": "No new qualifying cohort; checkpoint read."
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-25T02:40:16.637Z",
-      "result": "Historical eligibility reference only; no new target measurements."
+      "updated_at": "2026-11-25T03:38:08.424Z",
+      "result": "Acquisition/profile leads only; checkpoint read."
     }
   ],
-  "verified_commit_sha": "4e74c412e7cc04d92379f37e1fcf2433f95384e6",
-  "checked_research_branch_head_before_status_write": "4e74c412e7cc04d92379f37e1fcf2433f95384e6",
+  "verified_commit_sha": "15c900f6ddbb18fcaf9a567d790dd891c3cae035",
+  "checked_research_branch_head_before_status_write": "15c900f6ddbb18fcaf9a567d790dd891c3cae035",
   "main_head_checked": "2db9929050b8532645149dea5a3c5fa8aa0a035a",
   "owner_three_pass_head_checked": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "owner_catalogue_manifest_branch_head_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
   "owner_catalogue_pipeline_branch_checked": "a23e65d784f0c36833df0ad903d817d10d2f2ae3",
   "validation_this_run": {
-    "CI": "GitHub push workflow main 45452849366 success at 2db9929050b8532645149dea5a3c5fa8aa0a035a; research 45534624170 success at 4e74c412e7cc04d92379f37e1fcf2433f95384e6; not validation of subsequent status-only commit.",
-    "automation": "All four role reports read; actual automation get returned 404 Action not found for all four, run outcome not independently verified.",
-    "managerTests": "Read charter, plan/pass1, v3 instructions/role, queue, strategy, flags, mechanics, current catalogue receipt and pipeline code. Spot-checked readable PTR counts and independent catalogue variant context, parsed all five original worker JSONL rows and verified histogram arithmetic. No build, Lua, or live game test executed.",
+    "CI": "Combined statuses empty and PR-filtered workflow runs empty for exact main 2db9929 and research 15c900f; push CI not independently verified this run.",
+    "automation": "Four role checkpoints read; actual automation get returned 404 Action not found for each. No actual run outcome claim.",
+    "managerTests": "Read current charter, plan/pass1, v3 README, schema, mechanics, queue, master role, flags, strategy and cutoff receipt; fetched current pipeline and checked reference bounds. Parsed 9 saved JSONL rows: all N, positive hits and weighted totals equal source transcription. Checked public collector release and item catalog context. No build, Lua or live-game test.",
     "newMeasuredCohorts": 0,
     "newSupportedGoldDecisions": 0,
     "cutoffCatalogue": "CLOSED_VERIFIED_CURRENT_PIPELINE (731 receipt sources; exact owner receipt verifiedResearchCommit 858b6c1bda7994c0d29f6f3d93df30f0a9b9674f; merged main 3f7323db7b28d822d7c1a89d2d48ee15dbfc5b36). No recatalogue.",
-    "historicalPRs": "#22 and #23 both closed, not merged, no action taken."
+    "historicalPRs": "Prior checkpoint records closed #22/#23; not independently refreshed this run; no action."
   },
   "blockers": [
     "Goldsmith full source receipt and cast/refund reconciliation absent; pooled bag decreases and three-second gains cannot establish complete operation or reliable net-input mean.",
@@ -173,7 +153,9 @@
     "Three earlier candidate gaps have numerical runtime records; do not add historical model copies. Two Trillium 90407 keys absent in inspected canonical models/static runtime; historical range guide alone cannot prove unconditional mean, current epoch or Black Trillium equivalence. Exact runtime selection and tooltip not executed.",
     "Trillium reference: mixed-author summary gives 0.3 shards per ore but no date, color-separated cohort, raw ledger, skill or patch. Retail PTR reverse-table exact count semantics and underlying collection epoch unresolved. Range is White-specific in historical guide; generic author range not proof of identical color distributions. Need dedup/source-scope review and existing gap-only reference admission/consumer verification; no fabricated measurements or unconditional 100% probability.",
     "Rare Resourcing native entry 123429 already has rarity-3 label3437 extraOutput qualitative binding at confidence 0; unknown target-compatible output item identities for new worker report, exact per-milestone effect, hit counts and mean. Existing 2024 cuff observations remain distinct; no generic leather rate or extra skill-to-yield factor.",
-    "229080: reference source has mixed or unknown actual variant/rarity/ilvl/epoch and skill. Existing reference range path may supply missing positive bounds to an exact-key estimate but not produce independent means. Need exact variant evidence, reverse-tab overlap check and actual consumer scope before current-profile admission. No rarity-wide extrapolation."
+    "229080: reference source has mixed or unknown actual variant/rarity/ilvl/epoch and skill. Existing reference range path may supply missing positive bounds to an exact-key estimate but not produce independent means. Need exact variant evidence, reverse-tab overlap check and actual consumer scope before current-profile admission. No rarity-wide extrapolation.",
+    "229085/232450: actual variant, source capture build/skill and reverse-side overlap remain unknown. Current source aggregate is reference only; no current-profile admission or independent zero-output count established.",
+    "CraftSim historical affected logger and seasonal salvage stats: specific affected source cohorts and versions not yet identified; use version/reconciliation evidence rather than apply blanket correction."
   ],
   "exhausted_sources": [
     "2026-11-21 Disenchantry release is a recheck of already-documented 2026-11-19 stats instrumentation lead; no public original Retail events or authoritative per-item DE rates found. Avoid repeated release-description scrapes.",
@@ -221,16 +203,17 @@
     "2026-11-25 00Z: canonical admitted models and committed runtime now successfully inspected via blob endpoint; no repeat of three already-compiled pair searches. Contemporary MoP Classic tables and calculator excluded. Historical guide White Ore range only, underlying raw table/ledger not accessible; revisit only original exact scope or new original Retail evidence.",
     "2026-11-25 01Z: both Retail PTR Sparkling Shard mirrors identical counter table; contemporary MoP Classic table and Lazy Goldmaker 2025 model excluded. Recovered historic guide complete table and Kyparite mixed-author reference. Do not repeat unchanged source searches; follow exact source scope/epoch or new published original ledger.",
     "2026-11-25 01:57Z: GoldScout Nov24 v0.12.49 explicitly Forever 1.60.1; community kills dataset not Retail processing. ProspectMate June17 release only describes capture features, no published raw cohort found in this screen. Storm Dust issue post-level direct fetch inaccessible; indexed thread and trait/guide confirm only contextual scope, existing 7652 cuff audit and Shimmering Dust comment already reviewed. Do not repeat without new exact loot receipts or changed original source.",
-    "229080 live/PTR item-side table: do not re-fetch unchanged aggregate or count live and PTR as independent; next work requires new variant/epoch evidence or reverse-output overlap change."
+    "229080 live/PTR item-side table: do not re-fetch unchanged aggregate or count live and PTR as independent; next work requires new variant/epoch evidence or reverse-output overlap change.",
+    "2026-11-25 04Z: worker's nine saved ranked reference rows validated, source catalogue variant links corroborated; no re-transcription of unchanged aggregates. CraftSim 20.3.0 changelog confirms specific collection/model issues; revisit only with actual source logger version, raw receipt or impacted cohort."
   ],
-  "next_concrete_step": "Seek distinct published ranked operation ledgers or exact held-item variant/build/skill evidence for current unresolved targets. For 229080 use only new variant or cohort-linkage data, not unchanged aggregate. If new source-context information warrants it, review exact-key reference range and mean selection through current consumer in separate authorized engineering workflow.",
+  "next_concrete_step": "Find new original published skill/build-qualified ranked operation ledgers, or identify a specific existing source using affected CraftSim pre-20.3.0 craft counts and reconcile to original operation records. For 229085/232450 seek executed variant or reverse-table cohort linkage only; do not repeat unchanged item tables.",
   "production_main_changes": false,
   "addon_changes": false,
   "routine_research_prs": 0,
   "merge_or_release": false,
   "new_schedules": 0,
   "role_schedules_unchanged": true,
-  "prior_status_blob_sha": "5b1278b8e94442ab77864b047270dedc779ce6c3",
-  "previous_checkpoint": "c85a244bfda1887bef57dd06bab9f5cc4435cc78",
-  "previous_status_updated_at": "2026-11-25T01:57:44.123Z"
+  "prior_status_blob_sha": "38cb9a0d7fe392d6ebce29d7b234b19d137a933c",
+  "previous_checkpoint": "66bc8b781268e67467d0b9a2f0f8977e07f61b87",
+  "previous_status_updated_at": "2026-11-25T03:01:59.054Z"
 }
