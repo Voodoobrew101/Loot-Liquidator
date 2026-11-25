@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-25T07:11:45.886Z",
-  "status": "active__new_source_screening_no_new_baseline",
+  "updated_at": "2026-11-25T08:07:21.781Z",
+  "status": "active_search_no_new_numeric_cohort",
   "task_ids": [
     "T0026",
     "T0049",
@@ -2216,9 +2216,10 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://www.curseforge.com/wow/addons/forever-stats/files/9783695",
-    "https://www.curseforge.com/wow/addons/forever-stats/files/9801001",
-    "https://www.curseforge.com/wow/addons/keeporsell/files/9731986/dependencies"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/issues/91",
+    "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/TourData.lua",
+    "https://www.curseforge.com/wow/addons/avg-export",
+    "https://www.curseforge.com/wow/addons/simple-trade-skill-exporter"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -2974,31 +2975,44 @@
     {
       "url": "https://www.curseforge.com/wow/addons/keeporsell/files/9731986/dependencies",
       "reason": "Nov 21 v0.23.0 explicitly Forever 1.60.1. Bag categorization, filter export and price sharing do not export Retail Midnight processing observations; no transfer of rates."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/avg-export",
+      "reason": "Original publisher Aug 10 release exports auction listing prices sampled from market depth, not processing outcomes; no cast, rank, or event cohort. Source screen only, not cutoff recataloguing."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/simple-trade-skill-exporter",
+      "reason": "September 16 release exports learned recipe list as text/CSV/Markdown, not completed processing or actual material receipts. No current cast-profile observations. No re-cataloguing."
     }
   ],
-  "next_concrete_step": "Check genuinely new consented Retail community receipt exports and research-branch source deltas, especially actual at-cast 272246 item-instance/bonus and ranked ore/herb operations. Do not re-screen unchanged guides or tracker releases without new processing-data content. Preserve existing held PvP, Tin and Looter cohorts with null denominators where unknown. No in-game testing.",
-  "verified_base_commit_sha": "d6ff1d17cfa9cf931bb6be4a2f536cde4d6989a2",
+  "next_concrete_step": "Seek new public, consented, item-linked Retail operation receipts or changed source data rather than static addon releases, unchanged TourData or repeated item-level previews. Preserve held original PvP, Goldsmith, Tin and Looter cohorts. Community submission admission remains with the dedicated daily review; no game operations.",
+  "verified_base_commit_sha": "d5e5d7fb53fb9d2447db795130804102a8c3aa56",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Previous status commit exact blob matched. This commit cannot embed its own SHA; verify returned commit and exact file content after write.",
+  "commit_note": "Previous status commit exact blob matched at refreshed head. This commit cannot embed its own SHA; verify returned commit and exact file content after write.",
   "new_leads_screened": [
     {
-      "category": "post_checkpoint_repository_and_public_release_delta",
+      "category": "new_public_export_leads_and_exact_source_delta",
       "sources": [
         {
-          "url": "https://www.curseforge.com/wow/addons/forever-stats/files/9783695",
-          "reason": "Nov 24 2026 release 0.88.4 supports Retail 12.1.7 and Forever. Delta from previously screened 0.88.3 addresses disconnected guild messages, dropped profession visibility/history and guild material movement; no public original processing receipts or new cast-count or yield mechanism. Profession history retention is not an at-cast profile."
+          "url": "https://github.com/Voodoobrew101/Loot-Liquidator/issues/91",
+          "reason": "Nov 24+ issue search returned only the public contribution hub; its comment list returned zero. No new separate participant submission or actual receipt observed in this search. Daily community review owns submission admission; no duplicate review, action, or publication."
         },
         {
-          "url": "https://www.curseforge.com/wow/addons/forever-stats/files/9801001",
-          "reason": "Nov 24 release 0.89.0 adds an optional auction price module and API compatibility level; prices in crafted-item views are valuations, not processing output observations. No public original Retail ledger or new measured denominator. Existing consented export lead remains open, not a numeric cohort."
+          "url": "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/TourData.lua",
+          "blob_sha": "066d4c16eae75ea26aabd0d8cd7c7b0ddb0bb12c",
+          "reason": "Fresh main head is 045d366a; exact TourData.lua blob is unchanged from Nov 24 acquired aggregate. No additional original account sample, zero-inclusive receipts, skill or gross casts. Do not duplicate the 22 held rows."
         },
         {
-          "url": "https://www.curseforge.com/wow/addons/keeporsell/files/9731986/dependencies",
-          "reason": "Nov 21 v0.23.0 explicitly Forever 1.60.1. Bag categorization, filter export and price sharing do not export Retail Midnight processing observations; no transfer of rates."
+          "url": "https://www.curseforge.com/wow/addons/avg-export",
+          "reason": "Original publisher Aug 10 release exports auction listing prices sampled from market depth, not processing outcomes; no cast, rank, or event cohort. Source screen only, not cutoff recataloguing."
+        },
+        {
+          "url": "https://www.curseforge.com/wow/addons/simple-trade-skill-exporter",
+          "reason": "September 16 release exports learned recipe list as text/CSV/Markdown, not completed processing or actual material receipts. No current cast-profile observations. No re-cataloguing."
         }
       ],
-      "disposition": "No new qualifying independent numerical cohort. Compared prior status commit 31013897135c86c4ecb144c9bb1215e4409340d8 to d6ff1d17cfa9cf931bb6be4a2f536cde4d6989a2: five intervening commits, changed other-role status files and Master Dreamleaf and War Within gear evidence only. Fresh public searches for current disenchant/ore/herb results and CSV exports surfaced prior screened references, unrelated Forever data, or the exact new release deltas above. No independent cutoff catalogue review; no empty evidence file or baseline changes."
+      "disposition": "No new qualifying independent numerical cohort. Refreshed branch and read required instructions/queue; compared previous checkpoint to d5e5d7fb (five intervening commits: other-role status files and Master Shadowlands Progenium/First Flower unit screen). Public queries covered current DE/272246, ranked Tin/Copper/Silver and Diamond, and Midnight milling. Search returned existing sources, unrelated classic/Forever results, and export tools without output records. GatherBuffs source audit already exists (20261116T0015-gatherbuffs-loot-window-denominator-audit.jsonl); its code is not a new cohort. No assigned-corpus recataloguing, no empty evidence file, no baseline or implementation changes."
     }
   ],
   "catalogue_checkpoint": {
@@ -3014,5 +3028,5 @@
     "release_status": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending",
     "worker_recataloguing": "not performed"
   },
-  "previous_verified_status_commit_sha": "31013897135c86c4ecb144c9bb1215e4409340d8"
+  "previous_verified_status_commit_sha": "0149fd16e2aa1c0827783f9a904c76d26d3eb922"
 }
