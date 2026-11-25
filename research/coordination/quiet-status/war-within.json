@@ -1,22 +1,24 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-25T00:21:13.059Z",
-  "status": "Verified new Goldsmith salvage collector's run schema and completed-cast counting, with aggregate bag-attribution and profile limitations; no public TWW run recovered and no empirical yield admitted.",
+  "updated_at": "2026-11-25T01:21:01.840Z",
+  "status": "New original historical Rare Resourcing additional-material report located; identity and quantities unresolved, no independent empirical yield admitted.",
   "task_ids": [
+    "T0048",
+    "T0032",
+    "T0040",
     "T0009",
     "T0010",
     "T0011",
-    "T0007",
-    "T0040",
     "T0008",
-    "T0048"
+    "T0007",
+    "T0012"
   ],
   "exact_gaps_targeted": [
-    "Independent ranked TWW ore/herb operation logs with gross casts and net inputs separated",
-    "Collector source-integrity: avoid synthetic P(hit), pooled skill and refund denominators"
+    "Rare gear DE conditional material identity and profile (Rare Resourcing 99888)",
+    "Independent ranked TWW prospect/mill operation logs and gross/refund counts"
   ],
-  "source_branch_head_reviewed": "1be7eea07a294947a39fd423b99df08a50173e78",
-  "source_policy": "Read current README, evidence format, mechanics, worker, queue and owned status. Consulted verified cutoff receipt and enabled registry; no recatalogue, runtime edits or new experiments.",
+  "source_branch_head_reviewed": "b4cad0a5ecee5e6427c18acf989667f0c6670e0a",
+  "source_policy": "Read current README, evidence format, mechanics, worker, queue and owned status. Current cutoff receipt CLOSED_VERIFIED_CURRENT_PIPELINE (731 sources); no recatalogue, runtime edits, new experiments or build changes.",
   "study_backlog_triage": [
     {
       "status": "admitted",
@@ -1275,12 +1277,15 @@
   },
   "newly_verified_fields": [
     {
-      "field": "GoldsmithDB.salvageRuns source semantics",
-      "detail": "GoldsmithDB.salvageRuns stores exact itemID, recipeID, time, character, casts counted on matching player UNIT_SPELLCAST_SUCCEEDED, net used, perCast from schematic.quantityMax, aggregate output IDs and quantities, start-of-run skill/difficulty/quality/resourcefulness and concentration. It keeps at most 500 runs. Bag gains within three seconds after input disappearance are attributed to salvage; unrelated loot, delayed gains or net refunds can distort a run. Session only switches on input ID or concentration (not every same-input recipe or skill change). No per-cast output assignment, explicit hits/zeros/histogram, spec node state or per-run client build. Report.lua GetBuildInfo is report-time, not run-time. UI aggregates by item/character and uses last profile, falls back to net-input totals scaled by nominal batch size, and uses modeled refund save fraction; estimated milling synthesizes records for Midnight herbs. Do not treat these as independent empirical per-cast probabilities, direct measured refund procs or TWW data. No public TWW run export in inspected source; comments not visible in web extraction. Seek already-existing consented raw salvageRuns with capture build, stable profile, method/IDs and independently checked bag attribution; only then consider aggregate mean, not P(hit). No in-game operation requested.",
+      "field": "Historical reported specialization allocation",
+      "traitID": 99888,
+      "reported_points": 30,
+      "reported_max_points": 30,
+      "detail": "Dark-17847's September 5, 2024 first-person forum post reports allocating 30/30 Rare Resourcing then receiving unspecified leather while disenchanting inventory. The source does not identify the gear, its rarity, leather type/rank/ID, quantity, completed N, or which individual operation gave leather. Supports historical possibility of an additional-material output in a disclosed Rare Resourcing profile, not a confirmed conditional rule for a specific item or material. Trait 99888 and specialization guide corroborate rarity-scoped specialization, but not a leather drop rate. A separate August 30 commenter reports shards from low-level crafted bracers without ID/rarity/skill or quantities; do not pool authors or assume those are uncommon items. No exact numeric yield or measured probability; all unavailable values remain null. Source thread not present in cutoff manifest or previous owned status. No new estimator record.",
       "sources": [
-        "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
-        "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Goldsmith.toc",
-        "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Report.lua"
+        "https://eu.forums.blizzard.com/en/wow/t/storm-dust-issue/532522/20",
+        "https://www.wowhead.com/profession-trait/rare-resourcing-99888",
+        "https://www.wowhead.com/guide/the-war-within/professions/enchanting-specialization"
       ]
     }
   ],
@@ -1293,18 +1298,16 @@
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
-    "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Goldsmith.toc",
-    "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Report.lua",
-    "https://www.curseforge.com/wow/addons/goldsmith-crafting-profit-planner/comments",
-    "https://github.com/sunseteffect/Goldsmith/issues"
+    "https://eu.forums.blizzard.com/en/wow/t/storm-dust-issue/532522/20",
+    "https://www.wowhead.com/profession-trait/rare-resourcing-99888",
+    "https://www.wowhead.com/guide/the-war-within/professions/enchanting-specialization"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-24T1822-pioneer-cloth-raw-looter-single-stack-reference.jsonl",
-  "verified_commit_sha": "1be7eea07a294947a39fd423b99df08a50173e78",
-  "verification": "Refreshed branch commit 1be7eea07a294947a39fd423b99df08a50173e78 and owned status blob 356a1afb3c509ac8277d029bba5e9e4391f8c8e0; new commit to be verified by read-back externally (self SHA cannot be embedded in same commit).",
+  "verified_commit_sha": "b4cad0a5ecee5e6427c18acf989667f0c6670e0a",
+  "verification": "Refreshed branch commit b4cad0a5ecee5e6427c18acf989667f0c6670e0a; owned prior status blob 6a16e3db506349ecf2e4236380dd500a2ddaf004. New status commit to be verified externally by exact read-back; self SHA cannot be embedded in the same commit.",
   "blockers": [
-    "No independent original TWW ranked ore/herb or gear operation data recovered from these searches. Goldsmith code is collection metadata, not a study.",
-    "Goldsmith output gains are aggregate bag deltas; no per-operation histograms, full specialization state or per-run game build. Need existing raw export and corroboration; no schema changes made."
+    "No exact ranked input/output IDs, complete operation ledger, quantities, hits or histogram from the new historical report; cannot admit as yield or item-specific conditional drop.",
+    "New English/German/Chinese searches yielded already-catalogued studies, translated copies, guides, or qualitative reports. No independent TWW raw Goldsmith salvageRuns export recovered."
   ],
   "exhausted_sources": [
     "2026-11-20: Reddit 1ftqzxp historical shatter original/commenter estimates inspected; new but unfit for direct DE numeric admission without distinct recipe method/raw ledger; do not scrape it repeatedly without author export.",
@@ -1375,24 +1378,28 @@
     "2026-11-24T21:22:32.420Z: Named searches across Reddit, Blizzard, Wowhead and wiki found previously covered 1fmrp4z, 1f5rby5, 1fdmzwy, 1jc2ya5, 1iaamax, 2083666, 1m0dvk9, 1nqwdhf, Canadiatv, PeaEsk and dye-only 1pa98qw. No new independent numeric cohort. Wowhead output-side 219954 snippet has class-variant same-name rows; direct page did not expose underlying IDs/stack distributions, so no rows imported. Restoration reports are new but indirect.",
     "2026-11-24T22:21:08.358Z: Named Reddit, Blizzard, Wowhead, Method and wiki searches returned earlier Aspalar, 1f8pc9q, 1g6jcfr, PeaEsk, Adreymar, LotzBoi, 1g350pq, 1958379, 1968257 and 565405 sources. Oct 3 1975800 cross-post has only aggregate range and possible same-author overlap; do not re-transcribe. Oct 25 hotfix confirmed by contemporary Oct 26 Reddit link; Wowhead Oct 30 comment references rolling article, not evidence of a separate epoch.",
     "2026-11-24T23:21:18.538Z: Three historical ItemDisenchantLoot extracts and ItemClass identity table checked. No new empirical counts. Named searches returned existing LotzBoi, Method, 1jc2ya5, 1g6jcfr, and Arathor's Spear reports; beta 1ew3glf is qualitative and not a Retail cast cohort, not re-transcribed. No repeat of identical bracket scans unless relevant build or metadata differs.",
-    "2026-11-25T00:21:13.059Z: Named searches for Mycobloom, Blessing Blossom, Arathor's Spear, Aqirite, Ironclaw and Darkmoon Deck returned known 1fdmzwy, 1g350pq, 1fisfkn, 1k78h4v and Method or unrelated results. Goldgoblin milling guide has mappings, no empirical operation ledger. ProspectMate/Goblinomics already screened. New Goldsmith source code inspected at pinned commit; no public TWW cohort found, CurseForge comments unavailable in extracted page. Do not rescan unchanged code unless raw export or new capture changes emerge."
+    "2026-11-25T00:21:13.059Z: Named searches for Mycobloom, Blessing Blossom, Arathor's Spear, Aqirite, Ironclaw and Darkmoon Deck returned known 1fdmzwy, 1g350pq, 1fisfkn, 1k78h4v and Method or unrelated results. Goldgoblin milling guide has mappings, no empirical operation ledger. ProspectMate/Goblinomics already screened. New Goldsmith source code inspected at pinned commit; no public TWW cohort found, CurseForge comments unavailable in extracted page. Do not rescan unchanged code unless raw export or new capture changes emerge.",
+    "2026-11-25T01:21:01.840Z: English/German/Chinese named searches for Ironclaw/Aqirite/Bismuth, Luredrop/Orbinid/Mycobloom, Storm Dust and Gleaming Shards yielded known 1fspqym, 1g350pq, 1fdmzwy, 1g9l8t8, 565405, LotzBoi and PeaEsk, no new operation ledger. EU forum 532522 newly inspected; qualitative only. Do not rescan unchanged forum or guide unless new item-specific original results appear."
   ],
-  "next_concrete_step": "Look for existing public raw Goldsmith salvageRuns or other independent logs with exact ranked item IDs, capture build and stable skill/spec; seek new DE gear operation evidence without repeating cutoff catalogue or exhausted sources.",
-  "previous_status_updated_at": "2026-11-24T23:21:18.538Z",
+  "next_concrete_step": "Prioritize a genuinely new public raw export or source-linked operation log, e.g. archived item-side weapon/profession equipment observations with capture epoch and non-overlap or original ranked herb/ore data; avoid recataloguing old sources and repeatedly searching unchanged guide material. Keep qualitative additional-material reports separate from normal DE yield.",
+  "previous_status_updated_at": "2026-11-25T00:21:13.059Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "date": "2026-11-25T00:21:13.059Z",
-    "method": "Named searches across Reddit, forums, guides, GitHub and CurseForge; code-level audit of newly surfaced collector at pinned commit.",
+    "date": "2026-11-25T01:21:01.840Z",
+    "method": "English, German and Chinese named searches across Reddit, Blizzard, Wowhead, Method and Goldgoblin; original forum thread inspected; duplicate check against current catalogue and owned status.",
     "source_checked": [
-      "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
-      "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Goldsmith.toc",
-      "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Report.lua",
-      "https://www.curseforge.com/wow/addons/goldsmith-crafting-profit-planner/comments",
-      "https://github.com/sunseteffect/Goldsmith/issues"
+      "https://eu.forums.blizzard.com/en/wow/t/storm-dust-issue/532522/20",
+      "https://www.wowhead.com/profession-trait/rare-resourcing-99888",
+      "https://www.wowhead.com/guide/the-war-within/professions/enchanting-specialization",
+      "https://www.reddit.com/r/woweconomy/comments/1fspqym",
+      "https://www.reddit.com/r/woweconomy/comments/1g350pq",
+      "https://www.reddit.com/r/woweconomy/comments/1fdmzwy",
+      "https://www.reddit.com/r/woweconomy/comments/1g9l8t8",
+      "https://www.goldgoblin.net/berufe/juwelierskunst/juwelierskunst-von-khaz-algar/"
     ],
     "new_numeric_cohorts": 0,
     "new_reference_cohorts": 0,
@@ -4335,6 +4342,37 @@
       "build": null,
       "resourcefulness_refund_basis": null,
       "detail": "GoldsmithDB.salvageRuns stores exact itemID, recipeID, time, character, casts counted on matching player UNIT_SPELLCAST_SUCCEEDED, net used, perCast from schematic.quantityMax, aggregate output IDs and quantities, start-of-run skill/difficulty/quality/resourcefulness and concentration. It keeps at most 500 runs. Bag gains within three seconds after input disappearance are attributed to salvage; unrelated loot, delayed gains or net refunds can distort a run. Session only switches on input ID or concentration (not every same-input recipe or skill change). No per-cast output assignment, explicit hits/zeros/histogram, spec node state or per-run client build. Report.lua GetBuildInfo is report-time, not run-time. UI aggregates by item/character and uses last profile, falls back to net-input totals scaled by nominal batch size, and uses modeled refund save fraction; estimated milling synthesizes records for Midnight herbs. Do not treat these as independent empirical per-cast probabilities, direct measured refund procs or TWW data. No public TWW run export in inspected source; comments not visible in web extraction. Seek already-existing consented raw salvageRuns with capture build, stable profile, method/IDs and independently checked bag attribution; only then consider aggregate mean, not P(hit). No in-game operation requested."
+    },
+    {
+      "checked_at_utc": "2026-11-25T01:21:01.840Z",
+      "status": "held-original-historical-additional-material-profile",
+      "method": "Disenchant",
+      "source": "https://eu.forums.blizzard.com/en/wow/t/storm-dust-issue/532522/20",
+      "published": "2024-09-05",
+      "author": "Dark-17847",
+      "specialization": "Rare Resourcing 30/30 (source stated)",
+      "traitID": 99888,
+      "inputItemID": null,
+      "gearGroup": null,
+      "outputItemID": null,
+      "outputName": "unspecified leather (source wording only)",
+      "casts": null,
+      "inputsPerCast": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "minSeen": null,
+      "maxSeen": null,
+      "histogram": null,
+      "skill": null,
+      "patch": null,
+      "build": null,
+      "resourcefulness_refund_basis": null,
+      "corroboration": [
+        "https://www.wowhead.com/profession-trait/rare-resourcing-99888",
+        "https://www.wowhead.com/guide/the-war-within/professions/enchanting-specialization"
+      ],
+      "detail": "Dark-17847's September 5, 2024 first-person forum post reports allocating 30/30 Rare Resourcing then receiving unspecified leather while disenchanting inventory. The source does not identify the gear, its rarity, leather type/rank/ID, quantity, completed N, or which individual operation gave leather. Supports historical possibility of an additional-material output in a disclosed Rare Resourcing profile, not a confirmed conditional rule for a specific item or material. Trait 99888 and specialization guide corroborate rarity-scoped specialization, but not a leather drop rate. A separate August 30 commenter reports shards from low-level crafted bracers without ID/rarity/skill or quantities; do not pool authors or assume those are uncommon items. No exact numeric yield or measured probability; all unavailable values remain null. Source thread not present in cutoff manifest or previous owned status. No new estimator record."
     }
   ],
   "last_source_commit_pending": true
