@@ -29,6 +29,15 @@ The export can contain **character names and realms**, cast and item GUIDs, time
 
 GitHub issues and attached files are public. Share only your own data that you are comfortable publishing and allowing Loot Liquidator to use for research and shipped shared statistics. Do not upload the whole `SavedVariables/LootLiquidator.lua` file, account folders, credentials or another player's private data. Do not silently edit identities or operation IDs: they are used to match context and prevent double counting. If you do not want the export public, keep it local and do not submit it.
 
+**Large histories need only one attachment.** Use **Export all**, press Ctrl+C
+once, paste into a plain-text editor, and save as `LootLiquidator-results.txt`.
+Attach that file to the submission form. The addon compresses the complete
+history once instead of repeating shared metadata on 25-cast pages. Every
+record, context, study, diagnostic, identifier and captured numeric value is
+preserved. Large exports can exceed GitHub's issue-text limit, so attach the
+text file rather than pasting its contents into the issue. Export pages remains
+available as a fallback for clients without the native compression API.
+
 ## Exporting and resetting are separate
 
 **Export all** and **Export pages** copy results and do not clear them. **Start new batch** keeps older history. **Reset recordings** asks for confirmation and clears recorded research, including older personal processing/disenchant learning, while keeping one previous set as a local backup until the next reset. Settings and imported results are separate.

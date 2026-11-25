@@ -1,6 +1,7 @@
 -- Exercise the actual export serializer, strict importer and native copy UI.
 -- No WoW renderer/clipboard is claimed; the copy field's bytes are checked.
 local checks=0
+local tempRoot=os.getenv('LOOT_TEST_TMPDIR') or '/tmp'
 local function check(value,label) assert(value,label);checks=checks+1 end
 local function eq(actual,expected,label)
     check(actual==expected,(label or '')..': '..tostring(actual)..' ~= '..tostring(expected))
@@ -225,7 +226,7 @@ CopyToClipboard=function()error('protected clipboard API must never be called by
 -- Optional full-suite integration: actual successful cast events, new loot-slot
 -- evidence and variant identities -> native popup -> the exact copied JSON.
 -- Standalone dialog fixtures need no external file; tests/run.sh supplies it.
-if arg and arg[1] then
+if arg and arg[1] and arg[1]~='' then
     local file=assert(io.open(arg[1],'r'));local captured=file:read('*a');file:close()
     local measured=assert(LL.DecodeImportJSON(captured))
     LL.db.craftResearch={records=measured.records,contexts=measured.contexts,studies=measured.studies,
@@ -239,11 +240,11 @@ if arg and arg[1] then
     eq(copied.records[3].inputs[1].itemLevel,280,'consumed variant survives native export')
     eq(copied.records[3].inputs[1].hyperlink,'item:109979:0:0:0:0:0:0:2')
     check(copied.diagnostics[#copied.diagnostics].studyID~=nil,'diagnostic links survive native export')
-    local output=assert(io.open('/tmp/loot-disenchant-popup.json','w'))
+    local output=assert(io.open(tempRoot..'/loot-disenchant-popup.json','w'))
     output:write(select(3,LL.DecodeImportJSON(f.edit:GetText())));output:close()
     print('PASS: live-event recorder fixture -> native export popup -> unchanged copied research JSON')
 end
-if arg and arg[2] then
+if arg and arg[2] and arg[2]~='' then
     local file=assert(io.open(arg[2],'r'));local captured=file:read('*a');file:close()
     local measured=assert(LL.DecodeImportJSON(captured))
     LL.db.craftResearch={records=measured.records,contexts=measured.contexts,studies=measured.studies,
@@ -253,7 +254,7 @@ if arg and arg[2] then
     check(same(copied,measured),'Recycling receipts and aggregate reconciliation survive native copy')
     eq(#copied.records,20);eq(copied.records[1].method,'Recycle');eq(copied.records[1].captureVersion,3)
     eq(copied.records[1].bagReconciliation.operations,20)
-    local output=assert(io.open('/tmp/loot-recycling-popup.json','w'))
+    local output=assert(io.open(tempRoot..'/loot-recycling-popup.json','w'))
     output:write(select(3,LL.DecodeImportJSON(f.edit:GetText())));output:close()
     print('PASS: Recycling20 receipt replay -> native export popup -> unchanged copied JSON')
 end
@@ -276,7 +277,24 @@ check(not f.previous.shown and not f.next.shown,'one-copy export needs no page n
 check(same(all.records,merged.records) and same(all.contexts,merged.contexts)
     and same(all.studies,merged.studies) and same(all.diagnostics,merged.diagnostics),'all evidence survives one copy')
 eq(f.edit.selected,f.contents,'all retained results are selected for one Ctrl+C')
-local out=assert(io.open('/tmp/loot-recycling-200-popup.json','w'));out:write(select(3,LL.DecodeImportJSON(f.contents)));out:close()
+local out=assert(io.open(tempRoot..'/loot-recycling-200-popup.json','w'));out:write(select(3,LL.DecodeImportJSON(f.contents)));out:close()
+-- A compressed history larger than the issue-text limit remains one complete
+-- export for a .txt attachment, rather than falling back to 25-cast pages.
+local oldCodec=C_EncodingUtil
+local completeHistory=LL:ExportCraftResearch('all')
+local largePayload=string.rep('A',70000)
+C_EncodingUtil={CompressString=function(raw,method,level)
+ eq(raw,completeHistory);eq(method,1);eq(level,2);return 'large-native-fixture' end,
+ EncodeBase64=function()return largePayload end,
+ DecodeBase64=function(payload)eq(payload,largePayload);return 'large-native-fixture'end,
+ DecompressString=function()return completeHistory end}
+f.close.scripts.OnClick(f.close);LL:ShowRecordedResultsExport(false,true)
+check(#f.contents>LL.MaxCopyTextBytes and #f.contents<=LL.MaxResearchCopyTextBytes)
+eq(f.pages,1);check(not f.next.shown and not f.previous.shown)
+check(f.help.text:find('.txt',1,true),'large export explains the single-file attachment path')
+eq(select(3,LL.DecodeImportJSON(f.contents)),completeHistory,'complete serialized history survives the larger compact copy')
+eq(LL:ExportCraftResearch('all'),completeHistory,'large export does not change any recorded data')
+C_EncodingUtil=oldCodec
 -- Reproduce the 1.8 MB owner upload: export only its latest 169-record batch,
 -- preserving all 683 saved records, its coverage flags and its diagnostics.
 local path='research/integration/measured-captures/2026-11-07-disenchant-108-export-freeze/export-page-1.json'
@@ -293,7 +311,7 @@ check(latest.studies[latest.exportStudyID].coverageGaps['Disenchant:13262'],'fil
 eq(#latest.diagnostics,50);eq(LL:ExportCraftResearch('all'),history,'export leaves every saved batch unchanged')
 check(#f.edit:GetText()<=LL.MaxCopyTextBytes,'copy widget receives bounded compact text')
 eq(f.edit.selected,f.contents,'latest batch is ready for one Ctrl+C')
-out=assert(io.open('/tmp/loot-latest-batch.json','w'));out:write(raw);out:close()
+out=assert(io.open(tempRoot..'/loot-latest-batch.json','w'));out:write(raw);out:close()
 f.close.scripts.OnClick(f.close)
 eq(f.edit:GetText(),'','closing releases native text layout');eq(f.contents,'')
 LL:ShowCopy('Oversize report',string.rep('x',LL.MaxCopyTextBytes+1))
@@ -368,3 +386,24 @@ check(LL.db.craftResearch and LL.db.craftResearch.activeStudy,'confirmed batch s
 eq(LL.db.recordedResultsBackup.craftResearch,source,'new batch preserves the preceding reset backup')
 print('PASS: community links, full export, paging, confirmation, reset backup and settings/import isolation')
 print('PASS: '..checks..' native export dialog, literal JSON, importer, snapshot paging and optional skin assertions')
+-- Optional full-sized real-data replay. The fixture stays outside the repo.
+if arg and arg[3] and arg[4] then
+ local function read(path)local file=assert(io.open(path,'rb'));local value=file:read('*a');file:close();return value end
+ local original=read(arg[3]);local wire=read(arg[4])
+ -- Read the outer envelope without invoking the compact decoder yet.
+ local packet=assert(LL.DecodeImportJSON(wire:gsub('loot%-liquidator%.cast%-transfer/1','codec-fixture/1',1)))
+ local source=assert(LL.DecodeImportJSON(original))
+ LL.db.craftResearch=source
+ C_EncodingUtil={CompressString=function(raw,method,level)eq(raw,original);eq(method,1);eq(level,2);return 'real-zlib-bytes'end,
+  EncodeBase64=function()return packet.payload end,
+  DecodeBase64=function(payload)eq(payload,packet.payload);return 'real-zlib-bytes'end,
+  DecompressString=function()return original end}
+ f.close.scripts.OnClick(f.close);LL:ShowRecordedResultsExport(false,true)
+ eq(f.pages,1);check(not f.next.shown and not f.previous.shown)
+ eq(f.contents,wire,'real portable compressed packet is copied without truncation')
+ local restored,why,restoredBytes=LL.DecodeImportJSON(f.contents);check(restored,why)
+ eq(restoredBytes,original,'every original serialized byte is recoverable')
+ check(same(restored,source),'every record, field, diagnostic and context survives')
+ eq(#restored.records,2000)
+ print('PASS: actual 2000-record history -> one native copy -> byte-exact lossless recovery')
+end

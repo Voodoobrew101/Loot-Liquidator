@@ -8,8 +8,16 @@ body:
       value: |
         Help improve Loot Liquidator with your recorded results. Small, complete batches are welcome.
         Read the [contribution guide](https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/docs/community-research.md).
-        Open /ll → Community research on the first settings tab and use Export all, then copy and paste the result below. For Export pages, paste every page.
+        Open /ll → Community research → Export all. Save the copied text as LootLiquidator-results.txt, then attach that file in the single box below. You do not need to paste the file's contents or move attachment links between boxes.
         This issue and its attachments will be public. Compact exports are compressed, not anonymized.
+  - type: textarea
+    id: exports
+    attributes:
+      label: Export file
+      description: Drag your .txt file into this box, or click the paperclip. Wait for the upload to finish, then submit the form. Optional notes or links to earlier submissions can go beneath the attachment in this same box. Small exports can also be pasted directly.
+      placeholder: Attach LootLiquidator-results.txt here.
+    validations:
+      required: true
   - type: dropdown
     id: game-mode
     attributes:
@@ -22,31 +30,6 @@ body:
         - Unknown
     validations:
       required: true
-  - type: textarea
-    id: session
-    attributes:
-      label: Additional notes (optional)
-      description: The export already includes processing methods, item IDs, timestamps and captured profession context. Add only relevant information missing from the export; otherwise leave this blank.
-      placeholder: "Optional context the recorder could not capture, or a problem you noticed."
-    validations:
-      required: false
-  - type: textarea
-    id: exports
-    attributes:
-      label: Paste your export
-      description: Copy the complete export from the addon and paste it here. No file is required. For a paged export, paste every page from the same snapshot, separated by a blank line. Do not record more results between copying pages. If the export exceeds GitHub's text limit, attach it as a .txt file instead. Never share your entire SavedVariables file.
-      placeholder: Paste the complete text copied from the addon's export window here.
-      render: json
-    validations:
-      required: true
-  - type: textarea
-    id: overlap
-    attributes:
-      label: Earlier submissions or overlapping exports
-      description: Link any earlier issue containing these same operations. A full-history export may overlap an earlier batch; this helps avoid double counting.
-      placeholder: "None, or links to earlier submissions."
-    validations:
-      required: false
   - type: checkboxes
     id: sharing
     attributes:

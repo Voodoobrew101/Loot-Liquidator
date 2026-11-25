@@ -4,6 +4,7 @@ import copy
 import importlib.util
 import json
 import hashlib
+import os
 from pathlib import Path
 import unittest
 import zlib
@@ -11,16 +12,17 @@ import zlib
 spec = importlib.util.spec_from_file_location('export_validator', 'tools/validate_craft_export.py')
 validator = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(validator)
-raw = Path('/tmp/loot-latest-batch.json').read_bytes()
+TEMP = Path(os.environ.get('LOOT_TEST_TMPDIR', '/tmp'))
+raw = (TEMP / 'loot-latest-batch.json').read_bytes()
 data = json.loads(raw)
 binary = zlib.compress(raw, 9)
 encoded = base64.b64encode(binary).decode('ascii')
 transfer = {'schemaVersion': 'loot-liquidator.cast-transfer/1', 'encoding': 'zlib-base64',
             'uncompressedBytes': len(raw), 'payload': encoded}
 wire = json.dumps(transfer, separators=(',', ':'), sort_keys=True)
-Path('/tmp/loot-transfer-zlib.bin').write_bytes(binary)
-Path('/tmp/loot-transfer-base64.txt').write_text(encoded)
-Path('/tmp/loot-transfer-wire.json').write_text(wire)
+(TEMP / 'loot-transfer-zlib.bin').write_bytes(binary)
+(TEMP / 'loot-transfer-base64.txt').write_text(encoded)
+(TEMP / 'loot-transfer-wire.json').write_text(wire)
 
 
 class CompactTransferTests(unittest.TestCase):
@@ -65,12 +67,59 @@ class CompactTransferTests(unittest.TestCase):
     def test_raw_exports_are_still_supported(self):
         self.assertIs(validator.unpack_transfer(data), data)
 
+    def test_large_single_attachment_is_lossless_and_not_limited_to_issue_body_size(self):
+        larger = copy.deepcopy(data)
+        larger['retainedDiagnosticText'] = ''.join(hashlib.sha256(str(i).encode()).hexdigest() for i in range(3000))
+        original = json.dumps(larger, ensure_ascii=False, separators=(',', ':')).encode()
+        packed = base64.b64encode(zlib.compress(original, 9)).decode()
+        self.assertGreater(len(packed), 65536)
+        self.assertLess(len(packed), 500000)
+        packet = dict(schemaVersion='loot-liquidator.cast-transfer/1', encoding='zlib-base64',
+                      uncompressedBytes=len(original), payload=packed)
+        self.assertEqual(validator.unpack_transfer(packet), larger)
+        self.assertEqual(validator.validate([packet]), validator.validate([larger]))
+
+    def test_explicitly_truncated_old_batch_is_preserved_without_becoming_a_rate(self):
+        from test_community_research import sample
+        page = sample()
+        context = page['contexts']['context-1']
+        context.update(method='Recycle', recipeID=1229930)
+        row = page['records'][0]
+        row.update(method='Recycle', recipeID=1229930, operationID='batch-first',
+                   attribution='cast-result-batch-bag', captureVersion=3, allocationItemGUID='target-guid')
+        row['inputs'] = [{'itemID': 245807, 'quantity': 5}]
+        row['nominalInputs'] = copy.deepcopy(row['inputs'])
+        row['outputs'] = [{'itemID': 243581, 'quantity': 2}]
+        row['resultMetadata'] = [{'operationID': 101, 'itemID': 243581, 'quantity': 2, 'itemGUID': 'result-guid'}]
+        row['salvageTarget'] = {'itemID': 245807, 'quantity': 5, 'itemGUID': 'target-guid',
+                                'eligibilitySource': 'C_TradeSkillUI.GetSalvagableItemIDs'}
+        row['bagReconciliation'] = {'id': 'batch-first', 'operations': 2,
+            'inputs': [{'itemID': 245807, 'quantity': 10}], 'outputs': [{'itemID': 243581, 'quantity': 4}]}
+        page.update(records=[row], retainedRecords=1)
+        with self.assertRaisesRegex(ValueError, 'Missing salvage reconciliation casts'):
+            validator.validate([page])
+        page['studies']['study-1']['truncated'] = 'true'
+        with self.assertRaisesRegex(ValueError, 'Missing salvage reconciliation casts'):
+            validator.validate([page])
+        page['studies']['study-1']['truncated'] = True
+        before = copy.deepcopy(page)
+        self.assertEqual(len(validator.validate([page])[0]), 1)
+        staged = validator.compile_baselines([page])
+        self.assertEqual(staged['baselines'], [])
+        self.assertTrue(staged['excludedCohorts'])
+        self.assertEqual(page, before)
+        damaged = copy.deepcopy(page)
+        damaged['records'][0]['bagReconciliation']['outputs'][0]['quantity'] = 1
+        with self.assertRaisesRegex(ValueError, 'exceed'):
+            validator.validate([damaged])
+
     def test_corruption_missing_codec_and_malformed_lengths_fail_closed(self):
         changes = [
             {'encoding': 'unknown'}, {'uncompressedBytes': -1},
             {'uncompressedBytes': 16777217}, {'uncompressedBytes': len(raw)-1},
             {'uncompressedBytes': len(raw)+1}, {'payload': 'not base64!'},
             {'payload': encoded[:-4]}, {'payload': base64.b64encode(binary+b'extra').decode()},
+            {'payload': 'A' * 500001},
             {'payload': base64.b64encode(zlib.compress(b'{broken')).decode()},
         ]
         for change in changes:

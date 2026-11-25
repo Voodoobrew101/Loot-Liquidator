@@ -5,7 +5,7 @@
 -- receipt/context JSON as reference-only evidence, never numeric estimates.
 local _,LL=...
 local SCHEMA="loot-liquidator.cast-log/1"
-local MAX_TEXT=500000          -- characters; one export page is far smaller
+local MAX_TEXT=500000          -- complete compressed exports or individual pages
 local MAX_RECORDS=2000         -- matches the recorder's bounded retained ledger
 local MAX_INPUTS_PER_CAST=20   -- mass milling uses 20; disenchanting uses 1
 local MAX_PER_MATERIAL=100     -- no processing cast returns more of one item
@@ -324,7 +324,7 @@ local function decodeTransfer(text)
     if not data then return nil,why end
     if not object(data) or data.schemaVersion~='loot-liquidator.cast-transfer/1' then return data,nil,text end
     if data.encoding~='zlib-base64' or not integer(data.uncompressedBytes,1,16777216)
-        or type(data.payload)~='string' or #data.payload>65536 then return nil,'Invalid compact export' end
+        or type(data.payload)~='string' or #data.payload>MAX_TEXT then return nil,'Invalid compact export' end
     local api=C_EncodingUtil
     if not api or type(api.DecodeBase64)~='function' or type(api.DecompressString)~='function' then
         return nil,'This client cannot read compact exports; ask for Export pages.'
