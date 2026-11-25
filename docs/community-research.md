@@ -17,11 +17,11 @@ Submit Retail results as Retail. Clearly label Classic, PTR, beta or private-ser
 ## Export and submit
 
 1. Under **Community research** on the first tab, click **Export all**. Copy the entire text from the export window with **Ctrl+C**. A compact export is supported; copy it unchanged. For only your newest batch, use **Export** in Processing Research instead.
-2. Open the [submission form](https://github.com/Voodoobrew101/Loot-Liquidator/issues/new?template=processing-export.yml), sign in to GitHub, and **paste directly into “Paste your export” with Ctrl+V**. No file or manual code-block formatting is required.
-3. For **Export pages**, copy and paste **every page from the same snapshot**, separated by a blank line. Do not record more results between copying pages. If anything changes, start the export again and replace the whole set.
+2. Paste the copied text into a plain text editor and save it as `LootLiquidator-results.txt`. Open the [submission form](https://github.com/Voodoobrew101/Loot-Liquidator/issues/new?template=processing-export.yml), sign in to GitHub, and **drag the file into “Export file”**, or use its paperclip button. Leave the attachment link where GitHub inserts it. Short exports can also be pasted into that same box.
+3. For **Export pages**, attach **every page from the same snapshot** to the same box, or paste all pages separated by a blank line. Do not record more results between copying pages. If anything changes, start the export again and replace the whole set.
 4. Select the game mode and confirm the public-sharing checkboxes. The export supplies methods, item IDs, timestamps and captured profession context; no manual version or session summary is required. Additional notes are optional. Submit the issue and check that the complete export and every page are present. Keep a local copy before resetting. Link earlier submissions containing the same operations so they are not counted twice.
 
-**Optional file alternative:** If the export exceeds GitHub's text limit, paste it into a plain text editor, save as `processing-export.txt`, and attach it to the issue. For pages, save and attach each page. A `.json` file is also acceptable if GitHub accepts it. Screenshots cannot replace the copied export.
+Attach large exports as a file to avoid GitHub's text limit. A `.json` file is also acceptable if GitHub accepts it. Screenshots cannot replace the copied export.
 
 ## Before posting publicly
 
