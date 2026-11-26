@@ -1,33 +1,26 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-26T06:39:01.516Z",
-  "status": "Held new pinned recorder export attribution limitation; no new measured cohort",
+  "updated_at": "2026-11-26T07:40:38.300Z",
+  "status": "Held qualitative crafted-versus-scaled eligibility context; no new measured cohort",
   "task_ids": [
     "T0047",
+    "T0050",
     "T0052",
     "T0042",
     "T0022",
     "T0044"
   ],
   "exact_gaps_targeted": [
-    "24995/30364 current Retail operation receipt, exact target itemLink and material event joins",
-    "36909/23424 independent source-target operation N, output quantities and known zeros"
+    "24995/25003/13866 exact Retail held-item variant, DE eligibility and material attribution after item squish",
+    "36909/23424 independent completed operations, hits, zeros, per-material quantities and refunds"
   ],
   "newly_verified_fields_cohorts": [
     {
-      "source": "https://github.com/tusharsaxena/LootHistory/blob/0c5f258ab060c6c4efabd323cddb3a1fde6d1110/modules/Attribution.lua",
-      "exportSource": "https://github.com/tusharsaxena/LootHistory/blob/0c5f258ab060c6c4efabd323cddb3a1fde6d1110/modules/Export.lua",
-      "sourceCommit": "0c5f258ab060c6c4efabd323cddb3a1fde6d1110",
-      "sourceProfile": "recorder implementation, not player data",
-      "attributionBlob": "52d57f3f45562c9a4fb548fd1cb132457549554f",
-      "exportBlob": "4eeda2f9a71185d6afad6df41398b76fb377c607",
-      "actualPlayerCastSuccessEvent": true,
-      "castGUIDRetainedByAttribution": false,
-      "sourceDetailForProcessing": null,
-      "rawItemLinkExported": false,
-      "sourceDetailExported": false,
-      "confidenceExported": false,
+      "source": "https://us.forums.blizzard.com/en/wow/t/blizzard-moving-the-level-goalpost-maybe-unfair/2287344/12",
+      "sourceDate": "2026-04-06",
+      "author": "Coprus",
+      "sourceProfile": "Retail qualitative forum report; no exact input attribution",
       "inputItemID": null,
       "outputItemID": null,
       "casts": null,
@@ -35,19 +28,54 @@
       "totalQuantity": null,
       "histogram": null,
       "zeroCount": null,
-      "disposition": "methodology only; no published original player operation rows"
+      "reportedContext": "Vanilla crafted gear ilvl15 example; runecloth/thorium no longer yields top Classic enchanting materials per commenter; exact items and output identities not stated.",
+      "disposition": "held qualitative, no numerical admission"
+    },
+    {
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/24244455",
+      "sourceDate": "2026-01-21",
+      "effectiveDate": "2026-01-20",
+      "sourceProfile": "official patch notes; general stat/item squish only",
+      "inputItemID": null,
+      "outputItemID": null,
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "zeroCount": null,
+      "disposition": "context, no documented DE rate or eligibility change"
+    },
+    {
+      "source": "https://us.forums.blizzard.com/en/wow/t/unable-to-disenchant-items-while-leveling-in-dragonflight/1953120",
+      "sourceDate": "2024-09-12",
+      "author": "Trest",
+      "sourceProfile": "historical Retail firsthand qualitative eligibility contrast",
+      "characterLevel": 34,
+      "reportedWorldGearItemLevelRange": [
+        117,
+        146
+      ],
+      "reportedCraftedDFBracerItemLevel": 316,
+      "inputItemID": null,
+      "outputItemID": null,
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "zeroCount": null,
+      "disposition": "historical cross-profile comparison only; no threshold inferred or live transfer"
     }
   ],
   "source_urls": [
-    "https://github.com/tusharsaxena/LootHistory/blob/0c5f258ab060c6c4efabd323cddb3a1fde6d1110/modules/Attribution.lua",
-    "https://github.com/tusharsaxena/LootHistory/blob/0c5f258ab060c6c4efabd323cddb3a1fde6d1110/modules/Export.lua",
-    "https://www.curseforge.com/wow/addons/ka0s-loot-history",
-    "https://legacyofwarcraft.com/db/tbc/professions/disenchanting.html",
-    "https://legacyofwarcraft.com/db/tbc/item/30364.html",
-    "https://legacyofwarcraft.com/db/retail/item/36909.html",
-    "https://legacyofwarcraft.com/db/retail/item/23424.html"
+    "https://us.forums.blizzard.com/en/wow/t/blizzard-moving-the-level-goalpost-maybe-unfair/2287344/12",
+    "https://worldofwarcraft.blizzard.com/en-us/news/24244455",
+    "https://us.forums.blizzard.com/en/wow/t/unable-to-disenchant-items-while-leveling-in-dragonflight/1953120",
+    "https://www.wowhead.com/item=24995/warmaul-legplates",
+    "https://www.wowhead.com/item=25003/bloodfist-legplates",
+    "https://warcraft.wiki.gg/wiki/Cobalt_Ore",
+    "https://warcraft.wiki.gg/wiki/Fel_Iron_Ore"
   ],
-  "numeric_summary": "New pinned original recorder-code verification (not a yield cohort): LootHistory master 0c5f258ab060c6c4efabd323cddb3a1fde6d1110, Attribution.lua lines 399–435/500–505 registers player UNIT_SPELLCAST_SUCCEEDED but discards castGUID and stamps only processing source, nil detail, Certain; lines 150–181 and 239–247 describe shared TTL context and material loot-window attribution. Export.lua lines 28–39, 63–90 exports output item ID/quantity/source and Wowhead link assembled from output itemLink/bonus list, explicitly omits raw itemLink, sourceDetail and confidence. Thus CSV alone cannot identify the destroyed input item, distinguish individual casts, supply zero-inclusive N, or guarantee complete material capture. Existing independently archived debug or raw source-target receipt data would be needed; do not treat an output row count or Certain label as measured operation N. The code also now supports localized name-family detection; old issue #2 is not evidence of current defect. No actual target processing exports found. Reopened known historical 2.4.3 table and item-specific Resonating Axe 30364 (ilvl108, uncommon one-hand axe, 22446/22445/22449 modeled), not an independent cohort; original target 24995 direct pages inaccessible via web. Cobalt 36909/Fel Iron 23424 retail static item pages merely label prospectable, no original per-cast yields. No measured casts, hit counts, zeros, quantities, ranges or means advanced; T0053 already done. No duplicate JSONL, pricing or production changes.",
+  "numeric_summary": "T0050/T0047 new post-squish qualitative source screen: Coprus, Blizzard forum 2287344 post 12 (2026-04-06), reports runecloth/thorium crafted gear not yielding the top Classic enchanting materials after squishes and cites vanilla crafted ilvl15 as an example, without identifying specific item IDs, actual outputs, cast totals or skill. Official Midnight pre-expansion notes published Jan 21 2026 confirm a general stat/item squish in the Jan 20 update; they do not establish a disenchant loot-table change or any coefficient. Historical independent comparison: Trest, forum 1953120 post 1 (2024-09-12), reports level34 Chromie Time Dragonflight gear in ilvl117–146 range could not be disenchanted, but a crafted Dragonflight ilvl316 bracer and unspecified Classic bracer could be disenchanted by the same character with Classic and Dragonflight Enchanting and Runed Copper/Draconic rods; item IDs, outputs, exact counts and cause unknown. Treat this as historical qualitative eligibility contrast, not a threshold, a live 12.x bug or a new drop cohort. These three URLs absent from prior owned status and compact catalogue manifest; full scoped source catalogue not independently checked, no second admission requested. Fresh indexed 24995/25003 live Wowhead displays both ilvl14 and 74, already-known display ambiguity; direct 24995 page shows ilvl14 and no visible original DE rows in available text. Cobalt 36909/Fel Iron 23424 searches yielded known wiki models and previously recorded Thottbot cohorts, no new target operation-linked original. No measured N, hits, zeros, quantities, histograms, refunds, or supported per-operation mean advanced. T0053 remains done; no new JSONL, prices, or production changes.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-25T2337-whiptail-original-cataclysm-milling.jsonl",
   "preserved_prior_status_summary": [
@@ -450,11 +478,16 @@
       "updated_at": "2026-11-26T05:38:48.072Z",
       "disposition": "Held new bonus-URL provenance context; no new measured cohort",
       "summary": "T0047 new item-variant provenance constraint: original indexed Wowhead Retail URL for exact Warmaul Legplates 24995 contains bonus=1680; opened and confirmed level 14, required level 26, identical visible tooltip and comments to base page. The URL parameter alone does NOT verify applied bonus, full itemLink, a currently obtainable or held variant, or a completed DE cast. Erorus's historical 7.2.0 item bonus data maps 1680 to 'of the Quickblade', with quality/level/levelcurve null; not a current 12.x mapping. In original August 15–16 2016 Wowhead forum thread 254773, Erorus explains how the site could discard unrecognized supplied bonuses and display defaults, that older held items and newly acquired gear may use different bonus IDs, and that chance bonuses were sourced from Looter observations; follow-up says many issues were improved. Historical mechanism/context only; do not assert current site bug from this. French exact item page is a mirror with level14 and no independently visible DE table; direct French/German hash-only paths blocked; English hash view has no operation counts. No new target yield fields. Independent German historical reference guides show Cobalt 36909 threshold 375 versus 350 while both report Fel Iron 23424 threshold 275; no original threshold experiment or date/build proof, no current Retail requirement inferred. Prior 2.1.0 blue-gem increase already recorded in 2026-11-02T0243 and T1640, and madag/Dusksteel cohorts already in existing evidence: do not duplicate. Cutoff source-key novelty not exhaustively established; no new numerical admission or evidence JSONL. T0053 done; no price values, game actions or production changes."
+    },
+    {
+      "updated_at": "2026-11-26T06:39:01.516Z",
+      "disposition": "Held new pinned recorder export attribution limitation; no new measured cohort",
+      "summary": "New pinned original recorder-code verification (not a yield cohort): LootHistory master 0c5f258ab060c6c4efabd323cddb3a1fde6d1110, Attribution.lua lines 399–435/500–505 registers player UNIT_SPELLCAST_SUCCEEDED but discards castGUID and stamps only processing source, nil detail, Certain; lines 150–181 and 239–247 describe shared TTL context and material loot-window attribution. Export.lua lines 28–39, 63–90 exports output item ID/quantity/source and Wowhead link assembled from output itemLink/bonus list, explicitly omits raw itemLink, sourceDetail and confidence. Thus CSV alone cannot identify the destroyed input item, distinguish individual casts, supply zero-inclusive N, or guarantee complete material capture. Existing independently archived debug or raw source-target receipt data would be needed; do not treat an output row count or Certain label as measured operation N. The code also now supports localized name-family detection; old issue #2 is not evidence of current defect. No actual target processing exports found. Reopened known historical 2.4.3 table and item-specific Resonating Axe 30364 (ilvl108, uncommon one-hand axe, 22446/22445/22449 modeled), not an independent cohort; original target 24995 direct pages inaccessible via web. Cobalt 36909/Fel Iron 23424 retail static item pages merely label prospectable, no original per-cast yields. No measured casts, hit counts, zeros, quantities, ranges or means advanced; T0053 already done. No duplicate JSONL, pricing or production changes."
     }
   ],
   "verified_parent_sha": "618c96b557b851e42b114082e72db5fbc4e02080",
-  "verified_commit_sha": "b62fbc8302d4ccbba393ead1a27a57fb42e19c90",
-  "commit_note": "Previous immutable status commit b62fbc8 independently verified sole changed path and exact current blob; this update uses same-path SHA guard. Current immutable commit read-back follows externally; cannot embed its own SHA.",
+  "verified_commit_sha": "061327d54ecce809b9d98830db27ada757e408e5",
+  "commit_note": "Prior immutable commit 061327d verified sole status path and current blob SHA. Current update is same-path blob-SHA guarded; verify immutable commit and exact blob after write. A commit cannot embed its own SHA.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -1267,6 +1300,18 @@
       "source": "https://github.com/tusharsaxena/LootHistory/blob/0c5f258ab060c6c4efabd323cddb3a1fde6d1110/modules/Attribution.lua",
       "disposition": "held new pinned export semantics; not numerical evidence",
       "reason": "Player success event stamps source only; discarded castGUID and nil detail cannot join material rows to exact target or establish N. CSV omits raw itemLink, sourceDetail and confidence; output row count is not operation count."
+    },
+    {
+      "task": "T0050/T0047/T0052",
+      "source": "https://us.forums.blizzard.com/en/wow/t/blizzard-moving-the-level-goalpost-maybe-unfair/2287344/12",
+      "disposition": "held qualitative, no numerical admission",
+      "reason": "Reports crafted legacy material mismatch; no exact item IDs, output IDs, N or skill. Official general squish does not prove DE rate change. No duplicate admission."
+    },
+    {
+      "task": "T0047",
+      "source": "https://us.forums.blizzard.com/en/wow/t/unable-to-disenchant-items-while-leveling-in-dragonflight/1953120",
+      "disposition": "held historical eligibility contrast",
+      "reason": "Same character reports failed world-drop and successful crafted-item disenchanting at different ilvls; no item IDs or verified threshold. Do not use as current Retail eligibility rule."
     }
   ],
   "blockers": [
@@ -1482,10 +1527,20 @@
       "source": "https://github.com/tusharsaxena/LootHistory/blob/0c5f258ab060c6c4efabd323cddb3a1fde6d1110/modules/Attribution.lua",
       "disposition": "recorder code checked; no original player data",
       "reason": "Reopen only for separately archived actual target-linked processing receipt or complete independent export, not sample datasets or output-only CSV."
+    },
+    {
+      "source": "https://us.forums.blizzard.com/en/wow/t/blizzard-moving-the-level-goalpost-maybe-unfair/2287344/12",
+      "disposition": "qualitative post-squish material mismatch only",
+      "reason": "Reopen only for exact existing item-level receipts and material outputs; no repeated forum searches without new provenance."
+    },
+    {
+      "source": "https://us.forums.blizzard.com/en/wow/t/unable-to-disenchant-items-while-leveling-in-dragonflight/1953120",
+      "disposition": "historical eligibility context only",
+      "reason": "No exact item IDs, cause, material counts or current build. Do not repeat for a numeric model."
     }
   ],
   "previous_verified_evidence_sha": "69115661d29efead5f8fb80ea2ceca0b4134a2ff",
-  "next_concrete_step": "Seek existing original Retail processing receipts with a retained cast/operation ID, exact input itemLink and output quantities plus complete operation boundaries; use output-only ledgers only for supported output attribution, not measured rates. Avoid repeat recorder listings or modeled tables without a newly published original export.",
+  "next_concrete_step": "Pivot away from repeated target-name results and generic logger listings: seek existing publicly shared item restoration or raw processing receipts where exact destroyed item link and actual material units are visible; only record output attribution supported by source, never reconstruct missing zero-inclusive N. Check original cohort against enabled catalogue before admission.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -1494,16 +1549,16 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://github.com/tusharsaxena/LootHistory/blob/0c5f258ab060c6c4efabd323cddb3a1fde6d1110/modules/Attribution.lua",
-    "https://github.com/tusharsaxena/LootHistory/blob/0c5f258ab060c6c4efabd323cddb3a1fde6d1110/modules/Export.lua",
-    "https://www.curseforge.com/wow/addons/ka0s-loot-history",
-    "https://legacyofwarcraft.com/db/tbc/professions/disenchanting.html",
-    "https://legacyofwarcraft.com/db/tbc/item/30364.html",
-    "https://legacyofwarcraft.com/db/retail/item/36909.html",
-    "https://legacyofwarcraft.com/db/retail/item/23424.html"
+    "https://us.forums.blizzard.com/en/wow/t/blizzard-moving-the-level-goalpost-maybe-unfair/2287344/12",
+    "https://worldofwarcraft.blizzard.com/en-us/news/24244455",
+    "https://us.forums.blizzard.com/en/wow/t/unable-to-disenchant-items-while-leveling-in-dragonflight/1953120",
+    "https://www.wowhead.com/item=24995/warmaul-legplates",
+    "https://www.wowhead.com/item=25003/bloodfist-legplates",
+    "https://warcraft.wiki.gg/wiki/Cobalt_Ore",
+    "https://warcraft.wiki.gg/wiki/Fel_Iron_Ore"
   ],
-  "latest_run_source_date": null,
-  "latest_run": "New pinned original recorder-code verification (not a yield cohort): LootHistory master 0c5f258ab060c6c4efabd323cddb3a1fde6d1110, Attribution.lua lines 399–435/500–505 registers player UNIT_SPELLCAST_SUCCEEDED but discards castGUID and stamps only processing source, nil detail, Certain; lines 150–181 and 239–247 describe shared TTL context and material loot-window attribution. Export.lua lines 28–39, 63–90 exports output item ID/quantity/source and Wowhead link assembled from output itemLink/bonus list, explicitly omits raw itemLink, sourceDetail and confidence. Thus CSV alone cannot identify the destroyed input item, distinguish individual casts, supply zero-inclusive N, or guarantee complete material capture. Existing independently archived debug or raw source-target receipt data would be needed; do not treat an output row count or Certain label as measured operation N. The code also now supports localized name-family detection; old issue #2 is not evidence of current defect. No actual target processing exports found. Reopened known historical 2.4.3 table and item-specific Resonating Axe 30364 (ilvl108, uncommon one-hand axe, 22446/22445/22449 modeled), not an independent cohort; original target 24995 direct pages inaccessible via web. Cobalt 36909/Fel Iron 23424 retail static item pages merely label prospectable, no original per-cast yields. No measured casts, hit counts, zeros, quantities, ranges or means advanced; T0053 already done. No duplicate JSONL, pricing or production changes.",
+  "latest_run_source_date": "2026-04-06",
+  "latest_run": "T0050/T0047 new post-squish qualitative source screen: Coprus, Blizzard forum 2287344 post 12 (2026-04-06), reports runecloth/thorium crafted gear not yielding the top Classic enchanting materials after squishes and cites vanilla crafted ilvl15 as an example, without identifying specific item IDs, actual outputs, cast totals or skill. Official Midnight pre-expansion notes published Jan 21 2026 confirm a general stat/item squish in the Jan 20 update; they do not establish a disenchant loot-table change or any coefficient. Historical independent comparison: Trest, forum 1953120 post 1 (2024-09-12), reports level34 Chromie Time Dragonflight gear in ilvl117–146 range could not be disenchanted, but a crafted Dragonflight ilvl316 bracer and unspecified Classic bracer could be disenchanted by the same character with Classic and Dragonflight Enchanting and Runed Copper/Draconic rods; item IDs, outputs, exact counts and cause unknown. Treat this as historical qualitative eligibility contrast, not a threshold, a live 12.x bug or a new drop cohort. These three URLs absent from prior owned status and compact catalogue manifest; full scoped source catalogue not independently checked, no second admission requested. Fresh indexed 24995/25003 live Wowhead displays both ilvl14 and 74, already-known display ambiguity; direct 24995 page shows ilvl14 and no visible original DE rows in available text. Cobalt 36909/Fel Iron 23424 searches yielded known wiki models and previously recorded Thottbot cohorts, no new target operation-linked original. No measured N, hits, zeros, quantities, histograms, refunds, or supported per-operation mean advanced. T0053 remains done; no new JSONL, prices, or production changes.",
   "new_evidence_file_this_run": null,
-  "next": "Seek existing original Retail processing receipts with a retained cast/operation ID, exact input itemLink and output quantities plus complete operation boundaries; use output-only ledgers only for supported output attribution, not measured rates. Avoid repeat recorder listings or modeled tables without a newly published original export."
+  "next": "Pivot away from repeated target-name results and generic logger listings: seek existing publicly shared item restoration or raw processing receipts where exact destroyed item link and actual material units are visible; only record output attribution supported by source, never reconstruct missing zero-inclusive N. Check original cohort against enabled catalogue before admission."
 }
