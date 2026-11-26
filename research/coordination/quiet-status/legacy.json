@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-26T18:40:49.373Z",
-  "status": "New source-context screening; no new qualifying numerical cohort",
+  "updated_at": "2026-11-26T19:45:35.238Z",
+  "status": "New original historical milling cohort held as reference; current Retail gaps remain",
   "task_ids": [
     "T0047",
     "T0052",
@@ -11,30 +11,44 @@
     "T0042"
   ],
   "exact_gaps_targeted": [
-    "24995/25003/30364 exact-item eligibility, original output units and histograms; distinguish flavor-specific exclusion tables from Retail",
-    "36909 Cobalt and 23424 Fel Iron: original actual-operation logs, output totals, hits, zeros and refunds",
-    "New recorder provenance: synthetic examples versus original operation records"
+    "Warmaul Legplates 24995 and matched TBC gear original operations, actual Retail item profiles, named outputs, hit/range/histograms",
+    "Cobalt 36909 and Fel Iron 23424 original input-linked prospect cohorts, denominators and refunds",
+    "Legacy herb milling original historical inputs and output totals versus stack-level observations and downstream ink tally"
   ],
   "newly_verified_fields_cohorts": [
     {
-      "source": "https://www.curseforge.com/wow/addons/oh-my-loot",
-      "field": "capture_scope_and_example_contamination",
-      "finding": "MiguelFlores author listing November 26, 2026, OhMyLoot-1.0.1-retail.zip, Retail 12.1.7, separate Forever version. General bag entry/exit history includes crafted, looted and destroyed items; /oml examples explicitly inserts/removes demonstration records. A bag-history dump cannot establish an input-linked completed DE/prospect/mill denominator or zeros without separate operation evidence; example rows must be excluded. Direct fetch failed but indexed author description was retrieved. No original target ledger or code inspected.",
-      "disposition": "capture-method lead only; no numerical admission",
-      "inputItemID": null,
-      "outputItemID": null,
+      "source": "https://wowalone.blogspot.com/2009/10/changing-tactics-with-inscription.html",
+      "field": "original historical reported input stacks and output units",
+      "finding": "Historical original WotLK-era anonymous first-person comment, 2009-10-29 7:29 PM, comment anchor 1256862582023 (base page directly read; direct anchor fetch failed). Reports milling 20 stacks of Adder's Tongue yielding 229 Azure Pigment and 45 Icy Pigment. Source discussion uses 20 herbs per stack and 5 herbs per mill, so nominal 400 herbs and 80 five-herb equivalents, not independently counted successful operations. Followup reports 2.86 Azure and 0.56 Icy per mill, and 11.5 Azure and 2.25 Icy per stack; these are source-reported rounded means, not hit probabilities. Some stacks reportedly yielded no Icy and maximum reported 5 Icy per stack, not per-cast zero or range evidence, and applicability to this exact cohort unknown. Exact completed casts, net consumption, refunds, hits, zeros, per-cast yield range/histogram, player skill, specialization, build/hotfix and Retail transfer unknown. Preserve historical quantities as reference-only, no independent Retail baseline admission. Distinct from blog author's mixed-herb/ink tally article October 30. URL/name and comment anchor absent from owned status, compact cutoff manifest and default-branch exact search; not exhaustive deduplication.",
+      "disposition": "Historical original held; no verified Retail transfer or completed-cast denominator.",
+      "inputItemID": 36903,
+      "outputItemID": 39343,
       "casts": null,
       "castsWithDrop": null,
-      "totalQuantity": null,
+      "totalQuantity": 229,
       "zeroCount": null,
       "histogram": null,
       "refunds": null
     },
     {
-      "source": "https://www.curseforge.com/wow/addons/bambyworth/files/9816851",
-      "field": "source_flavor_and_eligibility_scope",
-      "finding": "xBambyQT BambyWorth 0.2.2, November 25, 2026, file 9816851 supports Retail 12.1.5 and Forever 1.60.1. Author explicitly ties revised no-DE exclusions to Forever build 71139; product description says its Forever tables include wand and leather exceptions. No supported Retail target operation sample or independently verified profile mapping. Do not transplant Forever exclusions or treat tooltip valuation as observations. Code not inspected.",
-      "disposition": "hold as flavor-specific model context; no numerical admission",
+      "source": "https://wowalone.blogspot.com/2009/10/changing-tactics-with-inscription.html",
+      "field": "same cohort second output",
+      "finding": "45 Icy Pigment, source reported 0.56 per mill; stack-level max/zero reports not cast-level data.",
+      "disposition": "Historical original held; no verified Retail transfer or completed-cast denominator.",
+      "inputItemID": 36903,
+      "outputItemID": 43109,
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": 45,
+      "zeroCount": null,
+      "histogram": null,
+      "refunds": null
+    },
+    {
+      "source": "https://wowalone.blogspot.com/2009/10/milling-statistics.html",
+      "field": "mixed-input ink tally provenance",
+      "finding": "Blog author reports 2.98 Azure and 0.56 Icy per mill from ink notes; exact herb split, N, raw pigment units and conversion unspecified.",
+      "disposition": "Held mixed-input source; no item-specific admission",
       "inputItemID": null,
       "outputItemID": null,
       "casts": null,
@@ -46,17 +60,16 @@
     }
   ],
   "source_urls": [
-    "https://www.curseforge.com/wow/addons/oh-my-loot",
-    "https://www.curseforge.com/wow/addons/bambyworth/files/9816851",
-    "https://www.curseforge.com/wow/addons/bambyworth"
+    "https://wowalone.blogspot.com/2009/10/changing-tactics-with-inscription.html",
+    "https://wowalone.blogspot.com/2009/10/milling-statistics.html"
   ],
-  "numeric_summary": "New post-cutoff author-source screening: Oh, My Loot! (Nov 26) explicitly includes generated demonstration records via /oml examples, so exclude examples and require operation-linked evidence rather than bag flows alone. BambyWorth 0.2.2 (Nov 25) explicitly documents Forever build 71139 eligibility exclusions; dual-flavor support does not make those Retail evidence. Neither source publishes actual target-item operations, yields or zeros. Targeted Warmaul/Bloodfist and Cobalt/Fel Iron searches returned previously reviewed historical profiles and reference guides; EzDisenchant 1.2.3 already screened and not duplicated. No new exact-item quantities, completed casts, hits, histograms, refunds, skill/build or eligible Retail profile. T0053 stays done. No evidence JSONL or game actions.",
-  "evidence_file": null,
+  "numeric_summary": "Recovered one new original historical WotLK-era milling cohort: anonymous WoW Alone comment dated October 29, 2009, Adder's Tongue 36903, 20 stacks reported milled, 229 Azure Pigment 39343 and 45 Icy Pigment 43109. Discussion indicates 20 herbs/stack and 5 herbs/mill; 400 herbs/80 nominal equivalents, not completed-cast counts. Source reported 2.86/0.56 per mill and 11.5/2.25 per stack; max five Icy and zero Icy on some stacks do not identify cast-level ranges or zeros. Preserve two historical reference rows, held for Retail eligibility and denominator evidence. Separate October 30 blog author mixed-herb ink tally reports 2.98/0.56 pigment-equivalent means per mill without exact input split, N or conversion details; held without assigning item-specific values. Targeted Warmaul/Bloodfist and Cobalt/Fel Iron searches found known historical sources/profile conflicts, no new independently identified cohort. T0053 remains done. No game actions or prices.",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-26T1944-adders-tongue-original-2009-milling.jsonl",
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-25T2337-whiptail-original-cataclysm-milling.jsonl",
-  "preserved_prior_status_summary": "Fresh post-cutoff publication screening: Pirson Prospect Helper and Mill Helper author documentation updated November 23, 2026 describes Classic-only macro-based action helpers, not actual completed-operation or result logs. A public mirrored README for buildthehomelab/wow-mod-retail-professions explicitly describes AzerothCore 3.3.5a and custom server processing, not Blizzard Retail. No target ledgers or new exact quantities. Known Warmaul Looter/reference data, TSM/BootyBayBroker profile conflict, historical Cobalt/Fel Iron reports and milling cohorts (rollocola, funknut) remain existing reviewed evidence; no duplicate weighting. Recent Craft Ladder/ProfessionsForever listings restate already excluded non-Retail sources. No new independent Retail target identities, cast counts, hits, quantities, zeros, histograms, refunds, skill/build or eligible profile. No new JSONL or game actions. T0053 remains done.",
-  "verified_parent_sha": "d97c46288fbeea72cad444130f64ff48a929f913",
-  "verified_commit_sha": "d97c46288fbeea72cad444130f64ff48a929f913",
-  "commit_note": "Previous owned status verified at immutable d97c46288fbeea72cad444130f64ff48a929f913; this commit cannot contain its own SHA. Verify content/blob and changed files after write.",
+  "preserved_prior_status_summary": "New post-cutoff author-source screening: Oh, My Loot! (Nov 26) explicitly includes generated demonstration records via /oml examples, so exclude examples and require operation-linked evidence rather than bag flows alone. BambyWorth 0.2.2 (Nov 25) explicitly documents Forever build 71139 eligibility exclusions; dual-flavor support does not make those Retail evidence. Neither source publishes actual target-item operations, yields or zeros. Targeted Warmaul/Bloodfist and Cobalt/Fel Iron searches returned previously reviewed historical profiles and reference guides; EzDisenchant 1.2.3 already screened and not duplicated. No new exact-item quantities, completed casts, hits, histograms, refunds, skill/build or eligible Retail profile. T0053 stays done. No evidence JSONL or game actions.",
+  "verified_parent_sha": "3d1a147060849b8a935d2e33ef6d5e4dcdf2ed52",
+  "verified_commit_sha": "6e7c138f307ca51ab96f55c45ac3b220b34eedb6",
+  "commit_note": "Previous owned status exact content/blob verified at immutable 6e7c138f307ca51ab96f55c45ac3b220b34eedb6; this commit cannot contain its own SHA. Verify both new blobs and changed paths after ref update.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -1018,6 +1031,15 @@
       ],
       "disposition": "new capture/model context only",
       "reason": "New post-cutoff author-source screening: Oh, My Loot! (Nov 26) explicitly includes generated demonstration records via /oml examples, so exclude examples and require operation-linked evidence rather than bag flows alone. BambyWorth 0.2.2 (Nov 25) explicitly documents Forever build 71139 eligibility exclusions; dual-flavor support does not make those Retail evidence. Neither source publishes actual target-item operations, yields or zeros. Targeted Warmaul/Bloodfist and Cobalt/Fel Iron searches returned previously reviewed historical profiles and reference guides; EzDisenchant 1.2.3 already screened and not duplicated. No new exact-item quantities, completed casts, hits, histograms, refunds, skill/build or eligible Retail profile. T0053 stays done. No evidence JSONL or game actions."
+    },
+    {
+      "task": "T0042",
+      "source": [
+        "https://wowalone.blogspot.com/2009/10/changing-tactics-with-inscription.html",
+        "https://wowalone.blogspot.com/2009/10/milling-statistics.html"
+      ],
+      "disposition": "Historical original quantities recorded, current Retail admission held; mixed-input means separately held",
+      "reason": "Recovered one new original historical WotLK-era milling cohort: anonymous WoW Alone comment dated October 29, 2009, Adder's Tongue 36903, 20 stacks reported milled, 229 Azure Pigment 39343 and 45 Icy Pigment 43109. Discussion indicates 20 herbs/stack and 5 herbs/mill; 400 herbs/80 nominal equivalents, not completed-cast counts. Source reported 2.86/0.56 per mill and 11.5/2.25 per stack; max five Icy and zero Icy on some stacks do not identify cast-level ranges or zeros. Preserve two historical reference rows, held for Retail eligibility and denominator evidence. Separate October 30 blog author mixed-herb ink tally reports 2.98/0.56 pigment-equivalent means per mill without exact input split, N or conversion details; held without assigning item-specific values. Targeted Warmaul/Bloodfist and Cobalt/Fel Iron searches found known historical sources/profile conflicts, no new independently identified cohort. T0053 remains done. No game actions or prices."
     }
   ],
   "blockers": [
@@ -1379,10 +1401,20 @@
       "source": "https://www.curseforge.com/wow/addons/bambyworth/files/9816851",
       "disposition": "hold as flavor-specific model context; no numerical admission",
       "reason": "xBambyQT BambyWorth 0.2.2, November 25, 2026, file 9816851 supports Retail 12.1.5 and Forever 1.60.1. Author explicitly ties revised no-DE exclusions to Forever build 71139; product description says its Forever tables include wand and leather exceptions. No supported Retail target operation sample or independently verified profile mapping. Do not transplant Forever exclusions or treat tooltip valuation as observations. Code not inspected. Reopen only for a versioned original Retail input-linked ledger or verified source profile."
+    },
+    {
+      "source": "https://wowalone.blogspot.com/2009/10/changing-tactics-with-inscription.html",
+      "disposition": "Historical original held; no verified Retail transfer or completed-cast denominator.",
+      "reason": "No raw cast ledger; reopen only on independently recovered denominator/profile or original event data."
+    },
+    {
+      "source": "https://wowalone.blogspot.com/2009/10/milling-statistics.html",
+      "disposition": "Held mixed-input ink tally",
+      "reason": "No exact herb split, N or direct output units; reopen only for underlying records."
     }
   ],
   "previous_verified_evidence_sha": "69115661d29efead5f8fb80ea2ceca0b4134a2ff",
-  "next_concrete_step": "Seek newly published original Retail operation exports with actual input links, build and complete capture, or independently recover missing fields; exclude generated examples, bag-flow-only data and Forever-specific rules. Do not reopen cutoff cohorts or known guide tables without new provenance.",
+  "next_concrete_step": "Seek new original Retail target-item-linked operation ledgers for Warmaul and matched TBC gear, Cobalt and Fel Iron, including output counts, hit distributions, refunds and client build. For the historical Adder's Tongue source, reopen only if independently published raw event tally or profile evidence becomes available; do not recatalogue known cutoff sources.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -1391,15 +1423,14 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://www.curseforge.com/wow/addons/oh-my-loot",
-    "https://www.curseforge.com/wow/addons/bambyworth/files/9816851",
-    "https://www.curseforge.com/wow/addons/bambyworth",
-    "https://www.curseforge.com/wow/addons/ezdisenchant/files/9760107",
+    "https://wowalone.blogspot.com/2009/10/changing-tactics-with-inscription.html",
+    "https://wowalone.blogspot.com/2009/10/milling-statistics.html",
     "https://www.wowhead.com/item=24995/warmaul-legplates",
-    "https://www.wowhead.com/wotlk/it/guide/professions/jewelcrafting/overview"
+    "https://www.wowhead.com/item=36909/cobalt-ore",
+    "https://www.wowhead.com/item=23424/fel-iron-ore"
   ],
-  "latest_run_source_date": "2026-11-26",
-  "latest_run": "New post-cutoff author-source screening: Oh, My Loot! (Nov 26) explicitly includes generated demonstration records via /oml examples, so exclude examples and require operation-linked evidence rather than bag flows alone. BambyWorth 0.2.2 (Nov 25) explicitly documents Forever build 71139 eligibility exclusions; dual-flavor support does not make those Retail evidence. Neither source publishes actual target-item operations, yields or zeros. Targeted Warmaul/Bloodfist and Cobalt/Fel Iron searches returned previously reviewed historical profiles and reference guides; EzDisenchant 1.2.3 already screened and not duplicated. No new exact-item quantities, completed casts, hits, histograms, refunds, skill/build or eligible Retail profile. T0053 stays done. No evidence JSONL or game actions.",
-  "new_evidence_file_this_run": null,
-  "next": "Seek newly published original Retail operation exports with actual input links, build and complete capture, or independently recover missing fields; exclude generated examples, bag-flow-only data and Forever-specific rules. Do not reopen cutoff cohorts or known guide tables without new provenance."
+  "latest_run_source_date": "2009-10-30",
+  "latest_run": "Recovered one new original historical WotLK-era milling cohort: anonymous WoW Alone comment dated October 29, 2009, Adder's Tongue 36903, 20 stacks reported milled, 229 Azure Pigment 39343 and 45 Icy Pigment 43109. Discussion indicates 20 herbs/stack and 5 herbs/mill; 400 herbs/80 nominal equivalents, not completed-cast counts. Source reported 2.86/0.56 per mill and 11.5/2.25 per stack; max five Icy and zero Icy on some stacks do not identify cast-level ranges or zeros. Preserve two historical reference rows, held for Retail eligibility and denominator evidence. Separate October 30 blog author mixed-herb ink tally reports 2.98/0.56 pigment-equivalent means per mill without exact input split, N or conversion details; held without assigning item-specific values. Targeted Warmaul/Bloodfist and Cobalt/Fel Iron searches found known historical sources/profile conflicts, no new independently identified cohort. T0053 remains done. No game actions or prices.",
+  "new_evidence_file_this_run": "research/v3/evidence/legacy/2026-11-26T1944-adders-tongue-original-2009-milling.jsonl",
+  "next": "Seek new original Retail target-item-linked operation ledgers for Warmaul and matched TBC gear, Cobalt and Fel Iron, including output counts, hit distributions, refunds and client build. For the historical Adder's Tongue source, reopen only if independently published raw event tally or profile evidence becomes available; do not recatalogue known cutoff sources."
 }
