@@ -1,25 +1,25 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-26T15:18:32.831Z",
-  "status": "Screened two new collector/trait identity leads; no independent measured TWW cohort or numerical correction.",
+  "updated_at": "2026-11-26T16:24:14.164Z",
+  "status": "Screened new launch profile guide and Midnight milling speed aura; no new independent TWW processing cohort.",
   "task_ids": [
-    "T0048",
-    "T0040",
     "T0007",
     "T0008",
     "T0009",
+    "T0040",
+    "T0032",
     "T0010",
     "T0011",
     "T0012",
-    "T0032"
+    "T0048"
   ],
   "exact_gaps_targeted": [
-    "T0048: new item-specific armor/weapon disenchant receipts and profiles.",
-    "T0007/T0008/T0009/T0040/T0032: original ore rank-specific post-hotfix processing receipts and unlock context.",
-    "T0010/T0011/T0012: completed mills, output rank/histogram and native TWW skill-node identity."
+    "T0010/T0011/T0012: TWW Improved Milling node identity and per-rank output receipts.",
+    "T0007/T0008/T0009/T0040/T0032: post-hotfix ore processing operations, unlock effects and refund basis.",
+    "T0048: rarity/gear/profile-specific disenchant operation logs."
   ],
-  "source_branch_head_reviewed": "0649bf504ef46908d7eff165f3075986d76f81a6",
-  "source_policy": "Current branch instructions/queue and closed catalogue receipt/registry checked; existing scoped decisions and prior held leads reused, no recatalogue.",
+  "source_branch_head_reviewed": "dfb87c3a7fd6b33e22085c881fd6752fea9efbab",
+  "source_policy": "Current instructions, queue and verified closed cutoff catalogue receipt/registry fetched at reviewed immutable head. Existing source decisions reused; no recatalogue.",
   "study_backlog_triage": [
     {
       "status": "admitted",
@@ -1843,12 +1843,32 @@
       "exact_inputs": null,
       "outputs": null,
       "reason": "Perfect Milling trait 109653 says +1 skill per point; Midnight specialization guide locates it under Perfected Products > Processing. TWW instead uses Improved Milling under Pursuit of Perfection. Do not attach Midnight trait ID, rank cap, coefficients or skill thresholds to Khaz Algar Milling 444181; TWW native Improved Milling trait ID remains unresolved in these sources. Neither guide provides observed pigment counts, completed mills, rank-specific means or refund basis."
+    },
+    {
+      "status": "held",
+      "scope": "held-new-prelaunch-guide-profile-advice-not-measured",
+      "original_cohort": null,
+      "source": "https://gamesfuze.com/guides/wow/the-war-within-best-professions-for-goldmaking/",
+      "existing_ids": null,
+      "exact_inputs": null,
+      "outputs": null,
+      "reason": "Lines 47–69 recommend spending 60 points across Pursuit of Perfection and Improved Milling and distinguish Resourcefulness-only prospecting advice from Crushing. This is planned specialization advice at launch, not executed player skill, named node IDs, node-specific coefficients, actual refund probability or measured output. No herb/ore rank, receipts, completed operations or epoch-specific yield; no new model."
+    },
+    {
+      "status": "held",
+      "scope": "held-new-midnight-speed-aura-excluded-from-tww-yield",
+      "original_cohort": null,
+      "source": "https://www.wowhead.com/spell=1286015/perfected-milling",
+      "existing_ids": null,
+      "exact_inputs": null,
+      "outputs": null,
+      "reason": "Live indexed spell identifies addition in 12.0.1 Midnight; PTR lines 16–40 independently show a 30-second aura giving 2% Crafting Speed, with Improved Milling named in the buff. This is a spell ID, not the TWW trait ID; speed is not output count or Resourcefulness, and the PTR/live views are one spell identity. Do not map this aura to Khaz Algar Milling 444181 or use as a TWW rate multiplier."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 21,
-    "held": 109,
+    "held": 111,
     "duplicate": 5
   },
   "newly_verified_fields": [],
@@ -1857,22 +1877,21 @@
   "new_reference_only_numeric_records": 0,
   "new_no_disenchant_records": 0,
   "new_condition_records": 0,
-  "numeric_fields_advanced": "None; Midnight profession trait 109653 excluded from TWW profile mapping. No yield, hit, denominator or confidence change.",
+  "numeric_fields_advanced": "None. Midnight spell 1286015 is a crafting-speed aura, not TWW yield or trait identity. Unknown counts/rates remain null.",
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://www.curseforge.com/wow/addons/gathervalue",
-    "https://www.wowhead.com/profession-trait/perfect-milling-109653",
-    "https://www.wowhead.com/guide/midnight/professions/inscription-specializations",
-    "https://www.wowhead.com/guide/the-war-within/professions/inscription-specialization"
+    "https://gamesfuze.com/guides/wow/the-war-within-best-professions-for-goldmaking/",
+    "https://www.wowhead.com/spell=1286015/perfected-milling",
+    "https://www.wowhead.com/ptr/spell=1286015/perfected-milling"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-26T1221-lightless-footpads-crystal-rank-stack-correction.jsonl",
-  "verified_commit_sha": "0649bf504ef46908d7eff165f3075986d76f81a6",
-  "verification": "Instructions and queue fetched at immutable reviewed head; owned status blob SHA matched prior read before single-file guarded update. verified_commit_sha identifies reviewed parent, not self-referential status commit; post-write read-back checked separately.",
+  "verified_commit_sha": "dfb87c3a7fd6b33e22085c881fd6752fea9efbab",
+  "verification": "Required files and catalogue receipt/registry fetched at reviewed head. Current owned status blob matched reviewed blob before guarded single-file update. verified_commit_sha is reviewed parent, not a self-referential commit; exact status read-back performed separately.",
   "blockers": [
-    "No new publicly accessible TWW per-operation input/output ledger; exact rank, completed operations, hits, zeros, stack histograms and refund basis remain unknown.",
-    "GatherValue documentation supplies no TWW cohort or raw export; Midnight trait 109653 is not TWW Improved Milling.",
-    "Existing Looter cumulative tables require unresolved original cohort overlap, profile/build and eligibility context; do not promote references into independent studies."
+    "No new operation-level TWW processing log with identified input/output ranks and hit/zero counts.",
+    "Native TWW Improved Milling trait identity still unresolved; new guide has recommended allocations only, Midnight aura excluded.",
+    "Full Reddit retrospective retrieval blocked; already catalogued cumulative tables and older studies not reopened without a new evidence trigger."
   ],
   "exhausted_sources": [
     "2026-11-20: Reddit 1ftqzxp historical shatter original/commenter estimates inspected; new but unfit for direct DE numeric admission without distinct recipe method/raw ledger; do not scrape it repeatedly without author export.",
@@ -1980,23 +1999,22 @@
     "2026-11-26T11:25:01.608Z: GamingHero and MMOPixel context only; do not re-review without new original data. Existing 349956, 1f51u6e, 1g350pq, LotzBoi and named gear tables already reviewed; 227661 and 227659 knowledge-item input conflict already held.",
     "2026-11-26T12:22:23.034Z: 212022 live/ptr/ptr-2 views one cumulative table corrected once; do not re-count 46 operations. Previously screened 565405, 1k78h4v, 2130416, 1fhd4wa, orangeboom and LotzBoi reused without re-review.",
     "2026-11-26T13:26:23.038Z: Quest 84085 comments and Reddit 1j59sv6 are context only; do not revisit without a new linked processing ledger or official patch evidence. Previously reviewed 570664, 1934709, 1jnvht8, 1l91chl, 1oa7vn1, 1g8kbaq, 1neicjm, 1jc2ya5, 2114101 and 1934281 reused without recatalogue.",
-    "2026-11-26T15:18:32.831Z: Previously held Tomasz 554920, ProspectMate, ProfitProphet, 1944679, 1th2zkl, 2274188 and SemiCollin worksheet reused; LotzBoi and older known original studies not re-transcribed. GatherValue and Midnight Perfect Milling trait screened once; revisit only for actual TWW log/native TWW identity."
+    "2026-11-26T15:18:32.831Z: Previously held Tomasz 554920, ProspectMate, ProfitProphet, 1944679, 1th2zkl, 2274188 and SemiCollin worksheet reused; LotzBoi and older known original studies not re-transcribed. GatherValue and Midnight Perfect Milling trait screened once; revisit only for actual TWW log/native TWW identity.",
+    "2026-11-26T16:24:14.164Z: GamesFuze launch guide and Midnight spell 1286015 screened once; prior LotzBoi, 1f5rby5, 1942494 and 2145981 searches returned already known studies/context; no recatalogue. Reddit 1g3y5ib full retrieval blocked; search excerpt only discussed general profession equipment, no observed processing cohort."
   ],
-  "next_concrete_step": "Look for publicly shared existing TWW processing exports with paired operation receipts, or native archived Improved Milling/Gem Finding nodes with expansion-specific IDs and source-grounded effects. Avoid market or generic addon listings without a linked original dataset.",
-  "previous_status_updated_at": "2026-11-26T13:26:23.038Z",
+  "next_concrete_step": "Search archived TWW profession tree data or public existing collector exports with actual paired operations, named outputs and dated skill/refund profiles; avoid generic guides and cross-expansion traits.",
+  "previous_status_updated_at": "2026-11-26T15:18:32.831Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "checked_at_utc": "2026-11-26T15:18:32.831Z",
+    "checked_at_utc": "2026-11-26T16:24:14.164Z",
     "queries": [
-      "post-hotfix ore rank prospect receipts",
-      "TWW milling herbs/pigments original results",
-      "TWW disenchant gear and shard receipts",
-      "public processing collector exports",
-      "expansion-specific milling trait identity"
+      "TWW Improved Milling profession trait ID and archived specialization data",
+      "TWW 2025 ore prospecting results and public CSVs",
+      "TWW herb/pigment receipts and shard disenchant logs"
     ],
     "new_sources_screened": 2,
     "existing_cohort_corrected": 0
@@ -7778,6 +7796,58 @@
       ],
       "traitID": 109653,
       "detail": "Perfect Milling trait 109653 says +1 skill per point; Midnight specialization guide locates it under Perfected Products > Processing. TWW instead uses Improved Milling under Pursuit of Perfection. Do not attach Midnight trait ID, rank cap, coefficients or skill thresholds to Khaz Algar Milling 444181; TWW native Improved Milling trait ID remains unresolved in these sources. Neither guide provides observed pigment counts, completed mills, rank-specific means or refund basis."
+    },
+    {
+      "checked_at_utc": "2026-11-26T16:24:14.164Z",
+      "inputItemID": null,
+      "inputRank": null,
+      "outputItemID": null,
+      "outputRank": null,
+      "casts": null,
+      "inputsPerCast": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "minSeen": null,
+      "maxSeen": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": null,
+      "patch": null,
+      "build": null,
+      "refund_basis": null,
+      "status": "held-new-prelaunch-guide-profile-advice-not-measured",
+      "method": "Mill/Prospect",
+      "source": "https://gamesfuze.com/guides/wow/the-war-within-best-professions-for-goldmaking/",
+      "published": "2024-08-22",
+      "author": "Haider",
+      "detail": "Lines 47–69 recommend spending 60 points across Pursuit of Perfection and Improved Milling and distinguish Resourcefulness-only prospecting advice from Crushing. This is planned specialization advice at launch, not executed player skill, named node IDs, node-specific coefficients, actual refund probability or measured output. No herb/ore rank, receipts, completed operations or epoch-specific yield; no new model."
+    },
+    {
+      "checked_at_utc": "2026-11-26T16:24:14.164Z",
+      "inputItemID": null,
+      "inputRank": null,
+      "outputItemID": null,
+      "outputRank": null,
+      "casts": null,
+      "inputsPerCast": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "minSeen": null,
+      "maxSeen": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": null,
+      "patch": null,
+      "build": null,
+      "refund_basis": null,
+      "status": "held-new-midnight-speed-aura-excluded-from-tww-yield",
+      "method": "Mill",
+      "source": "https://www.wowhead.com/spell=1286015/perfected-milling",
+      "corroboration": "https://www.wowhead.com/ptr/spell=1286015/perfected-milling",
+      "spellID": 1286015,
+      "detail": "Live indexed spell identifies addition in 12.0.1 Midnight; PTR lines 16–40 independently show a 30-second aura giving 2% Crafting Speed, with Improved Milling named in the buff. This is a spell ID, not the TWW trait ID; speed is not output count or Resourcefulness, and the PTR/live views are one spell identity. Do not map this aura to Khaz Algar Milling 444181 or use as a TWW rate multiplier."
     }
   ],
   "last_source_commit_pending": false
