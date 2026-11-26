@@ -551,7 +551,12 @@ for _,r in ipairs(additions.processing or {}) do db.processing[#db.processing+1]
 -- This adapter carries no numerical rates, bounds, confidence or mechanics.
 local captures=assert(loadfile('database/capture-observations.lua'))()
 local recycling=assert(loadfile('database/recycling-capture-baselines.lua'))()
-local community=assert(loadfile('database/community-capture-baselines.lua'))()
+-- Evidence/v3 fixture builds use the same isolated source set as categories
+-- below. An explicit category path selects the full source override mode.
+local community={schemaVersion=1,processing={}}
+if arg[4] or (not arg[2] and not arg[3]) then
+    community=assert(loadfile('database/community-capture-baselines.lua'))()
+end
 assert(community.schemaVersion==1 and type(community.processing)=='table','Unsupported community captures')
 for _,r in ipairs(community.processing) do
     assert(r.sourceKind=='reviewed-community-player-capture' and type(r.communityMeasuredProfile)=='table'
