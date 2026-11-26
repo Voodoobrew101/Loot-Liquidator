@@ -1,26 +1,28 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-26T13:36:57.938Z",
-  "status": "Author-documented historical mailbox capture limitation; no new target cohort or numeric admission",
+  "updated_at": "2026-11-26T14:38:00.227Z",
+  "status": "New capture-bias and source-lineage screen; no qualifying new numerical cohort",
   "task_ids": [
     "T0047",
+    "T0052",
     "T0042",
     "T0022",
-    "T0044"
+    "T0044",
+    "T0021"
   ],
   "exact_gaps_targeted": [
-    "24995 and comparable TBC armor/weapon actual Retail variant, hits, conditional quantities and complete cast ledger",
-    "36909 and 23424 exact per-output units, actual completed casts, hits and zeros",
-    "Historical recorder capture completeness and denominator provenance"
+    "24995 and adjacent TBC armor/weapon exact held itemLink/build, completed DE and output counts/histograms",
+    "36909, 23424 and 36910 completed operations, exact materials/hits/zero bins",
+    "New or versioned public recorder exports; distinguish borrowed reference models from measured casts and capture bias"
   ],
   "newly_verified_fields_cohorts": [
     {
-      "source": "https://www.curseforge.com/wow/addons/prospect-me",
-      "author": "Mischivin",
-      "source_version": "Prospect Me v2; listing latest v2.7.2.0, Retail 7.2.0, 2017-03-31",
-      "field": "capture_completeness",
-      "finding": "Author documents omission of mass-processing outputs routed to mailbox when inventory is full",
+      "source": "https://www.curseforge.com/wow/addons/auction-detonator/files/9514690",
+      "author": "Bubbledude",
+      "field": "capture_completeness_and_model_lineage",
+      "source_version": "v0.21.9-beta, 2026-11-08, historical v0.17.3 and v0.16.4 changelog",
+      "finding": "Cancelled manual cast previously blocked subsequent manual DE logging; TBC/Classic per-item model explicitly sourced from CMaNGOS. Other game flavors only.",
       "inputItemID": null,
       "outputItemID": null,
       "casts": null,
@@ -29,19 +31,35 @@
       "zeroCount": null,
       "histogram": null,
       "refunds": null,
-      "disposition": "historical source-method limitation only; no numerical weighting; actual target exports not found"
+      "disposition": "exclude non-Retail model and recorder context from numeric weighting"
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/malitors-disenchanting-box/files/9814085",
+      "field": "acquisition_lead",
+      "source_version": "Mainline v12.0.8; 2026-11-25; Retail 12.1.7",
+      "finding": "Public author feature description lists selection/filtering UI, no documented raw processing export",
+      "disposition": "held, no public target ledger verified"
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/disenchantry/files/9807065",
+      "field": "source_version",
+      "source_version": "1.3.1, 2026-11-25",
+      "finding": "Cross-flavor file includes Retail 12.1.5; no changelog or actual target logs supplied",
+      "disposition": "held, no numerical data"
     }
   ],
   "source_urls": [
-    "https://www.curseforge.com/wow/addons/prospect-me",
-    "https://repos.curseforge.com/wow/prospect-me/file/f9b6c0305908/ProspectMe.lua",
-    "https://www.wowhead.com/item=24995/warmaul-legplates",
+    "https://www.curseforge.com/wow/addons/auction-detonator/files/9514690",
+    "https://www.curseforge.com/wow/addons/malitors-disenchanting-box/files/9814085",
+    "https://www.curseforge.com/wow/addons/disenchantry/files/9807065",
+    "https://www.curseforge.com/wow/addons/enchant-audit",
     "https://www.wowhead.com/item=22445/arcane-dust",
-    "https://www.wowhead.com/mop-classic/item=36909/cobalt-ore",
-    "https://wowpedia.fandom.com/wiki/Fel_Iron_Ore",
-    "https://www.wowhead.com/item=45661/spaulders-of-the-wayward-vanquisher"
+    "https://www.wowhead.com/wotlk/item=24995/warmaul-legplates",
+    "https://www.wowhead.com/mop-classic/it/item=23424/fel-iron-ore",
+    "https://warcraft.wiki.gg/wiki/Cobalt_Ore",
+    "https://artisansofazeroth.com/netherweave-shuffle"
   ],
-  "numeric_summary": "New recorder provenance, not new yield evidence: the author Mischivin's Prospect Me v2 project page (last release 2017-03-31, Retail 7.2.0) explicitly documents that mass prospecting/milling results sent to the mailbox when bags fill are not recorded. This is an independently stated capture limitation beyond the already reviewed 2016 code denominator semantics, not a measured loss frequency or evidence of zero yield, refunds, or a particular target ore being affected. Existing f9b6c0305908 source is a known reference: standard processing uses multiplier 1 and mass 4; records aggregate units, not per-output hit or zero histograms. Do not treat a screenshot percentage or TimesProspected field as an observed chance or a mixed-method raw cast denominator. Do not infer incomplete capture merely from missing outputs; retain documented uncertainty if an actual relevant versioned export appears. No original Cobalt 36909 or Fel Iron 23424 target export recovered. Exact-name searches for Warmaul 24995, adjacent TBC gear, Arcane Dust and the two ores returned already reviewed cohorts, reference tables or unrelated Midnight data. Jakebees, 16088, 397115 and Strikk3r not treated as new cohorts; current auction metadata not a DE receipt. Token 45661 remains done; no new reward identities. No new qualifying numerical cohort or JSONL, no prices, game actions, production or schedule changes.",
+  "numeric_summary": "New source provenance and acquisition screening: Bubbledude's Auction Detonator v0.21.9-beta release (Nov 8 2026, file 9514690) reproduces its v0.17.3-beta fix: an interrupted/cancelled manual disenchant previously remained pending and blocked recording later manual disenchants. It also describes recognition of the input when the loot window opens before bag removal. Its v0.16.4-beta changelog expressly credits CMaNGOS world database for TBC/Classic item-specific estimates (11,025 TBC and 6,648 Classic Era items, coverage counts only). File supports Classic TBC 2.5.6, Classic 1.15.9 and Forever 1.60.1, not Retail. No target operation export, exact item-level yields, missed-operation count, or current Retail transfer. Do not count modeled rows or missed events as observed casts/zeros. Newly published Malitor Mainline v12.0.8 (Nov 25, file 9814085; client 12.1.7) is an eligibility-selection/filtering UI in its public description, no documented raw history export or public target ledger. Disenchantry 1.3.1 Nov 25 (9807065) is multi-flavor, includes Retail 12.1.5, has no changelog; no new original operation data verified. Enchant Audit November 25 listing explicitly targets Forever interface 16001; party ledger clears on disband; illustrated loot chat is not a cohort; direct open blocked, listing excerpt only. No eligible new sources from exact-name Warmaul/Bloodfist group, Cobalt, Fel Iron, Titanium and Arcane Dust searches: historical Thottbot/Wowhead cohorts, copied priors, farming videos and other-flavor guides; Artisans of Azeroth Netherweave 108-belt source explicitly already in 731-source manifest. No re-transcription of cutoff cohorts, new admitted measurements, evidence JSONL, prices, game actions, PRs, production or schedule changes.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-25T2337-whiptail-original-cataclysm-milling.jsonl",
   "preserved_prior_status_summary": [
@@ -474,9 +492,9 @@
       "evidence": null
     }
   ],
-  "verified_parent_sha": "918ed9a74ab2d84be2fa2a3a81e00b24c16e465b",
-  "verified_commit_sha": "4cf3f6cf557c4e87ec5377cffb4e2e4f05703242",
-  "commit_note": "Prior status commit verified as changing only owned status path. This file cannot contain its own resulting commit hash; verify current immutable commit/blob after update.",
+  "verified_parent_sha": "df3dfe379b3fe59b8522404275313da77b9715b6",
+  "verified_commit_sha": "fff612b2fe97cee1e24990088098a3bdb412735b",
+  "commit_note": "Previous owned status blob verified against prior immutable commit. Current resulting commit SHA cannot self-reference; verify immutable blob and changed-file list after update.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -1365,6 +1383,22 @@
       "source": "https://www.curseforge.com/wow/addons/prospect-me",
       "disposition": "historical capture context only; no new study",
       "reason": "Author documents mailbox omission during mass processing; no target ore export, completed denominator, unit counts, or measured impact. Existing code revision already reviewed; do not reweight."
+    },
+    {
+      "task": "T0047/T0052/T0042",
+      "source": "https://www.curseforge.com/wow/addons/auction-detonator/files/9514690",
+      "disposition": "non-Retail source model and capture limitation; no numerical admission",
+      "reason": "Author explicitly attributes static Classic/TBC model to CMaNGOS and describes missed later manual DE after cancelled cast; no target logs or measured loss count. Do not treat model coverage counts as operations."
+    },
+    {
+      "task": "T0047/T0042",
+      "source": [
+        "https://www.curseforge.com/wow/addons/malitors-disenchanting-box/files/9814085",
+        "https://www.curseforge.com/wow/addons/disenchantry/files/9807065",
+        "https://www.curseforge.com/wow/addons/enchant-audit"
+      ],
+      "disposition": "held newly released recorder leads, no original target cohort",
+      "reason": "Mainline selection UI, multi-flavor stats package without changelog, and Forever-only party ledger respectively; no independent target measurements."
     }
   ],
   "blockers": [
@@ -1651,10 +1685,30 @@
       "source": "https://www.curseforge.com/wow/addons/prospect-me",
       "disposition": "capture limitation recorded; no target original logs",
       "reason": "Reopen only for a versioned actual export with capture completeness and input-specific data; do not repeat listing/code searches."
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/auction-detonator/files/9514690",
+      "disposition": "non-Retail model and capture-method context",
+      "reason": "Reopen only for actual versioned independent Retail source, not CMaNGOS-derived tables or missing records."
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/malitors-disenchanting-box/files/9814085",
+      "disposition": "Retail 12.1.7 release screened",
+      "reason": "No documented raw operation export or original ledger found in public feature description; reopen for actual capture/export evidence."
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/disenchantry/files/9807065",
+      "disposition": "new version screened; no changelog or target data",
+      "reason": "Reopen only for actual versioned Retail logs, not mixed-flavor estimates."
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/enchant-audit",
+      "disposition": "Forever-only listing excerpt; direct page blocked",
+      "reason": "No Retail admission; do not repeat absent new Retail version and original logs."
     }
   ],
   "previous_verified_evidence_sha": "69115661d29efead5f8fb80ea2ceca0b4134a2ff",
-  "next_concrete_step": "Seek a genuinely new versioned public Retail legacy processing export or contributor receipt with exact input and output IDs, capture completeness, actual completed operations or supported unconditional means; reopen historical sources only for a missing field or new provenance, not repeated cohort transcription.",
+  "next_concrete_step": "Seek newly published independent Retail exact-item receipts or complete versioned source exports, including direct source-linked processing event data. Do not repeat prior source searches unless an original missing field or provenance becomes available; keep cutoff decisions intact.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -1663,16 +1717,18 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://www.curseforge.com/wow/addons/prospect-me",
-    "https://repos.curseforge.com/wow/prospect-me/file/f9b6c0305908/ProspectMe.lua",
-    "https://www.wowhead.com/item=24995/warmaul-legplates",
+    "https://www.curseforge.com/wow/addons/auction-detonator/files/9514690",
+    "https://www.curseforge.com/wow/addons/malitors-disenchanting-box/files/9814085",
+    "https://www.curseforge.com/wow/addons/disenchantry/files/9807065",
+    "https://www.curseforge.com/wow/addons/enchant-audit",
     "https://www.wowhead.com/item=22445/arcane-dust",
-    "https://www.wowhead.com/mop-classic/item=36909/cobalt-ore",
-    "https://wowpedia.fandom.com/wiki/Fel_Iron_Ore",
-    "https://www.wowhead.com/item=45661/spaulders-of-the-wayward-vanquisher"
+    "https://www.wowhead.com/wotlk/item=24995/warmaul-legplates",
+    "https://www.wowhead.com/mop-classic/it/item=23424/fel-iron-ore",
+    "https://warcraft.wiki.gg/wiki/Cobalt_Ore",
+    "https://artisansofazeroth.com/netherweave-shuffle"
   ],
-  "latest_run_source_date": null,
-  "latest_run": "New recorder provenance, not new yield evidence: the author Mischivin's Prospect Me v2 project page (last release 2017-03-31, Retail 7.2.0) explicitly documents that mass prospecting/milling results sent to the mailbox when bags fill are not recorded. This is an independently stated capture limitation beyond the already reviewed 2016 code denominator semantics, not a measured loss frequency or evidence of zero yield, refunds, or a particular target ore being affected. Existing f9b6c0305908 source is a known reference: standard processing uses multiplier 1 and mass 4; records aggregate units, not per-output hit or zero histograms. Do not treat a screenshot percentage or TimesProspected field as an observed chance or a mixed-method raw cast denominator. Do not infer incomplete capture merely from missing outputs; retain documented uncertainty if an actual relevant versioned export appears. No original Cobalt 36909 or Fel Iron 23424 target export recovered. Exact-name searches for Warmaul 24995, adjacent TBC gear, Arcane Dust and the two ores returned already reviewed cohorts, reference tables or unrelated Midnight data. Jakebees, 16088, 397115 and Strikk3r not treated as new cohorts; current auction metadata not a DE receipt. Token 45661 remains done; no new reward identities. No new qualifying numerical cohort or JSONL, no prices, game actions, production or schedule changes.",
+  "latest_run_source_date": "2026-11-25",
+  "latest_run": "New source provenance and acquisition screening: Bubbledude's Auction Detonator v0.21.9-beta release (Nov 8 2026, file 9514690) reproduces its v0.17.3-beta fix: an interrupted/cancelled manual disenchant previously remained pending and blocked recording later manual disenchants. It also describes recognition of the input when the loot window opens before bag removal. Its v0.16.4-beta changelog expressly credits CMaNGOS world database for TBC/Classic item-specific estimates (11,025 TBC and 6,648 Classic Era items, coverage counts only). File supports Classic TBC 2.5.6, Classic 1.15.9 and Forever 1.60.1, not Retail. No target operation export, exact item-level yields, missed-operation count, or current Retail transfer. Do not count modeled rows or missed events as observed casts/zeros. Newly published Malitor Mainline v12.0.8 (Nov 25, file 9814085; client 12.1.7) is an eligibility-selection/filtering UI in its public description, no documented raw history export or public target ledger. Disenchantry 1.3.1 Nov 25 (9807065) is multi-flavor, includes Retail 12.1.5, has no changelog; no new original operation data verified. Enchant Audit November 25 listing explicitly targets Forever interface 16001; party ledger clears on disband; illustrated loot chat is not a cohort; direct open blocked, listing excerpt only. No eligible new sources from exact-name Warmaul/Bloodfist group, Cobalt, Fel Iron, Titanium and Arcane Dust searches: historical Thottbot/Wowhead cohorts, copied priors, farming videos and other-flavor guides; Artisans of Azeroth Netherweave 108-belt source explicitly already in 731-source manifest. No re-transcription of cutoff cohorts, new admitted measurements, evidence JSONL, prices, game actions, PRs, production or schedule changes.",
   "new_evidence_file_this_run": null,
-  "next": "Seek a genuinely new versioned public Retail legacy processing export or contributor receipt with exact input and output IDs, capture completeness, actual completed operations or supported unconditional means; reopen historical sources only for a missing field or new provenance, not repeated cohort transcription."
+  "next": "Seek newly published independent Retail exact-item receipts or complete versioned source exports, including direct source-linked processing event data. Do not repeat prior source searches unless an original missing field or provenance becomes available; keep cutoff decisions intact."
 }
