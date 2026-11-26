@@ -1,25 +1,25 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-26T08:16:43.197Z",
-  "status": "New external addon batch-size corroboration screened; no independent numeric processing cohort found.",
+  "updated_at": "2026-11-26T09:16:43.639Z",
+  "status": "New item-specific eligibility conflict and gathering-only source screened; no independent processing cohort verified.",
   "task_ids": [
-    "T0007",
-    "T0008",
-    "T0009",
+    "T0048",
     "T0010",
     "T0011",
     "T0012",
-    "T0032",
+    "T0007",
+    "T0008",
+    "T0009",
     "T0040",
-    "T0048"
+    "T0032"
   ],
   "exact_gaps_targeted": [
-    "T0048: original DE operation/receipt counts by rarity, gear kind, rank and skill.",
-    "T0007–T0009/T0040: post-hotfix ore/rank receipts and refund-adjusted denominator.",
-    "T0010–T0012: herb/rank-specific completed mills, pigment receipts and batch identity."
+    "T0048: exact item-side DE receipts and eligibility across variants, specifically 217133 and 230373.",
+    "T0010–T0012: actual herb-to-pigment receipts, not gathering or exchange counts.",
+    "T0007–T0009/T0040/T0032: independent ore/rank/unlock operation ledgers; familiar Raven11 and existing guide studies not retranscribed."
   ],
-  "source_branch_head_reviewed": "7af7276a87df3972954edc80203cfb5fe5bf77ea",
-  "source_policy": "Read current repository README, evidence format, mechanics, worker instructions, War Within queue and closed catalogue receipt/registry; checked new source keys against cutoff manifest and owned status. Reused prior decisions.",
+  "source_branch_head_reviewed": "a2f4913f13b322b671a2c9b1340f98a57926b68c",
+  "source_policy": "Read current repository instructions, worker queue, closed catalogue receipt and enabled registry. Cross-checked owned status and cutoff source keys; no backlog recatalogue.",
   "study_backlog_triage": [
     {
       "status": "admitted",
@@ -1711,6 +1711,26 @@
       "exact_inputs": null,
       "outputs": null,
       "reason": "Wise addon technical documentation identifies 10 herbs per TWW/Midnight mill vs 5 through Dragonflight, and describes price/provider selection from TSM, ProfitProphet or Auctionator. This is static third-party documentation, not a native spell record or independent output study. The linked implementation was inaccessible (web retrieval error and GitHub contents 404); no measured receipts or exact spell ID provided by the excerpt. Corroborates already verified TWW milling batch 10 without changing it. Do not reuse dependent pricing tables as original cohorts."
+    },
+    {
+      "status": "held",
+      "scope": "held-new-item-specific-eligibility-conflict-existing-output-side-reference",
+      "original_cohort": null,
+      "source": "https://ptr.wowdb.com/items/217133-algari-competitors-leather-wristwraps",
+      "existing_ids": null,
+      "exact_inputs": 217133,
+      "outputs": 219947,
+      "reason": "WoWDB PTR quick-info explicitly flags Cannot be disenchanted for 217133; Wowhead live indexed item page lists four Disenchanting entries, and PTR-2 output-side Storm Dust 219947 lists 15 out of 24, 63%. The raw item-side rows were not exposed by opened page. Output-side Wowhead source family already cutoff-catalogued (wowhead:item=219947@ptr); do not add counts or assume independent PTR cohorts. WoWDB 11.0.0 build 54210 is addition metadata, not observation or flag verification epoch. No exact bonus/item-level variant, skill, per-hit quantity or observation build. Do not turn the conflicting static flag into a permanent live eligibility rule or the output-side report into current measured probability."
+    },
+    {
+      "status": "held",
+      "scope": "held-new-gathering-data-not-milling",
+      "original_cohort": null,
+      "source": "https://us.forums.blizzard.com/en/wow/t/phantom-bloom-and-desolate-talus-numbers/2160589",
+      "existing_ids": null,
+      "exact_inputs": null,
+      "outputs": null,
+      "reason": "Original one-hour gathering comparison reports Phantom Bloom rank quantities 443/520/279 and 5 K'areshi Lotus. These are gathered herbs, not mill outputs, and subsequent exchange prices are not permanent recipe costs. Existing 2145981 method-exclusion review covers Phantom Bloom 239690–239692; no re-admission or new gathering model."
     }
   ],
   "triage_counts": {
@@ -1725,18 +1745,21 @@
   "new_reference_only_numeric_records": 0,
   "new_no_disenchant_records": 0,
   "new_condition_records": 0,
-  "numeric_fields_advanced": "None; corroborating static batch size already verified, no new receipt or eligible mean.",
+  "numeric_fields_advanced": "None: source-level eligibility conflict only, no verified current outcome or independent cohort.",
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://github.com/claytonkimber/Wise/blob/main/AGENTS.md"
+    "https://ptr.wowdb.com/items/217133-algari-competitors-leather-wristwraps",
+    "https://www.wowhead.com/item=217133/algari-competitors-leather-wristwraps",
+    "https://www.wowhead.com/ptr-2/item=219947/storm-dust",
+    "https://us.forums.blizzard.com/en/wow/t/phantom-bloom-and-desolate-talus-numbers/2160589"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-25T1826-siren-isle-weapon-crystal-looter-reference.jsonl",
-  "verified_commit_sha": "7af7276a87df3972954edc80203cfb5fe5bf77ea",
-  "verification": "Reviewed branch parent and owned blob; compare-and-swap contents update followed by immutable read-back. verified_commit_sha denotes reviewed parent, not self-referential.",
+  "verified_commit_sha": "a2f4913f13b322b671a2c9b1340f98a57926b68c",
+  "verification": "Reviewed parent and status blob; compare-and-swap contents update, followed by immutable commit read-back. verified_commit_sha refers to reviewed parent, not self-reference.",
   "blockers": [
-    "No new independent rank-specific operation/receipt cohorts in public searches; prior Aqirite/Ironclaw and Arathor's Spear reports already screened.",
-    "Wise implementation inaccessible; docs provide no original output ledger. Native historical Gem Finding milestones still unavailable."
+    "No independent original per-operation ledger found for ore or herb ranks; item-side DE raw receipts inaccessible.",
+    "217133 static PTR eligibility flag conflicts with cumulative Looter occurrence reference; exact variant/epoch and live eligibility unresolved."
   ],
   "exhausted_sources": [
     "2026-11-20: Reddit 1ftqzxp historical shatter original/commenter estimates inspected; new but unfit for direct DE numeric admission without distinct recipe method/raw ledger; do not scrape it repeatedly without author export.",
@@ -1838,23 +1861,24 @@
     "2026-11-26T05:22:47.317Z: 2213175 housing dye interruption only; 239463/239468/239452 indexed item tabs lack DE receipts; source searches returned already reviewed 1fvhzy0, 2083666, 1nqwdhf, 1g350pq, 1k78h4v, 1fdmzwy, 1pa98qw, LotzBoi, PeaEsk. No re-transcription. Community export issue #94 already in separate reviewer flow.",
     "2026-11-26T06:17:35.031Z: 1gcai5k market discussion and hotfix interpretation only; existing 1942494, 1g350pq, 1968257, 554920, 1935257, 565405, 570929, 2130416, 2113817, 2114101, 2268773, LotzBoi, PeaEsk, 1oa7vn1 and existing Looter cohorts returned. No duplicate transcription or new independent cohort.",
     "2026-11-26T07:25:03.716Z: 1981681 and official 24134803 Oct 7 eligibility context; Dot Esports guide Dec 19 2025 no receipt ledger; repeated 1934709, 2083666, 227662, 1g350pq, 1k78h4v, 1929785, 565405, 1976354, 1mw5zm2 and LotzBoi already screened. No re-transcription; translated Wowhead mirrors not independent.",
-    "2026-11-26T08:16:43.197Z: public search surfaced already screened 1fisfkn, 1g350pq, 1fuuqnh, 1nqwdhf, 1935257, 2083666, 2145981, 1976354, 2268773, ProfitProphet changelog; Wise static documentation newly screened; no duplicate numeric transcription."
+    "2026-11-26T08:16:43.197Z: public search surfaced already screened 1fisfkn, 1g350pq, 1fuuqnh, 1nqwdhf, 1935257, 2083666, 2145981, 1976354, 2268773, ProfitProphet changelog; Wise static documentation newly screened; no duplicate numeric transcription.",
+    "2026-11-26T09:16:43.639Z: familiar Method guides, Raven11 and 1933547 already reviewed; 219947 output-side family cutoff-catalogued; 2160589 gathering not processing. No new measured rates."
   ],
-  "next_concrete_step": "Seek genuinely new published rank-specific player processing exports with completed operations and receipt counts, or independently retrievable item-side Looter histograms; skip already-reviewed static provider tables unless original measured provenance is exposed.",
-  "previous_status_updated_at": "2026-11-26T07:25:03.716Z",
+  "next_concrete_step": "Seek independently published processing export or exact item-side receipt/histogram with variant and build; no repeated output-side PTR table transcription. Preserve conflict for Master/runtime eligibility review.",
+  "previous_status_updated_at": "2026-11-26T08:16:43.197Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "checked_at_utc": "2026-11-26T08:16:43.197Z",
-    "topics": [
-      "Original ore/herb receipt searches",
-      "Historical disenchanting gear and skill reports",
-      "Third-party addon milling batch source and original-data lineage"
+    "checked_at_utc": "2026-11-26T09:16:43.639Z",
+    "queries": [
+      "TWW Storm Dust item-specific DE and WoWDB eligibility",
+      "TWW Aqirite prospecting samples",
+      "TWW herb milling and Phantom Bloom applicability"
     ],
-    "new_measured_cohorts": 0
+    "new_sources_screened": 2
   },
   "source_integrity_findings": [
     {
@@ -7281,6 +7305,54 @@
       "refund_basis": null,
       "source_reported_milling_batch": 10,
       "detail": "Wise addon technical documentation identifies 10 herbs per TWW/Midnight mill vs 5 through Dragonflight, and describes price/provider selection from TSM, ProfitProphet or Auctionator. This is static third-party documentation, not a native spell record or independent output study. The linked implementation was inaccessible (web retrieval error and GitHub contents 404); no measured receipts or exact spell ID provided by the excerpt. Corroborates already verified TWW milling batch 10 without changing it. Do not reuse dependent pricing tables as original cohorts."
+    },
+    {
+      "checked_at_utc": "2026-11-26T09:16:43.639Z",
+      "status": "held-new-item-specific-eligibility-conflict-existing-output-side-reference",
+      "method": "Disenchant",
+      "source": "https://ptr.wowdb.com/items/217133-algari-competitors-leather-wristwraps",
+      "corroboration": [
+        "https://www.wowhead.com/item=217133/algari-competitors-leather-wristwraps",
+        "https://www.wowhead.com/ptr-2/item=219947/storm-dust"
+      ],
+      "inputItemID": 217133,
+      "inputName": "Algari Competitor's Leather Wristwraps",
+      "inputRank": null,
+      "gearKind": "leather wrist armor",
+      "gearQuality": null,
+      "outputItemID": 219947,
+      "outputRank": null,
+      "source_reported_occurrences": 15,
+      "source_reported_denominator": 24,
+      "source_reported_percent": 63,
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "minSeen": null,
+      "maxSeen": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": null,
+      "patch": null,
+      "build": null,
+      "refund_basis": null,
+      "detail": "WoWDB PTR quick-info explicitly flags Cannot be disenchanted for 217133; Wowhead live indexed item page lists four Disenchanting entries, and PTR-2 output-side Storm Dust 219947 lists 15 out of 24, 63%. The raw item-side rows were not exposed by opened page. Output-side Wowhead source family already cutoff-catalogued (wowhead:item=219947@ptr); do not add counts or assume independent PTR cohorts. WoWDB 11.0.0 build 54210 is addition metadata, not observation or flag verification epoch. No exact bonus/item-level variant, skill, per-hit quantity or observation build. Do not turn the conflicting static flag into a permanent live eligibility rule or the output-side report into current measured probability."
+    },
+    {
+      "checked_at_utc": "2026-11-26T09:16:43.639Z",
+      "status": "held-new-gathering-data-not-milling",
+      "method": "Mill exclusion",
+      "source": "https://us.forums.blizzard.com/en/wow/t/phantom-bloom-and-desolate-talus-numbers/2160589",
+      "published": "2025-08-30",
+      "author": "Teishoku",
+      "inputItemID": null,
+      "outputItemID": null,
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "detail": "Original one-hour gathering comparison reports Phantom Bloom rank quantities 443/520/279 and 5 K'areshi Lotus. These are gathered herbs, not mill outputs, and subsequent exchange prices are not permanent recipe costs. Existing 2145981 method-exclusion review covers Phantom Bloom 239690–239692; no re-admission or new gathering model."
     }
   ],
   "last_source_commit_pending": false
