@@ -89,20 +89,23 @@ class CommunityIntakeTests(unittest.TestCase):
         self.assertEqual(row['sourceRecordIDs'], ['Cast-unique-1', 'Cast-unique-2'])
         self.assertEqual(row['patchBuild'], '70961')
         self.assertEqual(row['communityMeasuredProfile']['effectiveSkill'], 90)
-        self.assertEqual(row['categoryItemLevelMin'], 300)
-        self.assertEqual(row['categoryItemLevelMax'], 300)
+        self.assertEqual(row['categoryItemLevelMin'], 1)
+        self.assertEqual(row['categoryItemLevelMax'], 999)
+        self.assertEqual(row['gearKey'], 'gear:11:4:armor')
+        self.assertNotIn('inputItemID', row)
         self.assertEqual(self.source.read_bytes(), source_bytes)
         self.assertEqual(self.approve(manifest), self.review(manifest))
 
     def test_actual_helper_output_matches_native_runtime(self):
         executable = os.environ.get('LUA51') or shutil.which('lua5.1')
-        if not executable:
+        command = json.loads(os.environ['LUA51_COMMAND']) if os.environ.get('LUA51_COMMAND') else ([executable] if executable else None)
+        if not command:
             self.skipTest('Lua 5.1 unavailable; full addon CI installs it for required runtime checks')
         manifest = self.stage()
         self.approve(manifest)
         output = self.root / 'compiled-community-fixture.lua'
         output.write_text(intake.render(intake.compile_reviewed(self.root)), encoding='utf-8')
-        completed = subprocess.run([executable, 'tests/test_community_capture_runtime.lua', str(output)],
+        completed = subprocess.run(command + ['tests/test_community_capture_runtime.lua', str(output)],
                                    cwd=intake.ROOT, text=True, capture_output=True)
         self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
 
@@ -337,6 +340,78 @@ class CommunityIntakeTests(unittest.TestCase):
         disenchant = json.loads((intake.ROOT / intake.CAPTURES / '2026-11-22-reviewed-disenchant-subset/coverage-review.json').read_text())
         self.assertTrue(set(recycling['operationIDs']).issubset(known))
         self.assertTrue({op for group in disenchant['groups'] for op in group['operationIDs']}.issubset(known))
+
+    def small_batch(self, number, casts=10, positive=None, skill=90, rarity=4):
+        page = sample()
+        name = f'Contributor {number} - Realm'
+        context = page['contexts']['context-1']
+        context.update(character=name, effectiveSkill=skill, baseSkill=skill-30)
+        records = []
+        positive = casts // 2 if positive is None else positive
+        for index in range(casts):
+            record = copy.deepcopy(page['records'][0 if index < positive else 1])
+            record.update(operationID=f'Cast-contributor-{number}-{index}', character=name,
+                          studyID=f'contributor-study-{number}')
+            record['inputs'][0].update(itemID=250000+number, itemLevel=100+number, rarity=rarity)
+            records.append(record)
+        page.update(records=records, retainedRecords=casts,
+                    studies={f'contributor-study-{number}': {'character': name, 'build': '70961', 'censored': False}})
+        return page
+
+    def test_profession_gear_keeps_its_own_category(self):
+        for number, item_class in ((60, 4), (61, 19)):
+            page = self.small_batch(number, casts=1, positive=1)
+            for record in page['records']:
+                record['inputs'][0]['classID'] = item_class
+            self.approve(self.stage(page, issue=1000+number))
+        rows = intake.compile_reviewed(self.root)['processing']
+        self.assertEqual({row['gearKey'] for row in rows},
+                         {'gear:11:4:armor', 'gear:11:4:profession'})
+        self.assertTrue(all(row['observedOperations'] == 1 for row in rows))
+        self.assertTrue(all(row['materials'][0]['expectedQuantity']['value'] == 2 for row in rows))
+
+    def test_twenty_small_contributors_pool_counts_and_raise_confidence(self):
+        first_score = None
+        for number in range(20):
+            manifest = self.stage(self.small_batch(number), issue=1000+number)
+            self.approve(manifest)
+            if number == 0:
+                first_score = intake.compile_reviewed(self.root)['processing'][0]['materials'][0]['dropChance']['confidence']
+        rows = intake.compile_reviewed(self.root)['processing']
+        self.assertEqual(len(rows), 1)
+        row, material = rows[0], rows[0]['materials'][0]
+        self.assertEqual(row['observedOperations'], 200)
+        self.assertEqual(len(set(row['sourceRecordIDs'])), 200)
+        self.assertEqual(len(row['communitySourceStudyIDs']), 20)
+        self.assertEqual(row['gearKey'], 'gear:11:4:armor')
+        self.assertNotIn('inputItemID', row)
+        self.assertEqual(material['quantityCounts'], {'0': 100, '2': 100})
+        self.assertEqual(material['expectedQuantity']['value'], 1)
+        self.assertEqual(material['dropChance']['value'], .5)
+        self.assertGreater(material['dropChance']['confidence'], first_score)
+        self.assertEqual(material['dropChance']['confidence'], intake.evidence_to_baselines.rate_confidence(50, 100))
+
+    def test_one_cast_and_confirmed_empty_cast_are_used_without_size_threshold(self):
+        empty = self.stage(self.small_batch(40, casts=1, positive=0), issue=1040)
+        self.approve(empty)
+        pending = intake.compile_reviewed(self.root)
+        self.assertEqual(pending['processing'], [])
+        self.assertEqual(pending['pendingZeroOutputCohorts'][0]['observedOperations'], 1)
+        positive = self.stage(self.small_batch(41, casts=1, positive=1), issue=1041)
+        self.approve(positive)
+        result = intake.compile_reviewed(self.root)
+        self.assertNotIn('pendingZeroOutputCohorts', result)
+        row = result['processing'][0]
+        self.assertEqual(row['observedOperations'], 2)
+        self.assertEqual(row['materials'][0]['quantityCounts'], {'0': 1, '2': 1})
+        self.assertGreater(row['materials'][0]['dropChance']['confidence'], 0)
+
+    def test_different_profile_and_category_samples_remain_separate(self):
+        for number, skill, rarity in ((50, 90, 4), (51, 100, 4), (52, 90, 3)):
+            self.approve(self.stage(self.small_batch(number, skill=skill, rarity=rarity), issue=1000+number))
+        rows = intake.compile_reviewed(self.root)['processing']
+        self.assertEqual(len(rows), 3)
+        self.assertEqual(sorted(r['observedOperations'] for r in rows), [10, 10, 10])
 
 
 if __name__ == '__main__':

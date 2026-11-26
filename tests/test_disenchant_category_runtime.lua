@@ -162,7 +162,7 @@ for _,r in ipairs(LL.ItemDB.processing) do
     -- measured-profile cohorts; table order must not replace the old receipt.
     if r.retainedSourceProfileKey then
         retained[#retained+1]=r
-    elseif r.isDisenchantCategory and r.expansionID==11 and r.recordID:match('^evidence:category:') then
+    elseif not r.sharedCategoryCapture and r.isDisenchantCategory and r.expansionID==11 and r.recordID:match('^evidence:category:') then
         native[#native+1]=r
         if r.categoryReferenceOnly then maxReference=r else ordinary[r.gearKey]=r end
     end

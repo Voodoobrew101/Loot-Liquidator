@@ -16,12 +16,12 @@ Submit Retail results as Retail. Clearly label Classic, PTR, beta or private-ser
 
 ## Export and submit
 
-1. Under **Community research** on the first tab, click **Export all**. Copy the entire text from the export window with **Ctrl+C**. A compact export is supported; copy it unchanged. For only your newest batch, use **Export** in Processing Research instead.
-2. Open the [submission form](https://github.com/Voodoobrew101/Loot-Liquidator/issues/new?template=processing-export.yml), sign in to GitHub, and **paste directly into “Paste your export” with Ctrl+V**. No file or manual code-block formatting is required.
-3. For **Export pages**, copy and paste **every page from the same snapshot**, separated by a blank line. Do not record more results between copying pages. If anything changes, start the export again and replace the whole set.
+1. Open the [submission form](https://github.com/Voodoobrew101/Loot-Liquidator/issues/new?template=processing-export.yml) and sign in to GitHub. In the addon, **Copy link** supplies this address; use it before copying your export so it does not replace the results on your clipboard.
+2. Return to **Community research** on the first tab and click **Export all**. Copy the entire text with **Ctrl+C**, paste it into a plain text editor, and save as `LootLiquidator-results.txt`. Copy compact exports unchanged. **Drag the file into “Export file”** on the form, or use its paperclip button, and wait for the upload to finish. Leave the attachment link in that same box; no moving links between boxes is needed. Short exports can also be pasted into that box. For only your newest batch, use **Export** in Processing Research instead.
+3. For **Export pages**, attach **every page from the same snapshot** to the same box, or paste all pages separated by a blank line. Do not record more results between copying pages. If anything changes, start the export again and replace the whole set.
 4. Select the game mode and confirm the public-sharing checkboxes. The export supplies methods, item IDs, timestamps and captured profession context; no manual version or session summary is required. Additional notes are optional. Submit the issue and check that the complete export and every page are present. Keep a local copy before resetting. Link earlier submissions containing the same operations so they are not counted twice.
 
-**Optional file alternative:** If the export exceeds GitHub's text limit, paste it into a plain text editor, save as `processing-export.txt`, and attach it to the issue. For pages, save and attach each page. A `.json` file is also acceptable if GitHub accepts it. Screenshots cannot replace the copied export.
+Attach large exports as a file to avoid GitHub's text limit. A `.json` file is also acceptable if GitHub accepts it. Screenshots cannot replace the copied export.
 
 ## Before posting publicly
 
@@ -47,6 +47,18 @@ Save and check your export before resetting. A backup in SavedVariables is not a
 ## What happens next
 
 A scheduled review checks submissions once a day. It validates complete exports/pages, identifies duplicate operations and overlapping studies, and checks item identities, output qualities, measured profession context and client applicability. Partial records remain research; unknowns do not become zeros. No minimum batch size alone grants approval or establishes a skill formula.
+
+There is also no minimum batch size for inclusion: a valid single completed
+cast is useful. After review, compatible Disenchant submissions are pooled by
+expansion, rarity and armor/weapon category, measured profession profile and
+client build. Item numbers and individual contributors do not split that
+category. Confidence is recalculated from the combined cast, hit and quantity
+counts, rather than averaged from the individual small-sample scores. Twenty
+compatible ten-cast submissions therefore supply 200 distinct observations.
+Different relevant profiles remain separate, and overlapping operations cannot
+count twice. A confirmed empty cast is preserved as denominator evidence; if
+there is not yet a compatible material-positive sample, it waits for one
+without being discarded or assigned an invented output.
 
 Usable independent records are reviewed through the existing capture and database pipeline against the latest production source. When they make a supported change to shared statistics, the addon is rebuilt, tested and versioned before publishing an update to CurseForge. No-change reviews do not create a release. Held submissions may need a follow-up question or another recording session; they are not automatically added to gold calculations.
 

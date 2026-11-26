@@ -10,6 +10,22 @@ owner decision for each merge/release **within this scope**. It does not authori
 unrelated feature work, scientific-policy changes, bypassing checks, sharing
 secrets, or publishing unreviewed submissions.
 
+The separately owner-approved [archived shared disenchant reference](shared-midnight-rare-armor.md)
+contains 663 distinct promoted receipts across six gear categories. Its older
+570 complete receipts form a fixed empirical category reference with mixed or
+unknown source skills preserved in provenance; the other 93 retained receipts
+keep their existing measured-profile and build gates. This is not one compatible
+663-cast study, a calibrated skill formula or proof of applicability to every
+profile or later client build. Confidence from observed quantities and
+cross-profile/client applicability remain separate questions.
+
+That approval is specific to those archived owner captures. New community
+submissions still require the review and complete measured context below.
+Compatible disenchant cohorts may pool by expansion, rarity and gear class
+only with matching measured profession profile and client build; source item
+IDs and item levels remain provenance. Do not broaden this incoming policy to
+match the older fixed reference, fill unknown context, or relabel source builds.
+
 ## Start from current production and inspect all updates
 
 1. Read the newest GitHub `main` and release tags. Create an isolated review
@@ -89,7 +105,10 @@ parse or an arbitrary minimum sample count. In particular verify:
 
 - Exact Retail mode, source client version/build, recipe and input batch.
 - Item/quality identities and, for gear, rarity, item class, expansion and captured
-  item level. Do not silently generalize an exact item variant to a whole category.
+  item level. The reviewed disenchant category adapter preserves source item
+  provenance and pools only matching measured-profile/build cohorts. Other
+  item-specific exceptions require their own supported review; do not silently
+  generalize them to a whole category.
 - Measured skill, specialization, relevant buffs and their recorded known/unknown
   status. Non-disenchant numerical cohorts also need measured operation stats.
 - Complete independent operations, resolved result attribution and original

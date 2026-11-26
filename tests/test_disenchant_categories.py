@@ -168,6 +168,8 @@ class DisenchantCategoryTests(unittest.TestCase):
         self.assertEqual(len(set(operation_ids)), 93)
         self.assertEqual({row['baselineProfile']['effectiveSkill'] for row in captured}, {51, 104})
         records.extend(captured)
+        from shared_disenchant_captures import compile_records as shared_records
+        records.extend(shared_records())
         self.assertEqual(categories.OUTPUT.read_text(), categories.render(records))
 
 

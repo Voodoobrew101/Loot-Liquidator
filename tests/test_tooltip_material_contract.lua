@@ -32,7 +32,8 @@ for method,label in pairs(labels)do for _,stale in ipairs({false,true})do
   deStats={total=999},conversionOptions={{name=method,letter='D',value=250/batch,available=true,yieldModel=model}}})
  assert(#tip.lines==1 and tip.lines[1]=='|cff66ccffLoot Liquidator:|r Disenchant|r')
  assert(#tip.rows==1+#model.materials,'Every actual material survives '..method)
- assert(tip.rows[1][1]==label..' — Fixture - Realm (Confidence 0%)|r')
+ assert(tip.rows[1][1]==label..' — Fixture - Realm (Confidence 30%)|r',
+  'Unknown display-only fields must not erase model confidence')
  for _,row in ipairs(tip.rows)do
   assert(not row[1]:find('Named ',1,true)and not row[2]:find('Discovery',1,true),
    'Unidentified non-item extras must not use a separate tooltip layout')

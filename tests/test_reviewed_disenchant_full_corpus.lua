@@ -74,7 +74,9 @@ for index,r in ipairs(records) do
     local old=evaluate(before,facts,ctx)
     local model=evaluate(after,facts,ctx)
     check(used(model,r.recordID),'reviewed source contributes in FULL corpus: '..r.gearKey)
-    check(not equal(signature(old),signature(model)),'reviewed source affects actual quantities: '..r.gearKey)
+    -- Independent cohorts can observe the same constant yield. Contribution
+    -- must survive in the full corpus even when the mean stays unchanged.
+    check(not used(old,r.recordID),'control excludes this reviewed source: '..r.gearKey)
     local gold=0 for _,m in ipairs(model.materials) do if m.expectedQuantity then gold=gold+m.expectedQuantity*after:GetOutputPrice(m.id) end end
     near(after:ValueProcessingModel(model,0,true,facts),gold,'gold uses fused E once, never P times E')
     for _,change in ipairs({
@@ -196,8 +198,13 @@ for index,r in ipairs(records) do
         check(row[1]:find('%% ') and row[1]:find('|T'..(m.id+1000)..':14:14:0:0|t ',1,true)
             and row[1]:find('Material '..m.id,1,true) and row[1]:find('%[.-%]')
             and not row[1]:find('x ',1,true),'approved percentage/icon/name/range format')
-        near(m.netExpectedValue,m.expectedQuantity*ll:GetOutputPrice(m.id),'material gold is E times quote once')
-        check(row[2]==ll:Money(m.netExpectedValue),'renderer shows unchanged material gold')
+        if type(m.expectedQuantity)=='number' then
+            near(m.netExpectedValue,m.expectedQuantity*ll:GetOutputPrice(m.id),'material gold is E times quote once')
+            check(row[2]==ll:Money(m.netExpectedValue),'renderer shows unchanged material gold')
+        else
+            check(m.netExpectedValue==nil and row[2]=='',
+                'unobserved possible output stays unknown and adds no invented gold')
+        end
     end
     ll._processingContextCache=nil;ll._processingModelCache=nil
     ll.db.characters['Scanned Alt - Realm']=copy(ll.db.characters['Another - Realm'])

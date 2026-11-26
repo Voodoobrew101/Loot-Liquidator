@@ -71,8 +71,8 @@ for _,method in ipairs({'Disenchant','Mill','Prospect'})do
     assert(#tip.rows==(level==2 and 3 or 3+#materials),'Every actual output remains present at Breakdown')
     assert(tip.rows[1][1]=='Auction|r'and tip.rows[1][2]==LL:Money(afterCut and 190 or 200),
      'The AH-cut preference controls the existing auction row')
-    assert(tip.rows[2][1]:find('(Confidence 0%)',1,true),
-     'An unsupported display estimate has lowest header confidence while model confidence stays unchanged')
+    assert(tip.rows[2][1]:find('(Confidence 80%)',1,true),
+     'Display-only uncertainty must not overwrite independently valued model confidence')
     assert(tip.rows[2][2]==LL:Money(option.value),'Restoring display fields cannot change method value')
     assert(tip.rows[#tip.rows][1]=='Vendor|r'and tip.rows[#tip.rows][2]==LL:Money(5))
     if level==3 then

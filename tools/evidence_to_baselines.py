@@ -173,8 +173,8 @@ def build(report):
         if reasons:
             notes['skipped'].append((entry['id'], '; '.join(reasons)))
             continue
-        if isinstance(record['input'], str) and not record['input'].endswith((':armor', ':weapon')):
-            notes['skipped'].append((entry['id'], 'gear key needs :armor or :weapon for ItemDB (kept)'))
+        if isinstance(record['input'], str) and not record['input'].endswith((':armor', ':weapon', ':profession')):
+            notes['skipped'].append((entry['id'], 'gear key needs :armor, :weapon or :profession for ItemDB (kept)'))
             continue
         lineages = groups.setdefault(group_key(record), {})
         best = lineages.get(record['lineage'])
