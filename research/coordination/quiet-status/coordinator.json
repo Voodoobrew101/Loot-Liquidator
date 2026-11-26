@@ -1,138 +1,79 @@
 {
   "role": "research-manager",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-26T15:58:55.008Z",
-  "status": "verified_specific_historical_cohort_lineage_and_catalogue_prior_not_new_observations",
+  "updated_at": "2026-11-26T17:05:58.971Z",
+  "status": "verified_external_recorder_denominator_semantics_no_new_numeric_cohort",
   "task_ids": [
-    "T0050",
     "T0026",
-    "T0039"
+    "T0039",
+    "T0047"
   ],
   "exact_gaps_targeted": [
-    "Legacy worker's explicitly requested 13866 / original author 1115352 cross-mirror deduplication QA, including current catalogue and actual committed producer output. This is a scoped lineage check, not a new catalogue review.",
-    "Screen new original operation-level public receipts without repeating old numerical transcriptions."
+    "Resolve legacy worker's GatherBuffs 0.99.19 capture-context lead at original tagged source; distinguish positive tracked-loot actions from completed item-specific disenchant operations, before importing any session means.",
+    "Screen new original Retail receipts, retaining prior scoped catalogue dispositions."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "sourceKind": "historical-cohort-lineage",
-      "inputItemID": 13866,
-      "inputName": "Runecloth Headband",
-      "sourceAuthor": "1115352",
-      "canonicalOriginalCohort": {
-        "reportedOperations": 5,
-        "outputs": [
-          {
-            "id": 16204,
-            "name": "Illusion Dust",
-            "hits": 4,
-            "totalQuantity": null
-          },
-          {
-            "id": 16203,
-            "name": "Greater Eternal Essence",
-            "hits": 1,
-            "totalQuantity": null
-          }
-        ],
-        "originalPatch": null,
-        "skill": null,
-        "itemVariant": null,
-        "currentRetailApplicability": null
-      },
-      "sourceRecords": [
-        {
-          "file": "research/v3/evidence/legacy/2026-11-08T0103-illusion-firsthand-classic-looter-hits.jsonl",
-          "blob": "8c6f4f22fc0d47ee38a8616c4d98d88d0b019e3b",
-          "ids": [
-            "legacy-20261108-001",
-            "legacy-20261108-002"
-          ],
-          "studyKey": "wowhead-illusiondust-1115352-runecloth-headband-5"
-        },
-        {
-          "file": "research/v3/evidence/legacy/2026-11-09T2151-classic-de-cast-hits-and-priors.jsonl",
-          "blob": "78a58eb8d5844c51e1ada5cb00f3b9b82ee02062",
-          "ids": [
-            "legacy-20261109-220005",
-            "legacy-20261109-220006"
-          ],
-          "studyKey": "wowhead-16204-1115352-five-headband-source-explicit-outcomes"
-        },
-        {
-          "file": "research/v3/evidence/legacy/2026-11-17T1351-runecloth-wizardweave-original-cast-identity.jsonl",
-          "blob": "b769c891e9ead89a1a7bb942d73fae59f0b0e983",
-          "ids": [
-            "legacy-20261117-820001",
-            "legacy-20261117-820002"
-          ],
-          "studyKey": "wowhead-16204-1115352-runecloth-headband-five-disencasts"
-        }
+      "sourceKind": "recorder-code-semantics",
+      "sourceVersion": "GatherBuffs 0.99.19 (Retail 12.0.5/12.0.1, Apr 22 2026)",
+      "sourceCommit": "b1f5c5508050a88adf326ecaca008e6b2eee72cc",
+      "sourceBlob": "eed538e7b629f5eae068e1e2a1a5554c6b4bcb3f",
+      "inputItemID": null,
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "source": "https://github.com/barnpusher/gatherbuffs/blob/b1f5c5508050a88adf326ecaca008e6b2eee72cc/Modules/Profit.lua",
+      "findings": [
+        "Profit.lua 430–478: one increment per marked profession per finalized loot window, not a completed-spell event; an empty profession set increments nothing.",
+        "Profit.lua 1589–1662: only positive recognized gather materials tracked for profit mark the window; merchant/ignored/paused cases and optional Shattered Essence gating can exclude events. Profession attribution is by output lookup, not target input item.",
+        "Profit.lua 1665–1699: positive bag deltas can increment one action per profession for the scan outside a loot window. Multiple casts in one scan are not distinguishable; zero or net-negative deltas contribute nothing.",
+        "Profit.lua 128–245 persists output-item aggregates and profession counts, not per-target operations; 685–750 reports averages using these counters. No verified zero-inclusive denominator, skill/variant at cast, or per-output hit histogram. The report's Disenchants label is not proof of completed disenchant casts. Retain raw session reports as source-context only unless independent target/count/attribution documentation establishes a usable field."
       ],
-      "finding": "All six raw rows refer to one five-operation original. The third source is the live item-page mirror with shorter dust quote, not a fresh Retail experiment. Two other mirrors use explicit Classic page routes; those URL labels do not establish original game epoch. Preserve 4 and 1 reported hits, not output totals; never add to 15 operations. No MoP Classic observation admitted.",
-      "producer": {
-        "main": "732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717",
-        "adapterBlob": "26e8cb596df6ff9eae63d4647795c5f5a7c0d2e5",
-        "calculatorBlob": "a3209a00cd252c76898d062879797d2bf75cca53",
-        "cataloguePolicyBlob": "3f0fd30d8f548059cc7e59094775106effbee70e",
-        "catalogueDecisionBlob": "b820d68e9447acd484e78831dd534b8d30c7f79f",
-        "baselineBlob": "d8ab3d15302e53579415f448d2183c1792992b96",
-        "findings": [
-          "RUNECLOTH_MIRROR_SOURCES explicitly joins Nov8 and Nov9 aliases, not Nov17. The fallback identity includes normalized source key; the live URL differs from the reviewed Classic mirrors. This is a static alias completeness risk, not proof of inflated final weighting.",
-          "Current enabled catalogue admits only the Nov17 essence row as model evidence:reviewed-backlog:deb:6be45d8a4d77e3402bdb, 1/5 source fraction, source support 20, model confidence cap 0, no expectedQuantity or observed sample count. Nov9 essence is source fact source-fact:dea:b17a10a865b87cfc3d01b850. No exact six-record matches in sourceFieldExclusions or model supersedesSourceFields. The catalogue source scope is not the whole ordinary baseline.",
-          "Actual committed main research-v3-baselines.lua contains the Nov17 historical prior and its source fact, with samples=0 and sampleSizeKnown=false; no extra measured sample is attributed to that prior. The ordinary 13866 baseline record also exists; its exact source-level contribution and combined runtime selection were not executed or proven. No claim of measured duplicate inflation or real-client coverage."
-        ]
-      },
-      "disposition": "Preserve one historical source cohort. Do not append duplicate evidence or change reviewed catalogue decisions. Precise implementation follow-up only if isolated replay shows ordinary measured cohort or historical prior double weighting: exact alias for live mirror, retain source facts, enforce one 5-operation denominator, no current profile transfer without evidence."
+      "disposition": "No actual user receipt examined; no data admission, no coefficient inferred. This advances capture-semantic validation, not numerical coverage."
     }
   ],
   "source_links": [
-    "https://www.wowhead.com/mop-classic/item=16204/illusion-dust",
-    "https://www.wowhead.com/cata/item=16204/illusion-dust",
-    "https://www.wowhead.com/item=16204/light-illusion-dust",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717/tools/research_v3_evidence.py",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717/database/research-v3-baselines.lua",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b8a4b6ba46bda960d2e252f00f2899dd348a3f44/research/v3/evidence/legacy/2026-11-08T0103-illusion-firsthand-classic-looter-hits.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b8a4b6ba46bda960d2e252f00f2899dd348a3f44/research/v3/evidence/legacy/2026-11-09T2151-classic-de-cast-hits-and-priors.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b8a4b6ba46bda960d2e252f00f2899dd348a3f44/research/v3/evidence/legacy/2026-11-17T1351-runecloth-wizardweave-original-cast-identity.jsonl"
+    "https://github.com/barnpusher/gatherbuffs/blob/b1f5c5508050a88adf326ecaca008e6b2eee72cc/Modules/Profit.lua",
+    "https://github.com/barnpusher/gatherbuffs/blob/b1f5c5508050a88adf326ecaca008e6b2eee72cc/GatherBuffs.toc",
+    "https://www.curseforge.com/wow/addons/gatherbuffs/files/7967869",
+    "https://worldofwarcraft.blizzard.com/en-us/news/24307310/hotfixes-november-6-2026",
+    "https://www.curseforge.com/wow/addons/disenchantrix"
   ],
-  "evidence_files": [
-    "research/v3/evidence/legacy/2026-11-08T0103-illusion-firsthand-classic-looter-hits.jsonl",
-    "research/v3/evidence/legacy/2026-11-09T2151-classic-de-cast-hits-and-priors.jsonl",
-    "research/v3/evidence/legacy/2026-11-17T1351-runecloth-wizardweave-original-cast-identity.jsonl"
-  ],
+  "evidence_files": [],
   "previous_checkpoint": {
-    "commit": "ededa5ed3d77db0b0ac6dfba6d1c8593466ad5c4",
-    "updated_at": "2026-11-26T15:04:57.930Z",
-    "summary": "variant_context_corroborated_catalogue_restriction_not_native_proof_no_new_cohort"
+    "commit": "f034cc4a3a328cdb192a444fc5572f061605e521",
+    "updated_at": "2026-11-26T15:58:55.008Z",
+    "summary": "verified_specific_historical_cohort_lineage_and_catalogue_prior_not_new_observations"
   },
   "worker_reports_verified": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-26T15:07:13.111Z",
-      "checkpoint_blob_sha": "a21134f7fc4ce5f4313ad8144bcef980642bebde",
-      "reported_status": "No new independent numeric cohort"
+      "updated_at": "2026-11-26T16:13:25.288Z",
+      "checkpoint_blob_sha": "1be06362d2037bdadb25df0fb2fd4f7fe012e53e",
+      "reported_status": "No new independent numeric cohort; run completed"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-26T15:18:32.831Z",
-      "checkpoint_blob_sha": "9f62d2e6afc4d8e0f2c527f0e08df3deea24015b",
-      "reported_status": "No independent measured TWW cohort or numerical correction"
+      "updated_at": "2026-11-26T16:24:14.164Z",
+      "checkpoint_blob_sha": "a4c5f427d2d6adae0679c1ef48fe12fc323fbb8d",
+      "reported_status": "No new independent cohort; Midnight speed aura excluded from TWW; run completed"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-26T15:27:31.156Z",
-      "checkpoint_blob_sha": "525442b9c5de85f3d8806aa93c4066aeecbef831",
-      "reported_status": "No qualifying new independent numeric evidence"
+      "updated_at": "2026-11-26T16:28:00.365Z",
+      "checkpoint_blob_sha": "1dc8cc124bc2f80cdbada661a23775edec2d7168",
+      "reported_status": "No qualifying new evidence; run completed"
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-26T15:44:49.916Z",
-      "checkpoint_blob_sha": "f18319dedd7e6abfeb6d473d38c1c875c4aab624",
-      "reported_status": "No qualifying new cohort; scoped 13866 alias QA requested"
+      "updated_at": "2026-11-26T16:41:54.344Z",
+      "checkpoint_blob_sha": "113161aeb5cd291de211f510ba95edb85beac10d",
+      "reported_status": "GatherBuffs recorder lead, no new cohort; run completed"
     }
   ],
-  "verified_commit_sha": "b8a4b6ba46bda960d2e252f00f2899dd348a3f44",
-  "checked_research_branch_head_before_status_write": "b8a4b6ba46bda960d2e252f00f2899dd348a3f44",
+  "verified_commit_sha": "0625a71a963904cd780a232c0dd65e70073351b5",
+  "checked_research_branch_head_before_status_write": "0625a71a963904cd780a232c0dd65e70073351b5",
   "main_head_checked": "732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717",
   "owner_three_pass_head_checked": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "owner_catalogue_manifest_branch_head_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
@@ -148,16 +89,21 @@
     "path": "research/coordination/backlog-catalogue-20261120.json"
   },
   "validation_this_run": {
-    "CI": "Exact main SHA run 45665180898 success; exact starting research SHA run 45852147922 success; no CI result claimed for future status-only head.",
-    "managerTests": "Direct six-row raw lineage comparison, inspected enabled catalogue manifests, exact final scoped decisions and admitted model JSON, matched actual main producer baseline blob. Static verification only; no isolated build replay or runtime valuation test executed.",
-    "newMeasuredCohortsAdmitted": 0,
-    "newSupportedGoldDecisions": 0,
-    "automationResults": "Read durable reports from all four workers; automation execution success not independently queried.",
-    "publicScreen": "Recent searches yielded known March/April threads, older TWW evidence, guide budgets and prices without new operation logs."
+    "tagged_source_and_blobs_read": true,
+    "static_semantic_review": true,
+    "actual_game_or_lua_execution": false,
+    "baseline_build_executed": false,
+    "ci": "Combined status and PR-filtered workflow endpoints empty for checked main and research heads; current CI unverified.",
+    "new_cohorts": 0,
+    "measured_operations_added": 0,
+    "production_changed": false,
+    "pr_created": false,
+    "schedules_changed": false
   },
   "blockers": [
     "Ordinary current baseline cohort contribution and actual compiled runtime prior selection need isolated replay to establish whether the missing third alias affects any weighting. No code change authorized in this run.",
-    "No exact current variant/skill/patch or unit quantities in 1115352 original. No new qualifying independent receipt."
+    "No exact current variant/skill/patch or unit quantities in 1115352 original. No new qualifying independent receipt.",
+    "No GatherBuffs original exact-target export or independently logged actual operations; no supported conversion rate from generic action count."
   ],
   "exhausted_sources": [
     "2026-11-24 14Z direct DB2 exact rank joins for 242786/242787/242788/242789/237362/237363 and TWW 224802/224800 verified. No repeat source identity scan absent changed build or new field; avoid treating prior identity evidence as new numerical cohorts.",
@@ -208,7 +154,8 @@
     "2026-11-26T13:02:08.597Z: 212022 raw live item-side Listview and all three exact Refulgent Crystal material ranks independently verified. Raw reverse material pages did not expose literal 212022 row; absence is not exhaustive. Do not repeat unchanged source, merge PTR mirrors, or relabel reference as observed. Revisit only independent cohort/epoch/profile, actual overlapping source or build-pinned gap-only admission proof. Recent Midnight queries surfaced known March/April posts and market context, no new current complete receipts.",
     "2026-11-26T14:03:19.586Z: Prospect Me v2.7.2.0 original release source, exact counter/percent semantics, Gem Chip collapsing, capture overwrite and migration overlap inspected; no raw user cohort. Do not re-audit unchanged source code or copy legacy mailbox note as new measurements. Reopen only on matching actual export/screenshot, new version, or consumer issue. Recent Midnight guides/knowledge reagent source not operation logs.",
     "2026-11-26T15:04:57.930Z: 271457 variant-specific source context, native pin and compiled producer checked; don't reread unchanged catalogue or repeat absence checks. Reopen only exact instance evidence, changed native pin/variant or independent processing ledger. Renown Professions Exporter public schema has no result capture; recent searches mainly March/April threads already familiar.",
-    "2026-11-26T15:58:55.008Z: 1115352 six-row original cohort lineage, three mirror routes, actual current reviewed catalogue decisions and committed producer model inspected. Do not recatalogue or re-fetch unchanged source. Reopen only isolated exact consumer replay or new original patch/profile/quantity evidence."
+    "2026-11-26T15:58:55.008Z: 1115352 six-row original cohort lineage, three mirror routes, actual current reviewed catalogue decisions and committed producer model inspected. Do not recatalogue or re-fetch unchanged source. Reopen only isolated exact consumer replay or new original patch/profile/quantity evidence.",
+    "2026-11-26T17:05:58.971Z: GatherBuffs v0.99.19 original source examined; no repeat until a matching actual export or changed version. Recent searches returned already-reviewed Oct8 guide/2024 Aspalar/known March posts and new Forever-only Disenchantrix (explicit 1.60.1); no Retail admission. Nov6 official hotfix indexed excerpt did not give conversion data."
   ],
-  "next_concrete_step": "Prioritize new published exact-item and rank-specific operation receipts or confidence/profile evidence. For 13866 only isolated ordinary/compiled consumer duplicate-weight regression or new original fields; no more same-source transcription or catalogue re-review."
+  "next_concrete_step": "Seek genuinely new source-original exact-item completed operation/quantity or scoped reported means; only reopen GatherBuffs if matching receipt or changed implementation and independent target/denominator evidence; preserve 13866 isolated regression request without recataloguing."
 }
