@@ -1,6 +1,6 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-26T05:08:01.196Z",
+  "updated_at": "2026-11-26T06:13:10.002Z",
   "status": "active_search_no_new_numeric_cohort",
   "task_ids": [
     "T0026",
@@ -2256,9 +2256,11 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/whisperwind/magieyeballs/",
-    "https://www.curseforge.com/wow/addons/diaryprofessions",
-    "https://github.com/mxhes/AnotherLedger/blob/main/README.md"
+    "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/docs/research/salvage-yields.md",
+    "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/docs/specifications/issues/e18-salvage-value/f136-record-outcomes/README.md",
+    "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/src/Tradewright/src/data/Tradewright_SourceData.lua",
+    "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/src/Tradewright/src/data/Tradewright_SalvageData.lua",
+    "https://github.com/danilofruttaldo/Wow.Manager/blob/main/README.md"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -3369,43 +3371,69 @@
       "url": "https://github.com/mxhes/AnotherLedger/blob/main/README.md",
       "blob_sha": "41000a0fdcb76d495ae9850ebe46ab06531ffb3d",
       "reason": "Newly surfaced repository from updated prospect/milling search. Publisher specifies Forever; destroy valuations are supplied by TSM or Auctionator, not independent observed processing receipts. No Retail ranked cast/output dataset."
+    },
+    {
+      "url": "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/docs/research/salvage-yields.md",
+      "blob_sha": "b1a87b5e86d598bdfd182b67ee40c20b8a0d02ca",
+      "reason": "New post-cutoff independent literature survey dated 2026-11-22, not a new player cohort. Midnight spreadsheet/addon references lack stated profile and original measurement provenance; classic counted data not transferable to Midnight. No new rates or identity corrections from this secondary survey."
+    },
+    {
+      "url": "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/docs/specifications/issues/e18-salvage-value/f136-record-outcomes/README.md",
+      "blob_sha": "094fc022f84dd6c3be513b223bbc171d7e3d3228",
+      "reason": "New potentially relevant Retail collector; documentation says implementation uses bag deltas, not actual crafted-result or loot-window quantities, has not been checked in game, omits zero-receipt outcomes and timed-out/full-bag events, can coalesce back-to-back prospects, and records upgraded gear at base item level. A future receipt is reviewable only with provenance and gross/refund/operation reconciliation. No present independent cast cohort; specifically cannot resolve 272246 at-cast 305 from base ID alone."
+    },
+    {
+      "url": "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/src/Tradewright/src/data/Tradewright_SourceData.lua",
+      "blob_sha": "ec07b48784d647672a006f02b90c551a2c936d93",
+      "reason": "Exact source snapshot contains only empty collected map, no published salvage observations. Do not infer that private player SavedVariables are empty."
+    },
+    {
+      "url": "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/src/Tradewright/src/data/Tradewright_SalvageData.lua",
+      "blob_sha": "37a5990e1c6e42cfc47f87c38ee37d827b461da1",
+      "reason": "Exact source snapshot ships a Classic-derived Forever table and an empty retail table. No new Midnight numeric values; no transfer. Check only new source-data epochs or genuine published receipts, not unchanged code."
+    },
+    {
+      "url": "https://github.com/danilofruttaldo/Wow.Manager/blob/main/README.md",
+      "blob_sha": "1cd5cc0b88c9ea95d711d28e3181693d6454d36a",
+      "reason": "New repository lead from updated Retail profession search. Publisher describes profession specialization trees from client and leveling routes from web, personal UI configuration and collection manifests; README does not identify a processing receipt dataset. No qualifying measured fields found; no claim of exhaustive repository audit."
     }
   ],
-  "next_concrete_step": "Seek newly posted original Retail logs with exact input variant/quality, completed operations and output IDs, explicit zeros and skill/spec/build; for 272246 prioritize source-linked at-cast material receipt over more equipped-item snapshots. Continue ranked Tin/Diamond, Copper/Silver capstone and gross/refund basis, then ten-herb milling. Do not repeat unchanged workbook, Looter snippets, or Forever sources.",
-  "verified_base_commit_sha": "5f41c49ee81bd43ec78ea3d2f85bda7a8fc4dfb8",
+  "next_concrete_step": "Look for genuinely new public Retail processing receipts or newly populated Tradewright source-data epochs; require actual variant/quality, completed operations, output IDs and profile, with gross inputs/refunds and hit/zero basis reconciled. For 272246 prioritize joined at-cast material receipt rather than static equipped or tooltip variants. Continue ranked Tin/Diamond, Copper/Silver and ten-herb milling. Do not reopen unchanged sources or re-catalogue assigned cutoff corpus.",
+  "verified_base_commit_sha": "79f182a472572094ab37322856667ac14a19df48",
   "commit_sha": null,
   "verified_commit_sha": null,
   "commit_note": "Resulting status commit must be verified externally via exact file read-back; self SHA cannot be embedded.",
   "new_leads_screened": [
     {
-      "category": "new_variant_reference_and_exporter_leads",
+      "category": "post_cutoff_retail_collector_and_source_snapshot",
       "sources": [
         {
-          "url": "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/whisperwind/magieyeballs/",
-          "input_id_candidate": 272246,
-          "source_reported": {
-            "equipped_item_name": "Miststalker's Wristbands",
-            "equipped_item_level": 305,
-            "actual_at_cast_item_level": null,
-            "actual_completed_casts": null,
-            "outputItemID": null,
-            "skill": null,
-            "specialization": null,
-            "build": null
-          },
-          "reason": "New indexed Blizzard Armory result corroborates an equipped 305 variant by name. Direct fetch returned 403; exact item link/bonus IDs and build not visible. This is not a new disenchant event or independent numerical cohort; prior captured 305/292 variants remain stronger evidence. No change to rate/eligibility baseline."
+          "url": "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/docs/research/salvage-yields.md",
+          "blob_sha": "b1a87b5e86d598bdfd182b67ee40c20b8a0d02ca",
+          "reason": "New post-cutoff independent literature survey dated 2026-11-22, not a new player cohort. Midnight spreadsheet/addon references lack stated profile and original measurement provenance; classic counted data not transferable to Midnight. No new rates or identity corrections from this secondary survey."
         },
         {
-          "url": "https://www.curseforge.com/wow/addons/diaryprofessions",
-          "reason": "Newly published Nov 24 2026 profession diary supports JSON session export but explicitly targets Forever 1.60.1/interface 16001 only. Fixed-output calculator excludes quality/variable recipes. No Retail processing dataset or transferable rates."
+          "url": "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/docs/specifications/issues/e18-salvage-value/f136-record-outcomes/README.md",
+          "blob_sha": "094fc022f84dd6c3be513b223bbc171d7e3d3228",
+          "reason": "New potentially relevant Retail collector; documentation says implementation uses bag deltas, not actual crafted-result or loot-window quantities, has not been checked in game, omits zero-receipt outcomes and timed-out/full-bag events, can coalesce back-to-back prospects, and records upgraded gear at base item level. A future receipt is reviewable only with provenance and gross/refund/operation reconciliation. No present independent cast cohort; specifically cannot resolve 272246 at-cast 305 from base ID alone."
         },
         {
-          "url": "https://github.com/mxhes/AnotherLedger/blob/main/README.md",
-          "blob_sha": "41000a0fdcb76d495ae9850ebe46ab06531ffb3d",
-          "reason": "Newly surfaced repository from updated prospect/milling search. Publisher specifies Forever; destroy valuations are supplied by TSM or Auctionator, not independent observed processing receipts. No Retail ranked cast/output dataset."
+          "url": "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/src/Tradewright/src/data/Tradewright_SourceData.lua",
+          "blob_sha": "ec07b48784d647672a006f02b90c551a2c936d93",
+          "reason": "Exact source snapshot contains only empty collected map, no published salvage observations. Do not infer that private player SavedVariables are empty."
+        },
+        {
+          "url": "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/src/Tradewright/src/data/Tradewright_SalvageData.lua",
+          "blob_sha": "37a5990e1c6e42cfc47f87c38ee37d827b461da1",
+          "reason": "Exact source snapshot ships a Classic-derived Forever table and an empty retail table. No new Midnight numeric values; no transfer. Check only new source-data epochs or genuine published receipts, not unchanged code."
+        },
+        {
+          "url": "https://github.com/danilofruttaldo/Wow.Manager/blob/main/README.md",
+          "blob_sha": "1cd5cc0b88c9ea95d711d28e3181693d6454d36a",
+          "reason": "New repository lead from updated Retail profession search. Publisher describes profession specialization trees from client and leveling routes from web, personal UI configuration and collection manifests; README does not identify a processing receipt dataset. No qualifying measured fields found; no claim of exhaustive repository audit."
         }
       ],
-      "disposition": "Fresh name-based searches for gear, Tin/Diamond, Copper/Silver and milling across Reddit, Blizzard forums, Wowhead-indexed results, YouTube and profession addon/repository listings surfaced no new independent Retail processing cohort. Existing GamGem, Bue, Cardinalai, Disenchantry and guide results not reopened; updated community issue search surfaced previously reviewed #94 only. New equipped item index is corroboration, not an at-cast measurement. No cutoff catalogue duplication."
+      "disposition": "Fresh gear/ore/herb searches across Reddit, Blizzard forums, Wowhead and addon/repository listings yielded known older guides, static item variants or unrelated game versions; no new independent Retail numerical cohort. Tradewright Nov22 literature survey and exact empty shipped source and Retail yield tables were verified, with collector limitations documented; no new data admitted, no cutoff catalogue duplication."
     }
   ],
   "catalogue_checkpoint": {
@@ -3421,5 +3449,5 @@
     "release_status": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending",
     "worker_recataloguing": "not performed"
   },
-  "previous_verified_status_commit_sha": "bda8e12bc27d300c04d28c9ca25b8c2118e437c5"
+  "previous_verified_status_commit_sha": "6ea125743bef49b76c97d33d922cba51f8808983"
 }
