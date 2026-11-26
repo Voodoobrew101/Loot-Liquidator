@@ -1,24 +1,24 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-26T16:41:54.344Z",
-  "status": "New independent capture/statistics context screened; no qualifying new numerical cohort",
+  "updated_at": "2026-11-26T17:37:17.525Z",
+  "status": "New source screening; no new qualifying original numerical cohort",
   "task_ids": [
     "T0047",
     "T0052",
-    "T0042",
     "T0022",
     "T0044",
-    "T0021",
-    "T0053"
+    "T0042"
   ],
   "exact_gaps_targeted": [
-    "24995 and adjacent TBC gear: exact original completed operation/units/hits/zero distribution and Retail profile",
-    "36909, 23424 and other legacy ore: completed cast and output-linked logs, source context, refunds",
-    "Distinguish cumulative material statistics and generic gather-action counts from item-specific completed operations"
+    "24995 and adjacent TBC gear: original exact-item current Retail completed casts, output identities/quantities and profile",
+    "36909 Cobalt and 23424 Fel Iron: independent actual operations, per-output hits, totals, zero/positive histograms and refunds",
+    "New post-cutoff processing source flavor and action-versus-operation distinction"
   ],
   "newly_verified_fields_cohorts": [
     {
+      "source": "https://wow.pirson.dev/addons/prospect-helper/",
+      "field": "source_flavor_and_capture_scope",
       "inputItemID": null,
       "outputItemID": null,
       "casts": null,
@@ -27,13 +27,12 @@
       "zeroCount": null,
       "histogram": null,
       "refunds": null,
-      "source": "https://warcraft.wiki.gg/wiki/Statistics_panel",
-      "relatedSource": "https://www.wowhead.com/spell=31252/prospecting",
-      "field": "counter_semantics",
-      "finding": "Warcraft Wiki lists Materials produced from disenchanting and Items disenchanted as separate cumulative character statistics. Historical Wowhead contributor 274087 additionally reports prospecting incremented the former; original comment gives no patch, counts or validation. The spell page is already in the cutoff catalogue; do not reopen its numerical cohorts. The independent statistics-panel description confirms labels are distinct, not the historical cross-method behavior. Neither statistic is an exact-item, dated, zero-inclusive operation ledger; do not infer input IDs, hit counts or use material-production counters as DE denominators.",
-      "disposition": "reference and historical anecdote; no numerical admission"
+      "finding": "Author documentation v1.11 updated November 23, 2026 lists MoP, Cataclysm, Wrath and TBC Classic only. Prospect buttons invoke an ore-specific macro; bag count and five-unit availability threshold are not completed operations. No published target yield or actual run export in documentation. Code not inspected.",
+      "disposition": "non-Retail action helper; no numerical admission"
     },
     {
+      "source": "https://wow.pirson.dev/addons/mill-helper/",
+      "field": "source_flavor_and_capture_scope",
       "inputItemID": null,
       "outputItemID": null,
       "casts": null,
@@ -42,466 +41,36 @@
       "zeroCount": null,
       "histogram": null,
       "refunds": null,
-      "source": "https://www.curseforge.com/wow/addons/gatherbuffs/files/7967869",
-      "author": "barnpusher",
-      "source_version": "v0.99.19 Retail 12.0.5/12.0.1",
-      "field": "recorder_capture_context",
-      "finding": "GatherBuffs author barnpusher v0.99.19, file 7967869 uploaded April 22 2026 for Retail 12.0.5/12.0.1, documents adding per-profession gather-action counts and loot-window/current-cast handling to improve tracking. This is a capture-method lead, not proof that an action count is an exact completed target-item cast, that zero yields are retained or that refunds are distinct. No original target ledger in release notes; code not inspected.",
-      "disposition": "held recorder lead; no original target data"
+      "finding": "Companion Mill Helper v1.11 documentation updated November 23, 2026 lists MoP/Cataclysm/Wrath Classic only. Describes herb-specific macro and bag availability, not an original zero-inclusive output ledger. Code not inspected.",
+      "disposition": "non-Retail action helper; no numerical admission"
+    },
+    {
+      "source": "https://githubhelp.com/buildthehomelab/wow-mod-retail-professions",
+      "field": "source_flavor_and_custom_server_mechanics",
+      "inputItemID": null,
+      "outputItemID": null,
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zeroCount": null,
+      "histogram": null,
+      "refunds": null,
+      "finding": "Mirrored README explicitly identifies AzerothCore WotLK 3.3.5a server module, not Blizzard Retail despite project title. The milling/prospecting preview uses server loot tables; bulk operations and crafting stats are custom server additions. Thus a Retail-style interface, its rates or its proc log are not Retail measurements. Original GitHub web retrieval failed; mirror alone sufficient to hold, not to verify code or numerical models.",
+      "disposition": "non-Retail mirror; excluded from Retail numeric model"
     }
   ],
   "source_urls": [
-    "https://warcraft.wiki.gg/wiki/Statistics_panel",
-    "https://www.wowhead.com/spell=31252/prospecting",
-    "https://www.curseforge.com/wow/addons/gatherbuffs/files/7967869",
-    "https://www.wowhead.com/item=24995/warmaul-legplates",
-    "https://www.wowhead.com/item=22445/arcane-dust",
-    "https://www.wowhead.com/mop-classic/item=24979/reaver-legplates",
-    "https://www.wowhead.com/mop-classic/it/item=23424/fel-iron-ore",
-    "https://www.wowhead.com/it/item=36909/minerale-di-cobalto"
+    "https://wow.pirson.dev/addons/prospect-helper/",
+    "https://wow.pirson.dev/addons/mill-helper/",
+    "https://githubhelp.com/buildthehomelab/wow-mod-retail-professions"
   ],
-  "numeric_summary": "New source-context screening: Warcraft Wiki lists Materials produced from disenchanting and Items disenchanted as separate cumulative character statistics. Historical Wowhead contributor 274087 additionally reports prospecting incremented the former; original comment gives no patch, counts or validation. The spell page is already in the cutoff catalogue; do not reopen its numerical cohorts. The independent statistics-panel description confirms labels are distinct, not the historical cross-method behavior. Neither statistic is an exact-item, dated, zero-inclusive operation ledger; do not infer input IDs, hit counts or use material-production counters as DE denominators. GatherBuffs author barnpusher v0.99.19, file 7967869 uploaded April 22 2026 for Retail 12.0.5/12.0.1, documents adding per-profession gather-action counts and loot-window/current-cast handling to improve tracking. This is a capture-method lead, not proof that an action count is an exact completed target-item cast, that zero yields are retained or that refunds are distinct. No original target ledger in release notes; code not inspected. These independent source names were absent from the current owned status and compact cutoff manifest. Exact-name and material-side searches for Warmaul/Bloodfist, Arcane Dust, Fel Iron and Cobalt recovered only already catalogued historical Looter/Thottbot data, duplicated Reaver Legplates 24979 ->22445 x5 (unknown N, legacy-20261108-1750008), Jakebees 21849 ->22445 11/16 and nine mixed greens/19 dust (already reviewed), and known ore studies and reference tables. Current Retail spell metadata 382980/382979 and stack-size changes previously recorded; no re-transcription. No new independently attributable exact-item quantities, completed casts, hits, zeros, histograms, refunds, measured means or profile-specific eligibility. No new JSONL, prices, game actions, PRs, production or schedule changes. T0053 remains done.",
+  "numeric_summary": "Fresh post-cutoff publication screening: Pirson Prospect Helper and Mill Helper author documentation updated November 23, 2026 describes Classic-only macro-based action helpers, not actual completed-operation or result logs. A public mirrored README for buildthehomelab/wow-mod-retail-professions explicitly describes AzerothCore 3.3.5a and custom server processing, not Blizzard Retail. No target ledgers or new exact quantities. Known Warmaul Looter/reference data, TSM/BootyBayBroker profile conflict, historical Cobalt/Fel Iron reports and milling cohorts (rollocola, funknut) remain existing reviewed evidence; no duplicate weighting. Recent Craft Ladder/ProfessionsForever listings restate already excluded non-Retail sources. No new independent Retail target identities, cast counts, hits, quantities, zeros, histograms, refunds, skill/build or eligible profile. No new JSONL or game actions. T0053 remains done.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-25T2337-whiptail-original-cataclysm-milling.jsonl",
-  "preserved_prior_status_summary": [
-    {
-      "disposition": "historical skill context only; no yield admission",
-      "summary": "New historical skill context: Kaliope's Jan 18 2007 prospecting-level article lists Fel Iron Ore (23424) at JC 290, but in Jan 19 comments the author explicitly says they did not test Fel Iron. Independent commenter wandelaar on Jan 19 reports successful prospecting at 290; this establishes a reported sufficient skill, NOT a measured minimum or a yield cohort. Same article records author's Adamantite 23425 becoming available at 325; Wings Jan 22 reports Thorium 10620 error explicitly requiring JC 250. Warcraft Wiki gives previous Fel Iron JC threshold 275 but current threshold unknown; date/cause of the discrepancy unverified, no current Retail skill gate inferred. Wiki mining requirement is a separate skill and must not substitute for prospecting. Original Jan 18 article URL absent in prior owned status and current coordination manifest text, not exhaustive of scoped catalogue. Prior screened SimpleDisenchant listing was not treated as new; tag v1.7.5 TOC independently confirms Retail interfaces 120100/120105 and per-character SavedVariables name SimpleDisenchantDB, but this metadata does not establish any actual processing ledger or completed cast count. No target export available in materials inspected. Warmaul exact-name and Arcane Dust searches yielded known historical table and ilvl 14/74 tooltip, no new operation receipt; Cobalt/Fel Iron searches yielded already-known source-page cohorts and reference guides, no newly attributable measured casts, hits, quantities, zeros, histograms, refunds or supported means. T0053 remains done. No prices retained.",
-      "source": "https://kaliope.wordpress.com/2007/01/18/jc-prospecting-levels-for-ore/",
-      "evidence": null
-    },
-    {
-      "disposition": "reviewable historical raw totals; not current Retail rate admission",
-      "summary": "Avisay: 40600 purchased Dreamleaf 124102; direct 129032=17036, 129034=1815, 128304=1713, 136926=850; cumulative post-pod 129032=18988, 129034=4310, 128304=1905. Actual casts and consumed inputs unknown.",
-      "source": "https://www.reddit.com/r/woweconomy/comments/6tktrg/40600_dreamleaf_mass_mill_data/",
-      "evidence": "research/v3/evidence/legacy/2026-11-25T1444-dreamleaf-original-mass-mill-phases.jsonl"
-    },
-    {
-      "disposition": "reviewable historical raw totals; not current Retail rate admission",
-      "summary": "ghostmarble: 38180 purchased Dreamleaf 124102; direct 129032=16007, 129034=1746, 128304=1563, 136926=736; cumulative post-pod 129032=17759, 129034=3995, 128304=1723. Actual casts and consumed inputs unknown.",
-      "source": "https://www.reddit.com/r/woweconomy/comments/6tjjj2/mass_mill_data_38180_dreamleaf/",
-      "evidence": "research/v3/evidence/legacy/2026-11-25T1444-dreamleaf-original-mass-mill-phases.jsonl"
-    },
-    {
-      "disposition": "held historical source, raw species quantities; no Retail admission",
-      "summary": "Felslate 123919 -> 130179/130180/130178/130183/130181/130182; 23 raw rows in four named batches, five source-reported batch-level zeros; actual casts/hits/zero-event histogram unknown. 750 ore corrected by author. Source incompleteness explicit.",
-      "source": "https://www.reddit.com/r/woweconomy/comments/52fkaz/a_bit_of_data_from_prospecting_felslate_7k/",
-      "evidence": "research/v3/evidence/legacy/2026-11-25T1540-felslate-original-batch-species.jsonl"
-    },
-    {
-      "disposition": "held pooled output totals, not named species measurements",
-      "summary": "Serejai five 1000-ore manually prospected Felslate batches; rare totals 29/45/38/42/35; uncommon 217/202/209/213/220. No species IDs or independent spell receipts.",
-      "source": "https://www.reddit.com/r/woweconomy/comments/51f47c/5000_felslate_prospecting_results/",
-      "evidence": null
-    },
-    {
-      "disposition": "held pooled outputs; image uninspected; no Retail admission",
-      "summary": "BilisOnyxia 6000 Felslate, 300 reported mass prospects, 208 rare/1209 uncommon/1200 gemchips. OldWolf2 separate 500 ore, 57 uncommon/2 rare. No independently verified spell receipt, species allocation or zero-inclusive histograms.",
-      "source": "https://www.reddit.com/r/woweconomy/comments/57pqo4/comment/d8ua1ck/",
-      "evidence": null
-    },
-    {
-      "disposition": "held historical pooled-category quantities; no species mapping",
-      "source": "https://us.forums.blizzard.com/en/wow/t/mass-prospecting-appears-to-be-bugged/92856",
-      "summary": "152513: mass 40 ore -> rare 1/uncommon 20; standard 40 ore -> rare 8/uncommon 13. Actual casts and species unknown; 256622 requires 20 ore.",
-      "evidence": null
-    },
-    {
-      "disposition": "historical trainer availability, not yield change",
-      "source": "https://worldofwarcraft.blizzard.com/en-gb/news/22824893/hotfixes-march-13-2019",
-      "summary": "2019-01-07 official BfA mass prospecting trainer availability.",
-      "evidence": null
-    },
-    {
-      "disposition": "held approximate historical per-input means; not exact counts",
-      "source": "https://us.forums.blizzard.com/en/wow/t/mass-milling-monelite-gives-1000-krakens-eyes/125375",
-      "summary": "152512 -> 153706 reported approximate one unit per 200 before patch / ~20 after; second player ~one per 33 ore over 400, 8.1.5 context.",
-      "evidence": null
-    },
-    {
-      "disposition": "held historical qualitative bug report",
-      "source": "https://us.forums.blizzard.com/en/wow/t/legion-jewelcrafting-broken/1133329",
-      "summary": "151564 >100 ore approximate and one unnamed gem, no exact N or species.",
-      "evidence": null
-    },
-    {
-      "disposition": "new original earlier cumulative checkpoint; not an independent additional cohort",
-      "source": "https://www.reddit.com/r/woweconomy/comments/ca07gv/zinanthid_milling_numbers/",
-      "summary": "Definetely_not_you July 6 2019: 10,680 Zin'anthid (168487) milled, Maroon Pigment (168662) 6,383. Published normalized amounts per 5 herbs 2.988 and per 20 herbs 11.953. Aug 8 follow-up cnnagg explicitly references earlier 10k report and updates to 30,356 herbs, 18,171 pigment, 2.99/5 and 11.97/20. Existing 2026-10-28 legacy-batch002 observation already archives later total. Do not pool checkpoints. The follow-up total 30,356 is not divisible by 5 or 20; both source amounts are normalized comparisons, not separate observed spell cohorts. Actual recipe mix, casts, input receipt, refunds, hits, zeros, per-hit histograms, skill, build, hotfix unknown. Request Master correct older mass-only label if active after lineage verification. Keep historical aggregate as reported, not current Retail rate.",
-      "evidence": null
-    },
-    {
-      "disposition": "held historical partial named-output original snippet; source completeness and independence not established",
-      "source": "https://www.reddit.com/r/woweconomy/comments/k0z0dw",
-      "summary": "Nov 25 2020 first-person post reports buying and prospecting 1,600 Laestrite Ore (171828), 168 Angerseye (173109), explicitly 0.105 units per ore. Search-indexed original body supplies these values; direct open and old Reddit unavailable, original linked result table and author not recovered. No completed casts, method, other output quantities, per-output hits or zeros, skill/build/refunds, or overlap check against author-level cumulative studies. Exact source absent from compact cutoff manifest, prior owned status and default-branch code search; this is not exhaustive proof of novelty. Preserve this raw partial observation here pending source access; do not set casts=320 or interpret per-ore mean as chance. No current Retail admission.",
-      "evidence": null
-    },
-    {
-      "disposition": "new historical provenance context; no measurement",
-      "source": "https://the-wow-gold-guide.blogspot.com/2007/",
-      "summary": "Nguyen's 2007-08-29 Enchantrix guide (annual archive lines 1348–1363) explicitly describes then-beta Enchantrix after BC formula changes, using tooltip model probabilities and average quantities rather than raw observations, and attributes baseline value to third-party sources such as Allakhazam/Thottbot. Its illustrated 99% Small Prismatic Shard / 1% Void Crystal at x1 and skill 225 is not a documented study: source item identity, exact client build, operation count, hits, zeros, skill profile of the underlying sample and original cohort are unavailable. Do not promote this example to measured item or category rates or assign a gear ID. No new current Retail evidence.",
-      "evidence": null
-    },
-    {
-      "disposition": "new historical qualitative anecdote; no named inputs or completed counts",
-      "source": "https://ogsledger.blogspot.com/2007/11/",
-      "summary": "Og's Ledger 2007-11-28 describes seeking Small Radiant Shards and obtaining a shard plus unspecified Vision Dust. The author's 5% and 80 items for four shards are planning assumptions, not measured frequencies or completed operations. No exact input identity, actual denominator, output totals, or zero histogram. Do not create a study or infer a zero. Not a TBC target cohort.",
-      "evidence": null
-    },
-    {
-      "disposition": "held existing partial original; additional linked-table recovery attempted",
-      "source": "https://www.reddit.com/r/woweconomy/comments/k0z0dw",
-      "summary": "Existing November 25 2020 Laestrite 171828 -> Angerseye 173109 report (1,600 ore, 168 units, 0.105 units/ore) rechecked only for source recovery; direct web open and independent page retrieval both fail; indexed discussion adds commenter-reported 524 combined output units, not an independently inspected table or species breakdown. Author and original linked table still unavailable, no new item-level observation, no verified completed casts or hits/zeros. Do not create a second row, infer missing species or treat pooled units as N. Other December 2020 Laestrite threads k6fuik/kadrxj already assigned in current catalogue; do not recatalogue.",
-      "evidence": null
-    },
-    "2026-11-25T19:37:58.623Z: New exact 25003 Retail listing-profile evidence: 14 explicit reported item levels (14,25,34,35,36,37,40,50,55,61,62,63,70,74) plus a character-dependent category, demonstrating why an item-ID-only/default-ilvl DE group is unsafe. Third-party listing profiles only, no eligible processing observations. 24995 NPC and detail views display differing ilvls within the same PTR version; no new cast cohort. Screened historical acquisition-related no-DE report. Post-cutoff name/date searches across Wowhead, forums, Reddit and indexed results yielded no new original 24995/25003/30364, 36909/23424 or 13866 processing logs; existing guide and Classic sources remain reference/duplicates. Prior Laestrite table not reopened without new path. T0053 remains done. No gold values retained, no new drop JSONL justified.",
-    "2026-11-25T20:40:56.054Z: New source-method lead: existing item-restoration records have been used by players to identify mismatched DE outcomes and item-level/acquisition context (2026-03-14 and 2024-12-21 reports). Such records are selective/incomplete and may omit knowledge items or whole events, so no observed zero-inclusive denominator or per-item output IDs/quantities are inferred. Official support article redirect-looped; no authentication or restore action attempted. Three primary reports and two corroborating failure reports absent by ID from prior owned status and compact coordination manifest; full cutoff catalogue novelty not established, retain context only. Historical 7.3.5 expansion-based rule already captured; do not duplicate. Exact-name target searches across Wowhead, Reddit, Blizzard forums and indexed blog results returned already-known or non-Retail references. No new independently attributable 24995/25003/30364 or 36909/23424/13866 completed casts, hits, units, zero bins, refunds, histograms or source-supported means. T0053 remains done. No prices retained.",
-    {
-      "source": "https://github.com/sunseteffect/Goldsmith/blob/045d366a99ff207250d96e65ebd2d13c71e7ffdf/Milling.lua",
-      "disposition": "New source-method review; possible original aggregate run evidence if published, not an observation",
-      "summary": "New acquisition-path review: Goldsmith author release 2.10.0-beta, 2026-11-20, supports Retail and Forever; pinned public source 045d366a99ff207250d96e65ebd2d13c71e7ffdf (2026-11-24, TOC 2.11.0-beta, interfaces 120107/120105/120100/16001). Milling.lua blob c15c11eabfea7334a2d41351385296d24dd60130 lines 84–125, 139–214, 216–272, 924–931: salvageRuns stores recipeID, input itemID, net used, perCast, aggregate output IDs/units, start time, skill, quality and resourcefulness. Its cast counter increments on matching player UNIT_SPELLCAST_SUCCEEDED rather than net inputs divided by nominal batch size. However output attribution is bag gains in a three-second window after net consumption, not a cast-linked loot receipt; same-input gains are excluded and an operation with no net consumption may lack output attribution. No per-output hit counts, zeros, histograms, explicit per-run game build/flavor, or complete specialization profile. Same input/concentration session is reused without checking recipe or stats changes. The source also drops enchant-scroll contamination from both aggregate and run history (lines 887–909); corrections do not prove remaining output attribution is complete. 500 retained runs is a capacity, not a sample. Distinguish stored runs from cumulative milling aggregates and displayed fallback estimates, never count both or infer exact refund quantities without validated consumption accounting. Public searches for GoldsmithDB salvageRuns returned no original target data; source author name absent from prior owned status and cutoff coordination manifest, not an exhaustive catalogue check. German 4fansites Midnight-labelled guide still shows historical level bands and no measured denominators (direct page 429, indexed excerpt only), and Wowhead translated pages reproduce known English comments; do not promote these to new studies. Wowhead reverse spell aggregate page could not be opened beyond a rewritten summary; no reimport. Known Warmaul/Arcane Dust, Cobalt/Fel Iron historical results remain unchanged. No new qualifying 24995/25003/30364, 36909/23424 or 13866 operations, hits, units, zeros, histograms, refunds or supported means. T0053 remains done. No prices retained.",
-      "evidence": null
-    },
-    {
-      "updated_at": "2026-11-25T23:37:02.139Z",
-      "prior_status_commit": "07f26319702133579a903a2af6f155029eb12a55",
-      "summary": "New historical acquisition-profile distinction, not numerical evidence: original Nov 26–27 2024 Blizzard forum thread 2017830. Paranitis (post 1) describes Timewalking yielding old materials, mentioning Arcane Dust (22445, name resolves) and ambiguous 'Large Shards'; DarkKuno (post 2) proposes source-expansion rather than item-level rule. Jacara (post 5, Nov 27) specifically reports Wrath gear marked Timewalking disenchanting to TWW materials, a counterexample to applying the proposed rule without acquisition/epoch validation. No exact input item IDs, bonus IDs, output species for Wrath, completed operation count, build, skill, hits, quantities or zero bins. No observed 24995 result and no blanket rule or historical-to-current transfer. Source thread ID absent from previous owned status, compact coordination manifest and default-branch code search; not an exhaustive catalogue novelty check. Separate official March 13 2026 Crate of Battlefield Goods acquisition-level rule already recorded by Midnight/Master; October 7 2024 Renown quartermaster no-DE hotfix already recorded by War Within; neither is evidence for 24995 and neither should be reimported. Exact name searches for 24995 and Arcane Dust yielded historical TBC and current third-party static ilvl labels only; Cobalt and Fel Iron searches returned known tables. Default-branch search confirmed previously recorded Thottbot 565-ore cohort and Runecloth Headband 930224/470030 comments; do not add duplicates. No published GoldsmithDB salvageRuns target dataset located. No newly qualifying 24995/25003/30364, 36909/23424, or 13866 observed numerical field, zero, refund, hit, histogram or supported mean; T0053 done. No price data retained."
-    },
-    {
-      "disposition": "previous verified historical original",
-      "summary": "Recovered one independently authored historical Cataclysm milling cohort (Critical Goblin, 2011-11-02): Whiptail 52988, 5000 reported herbs across three sessions, Ashen Pigment 61979 x3015 and Burning Embers 61980 x533. Five-herb batch explicitly described; actual completed casts, hit counts, zeros, refunds, histograms, skill and exact build unknown. Keep as held historical/reference, not current Retail sample weight or measured hit chance. Source's rounded per-mill quantities are not exact probabilities. Linked Foo comment separately reports 1500 Cinderbloom and 1500 Twilight Jasmine in Dec 2010, converted-equivalent inks 32.5/375.5 and 82/458 respectively; linked public spreadsheet is accessible but the raw experiment is not visible in the retrieved sheet, so do not convert to measured pigment totals or add a second cohort pending source-tab recovery. MarcusMaximi's 4800 Whiptail, 3700 Twilight Jasmine, 6000 lower-tier herb quantities accompany approximate ink ratios rather than direct observed pigment totals; keep unweighted. Existing Jakebees, ZeRoTaCtIcS, Lingsha and Gold Forever sources checked as already reviewed, not recopied. Warmaul/adjacent TBC DE and Cobalt/Fel Iron searches yielded known tables and cohorts, no new qualifying target observations. T0053 done; no price data or game actions.",
-      "evidence_file": "research/v3/evidence/legacy/2026-11-25T2337-whiptail-original-cataclysm-milling.jsonl",
-      "commit": "69115661d29efead5f8fb80ea2ceca0b4134a2ff"
-    },
-    {
-      "disposition": "previous held mixed-input original",
-      "summary": "Newly located original bbr 2008-10-25 historical 3.0.2-era inscription leveling report gives seven pooled herb-tier input counts and 13 pigment totals, with output item IDs verified via author's linked Wowhead IDs. Held as mixed-input evidence only: individual herb identities/quantities not attributable, exact skill at each mill, actual completed casts, per-output hits, zeros, refunds, histograms and exact client build unknown. Skill headings describe guide stages, not each cast's measured skill. No individual item baseline or current Retail admission. Source explicitly states five-herb milling; do not treat herb/5 equivalents as counted operations. Its first-tier average wording conflicts with raw totals and the Outland total includes another scribe's ~50 herbs. URL absent in previous owned status, compact coordination/registry manifest and default-branch code search; large assigned-sources catalogue not fully retrieved, so novelty check not exhaustive. Known Fel Iron 565-ore qoothecat cohort and historical Whiptail/Jasmine comments already recorded; 430-stack Whiptail comment also already exists in 2026-10-31T1642 evidence. No new independently grounded 24995/25003/30364 or 36909/23424 exact-item numerical cohort. T0053 done; no new JSONL, no prices.",
-      "cohorts": [
-        {
-          "source": "https://rrvs.blogspot.com/2008/10/inscription-1-350-guide.html",
-          "author": "bbr",
-          "published": "2008-10-25",
-          "patchContext": "3.0.2-era; source names 3.0.2",
-          "disposition": "held mixed-input historical source; schema has no non-DE group attribution; request Master only if a mixed-input informational representation is needed",
-          "inputsPerCast": 5,
-          "casts": null,
-          "castsWithDrop": null,
-          "histogram": null,
-          "refunds": null,
-          "exactBuild": null,
-          "exactInputItemID": null,
-          "cohorts": [
-            {
-              "skillSection": "1–75",
-              "candidateInputs": [
-                "Peacebloom",
-                "Silverleaf",
-                "Earthroot"
-              ],
-              "reportedHerbs": 360,
-              "outputs": [
-                {
-                  "id": 39151,
-                  "quantity": 156
-                }
-              ],
-              "note": "Source's accompanying average wording contradicts raw quantities; preserve totals only."
-            },
-            {
-              "skillSection": "75–100",
-              "candidateInputs": [
-                "Briarthorn",
-                "Bruiseweed",
-                "Mageroyal",
-                "Stranglekelp",
-                "Swiftthistle"
-              ],
-              "reportedHerbs": 80,
-              "outputs": [
-                {
-                  "id": 39334,
-                  "quantity": 40
-                },
-                {
-                  "id": 43103,
-                  "quantity": 9
-                }
-              ]
-            },
-            {
-              "skillSection": "100–150",
-              "candidateInputs": [
-                "Grave Moss",
-                "Kingsblood",
-                "Liferoot",
-                "Wild Steelbloom"
-              ],
-              "reportedHerbs": 180,
-              "outputs": [
-                {
-                  "id": 39338,
-                  "quantity": 102
-                },
-                {
-                  "id": 43104,
-                  "quantity": 17
-                }
-              ]
-            },
-            {
-              "skillSection": "150–200",
-              "candidateInputs": [
-                "Goldthorn",
-                "Fadeleaf",
-                "Khadgar's Whisker",
-                "Wintersbite"
-              ],
-              "reportedHerbs": 200,
-              "outputs": [
-                {
-                  "id": 39339,
-                  "quantity": 113
-                },
-                {
-                  "id": 43105,
-                  "quantity": 16
-                }
-              ]
-            },
-            {
-              "skillSection": "200–250",
-              "candidateInputs": [
-                "Arthas' Tears",
-                "Blindweed",
-                "Firebloom",
-                "Ghost Mushroom",
-                "Gromsblood",
-                "Purple Lotus",
-                "Sungrass"
-              ],
-              "reportedHerbs": 200,
-              "outputs": [
-                {
-                  "id": 39340,
-                  "quantity": 102
-                },
-                {
-                  "id": 43106,
-                  "quantity": 16
-                }
-              ]
-            },
-            {
-              "skillSection": "250–300",
-              "candidateInputs": [
-                "Dreamfoil",
-                "Golden Sansam",
-                "Icecap",
-                "Mountain Silversage",
-                "Plaguebloom"
-              ],
-              "reportedHerbs": 150,
-              "outputs": [
-                {
-                  "id": 39341,
-                  "quantity": 73
-                },
-                {
-                  "id": 43107,
-                  "quantity": 6
-                }
-              ]
-            },
-            {
-              "skillSection": "290–350",
-              "candidateInputs": [
-                "Ancient Lichen",
-                "Dreaming Glory",
-                "Felweed",
-                "Mana Thistle",
-                "Netherbloom",
-                "Nightmare Vine",
-                "Ragveil",
-                "Terocone"
-              ],
-              "reportedHerbs": 290,
-              "outputs": [
-                {
-                  "id": 39342,
-                  "quantity": 145
-                },
-                {
-                  "id": 43108,
-                  "quantity": 18
-                }
-              ],
-              "note": "Author includes about 50 herbs handled by another scribe; operator/skill allocation unknown."
-            }
-          ]
-        }
-      ],
-      "commit": "fd8555a756616d92363c09e5e51e1f63da5f6937"
-    },
-    {
-      "disposition": "previous held historical perk observation",
-      "summary": "Screened original historical Bountiful Bags comment 820419 (2011-04-26; page labels 4.0.3): 136 reported completed epic disenchants, with 15 two-crystal and one three-crystal outcomes for Maelstrom Crystal 52722. Exact input IDs, gear type/ilvl, other bins, total material quantity, hit count, zeros, skill and exact build remain unknown. Hold partial quantity observations; no complete histogram or calculated rate. Perk removed in 6.0.2 according to Warcraft Wiki; no transfer to current Retail. The spell page was already cited by Master for perk mechanics; bounded repository search did not locate this specific author/cohort, but full assigned catalogue novelty not proven, so do not create a new evidence file or duplicate weighting. Haggleworks sharing page explicitly targets WoW Forever, not Retail; no target ledger recovered. Scott75 70 bracers/159 Arcane Dust/37 Lesser Planar Essences, Cobalt Strikk3r 180 ore, Fel Iron Thottbot and qoothecat, and Runecloth Headband vikn cohorts are already recorded; do not recopy. No new qualifying current Retail 24995/25003/30364, 36909/23424, or 13866 observations; T0053 remains done. No prices, game actions, production changes or schedules.",
-      "cohorts": [
-        {
-          "source": "https://www.wowhead.com/cata/spell=83966/bountiful-bags",
-          "author": "820419",
-          "published": "2011-04-26",
-          "sourcePatchLabel": "4.0.3",
-          "sourceKind": "original historical player report",
-          "inputItemID": null,
-          "inputName": "unspecified epic gear",
-          "inputQuality": "epic",
-          "gearKind": null,
-          "itemLevelRange": null,
-          "outputItemID": 52722,
-          "outputName": "Maelstrom Crystal",
-          "casts": 136,
-          "reportedQuantityBins": {
-            "2": 15,
-            "3": 1
-          },
-          "castsWithDrop": null,
-          "totalQuantity": null,
-          "histogram": null,
-          "zeroCount": null,
-          "skill": null,
-          "specialization": null,
-          "exactBuild": null,
-          "refunds": null,
-          "disposition": "held partial pooled historical quantity-bin observations; source page previously cited by Master, exact cohort not found in bounded search; not a fresh catalogue assignment or current Retail sample",
-          "notes": "Original commenter gives 136 disenchants and lists 15 x2 and 1 x3 Maelstrom Crystal outcomes. Remaining output quantities and bins not directly stated; no complete histogram, no inferred zero or one counts, no measured proc chance. Perk context is the discussion topic; precise character profile and gear identities not supplied. Separate commenters report double crystal or multiple shard procs, with no denominator or named input. Wiki dates removal to 6.0.2 (2014-10-14). Keep distinct from the already-reviewed Scott75 70-bracer cohort and do not apply to current Retail."
-        },
-        {
-          "source": "https://haggleworks.com/share",
-          "disposition": "excluded acquisition lead; non-Retail game flavor",
-          "notes": "Public sharing page explicitly targets WoW Forever and describes aggregate disenchant counts/materials and item level, rarity, and type. No original Retail operation ledger or target cohort recovered; no uploads or account access."
-        }
-      ],
-      "commit": "162a9cd979846fab124f65ea5124d63791d3349c"
-    },
-    {
-      "summary": "New source-context finding: Blizzard's 6.2.0 hotfix list, published 2015-07-25 by Rygarius, dates a prospecting loot-window/internal bag error fix to July 23. The trigger was entering a seamless instance with the prospected-ore window open. This establishes an actual historical capture/loot-interface failure mode, NOT loss frequency, failed output, a refund, a yield change or proof of any specific ore being affected. For pre-fix historical session logs retain incomplete-capture uncertainty; never encode missing loot as a measured zero. Exact build, item IDs, counts and quantities not supplied. Official URL/article ID and phrase absent in prior owned status, compact coordination manifest, and article-ID default-branch search; full catalogue novelty not established. Exact-name Warmaul, adjacent TBC armor, Cobalt and Fel Iron searches found known historical reference tables and already-catalogued cohorts, including the 2.4.3 Legacy of Warcraft reference previously evaluated by Master; 11,018 is a count of eligible item definitions, not casts. Jakebees, 509750, childofnewlight, qoothecat and the 2.1.0 guarantee are not new. No new qualifying measured hits, quantities, zeros, refunds, histograms or per-input means for 24995/25003/30364, 36909/23424 or 13866. No new JSONL warranted; no prices or game actions. T0053 remains done.",
-      "cohorts": [
-        {
-          "source": "https://worldofwarcraft.blizzard.com/en-us/news/19818494/62-hotfix-%E4%BF%AE%E6%AD%A3%E9%A0%85%E7%9B%AE%EF%BC%8D7%E6%9C%8820-24%E6%97%A5%E6%9B%B4%E6%96%B0",
-          "corroboration": "https://www.bluetracker.gg/wow/topic/gb-en/19803855-patch-62-hotfixes-july-27/",
-          "author": "Blizzard (Rygarius)",
-          "published": "2015-07-25",
-          "hotfixDate": "2015-07-23",
-          "patch": "6.2.0",
-          "method": "Prospect",
-          "inputItemID": null,
-          "outputItemID": null,
-          "casts": null,
-          "castsWithDrop": null,
-          "totalQuantity": null,
-          "histogram": null,
-          "zeroCount": null,
-          "refunds": null,
-          "exactBuild": null,
-          "disposition": "official historical mechanics/capture caveat only; not a rate change or observed cohort",
-          "notes": "Internal bag error when entering seamless instance with prospected ore window open; fix does not establish specific loss, missing material, outcome or rate. Keep capture gaps distinct from zero outcomes."
-        }
-      ],
-      "commit": "5e00d48cf5412ad33dbe84f8820cdc0d383b4dab"
-    },
-    {
-      "summary": "New original historical mixed-input lead: Gern's Jan 19 2007 comment 16 on Kaliope's Jan 16 live-update article reports prospecting approximately 40 Fel Iron Ore (23424) and 25 Adamantite Ore (23425) the preceding night, yielding a pooled four blue gems and approximately ten green gems, at reported JC 330/mining about 350+ (current skill at posting, not necessarily exact processing skill). No individual material IDs or allocation by ore, exact input counts, cast receipt count, hit counts, zero bins, refunds, complete histogram or exact build. Keep pooled quantities and approximations as originally described, not as item-level yield or measured probability. The same page's Zwolfter Jan 17 comment 7 reports a Nightseye while MINING Fel Iron, not prospecting; do not treat it as processing evidence. Article and Gern not found in owned prior status or compact cutoff coordination manifest; not exhaustive of all scoped decisions. Jan 5 Adamantite stats page and Jan 18 Mithril page already assigned in cutoff, so no re-catalogue. Known Gary13579, 1115352, vikn, urbanmonkey83, and pre-2.1 Fel Iron cohorts not duplicated. Exact-name and reverse material searches did not recover new Warmaul/adjacent TBC or Cobalt/Fel Iron item-specific receipts, completed cast N, hits, zeros, refund or supported per-item mean. T0053 remains done. No evidence JSONL warranted, no prices or game actions.",
-      "cohorts": [
-        {
-          "source": "https://kaliope.wordpress.com/2007/01/16/jc-live-update-the-changes/",
-          "author": "Gern",
-          "published": "2007-01-19",
-          "dataDate": "preceding night as reported",
-          "method": "Prospect",
-          "reportedInputs": [
-            {
-              "itemID": 23424,
-              "name": "Fel Iron Ore",
-              "quantity": 40,
-              "approximate": true
-            },
-            {
-              "itemID": 23425,
-              "name": "Adamantite Ore",
-              "quantity": 25,
-              "approximate": false
-            }
-          ],
-          "reportedPooledOutputs": [
-            {
-              "quality": "rare (blue)",
-              "quantity": 4,
-              "itemID": null
-            },
-            {
-              "quality": "uncommon (green)",
-              "quantity": 10,
-              "approximate": true,
-              "itemID": null
-            }
-          ],
-          "skill": "JC 330 at posting; mining about 350+",
-          "casts": null,
-          "castsWithDrop": null,
-          "totalQuantity": null,
-          "zeroCount": null,
-          "histogram": null,
-          "refunds": null,
-          "build": null,
-          "disposition": "held historical mixed-input pooled report; no species-level or input-specific assignment",
-          "notes": "No denominator inferred from nominal batch equivalents; no current Retail transfer. Source approximate phrasing retained."
-        }
-      ],
-      "commit": "7f0d0bb42a462c682415fd8f7e55f6a22f7870cb"
-    },
-    {
-      "updated_at": "2026-11-26T05:38:48.072Z",
-      "disposition": "Held new bonus-URL provenance context; no new measured cohort",
-      "summary": "T0047 new item-variant provenance constraint: original indexed Wowhead Retail URL for exact Warmaul Legplates 24995 contains bonus=1680; opened and confirmed level 14, required level 26, identical visible tooltip and comments to base page. The URL parameter alone does NOT verify applied bonus, full itemLink, a currently obtainable or held variant, or a completed DE cast. Erorus's historical 7.2.0 item bonus data maps 1680 to 'of the Quickblade', with quality/level/levelcurve null; not a current 12.x mapping. In original August 15–16 2016 Wowhead forum thread 254773, Erorus explains how the site could discard unrecognized supplied bonuses and display defaults, that older held items and newly acquired gear may use different bonus IDs, and that chance bonuses were sourced from Looter observations; follow-up says many issues were improved. Historical mechanism/context only; do not assert current site bug from this. French exact item page is a mirror with level14 and no independently visible DE table; direct French/German hash-only paths blocked; English hash view has no operation counts. No new target yield fields. Independent German historical reference guides show Cobalt 36909 threshold 375 versus 350 while both report Fel Iron 23424 threshold 275; no original threshold experiment or date/build proof, no current Retail requirement inferred. Prior 2.1.0 blue-gem increase already recorded in 2026-11-02T0243 and T1640, and madag/Dusksteel cohorts already in existing evidence: do not duplicate. Cutoff source-key novelty not exhaustively established; no new numerical admission or evidence JSONL. T0053 done; no price values, game actions or production changes."
-    },
-    {
-      "updated_at": "2026-11-26T06:39:01.516Z",
-      "disposition": "Held new pinned recorder export attribution limitation; no new measured cohort",
-      "summary": "New pinned original recorder-code verification (not a yield cohort): LootHistory master 0c5f258ab060c6c4efabd323cddb3a1fde6d1110, Attribution.lua lines 399–435/500–505 registers player UNIT_SPELLCAST_SUCCEEDED but discards castGUID and stamps only processing source, nil detail, Certain; lines 150–181 and 239–247 describe shared TTL context and material loot-window attribution. Export.lua lines 28–39, 63–90 exports output item ID/quantity/source and Wowhead link assembled from output itemLink/bonus list, explicitly omits raw itemLink, sourceDetail and confidence. Thus CSV alone cannot identify the destroyed input item, distinguish individual casts, supply zero-inclusive N, or guarantee complete material capture. Existing independently archived debug or raw source-target receipt data would be needed; do not treat an output row count or Certain label as measured operation N. The code also now supports localized name-family detection; old issue #2 is not evidence of current defect. No actual target processing exports found. Reopened known historical 2.4.3 table and item-specific Resonating Axe 30364 (ilvl108, uncommon one-hand axe, 22446/22445/22449 modeled), not an independent cohort; original target 24995 direct pages inaccessible via web. Cobalt 36909/Fel Iron 23424 retail static item pages merely label prospectable, no original per-cast yields. No measured casts, hit counts, zeros, quantities, ranges or means advanced; T0053 already done. No duplicate JSONL, pricing or production changes."
-    },
-    {
-      "updated_at": "2026-11-26T08:42:53.250Z",
-      "disposition": "Held new restoration receipt provenance and mixed legacy shard totals; no qualifying new numeric cohort",
-      "summary": "New published receipt-quality evidence, not a yield cohort. TBC Classic Aug 9 2021 Pierre reports one accidental disenchant of exact Chestguard of the Conniver 28601 (Nightbane; historical epic leather armor ilvl115), missing from restoration history, material outcomes not named. On Aug 11 Blizzard support Zaxithorne confirms a TBCC restoration-site omission while support tools retained item history; mentions 22450 Void Crystal and 22449 Large Prismatic Shard generically for manual restoration, not specific outputs of 28601. This is historical missing-record/censoring evidence; a missing UI record is not zero yield or a failed cast. May 14 2024 Zoidberg posts 6/10/12 report original mixed unnamed gear sales/disenchants with 10978 Small Glimmering Shard x1 and 14343 Small Brilliant Shard x11, plus disputed extra 11177 Small Radiant Shard x2 removed on restoration but expressly not reported original yields. Game flavor/build, input identities and completed N, hits, zeros, skill/quality profiles unknown; do not count the restoration debit as a drop. Aug 25 2021 Reddit pbbc4x search snippet reports a Botanica 'bangle' returned by GM with one Large Prismatic Shard taken; likely 28370 Bangle of Endless Blessings but exact name not stated by reporter, direct thread unavailable. No actual DE outcome receipt, do not assign ID or measured quantity. Source IDs absent from previous own status and compact catalogue receipt; full scoped catalogue not checked, no new numerical admission. The already-reviewed 2.4.3 Legacy of Warcraft table is repeated on 30364 and 25206 item pages, both historical uncommon weapons ilvl108/105, same model 22446 75% (1–2), 22445 22% (2–5), 22449 3% (quantity not shown); not independent. Its Retail 30364 page says metadata ilvl31, tooltip ilvl70 and cites Blizzard Game Data API; no DE result/build/variant. Target-name searches yielded already-recorded Warmaul, Strikk3r Cobalt and Thottbot Fel Iron references, no new operation ledger. T0053 done. No new JSONL, gold values, game operations, PRs, release or schedule changes."
-    },
-    {
-      "updated_at": "2026-11-26T10:42:27.842Z",
-      "summary": "New original Russian Wowhead comment by surrende (Huge Citrine page 36929, lines 9–11): prospected three stacks of Cobalt Ore 36909 and obtained one Huge Citrine 36929; stack fullness, stack size/epoch, actual ore consumed, casts, hit counts, zeros, full output list, refunds, skill, specialization, patch/build and date not stated. The author's claim of at most 10% is not a measured probability with verified N. Identical WotLK mirror is one comment, not another cohort; current Live page does not date the underlying report. Hold source-level raw count, no supported per-input mean or runtime admission. Author and exact item-page source absent in checked prior owned status, compact cutoff manifest and default-branch search for surrende (not exhaustive). Mining-node source object 189978 distinguishes unrelated gem counts from prospecting (subby 277 ore, one Scarlet Ruby, two Huge Citrine, two Shadow Crystal during farming/rare kills); not processing input or output. Shadowlace Cuffs 173222 original 100-cast source k2ikkg already preserved in legacy Nov 1 records 625/626, 172230=146 and 172231=145; no repeat weighting. Samadan spreadsheet source llxv31 already in cutoff manifest. New November 2026 Forever Anvil Runecloth Headband 13866 display is expressly WoW: Forever Classic game-file model, not Retail data; exclude. Warmaul 24995 current item levels 14/74 vs wiki 31 and historical TBCC 108 remain non-receipt metadata; Fel Iron results returned known Thottbot cohorts, no new actual completed target casts or per-output histograms. Community issue 94 already assigned to existing community review workflow; no parallel ingestion. T0053 remains done. No new evidence JSONL or numerical admissions; no game actions, prices, PRs, releases or schedule changes.",
-      "source": "https://www.wowhead.com/ru/item=36929/%D0%BE%D0%B3%D1%80%D0%BE%D0%BC%D0%BD%D1%8B%D0%B9-%D1%86%D0%B8%D1%82%D1%80%D0%B8%D0%BD",
-      "evidence": null
-    },
-    {
-      "updated_at": "2026-11-26T11:43:26.349Z",
-      "summary": "New provenance, not a new cohort: the archived Thottbot comment on the misattached ZZold Arcane Dust page 17019 is indexed as danz107, January 28 2007, TBC 2.0.6. The direct rewritten page lines 10–12 independently confirms the same five Netherweave Gloves disenchanted and nine Arcane Dust units; author/date/patch label comes from indexed metadata, not direct page text or client receipt. Three existing branch records legacy-20261108-0001, legacy-20261114-2246-007, legacy-20261118-1352-004 already preserve 21851 -> 22445, 5 completed DE, 9 units with unknown author/date/patch. Treat all as one original cohort; source page ID 17019 is a different obsolete reagent, not a newly observed DE output. The historic named material identity 22445 is supported by the original migrated comment on its correct material page. Patch label identifies posting era only; collection build/date, skill, specialization, hits, zeros, conditional range/histogram, other outputs and eligibility remain unknown. Recommend Master attach recovered author/date/patch-label provenance to existing scoped decision, not add a fourth numerical row. Retail 21851 third-party page shows metadata ilvl31 and tooltip14, historical TBC ilvl99; no current DE receipt. Existing 2.4.3 historical model and 30364 profile were already archived, 147-ring and 10-belt cohorts are duplicates; Cobalt Strikk3r 180 ore and Fel Iron 100/565 ore historical rows are known. No new independently attributable target operations or admissible means, no new evidence file. T0053 is done; no game actions, prices, PRs, releases or schedule changes.",
-      "source": "https://www.wowhead.com/wotlk/item=17019/zzold-arcane-dust",
-      "evidence": null
-    },
-    {
-      "updated_at": "2026-11-26T13:05:48.759Z",
-      "summary": "Recovered two firsthand reports not located in the previous owned status. Wowhead user 76534 (Zaxxis Raider 18875 Live page lines 16–20) reports seven unidentified uncommon items disenchanted, yielding 12 Arcane Dust (22445) and 4 Greater Planar Essence (22446). Original collection date, build, individual gear IDs, armor/weapon split, levels, hits, zero counts and other outputs unknown; historical context, not a 12.x observation. Same author/text on TBC, WotLK, Cataclysm and PTR pages is one cohort, not independent samples. Preserve raw mixed-group totals and seven reported DE operations only; no category or item-level numerical admission, no inferred zero or per-material hit rate. Fel Iron Ore 23424 comment by loler (TBC page lines 32–34) reports eight stacks prospected and one unnamed rare gem. Fullness/size, actual input units, completed casts, gem identity, hits/zeros, build/date, skill and refunds unknown. Do not convert stacks to nominal or actual casts or distribute the rare unit across known gems. No new exact Warmaul ledger or Cobalt completed operation. Warmaul Live page still omits related-table rows in accessible HTML; existing historical cumulative Looter cohort not reweighted. Cobalt wiki percentages are reference only, not new observations. Compact cutoff coordination manifest has no Zaxxis or author 76534 entry, but full catalogue/source duplication not exhaustively checked; Fel Iron page is already familiar and source-level triage only. No new JSONL, no production, price, game or schedule changes. T0053 remains done.",
-      "source": "https://www.wowhead.com/npc=18875/zaxxis-raider",
-      "evidence": null
-    },
-    {
-      "updated_at": "2026-11-26T15:44:49.916Z",
-      "summary": "Fresh independent source screening: WLC documents a Disenchant response as a raid-loot allocation to an enchanter rather than proof of completed destruction; award CSV cannot establish completed DE or zero yields. Sintezza Disenchant v1.4.0 (Nov 25, Forever) offers CSV statistics and separates manual casts but provides no public original target ledger. VendorFloor Forever changelog describes personal-model cutovers after 3 same-item or 5 same-kind/level disenchants; thresholds are not observed sample counts. Chinese 17173 Wrath Classic guide dated July 25 2024 explicitly calls its Cobalt Ore 36909 23%/1.3% per-gem table reference-only, matching previously known guide vector; not independent observations. These four source names/URLs were absent in prior owned status and 731-source coordination manifest, not an exhaustive scoped decision check. Code not inspected. Targeted current exact-name, localized Chinese/Portuguese and historical searches on 24995, 36909, 23424, Arcane Dust and adjacent gear surfaced known Looter/Thottbot cohorts, old reference tables, auction metadata, or farming rather than prospecting. Historical 2.1 eligibility/guaranteed gem notes already covered by existing legacy evidence filenames; not recatalogued. No independent qualifying new Retail item/output IDs, completed casts, material hit counts, quantities, zero bins, histograms, refunds or measured means. No prices retained. T0053 remains done.",
-      "source": "https://www.curseforge.com/wow/addons/w-l-c",
-      "evidence": null
-    }
-  ],
-  "verified_parent_sha": "627e5e288e9e71d422b99fb19107af5a3956a03b",
-  "verified_commit_sha": "b8a4b6ba46bda960d2e252f00f2899dd348a3f44",
-  "commit_note": "Prior owned status blob verified at immutable revision; resulting status commit cannot be self-referential. Verify exact immutable read-back and changed-file list after write.",
+  "preserved_prior_status_summary": "New source-context screening: Warcraft Wiki lists Materials produced from disenchanting and Items disenchanted as separate cumulative character statistics. Historical Wowhead contributor 274087 additionally reports prospecting incremented the former; original comment gives no patch, counts or validation. The spell page is already in the cutoff catalogue; do not reopen its numerical cohorts. The independent statistics-panel description confirms labels are distinct, not the historical cross-method behavior. Neither statistic is an exact-item, dated, zero-inclusive operation ledger; do not infer input IDs, hit counts or use material-production counters as DE denominators. GatherBuffs author barnpusher v0.99.19, file 7967869 uploaded April 22 2026 for Retail 12.0.5/12.0.1, documents adding per-profession gather-action counts and loot-window/current-cast handling to improve tracking. This is a capture-method lead, not proof that an action count is an exact completed target-item cast, that zero yields are retained or that refunds are distinct. No original target ledger in release notes; code not inspected. These independent source names were absent from the current owned status and compact cutoff manifest. Exact-name and material-side searches for Warmaul/Bloodfist, Arcane Dust, Fel Iron and Cobalt recovered only already catalogued historical Looter/Thottbot data, duplicated Reaver Legplates 24979 ->22445 x5 (unknown N, legacy-20261108-1750008), Jakebees 21849 ->22445 11/16 and nine mixed greens/19 dust (already reviewed), and known ore studies and reference tables. Current Retail spell metadata 382980/382979 and stack-size changes previously recorded; no re-transcription. No new independently attributable exact-item quantities, completed casts, hits, zeros, histograms, refunds, measured means or profile-specific eligibility. No new JSONL, prices, game actions, PRs, production or schedule changes. T0053 remains done.",
+  "verified_parent_sha": "0625a71a963904cd780a232c0dd65e70073351b5",
+  "verified_commit_sha": "0625a71a963904cd780a232c0dd65e70073351b5",
+  "commit_note": "Verified previous owned status at immutable 0625a71; this status commit cannot contain its own SHA. Verify exact content and changed-file list after update.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -1443,6 +1012,16 @@
       ],
       "disposition": "source context only; no qualifying operation cohort",
       "reason": "New source-context screening: Warcraft Wiki lists Materials produced from disenchanting and Items disenchanted as separate cumulative character statistics. Historical Wowhead contributor 274087 additionally reports prospecting incremented the former; original comment gives no patch, counts or validation. The spell page is already in the cutoff catalogue; do not reopen its numerical cohorts. The independent statistics-panel description confirms labels are distinct, not the historical cross-method behavior. Neither statistic is an exact-item, dated, zero-inclusive operation ledger; do not infer input IDs, hit counts or use material-production counters as DE denominators. GatherBuffs author barnpusher v0.99.19, file 7967869 uploaded April 22 2026 for Retail 12.0.5/12.0.1, documents adding per-profession gather-action counts and loot-window/current-cast handling to improve tracking. This is a capture-method lead, not proof that an action count is an exact completed target-item cast, that zero yields are retained or that refunds are distinct. No original target ledger in release notes; code not inspected. These independent source names were absent from the current owned status and compact cutoff manifest. Exact-name and material-side searches for Warmaul/Bloodfist, Arcane Dust, Fel Iron and Cobalt recovered only already catalogued historical Looter/Thottbot data, duplicated Reaver Legplates 24979 ->22445 x5 (unknown N, legacy-20261108-1750008), Jakebees 21849 ->22445 11/16 and nine mixed greens/19 dust (already reviewed), and known ore studies and reference tables. Current Retail spell metadata 382980/382979 and stack-size changes previously recorded; no re-transcription. No new independently attributable exact-item quantities, completed casts, hits, zeros, histograms, refunds, measured means or profile-specific eligibility. No new JSONL, prices, game actions, PRs, production or schedule changes. T0053 remains done."
+    },
+    {
+      "task": "T0047/T0052/T0022/T0044/T0042",
+      "source": [
+        "https://wow.pirson.dev/addons/prospect-helper/",
+        "https://wow.pirson.dev/addons/mill-helper/",
+        "https://githubhelp.com/buildthehomelab/wow-mod-retail-professions"
+      ],
+      "disposition": "no independent qualifying numerical evidence",
+      "reason": "Fresh post-cutoff publication screening: Pirson Prospect Helper and Mill Helper author documentation updated November 23, 2026 describes Classic-only macro-based action helpers, not actual completed-operation or result logs. A public mirrored README for buildthehomelab/wow-mod-retail-professions explicitly describes AzerothCore 3.3.5a and custom server processing, not Blizzard Retail. No target ledgers or new exact quantities. Known Warmaul Looter/reference data, TSM/BootyBayBroker profile conflict, historical Cobalt/Fel Iron reports and milling cohorts (rollocola, funknut) remain existing reviewed evidence; no duplicate weighting. Recent Craft Ladder/ProfessionsForever listings restate already excluded non-Retail sources. No new independent Retail target identities, cast counts, hits, quantities, zeros, histograms, refunds, skill/build or eligible profile. No new JSONL or game actions. T0053 remains done."
     }
   ],
   "blockers": [
@@ -1779,10 +1358,25 @@
       "source": "https://www.curseforge.com/wow/addons/gatherbuffs/files/7967869",
       "disposition": "Retail recorder release screened; no public target data",
       "reason": "GatherBuffs author barnpusher v0.99.19, file 7967869 uploaded April 22 2026 for Retail 12.0.5/12.0.1, documents adding per-profession gather-action counts and loot-window/current-cast handling to improve tracking. This is a capture-method lead, not proof that an action count is an exact completed target-item cast, that zero yields are retained or that refunds are distinct. No original target ledger in release notes; code not inspected. Reopen only for actual versioned source data with input/output identity and completeness."
+    },
+    {
+      "source": "https://wow.pirson.dev/addons/prospect-helper/",
+      "disposition": "non-Retail action helper; no numerical admission",
+      "reason": "Author documentation v1.11 updated November 23, 2026 lists MoP, Cataclysm, Wrath and TBC Classic only. Prospect buttons invoke an ore-specific macro; bag count and five-unit availability threshold are not completed operations. No published target yield or actual run export in documentation. Code not inspected. Reopen only for independent, versioned original Retail target-item ledger."
+    },
+    {
+      "source": "https://wow.pirson.dev/addons/mill-helper/",
+      "disposition": "non-Retail action helper; no numerical admission",
+      "reason": "Companion Mill Helper v1.11 documentation updated November 23, 2026 lists MoP/Cataclysm/Wrath Classic only. Describes herb-specific macro and bag availability, not an original zero-inclusive output ledger. Code not inspected. Reopen only for independent, versioned original Retail target-item ledger."
+    },
+    {
+      "source": "https://githubhelp.com/buildthehomelab/wow-mod-retail-professions",
+      "disposition": "non-Retail mirror; excluded from Retail numeric model",
+      "reason": "Mirrored README explicitly identifies AzerothCore WotLK 3.3.5a server module, not Blizzard Retail despite project title. The milling/prospecting preview uses server loot tables; bulk operations and crafting stats are custom server additions. Thus a Retail-style interface, its rates or its proc log are not Retail measurements. Original GitHub web retrieval failed; mirror alone sufficient to hold, not to verify code or numerical models. Reopen only for independent, versioned original Retail target-item ledger."
     }
   ],
   "previous_verified_evidence_sha": "69115661d29efead5f8fb80ea2ceca0b4134a2ff",
-  "next_concrete_step": "Seek independent published exact-item Retail operation exports or original receipts with quantities and verified profile, focusing on newly posted data. Do not revisit already reviewed aggregate counters, generic addon descriptions or cutoff studies without an independently recovered missing field.",
+  "next_concrete_step": "Focus on newly published versioned Retail logs or independently recovered missing identity/quantity/profile fields; no repeat of known guide tables, macro helpers, private-server data, historical comment mirrors or cutoff rows without a new trigger.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -1791,17 +1385,17 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://warcraft.wiki.gg/wiki/Statistics_panel",
-    "https://www.wowhead.com/spell=31252/prospecting",
-    "https://www.curseforge.com/wow/addons/gatherbuffs/files/7967869",
+    "https://wow.pirson.dev/addons/prospect-helper/",
+    "https://wow.pirson.dev/addons/mill-helper/",
+    "https://githubhelp.com/buildthehomelab/wow-mod-retail-professions",
     "https://www.wowhead.com/item=24995/warmaul-legplates",
     "https://www.wowhead.com/item=22445/arcane-dust",
-    "https://www.wowhead.com/mop-classic/item=24979/reaver-legplates",
-    "https://www.wowhead.com/mop-classic/it/item=23424/fel-iron-ore",
-    "https://www.wowhead.com/it/item=36909/minerale-di-cobalto"
+    "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
+    "https://www.wowhead.com/mop-classic/item=36909/cobalt-ore",
+    "https://www.wowhead.com/cata/item=43108/ebon-pigment"
   ],
   "latest_run_source_date": "2026-11-26",
-  "latest_run": "New source-context screening: Warcraft Wiki lists Materials produced from disenchanting and Items disenchanted as separate cumulative character statistics. Historical Wowhead contributor 274087 additionally reports prospecting incremented the former; original comment gives no patch, counts or validation. The spell page is already in the cutoff catalogue; do not reopen its numerical cohorts. The independent statistics-panel description confirms labels are distinct, not the historical cross-method behavior. Neither statistic is an exact-item, dated, zero-inclusive operation ledger; do not infer input IDs, hit counts or use material-production counters as DE denominators. GatherBuffs author barnpusher v0.99.19, file 7967869 uploaded April 22 2026 for Retail 12.0.5/12.0.1, documents adding per-profession gather-action counts and loot-window/current-cast handling to improve tracking. This is a capture-method lead, not proof that an action count is an exact completed target-item cast, that zero yields are retained or that refunds are distinct. No original target ledger in release notes; code not inspected. These independent source names were absent from the current owned status and compact cutoff manifest. Exact-name and material-side searches for Warmaul/Bloodfist, Arcane Dust, Fel Iron and Cobalt recovered only already catalogued historical Looter/Thottbot data, duplicated Reaver Legplates 24979 ->22445 x5 (unknown N, legacy-20261108-1750008), Jakebees 21849 ->22445 11/16 and nine mixed greens/19 dust (already reviewed), and known ore studies and reference tables. Current Retail spell metadata 382980/382979 and stack-size changes previously recorded; no re-transcription. No new independently attributable exact-item quantities, completed casts, hits, zeros, histograms, refunds, measured means or profile-specific eligibility. No new JSONL, prices, game actions, PRs, production or schedule changes. T0053 remains done.",
+  "latest_run": "Fresh post-cutoff publication screening: Pirson Prospect Helper and Mill Helper author documentation updated November 23, 2026 describes Classic-only macro-based action helpers, not actual completed-operation or result logs. A public mirrored README for buildthehomelab/wow-mod-retail-professions explicitly describes AzerothCore 3.3.5a and custom server processing, not Blizzard Retail. No target ledgers or new exact quantities. Known Warmaul Looter/reference data, TSM/BootyBayBroker profile conflict, historical Cobalt/Fel Iron reports and milling cohorts (rollocola, funknut) remain existing reviewed evidence; no duplicate weighting. Recent Craft Ladder/ProfessionsForever listings restate already excluded non-Retail sources. No new independent Retail target identities, cast counts, hits, quantities, zeros, histograms, refunds, skill/build or eligible profile. No new JSONL or game actions. T0053 remains done.",
   "new_evidence_file_this_run": null,
-  "next": "Seek independent published exact-item Retail operation exports or original receipts with quantities and verified profile, focusing on newly posted data. Do not revisit already reviewed aggregate counters, generic addon descriptions or cutoff studies without an independently recovered missing field."
+  "next": "Focus on newly published versioned Retail logs or independently recovered missing identity/quantity/profile fields; no repeat of known guide tables, macro helpers, private-server data, historical comment mirrors or cutoff rows without a new trigger."
 }
