@@ -1,6 +1,6 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-26T11:10:32.202Z",
+  "updated_at": "2026-11-26T12:11:29.482Z",
   "status": "active_search_no_new_independent_numeric_cohort",
   "task_ids": [
     "T0026",
@@ -2256,9 +2256,11 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://www.curseforge.com/wow/addons/enchantlens",
-    "https://www.curseforge.com/wow/addons/disenchant-tracker/files/all",
-    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/the-venture-co/wontonphuy/"
+    "https://www.wowhead.com/ptr/item=250028/devouring-reavers-drape",
+    "https://www.wowhead.com/de/spell=1231127/sondieren-von-midnight",
+    "https://wowgameres.com/guias/inscripcion/midnight/",
+    "https://expcarry.com/es/guia-inscripcion-wow-midnight",
+    "https://wow.gg/de/professions/midnight/jewelcrafting"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -3525,47 +3527,123 @@
         "build": null
       },
       "reason": "New indexed Armory character result shows named wrist item at 295, not the 305 preceding item in the list. Direct open returned 403. Exact item/bonus link not retrievable; corroborates variant possibility by name only, not an independent disenchant outcome. No rate or eligibility change."
+    },
+    {
+      "url": "https://www.wowhead.com/ptr/item=250028/devouring-reavers-drape",
+      "related_sources": [
+        "https://www.wowhead.com/item=250028/devouring-reavers-drape",
+        "https://www.wowhead.com/item=250028/devouring-reavers-drape?bonus=41%3A13440%3A12806&ilvl=289&spec=581"
+      ],
+      "input_id": 250028,
+      "disposition": "duplicate",
+      "source_reported": {
+        "table_denominator": 12,
+        "anonymous_Dawn_Crystal_hits": [
+          7,
+          4
+        ],
+        "base_preview_ilvl": 44,
+        "selected_preview_ilvl": 289,
+        "actual_completed_casts": null,
+        "outputItemIDs": null,
+        "outputRanks": null,
+        "totalQuantity": null,
+        "histogram": null,
+        "at_cast_ilvl": null,
+        "skill": null,
+        "specialization": null,
+        "build": null
+      },
+      "reason": "Search surfaced matching live, selected variant and 12.1.7 PTR snapshots. Direct PTR page omits raw table. Exact prior records midnight-20261115-8001/8002 and midnight-20261109-0822-003/004 already preserve these counts; repository default-branch snapshot confirms overlap, not a new cohort. No missing rank or event-level field recovered.",
+      "prior_evidence": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717/database/research/v3-snapshot/research/v3/evidence/midnight/20261115T0817-devouring-reaver-de-rank-holds.jsonl"
+    },
+    {
+      "url": "https://www.wowhead.com/de/spell=1231127/sondieren-von-midnight",
+      "disposition": "duplicate",
+      "reason": "Localized source shows the same JD3K rank-2 50-ore-per-input cohorts already in 2026-11-01T0310-jd3k-rank2-prospecting.jsonl; no new rank IDs, exact completed casts, refunds or per-output histograms. Do not count a second time.",
+      "prior_evidence": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717/research/v3/evidence/midnight/2026-11-01T0310-jd3k-rank2-prospecting.jsonl"
+    },
+    {
+      "url": "https://wowgameres.com/guias/inscripcion/midnight/",
+      "disposition": "not a study",
+      "reason": "Newly surfaced Spanish guide: direct page lists 360 Tranquility Bloom, 100 Argentleaf, 90 Mana Lily and 90 Sanguithorn as shopping/milling instructions; pigment numbers are downstream ink recipe budgets, not measured output from those inputs. No rank-specific operation, refund or histogram ledger; no cutoff recataloguing."
+    },
+    {
+      "url": "https://expcarry.com/es/guia-inscripcion-wow-midnight",
+      "published": "2026-10-09",
+      "disposition": "not a study",
+      "reason": "Direct Spanish guide describes approximate 240-herb leveling requirement and variation from skill-up chance. No reported measured pigments, input ranks, completed mills or observed zero events; old guide not recatalogued."
+    },
+    {
+      "url": "https://wow.gg/de/professions/midnight/jewelcrafting",
+      "updated": "2026-11-20",
+      "disposition": "not a study",
+      "reason": "Localized guide's direct page has 12 planned prospects and 60 copper ore in a leveling recipe budget. These are instructions, not completed operations or measured output. Earlier English guide already screened; no independent cohort or unlock/quality correction."
     }
   ],
-  "next_concrete_step": "Seek original public or owner-submitted Retail processing receipts with full operation denominators and ranks: 272246 at-cast instance/build/profile, ordinary armor and weapons, 237362/237363 and ore-specific 242608 unlock, Copper/Silver, ten-herb milling. Reopen EnchantLens only upon actual exported observation ledger, not promotional graphics. Skip unchanged guides, calculators and already screened source snapshots.",
-  "verified_base_commit_sha": "7add7482bcc5bccc14377894c9ded348ff463dd4",
+  "next_concrete_step": "Prioritize genuinely new owner/community exports or public original receipts: exact at-cast 272246 bonus/profile, ordinary armor and weapons, 237362/237363 rank and ore-specific 242608 unlock, Copper/Silver and ten-herb milling. Do not reopen unchanged Wowhead tables, translations, leveling guides or prior collectors without new original field evidence.",
+  "verified_base_commit_sha": "595a2fc1c9081013c13ff517038c595db131eaf4",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Current status commit verified externally by exact file read-back; self-referential SHA cannot be embedded.",
+  "commit_note": "Status commit verified externally by exact file read-back; self-referential SHA cannot be embedded.",
   "new_leads_screened": [
     {
-      "category": "new_source_screening",
+      "category": "localized_source_and_duplicate_screening",
       "sources": [
         {
-          "url": "https://www.curseforge.com/wow/addons/enchantlens",
+          "url": "https://www.wowhead.com/ptr/item=250028/devouring-reavers-drape",
           "related_sources": [
-            "https://www.curseforge.com/wow/addons/enchantlens/files/8427398",
-            "https://media.forgecdn.net/attachments/1793/661/zauberhafte-erkenntnisse-fa14r-verzauberungen-jpg.jpg",
-            "https://media.forgecdn.net/attachments/1791/407/analyse-vorhersage-verzauberung-im-detail-jpg.jpg"
+            "https://www.wowhead.com/item=250028/devouring-reavers-drape",
+            "https://www.wowhead.com/item=250028/devouring-reavers-drape?bonus=41%3A13440%3A12806&ilvl=289&spec=581"
           ],
-          "reason": "Newly located older Retail 12.0.7 collector lead. Author gallery advertises recording successful disenchants and export of observations; directly inspected promotional graphics show pooled illustrative counters 2147 observations, 1982 successful, 146 unique items, and a separate explicitly generic prototype prediction with conflicting displayed item levels. Not a documented original Midnight cohort or source-linked export; no exact input/output IDs, at-cast profile, complete cast ledger or zero accounting. Do not treat promotional totals or 87% model confidence as measured data. Reopen only on an original public receipt export with provenance; no cutoff recataloguing."
-        },
-        {
-          "url": "https://www.curseforge.com/wow/addons/disenchant-tracker/files/all",
-          "reason": "Newly screened publisher file list: Nov 4 2026 v2.09 supports Forever, Classic and Classic TBC only (1.60.1/1.15.x/2.5.x). No Retail Midnight cast cohort; no transfer."
-        },
-        {
-          "url": "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/the-venture-co/wontonphuy/",
-          "input_id_candidate": 272246,
+          "input_id": 250028,
+          "disposition": "duplicate",
           "source_reported": {
-            "equipped_item_name": "Miststalker's Wristbands",
-            "equipped_item_level": 295,
-            "actual_at_cast_ilvl": null,
-            "completed_casts": null,
-            "outputItemID": null,
+            "table_denominator": 12,
+            "anonymous_Dawn_Crystal_hits": [
+              7,
+              4
+            ],
+            "base_preview_ilvl": 44,
+            "selected_preview_ilvl": 289,
+            "actual_completed_casts": null,
+            "outputItemIDs": null,
+            "outputRanks": null,
+            "totalQuantity": null,
+            "histogram": null,
+            "at_cast_ilvl": null,
             "skill": null,
             "specialization": null,
             "build": null
           },
-          "reason": "New indexed Armory character result shows named wrist item at 295, not the 305 preceding item in the list. Direct open returned 403. Exact item/bonus link not retrievable; corroborates variant possibility by name only, not an independent disenchant outcome. No rate or eligibility change."
+          "reason": "Search surfaced matching live, selected variant and 12.1.7 PTR snapshots. Direct PTR page omits raw table. Exact prior records midnight-20261115-8001/8002 and midnight-20261109-0822-003/004 already preserve these counts; repository default-branch snapshot confirms overlap, not a new cohort. No missing rank or event-level field recovered.",
+          "prior_evidence": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717/database/research/v3-snapshot/research/v3/evidence/midnight/20261115T0817-devouring-reaver-de-rank-holds.jsonl"
+        },
+        {
+          "url": "https://www.wowhead.com/de/spell=1231127/sondieren-von-midnight",
+          "disposition": "duplicate",
+          "reason": "Localized source shows the same JD3K rank-2 50-ore-per-input cohorts already in 2026-11-01T0310-jd3k-rank2-prospecting.jsonl; no new rank IDs, exact completed casts, refunds or per-output histograms. Do not count a second time.",
+          "prior_evidence": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717/research/v3/evidence/midnight/2026-11-01T0310-jd3k-rank2-prospecting.jsonl"
+        },
+        {
+          "url": "https://wowgameres.com/guias/inscripcion/midnight/",
+          "disposition": "not a study",
+          "reason": "Newly surfaced Spanish guide: direct page lists 360 Tranquility Bloom, 100 Argentleaf, 90 Mana Lily and 90 Sanguithorn as shopping/milling instructions; pigment numbers are downstream ink recipe budgets, not measured output from those inputs. No rank-specific operation, refund or histogram ledger; no cutoff recataloguing."
+        },
+        {
+          "url": "https://expcarry.com/es/guia-inscripcion-wow-midnight",
+          "published": "2026-10-09",
+          "disposition": "not a study",
+          "reason": "Direct Spanish guide describes approximate 240-herb leveling requirement and variation from skill-up chance. No reported measured pigments, input ranks, completed mills or observed zero events; old guide not recatalogued."
+        },
+        {
+          "url": "https://wow.gg/de/professions/midnight/jewelcrafting",
+          "updated": "2026-11-20",
+          "disposition": "not a study",
+          "reason": "Localized guide's direct page has 12 planned prospects and 60 copper ore in a leveling recipe budget. These are instructions, not completed operations or measured output. Earlier English guide already screened; no independent cohort or unlock/quality correction."
         }
       ],
-      "disposition": "No qualifying new independent Retail cohort. Fresh searches for ordinary disenchant outputs, ranked Tin/Diamond, Copper/Silver and milling yielded existing sources, unrelated guides or incompatible clients. New EnchantLens gallery reviewed directly; no original receipts published in inspected material. Repository issue search still has no newer submission than #94. No numerical admission or cutoff recataloguing."
+      "disposition": "No qualifying new original Retail cohorts. Search results for DE, ranked Tin/Diamond, Copper/Silver and milling were predominantly existing studies or guides. Two apparent numerical leads proven duplicates; three localized guides screened as non-studies. Recent repository issue search surfaced existing #94 and #91 only. No cutoff recataloguing or baseline change."
     }
   ],
   "catalogue_checkpoint": {
@@ -3581,5 +3659,5 @@
     "release_status": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending",
     "worker_recataloguing": "not performed"
   },
-  "previous_verified_status_commit_sha": "a88367c981fe0456f669180cd35bbb758e93c8c0"
+  "previous_verified_status_commit_sha": "e7ed5b6ddb1d34ef044bad385ffef848e8087d08"
 }
