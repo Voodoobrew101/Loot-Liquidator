@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-26T13:26:23.038Z",
-  "status": "Screened two previously untracked historical sources; no new measured output cohort or correction. Existing source reviews reused.",
+  "updated_at": "2026-11-26T15:18:32.831Z",
+  "status": "Screened two new collector/trait identity leads; no independent measured TWW cohort or numerical correction.",
   "task_ids": [
     "T0048",
     "T0040",
@@ -14,12 +14,12 @@
     "T0032"
   ],
   "exact_gaps_targeted": [
-    "T0048: exact gear/rarity/skill and shard rank-specific observed counts, not quest requirements.",
-    "T0040/T0007/T0008/T0009/T0032: independent post-hotfix ore receipts, method-specific byproduct and unlock context.",
-    "T0010/T0011/T0012: herb/rank-specific completed mills and refund ledger."
+    "T0048: new item-specific armor/weapon disenchant receipts and profiles.",
+    "T0007/T0008/T0009/T0040/T0032: original ore rank-specific post-hotfix processing receipts and unlock context.",
+    "T0010/T0011/T0012: completed mills, output rank/histogram and native TWW skill-node identity."
   ],
-  "source_branch_head_reviewed": "c16213a7c0e6c8e1c348f267d41bad0ade0d81df",
-  "source_policy": "Read current instructions, queue, closed catalogue receipt and enabled registry; checked newly found sources against owned status and cutoff source list. No recatalogue.",
+  "source_branch_head_reviewed": "0649bf504ef46908d7eff165f3075986d76f81a6",
+  "source_policy": "Current branch instructions/queue and closed catalogue receipt/registry checked; existing scoped decisions and prior held leads reused, no recatalogue.",
   "study_backlog_triage": [
     {
       "status": "admitted",
@@ -1823,12 +1823,32 @@
         213399
       ],
       "reason": "March 6–10 thread concerns Glittering Glass price fluctuations and supply. One March 8 commenter attributes a price dip to a claimed glass drop-rate change in crushing, without official patch link, dated execution, raw yields, or differentiation of Crushing and Prospecting receipts. No original operation count, ore identity/rank, named measured outputs, refund basis, skill or specialization. Do not infer a new hotfix epoch or rate from price movements; retain the verified October 25 2024 prospecting hotfix separately."
+    },
+    {
+      "status": "held",
+      "scope": "held-new-collector-lead-no-published-tww-cohort",
+      "original_cohort": null,
+      "source": "https://www.curseforge.com/wow/addons/gathervalue",
+      "existing_ids": null,
+      "exact_inputs": null,
+      "outputs": null,
+      "reason": "Retail 12.1.0 GatherValue 1.1.0 (Oct 2 2026) documents transformation session item counts, consumed input costs and aggregated session statistics; /gv log is a diagnostic report, not a demonstrated processing export. No public TWW paired operations, item/rank IDs, refund-separated quantities, skill profile or hit histogram on project page. Collector is a possible source lead only; no measured data or proof of TWW recipe coverage. Do not reuse auction values or session aggregate as casts."
+    },
+    {
+      "status": "held",
+      "scope": "held-new-cross-expansion-trait-identity-exclusion",
+      "original_cohort": null,
+      "source": "https://www.wowhead.com/profession-trait/perfect-milling-109653",
+      "existing_ids": null,
+      "exact_inputs": null,
+      "outputs": null,
+      "reason": "Perfect Milling trait 109653 says +1 skill per point; Midnight specialization guide locates it under Perfected Products > Processing. TWW instead uses Improved Milling under Pursuit of Perfection. Do not attach Midnight trait ID, rank cap, coefficients or skill thresholds to Khaz Algar Milling 444181; TWW native Improved Milling trait ID remains unresolved in these sources. Neither guide provides observed pigment counts, completed mills, rank-specific means or refund basis."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 21,
-    "held": 107,
+    "held": 109,
     "duplicate": 5
   },
   "newly_verified_fields": [],
@@ -1837,21 +1857,22 @@
   "new_reference_only_numeric_records": 0,
   "new_no_disenchant_records": 0,
   "new_condition_records": 0,
-  "numeric_fields_advanced": "None. Quest requirement identity is non-yield context; no measured fields advanced.",
+  "numeric_fields_advanced": "None; Midnight profession trait 109653 excluded from TWW profile mapping. No yield, hit, denominator or confidence change.",
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://www.wowhead.com/quest=84085/the-power-of-potential",
-    "https://www.wowhead.com/item=219949/gleaming-shard",
-    "https://www.reddit.com/r/woweconomy/comments/1j59sv6"
+    "https://www.curseforge.com/wow/addons/gathervalue",
+    "https://www.wowhead.com/profession-trait/perfect-milling-109653",
+    "https://www.wowhead.com/guide/midnight/professions/inscription-specializations",
+    "https://www.wowhead.com/guide/the-war-within/professions/inscription-specialization"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-26T1221-lightless-footpads-crystal-rank-stack-correction.jsonl",
-  "verified_commit_sha": "c16213a7c0e6c8e1c348f267d41bad0ade0d81df",
-  "verification": "Instructions and queue read at immutable reviewed head c16213a7c0e6c8e1c348f267d41bad0ade0d81df; owned status blob checked unchanged immediately before single-file SHA-guarded update. verified_commit_sha identifies reviewed parent, not a self-referential new commit. Exact read-back verified separately in run history.",
+  "verified_commit_sha": "0649bf504ef46908d7eff165f3075986d76f81a6",
+  "verification": "Instructions and queue fetched at immutable reviewed head; owned status blob SHA matched prior read before single-file guarded update. verified_commit_sha identifies reviewed parent, not self-referential status commit; post-write read-back checked separately.",
   "blockers": [
-    "No new independent completed prospecting/milling or DE logs in this search; known studies are already reviewed and should not be recounted.",
-    "Quest objective quantities and market prices do not identify measured DE or prospecting outputs; the asserted crushing hotfix is unverified.",
-    "Existing Looter reference corrections remain distinct from measured independent cohorts; skill/spec/build and reverse-table overlap still unresolved."
+    "No new publicly accessible TWW per-operation input/output ledger; exact rank, completed operations, hits, zeros, stack histograms and refund basis remain unknown.",
+    "GatherValue documentation supplies no TWW cohort or raw export; Midnight trait 109653 is not TWW Improved Milling.",
+    "Existing Looter cumulative tables require unresolved original cohort overlap, profile/build and eligibility context; do not promote references into independent studies."
   ],
   "exhausted_sources": [
     "2026-11-20: Reddit 1ftqzxp historical shatter original/commenter estimates inspected; new but unfit for direct DE numeric admission without distinct recipe method/raw ledger; do not scrape it repeatedly without author export.",
@@ -1958,23 +1979,24 @@
     "2026-11-26T10:15:59.750Z: familiar 227662, 2083666, 1f8pc9q, 1fmrp4z, 1l91chl, 1g8kbaq, 1968257, 554920, LotzBoi, 2268773 and 2268859 already reviewed; housing dyes/Classic and Midnight prospecting excluded. Newly screened three context-only sources.",
     "2026-11-26T11:25:01.608Z: GamingHero and MMOPixel context only; do not re-review without new original data. Existing 349956, 1f51u6e, 1g350pq, LotzBoi and named gear tables already reviewed; 227661 and 227659 knowledge-item input conflict already held.",
     "2026-11-26T12:22:23.034Z: 212022 live/ptr/ptr-2 views one cumulative table corrected once; do not re-count 46 operations. Previously screened 565405, 1k78h4v, 2130416, 1fhd4wa, orangeboom and LotzBoi reused without re-review.",
-    "2026-11-26T13:26:23.038Z: Quest 84085 comments and Reddit 1j59sv6 are context only; do not revisit without a new linked processing ledger or official patch evidence. Previously reviewed 570664, 1934709, 1jnvht8, 1l91chl, 1oa7vn1, 1g8kbaq, 1neicjm, 1jc2ya5, 2114101 and 1934281 reused without recatalogue."
+    "2026-11-26T13:26:23.038Z: Quest 84085 comments and Reddit 1j59sv6 are context only; do not revisit without a new linked processing ledger or official patch evidence. Previously reviewed 570664, 1934709, 1jnvht8, 1l91chl, 1oa7vn1, 1g8kbaq, 1neicjm, 1jc2ya5, 2114101 and 1934281 reused without recatalogue.",
+    "2026-11-26T15:18:32.831Z: Previously held Tomasz 554920, ProspectMate, ProfitProphet, 1944679, 1th2zkl, 2274188 and SemiCollin worksheet reused; LotzBoi and older known original studies not re-transcribed. GatherValue and Midnight Perfect Milling trait screened once; revisit only for actual TWW log/native TWW identity."
   ],
-  "next_concrete_step": "Prioritize new player-exported logs and archived native specialization nodes; resolve explicit held gear output identity/stack gaps only from original raw tables with same-cohort deduplication; avoid generic market/quest threads.",
-  "previous_status_updated_at": "2026-11-26T12:22:23.034Z",
+  "next_concrete_step": "Look for publicly shared existing TWW processing exports with paired operation receipts, or native archived Improved Milling/Gem Finding nodes with expansion-specific IDs and source-grounded effects. Avoid market or generic addon listings without a linked original dataset.",
+  "previous_status_updated_at": "2026-11-26T13:26:23.038Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "checked_at_utc": "2026-11-26T13:26:23.038Z",
+    "checked_at_utc": "2026-11-26T15:18:32.831Z",
     "queries": [
-      "2025 Bismuth/Ironclaw/Aqirite prospecting receipts",
-      "2025 Mycobloom/Luredrop/Blossom milling logs",
-      "2025 Refulgent Crystal/Gleaming Shard disenchant logs",
-      "Glittering Glass post-hotfix receipts and claimed crushing change",
-      "Gleaming Shard quest objective link"
+      "post-hotfix ore rank prospect receipts",
+      "TWW milling herbs/pigments original results",
+      "TWW disenchant gear and shard receipts",
+      "public processing collector exports",
+      "expansion-specific milling trait identity"
     ],
     "new_sources_screened": 2,
     "existing_cohort_corrected": 0
@@ -7702,6 +7724,60 @@
       "outputItemID": 213399,
       "outputRank": null,
       "detail": "March 6–10 thread concerns Glittering Glass price fluctuations and supply. One March 8 commenter attributes a price dip to a claimed glass drop-rate change in crushing, without official patch link, dated execution, raw yields, or differentiation of Crushing and Prospecting receipts. No original operation count, ore identity/rank, named measured outputs, refund basis, skill or specialization. Do not infer a new hotfix epoch or rate from price movements; retain the verified October 25 2024 prospecting hotfix separately."
+    },
+    {
+      "inputItemID": null,
+      "inputRank": null,
+      "outputItemID": null,
+      "outputRank": null,
+      "casts": null,
+      "inputsPerCast": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "minSeen": null,
+      "maxSeen": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": null,
+      "patch": null,
+      "build": null,
+      "refund_basis": null,
+      "checked_at_utc": "2026-11-26T15:18:32.831Z",
+      "status": "held-new-collector-lead-no-published-tww-cohort",
+      "method": "Prospect/Mill/Disenchant",
+      "source": "https://www.curseforge.com/wow/addons/gathervalue",
+      "author": "Oxyn",
+      "detail": "Retail 12.1.0 GatherValue 1.1.0 (Oct 2 2026) documents transformation session item counts, consumed input costs and aggregated session statistics; /gv log is a diagnostic report, not a demonstrated processing export. No public TWW paired operations, item/rank IDs, refund-separated quantities, skill profile or hit histogram on project page. Collector is a possible source lead only; no measured data or proof of TWW recipe coverage. Do not reuse auction values or session aggregate as casts."
+    },
+    {
+      "inputItemID": null,
+      "inputRank": null,
+      "outputItemID": null,
+      "outputRank": null,
+      "casts": null,
+      "inputsPerCast": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "minSeen": null,
+      "maxSeen": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": null,
+      "patch": null,
+      "build": null,
+      "refund_basis": null,
+      "checked_at_utc": "2026-11-26T15:18:32.831Z",
+      "status": "held-new-cross-expansion-trait-identity-exclusion",
+      "method": "Mill",
+      "source": "https://www.wowhead.com/profession-trait/perfect-milling-109653",
+      "corroboration": [
+        "https://www.wowhead.com/guide/midnight/professions/inscription-specializations",
+        "https://www.wowhead.com/guide/the-war-within/professions/inscription-specialization"
+      ],
+      "traitID": 109653,
+      "detail": "Perfect Milling trait 109653 says +1 skill per point; Midnight specialization guide locates it under Perfected Products > Processing. TWW instead uses Improved Milling under Pursuit of Perfection. Do not attach Midnight trait ID, rank cap, coefficients or skill thresholds to Khaz Algar Milling 444181; TWW native Improved Milling trait ID remains unresolved in these sources. Neither guide provides observed pigment counts, completed mills, rank-specific means or refund basis."
     }
   ],
   "last_source_commit_pending": false
