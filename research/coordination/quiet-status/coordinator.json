@@ -1,104 +1,138 @@
 {
   "role": "research-manager",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-26T15:04:57.930Z",
-  "status": "variant_context_corroborated_catalogue_restriction_not_native_proof_no_new_cohort",
+  "updated_at": "2026-11-26T15:58:55.008Z",
+  "status": "verified_specific_historical_cohort_lineage_and_catalogue_prior_not_new_observations",
   "task_ids": [
+    "T0050",
     "T0026",
-    "T0049",
-    "T0003",
     "T0039"
   ],
   "exact_gaps_targeted": [
-    "Retained Nov20 flag midnight-20261114-1717-009: test exact Warrior 271457 base-ID eligibility claim against independent variant context, native restriction pin and current compiled source; no cutoff recatalogue.",
-    "Screen recent public Retail receipts with direct denominators and ranked outputs; distinguish recipe export from processing-event export."
+    "Legacy worker's explicitly requested 13866 / original author 1115352 cross-mirror deduplication QA, including current catalogue and actual committed producer output. This is a scoped lineage check, not a new catalogue review.",
+    "Screen new original operation-level public receipts without repeating old numerical transcriptions."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "sourceKind": "eligibility-context-only",
-      "itemID": 271457,
-      "name": "Jeweled Gauntlets of the Jade Warlord",
-      "source": "https://www.wowhead.com/item=271457/jeweled-gauntlets-of-the-jade-warlord",
-      "author": "Teaspoon",
-      "observedContext": "Player describes two acquisition routes (Catalyst and Venomforged Idol) at Hero 6 item level 321 with distinct secondary stats; neither a disenchant attempt nor a yield report. Catalyst haste 92/mastery 51; idol crit 96/haste 47.",
-      "baseCatalog": "WoWDB LIVE reports cannot disenchant at preview item level 219, PTR mirror repeats same statement; neither provides variant receipt. Wowhead base preview also 219 but no DE outcome table in retrieved page.",
-      "nativeCheck": {
-        "build": "12.1.7.70493",
-        "blob": "e03c7b0c302b1ef718b62b7de9c364e2c0b6ea03",
-        "baseIDs": [
-          271457,
-          271466,
-          271475
+      "sourceKind": "historical-cohort-lineage",
+      "inputItemID": 13866,
+      "inputName": "Runecloth Headband",
+      "sourceAuthor": "1115352",
+      "canonicalOriginalCohort": {
+        "reportedOperations": 5,
+        "outputs": [
+          {
+            "id": 16204,
+            "name": "Illusion Dust",
+            "hits": 4,
+            "totalQuantity": null
+          },
+          {
+            "id": 16203,
+            "name": "Greater Eternal Essence",
+            "hits": 1,
+            "totalQuantity": null
+          }
         ],
-        "warriorMappedVariantIDs": [
-          306692,
-          306693,
-          306694,
-          306695
-        ],
-        "finding": "None of these IDs present in the generated native hard-restriction list; absence is not proof that a specific live instance is disenchantable or that every ID was present in source CSV."
+        "originalPatch": null,
+        "skill": null,
+        "itemVariant": null,
+        "currentRetailApplicability": null
       },
-      "consumerCheck": {
+      "sourceRecords": [
+        {
+          "file": "research/v3/evidence/legacy/2026-11-08T0103-illusion-firsthand-classic-looter-hits.jsonl",
+          "blob": "8c6f4f22fc0d47ee38a8616c4d98d88d0b019e3b",
+          "ids": [
+            "legacy-20261108-001",
+            "legacy-20261108-002"
+          ],
+          "studyKey": "wowhead-illusiondust-1115352-runecloth-headband-5"
+        },
+        {
+          "file": "research/v3/evidence/legacy/2026-11-09T2151-classic-de-cast-hits-and-priors.jsonl",
+          "blob": "78a58eb8d5844c51e1ada5cb00f3b9b82ee02062",
+          "ids": [
+            "legacy-20261109-220005",
+            "legacy-20261109-220006"
+          ],
+          "studyKey": "wowhead-16204-1115352-five-headband-source-explicit-outcomes"
+        },
+        {
+          "file": "research/v3/evidence/legacy/2026-11-17T1351-runecloth-wizardweave-original-cast-identity.jsonl",
+          "blob": "b769c891e9ead89a1a7bb942d73fae59f0b0e983",
+          "ids": [
+            "legacy-20261117-820001",
+            "legacy-20261117-820002"
+          ],
+          "studyKey": "wowhead-16204-1115352-runecloth-headband-five-disencasts"
+        }
+      ],
+      "finding": "All six raw rows refer to one five-operation original. The third source is the live item-page mirror with shorter dust quote, not a fresh Retail experiment. Two other mirrors use explicit Classic page routes; those URL labels do not establish original game epoch. Preserve 4 and 1 reported hits, not output totals; never add to 15 operations. No MoP Classic observation admitted.",
+      "producer": {
+        "main": "732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717",
+        "adapterBlob": "26e8cb596df6ff9eae63d4647795c5f5a7c0d2e5",
+        "calculatorBlob": "a3209a00cd252c76898d062879797d2bf75cca53",
+        "cataloguePolicyBlob": "3f0fd30d8f548059cc7e59094775106effbee70e",
+        "catalogueDecisionBlob": "b820d68e9447acd484e78831dd534b8d30c7f79f",
         "baselineBlob": "d8ab3d15302e53579415f448d2183c1792992b96",
-        "runtimeBlob": "a1ec13cde95619289ed23c86c4e31b8718423f6b",
-        "compilerPolicy": "native-proof-only",
-        "finding": "Baseline preserves two same-WoWDB scoped observations with globalRestriction=false; not independent sources. Compiled runtime contains four warrior reward variant mappings and token reward list; no additional literal base-ID occurrence. No global restriction established; native-proof-only compiler intentionally does not turn catalogue warnings into hard exclusions."
+        "findings": [
+          "RUNECLOTH_MIRROR_SOURCES explicitly joins Nov8 and Nov9 aliases, not Nov17. The fallback identity includes normalized source key; the live URL differs from the reviewed Classic mirrors. This is a static alias completeness risk, not proof of inflated final weighting.",
+          "Current enabled catalogue admits only the Nov17 essence row as model evidence:reviewed-backlog:deb:6be45d8a4d77e3402bdb, 1/5 source fraction, source support 20, model confidence cap 0, no expectedQuantity or observed sample count. Nov9 essence is source fact source-fact:dea:b17a10a865b87cfc3d01b850. No exact six-record matches in sourceFieldExclusions or model supersedesSourceFields. The catalogue source scope is not the whole ordinary baseline.",
+          "Actual committed main research-v3-baselines.lua contains the Nov17 historical prior and its source fact, with samples=0 and sampleSizeKnown=false; no extra measured sample is attributed to that prior. The ordinary 13866 baseline record also exists; its exact source-level contribution and combined runtime selection were not executed or proven. No claim of measured duplicate inflation or real-client coverage."
+        ]
       },
-      "disposition": "New source context corroborates variant distinction; keep current eligibility unresolved; no zero, new sample, restriction or rate admitted."
-    },
-    {
-      "sourceKind": "acquisition-lead",
-      "source": "https://www.curseforge.com/wow/addons/renown-professions-exporter",
-      "sourceVersion": "v1.0, Retail 12.1.5, 2026-11-01",
-      "finding": "Public example exports character/profession skill and known recipe names only. No operation receipts, outputs, refund counts, or per-recipe measured yields; cannot use for baseline.",
-      "disposition": "No data import."
+      "disposition": "Preserve one historical source cohort. Do not append duplicate evidence or change reviewed catalogue decisions. Precise implementation follow-up only if isolated replay shows ordinary measured cohort or historical prior double weighting: exact alias for live mirror, retain source facts, enforce one 5-operation denominator, no current profile transfer without evidence."
     }
   ],
   "source_links": [
-    "https://www.wowhead.com/item=271457/jeweled-gauntlets-of-the-jade-warlord",
-    "https://www.wowdb.com/items/271457-jeweled-gauntlets-of-the-jade-warlord",
-    "https://ptr.wowdb.com/items/271457-jeweled-gauntlets-of-the-jade-warlord",
-    "https://gamgem.com/world-of-warcraft/items/jeweled-gauntlets-of-the-jade-warlord",
-    "https://www.curseforge.com/wow/addons/renown-professions-exporter",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717/database/sources/DB2Restrictions.lua",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717/tools/compile_itemdb.lua"
+    "https://www.wowhead.com/mop-classic/item=16204/illusion-dust",
+    "https://www.wowhead.com/cata/item=16204/illusion-dust",
+    "https://www.wowhead.com/item=16204/light-illusion-dust",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717/tools/research_v3_evidence.py",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717/database/research-v3-baselines.lua",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b8a4b6ba46bda960d2e252f00f2899dd348a3f44/research/v3/evidence/legacy/2026-11-08T0103-illusion-firsthand-classic-looter-hits.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b8a4b6ba46bda960d2e252f00f2899dd348a3f44/research/v3/evidence/legacy/2026-11-09T2151-classic-de-cast-hits-and-priors.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b8a4b6ba46bda960d2e252f00f2899dd348a3f44/research/v3/evidence/legacy/2026-11-17T1351-runecloth-wizardweave-original-cast-identity.jsonl"
   ],
   "evidence_files": [
-    "research/coordination/quiet-status/coordinator.json"
+    "research/v3/evidence/legacy/2026-11-08T0103-illusion-firsthand-classic-looter-hits.jsonl",
+    "research/v3/evidence/legacy/2026-11-09T2151-classic-de-cast-hits-and-priors.jsonl",
+    "research/v3/evidence/legacy/2026-11-17T1351-runecloth-wizardweave-original-cast-identity.jsonl"
   ],
   "previous_checkpoint": {
-    "commit": "3fc7618b0276352d3de3712e68f30f35dbef82c9",
-    "updated_at": "2026-11-26T14:03:19.586Z",
-    "summary": "Prospect Me original-code unit/capture review retained in preceding checkpoint."
+    "commit": "ededa5ed3d77db0b0ac6dfba6d1c8593466ad5c4",
+    "updated_at": "2026-11-26T15:04:57.930Z",
+    "summary": "variant_context_corroborated_catalogue_restriction_not_native_proof_no_new_cohort"
   },
   "worker_reports_verified": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-26T14:12:57.746Z",
-      "checkpoint_blob_sha": "663a762b999002bdf9c9fcf1de4698122ba708c6",
-      "reported_status": "No new independent cohort"
+      "updated_at": "2026-11-26T15:07:13.111Z",
+      "checkpoint_blob_sha": "a21134f7fc4ce5f4313ad8144bcef980642bebde",
+      "reported_status": "No new independent numeric cohort"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-26T13:26:23.038Z",
-      "checkpoint_blob_sha": "538ea79062373b0514b81058e429c406f595abe0",
-      "reported_status": "Prior checkpoint; current-hour report not yet present at inspected head"
+      "updated_at": "2026-11-26T15:18:32.831Z",
+      "checkpoint_blob_sha": "9f62d2e6afc4d8e0f2c527f0e08df3deea24015b",
+      "reported_status": "No independent measured TWW cohort or numerical correction"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-26T14:34:00.919Z",
-      "checkpoint_blob_sha": "6857aebb12e5e28455bf8a50ce8f0d8ba15e60e1",
-      "reported_status": "No new independent evidence"
+      "updated_at": "2026-11-26T15:27:31.156Z",
+      "checkpoint_blob_sha": "525442b9c5de85f3d8806aa93c4066aeecbef831",
+      "reported_status": "No qualifying new independent numeric evidence"
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-26T14:38:00.227Z",
-      "checkpoint_blob_sha": "c8a4802cfc2ffbdc5c279177720cebd7d4290d12",
-      "reported_status": "Capture-bias/source lineage review; no numerical cohort"
+      "updated_at": "2026-11-26T15:44:49.916Z",
+      "checkpoint_blob_sha": "f18319dedd7e6abfeb6d473d38c1c875c4aab624",
+      "reported_status": "No qualifying new cohort; scoped 13866 alias QA requested"
     }
   ],
-  "verified_commit_sha": "62fc7707cb614e37437150b57444025db9126166",
-  "checked_research_branch_head_before_status_write": "62fc7707cb614e37437150b57444025db9126166",
+  "verified_commit_sha": "b8a4b6ba46bda960d2e252f00f2899dd348a3f44",
+  "checked_research_branch_head_before_status_write": "b8a4b6ba46bda960d2e252f00f2899dd348a3f44",
   "main_head_checked": "732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717",
   "owner_three_pass_head_checked": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "owner_catalogue_manifest_branch_head_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
@@ -114,16 +148,16 @@
     "path": "research/coordination/backlog-catalogue-20261120.json"
   },
   "validation_this_run": {
-    "CI": "Exact main SHA 732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717 run 45665180898 success; starting research SHA 62fc7707cb614e37437150b57444025db9126166 run 45840987686 success. Status-only new head not yet tested.",
-    "managerTests": "Read-only source, static native list and actual committed generated blob comparison; no build or live game run.",
+    "CI": "Exact main SHA run 45665180898 success; exact starting research SHA run 45852147922 success; no CI result claimed for future status-only head.",
+    "managerTests": "Direct six-row raw lineage comparison, inspected enabled catalogue manifests, exact final scoped decisions and admitted model JSON, matched actual main producer baseline blob. Static verification only; no isolated build replay or runtime valuation test executed.",
     "newMeasuredCohortsAdmitted": 0,
     "newSupportedGoldDecisions": 0,
-    "automationResults": "Worker checkpoints read; automation execution results not independently queried. No claim current-hour War Within checkpoint completed.",
-    "community": "Open issue 94 already under assigned PR96 review; no new processing-export issue found among open issues."
+    "automationResults": "Read durable reports from all four workers; automation execution success not independently queried.",
+    "publicScreen": "Recent searches yielded known March/April threads, older TWW evidence, guide budgets and prices without new operation logs."
   },
   "blockers": [
-    "No verified actual DE attempt for 271457 exact bonus/itemLink, patch, acquisition route; neither absence of native flag nor provider catalogue establishes instance eligibility.",
-    "No new current operation-level receipts or complete output ledger in search. No duplicate community or cutoff work."
+    "Ordinary current baseline cohort contribution and actual compiled runtime prior selection need isolated replay to establish whether the missing third alias affects any weighting. No code change authorized in this run.",
+    "No exact current variant/skill/patch or unit quantities in 1115352 original. No new qualifying independent receipt."
   ],
   "exhausted_sources": [
     "2026-11-24 14Z direct DB2 exact rank joins for 242786/242787/242788/242789/237362/237363 and TWW 224802/224800 verified. No repeat source identity scan absent changed build or new field; avoid treating prior identity evidence as new numerical cohorts.",
@@ -173,14 +207,8 @@
     "2026-11-26T12:05:30.855Z: Original archived danz107 metadata confirmed; exact old cohort already represented in three records. No repeat unless independently measured context/epoch or new raw fields. Housing dye method distinction already archived, BfA Baadkitty/Kidneph existing; recent hotfix index offers no new processing evidence and direct full page denied. November 21 mining report out of conversion scope.",
     "2026-11-26T13:02:08.597Z: 212022 raw live item-side Listview and all three exact Refulgent Crystal material ranks independently verified. Raw reverse material pages did not expose literal 212022 row; absence is not exhaustive. Do not repeat unchanged source, merge PTR mirrors, or relabel reference as observed. Revisit only independent cohort/epoch/profile, actual overlapping source or build-pinned gap-only admission proof. Recent Midnight queries surfaced known March/April posts and market context, no new current complete receipts.",
     "2026-11-26T14:03:19.586Z: Prospect Me v2.7.2.0 original release source, exact counter/percent semantics, Gem Chip collapsing, capture overwrite and migration overlap inspected; no raw user cohort. Do not re-audit unchanged source code or copy legacy mailbox note as new measurements. Reopen only on matching actual export/screenshot, new version, or consumer issue. Recent Midnight guides/knowledge reagent source not operation logs.",
-    "2026-11-26T15:04:57.930Z: 271457 variant-specific source context, native pin and compiled producer checked; don't reread unchanged catalogue or repeat absence checks. Reopen only exact instance evidence, changed native pin/variant or independent processing ledger. Renown Professions Exporter public schema has no result capture; recent searches mainly March/April threads already familiar."
+    "2026-11-26T15:04:57.930Z: 271457 variant-specific source context, native pin and compiled producer checked; don't reread unchanged catalogue or repeat absence checks. Reopen only exact instance evidence, changed native pin/variant or independent processing ledger. Renown Professions Exporter public schema has no result capture; recent searches mainly March/April threads already familiar.",
+    "2026-11-26T15:58:55.008Z: 1115352 six-row original cohort lineage, three mirror routes, actual current reviewed catalogue decisions and committed producer model inspected. Do not recatalogue or re-fetch unchanged source. Reopen only isolated exact consumer replay or new original patch/profile/quantity evidence."
   ],
-  "next_concrete_step": "Seek new post-cutoff public/community operation-level receipts with exact itemLink, quality, method, profile, consumed inputs and output quantities. For 271457 only revisit new variant-specific eligibility proof, not unchanged catalogue metadata. Keep existing cutoff decisions and PR96 team ownership intact.",
-  "production_main_changes": false,
-  "addon_changes": false,
-  "routine_research_prs": false,
-  "merge_or_release": false,
-  "new_schedules": false,
-  "role_schedules_unchanged": true,
-  "prior_status_blob_sha": "abfda3bc4d437dd9d89b3a6e73309c08115e837a"
+  "next_concrete_step": "Prioritize new published exact-item and rank-specific operation receipts or confidence/profile evidence. For 13866 only isolated ordinary/compiled consumer duplicate-weight regression or new original fields; no more same-source transcription or catalogue re-review."
 }
