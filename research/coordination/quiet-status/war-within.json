@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-26T19:16:15.600Z",
-  "status": "Refreshed queue and searched for new post-hotfix TWW paired receipts; existing scoped cohorts resurfaced. One new action-addon lead excluded as inventory capacity, not observed processing. No new independent numerical evidence.",
+  "updated_at": "2026-11-26T20:24:35.893Z",
+  "status": "Refreshed required research instructions, queue and closed catalogue receipt. Searched rank-specific post-hotfix ore, milling and DE receipts. No new independent numerical cohorts; screened new source-context exclusions.",
   "task_ids": [
     "T0048",
     "T0007",
@@ -14,11 +14,11 @@
     "T0032"
   ],
   "exact_gaps_targeted": [
-    "T0048: rarity-specific effective disenchant skill versus base profession progression and measured reagent output.",
-    "T0007/T0008/T0009/T0040/T0032: independent ore/rank processing logs and refund basis.",
-    "T0010/T0011/T0012: herb-specific milling logs with explicit input denominators and pigment rank."
+    "T0048: post-launch rank-specific direct gear DE receipts, excluding shattering and legacy-scaled items.",
+    "T0007/T0008/T0009/T0040/T0032: post-Oct25 prospecting operations, distinguishing gathering counts and refund basis.",
+    "T0010/T0011/T0012: completed rank-specific mill counts, distinguishing cumulative achievement targets from actual operation receipts."
   ],
-  "source_branch_head_reviewed": "d7aecac7ce31649cfde5e34c0c630a7a142987a6",
+  "source_branch_head_reviewed": "5bb98e0456efc0e586c9f17a3f92b4c18607f3d5",
   "source_policy": "Required README, evidence format, mechanics, worker role and queue read; catalogue receipt CLOSED_VERIFIED_CURRENT_PIPELINE and enabled registry inspected. No cutoff recatalogue.",
   "study_backlog_triage": [
     {
@@ -1916,12 +1916,32 @@
       "exact_inputs": null,
       "outputs": null,
       "reason": "README describes action buttons and inventory-derived potential operation counts, not a public observed result ledger. Example 169 Saronite ore / 33 possible prospects is from a different expansion and is capacity, not completed operations. No TWW item/rank pairs, actual completed casts, material receipts, refund basis, skill/spec or distributions shown. Do not use inventory estimates or generic stack warnings to infer TWW batch or material yields; revisit only if original paired result exports are published."
+    },
+    {
+      "status": "held",
+      "scope": "new-achievement-operation-counter-not-cohort",
+      "original_cohort": null,
+      "source": "https://www.wowhead.com/achievement=18892/massive-mills",
+      "existing_ids": null,
+      "exact_inputs": null,
+      "outputs": null,
+      "reason": "Achievement 18892 criteria are 2,000 milling operations, not 2,000 herb inputs. Bathrezz comment distinguishes 10 herbs per TWW/Midnight mill from 5 for Dragonflight; Xemnuz reports prior milling did not populate counter. This corroborates batch size only; the achievement is a cumulative goal spanning expansions, not a completed TWW sample. No actual completed TWW count, rank, output receipts, skill, patch or refund context. Never multiply achievement target by batch size to create study denominator."
+    },
+    {
+      "status": "held",
+      "scope": "new-mining-cohort-not-prospecting",
+      "original_cohort": null,
+      "source": "https://us.forums.blizzard.com/en/wow/t/perception-stat-brokennot-working-correctly/1978398",
+      "existing_ids": null,
+      "exact_inputs": null,
+      "outputs": null,
+      "reason": "Ryusuke, Oct 6 2024, reports 102 mined nodes, 21 Finesse procs and rank-specific Bismuth/Ironclaw ore receipts. These are gathering outcomes, not ore processing. The node count and Finesse procs are not completed prospects or Resourcefulness refunds. No prospect output, skill/spec or hit counts; exclude from TWW prospecting models."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 22,
-    "held": 115,
+    "held": 117,
     "duplicate": 5
   },
   "newly_verified_fields": [],
@@ -1930,15 +1950,16 @@
   "new_reference_only_numeric_records": 0,
   "new_no_disenchant_records": 0,
   "new_condition_records": 0,
-  "numeric_fields_advanced": "None; no measured operation, hit, total, zero or profile field changed.",
+  "numeric_fields_advanced": "None; no measured cast, hit, quantity, zero, distribution or execution-profile fields changed.",
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://github.com/parnic/breakables"
+    "https://www.wowhead.com/achievement=18892/massive-mills",
+    "https://us.forums.blizzard.com/en/wow/t/perception-stat-brokennot-working-correctly/1978398"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-26T1221-lightless-footpads-crystal-rank-stack-correction.jsonl",
-  "verified_commit_sha": "d7aecac7ce31649cfde5e34c0c630a7a142987a6",
-  "verification": "Verified reviewed branch head; status-only update guarded by current owned blob SHA; exact read-back at returned commit SHA required.",
+  "verified_commit_sha": "5bb98e0456efc0e586c9f17a3f92b4c18607f3d5",
+  "verification": "Reviewed branch head verified; status-only update uses current owned blob SHA. Commit and exact read-back checked externally after write.",
   "blockers": [
     "No new independent paired operation-level TWW processing receipts with exact input/output rank, quantity/hit/zero fields.",
     "Existing cumulative Looter and translated copies of PeaEsk/LotzBoi studies are not independent cohorts. Historical skill, capstone proc, rank-specific histograms and refund basis remain unresolved.",
@@ -2054,24 +2075,25 @@
     "2026-11-26T16:24:14.164Z: GamesFuze launch guide and Midnight spell 1286015 screened once; prior LotzBoi, 1f5rby5, 1942494 and 2145981 searches returned already known studies/context; no recatalogue. Reddit 1g3y5ib full retrieval blocked; search excerpt only discussed general profession equipment, no observed processing cohort.",
     "2026-11-26T17:24:33.250Z: Direct TWW guide links resolved 101625/101627; existing main mappings confirmed, no duplicate model. 1jc2ya5, 1neicjm, 2129316 and 2274188 already reviewed; no re-transcription. Prospecting/milling logs searches returned no independent new paired cohort.",
     "2026-11-26T18:17:36.754Z: New 1936037/1932077 knowledge/skill progression and Goldgoblin JC plan screened once. Localized PeaEsk and LotzBoi comments are copies; no new independent cohort. Existing direct trait IDs 99887–99890 already documented in implementation. Do not revisit without actual receipts.",
-    "2026-11-26T19:16:15.600Z: Breakables README screened once; only inventory capacity/action UI documented. Searches for post-Oct25 receipts returned existing 1jnvht8 and 1nqwdhf, previously reviewed PeaEsk, Reikah, Raven11 and LotzBoi sources, and housing dye/knowledge reports already triaged; no duplicate transcription."
+    "2026-11-26T19:16:15.600Z: Breakables README screened once; only inventory capacity/action UI documented. Searches for post-Oct25 receipts returned existing 1jnvht8 and 1nqwdhf, previously reviewed PeaEsk, Reikah, Raven11 and LotzBoi sources, and housing dye/knowledge reports already triaged; no duplicate transcription.",
+    "2026-11-26T20:24:35.893Z: 18892, 1978398 screened once; previously recorded Reikah, PeaEsk, LotzBoi, Mycobloom 1fdmzwy, Aqirite 1g350pq/1f83cnd and Dastardly Duos reports resurfaced. No re-transcription; revisit only with original paired receipts or exact identity/profile correction."
   ],
-  "next_concrete_step": "Prioritize independently published paired processing exports or explicit source-context/identity correction triggers, especially post-Oct25 ore and rank-specific milling. Avoid unchanged guide/action-addon and knowledge/profit discussions.",
-  "previous_status_updated_at": "2026-11-26T18:17:36.754Z",
+  "next_concrete_step": "Seek genuinely new original published processing receipts or explicit identity/unit/profile correction triggers; exclude achievement targets, gathering logs and market estimates from operation denominators.",
+  "previous_status_updated_at": "2026-11-26T19:16:15.600Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "checked_at_utc": "2026-11-26T19:16:15.600Z",
+    "checked_at_utc": "2026-11-26T20:24:35.893Z",
     "queries": [
-      "TWW rank-specific prospecting after 2024-10-25",
-      "Mycobloom/Luredrop/Orbinid milling logs",
-      "TWW 2025 disenchant receipts and material counts",
-      "public processing addon datasets"
+      "Post-Oct25 Bismuth/Aqirite prospecting receipts",
+      "2025 rank-specific Storm Dust and Gleaming Shard DE receipts",
+      "Luredrop/Nacreous Pigment milling results and operation counters",
+      "German/localized prospecting studies"
     ],
-    "new_sources_screened": 1,
+    "new_sources_screened": 2,
     "existing_cohort_corrected": 0
   },
   "source_integrity_findings": [
@@ -8020,6 +8042,54 @@
       "method": "Prospect/Mill/Disenchant",
       "source": "https://github.com/parnic/breakables",
       "detail": "README describes action buttons and inventory-derived potential operation counts, not a public observed result ledger. Example 169 Saronite ore / 33 possible prospects is from a different expansion and is capacity, not completed operations. No TWW item/rank pairs, actual completed casts, material receipts, refund basis, skill/spec or distributions shown. Do not use inventory estimates or generic stack warnings to infer TWW batch or material yields; revisit only if original paired result exports are published.",
+      "inputItemID": null,
+      "inputRank": null,
+      "outputItemID": null,
+      "outputRank": null,
+      "casts": null,
+      "inputsPerCast": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "minSeen": null,
+      "maxSeen": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": null,
+      "patch": null,
+      "build": null,
+      "refund_basis": null
+    },
+    {
+      "checked_at_utc": "2026-11-26T20:24:35.893Z",
+      "status": "held-new-achievement-operation-counter-not-cohort",
+      "method": "Mill",
+      "source": "https://www.wowhead.com/achievement=18892/massive-mills",
+      "detail": "Achievement 18892 criteria are 2,000 milling operations, not 2,000 herb inputs. Bathrezz comment distinguishes 10 herbs per TWW/Midnight mill from 5 for Dragonflight; Xemnuz reports prior milling did not populate counter. This corroborates batch size only; the achievement is a cumulative goal spanning expansions, not a completed TWW sample. No actual completed TWW count, rank, output receipts, skill, patch or refund context. Never multiply achievement target by batch size to create study denominator.",
+      "inputItemID": null,
+      "inputRank": null,
+      "outputItemID": null,
+      "outputRank": null,
+      "casts": null,
+      "inputsPerCast": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "minSeen": null,
+      "maxSeen": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": null,
+      "patch": null,
+      "build": null,
+      "refund_basis": null
+    },
+    {
+      "checked_at_utc": "2026-11-26T20:24:35.893Z",
+      "status": "held-new-mining-cohort-not-prospecting",
+      "method": "Prospect",
+      "source": "https://us.forums.blizzard.com/en/wow/t/perception-stat-brokennot-working-correctly/1978398",
+      "detail": "Ryusuke, Oct 6 2024, reports 102 mined nodes, 21 Finesse procs and rank-specific Bismuth/Ironclaw ore receipts. These are gathering outcomes, not ore processing. The node count and Finesse procs are not completed prospects or Resourcefulness refunds. No prospect output, skill/spec or hit counts; exclude from TWW prospecting models.",
       "inputItemID": null,
       "inputRank": null,
       "outputItemID": null,
