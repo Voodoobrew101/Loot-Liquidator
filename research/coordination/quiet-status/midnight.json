@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-26T07:11:24.625Z",
-  "status": "active_search_no_new_numeric_cohort",
+  "updated_at": "2026-11-26T08:14:14Z",
+  "status": "active_search_new_held_identity_lead_no_admitted_cohort",
   "task_ids": [
     "T0026",
     "T0049",
@@ -2250,14 +2250,29 @@
       "reason": "New indexed 12.1.7 PTR item-side lead for 250047: reported aggregate 42 disenchants; two unlinked Dawn Crystal occurrences 22 and 20 (displayed 52%, 48%). Direct PTR and live page reads omit the actual table. Default-branch exact-ID search returns no match, not proof of disjointness from catalogue. No raw source links, ranks, actual at-cast ilvl, profile, build, units, or verified observation date. Hold in status only; no rate, zero or live eligibility inference."
     }
   ],
-  "newly_verified_fields_or_cohorts": [],
+  "newly_verified_fields_or_cohorts": [
+    {
+      "input_id": 282425,
+      "output_id": 243606,
+      "scope": "indexed PTR-2 reverse table identity corroboration only",
+      "reported_hits": 99,
+      "reported_denominator": 163,
+      "actual_completed_casts": null,
+      "admission": "held; raw table, original epoch, independence and at-cast profile not verified"
+    }
+  ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": [],
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://games.gg/world-of-warcraft/guides/wow-midnight-enchanting-specialization-guide/",
-    "https://github.com/EvilTactician/wow-mod-retail-professions/commit/f6f50cd18990393fc4b8c0b44cd0bd9b11346945"
+    "https://www.wowhead.com/ptr/item=282425/band-of-the-beast-reaper",
+    "https://www.wowhead.com/ptr-2/item=282425/band-of-the-beast-reaper",
+    "https://www.wowhead.com/ptr-2/item=243606/dawn-crystal",
+    "https://www.wowhead.com/item=282425/band-of-the-beast-reaper",
+    "https://github.com/Zorgie/EnchantQuex",
+    "https://github.com/APGM82/DisenchantForever",
+    "https://www.curseforge.com/wow/addons/manacode-market-based-auction"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -3404,30 +3419,127 @@
       "url": "https://github.com/EvilTactician/wow-mod-retail-professions/commit/f6f50cd18990393fc4b8c0b44cd0bd9b11346945",
       "blob_sha": "5bec043857e5c4474b2a922955492a5f56648388",
       "reason": "New exact repository delta since previously screened README blob dd033dd2cc0bcf9896436af893ff1877968b0483. Current README 1.25.4 explicitly requires AzerothCore WotLK 3.3.5a/12340; its proc log, five-herb milling and server-controlled loot/refunds are custom server behavior, not Blizzard Retail Midnight. New profit-catalog changes do not supply a Retail cohort; exclude."
+    },
+    {
+      "url": "https://www.wowhead.com/ptr/item=282425/band-of-the-beast-reaper",
+      "related_sources": [
+        "https://www.wowhead.com/ptr-2/item=282425/band-of-the-beast-reaper",
+        "https://www.wowhead.com/ptr-2/item=243606/dawn-crystal",
+        "https://www.wowhead.com/item=282425/band-of-the-beast-reaper"
+      ],
+      "input_id": 282425,
+      "source_reported": {
+        "ptr_12_1_7": {
+          "table_denominator": 171,
+          "unlinked_dawn_crystal_rows": [
+            102,
+            59
+          ]
+        },
+        "ptr_12_1_5": {
+          "table_denominator": 163,
+          "rows": [
+            {
+              "hits": 99,
+              "outputItemID": 243606,
+              "identity_basis": "matching reverse material-page indexed row"
+            },
+            {
+              "hits": 54,
+              "outputItemID": null
+            }
+          ]
+        },
+        "base_preview_ilvl": 197,
+        "myth_6_6_preview_ilvl": 289,
+        "actual_at_cast_ilvl": null,
+        "actual_completed_casts": null,
+        "skill": null,
+        "specialization": null,
+        "build": null,
+        "output_quantities": null,
+        "histograms": null
+      },
+      "reason": "Newly surfaced item-side indexed snapshots and one material-side cross-check. Direct 12.1.7 and live page reads omit table; reverse indexed 243606 row matches 99/163 for PTR-2 only. Cannot assign 243605 to other row by elimination, transfer identity to different snapshot, treat snapshot deltas as independent casts, or equate missing occurrence counts to zero outputs. Actual observation dates, profile, bonus IDs, live build and source overlap unknown; default-branch exact ID search returned no result but does not prove absence from cutoff catalogue. Hold as source lead only; no new numerical model or eligibility claim."
+    },
+    {
+      "url": "https://github.com/Zorgie/EnchantQuex",
+      "reason": "Newly surfaced publisher README documents Forever-specific cached Classic Wowhead scraping and ilvl <=40 bracket collection. No Retail Midnight cast receipts, at-cast profiles or transferable numerical observations."
+    },
+    {
+      "url": "https://github.com/APGM82/DisenchantForever",
+      "reason": "Newly surfaced publisher README explicitly targets Forever 1.60.1/interface 16001; material yields sourced from vmangos and cmangos Classic 1.12 emulation. Client brackets and vendor/EV display do not constitute measured Retail outcomes."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/manacode-market-based-auction",
+      "reason": "New search lead, older Oct 29 publication. Despite marketplace Retail label, original publisher specifies WotLK 3.3.5a build 12340 and explicitly excludes modern Retail; market/processing valuation tools are not independent Midnight observations."
     }
   ],
-  "next_concrete_step": "Watch for a new original Retail receipt or changed collector dataset rather than repeated unchanged guides. Prioritize 272246 at-cast variant/output/profile and actual successful operations; then ranked Tin/Diamond, Copper/Silver and ten-herb milling, retaining exact rank, gross/net/refunds and outcome distribution. Leave completed catalogue alone.",
-  "verified_base_commit_sha": "d02ce599ef10cbb3d75f85895e2b76ee047010c3",
+  "next_concrete_step": "Seek original new Retail processing receipts, not repeat static guides or cumulative snapshots. 282425 lead requires exact linked raw table and nonoverlap/profile proof before use; priority remains 272246 actual cast variant and ranked Tin/Diamond, Copper/Silver and ten-herb milling logs with refunds and outcomes.",
+  "verified_base_commit_sha": "070ef28e9428a095f8d09704f3aa2de09f1b8691",
   "commit_sha": null,
   "verified_commit_sha": null,
   "commit_note": "Resulting status commit must be verified externally via exact file read-back; self SHA cannot be embedded.",
   "new_leads_screened": [
     {
-      "category": "fresh_source_updates",
+      "category": "fresh_source_leads",
       "sources": [
         {
-          "url": "https://games.gg/world-of-warcraft/guides/wow-midnight-enchanting-specialization-guide/",
-          "published": "2026-03-02",
-          "updated": "2026-11-25",
-          "reason": "Newly screened update by Nuwel. Direct page confirms Disenchanting Delegate, Dust Deliverer, Shard Supplier and Crystal Collector qualitative rarity-specific skill/quantity/quality effects, consistent with existing M12. No observed material units, completed operations, item IDs, rank distribution or at-cast profiles; guide update date is not a measurement epoch. No new numerical cohort or cutoff recataloguing."
+          "url": "https://www.wowhead.com/ptr/item=282425/band-of-the-beast-reaper",
+          "related_sources": [
+            "https://www.wowhead.com/ptr-2/item=282425/band-of-the-beast-reaper",
+            "https://www.wowhead.com/ptr-2/item=243606/dawn-crystal",
+            "https://www.wowhead.com/item=282425/band-of-the-beast-reaper"
+          ],
+          "input_id": 282425,
+          "source_reported": {
+            "ptr_12_1_7": {
+              "table_denominator": 171,
+              "unlinked_dawn_crystal_rows": [
+                102,
+                59
+              ]
+            },
+            "ptr_12_1_5": {
+              "table_denominator": 163,
+              "rows": [
+                {
+                  "hits": 99,
+                  "outputItemID": 243606,
+                  "identity_basis": "matching reverse material-page indexed row"
+                },
+                {
+                  "hits": 54,
+                  "outputItemID": null
+                }
+              ]
+            },
+            "base_preview_ilvl": 197,
+            "myth_6_6_preview_ilvl": 289,
+            "actual_at_cast_ilvl": null,
+            "actual_completed_casts": null,
+            "skill": null,
+            "specialization": null,
+            "build": null,
+            "output_quantities": null,
+            "histograms": null
+          },
+          "reason": "Newly surfaced item-side indexed snapshots and one material-side cross-check. Direct 12.1.7 and live page reads omit table; reverse indexed 243606 row matches 99/163 for PTR-2 only. Cannot assign 243605 to other row by elimination, transfer identity to different snapshot, treat snapshot deltas as independent casts, or equate missing occurrence counts to zero outputs. Actual observation dates, profile, bonus IDs, live build and source overlap unknown; default-branch exact ID search returned no result but does not prove absence from cutoff catalogue. Hold as source lead only; no new numerical model or eligibility claim."
         },
         {
-          "url": "https://github.com/EvilTactician/wow-mod-retail-professions/commit/f6f50cd18990393fc4b8c0b44cd0bd9b11346945",
-          "blob_sha": "5bec043857e5c4474b2a922955492a5f56648388",
-          "reason": "New exact repository delta since previously screened README blob dd033dd2cc0bcf9896436af893ff1877968b0483. Current README 1.25.4 explicitly requires AzerothCore WotLK 3.3.5a/12340; its proc log, five-herb milling and server-controlled loot/refunds are custom server behavior, not Blizzard Retail Midnight. New profit-catalog changes do not supply a Retail cohort; exclude."
+          "url": "https://github.com/Zorgie/EnchantQuex",
+          "reason": "Newly surfaced publisher README documents Forever-specific cached Classic Wowhead scraping and ilvl <=40 bracket collection. No Retail Midnight cast receipts, at-cast profiles or transferable numerical observations."
+        },
+        {
+          "url": "https://github.com/APGM82/DisenchantForever",
+          "reason": "Newly surfaced publisher README explicitly targets Forever 1.60.1/interface 16001; material yields sourced from vmangos and cmangos Classic 1.12 emulation. Client brackets and vendor/EV display do not constitute measured Retail outcomes."
+        },
+        {
+          "url": "https://www.curseforge.com/wow/addons/manacode-market-based-auction",
+          "reason": "New search lead, older Oct 29 publication. Despite marketplace Retail label, original publisher specifies WotLK 3.3.5a build 12340 and explicitly excludes modern Retail; market/processing valuation tools are not independent Midnight observations."
         }
       ],
-      "disposition": "Fresh name-based gear, ore, diamond and milling searches across Reddit, Wowhead, guides and addon listings yielded no new independent Retail receipts. Existing Tradewright latest searchable SHA remains 5b544a67b73bd2edc496b2b60b98aa912581ddf4; unchanged source data not re-audited. Community issue search returned only the previously reviewed processing submission; no additional cohort inferred. No empty evidence file or baseline changes."
+      "disposition": "No qualifying independent Retail study. Name-based gear, ranked ore, Diamond, and herb searches across Wowhead, Reddit, guides and addon listings yielded no fresh complete ledger. Prior JD3K/Cardinalai and 250047 tables not counted again. No cutoff recataloguing."
     }
   ],
   "catalogue_checkpoint": {
@@ -3443,5 +3555,5 @@
     "release_status": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending",
     "worker_recataloguing": "not performed"
   },
-  "previous_verified_status_commit_sha": "be022424fd2d01cd410ee71c824da65be5a3678c"
+  "previous_verified_status_commit_sha": "ad1fab9be5433e39261c5162602f4e7671374535"
 }
