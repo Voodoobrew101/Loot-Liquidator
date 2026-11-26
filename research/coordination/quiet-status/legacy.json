@@ -1,28 +1,24 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-26T14:38:00.227Z",
-  "status": "New capture-bias and source-lineage screen; no qualifying new numerical cohort",
+  "updated_at": "2026-11-26T15:44:49.916Z",
+  "status": "New allocation/recorder and reference-lineage screens; no qualifying new numerical cohort",
   "task_ids": [
     "T0047",
     "T0052",
     "T0042",
     "T0022",
     "T0044",
-    "T0021"
+    "T0021",
+    "T0053"
   ],
   "exact_gaps_targeted": [
-    "24995 and adjacent TBC armor/weapon exact held itemLink/build, completed DE and output counts/histograms",
-    "36909, 23424 and 36910 completed operations, exact materials/hits/zero bins",
-    "New or versioned public recorder exports; distinguish borrowed reference models from measured casts and capture bias"
+    "24995 and matching TBC armor/weapon exact itemLink, current eligibility, build/skill and completed input-linked material receipt",
+    "36909 and 23424 independently sourced operation denominators, named outputs, quantities, hits, zeros and refunds",
+    "Differentiate raid loot allocation, learned-model thresholds and reference percentages from completed-operation observations"
   ],
   "newly_verified_fields_cohorts": [
     {
-      "source": "https://www.curseforge.com/wow/addons/auction-detonator/files/9514690",
-      "author": "Bubbledude",
-      "field": "capture_completeness_and_model_lineage",
-      "source_version": "v0.21.9-beta, 2026-11-08, historical v0.17.3 and v0.16.4 changelog",
-      "finding": "Cancelled manual cast previously blocked subsequent manual DE logging; TBC/Classic per-item model explicitly sourced from CMaNGOS. Other game flavors only.",
       "inputItemID": null,
       "outputItemID": null,
       "casts": null,
@@ -31,35 +27,72 @@
       "zeroCount": null,
       "histogram": null,
       "refunds": null,
-      "disposition": "exclude non-Retail model and recorder context from numeric weighting"
+      "source": "https://www.curseforge.com/wow/addons/w-l-c",
+      "author": "Gremmerrr",
+      "field": "denominator_semantics",
+      "finding": "Author describes history entry with response Disenchant as raid item award to a selected enchanter, not a completed destruction or resulting material receipt. CSV exports award history. Listing updated Nov 4 2026, Forever/Classic TBC, not Retail. No source operation ledger.",
+      "disposition": "exclude allocation counts from completed casts and zero outcomes"
     },
     {
-      "source": "https://www.curseforge.com/wow/addons/malitors-disenchanting-box/files/9814085",
+      "inputItemID": null,
+      "outputItemID": null,
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zeroCount": null,
+      "histogram": null,
+      "refunds": null,
+      "source": "https://www.curseforge.com/wow/addons/sintezza-disenchant",
+      "author": "SinteZza",
       "field": "acquisition_lead",
-      "source_version": "Mainline v12.0.8; 2026-11-25; Retail 12.1.7",
-      "finding": "Public author feature description lists selection/filtering UI, no documented raw processing export",
-      "disposition": "held, no public target ledger verified"
+      "source_version": "v1.4.0, Nov 25 2026; Forever 1.60.1",
+      "finding": "Author describes session/all-time material totals, separate manual-cast counts and CSV import/export. No original public target cohort or evidence of per-output zero-inclusive histogram; code not inspected.",
+      "disposition": "exclude non-Retail; no measured cohort"
     },
     {
-      "source": "https://www.curseforge.com/wow/addons/disenchantry/files/9807065",
-      "field": "source_version",
-      "source_version": "1.3.1, 2026-11-25",
-      "finding": "Cross-flavor file includes Retail 12.1.5; no changelog or actual target logs supplied",
-      "disposition": "held, no numerical data"
+      "inputItemID": null,
+      "outputItemID": null,
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zeroCount": null,
+      "histogram": null,
+      "refunds": null,
+      "source": "https://www.curseforge.com/wow/addons/vendorfloor/files/9716859/additional-files",
+      "author": "Bencepo",
+      "field": "model_vs_observation",
+      "source_version": "v1.0.4-forever; changelog v0.6.2-beta",
+      "finding": "Author describes choosing personal item observations after 3 disenchants or grouped observations after 5 of the same kind and level; these are decision thresholds, not published cohort counts. Forever 1.60.1. No public target ledger; code not inspected.",
+      "disposition": "exclude non-Retail and do not interpret thresholds as samples"
+    },
+    {
+      "inputItemID": 36909,
+      "outputItemID": null,
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zeroCount": null,
+      "histogram": null,
+      "refunds": null,
+      "source": "https://wow.17173.com/content/07282024/105618666.shtml",
+      "author": "武器大师",
+      "field": "reference_lineage",
+      "source_version": "page dated 2024-07-25, Wrath Classic",
+      "finding": "Cobalt table gives 23% for each of six common gems and 1.3% for each of six rares, explicitly labels percentages reference only. Same vector as already known Classic guide, no original N, hits, quantities or provenance. Do not double-weight or infer Retail rates.",
+      "disposition": "non-independent reference-only; no new evidence row"
     }
   ],
   "source_urls": [
-    "https://www.curseforge.com/wow/addons/auction-detonator/files/9514690",
-    "https://www.curseforge.com/wow/addons/malitors-disenchanting-box/files/9814085",
-    "https://www.curseforge.com/wow/addons/disenchantry/files/9807065",
-    "https://www.curseforge.com/wow/addons/enchant-audit",
-    "https://www.wowhead.com/item=22445/arcane-dust",
-    "https://www.wowhead.com/wotlk/item=24995/warmaul-legplates",
-    "https://www.wowhead.com/mop-classic/it/item=23424/fel-iron-ore",
-    "https://warcraft.wiki.gg/wiki/Cobalt_Ore",
-    "https://artisansofazeroth.com/netherweave-shuffle"
+    "https://www.curseforge.com/wow/addons/w-l-c",
+    "https://www.curseforge.com/wow/addons/sintezza-disenchant",
+    "https://www.curseforge.com/wow/addons/vendorfloor/files/9716859/additional-files",
+    "https://wow.17173.com/content/07282024/105618666.shtml",
+    "https://www.wowhead.com/item=24995/warmaul-legplates",
+    "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
+    "https://www.wowhead.com/mop-classic/item=36909/cobalt-ore",
+    "https://warcraft.wiki.gg/wiki/Patch_2.1.0"
   ],
-  "numeric_summary": "New source provenance and acquisition screening: Bubbledude's Auction Detonator v0.21.9-beta release (Nov 8 2026, file 9514690) reproduces its v0.17.3-beta fix: an interrupted/cancelled manual disenchant previously remained pending and blocked recording later manual disenchants. It also describes recognition of the input when the loot window opens before bag removal. Its v0.16.4-beta changelog expressly credits CMaNGOS world database for TBC/Classic item-specific estimates (11,025 TBC and 6,648 Classic Era items, coverage counts only). File supports Classic TBC 2.5.6, Classic 1.15.9 and Forever 1.60.1, not Retail. No target operation export, exact item-level yields, missed-operation count, or current Retail transfer. Do not count modeled rows or missed events as observed casts/zeros. Newly published Malitor Mainline v12.0.8 (Nov 25, file 9814085; client 12.1.7) is an eligibility-selection/filtering UI in its public description, no documented raw history export or public target ledger. Disenchantry 1.3.1 Nov 25 (9807065) is multi-flavor, includes Retail 12.1.5, has no changelog; no new original operation data verified. Enchant Audit November 25 listing explicitly targets Forever interface 16001; party ledger clears on disband; illustrated loot chat is not a cohort; direct open blocked, listing excerpt only. No eligible new sources from exact-name Warmaul/Bloodfist group, Cobalt, Fel Iron, Titanium and Arcane Dust searches: historical Thottbot/Wowhead cohorts, copied priors, farming videos and other-flavor guides; Artisans of Azeroth Netherweave 108-belt source explicitly already in 731-source manifest. No re-transcription of cutoff cohorts, new admitted measurements, evidence JSONL, prices, game actions, PRs, production or schedule changes.",
+  "numeric_summary": "Fresh independent source screening: WLC documents a Disenchant response as a raid-loot allocation to an enchanter rather than proof of completed destruction; award CSV cannot establish completed DE or zero yields. Sintezza Disenchant v1.4.0 (Nov 25, Forever) offers CSV statistics and separates manual casts but provides no public original target ledger. VendorFloor Forever changelog describes personal-model cutovers after 3 same-item or 5 same-kind/level disenchants; thresholds are not observed sample counts. Chinese 17173 Wrath Classic guide dated July 25 2024 explicitly calls its Cobalt Ore 36909 23%/1.3% per-gem table reference-only, matching previously known guide vector; not independent observations. These four source names/URLs were absent in prior owned status and 731-source coordination manifest, not an exhaustive scoped decision check. Code not inspected. Targeted current exact-name, localized Chinese/Portuguese and historical searches on 24995, 36909, 23424, Arcane Dust and adjacent gear surfaced known Looter/Thottbot cohorts, old reference tables, auction metadata, or farming rather than prospecting. Historical 2.1 eligibility/guaranteed gem notes already covered by existing legacy evidence filenames; not recatalogued. No independent qualifying new Retail item/output IDs, completed casts, material hit counts, quantities, zero bins, histograms, refunds or measured means. No prices retained. T0053 remains done.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-25T2337-whiptail-original-cataclysm-milling.jsonl",
   "preserved_prior_status_summary": [
@@ -492,9 +525,9 @@
       "evidence": null
     }
   ],
-  "verified_parent_sha": "df3dfe379b3fe59b8522404275313da77b9715b6",
-  "verified_commit_sha": "fff612b2fe97cee1e24990088098a3bdb412735b",
-  "commit_note": "Previous owned status blob verified against prior immutable commit. Current resulting commit SHA cannot self-reference; verify immutable blob and changed-file list after update.",
+  "verified_parent_sha": "9cf9ab118eb58a130985e52f69808c81255a32db",
+  "verified_commit_sha": "62fc7707cb614e37437150b57444025db9126166",
+  "commit_note": "Prior owned status blob verified at immutable prior commit; this run's commit cannot be self-referential. Verify resulting immutable blob and changed-file list after write.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -1399,6 +1432,33 @@
       ],
       "disposition": "held newly released recorder leads, no original target cohort",
       "reason": "Mainline selection UI, multi-flavor stats package without changelog, and Forever-only party ledger respectively; no independent target measurements."
+    },
+    {
+      "task": "T0047/T0052/T0042/T0022/T0044",
+      "source": [
+        "https://www.curseforge.com/wow/addons/w-l-c",
+        "https://www.curseforge.com/wow/addons/sintezza-disenchant",
+        "https://www.curseforge.com/wow/addons/vendorfloor/files/9716859/additional-files",
+        "https://wow.17173.com/content/07282024/105618666.shtml"
+      ],
+      "disposition": "source screen only; non-Retail, allocation versus actual operation, or reference-only",
+      "reason": "Fresh independent source screening: WLC documents a Disenchant response as a raid-loot allocation to an enchanter rather than proof of completed destruction; award CSV cannot establish completed DE or zero yields. Sintezza Disenchant v1.4.0 (Nov 25, Forever) offers CSV statistics and separates manual casts but provides no public original target ledger. VendorFloor Forever changelog describes personal-model cutovers after 3 same-item or 5 same-kind/level disenchants; thresholds are not observed sample counts. Chinese 17173 Wrath Classic guide dated July 25 2024 explicitly calls its Cobalt Ore 36909 23%/1.3% per-gem table reference-only, matching previously known guide vector; not independent observations. These four source names/URLs were absent in prior owned status and 731-source coordination manifest, not an exhaustive scoped decision check. Code not inspected. Targeted current exact-name, localized Chinese/Portuguese and historical searches on 24995, 36909, 23424, Arcane Dust and adjacent gear surfaced known Looter/Thottbot cohorts, old reference tables, auction metadata, or farming rather than prospecting. Historical 2.1 eligibility/guaranteed gem notes already covered by existing legacy evidence filenames; not recatalogued. No independent qualifying new Retail item/output IDs, completed casts, material hit counts, quantities, zero bins, histograms, refunds or measured means. No prices retained. T0053 remains done.",
+      "previous_run": {
+        "updated_at": "2026-11-26T14:38:00.227Z",
+        "summary": "New source provenance and acquisition screening: Bubbledude's Auction Detonator v0.21.9-beta release (Nov 8 2026, file 9514690) reproduces its v0.17.3-beta fix: an interrupted/cancelled manual disenchant previously remained pending and blocked recording later manual disenchants. It also describes recognition of the input when the loot window opens before bag removal. Its v0.16.4-beta changelog expressly credits CMaNGOS world database for TBC/Classic item-specific estimates (11,025 TBC and 6,648 Classic Era items, coverage counts only). File supports Classic TBC 2.5.6, Classic 1.15.9 and Forever 1.60.1, not Retail. No target operation export, exact item-level yields, missed-operation count, or current Retail transfer. Do not count modeled rows or missed events as observed casts/zeros. Newly published Malitor Mainline v12.0.8 (Nov 25, file 9814085; client 12.1.7) is an eligibility-selection/filtering UI in its public description, no documented raw history export or public target ledger. Disenchantry 1.3.1 Nov 25 (9807065) is multi-flavor, includes Retail 12.1.5, has no changelog; no new original operation data verified. Enchant Audit November 25 listing explicitly targets Forever interface 16001; party ledger clears on disband; illustrated loot chat is not a cohort; direct open blocked, listing excerpt only. No eligible new sources from exact-name Warmaul/Bloodfist group, Cobalt, Fel Iron, Titanium and Arcane Dust searches: historical Thottbot/Wowhead cohorts, copied priors, farming videos and other-flavor guides; Artisans of Azeroth Netherweave 108-belt source explicitly already in 731-source manifest. No re-transcription of cutoff cohorts, new admitted measurements, evidence JSONL, prices, game actions, PRs, production or schedule changes.",
+        "source_urls": [
+          "https://www.curseforge.com/wow/addons/auction-detonator/files/9514690",
+          "https://www.curseforge.com/wow/addons/malitors-disenchanting-box/files/9814085",
+          "https://www.curseforge.com/wow/addons/disenchantry/files/9807065",
+          "https://www.curseforge.com/wow/addons/enchant-audit",
+          "https://www.wowhead.com/item=22445/arcane-dust",
+          "https://www.wowhead.com/wotlk/item=24995/warmaul-legplates",
+          "https://www.wowhead.com/mop-classic/it/item=23424/fel-iron-ore",
+          "https://warcraft.wiki.gg/wiki/Cobalt_Ore",
+          "https://artisansofazeroth.com/netherweave-shuffle"
+        ],
+        "verified_commit_sha": "62fc7707cb614e37437150b57444025db9126166"
+      }
     }
   ],
   "blockers": [
@@ -1705,10 +1765,30 @@
       "source": "https://www.curseforge.com/wow/addons/enchant-audit",
       "disposition": "Forever-only listing excerpt; direct page blocked",
       "reason": "No Retail admission; do not repeat absent new Retail version and original logs."
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/w-l-c",
+      "disposition": "exclude allocation counts from completed casts and zero outcomes",
+      "reason": "Author describes history entry with response Disenchant as raid item award to a selected enchanter, not a completed destruction or resulting material receipt. CSV exports award history. Listing updated Nov 4 2026, Forever/Classic TBC, not Retail. No source operation ledger. Reopen only with independently published actual Retail operation-linked source data."
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/sintezza-disenchant",
+      "disposition": "exclude non-Retail; no measured cohort",
+      "reason": "Author describes session/all-time material totals, separate manual-cast counts and CSV import/export. No original public target cohort or evidence of per-output zero-inclusive histogram; code not inspected. Reopen only with independently published actual Retail operation-linked source data."
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/vendorfloor/files/9716859/additional-files",
+      "disposition": "exclude non-Retail and do not interpret thresholds as samples",
+      "reason": "Author describes choosing personal item observations after 3 disenchants or grouped observations after 5 of the same kind and level; these are decision thresholds, not published cohort counts. Forever 1.60.1. No public target ledger; code not inspected. Reopen only with independently published actual Retail operation-linked source data."
+    },
+    {
+      "source": "https://wow.17173.com/content/07282024/105618666.shtml",
+      "disposition": "non-independent reference-only; no new evidence row",
+      "reason": "Cobalt table gives 23% for each of six common gems and 1.3% for each of six rares, explicitly labels percentages reference only. Same vector as already known Classic guide, no original N, hits, quantities or provenance. Do not double-weight or infer Retail rates. Reopen only with independently published actual Retail operation-linked source data."
     }
   ],
   "previous_verified_evidence_sha": "69115661d29efead5f8fb80ea2ceca0b4134a2ff",
-  "next_concrete_step": "Seek newly published independent Retail exact-item receipts or complete versioned source exports, including direct source-linked processing event data. Do not repeat prior source searches unless an original missing field or provenance becomes available; keep cutoff decisions intact.",
+  "next_concrete_step": "Seek newly published independent Retail exact-item receipts or complete versioned operation exports, with source-linked input and output data. Reject allocation-only and output-only histories as cast denominators; preserve existing catalogue decisions and do not repeat these sources without missing original data.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -1717,18 +1797,17 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://www.curseforge.com/wow/addons/auction-detonator/files/9514690",
-    "https://www.curseforge.com/wow/addons/malitors-disenchanting-box/files/9814085",
-    "https://www.curseforge.com/wow/addons/disenchantry/files/9807065",
-    "https://www.curseforge.com/wow/addons/enchant-audit",
-    "https://www.wowhead.com/item=22445/arcane-dust",
-    "https://www.wowhead.com/wotlk/item=24995/warmaul-legplates",
-    "https://www.wowhead.com/mop-classic/it/item=23424/fel-iron-ore",
-    "https://warcraft.wiki.gg/wiki/Cobalt_Ore",
-    "https://artisansofazeroth.com/netherweave-shuffle"
+    "https://www.curseforge.com/wow/addons/w-l-c",
+    "https://www.curseforge.com/wow/addons/sintezza-disenchant",
+    "https://www.curseforge.com/wow/addons/vendorfloor/files/9716859/additional-files",
+    "https://wow.17173.com/content/07282024/105618666.shtml",
+    "https://www.wowhead.com/item=24995/warmaul-legplates",
+    "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
+    "https://www.wowhead.com/mop-classic/item=36909/cobalt-ore",
+    "https://warcraft.wiki.gg/wiki/Patch_2.1.0"
   ],
-  "latest_run_source_date": "2026-11-25",
-  "latest_run": "New source provenance and acquisition screening: Bubbledude's Auction Detonator v0.21.9-beta release (Nov 8 2026, file 9514690) reproduces its v0.17.3-beta fix: an interrupted/cancelled manual disenchant previously remained pending and blocked recording later manual disenchants. It also describes recognition of the input when the loot window opens before bag removal. Its v0.16.4-beta changelog expressly credits CMaNGOS world database for TBC/Classic item-specific estimates (11,025 TBC and 6,648 Classic Era items, coverage counts only). File supports Classic TBC 2.5.6, Classic 1.15.9 and Forever 1.60.1, not Retail. No target operation export, exact item-level yields, missed-operation count, or current Retail transfer. Do not count modeled rows or missed events as observed casts/zeros. Newly published Malitor Mainline v12.0.8 (Nov 25, file 9814085; client 12.1.7) is an eligibility-selection/filtering UI in its public description, no documented raw history export or public target ledger. Disenchantry 1.3.1 Nov 25 (9807065) is multi-flavor, includes Retail 12.1.5, has no changelog; no new original operation data verified. Enchant Audit November 25 listing explicitly targets Forever interface 16001; party ledger clears on disband; illustrated loot chat is not a cohort; direct open blocked, listing excerpt only. No eligible new sources from exact-name Warmaul/Bloodfist group, Cobalt, Fel Iron, Titanium and Arcane Dust searches: historical Thottbot/Wowhead cohorts, copied priors, farming videos and other-flavor guides; Artisans of Azeroth Netherweave 108-belt source explicitly already in 731-source manifest. No re-transcription of cutoff cohorts, new admitted measurements, evidence JSONL, prices, game actions, PRs, production or schedule changes.",
+  "latest_run_source_date": "2026-11-26",
+  "latest_run": "Fresh independent source screening: WLC documents a Disenchant response as a raid-loot allocation to an enchanter rather than proof of completed destruction; award CSV cannot establish completed DE or zero yields. Sintezza Disenchant v1.4.0 (Nov 25, Forever) offers CSV statistics and separates manual casts but provides no public original target ledger. VendorFloor Forever changelog describes personal-model cutovers after 3 same-item or 5 same-kind/level disenchants; thresholds are not observed sample counts. Chinese 17173 Wrath Classic guide dated July 25 2024 explicitly calls its Cobalt Ore 36909 23%/1.3% per-gem table reference-only, matching previously known guide vector; not independent observations. These four source names/URLs were absent in prior owned status and 731-source coordination manifest, not an exhaustive scoped decision check. Code not inspected. Targeted current exact-name, localized Chinese/Portuguese and historical searches on 24995, 36909, 23424, Arcane Dust and adjacent gear surfaced known Looter/Thottbot cohorts, old reference tables, auction metadata, or farming rather than prospecting. Historical 2.1 eligibility/guaranteed gem notes already covered by existing legacy evidence filenames; not recatalogued. No independent qualifying new Retail item/output IDs, completed casts, material hit counts, quantities, zero bins, histograms, refunds or measured means. No prices retained. T0053 remains done.",
   "new_evidence_file_this_run": null,
-  "next": "Seek newly published independent Retail exact-item receipts or complete versioned source exports, including direct source-linked processing event data. Do not repeat prior source searches unless an original missing field or provenance becomes available; keep cutoff decisions intact."
+  "next": "Seek newly published independent Retail exact-item receipts or complete versioned operation exports, with source-linked input and output data. Reject allocation-only and output-only histories as cast denominators; preserve existing catalogue decisions and do not repeat these sources without missing original data."
 }
