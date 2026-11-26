@@ -46,7 +46,7 @@ MECHANIC_OPTIONAL = {'numbers', 'notes'}
 CHECK_REQUIRED = {'kind', 'recordId', 'result', 'saw'}
 CHECK_OPTIONAL = {'source', 'notes'}
 
-GEAR_KEY = re.compile(r'^gear:\d+:\d+(:(armor|weapon))?$')
+GEAR_KEY = re.compile(r'^gear:\d+:\d+(:(armor|weapon|profession))?$')
 DATE = re.compile(r'^\d{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?)?$')
 PATCH = re.compile(r'^\d+\.\d+(\.\d+)?[a-z]?$')
 RECORD_ID = re.compile(r'^[^#]+\.json#\d+$')

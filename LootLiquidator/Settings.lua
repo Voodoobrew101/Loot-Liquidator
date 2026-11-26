@@ -1053,8 +1053,9 @@ function LL:ShowCommunityResearchInstructions()
         "",
         "1. In Processing Research, enable recording for disenchanting and/or crafting and processing. Open your own profession window so skill, equipment and specializations can be captured.",
         "2. Start a new batch, then process items normally. Let results settle; avoid unrelated looting, trading, mailing or bank transfers during a batch. Unknown or delayed results must not be called zero.",
-        "3. Stop processing, check Recording status, then use Export all here. Copy the complete text with Ctrl+C. Export pages is a fallback; submit every page together. Processing Research also offers an export of only your latest batch.",
-        "4. Open the submission link in your browser, attach the export saved as a .txt file (or paste it), and answer the form. A GitHub account is needed. Keep your original export until the submission is reviewed.",
+        "3. Stop processing and check Recording status. Use Copy link to open the submission form in your browser before copying your results. A GitHub account is needed.",
+        "4. Return here and use Export all. Press Ctrl+C, paste the complete text into a plain text editor, and save as LootLiquidator-results.txt. Attach that file in the form's Export file box. Wait for the upload to finish; leave the attachment link in the same box. Select your game mode, confirm public sharing, and submit.",
+        "Export pages is a fallback: save each page as a separate .txt file, attach them to the same box, and submit every page together. Processing Research also offers an export of only your latest batch. Keep your original export until the submission is reviewed.",
         "",
         "GitHub submissions are public. Exports include character/realm identifiers, cast and item GUIDs, timestamps, client build, profession skill/equipment/specializations, and recorded item results. Review before posting. Share only the export, not your entire SavedVariables file.",
         "",
@@ -1077,7 +1078,7 @@ function LL:AddCommunityResearchSettings(_,layout)
         "Record real processing results with your measured skill and specialization, then share an export. Read the recording, submission and privacy instructions.")
     button("Submit recorded results on GitHub","Copy link",function()
         if LL.ShowCopy then LL:ShowCopy("Public GitHub submission - copy link",COMMUNITY_SUBMIT_URL) end
-    end,"Copy the public submission link with Ctrl+C, then open it in your browser. A GitHub account is needed. Nothing is uploaded by the addon.")
+    end,"Copy the public submission link with Ctrl+C and open it in your browser before copying your export. A GitHub account is needed. Nothing is uploaded by the addon.")
     button("Contribution guide","Copy link",function()
         if LL.ShowCopy then LL:ShowCopy("Community research guide - copy link",COMMUNITY_GUIDE_URL) end
     end,"Copy the guide link with Ctrl+C for recording and export instructions. Exports contain character/realm identifiers and measured profession context; GitHub submissions are public.")

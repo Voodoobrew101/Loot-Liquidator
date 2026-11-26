@@ -10,6 +10,22 @@ reviewed sources add nine Midnight epic-armor casts, one epic-weapon cast,
 receipts across six physical categories. The known-profile retained cohorts
 keep their profile gates and are checked against overlapping personal records.
 
+The owner explicitly approved treating these archived uploads as the standard
+observed gear-category reference. This is a fixed empirical reference under the
+conditions represented in those recordings. The 570 older complete receipts
+retain their mixed and sometimes unknown skill context in provenance; they do
+not establish a result for every skill, specialization or later client build.
+The other 93 retained receipts keep their existing measured-profile and build
+restrictions. The total of 663 counts distinct receipts, not one compatible
+663-cast study.
+
+This approval does not change intake policy for new community submissions.
+Their complete, independently reviewed disenchant cohorts pool only when gear
+category, measured profession profile and client build match. The separate
+issue #94 review contributes 27 new disenchants in 26 whole cohorts, compiled
+into 22 such records; it does not merge those operations into the older mixed
+owner reference or treat its whole 2,000-record history as new evidence.
+
 The full intake audit also covers the original two-page November 6 export and
 the compact November 22 export. Older/green and other source observations with
 unresolved recording coverage or unverified Timewalking conditions remain in
@@ -32,6 +48,11 @@ profiles and profiles with invested specialization continue to use the existing
 simulation curves rather than asserting that these casts measured those
 allocations. Source-profile precision and applicability to
 an unmeasured profile are distinct uncertainties.
+
+Confidence calculated from the observed counts measures support for those
+recorded quantities. A high score does not verify applicability to an
+unmeasured profile or a different client build. The shared reference does not
+claim a calibrated skill response or a new current-build experiment.
 
 Exports with unresolved disenchant coverage remain preserved as research.
 In particular the 104-skill batch has 200 confirmed results but only 199

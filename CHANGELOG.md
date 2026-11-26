@@ -1,4 +1,11 @@
-# Unreleased
+# Loot Liquidator 1.0.2
+
+- Use reviewed disenchant observations across matching expansion, rarity and gear categories, including previously submitted rare and epic armor and weapons. Exact item numbers no longer prevent those shared observations from helping.
+- Show method confidence from the valued yield model while keeping missing display-only chance and range fields uncertain.
+- Pool compatible reviewed community samples by gear category, measured profession profile and client build. Small complete samples contribute to combined counts and confidence without counting overlapping operations twice.
+- Add 27 newly reviewed disenchants from issue #94 in 26 complete cohorts, pooled into 22 profile-specific records across six gear categories. Preserve incomplete, overlapping and unsupported observations in the research archive.
+- Copy a complete retained recording history as one losslessly compressed export. Large histories can be saved as one text file instead of copying many pages.
+- Simplify community submissions to one attachment box: drag in the text file or use the paperclip, with no links to move between fields.
 
 - Reclaim recorder context slots that no retained history references, keeping saved casts and live context identities intact without increasing the memory bound.
 - Make CurseForge uploads an explicit manual choice. Normal builds and version-tag pushes produce verified artifacts without publishing.

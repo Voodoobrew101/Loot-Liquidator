@@ -358,6 +358,18 @@ class CommunityIntakeTests(unittest.TestCase):
                     studies={f'contributor-study-{number}': {'character': name, 'build': '70961', 'censored': False}})
         return page
 
+    def test_profession_gear_keeps_its_own_category(self):
+        for number, item_class in ((60, 4), (61, 19)):
+            page = self.small_batch(number, casts=1, positive=1)
+            for record in page['records']:
+                record['inputs'][0]['classID'] = item_class
+            self.approve(self.stage(page, issue=1000+number))
+        rows = intake.compile_reviewed(self.root)['processing']
+        self.assertEqual({row['gearKey'] for row in rows},
+                         {'gear:11:4:armor', 'gear:11:4:profession'})
+        self.assertTrue(all(row['observedOperations'] == 1 for row in rows))
+        self.assertTrue(all(row['materials'][0]['expectedQuantity']['value'] == 2 for row in rows))
+
     def test_twenty_small_contributors_pool_counts_and_raise_confidence(self):
         first_score = None
         for number in range(20):

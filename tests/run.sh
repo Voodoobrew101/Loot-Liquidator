@@ -93,6 +93,7 @@ python3 tests/validate_package.py
 "$lua_bin" tests/test_native_visibility.lua
 "$lua_bin" tests/test_settings.lua
 "$lua_bin" tests/test_community_capture_runtime.lua
+"$lua_bin" tests/test_community_category_corpus.lua
 "$lua_bin" tests/test_native_stat_reference_receipt.lua
 "$lua_bin" tests/test_published_milling_runtime.lua
 "$lua_bin" tests/test_published_per_input_runtime.lua
