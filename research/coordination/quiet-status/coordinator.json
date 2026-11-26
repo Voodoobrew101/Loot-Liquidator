@@ -1,135 +1,143 @@
 {
   "role": "research-manager",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-26T12:05:30.855Z",
-  "status": "existing_tbc_gloves_cohort_original_provenance_independently_confirmed_no_new_baseline",
+  "updated_at": "2026-11-26T13:02:08.597Z",
+  "status": "tww_reference_rank_and_fixed_stack_independently_corroborated_reference_admission_boundary_identified",
   "task_ids": [
-    "T0041"
+    "T0048",
+    "T0040",
+    "T0026",
+    "T0003"
   ],
   "exact_gaps_targeted": [
-    "Original historical DE source author/date/epoch and dedup of item 21851; verify legacy worker's newly recovered provenance without changing source or reopening cutoff catalogue.",
-    "Screen newly dated Retail conversion evidence and keep gathering observations separate from processing."
+    "Independently verify 212022 rank/quantity correction against original live item-side raw HTML and exact material metadata; investigate reverse-table overlap without increasing N.",
+    "Check current main build admission path for new post-cutoff reference rows and retain unresolved applicability.",
+    "Screen newly published current Retail processing cohorts; do not re-catalogue closed cutoff."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "source": "https://www.wowhead.com/wotlk/item=17019/zzold-arcane-dust",
-      "sourceAccess": "Indexed archived original Thottbot comment with author, date, posting patch and body; classic mirror is host, original post is 2007 historical original-era TBC.",
-      "author": "danz107",
-      "published": "2007-01-28",
-      "postingPatchLabel": "2.0.6",
-      "actualCollectionBuild": null,
+      "inputItemID": 212022,
+      "inputName": "Lightless Scavenger's Footpads",
+      "source": "https://www.wowhead.com/item=212022/lightless-scavengers-footpads",
+      "sourceAccess": "Independent raw HTML Listview id=disenchanting, _totalCount=46; three exact output IDs, count, outof and stack=[1,1] recovered; separate material raw HTML explicitly confirms qualityTier 1/2/3.",
+      "cohortKey": "wowhead-live-item-212022-looter-46-crystal-rank-unresolved",
+      "sourceKind": "reference",
+      "reportedOperations": 46,
+      "outputs": [
+        {
+          "id": 219952,
+          "rank": 1,
+          "hits": 21,
+          "quantity": 21,
+          "meanPerReportedOperation": 0.45652173913043476,
+          "positiveStack": [
+            1,
+            1
+          ],
+          "materialZero": 25
+        },
+        {
+          "id": 219954,
+          "rank": 2,
+          "hits": 19,
+          "quantity": 19,
+          "meanPerReportedOperation": 0.41304347826086957,
+          "positiveStack": [
+            1,
+            1
+          ],
+          "materialZero": 27
+        },
+        {
+          "id": 219955,
+          "rank": 3,
+          "hits": 4,
+          "quantity": 4,
+          "meanPerReportedOperation": 0.08695652173913043,
+          "positiveStack": [
+            1,
+            1
+          ],
+          "materialZero": 42
+        }
+      ],
+      "rankSourceLinks": [
+        "https://www.wowhead.com/item=219952/refulgent-crystal",
+        "https://www.wowhead.com/item=219954/refulgent-crystal",
+        "https://www.wowhead.com/item=219955/refulgent-crystal"
+      ],
       "dataDate": null,
-      "inputItemID": 21851,
-      "inputName": "Netherweave Gloves",
-      "outputItemID": 22445,
-      "outputName": "Arcane Dust",
-      "reportedDisenchants": 5,
-      "totalQuantity": 9,
-      "meanPerReportedDisenchant": 1.8,
-      "castsWithDrop": null,
-      "zeroCount": null,
-      "histogram": null,
+      "patch": null,
       "skill": null,
       "specialization": null,
-      "existingRecords": [
-        "legacy-20261108-0001",
-        "legacy-20261114-2246-007",
-        "legacy-20261118-1352-004"
+      "itemLevelAtOperation": null,
+      "recordIDs": [
+        "war-within-20261126-1221-001",
+        "war-within-20261126-1221-002",
+        "war-within-20261126-1221-003"
       ],
-      "materialIdentitySource": "https://www.wowhead.com/tbc/item=22445/arcane-dust",
-      "identityCaution": "17019 is the archive page's obsolete item, NOT output identity. Existing source rows resolve output 22445. Posting patch is not logged actual game build. Do not pool as current Retail rate or count three records as 15 operations.",
-      "disposition": "Provenance corroboration only. Existing single historical cohort, no new independent sample or changed admission."
+      "reverseOverlap": "Raw material pages retrieved; literal item row token for 212022 not located in returned pages. Cannot establish independence or exhaustive absence; same live/PTR aggregate counts not independent.",
+      "disposition": "Existing 46-operation reference corrected by TWW worker; manager corroboration only, no new cohort. 44 total material hits is not evidence of two globally empty disenchants.",
+      "consumerAudit": "Main is_counted explicitly excludes REFERENCE_KINDS from observed model; reference_ranges collects positive bounds by exact key/batch. Build reviewer returns PRESERVED_REFERENCE unless exact reviewed-prior exception applies; no actual new build or runtime admission verified. Separate gap-only reference model review would require applicability, overlap, and exact existing-field checks, not relabeling as study."
     }
   ],
   "source_links": [
-    "https://www.wowhead.com/wotlk/item=17019/zzold-arcane-dust",
-    "https://www.wowhead.com/tbc/item=22445/arcane-dust",
-    "https://us.forums.blizzard.com/en/wow/t/all-of-a-sudden-im-mining-t1-ore-in-tww/2424564",
-    "https://worldofwarcraft.blizzard.com/en-us/news/24307310/hotfix-16-ottobre-2026",
-    "https://us.forums.blizzard.com/en/wow/t/a-question-about-crafting-dyes/2242661"
+    "https://www.wowhead.com/item=212022/lightless-scavengers-footpads",
+    "https://www.wowhead.com/item=219952/refulgent-crystal",
+    "https://www.wowhead.com/item=219954/refulgent-crystal",
+    "https://www.wowhead.com/item=219955/refulgent-crystal",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717/tools/research_v3_to_baselines.py#L323-L365",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717/tools/research_build_review.py#L193-L208"
   ],
-  "evidence_files": [],
+  "evidence_files": [
+    "research/v3/evidence/war-within/2026-11-26T1221-lightless-footpads-crystal-rank-stack-correction.jsonl"
+  ],
   "worker_reports_verified": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-26T11:10:32.202Z",
-      "checkpoint_blob_sha": "19a3675b3ae43de359adbb4950b81d6d493bab45",
-      "reported_status": "No independent cohort; EnchantLens export lead only",
-      "last_run": "2026-11-26T11:10:40.764248+00:00",
-      "automation_execution": "completed; recorded automation status independently retrieved, not reproduction of worker research"
+      "updated_at": "2026-11-26T12:11:29.482Z",
+      "checkpoint_blob_sha": "a049ecdb5f2615615fc6268fa82055dc01541b27",
+      "reported_status": "No new independent cohort",
+      "last_run": "2026-11-26T12:11:40.590425+00:00"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-26T11:25:01.608Z",
-      "checkpoint_blob_sha": "cb5d3b3d6950900d6efb1b3ae455bc30ac6f1650",
-      "reported_status": "No independent cohort; guides only",
-      "last_run": "2026-11-26T11:25:09.213884+00:00",
-      "automation_execution": "completed; recorded automation status independently retrieved, not reproduction of worker research"
+      "updated_at": "2026-11-26T12:22:23.034Z",
+      "checkpoint_blob_sha": "5ae7382f2d6ace6750c34a3f716a0fd6496a1fc0",
+      "reported_status": "Three exact rank/stack corrections for existing 46-operation reference; independently checked raw source this run",
+      "last_run": "2026-11-26T12:22:37.015326+00:00"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-26T11:34:22.159Z",
-      "checkpoint_blob_sha": "8d4d7eb2db6953444432896c693217ddc2d39ee3",
-      "reported_status": "No independent cohort; Forever excluded",
-      "last_run": "2026-11-26T11:34:31.174029+00:00",
-      "automation_execution": "completed; recorded automation status independently retrieved, not reproduction of worker research"
+      "updated_at": "2026-11-26T12:26:49.996Z",
+      "checkpoint_blob_sha": "eac21e627d617d966390eba9cd0da24e7c397de2",
+      "reported_status": "No new independent cohort",
+      "last_run": "2026-11-26T12:27:01.500074+00:00"
     },
     {
       "role": "legacy",
       "updated_at": "2026-11-26T11:43:26.349Z",
       "checkpoint_blob_sha": "1e4c14c6c92e8f919d03cbbbbc0811516908f9fc",
-      "reported_status": "Original author/date/posting patch label of existing gloves cohort recovered",
-      "last_run": "2026-11-26T11:43:33.775036+00:00",
-      "automation_execution": "completed; recorded automation status independently retrieved, not reproduction of worker research"
+      "reported_status": "Last available status unchanged from previous run; not new progress",
+      "last_run": "2026-11-26T11:43:33.775036+00:00"
     }
   ],
-  "verified_commit_sha": "bfae8ba3692fd6d19dd4b0a1e0b6a00814ea9a73",
-  "checked_research_branch_head_before_status_write": "bfae8ba3692fd6d19dd4b0a1e0b6a00814ea9a73",
+  "verified_commit_sha": "ec8a8bcc546a08c3bf51b31857c1198a871e6e64",
+  "checked_research_branch_head_before_status_write": "ec8a8bcc546a08c3bf51b31857c1198a871e6e64",
   "main_head_checked": "732bac6ea53c1f0fbc7cda87e6bcd4ab2eec2717",
   "owner_three_pass_head_checked": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "owner_catalogue_manifest_branch_head_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
   "owner_catalogue_pipeline_branch_checked": "a23e65d784f0c36833df0ad903d817d10d2f2ae3",
   "validation_this_run": {
-    "CI": "Exact main SHA 732bac6e workflow 45665180898 success; exact starting research SHA bfae8ba3692fd6d19dd4b0a1e0b6a00814ea9a73 workflow 45813142044 success. No tests rerun by manager.",
-    "managerTests": "Read-only indexed original metadata, repository source row search, current build-review code and status verification. No build, live character or tooltip run.",
+    "CI": "Main 732bac6e workflow 45665180898 success; starting research ec8a8bcc workflow 45819727584 success, exact heads read. No new tests executed by manager.",
+    "managerTests": "Raw HTML item-side and three material pages, worker correction file read, arithmetic checked, actual main admission/reference code inspected; no runtime/build or live-client run.",
     "newMeasuredCohortsAdmitted": 0,
-    "newSupportedGoldDecisions": 0,
-    "PR22and23": "Both closed, unmerged independently confirmed; no action."
+    "newSupportedGoldDecisions": 0
   },
   "blockers": [
-    "447311: Moods exact input and operation counts now known but historical profile/epoch/dedup unresolved; Alustriel rank unknown. Six tradable outputs must be gated by Parts; bound scrap cannot be AH-priced. No live current-character eligibility or runtime adapter.",
-    "GnomeWorks/DugiWorkshop shared model lineage: exact upstream measurement provenance, historical patch and current applicability not established; ReagentMaker explicitly credited Enchantrix but different rounded model. New frozen-source missing keys may already have usable baseline support; no new runtime admission until scoped producer/consumer check.",
-    "Three earlier candidate gaps have numerical runtime records; do not add historical model copies. Two Trillium 90407 keys absent in inspected canonical models/static runtime; historical range guide alone cannot prove unconditional mean, current epoch or Black Trillium equivalence. Exact runtime selection and tooltip not executed.",
-    "Trillium reference: mixed-author summary gives 0.3 shards per ore but no date, color-separated cohort, raw ledger, skill or patch. Retail PTR reverse-table exact count semantics and underlying collection epoch unresolved. Range is White-specific in historical guide; generic author range not proof of identical color distributions. Need dedup/source-scope review and existing gap-only reference admission/consumer verification; no fabricated measurements or unconditional 100% probability.",
-    "Rare Resourcing native entry 123429 already has rarity-3 label3437 extraOutput qualitative binding at confidence 0; unknown target-compatible output item identities for new worker report, exact per-milestone effect, hit counts and mean. Existing 2024 cuff observations remain distinct; no generic leather rate or extra skill-to-yield factor.",
-    "229080: reference source has mixed or unknown actual variant/rarity/ilvl/epoch and skill. Existing reference range path may supply missing positive bounds to an exact-key estimate but not produce independent means. Need exact variant evidence, reverse-tab overlap check and actual consumer scope before current-profile admission. No rarity-wide extrapolation.",
-    "229085/232450: actual variant, source capture build/skill and reverse-side overlap remain unknown. Current source aggregate is reference only; no current-profile admission or independent zero-output count established.",
-    "CraftSim historical affected logger and seasonal salvage stats: specific affected source cohorts and versions not yet identified; use version/reconciliation evidence rather than apply blanket correction.",
-    "Twitchie: Obsidium subtotal inconsistency, historical epoch; ink pre-exchange source basis and cumulative overlap not proven. No raw pigment totals or actual cast ledger. Current compiled gap-only admission not verified.",
-    "Dreamleaf 2017 original direct means use reported purchased input denominator, not logged actual cast/consumption count; exact epoch/profile, source dedup beyond inspected index and current applicability unresolved. Current review classifies reference rows PRESERVED_REFERENCE unless scoped reviewed prior is provided; verified current adapter and actual consumer selection required before admission. Bound Pod must not be AH-priced; secondary recursive outputs must not double-count primary output.",
-    "May 2022 Progenium/First Flower ujj71m: direct original comment inaccessible; approximate combined volume, exact unit, independent cohort, source profile and current applicability unknown; no baseline or confidence admission.",
-    "Tidespray edwallols same-author Horde cross-post recovered raw integer totals; 3884/22400 conflicts with both three reported means and rare share, whereas 3384 matches. Exact historical item variant, source date/ID, profile and current applicability remain unresolved; no additive cohort, no arbitrary corrected observed count or generic Rod scaling. vikn 242 per-arm ambiguous; aberdonian exact faction/epoch and full branch dedup unresolved; Quaaid 9.1.5 warning is not universal current zero.",
-    "Exodius historical WoD source has no exact inputs, operation counts, hits, raw totals, profession/skill, patch or current applicability; no scoped current consumer model. Prior archived WoD hotfix and two observations unchanged.",
-    "Historical BfA scrapping/Legion obliteration: actual variant, current method availability, dedicated recipe/operation identity and consumer path not established. Engineering Recycle alias is invalid; bound Expulsom cannot be AH-priced. New source-only evidence stored; do not reopen unchanged sources absent actual operation adapter/scope proof. TWW epic cloth reference rows have unknown at-cast item profile and collection epoch; original direct HTML not independently retrieved.",
-    "WoD 884144 pooled 510/1200 source: species-specific totals, completed casts, exact source date/skill, and applicability not available; no mixed-input scope in inspected item-key review path. Do not allocate evenly or infer confidence.",
-    "New 1ftqzxp: author/comment identities, actual successful casts, exact gross/net inputs and rank-share semantics unresolved; R2 rounded percentages incomplete, refund rates cannot be combined with stronger 1fdqzep output vectors. Current spell recipe and actual runtime learned/skill scope need separate verification; no additional confidence or generic DE model.",
-    "New legacy Dreamleaf rows are exact aliases of prior master sources, now explicitly excluded from numerical use while original files retained. No current Retail profile or consumed-input denominator; historical purchased-input ratios retained for future scoped review.",
-    "Workbook public HTML has blank contributor headers; exact raw source lineage, mass/normal recipe, current eligibility and denominator context unknown. Do not count 169 cells or 286205 ore as measured independent operations.",
-    "Zin'anthid 168487: verified nominalEquivalent existing source path does not treat 6071.2 as measured casts. Current exact recipe mix, skill/epoch applicability and live eligibility remain unknown; no actual resolver/tooltip executed. No source modification or re-transcription warranted without new evidence.",
-    "Runecloth 13866: source reports one historical five-operation cohort, no output units, stack histogram, original patch/skill/item variant or live Retail applicability. New alias correction CI not yet complete at time of review; no actual baseline/tooltip verification. No modern Rich Illusion Dust mapping inferred.",
-    "Goldsmith original public run export absent; mixed-context ProcSave coefficients and bag-delta refund estimates are not observed recipe-specific refund data. Require build/flavor, session boundaries, exact input/output IDs, success ledger, consumption reconciliation, and independence before numeric use.",
-    "Adamantite 105 operation-equivalent lead from prior run: current GitHub search points to unrelated patch/histogram file, which contains no matching 105-cast rows; no correction made without exact matching raw file and reviewed scope.",
-    "Critical Goblin Whiptail: historic Cataclysm quantities support reported-input mean; current applicability and exact cohort dedup not verified. Foo workbook raw tab and stage conversion evidence missing. No independent sample size inferred.",
-    "bbr 2008 mixed-input group: individual species weights, input count for 15 Dusky/4 Verdant and source overlap unknown; only historical group facts, no individual mean or current rate. Foo CSV/XLSX endpoints blocked. No new native Gem Finding coefficient or post-fix extra Amber receipt.",
-    "Historical 820419 multi-quantity observations do not establish base material occurrence or full quantity distribution; the removed guild perk is inapplicable to current Retail. 195208 live source counts and collection metadata remain unverified; two PTR mirror counts identical.",
-    "Native modifier scope and milestones resolved; additive aggregation in runtime is a model convention, not independently verified server stacking. Native milling recipe lacks explicit capability flag in generated entry; seek published recipe-specific saved-input ledger or native capability evidence, without new game operations.",
-    "GoldMaker public recipe pages do not publish source coefficients or output units; app content inaccessible as text. Free prospecting pipeline advertised, but no source-specific quantities recovered. Revisit only if underlying model vector/formula becomes publicly accessible; no purchase or account creation. Native capability remains tri-state; static fallback is not proof of an actual wrong recommendation.",
-    "GAM prospecting workbook: no raw measurement/cast basis, exact date/epoch or independent lineage, 28/28 family slots already present in April calculator, distinct modeled quantities not evidence of changed live rates. No rank pooling or Diamond gate bypass. Capability dump author attribution at build 69933 is useful corroboration; no published raw dump or current 70961 recipe capture. Do not derive refund size from support flag.",
-    "Historical Renown quartermaster 12 vendor IDs now resolved and already covered by exact native and shipped restrictions. Other vendor groups or alternative acquisition variants need independent scope; no observed cast counts and no current live action/tooltip test. Do not infer a blanket all-Renown-gear restriction.",
-    "Fizzwidget 5.2 source now accessible: inspected predictor has qualitative likelihood labels and historical item-level mapping rather than measured numeric distributions. No modern applicability or exact publisher archive equality proven. No numerical model from qualitative labels. Source-only closure; no need to revisit absent a separately published measured ledger or scoped identity gap.",
-    "2024-07-26 Reddit 1ecaqi9: new historical report gives 200 bands and 1.38 dust/0.46 shards per item versus older 1.98/0.89 means; earlier denominator/epoch and current exact item variant, skill, raw totals and hit counts absent. Candidate Surveyor's Cloth Bands 193497 and recipe 376509 independently identified, not author-confirmed. No direct source access beyond indexed original; no new current model or observed totals. The reply's proposed profession-tree explanation is speculation.",
-    "21851 danz107 provenance resolved; collection build/skill, per-output hits/zeros, histogram and current applicability unknown. Do not use obsolete 17019 as material ID or promote posting patch to captured build.",
-    "Nov 21 2026 TWW mining report describes rank-1 gathering sightings, not conversion output, no item-level exact ID, profile or confirmation of mechanic change. Do not derive prospecting/milling rates or trigger a global epoch change."
+    "212022 reference source execution build, item-level/bonus, skill/spec, and reverse cumulative cohort overlap unresolved; exact material positive stack and rank now confirmed. Existing automatic observed admission excludes reference; provisional positive range may be collected but no new valuation/display proof.",
+    "No newly published complete current Retail operation ledger surfaced in this search; current Midnight post-hotfix exact rank and profile evidence remains a priority.",
+    "Cutoff catalogue closed per existing verified receipt; no recatalogue or intervention in community #94 assigned review."
   ],
   "exhausted_sources": [
     "2026-11-24 14Z direct DB2 exact rank joins for 242786/242787/242788/242789/237362/237363 and TWW 224802/224800 verified. No repeat source identity scan absent changed build or new field; avoid treating prior identity evidence as new numerical cohorts.",
@@ -176,30 +184,31 @@
     "2026-11-26T09:03:06.547Z: GFW 6.0 release description explicitly Forever despite 12.1.0 listing; AH Flip Forever 1.0.19, BlazeDisenchant 0.1.0 and Sintezza 1.4.0 explicitly non-Retail. No import. Glimmering Powder 45 units/145 items and reverse-direction anomaly, Gyrospark historical Shadowlands milling, and ProfitProphet rate rebuild already archived. Do not repeat unchanged provider descriptions or these known cohorts.",
     "2026-11-26T10:06:09.077Z: Fizzwidget 5.2 historical archive recovered, exact mirror blob 306db0cb5b72915b43387e2fbbe02e7add7db1ea; do not reread unchanged predictor for numerical yields. Modern guides explicitly unmeasured and known JD3K/1rrn6of leads not new. No Forever import.",
     "2026-11-26T11:03:23.308Z: 1ecaqi9 original indexed text, official 2024-07-23 prepatch date, candidate recipe and existing ymruks beta/ zsxl1g estimated 2022 sessions / zk980g 180-bracer study compared. No repeat unless exact item/variant, source profile or current applicability emerges. 1v5esk0 already archived; other recent search hits market/context or previously reviewed. No cutoff recatalogue.",
-    "2026-11-26T12:05:30.855Z: Original archived danz107 metadata confirmed; exact old cohort already represented in three records. No repeat unless independently measured context/epoch or new raw fields. Housing dye method distinction already archived, BfA Baadkitty/Kidneph existing; recent hotfix index offers no new processing evidence and direct full page denied. November 21 mining report out of conversion scope."
+    "2026-11-26T12:05:30.855Z: Original archived danz107 metadata confirmed; exact old cohort already represented in three records. No repeat unless independently measured context/epoch or new raw fields. Housing dye method distinction already archived, BfA Baadkitty/Kidneph existing; recent hotfix index offers no new processing evidence and direct full page denied. November 21 mining report out of conversion scope.",
+    "2026-11-26T13:02:08.597Z: 212022 raw live item-side Listview and all three exact Refulgent Crystal material ranks independently verified. Raw reverse material pages did not expose literal 212022 row; absence is not exhaustive. Do not repeat unchanged source, merge PTR mirrors, or relabel reference as observed. Revisit only independent cohort/epoch/profile, actual overlapping source or build-pinned gap-only admission proof. Recent Midnight queries surfaced known March/April posts and market context, no new current complete receipts."
   ],
-  "next_concrete_step": "Seek new original Retail processing exports with actual successful-operation counts, exact ranked receipts and profile; prioritize current Midnight DE/prospecting/milling gaps, not unchanged guide or duplicate historical source. Reopen old cohorts only on genuinely new measured fields or applicability evidence.",
+  "next_concrete_step": "Seek genuinely new Retail operation-level evidence, especially current Midnight exact rank/profile/unlock and at-cast disenchant gear context; for 212022 only investigate exact existing-field or reverse-cohort overlap if new source/runtime proof emerges. Preserve corrected reference and avoid duplicate observations.",
   "production_main_changes": false,
   "addon_changes": false,
   "routine_research_prs": false,
   "merge_or_release": false,
   "new_schedules": false,
   "role_schedules_unchanged": true,
-  "prior_status_blob_sha": "df16947c89924b7cf78c77fc53e580b7a58b0b0d",
-  "previous_checkpoint": "7add7482bcc5bccc14377894c9ded348ff463dd4",
-  "previous_status_updated_at": "2026-11-26T11:03:23.308Z",
+  "prior_status_blob_sha": "5d876915d850c70d56d64d7169faed4bcd03c1a1",
+  "previous_checkpoint": "595a2fc1c9081013c13ff517038c595db131eaf4",
+  "previous_status_updated_at": "2026-11-26T12:05:30.855Z",
   "source_screen_this_run": [
     {
-      "source": "https://us.forums.blizzard.com/en/wow/t/all-of-a-sudden-im-mining-t1-ore-in-tww/2424564",
-      "disposition": "new dated gathering-only observation, no processing model; no confirmed rate change"
+      "source": "https://www.wowhead.com/item=212022/lightless-scavengers-footpads",
+      "disposition": "Raw live source corroboration of worker's newly corrected fields; indexed PTR mirrors repeat 46/21/19/4."
     },
     {
-      "source": "https://worldofwarcraft.blizzard.com/en-us/news/24307310/hotfix-16-ottobre-2026",
-      "disposition": "Indexed Nov 24 hotfix excerpt; direct fetch 403, cannot assert exhaustive absence of processing changes"
+      "source": "https://www.reddit.com/r/woweconomy/comments/1rrn6of/resourcefulness_in_crushingprospecting/",
+      "disposition": "Previously reviewed; no new data."
     },
     {
-      "source": "https://us.forums.blizzard.com/en/wow/t/a-question-about-crafting-dyes/2242661",
-      "disposition": "February historical housing dye method distinction already documented by worker; 12.1 dye redesign supersedes old workflow"
+      "source": "https://www.reddit.com/r/woweconomy/comments/1smgllg/prospecting_calculator/",
+      "disposition": "Known reference calculator; no new independent measured results."
     }
   ],
   "catalogue_receipt": {
@@ -212,5 +221,5 @@
     "receipt": "Owner team published receipt read; historical exact result not independently rerun this turn.",
     "path": "research/coordination/backlog-catalogue-20261120.json"
   },
-  "source_review_this_run": "Manager independently corroborated legacy worker metadata, not an independent new measurement. No cutoff catalogue reopened. Other search hits were known source studies or irrelevant to conversion."
+  "source_review_this_run": "Independent exact raw source corroboration and explicit reference admission boundary, not new measured samples or runtime coverage. Only coordinator status written."
 }
