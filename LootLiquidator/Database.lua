@@ -1240,7 +1240,11 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
     if hasCommunityReference then
         local scoped={}
         for _,record in ipairs(eligible) do
-            if record.communityMeasuredProfile then
+            if record.communityMeasuredProfile or record.retainedSourceProfileKey then
+                -- Previously reviewed receipts have already passed the same
+                -- target profile/build gates. New independent contributions
+                -- must not discard them; the operation overlap check below
+                -- still selects one whole survivor for duplicated casts.
                 scoped[#scoped+1]=record
                 for _,id in ipairs(record.communityNonEconomicOutputItemIDs or {}) do communityNonEconomicOutputs[id]=true end
             else communityReferenceExcluded[#communityReferenceExcluded+1]=record end

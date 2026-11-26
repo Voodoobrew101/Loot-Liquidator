@@ -209,9 +209,9 @@ local prospect=LL:ConversionOptions(oreFacts)[1]
 near(prospect.value,40) -- 2 known units * 100 copper / 5 ore; the gem adds nothing yet
 assert(prospect.partial and prospect.confidence==40,'partial value: confidence 80 scaled by 1 of 2 outputs priced')
 text=render(oreFacts,prospect)
-assert(not text:find('Partial:',1,true) and text:find('Confidence 0%',1,true)
+assert(not text:find('Partial:',1,true) and text:find('Confidence 40%',1,true)
     and not text:find('incomplete output valuation',1,true),
-    'mean-only display estimates keep their independent confidence without extra explanation panels')
+    'unknown display fields preserve the partial valued-mean confidence without extra explanation panels')
 assert(prospect.confidence==40,'tooltip display estimates cannot change numerical valuation confidence')
 -- A3: one confidence per option, weighted by value. The valuable output
 -- (confident, 80) dominates a cheap uncertain one (20): (80*900+20*100)/1000=74,
