@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-26T17:08:03.776Z",
-  "status": "active_search_no_new_independent_numeric_cohort",
+  "updated_at": "2026-11-26T18:12:40.408Z",
+  "status": "active_search_no_new_qualifying_evidence",
   "task_ids": [
     "T0026",
     "T0049",
@@ -2256,10 +2256,8 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/rojosinalma/salvager/blob/main/README.md",
-    "https://github.com/cnanas/foxden/blob/main/README.md",
-    "https://github.com/DominikKlis/RavenquillExpedition/blob/main/README.md",
-    "https://github.com/keebleton/pog-guild-tools/blob/main/README.md"
+    "https://www.curseforge.com/wow/addons/mob-compendium-reforge",
+    "https://metammo.com/wow-midnight-guide/auction-house/jewelcrafting"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -3642,10 +3640,24 @@
       "blob_sha": "eba6a2f4415b1e0262595b757a81e91c8d3df762",
       "disposition": "excluded_non_retail",
       "reason": "Publisher explicitly targets Forever; loot CSV describes boss drops and crafting directory shares recipe/skill, not processing receipt output distributions."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/mob-compendium-reforge",
+      "published": "2026-08-11",
+      "disposition": "not_a_processing_study",
+      "reason": "Direct publisher description confirms Retail 12.1.0/12.0.7 collector measures corpse loot against looted corpses, excludes other sources and has no import/export. No public joined disenchant/prospect/mill receipt ledger. Older source, not re-catalogued."
+    },
+    {
+      "url": "https://metammo.com/wow-midnight-guide/auction-house/jewelcrafting",
+      "related_sources": [
+        "https://metammo.com/wow-midnight-guide/auction-house/enchanting"
+      ],
+      "disposition": "market_only_indexed_lead",
+      "reason": "Indexed November 26 13:00 UTC snapshots explicitly use Blizzard auction API for ranked prices and listings; not operation counts or material yields. Direct opens unavailable. No price imported; no processing inference."
     }
   ],
   "next_concrete_step": "Prioritize genuinely new owner/community exports or public original receipts: exact at-cast 272246 bonus/profile, ordinary armor and weapons, 237362/237363 rank and ore-specific 242608 unlock, Copper/Silver and ten-herb milling. Do not reopen unchanged Wowhead tables, translations, leveling guides or prior collectors without new original field evidence.",
-  "verified_base_commit_sha": "c281216048931796ba0260bc4b003675f3224227",
+  "verified_base_commit_sha": "a5cd9a0fddedeb6a6020876581af59743b691b83",
   "commit_sha": null,
   "verified_commit_sha": null,
   "commit_note": "Status commit SHA is verified by external exact read-back; a commit cannot embed its own SHA.",
@@ -3654,31 +3666,21 @@
       "category": "fresh_original_source_and_community_screen",
       "sources": [
         {
-          "url": "https://github.com/rojosinalma/salvager/blob/main/README.md",
-          "blob_sha": "2436e6a62cf0febc217049799552b73af308c527",
-          "disposition": "excluded_non_retail",
-          "reason": "New recent repository lead. Original publisher explicitly targets WoW Forever and uses Classic disenchant tables by item level; ledger describes local accounting, not a public Midnight cohort. The 50% Arcane Salvager community estimate is not Retail evidence."
+          "url": "https://www.curseforge.com/wow/addons/mob-compendium-reforge",
+          "published": "2026-08-11",
+          "disposition": "not_a_processing_study",
+          "reason": "Direct publisher description confirms Retail 12.1.0/12.0.7 collector measures corpse loot against looted corpses, excludes other sources and has no import/export. No public joined disenchant/prospect/mill receipt ledger. Older source, not re-catalogued."
         },
         {
-          "url": "https://github.com/cnanas/foxden/blob/main/README.md",
-          "blob_sha": "69176b4821085020f9e7bf181454adebb41963b3",
-          "disposition": "excluded_non_retail",
-          "reason": "New recent crafting-log search lead. Publisher explicitly targets Forever; dungeon log and guild recipe directory do not contain Retail processing cast/output observations."
-        },
-        {
-          "url": "https://github.com/DominikKlis/RavenquillExpedition/blob/main/README.md",
-          "blob_sha": "18f6191f03075fbb00f248e4adcd956cb443e42c",
-          "disposition": "excluded_non_retail",
-          "reason": "Publisher explicitly targets Forever interface 16001; craft adviser compares upgrades and guild recipe availability, not Retail operation yields. Simulated test clients are not observed game data."
-        },
-        {
-          "url": "https://github.com/keebleton/pog-guild-tools/blob/main/README.md",
-          "blob_sha": "eba6a2f4415b1e0262595b757a81e91c8d3df762",
-          "disposition": "excluded_non_retail",
-          "reason": "Publisher explicitly targets Forever; loot CSV describes boss drops and crafting directory shares recipe/skill, not processing receipt output distributions."
+          "url": "https://metammo.com/wow-midnight-guide/auction-house/jewelcrafting",
+          "related_sources": [
+            "https://metammo.com/wow-midnight-guide/auction-house/enchanting"
+          ],
+          "disposition": "market_only_indexed_lead",
+          "reason": "Indexed November 26 13:00 UTC snapshots explicitly use Blizzard auction API for ranked prices and listings; not operation counts or material yields. Direct opens unavailable. No price imported; no processing inference."
         }
       ],
-      "disposition": "Refreshed branch and read README, evidence format, mechanics, worker and queue. Recent DE, Tin/Diamond, Copper/Silver and milling searches returned previously screened sources, old guides or nonempirical data. Recent repository issue search returned no updates since Nov 26. Four newly surfaced publisher READMEs inspected; all explicitly Forever, no Retail observations. No new qualifying fields or evidence file; no cutoff recataloguing or baseline changes."
+      "disposition": "Refreshed branch and read required instructions and queue. Recent targeted and multilingual DE, Tin/Diamond, Copper/Silver, milling searches surfaced existing cohorts, older guides and nonprocessing data. GitHub repository search for Midnight disenchant/prospecting/milling pushed since Nov 23 returned no results; project issue search updated since Nov 26 returned none. Two newly surfaced source leads checked; no qualifying independent cohort, new evidence file or baseline change. No cutoff recataloguing."
     }
   ],
   "catalogue_checkpoint": {
@@ -3694,5 +3696,5 @@
     "release_status": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending",
     "worker_recataloguing": "not performed"
   },
-  "previous_verified_status_commit_sha": "dfb87c3a7fd6b33e22085c881fd6752fea9efbab"
+  "previous_verified_status_commit_sha": "b091f726f9f6defd33c01698d284eb4168bf7255"
 }
