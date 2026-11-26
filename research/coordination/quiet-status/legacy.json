@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-26T17:37:17.525Z",
-  "status": "New source screening; no new qualifying original numerical cohort",
+  "updated_at": "2026-11-26T18:40:49.373Z",
+  "status": "New source-context screening; no new qualifying numerical cohort",
   "task_ids": [
     "T0047",
     "T0052",
@@ -11,14 +11,16 @@
     "T0042"
   ],
   "exact_gaps_targeted": [
-    "24995 and adjacent TBC gear: original exact-item current Retail completed casts, output identities/quantities and profile",
-    "36909 Cobalt and 23424 Fel Iron: independent actual operations, per-output hits, totals, zero/positive histograms and refunds",
-    "New post-cutoff processing source flavor and action-versus-operation distinction"
+    "24995/25003/30364 exact-item eligibility, original output units and histograms; distinguish flavor-specific exclusion tables from Retail",
+    "36909 Cobalt and 23424 Fel Iron: original actual-operation logs, output totals, hits, zeros and refunds",
+    "New recorder provenance: synthetic examples versus original operation records"
   ],
   "newly_verified_fields_cohorts": [
     {
-      "source": "https://wow.pirson.dev/addons/prospect-helper/",
-      "field": "source_flavor_and_capture_scope",
+      "source": "https://www.curseforge.com/wow/addons/oh-my-loot",
+      "field": "capture_scope_and_example_contamination",
+      "finding": "MiguelFlores author listing November 26, 2026, OhMyLoot-1.0.1-retail.zip, Retail 12.1.7, separate Forever version. General bag entry/exit history includes crafted, looted and destroyed items; /oml examples explicitly inserts/removes demonstration records. A bag-history dump cannot establish an input-linked completed DE/prospect/mill denominator or zeros without separate operation evidence; example rows must be excluded. Direct fetch failed but indexed author description was retrieved. No original target ledger or code inspected.",
+      "disposition": "capture-method lead only; no numerical admission",
       "inputItemID": null,
       "outputItemID": null,
       "casts": null,
@@ -26,13 +28,13 @@
       "totalQuantity": null,
       "zeroCount": null,
       "histogram": null,
-      "refunds": null,
-      "finding": "Author documentation v1.11 updated November 23, 2026 lists MoP, Cataclysm, Wrath and TBC Classic only. Prospect buttons invoke an ore-specific macro; bag count and five-unit availability threshold are not completed operations. No published target yield or actual run export in documentation. Code not inspected.",
-      "disposition": "non-Retail action helper; no numerical admission"
+      "refunds": null
     },
     {
-      "source": "https://wow.pirson.dev/addons/mill-helper/",
-      "field": "source_flavor_and_capture_scope",
+      "source": "https://www.curseforge.com/wow/addons/bambyworth/files/9816851",
+      "field": "source_flavor_and_eligibility_scope",
+      "finding": "xBambyQT BambyWorth 0.2.2, November 25, 2026, file 9816851 supports Retail 12.1.5 and Forever 1.60.1. Author explicitly ties revised no-DE exclusions to Forever build 71139; product description says its Forever tables include wand and leather exceptions. No supported Retail target operation sample or independently verified profile mapping. Do not transplant Forever exclusions or treat tooltip valuation as observations. Code not inspected.",
+      "disposition": "hold as flavor-specific model context; no numerical admission",
       "inputItemID": null,
       "outputItemID": null,
       "casts": null,
@@ -40,37 +42,21 @@
       "totalQuantity": null,
       "zeroCount": null,
       "histogram": null,
-      "refunds": null,
-      "finding": "Companion Mill Helper v1.11 documentation updated November 23, 2026 lists MoP/Cataclysm/Wrath Classic only. Describes herb-specific macro and bag availability, not an original zero-inclusive output ledger. Code not inspected.",
-      "disposition": "non-Retail action helper; no numerical admission"
-    },
-    {
-      "source": "https://githubhelp.com/buildthehomelab/wow-mod-retail-professions",
-      "field": "source_flavor_and_custom_server_mechanics",
-      "inputItemID": null,
-      "outputItemID": null,
-      "casts": null,
-      "castsWithDrop": null,
-      "totalQuantity": null,
-      "zeroCount": null,
-      "histogram": null,
-      "refunds": null,
-      "finding": "Mirrored README explicitly identifies AzerothCore WotLK 3.3.5a server module, not Blizzard Retail despite project title. The milling/prospecting preview uses server loot tables; bulk operations and crafting stats are custom server additions. Thus a Retail-style interface, its rates or its proc log are not Retail measurements. Original GitHub web retrieval failed; mirror alone sufficient to hold, not to verify code or numerical models.",
-      "disposition": "non-Retail mirror; excluded from Retail numeric model"
+      "refunds": null
     }
   ],
   "source_urls": [
-    "https://wow.pirson.dev/addons/prospect-helper/",
-    "https://wow.pirson.dev/addons/mill-helper/",
-    "https://githubhelp.com/buildthehomelab/wow-mod-retail-professions"
+    "https://www.curseforge.com/wow/addons/oh-my-loot",
+    "https://www.curseforge.com/wow/addons/bambyworth/files/9816851",
+    "https://www.curseforge.com/wow/addons/bambyworth"
   ],
-  "numeric_summary": "Fresh post-cutoff publication screening: Pirson Prospect Helper and Mill Helper author documentation updated November 23, 2026 describes Classic-only macro-based action helpers, not actual completed-operation or result logs. A public mirrored README for buildthehomelab/wow-mod-retail-professions explicitly describes AzerothCore 3.3.5a and custom server processing, not Blizzard Retail. No target ledgers or new exact quantities. Known Warmaul Looter/reference data, TSM/BootyBayBroker profile conflict, historical Cobalt/Fel Iron reports and milling cohorts (rollocola, funknut) remain existing reviewed evidence; no duplicate weighting. Recent Craft Ladder/ProfessionsForever listings restate already excluded non-Retail sources. No new independent Retail target identities, cast counts, hits, quantities, zeros, histograms, refunds, skill/build or eligible profile. No new JSONL or game actions. T0053 remains done.",
+  "numeric_summary": "New post-cutoff author-source screening: Oh, My Loot! (Nov 26) explicitly includes generated demonstration records via /oml examples, so exclude examples and require operation-linked evidence rather than bag flows alone. BambyWorth 0.2.2 (Nov 25) explicitly documents Forever build 71139 eligibility exclusions; dual-flavor support does not make those Retail evidence. Neither source publishes actual target-item operations, yields or zeros. Targeted Warmaul/Bloodfist and Cobalt/Fel Iron searches returned previously reviewed historical profiles and reference guides; EzDisenchant 1.2.3 already screened and not duplicated. No new exact-item quantities, completed casts, hits, histograms, refunds, skill/build or eligible Retail profile. T0053 stays done. No evidence JSONL or game actions.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-25T2337-whiptail-original-cataclysm-milling.jsonl",
-  "preserved_prior_status_summary": "New source-context screening: Warcraft Wiki lists Materials produced from disenchanting and Items disenchanted as separate cumulative character statistics. Historical Wowhead contributor 274087 additionally reports prospecting incremented the former; original comment gives no patch, counts or validation. The spell page is already in the cutoff catalogue; do not reopen its numerical cohorts. The independent statistics-panel description confirms labels are distinct, not the historical cross-method behavior. Neither statistic is an exact-item, dated, zero-inclusive operation ledger; do not infer input IDs, hit counts or use material-production counters as DE denominators. GatherBuffs author barnpusher v0.99.19, file 7967869 uploaded April 22 2026 for Retail 12.0.5/12.0.1, documents adding per-profession gather-action counts and loot-window/current-cast handling to improve tracking. This is a capture-method lead, not proof that an action count is an exact completed target-item cast, that zero yields are retained or that refunds are distinct. No original target ledger in release notes; code not inspected. These independent source names were absent from the current owned status and compact cutoff manifest. Exact-name and material-side searches for Warmaul/Bloodfist, Arcane Dust, Fel Iron and Cobalt recovered only already catalogued historical Looter/Thottbot data, duplicated Reaver Legplates 24979 ->22445 x5 (unknown N, legacy-20261108-1750008), Jakebees 21849 ->22445 11/16 and nine mixed greens/19 dust (already reviewed), and known ore studies and reference tables. Current Retail spell metadata 382980/382979 and stack-size changes previously recorded; no re-transcription. No new independently attributable exact-item quantities, completed casts, hits, zeros, histograms, refunds, measured means or profile-specific eligibility. No new JSONL, prices, game actions, PRs, production or schedule changes. T0053 remains done.",
-  "verified_parent_sha": "0625a71a963904cd780a232c0dd65e70073351b5",
-  "verified_commit_sha": "0625a71a963904cd780a232c0dd65e70073351b5",
-  "commit_note": "Verified previous owned status at immutable 0625a71; this status commit cannot contain its own SHA. Verify exact content and changed-file list after update.",
+  "preserved_prior_status_summary": "Fresh post-cutoff publication screening: Pirson Prospect Helper and Mill Helper author documentation updated November 23, 2026 describes Classic-only macro-based action helpers, not actual completed-operation or result logs. A public mirrored README for buildthehomelab/wow-mod-retail-professions explicitly describes AzerothCore 3.3.5a and custom server processing, not Blizzard Retail. No target ledgers or new exact quantities. Known Warmaul Looter/reference data, TSM/BootyBayBroker profile conflict, historical Cobalt/Fel Iron reports and milling cohorts (rollocola, funknut) remain existing reviewed evidence; no duplicate weighting. Recent Craft Ladder/ProfessionsForever listings restate already excluded non-Retail sources. No new independent Retail target identities, cast counts, hits, quantities, zeros, histograms, refunds, skill/build or eligible profile. No new JSONL or game actions. T0053 remains done.",
+  "verified_parent_sha": "d97c46288fbeea72cad444130f64ff48a929f913",
+  "verified_commit_sha": "d97c46288fbeea72cad444130f64ff48a929f913",
+  "commit_note": "Previous owned status verified at immutable d97c46288fbeea72cad444130f64ff48a929f913; this commit cannot contain its own SHA. Verify content/blob and changed files after write.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -1022,6 +1008,16 @@
       ],
       "disposition": "no independent qualifying numerical evidence",
       "reason": "Fresh post-cutoff publication screening: Pirson Prospect Helper and Mill Helper author documentation updated November 23, 2026 describes Classic-only macro-based action helpers, not actual completed-operation or result logs. A public mirrored README for buildthehomelab/wow-mod-retail-professions explicitly describes AzerothCore 3.3.5a and custom server processing, not Blizzard Retail. No target ledgers or new exact quantities. Known Warmaul Looter/reference data, TSM/BootyBayBroker profile conflict, historical Cobalt/Fel Iron reports and milling cohorts (rollocola, funknut) remain existing reviewed evidence; no duplicate weighting. Recent Craft Ladder/ProfessionsForever listings restate already excluded non-Retail sources. No new independent Retail target identities, cast counts, hits, quantities, zeros, histograms, refunds, skill/build or eligible profile. No new JSONL or game actions. T0053 remains done."
+    },
+    {
+      "task": "T0047/T0052/T0022/T0044/T0042",
+      "source": [
+        "https://www.curseforge.com/wow/addons/oh-my-loot",
+        "https://www.curseforge.com/wow/addons/bambyworth/files/9816851",
+        "https://www.curseforge.com/wow/addons/bambyworth"
+      ],
+      "disposition": "new capture/model context only",
+      "reason": "New post-cutoff author-source screening: Oh, My Loot! (Nov 26) explicitly includes generated demonstration records via /oml examples, so exclude examples and require operation-linked evidence rather than bag flows alone. BambyWorth 0.2.2 (Nov 25) explicitly documents Forever build 71139 eligibility exclusions; dual-flavor support does not make those Retail evidence. Neither source publishes actual target-item operations, yields or zeros. Targeted Warmaul/Bloodfist and Cobalt/Fel Iron searches returned previously reviewed historical profiles and reference guides; EzDisenchant 1.2.3 already screened and not duplicated. No new exact-item quantities, completed casts, hits, histograms, refunds, skill/build or eligible Retail profile. T0053 stays done. No evidence JSONL or game actions."
     }
   ],
   "blockers": [
@@ -1373,10 +1369,20 @@
       "source": "https://githubhelp.com/buildthehomelab/wow-mod-retail-professions",
       "disposition": "non-Retail mirror; excluded from Retail numeric model",
       "reason": "Mirrored README explicitly identifies AzerothCore WotLK 3.3.5a server module, not Blizzard Retail despite project title. The milling/prospecting preview uses server loot tables; bulk operations and crafting stats are custom server additions. Thus a Retail-style interface, its rates or its proc log are not Retail measurements. Original GitHub web retrieval failed; mirror alone sufficient to hold, not to verify code or numerical models. Reopen only for independent, versioned original Retail target-item ledger."
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/oh-my-loot",
+      "disposition": "capture-method lead only; no numerical admission",
+      "reason": "MiguelFlores author listing November 26, 2026, OhMyLoot-1.0.1-retail.zip, Retail 12.1.7, separate Forever version. General bag entry/exit history includes crafted, looted and destroyed items; /oml examples explicitly inserts/removes demonstration records. A bag-history dump cannot establish an input-linked completed DE/prospect/mill denominator or zeros without separate operation evidence; example rows must be excluded. Direct fetch failed but indexed author description was retrieved. No original target ledger or code inspected. Reopen only for a versioned original Retail input-linked ledger or verified source profile."
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/bambyworth/files/9816851",
+      "disposition": "hold as flavor-specific model context; no numerical admission",
+      "reason": "xBambyQT BambyWorth 0.2.2, November 25, 2026, file 9816851 supports Retail 12.1.5 and Forever 1.60.1. Author explicitly ties revised no-DE exclusions to Forever build 71139; product description says its Forever tables include wand and leather exceptions. No supported Retail target operation sample or independently verified profile mapping. Do not transplant Forever exclusions or treat tooltip valuation as observations. Code not inspected. Reopen only for a versioned original Retail input-linked ledger or verified source profile."
     }
   ],
   "previous_verified_evidence_sha": "69115661d29efead5f8fb80ea2ceca0b4134a2ff",
-  "next_concrete_step": "Focus on newly published versioned Retail logs or independently recovered missing identity/quantity/profile fields; no repeat of known guide tables, macro helpers, private-server data, historical comment mirrors or cutoff rows without a new trigger.",
+  "next_concrete_step": "Seek newly published original Retail operation exports with actual input links, build and complete capture, or independently recover missing fields; exclude generated examples, bag-flow-only data and Forever-specific rules. Do not reopen cutoff cohorts or known guide tables without new provenance.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -1385,17 +1391,15 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://wow.pirson.dev/addons/prospect-helper/",
-    "https://wow.pirson.dev/addons/mill-helper/",
-    "https://githubhelp.com/buildthehomelab/wow-mod-retail-professions",
+    "https://www.curseforge.com/wow/addons/oh-my-loot",
+    "https://www.curseforge.com/wow/addons/bambyworth/files/9816851",
+    "https://www.curseforge.com/wow/addons/bambyworth",
+    "https://www.curseforge.com/wow/addons/ezdisenchant/files/9760107",
     "https://www.wowhead.com/item=24995/warmaul-legplates",
-    "https://www.wowhead.com/item=22445/arcane-dust",
-    "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
-    "https://www.wowhead.com/mop-classic/item=36909/cobalt-ore",
-    "https://www.wowhead.com/cata/item=43108/ebon-pigment"
+    "https://www.wowhead.com/wotlk/it/guide/professions/jewelcrafting/overview"
   ],
   "latest_run_source_date": "2026-11-26",
-  "latest_run": "Fresh post-cutoff publication screening: Pirson Prospect Helper and Mill Helper author documentation updated November 23, 2026 describes Classic-only macro-based action helpers, not actual completed-operation or result logs. A public mirrored README for buildthehomelab/wow-mod-retail-professions explicitly describes AzerothCore 3.3.5a and custom server processing, not Blizzard Retail. No target ledgers or new exact quantities. Known Warmaul Looter/reference data, TSM/BootyBayBroker profile conflict, historical Cobalt/Fel Iron reports and milling cohorts (rollocola, funknut) remain existing reviewed evidence; no duplicate weighting. Recent Craft Ladder/ProfessionsForever listings restate already excluded non-Retail sources. No new independent Retail target identities, cast counts, hits, quantities, zeros, histograms, refunds, skill/build or eligible profile. No new JSONL or game actions. T0053 remains done.",
+  "latest_run": "New post-cutoff author-source screening: Oh, My Loot! (Nov 26) explicitly includes generated demonstration records via /oml examples, so exclude examples and require operation-linked evidence rather than bag flows alone. BambyWorth 0.2.2 (Nov 25) explicitly documents Forever build 71139 eligibility exclusions; dual-flavor support does not make those Retail evidence. Neither source publishes actual target-item operations, yields or zeros. Targeted Warmaul/Bloodfist and Cobalt/Fel Iron searches returned previously reviewed historical profiles and reference guides; EzDisenchant 1.2.3 already screened and not duplicated. No new exact-item quantities, completed casts, hits, histograms, refunds, skill/build or eligible Retail profile. T0053 stays done. No evidence JSONL or game actions.",
   "new_evidence_file_this_run": null,
-  "next": "Focus on newly published versioned Retail logs or independently recovered missing identity/quantity/profile fields; no repeat of known guide tables, macro helpers, private-server data, historical comment mirrors or cutoff rows without a new trigger."
+  "next": "Seek newly published original Retail operation exports with actual input links, build and complete capture, or independently recover missing fields; exclude generated examples, bag-flow-only data and Forever-specific rules. Do not reopen cutoff cohorts or known guide tables without new provenance."
 }
