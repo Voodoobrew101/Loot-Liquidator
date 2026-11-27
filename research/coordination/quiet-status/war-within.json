@@ -1,13 +1,13 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-27T21:20:15.374Z",
-  "status": "Four new leads screened; two exact-ID PTR reverse disenchant hit references held for cohort/variant deduplication and stack-source verification. No new admitted numeric model.",
+  "updated_at": "2026-11-27T22:20:08.552Z",
+  "status": "Recovered original live item-side fixed-stack evidence for two existing cumulative DE cohorts; corrected rank-2 references, identified duplicate aliases, held other rank rows for exact-scope deduplication.",
   "task_ids": [
     "T0048",
     "T0040",
-    "T0009",
-    "T0008",
     "T0007",
+    "T0008",
+    "T0009",
     "T0010",
     "T0011",
     "T0012"
@@ -17,7 +17,7 @@
     "T0040/T0007/T0008/T0009: post-hotfix prospecting by ore/rank/unlock and real operations/refunds.",
     "T0010/T0011/T0012: Khaz Algar herb/rank-specific observed yields and complete operations."
   ],
-  "source_branch_head_reviewed": "8301936b3fe478a92413a63d4f0a655866699507",
+  "source_branch_head_reviewed": "d82f177e03ebfba4763e34a8237da3dbe6fdcfe6",
   "source_policy": "Read required five documents on refreshed research branch and consulted current closed-verified catalogue receipt and enabled registry; reused prior decisions; no cutoff recatalogue.",
   "study_backlog_triage": [
     {
@@ -2427,6 +2427,44 @@
       "exact_inputs": [],
       "outputs": [],
       "reason": "Oct 28 2024 post qualitatively complains of glass and pebbles; numerical 10 Bismuth for 3–4 crushed gemstones refers to crushing, not prospecting. No original prospecting count, rank or gem outcome receipt. Do not assign crushing quantities to ore prospecting."
+    },
+    {
+      "status": "reviewable",
+      "scope": "existing-cumulative-reference-stack-correction",
+      "source": "https://www.wowhead.com/item=232784/stagecrashers-legguards",
+      "original_cohort": "war-within-20261115-2123-003",
+      "existing_ids": [
+        "war-within-20261115-2123-003",
+        "war-within-20261117-r2gs-002",
+        "war-within-20261117-0926-003"
+      ],
+      "exact_inputs": [
+        232784
+      ],
+      "outputs": [
+        219949,
+        219950,
+        219951
+      ],
+      "reason": "Live raw listview fixed positive stack [1,1] for all three exact ranks; same rank-2 count and denominator as PTR reverse; not independent. Rank-2 corrected, other ranks held for exact-scope deduplication."
+    },
+    {
+      "status": "reviewable",
+      "scope": "existing-cumulative-reference-stack-correction",
+      "source": "https://www.wowhead.com/item=233338/upcycled-helm",
+      "original_cohort": "war-within-20261115-2123-004",
+      "existing_ids": [
+        "war-within-20261115-2123-004"
+      ],
+      "exact_inputs": [
+        233338
+      ],
+      "outputs": [
+        219949,
+        219950,
+        219951
+      ],
+      "reason": "Live raw listview fixed positive stack [1,1] for all three exact ranks; same rank-2 count and denominator as PTR reverse; not independent. Rank-2 corrected, other ranks held for exact-scope deduplication."
     }
   ],
   "triage_counts": {
@@ -2438,42 +2476,124 @@
   "newly_verified_fields": [
     {
       "inputItemID": 232784,
+      "outputItemID": 219949,
+      "outputRank": 1,
+      "source_reported_casts": 58,
+      "castsWithDrop": 24,
+      "totalQuantity": 24,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 34,
+        "1": 24
+      },
+      "histogramBasis": "reconstructed from source count, outof and fixed stack [1,1]; zero is material-specific, not a wholly empty operation",
+      "status": "held for prior exact-scope deduplication"
+    },
+    {
+      "inputItemID": 232784,
       "outputItemID": 219950,
       "outputRank": 2,
       "source_reported_casts": 58,
-      "source_reported_hits": 26,
-      "status": "held PTR reference, not admitted"
+      "castsWithDrop": 26,
+      "totalQuantity": 26,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 32,
+        "1": 26
+      },
+      "histogramBasis": "reconstructed from source count, outof and fixed stack [1,1]; zero is material-specific, not a wholly empty operation",
+      "status": "append-only correction of existing reference; no new cohort"
+    },
+    {
+      "inputItemID": 232784,
+      "outputItemID": 219951,
+      "outputRank": 3,
+      "source_reported_casts": 58,
+      "castsWithDrop": 8,
+      "totalQuantity": 8,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 50,
+        "1": 8
+      },
+      "histogramBasis": "reconstructed from source count, outof and fixed stack [1,1]; zero is material-specific, not a wholly empty operation",
+      "status": "held for prior exact-scope deduplication"
+    },
+    {
+      "inputItemID": 233338,
+      "outputItemID": 219949,
+      "outputRank": 1,
+      "source_reported_casts": 260,
+      "castsWithDrop": 95,
+      "totalQuantity": 95,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 165,
+        "1": 95
+      },
+      "histogramBasis": "reconstructed from source count, outof and fixed stack [1,1]; zero is material-specific, not a wholly empty operation",
+      "status": "held for prior exact-scope deduplication"
     },
     {
       "inputItemID": 233338,
       "outputItemID": 219950,
       "outputRank": 2,
       "source_reported_casts": 260,
-      "source_reported_hits": 114,
-      "status": "held PTR reference, mixed variants unresolved"
+      "castsWithDrop": 114,
+      "totalQuantity": 114,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 146,
+        "1": 114
+      },
+      "histogramBasis": "reconstructed from source count, outof and fixed stack [1,1]; zero is material-specific, not a wholly empty operation",
+      "status": "append-only correction of existing reference; no new cohort"
+    },
+    {
+      "inputItemID": 233338,
+      "outputItemID": 219951,
+      "outputRank": 3,
+      "source_reported_casts": 260,
+      "castsWithDrop": 51,
+      "totalQuantity": 51,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 209,
+        "1": 51
+      },
+      "histogramBasis": "reconstructed from source count, outof and fixed stack [1,1]; zero is material-specific, not a wholly empty operation",
+      "status": "held for prior exact-scope deduplication"
     }
   ],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
-  "new_reference_only_numeric_records": 0,
+  "new_reference_only_numeric_records": 2,
   "new_no_disenchant_records": 0,
   "new_condition_records": 0,
-  "numeric_fields_advanced": "Two exact input identities and rank-2 material occurrence counts verified at source-reference level only; no independent cohort, output units, histograms or profile admitted.",
-  "evidence_file": null,
-  "evidence_files": [],
+  "numeric_fields_advanced": "Six exact ranked output rows with fixed stack [1,1] across two already-known cumulative item denominators (58 and 260). Two rank-2 references corrected; four other ranks held until exact scope deduplicated. Zero new independent cohorts.",
+  "evidence_file": "research/v3/evidence/war-within/2026-11-27T2220-gleaming-shard-live-stack-corrections.jsonl",
+  "evidence_files": [
+    "research/v3/evidence/war-within/2026-11-27T2220-gleaming-shard-live-stack-corrections.jsonl"
+  ],
   "evidence_source_links": [
-    "https://www.youtube.com/watch?v=LPTO0ZZFe-E",
     "https://www.wowhead.com/item=232784/stagecrashers-legguards",
     "https://www.wowhead.com/item=233338/upcycled-helm",
-    "https://www.reddit.com/r/wow/comments/1gedwvm",
     "https://www.wowhead.com/ptr/item=219950/gleaming-shard"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-27T1620-five-live-disenchant-rank-stack-reference.jsonl",
-  "verified_commit_sha": "8301936b3fe478a92413a63d4f0a655866699507",
-  "verification": "Owned status blob re-read unchanged before update; source claims checked against public pages and prior status/receipt; actual status commit/read-back verified separately.",
+  "verified_commit_sha": "d82f177e03ebfba4763e34a8237da3dbe6fdcfe6",
+  "verification": "Original item-side raw HTML retrieved for both inputs; exact counts match the previously held PTR reverse rows. Existing Nov15 and Nov17 evidence inspected; duplicate aliases identified. Current parent SHA verified; new commit exact read-back performed after publication, not self-referenced inside status.",
   "blockers": [
-    "PTR reverse cumulative samples may overlap historical item-side tables; observed bonus/rarity, build, skill, output stacks and denominator provenance not verified.",
-    "Original Ironclaw video unavailable as playable footage; no new ore or herb operation ledger."
+    "Master: collapse Stagecrasher's Legguards R2 duplicate aliases war-within-20261117-r2gs-002 and war-within-20261117-0926-003 into the corrected original cohort; no shared-file edits by worker.",
+    "At-cast rarity/bonus/ilvl, build, skill/spec and original observation dates remain unknown; Upcycled Helm has mixed rare/epic variants. Do not infer group baseline or current live eligibility.",
+    "Four rank-1/rank-3 records need full exact-scope deduplication before new JSONL admission.",
+    "No new post-hotfix ore or herb operation ledgers located; existing LotzBoi/amber sources not retranscribed."
   ],
   "exhausted_sources": [
     "2026-11-20: Reddit 1ftqzxp historical shatter original/commenter estimates inspected; new but unfit for direct DE numeric admission without distinct recipe method/raw ledger; do not scrape it repeatedly without author export.",
@@ -2609,26 +2729,24 @@
     "2026-11-27T18:21:58.184Z: Targeted 2025/2026 CraftSim issue/export, ore-specific, pigment-specific and alternate-language searches returned already-reviewed 1jc2ya5, 565405, 1neicjm, 1nmnuc2, 1g8kbaq, 1l91chl, 570664, 1976354, 2130416, and 1k78h4v; no unchanged source retranscription. French strategy and Forever estimator held.",
     "2026-11-27T19:24:47.852Z: Searches for original exports, 2025/2026 DE skill samples, ore rank results and herb milling videos returned already reviewed 1934709, 2362528, 565405, 570929, 2130416, 1jnvht8, 1fisfkn, 1g9l8t8, 1gabkel, PeaEsk and LotzBoi; no duplicate evidence. New video description held pending actual footage.",
     "2026-11-27T20:26:05.692Z: searched TWW 2025/2026 ore results, herb pigment results, direct DE reports, original public video titles/ID and addon exports; already reviewed forum 1944679, 2080583, 1934709, 2083666, 1935257, 2129316, 2268859, 1fvhzy0, 1g9s48p, 1fisfkn and 554920; no retranscription. New guide, TSM group and Midnight alpha thread held.",
-    "2026-11-27T21:20:15.374Z: Searched Luredrop/Orbinid/Mycobloom milling results, post-hotfix ore results and named item DE sources across Wowhead, Reddit, Blizzard forums, Method, Warcraft Wiki and YouTube. Existing LotzBoi, 1neicjm, 1jnvht8, 1k78h4v, 1l91chl, 1gmio0h, 1oa7vn1, 565405 and guide sources not retranscribed; Bue video unavailable. New PTR reverse leads held."
+    "2026-11-27T21:20:15.374Z: Searched Luredrop/Orbinid/Mycobloom milling results, post-hotfix ore results and named item DE sources across Wowhead, Reddit, Blizzard forums, Method, Warcraft Wiki and YouTube. Existing LotzBoi, 1neicjm, 1jnvht8, 1k78h4v, 1l91chl, 1gmio0h, 1oa7vn1, 565405 and guide sources not retranscribed; Bue video unavailable. New PTR reverse leads held.",
+    "2026-11-27T22:20:08.552Z: Named live item-side source HTML recovered for 232784/233338; matching PTR reverse samples already recorded. No new ore or herb ledger in targeted Wowhead, Reddit and Blizzard searches. Do not re-transcribe old rank-2 occurrences."
   ],
-  "next_concrete_step": "Check 232784 and 233338 against existing evidence/source catalogue at exact item/output scope before any new record; retrieve original live item-side raw rank IDs, stack distributions and observed profile, keeping PTR separate and rare/epic variants unresolved until proven. Seek independent post-Oct25 prospecting and milling raw logs rather than repeat unavailable video.",
-  "previous_status_updated_at": "2026-11-27T20:26:05.692Z",
+  "next_concrete_step": "Check exact input/output scope of 232784 and 233338 rank-1/rank-3 rows across existing evidence and scoped catalogue before adding them; investigate fresh original post-Oct25 ore and herb logs with actual completed operations and refunds.",
+  "previous_status_updated_at": "2026-11-27T21:20:15.374Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "checked_at_utc": "2026-11-27T21:20:15.374Z",
-    "queries": [
-      "Luredrop and Orbinid measured pigment yields",
-      "post-Oct25 Ironclaw/Bismuth/Aqirite prospecting results",
-      "Siren Isle skill DE",
-      "named Stagecrasher's Legguards and Upcycled Helm item identities",
-      "Bue Ironclaw prospecting video"
+    "checked_at_utc": "2026-11-27T22:20:08.552Z",
+    "sources": [
+      "https://www.wowhead.com/item=232784/stagecrashers-legguards",
+      "https://www.wowhead.com/item=233338/upcycled-helm",
+      "https://www.wowhead.com/ptr/item=219950/gleaming-shard"
     ],
-    "new_sources_screened": 4,
-    "existing_cohort_corrected": 0
+    "summary": "Raw source recovered; matching cumulative cohorts, not new samples. Other searches found known LotzBoi, prior amber and gathering reports; no new ore/herb ledger."
   },
   "source_integrity_findings": [
     {
@@ -10246,6 +10364,150 @@
       "status": "held-new-post-hotfix-crushing-not-prospecting-yield",
       "detail": "Oct 28 2024 post qualitatively complains of glass and pebbles; numerical 10 Bismuth for 3–4 crushed gemstones refers to crushing, not prospecting. No original prospecting count, rank or gem outcome receipt. Do not assign crushing quantities to ore prospecting.",
       "checked_at_utc": "2026-11-27T21:20:15.374Z"
+    },
+    {
+      "inputItemID": 232784,
+      "outputItemID": 219949,
+      "outputRank": 1,
+      "source_reported_casts": 58,
+      "castsWithDrop": 24,
+      "totalQuantity": 24,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 34,
+        "1": 24
+      },
+      "histogramBasis": "reconstructed from source count, outof and fixed stack [1,1]; zero is material-specific, not a wholly empty operation",
+      "status": "held for prior exact-scope deduplication",
+      "source": "https://www.wowhead.com/item=232784/stagecrashers-legguards",
+      "method": "Disenchant",
+      "checked_at_utc": "2026-11-27T22:20:08.552Z",
+      "skill": null,
+      "specialization": null,
+      "build": null,
+      "patch": null,
+      "refund_basis": null
+    },
+    {
+      "inputItemID": 232784,
+      "outputItemID": 219950,
+      "outputRank": 2,
+      "source_reported_casts": 58,
+      "castsWithDrop": 26,
+      "totalQuantity": 26,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 32,
+        "1": 26
+      },
+      "histogramBasis": "reconstructed from source count, outof and fixed stack [1,1]; zero is material-specific, not a wholly empty operation",
+      "status": "append-only correction of existing reference; no new cohort",
+      "source": "https://www.wowhead.com/item=232784/stagecrashers-legguards",
+      "method": "Disenchant",
+      "checked_at_utc": "2026-11-27T22:20:08.552Z",
+      "skill": null,
+      "specialization": null,
+      "build": null,
+      "patch": null,
+      "refund_basis": null
+    },
+    {
+      "inputItemID": 232784,
+      "outputItemID": 219951,
+      "outputRank": 3,
+      "source_reported_casts": 58,
+      "castsWithDrop": 8,
+      "totalQuantity": 8,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 50,
+        "1": 8
+      },
+      "histogramBasis": "reconstructed from source count, outof and fixed stack [1,1]; zero is material-specific, not a wholly empty operation",
+      "status": "held for prior exact-scope deduplication",
+      "source": "https://www.wowhead.com/item=232784/stagecrashers-legguards",
+      "method": "Disenchant",
+      "checked_at_utc": "2026-11-27T22:20:08.552Z",
+      "skill": null,
+      "specialization": null,
+      "build": null,
+      "patch": null,
+      "refund_basis": null
+    },
+    {
+      "inputItemID": 233338,
+      "outputItemID": 219949,
+      "outputRank": 1,
+      "source_reported_casts": 260,
+      "castsWithDrop": 95,
+      "totalQuantity": 95,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 165,
+        "1": 95
+      },
+      "histogramBasis": "reconstructed from source count, outof and fixed stack [1,1]; zero is material-specific, not a wholly empty operation",
+      "status": "held for prior exact-scope deduplication",
+      "source": "https://www.wowhead.com/item=233338/upcycled-helm",
+      "method": "Disenchant",
+      "checked_at_utc": "2026-11-27T22:20:08.552Z",
+      "skill": null,
+      "specialization": null,
+      "build": null,
+      "patch": null,
+      "refund_basis": null
+    },
+    {
+      "inputItemID": 233338,
+      "outputItemID": 219950,
+      "outputRank": 2,
+      "source_reported_casts": 260,
+      "castsWithDrop": 114,
+      "totalQuantity": 114,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 146,
+        "1": 114
+      },
+      "histogramBasis": "reconstructed from source count, outof and fixed stack [1,1]; zero is material-specific, not a wholly empty operation",
+      "status": "append-only correction of existing reference; no new cohort",
+      "source": "https://www.wowhead.com/item=233338/upcycled-helm",
+      "method": "Disenchant",
+      "checked_at_utc": "2026-11-27T22:20:08.552Z",
+      "skill": null,
+      "specialization": null,
+      "build": null,
+      "patch": null,
+      "refund_basis": null
+    },
+    {
+      "inputItemID": 233338,
+      "outputItemID": 219951,
+      "outputRank": 3,
+      "source_reported_casts": 260,
+      "castsWithDrop": 51,
+      "totalQuantity": 51,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 209,
+        "1": 51
+      },
+      "histogramBasis": "reconstructed from source count, outof and fixed stack [1,1]; zero is material-specific, not a wholly empty operation",
+      "status": "held for prior exact-scope deduplication",
+      "source": "https://www.wowhead.com/item=233338/upcycled-helm",
+      "method": "Disenchant",
+      "checked_at_utc": "2026-11-27T22:20:08.552Z",
+      "skill": null,
+      "specialization": null,
+      "build": null,
+      "patch": null,
+      "refund_basis": null
     }
   ],
   "last_source_commit_pending": false
