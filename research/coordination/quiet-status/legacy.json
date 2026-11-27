@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-27T08:36:45.116Z",
-  "status": "No new qualifying numerical cohort; Retail reference/capture semantics and blocked original screenshot",
+  "updated_at": "2026-11-27T09:44:53.573Z",
+  "status": "No new independent numerical cohort; historical Looter count semantics clarified",
   "task_ids": [
     "T0047",
     "T0052",
@@ -13,35 +13,28 @@
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "24995 and matched TBC armor/weapon current variant and original completed disenchants",
-    "23424 and 36909 independent operation counts and exact outcome distributions",
-    "23424 existing original screenshot for missing cohort fields",
-    "legacy milling and 13866 original eligible operation profiles"
+    "24995 and matched TBC armor/weapon exact Retail variant and completed disenchant evidence",
+    "36909 and 23424 original completed prospecting operations, quantities, hits, zeros",
+    "T0042 historical aggregate count semantics, raw units versus positive events, and denominator provenance"
   ],
   "newly_verified_fields_cohorts": [
     {
-      "source": "https://www.curseforge.com/wow/addons/easy-disenchant",
-      "field": "Newly screened author documentation; session aggregates and material identity hints, not a measured cohort",
-      "finding": "JamesLahey Easy Disenchant 1.4.1, Retail 12.1.7 release dated 2026-11-12. Direct author documentation lines 175–211 says the addon tracks session materials; its Retail and MoP versions display possible material names without probabilities or amounts. Retail uses expansion to choose the hints; it also skips items refused by the game. This is an author-described classification heuristic and candidate rejection behavior, not verified exact itemLink eligibility or a target-operation ledger. No code or original public per-input event export examined; no exact new IDs, completed operations, per-output quantities, hits, zeros, actual skill or collection build. Do not transfer probabilities shown in its other game flavors to Retail. Distinct from previously screened Easy Disenchant Revamped."
-    },
-    {
-      "source": "https://i3.photobucket.com/albums/y81/qoothecat/gems.jpg",
-      "field": "Existing qoothecat 565-ore cohort; original screenshot recovery blocked",
-      "finding": "Original Thottbot text on https://www.wowhead.com/wotlk/item%3D23424/fel-iron-ore and German/Chinese mirrors includes 565 Fel Iron Ore (23424), 113 Fel Iron Powder, named gem totals and this image link. Screenshot directly requested: HTTP 403. Existing triple alias already reconciled by Master; no new screenshot content, operation-level hits, zeros, skill or build verified. 113 powder units and 565/5 are not independent evidence of measured completed operations. No new weighting; reopen only with accessible original evidence containing a missing field."
+      "source": "https://www.wowhead.com/forums/topic/bug-drop-rates-never-shown-over-100-counting-of-loots-vs-quantity-175484",
+      "field": "Dated historical table-count provenance (not new measured cohort)",
+      "finding": "Direct original Erorus discussion, Dec 1–2 2010 (indexed patch 4.0.3 labels are post metadata, not collection build), lines 13–19, 36–56: historical Wowhead Looter input tables quoted as Adder's Tongue 36903 milled 378343 times, Azure Pigment 39343 count 378311, range 2–4; Goldclover 36901 milled 226490 times, Azure Pigment 39343 count 226456, range 2–4. These are contemporaneous quoted cumulative table counters, not independently logged player cohorts. The earlier 1,134,933/378,473 example is explicitly a proposed display, not observed totals; 3.0 and 2.5 per five herbs are asserted common averages with a linked reference, not derived from the quoted counts. Discussion explicitly distinguishes loot occurrences from material units; no official database schema confirmation, actual event ledger, zero outcomes, skill, output total or conditional histogram. Both linked illustrative images were inaccessible; no further screenshot findings. Do not independently weight older snapshots against later cumulative tables, infer zero-yield disenchants/mills, or transfer to current Retail. URL and both quoted denominators absent from compact coordination and catalogue manifests and prior status; default-branch exact search found no matches; full scoped novelty not established. Preserve as source-interpretation provenance only."
     }
   ],
   "source_urls": [
-    "https://www.curseforge.com/wow/addons/easy-disenchant",
-    "https://i3.photobucket.com/albums/y81/qoothecat/gems.jpg",
-    "https://www.wowhead.com/wotlk/item%3D23424/fel-iron-ore"
+    "https://www.wowhead.com/forums/topic/bug-drop-rates-never-shown-over-100-counting-of-loots-vs-quantity-175484",
+    "https://www.wowhead.com/item%3D36901/goldclover"
   ],
-  "numeric_summary": "No new independent qualifying numerical cohort. Screened Easy Disenchant's author documentation (Retail material hints explicitly exclude chances/amounts), and attempted original screenshot recovery for already catalogued 565-ore Fel Iron study (403). Warmaul 24995 and adjacent TBC profiles, Cobalt 36909, Fel Iron 23424 and milling searches returned known historical cohorts or reference-only material. T0053 remains done. No new JSONL or generated data.",
+  "numeric_summary": "Recovered a dated historical Looter counter-semantics discussion with two explicit quoted herb/material table counts (36903/36901 -> 39343), distinguishing occurrence counts from hypothetical unit totals. No independent cohort or current Retail measurements. Warmaul/Bloodfist, Cobalt/Fel Iron and milling name searches returned known historical profiles, previously screened sources, or already catalogued studies. T0053 remains done. No new evidence JSONL or generated data.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-26T1944-adders-tongue-original-2009-milling.jsonl",
   "preserved_prior_status_summary": "Recovered one new original historical WotLK-era milling cohort: anonymous WoW Alone comment dated October 29, 2009, Adder's Tongue 36903, 20 stacks reported milled, 229 Azure Pigment 39343 and 45 Icy Pigment 43109. Discussion indicates 20 herbs/stack and 5 herbs/mill; 400 herbs/80 nominal equivalents, not completed-cast counts. Source reported 2.86/0.56 per mill and 11.5/2.25 per stack; max five Icy and zero Icy on some stacks do not identify cast-level ranges or zeros. Preserve two historical reference rows, held for Retail eligibility and denominator evidence. Separate October 30 blog author mixed-herb ink tally reports 2.98/0.56 pigment-equivalent means per mill without exact input split, N or conversion details; held without assigning item-specific values. Targeted Warmaul/Bloodfist and Cobalt/Fel Iron searches found known historical sources/profile conflicts, no new independently identified cohort. T0053 remains done. No game actions or prices.",
-  "verified_parent_sha": "76ac4e333e922773d61ef24af0f0b26d0fcdc613",
-  "verified_commit_sha": "76ac4e333e922773d61ef24af0f0b26d0fcdc613",
-  "commit_note": "Read parent 76ac4e333e922773d61ef24af0f0b26d0fcdc613, owned status blob 76a9ae8d791116e61f80ed2273b96e47f0e395fe; resulting status commit verified separately, not self-embedded.",
+  "verified_parent_sha": "5f4019c1f3f168c24b9fd7dcec27c0b3ea9aa62f",
+  "verified_commit_sha": "5f4019c1f3f168c24b9fd7dcec27c0b3ea9aa62f",
+  "commit_note": "Read branch head 5f4019c1f3f168c24b9fd7dcec27c0b3ea9aa62f and owned status blob cf74bac6378be5e85203a9a5c816325f484beb40; resulting status commit to be verified separately, not self-embedded.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -1100,6 +1093,12 @@
       ],
       "disposition": "derivative provenance and denominator interpretation; no new numeric admission",
       "reason": "Dec 14 2019 original discussion (indexed text; direct Reddit fetch disabled) quotes a Felweed (22785) -> Nether Pigment (39342) Wowhead table with 184,405 numerator / 185,440 denominator and questions whether numerator represents units rather than hits. This is a quotation of an aggregate table, not a personal study; the poster's asserted minimum yield and interpretation are not verified measurements. Do not divide these counts into measured quantity per cast or infer missing zero outcomes. Replies mention WorthIt, with no underlying data; previous WorthIt model and source access findings remain unchanged. Direct guide by Keldesh updated 2022-04-12, labelled patch 9.1.0, lines 401–429 explicitly attributes the percentage tables to Wowhead user-submitted aggregates. For Ebon Pigment (43108), Felweed 22785 is listed 48%, and for Icy Pigment (43109), Adder's Tongue 36903 is listed 50%. These are derivative historical reference percentages, not new independent measurements; guide version is not collection build. No count basis, hit histograms, exact total units, zeros, skill or current Retail validation. Source URL/Reddit ID absent from prior owned status and compact cutoff manifest text; no exhaustive scoped novelty claimed. Reuse existing original source decisions."
+    },
+    {
+      "task": "T0042/T0047/T0022/T0044",
+      "source": "https://www.wowhead.com/forums/topic/bug-drop-rates-never-shown-over-100-counting-of-loots-vs-quantity-175484",
+      "disposition": "Historical aggregate semantics and dated snapshot quotation; no new independent weighting",
+      "reason": "Direct original Erorus discussion, Dec 1–2 2010 (indexed patch 4.0.3 labels are post metadata, not collection build), lines 13–19, 36–56: historical Wowhead Looter input tables quoted as Adder's Tongue 36903 milled 378343 times, Azure Pigment 39343 count 378311, range 2–4; Goldclover 36901 milled 226490 times, Azure Pigment 39343 count 226456, range 2–4. These are contemporaneous quoted cumulative table counters, not independently logged player cohorts. The earlier 1,134,933/378,473 example is explicitly a proposed display, not observed totals; 3.0 and 2.5 per five herbs are asserted common averages with a linked reference, not derived from the quoted counts. Discussion explicitly distinguishes loot occurrences from material units; no official database schema confirmation, actual event ledger, zero outcomes, skill, output total or conditional histogram. Both linked illustrative images were inaccessible; no further screenshot findings. Do not independently weight older snapshots against later cumulative tables, infer zero-yield disenchants/mills, or transfer to current Retail. URL and both quoted denominators absent from compact coordination and catalogue manifests and prior status; default-branch exact search found no matches; full scoped novelty not established. Preserve as source-interpretation provenance only."
     }
   ],
   "blockers": [
@@ -1597,10 +1596,15 @@
       "source": "https://i3.photobucket.com/albums/y81/qoothecat/gems.jpg",
       "disposition": "Existing qoothecat 565-ore cohort; original screenshot recovery blocked",
       "reason": "Original Thottbot text on https://www.wowhead.com/wotlk/item%3D23424/fel-iron-ore and German/Chinese mirrors includes 565 Fel Iron Ore (23424), 113 Fel Iron Powder, named gem totals and this image link. Screenshot directly requested: HTTP 403. Existing triple alias already reconciled by Master; no new screenshot content, operation-level hits, zeros, skill or build verified. 113 powder units and 565/5 are not independent evidence of measured completed operations. No new weighting; reopen only with accessible original evidence containing a missing field."
+    },
+    {
+      "source": "https://www.wowhead.com/forums/topic/bug-drop-rates-never-shown-over-100-counting-of-loots-vs-quantity-175484",
+      "disposition": "Historical source interpretation only; do not repeat",
+      "reason": "Direct original Erorus discussion, Dec 1–2 2010 (indexed patch 4.0.3 labels are post metadata, not collection build), lines 13–19, 36–56: historical Wowhead Looter input tables quoted as Adder's Tongue 36903 milled 378343 times, Azure Pigment 39343 count 378311, range 2–4; Goldclover 36901 milled 226490 times, Azure Pigment 39343 count 226456, range 2–4. These are contemporaneous quoted cumulative table counters, not independently logged player cohorts. The earlier 1,134,933/378,473 example is explicitly a proposed display, not observed totals; 3.0 and 2.5 per five herbs are asserted common averages with a linked reference, not derived from the quoted counts. Discussion explicitly distinguishes loot occurrences from material units; no official database schema confirmation, actual event ledger, zero outcomes, skill, output total or conditional histogram. Both linked illustrative images were inaccessible; no further screenshot findings. Do not independently weight older snapshots against later cumulative tables, infer zero-yield disenchants/mills, or transfer to current Retail. URL and both quoted denominators absent from compact coordination and catalogue manifests and prior status; default-branch exact search found no matches; full scoped novelty not established. Preserve as source-interpretation provenance only."
     }
   ],
   "previous_verified_evidence_sha": "bd0ae3dd28e479f8f63272f2d0f5fdf6210b7fd9",
-  "next_concrete_step": "Prioritize newly available original Retail input-linked operation exports, not further derivative tables or already inaccessible screenshots. Preserve known source decisions; Master model schema review remains outstanding.",
+  "next_concrete_step": "Seek newly published original Retail input-linked operation exports or independently recoverable per-material units/histograms from a known source, not additional cumulative-table copies or inaccessible images. Preserve source scope decisions; Master model/schema review remains outstanding.",
   "coordination_cutoff": {
     "summary": "Owner Codex team controls cutoff sources. 731 sources, 12,222 scopes, 0 unresolved cutoff rows reported in repository README; do not duplicate.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -1609,16 +1613,17 @@
     "releasePublication": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending"
   },
   "sources_reviewed_this_run": [
-    "https://www.curseforge.com/wow/addons/easy-disenchant",
-    "https://i3.photobucket.com/albums/y81/qoothecat/gems.jpg",
-    "https://www.wowhead.com/wotlk/item%3D23424/fel-iron-ore",
-    "https://www.wowhead.com/mop-classic/item%3D36909/cobalt-ore",
-    "https://www.wowhead.com/item%3D13866/runecloth-headband",
-    "https://www.wowhead.com/item%3D24995/warmaul-legplates"
+    "https://www.wowhead.com/forums/topic/bug-drop-rates-never-shown-over-100-counting-of-loots-vs-quantity-175484",
+    "http://apeirokalia.com/crap/wow/wowhead.mill1.png",
+    "http://apeirokalia.com/crap/wow/wowhead.mill2.png",
+    "https://www.wowhead.com/item%3D36901/goldclover",
+    "https://www.wowhead.com/wotlk/item%3D24995/warmaul-legplates",
+    "https://www.wowhead.com/item%3D39343/azure-pigment",
+    "https://www.wowhead.com/mop-classic/de/item%3D23424/teufelseisenerz"
   ],
   "latest_run_source_date": "2026-11-27",
-  "latest_run": "No new independent qualifying numerical cohort. Screened Easy Disenchant's author documentation (Retail material hints explicitly exclude chances/amounts), and attempted original screenshot recovery for already catalogued 565-ore Fel Iron study (403). Warmaul 24995 and adjacent TBC profiles, Cobalt 36909, Fel Iron 23424 and milling searches returned known historical cohorts or reference-only material. T0053 remains done. No new JSONL or generated data.",
+  "latest_run": "Recovered a dated historical Looter counter-semantics discussion with two explicit quoted herb/material table counts (36903/36901 -> 39343), distinguishing occurrence counts from hypothetical unit totals. No independent cohort or current Retail measurements. Warmaul/Bloodfist, Cobalt/Fel Iron and milling name searches returned known historical profiles, previously screened sources, or already catalogued studies. T0053 remains done. No new evidence JSONL or generated data.",
   "new_evidence_file_this_run": null,
-  "next": "Prioritize newly available original Retail input-linked operation exports, not further derivative tables or already inaccessible screenshots. Preserve known source decisions; Master model schema review remains outstanding.",
+  "next": "Seek newly published original Retail input-linked operation exports or independently recoverable per-material units/histograms from a known source, not additional cumulative-table copies or inaccessible images. Preserve source scope decisions; Master model/schema review remains outstanding.",
   "previous_run_model_summary": "Newly recovered public author-associated WorthIt v4.0.10 fixed flip model (commit c2151f04385991d43fc496b33aa63a95ac96cfcf, committed 2022-05-07, TOC Interface 90200, author DALAGG). Raw configured Fel Iron Ore 23424 material quantity 200, results 23112 Golden Draenite=7, 23107 Shadow Draenite=10, 21929 Flame Spessarite=11, 23077 Blood Garnet=7, 23117 Azure Moonstone=6, 23079 Deep Peridot=3, 23438 Star of Elune=1, 23440 Dawnstone=1, 23441 Nightseye=1, 23439 Noble Topaz=1. Cobalt 36909 is present in ore enum but absent from that prospect model/module. Netherweave Bracers 21849 configured Quantity=100 and results Arcane Dust 22445=60, Small Prismatic Shard 22448=10, Lesser Planar Essence 22447=140; it is a separate craft-and-DE flip, not the Warmaul profile. README describes average-based valuations, DestroyingResultModule consumes fixed model data; no actual operations, input consumption, event hits, zero counts, histograms, refunds, skill/spec or collection build documented. TOC interface is addon compatibility, not collection version. Milling model uses final ink quantities (e.g. Felweed 200 -> Ethereal Ink 50, Darkflame Ink 13); these are not raw pigment drops. Retain raw model quantities in status as reference-only, not measured totals or independent cast cohorts. Schema has no explicit nominal modeled batch/result quantity field separate from observed totalQuantity; Master to review a source-preserving model representation before build admission. Do not silently set casts=40 or 100, unlisted outputs=0, or current Retail eligibility. Author's public sitemap separately lists 1,000 Cobalt and Fel Iron WorthIt export titles, but no accessible output rows; website export index classified them under Patreon and direct retrieval failed (404); no purchases or access bypass. No new empirical cohort. Prior Warmaul and matched Reaver source searches repeated already-catalogued historical observations; token T0053 remains done. No evidence JSONL because only model quantities with undocumented collection lineage and no safe measured-field mapping."
 }
