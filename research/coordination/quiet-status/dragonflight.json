@@ -2,8 +2,8 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-27T14:26:01.907Z",
-  "status": "No new qualifying independent Dragonflight measurements or community exports.",
+  "updated_at": "2026-11-27T15:33:49.833Z",
+  "status": "No new qualifying Dragonflight numerical evidence; ProspectMate net-consumption denominator semantics checked against pinned code.",
   "task_ids": [
     "T0020",
     "T0018",
@@ -25,22 +25,21 @@
   "current_run_evidence_file": null,
   "evidence_file": null,
   "source_links": [
-    "https://wowgoldscout.com/share",
-    "https://everloot.app/",
-    "https://foreverecon.com/explorer",
-    "https://thewowdb.com/datamine/",
-    "https://www.curseforge.com/wow/addons/libitemdb/files/9208017/additional-files",
+    "https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua#L570-L638",
+    "https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua#L713-L740",
+    "https://www.curseforge.com/wow/addons/prospectmate",
+    "https://github.com/Urutseg/ProspectMate/issues",
+    "https://www.curseforge.com/wow/addons/wise/files/8742794",
+    "https://www.curseforge.com/wow/addons/disenqueue",
+    "https://www.curseforge.com/wow/addons/profitprophet/files/9007250",
+    "https://www.curseforge.com/wow/addons/foreverforge-bags",
+    "https://www.reddit.com/r/woweconomy/comments/13tvmaa",
+    "https://us.forums.blizzard.com/en/wow/t/jewelcrafting-prospecting-bug-not-giving-high-quality-mats/2315949",
     "https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight",
-    "https://www.reddit.com/r/woweconomy/comments/y3e8ek",
-    "https://www.wowhead.com/ptr-2/spell%3D374627/dragon-isles-prospecting",
-    "https://www.wowhead.com/ptr/item%3D194545/prismatic-ore",
-    "https://www.wowhead.com/news/crafting-work-orders-are-here-wowhead-economy-weekly-wrap-up-251-329620",
-    "https://www.curseforge.com/wow/addons/profession-assistance/files/6040040/additional-files",
-    "https://www.curseforge.com/wow/addons/profitprophet/files/8421677",
     "https://github.com/Voodoobrew101/Loot-Liquidator/issues/94"
   ],
-  "verified_parent_sha": "ae2515d705a58a1ca7218d3376a117b6db638d91",
-  "verified_commit_sha": "ae2515d705a58a1ca7218d3376a117b6db638d91",
+  "verified_parent_sha": "18939db2fcebf0a082d45da94a688a9e63906065",
+  "verified_commit_sha": "18939db2fcebf0a082d45da94a688a9e63906065",
   "commit_sha_scope": "Verified branch head before blob-SHA-guarded status update; resulting commit verified separately by immutable readback.",
   "blockers": [
     "No new independent R1 Draconium 189143, ranked Bubble Poppy 191467 or Saxifrage 191464 completed-operation ledger.",
@@ -2590,12 +2589,44 @@
         "https://www.curseforge.com/wow/addons/profitprophet/files/8421677",
         "https://github.com/Voodoobrew101/Loot-Liquidator/issues/94"
       ]
+    },
+    {
+      "at": "2026-11-27T15:33:49.833Z",
+      "scope": "New-publication delta; source-code check of previously screened ProspectMate for denominator semantics",
+      "reason": "11 public searches, direct listing/source inspection, and issue searches yielded no new independently attributable Dragonflight numerical cohort. ProspectMate's pinned code confirms that SmartProspectorDB.reagents rows store cumulative net inventory consumption and result quantities, not operation counts, hit counts, zero histograms, or profession profile. The session accumulator attaches the same results to every consumed reagent if multiple are detected. Successful cast events restart a session timer, not a persisted count. No public issues with samples returned. Thus future existing exports from this revision may support separately reviewed net-input means with single-input/source/epoch/profile context, not measured per-cast yields or zero counts; no observed player export available. Wise and Disenqueue are tools without new original results; ProfitProphet derived rates and guide ranges are known; ForeverForge and Classic item caches are non-Retail. Reddit TSM 2023 comment discusses missing coverage, and forum 2026 bug report concerns modern concentration, not DF yield. Repository recent issues search returned only known #94. Search coverage incomplete.",
+      "queries": [
+        "WoW Retail Dragonflight prospecting milling disenchanting data log export November 2026 after:2026-11-26",
+        "Dragonflight prospecting Draconium results spreadsheet after:2026-11-26",
+        "Dragonflight milling Saxifrage Bubble Poppy data after:2026-11-26",
+        "Dragonflight disenchant Chromatic Dust results log after:2026-11-26",
+        "site:github.com wow prospecting milling loot data Dragonflight savedvariables after:2026-11-20",
+        "site:curseforge.com/wow/addons prospecting milling disenchant tracker export Retail after:2026-11-26",
+        "WoW Wise addon Convert Wiser Dragonflight prospecting milling rates source github",
+        "site:github.com wow Draconium Serevite prospecting yield milling addon data",
+        "site:reddit.com/r/woweconomy Dragonflight prospecting milling disenchant data November 2026",
+        "site:us.forums.blizzard.com/en/wow Dragonflight prospecting milling disenchanting results November 2026",
+        "github urutseg ProspectMate Dragonflight data SavedVariables issues sample conversion"
+      ],
+      "whereLooked": [
+        "https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua#L570-L638",
+        "https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua#L713-L740",
+        "https://www.curseforge.com/wow/addons/prospectmate",
+        "https://github.com/Urutseg/ProspectMate/issues",
+        "https://www.curseforge.com/wow/addons/wise/files/8742794",
+        "https://www.curseforge.com/wow/addons/disenqueue",
+        "https://www.curseforge.com/wow/addons/profitprophet/files/9007250",
+        "https://www.curseforge.com/wow/addons/foreverforge-bags",
+        "https://www.reddit.com/r/woweconomy/comments/13tvmaa",
+        "https://us.forums.blizzard.com/en/wow/t/jewelcrafting-prospecting-bug-not-giving-high-quality-mats/2315949",
+        "https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight",
+        "https://github.com/Voodoobrew101/Loot-Liquidator/issues/94"
+      ]
     }
   ],
-  "next_concrete_step": "Seek genuinely newly published Retail DF processing exports or explicit identity/profile/stage corrections; avoid repeating exhausted historical searches and mob-loot/Forever sources. Community #94 remains with designated review.",
+  "next_concrete_step": "Seek new original Retail Dragonflight operation logs or explicit unresolved identity/profile corrections. Do not re-audit ProspectMate source unless a new revision or actual saved sample appears. Existing net-consumption-only logs require separate denominator review; community #94 stays with designated reviewer.",
   "validation": {
-    "status_json": "Parsed existing JSON, serialized and parsed replacement locally; immutable readback to follow.",
-    "evidence": "No new qualifying records; no JSONL or build generated.",
+    "status_json": "Parsed current JSON and serialized replacement; immutable readback pending.",
+    "evidence": "No qualifying new numeric record, no JSONL generated.",
     "scope": "Owned status file only."
   },
   "production_changed": false,
@@ -2605,9 +2636,9 @@
   "identity_corrections": [],
   "backlog_triage": "Owner receipt CLOSED_VERIFIED_CURRENT_PIPELINE (731 sources); do not reopen assigned catalogue.",
   "current_run_context_checks": {
-    "publication_delta": "No new original DF processing rows; crowd loot source checks distinguish mob kills and Forever from Retail profession casts.",
+    "publication_delta": "No new original DF processing rows; checked ProspectMate source semantics rather than re-transcribing known cohorts.",
     "community_issue_search": "updated >= 2026-11-26 returned only known #94",
-    "source_catalogue_registry": "Current README confirms cutoff catalogue complete; no recataloguing or independent build claim."
+    "source_catalogue_registry": "Current README confirms closed cutoff catalogue; no new recataloguing or independent build claim."
   },
   "pipeline_catalogue_receipt": {
     "path": "research/coordination/backlog-catalogue-20261120.json",
@@ -2623,35 +2654,34 @@
     "scope": "Read-only owner receipt; no independent release/runtime claim."
   },
   "last_search_review": {
-    "at": "2026-11-27T14:26:01.907Z",
-    "scope": "Post-cutoff publication delta and new public crowd-data source applicability",
-    "reason": "Eleven queries across recent indexes, Reddit, Blizzard forum, GitHub and CurseForge found no new independently attributable DF processing cohort. GoldScout public export schema explicitly describes creature kills and item drops, not profession operations; Everloot and ForeverEcon are Forever-specific. TheWoWDB describes client metadata and auction prices, not observed processing outcomes. LibItemDB ATT gathering changes establish source relationships, not operation yields. Known Jallfo beta, Bugy, Hotfor/TheChisel, Liqourice5 beta and ProfitProphet learning-tool families resurfaced without new original rows; WoW-Professions milling range is an already known guide. Profession Assistance 2024 release explicitly leaves prospecting unknown and does not supply measured ranked DF outcomes. Repository issues updated >= Nov 26 returned only known #94. No new measured or reference numeric fields, no new evidence file. Search indexing incomplete.",
+    "at": "2026-11-27T15:33:49.833Z",
+    "scope": "New-publication delta; source-code check of previously screened ProspectMate for denominator semantics",
+    "reason": "11 public searches, direct listing/source inspection, and issue searches yielded no new independently attributable Dragonflight numerical cohort. ProspectMate's pinned code confirms that SmartProspectorDB.reagents rows store cumulative net inventory consumption and result quantities, not operation counts, hit counts, zero histograms, or profession profile. The session accumulator attaches the same results to every consumed reagent if multiple are detected. Successful cast events restart a session timer, not a persisted count. No public issues with samples returned. Thus future existing exports from this revision may support separately reviewed net-input means with single-input/source/epoch/profile context, not measured per-cast yields or zero counts; no observed player export available. Wise and Disenqueue are tools without new original results; ProfitProphet derived rates and guide ranges are known; ForeverForge and Classic item caches are non-Retail. Reddit TSM 2023 comment discusses missing coverage, and forum 2026 bug report concerns modern concentration, not DF yield. Repository recent issues search returned only known #94. Search coverage incomplete.",
     "queries": [
-      "Draconium Ore prospecting results data after:2026-11-26",
-      "Serevite Ore Khaz'gorite prospecting results after:2026-11-26",
-      "Prismatic Ore prospecting results dragonflight after:2026-11-26",
-      "Bubble Poppy milling results Dragonflight after:2026-11-26",
-      "Saxifrage milling pigment results after:2026-11-26",
-      "Chromatic Dust disenchant results after:2026-11-26",
-      "World of Warcraft player processing loot dataset prospecting milling disenchant Dragonflight new export November 2026",
-      "Dragonflight player prospecting Draconium ore results exported spreadsheet site:reddit.com after:2026-11-20",
-      "Dragonflight Prismatic ore prospecting or milling Bubble Poppy actual results site:forums.blizzard.com after:2026-11-20",
-      "Dragonflight disenchant Chromatic Dust original loot sample site:github.com after:2026-11-20",
-      "Dragonflight prospecting milling data export site:curseforge.com after:2026-11-20"
+      "WoW Retail Dragonflight prospecting milling disenchanting data log export November 2026 after:2026-11-26",
+      "Dragonflight prospecting Draconium results spreadsheet after:2026-11-26",
+      "Dragonflight milling Saxifrage Bubble Poppy data after:2026-11-26",
+      "Dragonflight disenchant Chromatic Dust results log after:2026-11-26",
+      "site:github.com wow prospecting milling loot data Dragonflight savedvariables after:2026-11-20",
+      "site:curseforge.com/wow/addons prospecting milling disenchant tracker export Retail after:2026-11-26",
+      "WoW Wise addon Convert Wiser Dragonflight prospecting milling rates source github",
+      "site:github.com wow Draconium Serevite prospecting yield milling addon data",
+      "site:reddit.com/r/woweconomy Dragonflight prospecting milling disenchant data November 2026",
+      "site:us.forums.blizzard.com/en/wow Dragonflight prospecting milling disenchanting results November 2026",
+      "github urutseg ProspectMate Dragonflight data SavedVariables issues sample conversion"
     ],
     "whereLooked": [
-      "https://wowgoldscout.com/share",
-      "https://everloot.app/",
-      "https://foreverecon.com/explorer",
-      "https://thewowdb.com/datamine/",
-      "https://www.curseforge.com/wow/addons/libitemdb/files/9208017/additional-files",
+      "https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua#L570-L638",
+      "https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua#L713-L740",
+      "https://www.curseforge.com/wow/addons/prospectmate",
+      "https://github.com/Urutseg/ProspectMate/issues",
+      "https://www.curseforge.com/wow/addons/wise/files/8742794",
+      "https://www.curseforge.com/wow/addons/disenqueue",
+      "https://www.curseforge.com/wow/addons/profitprophet/files/9007250",
+      "https://www.curseforge.com/wow/addons/foreverforge-bags",
+      "https://www.reddit.com/r/woweconomy/comments/13tvmaa",
+      "https://us.forums.blizzard.com/en/wow/t/jewelcrafting-prospecting-bug-not-giving-high-quality-mats/2315949",
       "https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight",
-      "https://www.reddit.com/r/woweconomy/comments/y3e8ek",
-      "https://www.wowhead.com/ptr-2/spell%3D374627/dragon-isles-prospecting",
-      "https://www.wowhead.com/ptr/item%3D194545/prismatic-ore",
-      "https://www.wowhead.com/news/crafting-work-orders-are-here-wowhead-economy-weekly-wrap-up-251-329620",
-      "https://www.curseforge.com/wow/addons/profession-assistance/files/6040040/additional-files",
-      "https://www.curseforge.com/wow/addons/profitprophet/files/8421677",
       "https://github.com/Voodoobrew101/Loot-Liquidator/issues/94"
     ]
   },
@@ -3273,5 +3303,23 @@
     "build": null,
     "baseline_admission": false,
     "notes": "Range is stated generically, not explicitly observed minimum/maximum. Do not infer a mean or sample size; no verified branch-wide deduplication. No prices retained."
+  },
+  "prospectmate_denominator_screen": {
+    "source_url": "https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua",
+    "source_commit": "2d8d2f2a268fef68d9cae6996c4cc5ede7db622b",
+    "source_lines": [
+      "570–638",
+      "713–740"
+    ],
+    "saved_schema": "SmartProspectorDB.reagents[inputID]={consumed,results[itemID]}",
+    "denominator": "Net inventory decrease; not gross inputs or successful operations. Multiple detected input rows each receive same accumulated results.",
+    "casts": null,
+    "castsWithDrop": null,
+    "totalQuantity": null,
+    "histogram": null,
+    "skill": null,
+    "specialization": null,
+    "baseline_admission": false,
+    "classification": "Source-code semantics only, not a player dataset; future single-input net means require provenance/profile/refund and scope review."
   }
 }
