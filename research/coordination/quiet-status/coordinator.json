@@ -1,36 +1,38 @@
 {
   "role": "coordinator",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-27T18:03:59.261Z",
-  "status": "TARGETED_SOURCE_SCREEN_NO_NEW_ADMISSIBLE_COHORT",
+  "updated_at": "2026-11-27T18:58:33.709Z",
+  "status": "NEW_EXTERNAL_COLLECTOR_SCHEMA_REVIEW_NO_NUMERICAL_ADMISSION",
   "task_ids": [
     "T0026",
     "T0039",
-    "T0042"
+    "T0042",
+    "T0049"
   ],
   "exact_gaps_targeted": [
-    "New source-confirmed Retail processing receipts with quantities, identities and denominator; current publication screen",
-    "Variant-level disenchant eligibility follow-up 271457 (existing unresolved flag, not a new cohort)",
-    "Deduplicate known historical source results before any evidence admission"
+    "Newly released Retail collector Tradewright 1.0.4: shipped observations, flavor-specific reference tables, conditional quantities, cohort completeness and DE eligibility flags",
+    "Differentiate operation-normalized conditional quantities from net-input means and censored single-operation hits"
   ],
   "newly_verified_fields_cohorts": [],
   "source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1fdmzwy",
-    "https://www.reddit.com/r/woweconomy/comments/1rtqxbr/any_prospecting_sheet_out_there/",
-    "https://www.wow-professions.com/midnight/enchanting-guide",
-    "https://gamgem.com/world-of-warcraft/items/jeweled-gauntlets-of-the-jade-warlord",
-    "https://www.wowhead.com/item=271457/jeweled-gauntlets-of-the-jade-warlord",
-    "https://worldofwarcraft.blizzard.com/en-us/news/24307310/hotfix-16-ottobre-2026"
+    "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/src/Tradewright/src/data/Tradewright_SourceData.lua",
+    "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/src/Tradewright/src/data/Tradewright_SalvageData.lua",
+    "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/src/Tradewright/src/modules/Tradewright_SalvageSightings.lua",
+    "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/src/Tradewright/src/util/Tradewright_SalvageLogic.lua",
+    "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/scripts/build-no-disenchant-data.mjs",
+    "https://github.com/ukon1990/Tradewright/blob/5b544a67b73bd2edc496b2b60b98aa912581ddf4/docs/research/salvage-yields.md",
+    "https://www.curseforge.com/wow/addons/tradewright/files/9808147",
+    "https://www.curseforge.com/wow/addons/sintezza-disenchant"
   ],
   "evidence_files": [],
   "previous_checkpoint": {
-    "prior_updated_at": "2026-11-27T16:58:26.057Z",
-    "prior_blob": "23dc24c894eadc3192778aa30b8d1c688f44bb66",
-    "prior_commit": "9fcea7cb7c263e5821c65c743b32e25687ecc759",
-    "prior_summary": "Retail material-only previews and Forever-derived reference exclusion; no new numerical cohorts."
+    "prior_updated_at": "2026-11-27T18:03:59.261Z",
+    "prior_blob": "c81784838adddfa6d33653815a761c01f99bd97b",
+    "prior_commit": "17215682e9d5ecec240238bc14730f47a740a85a",
+    "prior_summary": "No newly admissible cohort; archived sources, prior eligibility flag and owner receipt preserved."
   },
-  "verified_commit_sha": "552f3ab6abd9b457f2e18f44a62f91013dd3219d",
-  "checked_research_branch_head_before_status_write": "552f3ab6abd9b457f2e18f44a62f91013dd3219d",
+  "verified_commit_sha": "30b9722731011499f010c2377be122fb9b729b14",
+  "checked_research_branch_head_before_status_write": "30b9722731011499f010c2377be122fb9b729b14",
   "main_head_checked": "31c57a4d5491d5d35a092ab6e5e3ede110912d55",
   "owner_three_pass_head_checked": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "owner_catalogue_manifest_branch_head_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
@@ -47,13 +49,14 @@
   },
   "validation_this_run": {
     "source_pages_read": true,
-    "novelty_screen": "Default-branch code search confirms 1fdmzwy Mycobloom already reviewed in owner Nov20 prior-preservation document, 1rtqxbr already screened by Midnight, Glimmering Powder conditional catchup rates already archived Nov4/14/18. The 271457 exact-source result is a repeat of prior variant follow-up (Nov26 exhausted list); no new eligibility conclusion. GamGem equipment census is not a processing cohort. Current Blizzard Nov24 item hotfix is content rewards, not conversion. No branch-wide dedup asserted.",
-    "main_CI": "Workflow query returned no PR-triggered runs for 31c57a4d; current CI unverified.",
-    "research_CI": "Workflow query returned no PR-triggered runs for 552f3ab; current CI unverified.",
-    "integration_CI": "Validate consolidated addon run 41484262496 success at 3d667d053db587c91401cfed7ecc56862b8340c9.",
-    "actual_automation_run_results": "Read actual last run results: Midnight completed 17:14:35Z (7c25b40d), War Within 17:19:01Z (909c5e2e), Dragonflight 17:26:26Z (313d86b1), Legacy 17:45:06Z (552f3ab6), each reported no new qualifying numerical cohort. Community review main 31c57a4d records 27 independent operations approved and 40 held, not new coordinator work. No automation changes.",
-    "pipeline_static_inspection": "Read current prepare_build_research.py and research_build_review.py catalogue receipt/consumer gates. No build or tests executed. Earlier blockers retained pending separate exact reproduction, not re-verified as current failures.",
-    "pr_state": "PR22 and PR23 both closed per connected GitHub; no actions taken.",
+    "novelty_screen": "Default-branch code search found no Tradewright or Sintezza match; not a full branch-wide dedup. Tradewright new release Nov25, source revision 5b544a67; SourceData blob ec07b487 has empty collected store; SalvageData blob 37a5990e has empty retail table and Forever-only reference table. Research document attributes classic values to wiki/Classic observations, Retail comparison to existing TSM/Enchantrix; no independent Retail yields. Sintezza Disenchant v1.4.0 lists Forever only despite CSV support.",
+    "collector_schema_review": "Tradewright SalvageSightings blob 6d8bb6c0 counts successful spell events but only commits positive bag gains with one net-lost item; zero-output/ambiguous watches not recorded; adjacent casts can be batched, and net input loss differs from nominal input. SalvageLogic blob 0daf5143 lines 82-181 stores total items from all recorded casts and inputs, while single/hits are only single-cast subsets. countedChances calculates each=perInput/chance, mixing all-cast net-input quantity and single-cast occurrence denominators; this is not observed conditional units, even if they agree accidentally. E.g. synthetic 1 single DE giving 1 unit plus 2 batched DE giving 4 units => each=5/3 divided by 1, although actual single-subset conditional yield is 1; for a 5-input action there is also a per-input/per-operation unit difference. Do not import displayed each as measured; raw compatible receipts may still support mean with verified consumed inputs, overlap, profile and context. No actual player cohort asserted. build-no-disenchant-data blob 4d12780f joins ItemSparse flags only for Forever and Classic Era builds; not Retail eligibility. GetSalvageInput uses that shared list; no proof of live Retail denial for specific items. Code inspected, not executed.",
+    "main_CI": "Validate consolidated addon run 46038181195 success at 31c57a4d.",
+    "research_CI": "Verify five-agent completion run 46051705134 success at 30b97227 (inspected head, not this status commit).",
+    "integration_CI": "Validate consolidated addon run 41484262496 success at 3d667d05; catalogue implementation a23e65d7 exact five runs 44870412829/44869373725/44869373708/44869373743/44869373689 successful. Not a new full current-pin build.",
+    "actual_automation_run_results": "Actual latest completed worker results read: Midnight 18:13:49Z 6b316287; War Within 18:22:05Z 5e5d49a7; Dragonflight 18:28:12Z b0058205; Legacy 18:44:35Z 30b97227. All report no new qualifying numerical cohorts. No changes.",
+    "pipeline_static_inspection": "Read main prepare_build_research.py 7bb3056a and research_build_review.py e0ae3c25b current catalogue gates; no generated build or tests executed this run. Prior blockers preserved, not reverified as current failures.",
+    "pr_state": "PR22 and PR23 closed, unmerged; no action.",
     "new_observed_operations": 0,
     "numeric_admissions": 0,
     "production_changes": false,
@@ -136,7 +139,8 @@
     "2026-11-27T14:56:39.290Z: Nov25 Inscription trait publication and existing Nov6/7 source metadata compared. No new exact profile or output yield; revisit only verified activation, scoped coefficient, or new ledger. ProfitProphet already archived November17; latest package DNS failure, no repeat unchanged changelog.",
     "2026-11-27T16:02:20.971Z: Nov25 Jewelcrafting traits and leveling publication directly inspected against known mechanics; no additional numerical capstone or refund coefficient. Leveling article build labels conflict, no observed yield. Cardinalai 330/480 and 18sd8ly already archived. Reopen only new exact trait formula/activation, operation data or changed source evidence.",
     "2026-11-27T16:58:26.057Z: Easy Disenchant Retail 1.4.1 preview is material-only; session totals not item-scoped receipts. Disenchant Forever 1.44 uses explicitly non-Retail bracket and emulator sources. Harandar guide no measured yields. Disenchantrix and Profession Assistance already screened. Reopen only actual original Retail ledger, changed source schema or scoped applicability proof.",
-    "2026-11-27T18:03:59.261Z: Current public search returned already archived 1fdmzwy, 1rtqxbr, Glimmering Powder conditional guide, and prior 271457 variant context; no new qualifying ledger. Blizzard Nov24 content rewards unrelated. Do not repeat without a changed original, exact item variant/processing receipt, or new data. No new claims or evidence admission."
+    "2026-11-27T18:03:59.261Z: Current public search returned already archived 1fdmzwy, 1rtqxbr, Glimmering Powder conditional guide, and prior 271457 variant context; no new qualifying ledger. Blizzard Nov24 content rewards unrelated. Do not repeat without a changed original, exact item variant/processing receipt, or new data. No new claims or evidence admission.",
+    "2026-11-27T18:58:33.709Z: Tradewright 1.0.4 source 5b544a67: no shipped Retail yield or collected store; conditional each mixes single-hit and all-cast input basis; positive bag delta censoring and Forever/Classic eligibility flags. Sintezza Disenchant v1.4.0 Forever only. No repeat unchanged sources; reopen Tradewright on populated independently scoped Retail receipts or schema change that preserves matched quantities/hits/zeros."
   ],
-  "next_concrete_step": "Avoid repeating known broad source searches; seek newly published or newly accessible exact original operation export, or a new exact applicability/identity field. Prioritize changed source schema and verified new receipts. Separate owner-assigned community and catalogue work; preserve unresolved consumer blockers pending scoped implementation."
+  "next_concrete_step": "Seek new exact Retail source receipts; do not ingest Tradewright displayed conditional each or client-mismatched no-DE flags. Reopen only when published collected store or logger schema changes. Preserve owner catalogue scope and separate unresolved consumer blockers."
 }
