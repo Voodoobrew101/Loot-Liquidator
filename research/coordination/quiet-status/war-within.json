@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-27T12:16:39.894Z",
-  "status": "No new independent TWW numerical cohort found; screened additional public leveling/valuation sources without original operation receipts. Existing scoped decisions retained.",
+  "updated_at": "2026-11-27T14:26:30.826Z",
+  "status": "Preserved rank-resolved reverse Looter leads and one unresolved-rank item-side cohort in owned status; no independently deduplicated numerical cohort admitted.",
   "task_ids": [
     "T0048",
     "T0009",
@@ -18,7 +18,7 @@
     "T0007/T0008/T0009/T0040/T0032: post-Oct25 ore rank/unlock and refund-linked prospecting receipts.",
     "T0010/T0011/T0012: herb/rank-specific standard milling means and observed per-operation outcomes."
   ],
-  "source_branch_head_reviewed": "765ffebb612a0c9c3d449233ea5aab63bdd08b55",
+  "source_branch_head_reviewed": "ae2515d705a58a1ca7218d3376a117b6db638d91",
   "source_policy": "Five required files refreshed at pinned head; CLOSED_VERIFIED_CURRENT_PIPELINE receipt and enabled backlog-20261120 registry checked; no cutoff recatalogue.",
   "study_backlog_triage": [
     {
@@ -2163,36 +2163,72 @@
       "exact_inputs": null,
       "outputs": null,
       "reason": "Project README identifies WoW Forever and describes importing disenchant result counts from SavedVariables into export/recorded.json. No independent Retail TWW observations or provenance are established by this source. Do not import Forever item brackets or export counts as Retail data."
+    },
+    {
+      "status": "held",
+      "scope": "held-new-cumulative-item-side-unresolved-output-rank",
+      "source": "https://www.wowhead.com/item=212069/hexflame-covens-shawl",
+      "original_cohort": "wowhead-looter-item-212069",
+      "existing_ids": null,
+      "exact_inputs": [
+        212069
+      ],
+      "outputs": null,
+      "reason": "Live search index reports 143 disenchants of 212069, with three separately displayed same-name Refulgent Crystal rows: 72, 41 and 21 occurrences, each out of 143. PTR mirrors with multiple bonus IDs display the identical table, not independent cohorts. Exact mapping of rows to 219952/219954/219955 not exposed. Do not assume rank ordering or infer nine empty operations. The item is Epic and a back-slot item; displayed tooltip ilvl is not the observed ilvl. Source date, observation build, skill, bonus, quantities and stack distribution unknown. Raw HTML blocked by transient connected-source credit exhaustion."
+    },
+    {
+      "status": "held",
+      "scope": "held-rank-resolved-reverse-looter-leads-overlap-unverified",
+      "source": "https://www.wowhead.com/item=219954/refulgent-crystal",
+      "original_cohort": null,
+      "existing_ids": null,
+      "exact_inputs": [
+        228853,
+        229254,
+        228892,
+        236818
+      ],
+      "outputs": [
+        219954
+      ],
+      "reason": "Live rank-specific reverse list contains four additional named input rows with count/outof. Rank 2 identity is established in earlier build-pinned CraftingQuality lookup. Item pages independently resolve the input IDs; individual item-side DE table / raw stack data unavailable. Preserve as partial observations only; cumulative overlap with existing item-side and reverse imports is not resolved. Do not assume displayed ilvl or source crawl date is the observation profile. No new independent evidence file or admitted numerical baseline."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 23,
-    "held": 138,
+    "held": 140,
     "duplicate": 5
   },
-  "newly_verified_fields": [],
+  "newly_verified_fields": [
+    "Source-displayed 212069 cumulative denominator 143, unlabeled output occurrence counts 72/41/21; output rank mapping unresolved.",
+    "Reverse 219954 rank 2: 228853 32/68; 229254 26/55; 228892 48/126; 236818 23/45. Held leads only; not independently verified operations or admitted estimator rows."
+  ],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
   "new_reference_only_numeric_records": 0,
   "new_no_disenchant_records": 0,
   "new_condition_records": 0,
-  "numeric_fields_advanced": "None; unobserved processing fields remain null.",
+  "numeric_fields_advanced": "Held source-specific count/outof and item identity leads only; no numerical baseline advancement.",
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://www.curseforge.com/wow/addons/wise/files/8742794",
-    "https://gaminghero.io/inscription-the-war-within/"
+    "https://www.wowhead.com/item=212069/hexflame-covens-shawl",
+    "https://www.wowhead.com/item=219954/refulgent-crystal",
+    "https://www.wowhead.com/item=228853/hired-muscles-legguards",
+    "https://www.wowhead.com/ptr-2/item=229254/cauldron-champions-fistguards?bonus=11994",
+    "https://www.wowhead.com/item=228892/greasemonkeys-shift-stick",
+    "https://www.wowhead.com/item=236818/malignant-visions-vambraces"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-27T0222-algari-rifle-rank-stack-correction.jsonl",
-  "verified_commit_sha": "765ffebb612a0c9c3d449233ea5aab63bdd08b55",
-  "verification": "Pinned source head and current owned blob verified before optimistic contents update. Self commit SHA cannot be embedded; exact resulting commit read-back checked separately.",
+  "verified_commit_sha": "ae2515d705a58a1ca7218d3376a117b6db638d91",
+  "verification": "Pinned source head and unchanged owned blob checked before optimistic contents update. Self commit SHA cannot be embedded; verify exact resulting commit and file read-back separately.",
   "blockers": [
     "No new independent paired operation-level TWW processing receipts with exact input/output rank, quantity/hit/zero fields.",
     "Existing cumulative Looter and translated copies of PeaEsk/LotzBoi studies are not independent cohorts. Historical skill, capstone proc, rank-specific histograms and refund basis remain unresolved.",
     "Community issue 94 is already assigned to separate community review; issue 91 is the general submission invitation. No separate new submission surfaced.",
     "223548 cumulative Looter exact rank and quantity recovered but observation build/profile/bonus and overlap with reverse tables unknown; earlier unranked duplicate reference cannot count again.",
-    "Firecrawl daily credits exhausted after successful live raw capture; PTR mirror raw comparison unavailable. Continue with public sources when available."
+    "Raw item-side HTML access temporarily exhausted; reset reported 2026-11-27T15:51:09.724Z. Output mapping for 212069 and reverse/forward cohort overlap, raw stack distributions, observed profile and build still unresolved."
   ],
   "exhausted_sources": [
     "2026-11-20: Reddit 1ftqzxp historical shatter original/commenter estimates inspected; new but unfit for direct DE numeric admission without distinct recipe method/raw ledger; do not scrape it repeatedly without author export.",
@@ -2320,23 +2356,24 @@
     "2026-11-27T08:21:33.313Z: Three new Forever-only collectors screened once; existing LotzBoi, Raven11, PeaEsk, Elfshinobi1, EnchantLens, 1g350pq, 1jnvht8, 554920, 2145981 and 1pa98qw not re-catalogued. No new independent TWW numeric study surfaced.",
     "2026-11-27T09:21:24.969Z: New 1ro776s spreadsheet request screened once; existing 1f83cnd, 1fisfkn, 1g350pq, 1968257, 1g9l8t8, 565405, 2083666, 1fqov94, 1gabkel, 1nqwdhf, 1pa98qw, LotzBoi and PeaEsk not re-transcribed. EU hotfix mirror 544737 repeats known Oct25 change, not independent cohort.",
     "2026-11-27T10:23:19.563Z: New mining object 413047 and Forever profit collector screened, excluded from TWW operation counts; PeaEsk/DobberSH, LotzBoi, Canadiatv, 13262, 2130416, 227662 and existing catalogue sources not re-transcribed. Community export remains in separately owned review scope.",
-    "2026-11-27T12:16:39.894Z: Additional Wise changelog and GamingHero leveling plan screened if not previously listed; no empirical cohort. Known LotzBoi, Reikah 1968257, 1942494 amber discussion, 565405, 570929, 532522 and GoldCap rank identities not re-transcribed."
+    "2026-11-27T12:16:39.894Z: Additional Wise changelog and GamingHero leveling plan screened if not previously listed; no empirical cohort. Known LotzBoi, Reikah 1968257, 1942494 amber discussion, 565405, 570929, 532522 and GoldCap rank identities not re-transcribed.",
+    "2026-11-27T14:26:30.826Z: Repeated search variants for 212069 live/PTR and reverse rank list did not resolve unlabeled row identity; existing 1fspqym, 1fmrp4z, 1g9l8t8, 1fmu18u and older expansion milling reports not re-transcribed."
   ],
-  "next_concrete_step": "Seek new publicly shared paired Retail TWW operation receipts or a precise source correction; avoid repeating already exhausted generic guides and price/valuation sources. Community issue 94 remains separately owned; no new submission found.",
-  "previous_status_updated_at": "2026-11-27T11:22:11.887Z",
+  "next_concrete_step": "After raw source access returns, verify 212069 explicit output IDs and stack distributions; compare 228853/229254/228892/236818 against existing source cohorts before any append-only evidence. Seek new post-hotfix ore/herb operation receipts, not generic valuation or old catalogue reviews.",
+  "previous_status_updated_at": "2026-11-27T12:16:39.894Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "checked_at_utc": "2026-11-27T12:16:39.894Z",
+    "checked_at_utc": "2026-11-27T14:26:30.826Z",
     "queries": [
-      "TWW 2025 paired milling pigment, prospecting glass, and DE shard receipts",
-      "Retail TWW processing addon public operation exports",
-      "Orbinid and Blossom milling original observation vs ingredient list",
-      "Ironclaw/Bismuth glass and Mycobloom refund-linked results",
-      "Recent repository issues checked through #96; no separate new community submission"
+      "Hexflame Coven's Shawl direct and reverse rank rows",
+      "Refulgent Crystal reverse list and named plate/staff input identity",
+      "TWW milling actual pigment receipts 2025",
+      "TWW post-hotfix ore prospecting receipts",
+      "TWW DE original 2025 shard observations"
     ],
     "new_sources_screened": 2,
     "existing_cohort_corrected": 0
@@ -9087,6 +9124,140 @@
       "patch": null,
       "build": null,
       "refund_basis": null
+    },
+    {
+      "source": "https://www.wowhead.com/item=212069/hexflame-covens-shawl",
+      "checked_at_utc": "2026-11-27T14:26:30.826Z",
+      "method": "Disenchant",
+      "status": "held-new-cumulative-item-side-unresolved-output-rank",
+      "detail": "Live search index reports 143 disenchants of 212069, with three separately displayed same-name Refulgent Crystal rows: 72, 41 and 21 occurrences, each out of 143. PTR mirrors with multiple bonus IDs display the identical table, not independent cohorts. Exact mapping of rows to 219952/219954/219955 not exposed. Do not assume rank ordering or infer nine empty operations. The item is Epic and a back-slot item; displayed tooltip ilvl is not the observed ilvl. Source date, observation build, skill, bonus, quantities and stack distribution unknown. Raw HTML blocked by transient connected-source credit exhaustion.",
+      "inputItemID": 212069,
+      "inputRank": null,
+      "outputItemID": null,
+      "outputRank": null,
+      "casts": 143,
+      "inputsPerCast": 1,
+      "castsWithDrop": null,
+      "reported_unresolved_row_counts": [
+        72,
+        41,
+        21
+      ],
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "minSeen": null,
+      "maxSeen": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": null,
+      "patch": null,
+      "build": null,
+      "refund_basis": null
+    },
+    {
+      "source": "https://www.wowhead.com/item=219954/refulgent-crystal",
+      "checked_at_utc": "2026-11-27T14:26:30.826Z",
+      "method": "Disenchant",
+      "status": "held-rank-resolved-reverse-looter-leads-overlap-unverified",
+      "detail": "Live rank-specific reverse list contains four additional named input rows with count/outof. Rank 2 identity is established in earlier build-pinned CraftingQuality lookup. Item pages independently resolve the input IDs; individual item-side DE table / raw stack data unavailable. Preserve as partial observations only; cumulative overlap with existing item-side and reverse imports is not resolved. Do not assume displayed ilvl or source crawl date is the observation profile. No new independent evidence file or admitted numerical baseline.",
+      "rows": [
+        {
+          "inputItemID": 228853,
+          "inputName": "Hired Muscle's Legguards",
+          "gear_kind": "armor",
+          "input_source": "https://www.wowhead.com/item=228853/hired-muscles-legguards",
+          "casts": 68,
+          "castsWithDrop": 32,
+          "outputItemID": 219954,
+          "outputName": "Refulgent Crystal",
+          "outputRank": 2,
+          "inputsPerCast": 1,
+          "source": "https://www.wowhead.com/item=219954/refulgent-crystal",
+          "totalQuantity": null,
+          "minSeen": null,
+          "maxSeen": null,
+          "histogram": null,
+          "zero_outcomes": null,
+          "skill": null,
+          "specialization": null,
+          "patch": null,
+          "build": null,
+          "refund_basis": null,
+          "denominator_basis": "source-rendered cumulative reverse Looter count/outof; not an independent audited operation ledger"
+        },
+        {
+          "inputItemID": 229254,
+          "inputName": "Cauldron Champion's Fistguards",
+          "gear_kind": "armor",
+          "input_source": "https://www.wowhead.com/ptr-2/item=229254/cauldron-champions-fistguards?bonus=11994",
+          "casts": 55,
+          "castsWithDrop": 26,
+          "outputItemID": 219954,
+          "outputName": "Refulgent Crystal",
+          "outputRank": 2,
+          "inputsPerCast": 1,
+          "source": "https://www.wowhead.com/item=219954/refulgent-crystal",
+          "totalQuantity": null,
+          "minSeen": null,
+          "maxSeen": null,
+          "histogram": null,
+          "zero_outcomes": null,
+          "skill": null,
+          "specialization": null,
+          "patch": null,
+          "build": null,
+          "refund_basis": null,
+          "denominator_basis": "source-rendered cumulative reverse Looter count/outof; not an independent audited operation ledger"
+        },
+        {
+          "inputItemID": 228892,
+          "inputName": "Greasemonkey's Shift-Stick",
+          "gear_kind": "weapon",
+          "input_source": "https://www.wowhead.com/item=228892/greasemonkeys-shift-stick",
+          "casts": 126,
+          "castsWithDrop": 48,
+          "outputItemID": 219954,
+          "outputName": "Refulgent Crystal",
+          "outputRank": 2,
+          "inputsPerCast": 1,
+          "source": "https://www.wowhead.com/item=219954/refulgent-crystal",
+          "totalQuantity": null,
+          "minSeen": null,
+          "maxSeen": null,
+          "histogram": null,
+          "zero_outcomes": null,
+          "skill": null,
+          "specialization": null,
+          "patch": null,
+          "build": null,
+          "refund_basis": null,
+          "denominator_basis": "source-rendered cumulative reverse Looter count/outof; not an independent audited operation ledger"
+        },
+        {
+          "inputItemID": 236818,
+          "inputName": "Malignant Vision's Vambraces",
+          "gear_kind": "armor",
+          "input_source": "https://www.wowhead.com/item=236818/malignant-visions-vambraces",
+          "casts": 45,
+          "castsWithDrop": 23,
+          "outputItemID": 219954,
+          "outputName": "Refulgent Crystal",
+          "outputRank": 2,
+          "inputsPerCast": 1,
+          "source": "https://www.wowhead.com/item=219954/refulgent-crystal",
+          "totalQuantity": null,
+          "minSeen": null,
+          "maxSeen": null,
+          "histogram": null,
+          "zero_outcomes": null,
+          "skill": null,
+          "specialization": null,
+          "patch": null,
+          "build": null,
+          "refund_basis": null,
+          "denominator_basis": "source-rendered cumulative reverse Looter count/outof; not an independent audited operation ledger"
+        }
+      ]
     }
   ],
   "last_source_commit_pending": false
