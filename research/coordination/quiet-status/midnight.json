@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-27T18:13:39.617Z",
-  "status": "active_search_no_new_qualifying_evidence",
+  "updated_at": "2026-11-27T19:11:19.758Z",
+  "status": "active_new_retail_export_pending_community_review",
   "task_ids": [
     "T0026",
     "T0049",
@@ -2250,13 +2250,24 @@
       "reason": "New indexed 12.1.7 PTR item-side lead for 250047: reported aggregate 42 disenchants; two unlinked Dawn Crystal occurrences 22 and 20 (displayed 52%, 48%). Direct PTR and live page reads omit the actual table. Default-branch exact-ID search returns no match, not proof of disjointness from catalogue. No raw source links, ranks, actual at-cast ilvl, profile, build, units, or verified observation date. Hold in status only; no rate, zero or live eligibility inference."
     }
   ],
-  "newly_verified_fields_or_cohorts": [],
+  "newly_verified_fields_or_cohorts": [
+    {
+      "source": "https://github.com/Voodoobrew101/Loot-Liquidator/issues/97",
+      "verified_fields": [
+        "Retail selection",
+        "public sharing/ownership/completeness attestations",
+        "submission timestamp",
+        "envelope schema and declared byte sizes"
+      ],
+      "numeric_cohort_verified": false
+    }
+  ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": [],
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/drmcfee/CueTheCashier-Maximum-Profit/blob/main/README.md"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/issues/97"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -4120,23 +4131,38 @@
       "reason": "Publisher README v0.46.1 explicitly says only WoW Forever, not Retail; local disenchant accounting and classic table comparisons are not Midnight source cohorts."
     }
   ],
-  "next_concrete_step": "Seek genuinely new public Retail processing receipts or changed original source ledgers; prioritize 272246 actual at-cast variant and skill/build, 237362/237363 rank-specific gross/net inputs, refunds and zero-inclusive outputs. Avoid repeated unrelated Forever trackers and already catalogued sources; use source change triggers.",
-  "verified_base_commit_sha": "17215682e9d5ecec240238bc14730f47a740a85a",
+  "next_concrete_step": "Inspect the dedicated community-review disposition for #97 when available; reuse its verified scoped decisions and seek remaining gaps in 272246 variant/build/skill and rank-specific 237362/237363 prospecting or milling only after source deduplication. Continue fresh original source change triggers; do not re-screen unchanged trackers or duplicate the community intake.",
+  "verified_base_commit_sha": "482a9755e92a99481e3f43ae3aac0bd8f9879633",
   "commit_sha": null,
   "verified_commit_sha": null,
   "commit_note": "Status commit SHA is verified by external exact read-back; a commit cannot embed its own SHA.",
   "new_leads_screened": [
     {
-      "category": "new_source_delta_only",
+      "category": "new_original_submission",
       "sources": [
         {
-          "url": "https://github.com/drmcfee/CueTheCashier-Maximum-Profit/blob/main/README.md",
-          "blob_sha": "078c427baf3337f5964b009f1c7a526297b96152",
-          "disposition": "excluded_non_retail_profession_and_disenchant_ledger",
-          "reason": "Publisher README v0.46.1 explicitly says only WoW Forever, not Retail; local disenchant accounting and classic table comparisons are not Midnight source cohorts."
+          "url": "https://github.com/Voodoobrew101/Loot-Liquidator/issues/97",
+          "published": "2026-11-27T18:32:35Z",
+          "disposition": "new_consented_retail_submission_pending_dedicated_review",
+          "source_reported": {
+            "schemaVersion": "loot-liquidator.cast-transfer/4",
+            "encoding": "craft-groups-zlib-ascii13",
+            "compressedBytes": 52099,
+            "groupBytes": 178329,
+            "uncompressedBytes": 4894427,
+            "completed_casts": null,
+            "inputItemIDs": null,
+            "outputItemIDs": null
+          },
+          "reason": "Direct issue read confirms Retail selection, all three public sharing/ownership/completeness attestations checked, open community-research issue, no comments as of this run. Metadata is envelope-declared byte sizes, not independently decoded or validated. Dedicated community review owns strict parsing, completeness checks, cohort overlap with #94 and other captures, profile/recipe validation, and admission. No duplicate processing, raw payload copy, inferred counts or publication."
         }
       ],
-      "disposition": "Read current branch instructions, mechanics, worker role and queue. Focused fresh public searches for DE/272246, ranked Tin/Diamond, Copper/Silver and milling returned known sources, not new complete cohorts. Exact default-branch source search confirms Reddit 1s0q5o0 already catalogued and 1v5esk0 previously recorded; no duplicate transcription. Recent issue listing contains only existing owner-reviewed processing export #94. One newly surfaced profession ledger screened and excluded for explicit non-Retail scope. No new JSONL or baseline change; search coverage not exhaustive."
+      "disposition": "New original post-cutoff source discovered; community review pending, no new numerical admission."
+    },
+    {
+      "category": "targeted_public_source_search",
+      "sources": [],
+      "disposition": "Fresh named searches across DE/272246, Tin/Diamond, Copper/Silver and pigment milling surfaced already-screened sources or unrelated expansions and market/collector metadata. No independent completed-operation evidence identified; search not exhaustive. No repeated catalogue transcription."
     }
   ],
   "catalogue_checkpoint": {
@@ -4152,5 +4178,5 @@
     "release_status": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending",
     "worker_recataloguing": "not performed"
   },
-  "previous_verified_status_commit_sha": "7c25b40d05f65b6ed72c5828be78f4e6b772987b"
+  "previous_verified_status_commit_sha": "6b3162876349313d3928f17c9cdbe70f661e37b7"
 }
