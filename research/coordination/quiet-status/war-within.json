@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-27T09:21:24.969Z",
-  "status": "New source sweep: destruction spreadsheet request contains no original observations; other returned studies and guides previously reviewed. No new independent numeric cohort or correction.",
+  "updated_at": "2026-11-27T10:23:19.563Z",
+  "status": "Targeted source sweep: no independent new Retail TWW processing cohorts. Excluded mining-event denominators and a Forever-only collector; existing sources not re-transcribed.",
   "task_ids": [
     "T0048",
     "T0009",
@@ -18,7 +18,7 @@
     "T0007/T0008/T0009/T0040/T0032: post-Oct25 ore rank/unlock and refund-linked prospecting receipts.",
     "T0010/T0011/T0012: herb/rank-specific standard milling means and observed per-operation outcomes."
   ],
-  "source_branch_head_reviewed": "39fb4f5caf1d27890b6954549681c9f092267c1b",
+  "source_branch_head_reviewed": "f42932f6afc3e8bf5dc88d4c3b0665ba3842f986",
   "source_policy": "Required five files refreshed at pinned head; catalogue receipt CLOSED_VERIFIED_CURRENT_PIPELINE and enabled registry confirmed. No cutoff recatalogue or duplication of existing sources.",
   "study_backlog_triage": [
     {
@@ -2143,12 +2143,32 @@
       "exact_inputs": null,
       "outputs": null,
       "reason": "March 8 2026 original discussion requests a destruction break-even spreadsheet and names CraftSim/Kaychak and unspecified paid sheets. No sheet, original paired observations, exact gear/ore/herb and material IDs, observed units, completed operations, skill profiles or refund linkage are supplied. Market/model tool recommendations are not measured Retail TWW yields. No evidence record or numerical admission."
+    },
+    {
+      "status": "held",
+      "scope": "held-new-mining-denominator-not-prospecting",
+      "source": "https://www.wowhead.com/object=413047/aqirite",
+      "original_cohort": null,
+      "existing_ids": null,
+      "exact_inputs": null,
+      "outputs": null,
+      "reason": "Source reports 13,769 mineral-vein mining events, including three Aqirite occurrence rows 8,155/3,838/1,741 and other mining materials. This is object gathering, not ore destruction; the rendered rows also do not expose rank-specific item IDs. Do not assign those counts to prospecting denominators, gem yields, ore refunds, or exact rank IDs."
+    },
+    {
+      "status": "held",
+      "scope": "held-new-forever-collector-not-retail-tww",
+      "source": "https://github.com/ExcEssIv3/profit",
+      "original_cohort": null,
+      "existing_ids": null,
+      "exact_inputs": null,
+      "outputs": null,
+      "reason": "Project README identifies WoW Forever and describes importing disenchant result counts from SavedVariables into export/recorded.json. No independent Retail TWW observations or provenance are established by this source. Do not import Forever item brackets or export counts as Retail data."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 23,
-    "held": 136,
+    "held": 138,
     "duplicate": 5
   },
   "newly_verified_fields": [],
@@ -2157,15 +2177,16 @@
   "new_reference_only_numeric_records": 0,
   "new_no_disenchant_records": 0,
   "new_condition_records": 0,
-  "numeric_fields_advanced": "None; preserve all unknown fields.",
+  "numeric_fields_advanced": "None; all unknown processing fields preserved.",
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1ro776s/destoying_spreadsheet/"
+    "https://www.wowhead.com/object=413047/aqirite",
+    "https://github.com/ExcEssIv3/profit"
   ],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-27T0222-algari-rifle-rank-stack-correction.jsonl",
-  "verified_commit_sha": "39fb4f5caf1d27890b6954549681c9f092267c1b",
-  "verification": "Required files and catalogue receipt checked at pinned head; owned status blob matched current branch before update. New commit read-back verified separately; self SHA cannot be embedded.",
+  "verified_commit_sha": "f42932f6afc3e8bf5dc88d4c3b0665ba3842f986",
+  "verification": "Five required files and enabled catalogue registry/closed receipt checked at exact pinned head; owned status blob matched current branch before update. Resulting commit read-back is checked separately; self SHA cannot be embedded.",
   "blockers": [
     "No new independent paired operation-level TWW processing receipts with exact input/output rank, quantity/hit/zero fields.",
     "Existing cumulative Looter and translated copies of PeaEsk/LotzBoi studies are not independent cohorts. Historical skill, capstone proc, rank-specific histograms and refund basis remain unresolved.",
@@ -2297,32 +2318,27 @@
     "2026-11-27T06:25:49.173Z: New 1fwr1sx (hypothetical ilvl brackets) and 1965605 (ore economics/mining) screened once. Previously reviewed 1gabkel, 1fqov94, 1fspqym, 1g9l8t8, 1nqwdhf, 1fvhzy0, 1fdmzwy, 570664, 1gankoi and cutoff 1go5h2b reused without re-transcription; latter is Dragonflight processing, not TWW. Older-expansion Wowhead milling studies excluded from TWW. No new material cohort.",
     "2026-11-27T07:19:40.598Z: Screened 1f6lpol, 1iuiju3 and 2272227 once. Existing 1fmrp4z, 1fpswuz, 1f2h7ih, 1fuy8gl, 2197826 and 1934498 already reviewed; LotzBoi and Method guides not re-transcribed; older-expansion milling tables excluded.",
     "2026-11-27T08:21:33.313Z: Three new Forever-only collectors screened once; existing LotzBoi, Raven11, PeaEsk, Elfshinobi1, EnchantLens, 1g350pq, 1jnvht8, 554920, 2145981 and 1pa98qw not re-catalogued. No new independent TWW numeric study surfaced.",
-    "2026-11-27T09:21:24.969Z: New 1ro776s spreadsheet request screened once; existing 1f83cnd, 1fisfkn, 1g350pq, 1968257, 1g9l8t8, 565405, 2083666, 1fqov94, 1gabkel, 1nqwdhf, 1pa98qw, LotzBoi and PeaEsk not re-transcribed. EU hotfix mirror 544737 repeats known Oct25 change, not independent cohort."
+    "2026-11-27T09:21:24.969Z: New 1ro776s spreadsheet request screened once; existing 1f83cnd, 1fisfkn, 1g350pq, 1968257, 1g9l8t8, 565405, 2083666, 1fqov94, 1gabkel, 1nqwdhf, 1pa98qw, LotzBoi and PeaEsk not re-transcribed. EU hotfix mirror 544737 repeats known Oct25 change, not independent cohort.",
+    "2026-11-27T10:23:19.563Z: New mining object 413047 and Forever profit collector screened, excluded from TWW operation counts; PeaEsk/DobberSH, LotzBoi, Canadiatv, 13262, 2130416, 227662 and existing catalogue sources not re-transcribed. Community export remains in separately owned review scope."
   ],
-  "next_concrete_step": "Seek actual publicly shared operation exports, original rank-specific receipts or accessible source corrections rather than generic spreadsheet recommendations; preserve post-Oct25 regime and separate shattering/housing dye recipes. Do not rescan already-reviewed threads absent new data.",
-  "previous_status_updated_at": "2026-11-27T08:21:33.313Z",
+  "next_concrete_step": "Seek original publicly shared Retail TWW processing exports and rank/skill-resolved receipts or genuinely new source corrections; prioritize post-Oct25 data. Exclude mining, shattering and non-Retail collector counts; do not re-open catalogue decisions absent new evidence.",
+  "previous_status_updated_at": "2026-11-27T09:21:24.969Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "checked_at_utc": "2026-11-27T09:21:24.969Z",
+    "checked_at_utc": "2026-11-27T10:23:19.563Z",
     "queries": [
-      "Recent TWW processing spreadsheets",
-      "Aqirite prospecting results",
-      "Luredrop pigment results",
-      "Gleaming Shard skill reports",
-      "TWW milled pigments 2024–25",
-      "Bismuth pebbles 2025",
-      "Gleaming Shards 2025",
-      "German Khaz Algar milling yield",
-      "GitHub Aqirite and Bismuth prospecting results",
-      "Orbinid milling",
-      "Ironclaw 2025",
-      "EU prospecting glass 2025"
+      "TWW prospecting 2025 measured gems and glass",
+      "TWW milling herbs/pigments original observations",
+      "TWW disenchant items and material totals 2025",
+      "post-Oct25 bounded searches for Ironclaw, Bismuth, Mycobloom",
+      "Chinese and French TWW processing yield terminology",
+      "public GitHub processing collector and recent repository issue check"
     ],
-    "new_sources_screened": 1,
+    "new_sources_screened": 2,
     "existing_cohort_corrected": 0
   },
   "source_integrity_findings": [
@@ -8931,6 +8947,54 @@
       "method": "Disenchant/Prospect/Mill",
       "detail": "March 8 2026 original discussion requests a destruction break-even spreadsheet and names CraftSim/Kaychak and unspecified paid sheets. No sheet, original paired observations, exact gear/ore/herb and material IDs, observed units, completed operations, skill profiles or refund linkage are supplied. Market/model tool recommendations are not measured Retail TWW yields. No evidence record or numerical admission.",
       "checked_at_utc": "2026-11-27T09:21:24.969Z",
+      "inputItemID": null,
+      "inputRank": null,
+      "outputItemID": null,
+      "outputRank": null,
+      "casts": null,
+      "inputsPerCast": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "minSeen": null,
+      "maxSeen": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": null,
+      "patch": null,
+      "build": null,
+      "refund_basis": null
+    },
+    {
+      "source": "https://www.wowhead.com/object=413047/aqirite",
+      "method": "Prospect",
+      "status": "held-new-mining-denominator-not-prospecting",
+      "detail": "Source reports 13,769 mineral-vein mining events, including three Aqirite occurrence rows 8,155/3,838/1,741 and other mining materials. This is object gathering, not ore destruction; the rendered rows also do not expose rank-specific item IDs. Do not assign those counts to prospecting denominators, gem yields, ore refunds, or exact rank IDs.",
+      "checked_at_utc": "2026-11-27T10:23:19.563Z",
+      "inputItemID": null,
+      "inputRank": null,
+      "outputItemID": null,
+      "outputRank": null,
+      "casts": null,
+      "inputsPerCast": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "minSeen": null,
+      "maxSeen": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": null,
+      "patch": null,
+      "build": null,
+      "refund_basis": null
+    },
+    {
+      "source": "https://github.com/ExcEssIv3/profit",
+      "method": "Disenchant",
+      "status": "held-new-forever-collector-not-retail-tww",
+      "detail": "Project README identifies WoW Forever and describes importing disenchant result counts from SavedVariables into export/recorded.json. No independent Retail TWW observations or provenance are established by this source. Do not import Forever item brackets or export counts as Retail data.",
+      "checked_at_utc": "2026-11-27T10:23:19.563Z",
       "inputItemID": null,
       "inputRank": null,
       "outputItemID": null,
