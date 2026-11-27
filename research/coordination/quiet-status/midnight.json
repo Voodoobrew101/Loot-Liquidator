@@ -1,6 +1,6 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-27T16:12:40.617Z",
+  "updated_at": "2026-11-27T17:14:25.839Z",
   "status": "active_search_no_new_qualifying_evidence",
   "task_ids": [
     "T0026",
@@ -2256,8 +2256,9 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/TheMouseNest/Journalator/blob/main/README.md",
-    "https://github.com/XalaMental/XalsTradesman"
+    "https://github.com/CaptainLykke/LootLedger/blob/main/LootLedger/LootLedger.toc",
+    "https://github.com/Wicks-mods/WicksLedger/blob/master/README.md",
+    "https://github.com/mycoursehqazsedc00-boop/XyTracker/blob/main/README.md"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -4093,10 +4094,30 @@
       "url": "https://github.com/XalaMental/XalsTradesman",
       "disposition": "empty_repository_no_source_available",
       "reason": "Recent profession-tracker repository search result. Direct GitHub contents request returned 404 with explicit empty-repository message. No published source data to review; no inferred expansion, casts, rates or item identity. Revisit only when contents are published."
+    },
+    {
+      "url": "https://github.com/CaptainLykke/LootLedger/blob/main/LootLedger/LootLedger.toc",
+      "blob_sha": "2d1afe05d070dab8e917b8b4bf2e8fb485b6f828",
+      "related_source": "https://github.com/CaptainLykke/LootLedger/blob/main/LootLedger/LootLedger.lua",
+      "related_blob_sha": "da4810b7c84a25a11498e962d99bd875ab6503e8",
+      "disposition": "excluded_non_retail_raid_loot_disposition",
+      "reason": "Original TOC interface 30300; Lua explicitly WotLK 3.3.5a. DE is a loot-master disposition label rather than a material receipt. No Retail Midnight processing cohort."
+    },
+    {
+      "url": "https://github.com/Wicks-mods/WicksLedger/blob/master/README.md",
+      "blob_sha": "c26da9aebcedc8abcb6dd12847ab107bac6bad47",
+      "disposition": "excluded_non_retail_loot_tracker",
+      "reason": "Original README explicitly TBC Classic Anniversary, tracking session loot, gold, experience and reputation. No Retail processing receipts."
+    },
+    {
+      "url": "https://github.com/mycoursehqazsedc00-boop/XyTracker/blob/main/README.md",
+      "blob_sha": "189d8065f38a04cd53c1afac4cc44ca90bb4ae54",
+      "disposition": "excluded_non_retail_raid_loot_tracker",
+      "reason": "Original README explicitly vanilla 1.12 interface 11200, soft-reserve and DKP raid loot. No Retail processing cohort."
     }
   ],
-  "next_concrete_step": "Prioritize new public actual processing exports or genuinely changed source ledgers, especially linked item 272246 actual cast variant/skill/build and rank-specific ore/herb receipts with actual completed operations, full outcomes and refunds. Do not repeat unchanged software README checks or cutoff catalogue.",
-  "verified_base_commit_sha": "31bd70e79890b10bfde14daeeb818fa208195f9e",
+  "next_concrete_step": "Watch for new public original Retail processing event exports or materially changed source ledgers, especially 272246 at-cast variant/skill/build and 237362/237363 rank-specific full outcomes including refunds and zeros. Avoid unrelated loot trackers, unchanged sources, and already reviewed community exports.",
+  "verified_base_commit_sha": "9fcea7cb7c263e5821c65c743b32e25687ecc759",
   "commit_sha": null,
   "verified_commit_sha": null,
   "commit_note": "Status commit SHA is verified by external exact read-back; a commit cannot embed its own SHA.",
@@ -4105,18 +4126,27 @@
       "category": "new_source_delta_only",
       "sources": [
         {
-          "url": "https://github.com/TheMouseNest/Journalator/blob/main/README.md",
-          "blob_sha": "e2fabd41477cbe962b9b0595a919331e811af344",
-          "disposition": "newly_indexed_tracker_fork_no_original_cohort_in_readme",
-          "reason": "Direct README describes Auctionator Journalator fork tracking auctions, crafting orders, monster/chest loot and spreadsheet exports. No public actual completed disenchant/prospect/mill operations, output ranks, zero-inclusive receipt records, at-cast gear profile or sample numbers in the README. Export capability is not evidence and upstream fork copies are not independent."
+          "url": "https://github.com/CaptainLykke/LootLedger/blob/main/LootLedger/LootLedger.toc",
+          "blob_sha": "2d1afe05d070dab8e917b8b4bf2e8fb485b6f828",
+          "related_source": "https://github.com/CaptainLykke/LootLedger/blob/main/LootLedger/LootLedger.lua",
+          "related_blob_sha": "da4810b7c84a25a11498e962d99bd875ab6503e8",
+          "disposition": "excluded_non_retail_raid_loot_disposition",
+          "reason": "Original TOC interface 30300; Lua explicitly WotLK 3.3.5a. DE is a loot-master disposition label rather than a material receipt. No Retail Midnight processing cohort."
         },
         {
-          "url": "https://github.com/XalaMental/XalsTradesman",
-          "disposition": "empty_repository_no_source_available",
-          "reason": "Recent profession-tracker repository search result. Direct GitHub contents request returned 404 with explicit empty-repository message. No published source data to review; no inferred expansion, casts, rates or item identity. Revisit only when contents are published."
+          "url": "https://github.com/Wicks-mods/WicksLedger/blob/master/README.md",
+          "blob_sha": "c26da9aebcedc8abcb6dd12847ab107bac6bad47",
+          "disposition": "excluded_non_retail_loot_tracker",
+          "reason": "Original README explicitly TBC Classic Anniversary, tracking session loot, gold, experience and reputation. No Retail processing receipts."
+        },
+        {
+          "url": "https://github.com/mycoursehqazsedc00-boop/XyTracker/blob/main/README.md",
+          "blob_sha": "189d8065f38a04cd53c1afac4cc44ca90bb4ae54",
+          "disposition": "excluded_non_retail_raid_loot_tracker",
+          "reason": "Original README explicitly vanilla 1.12 interface 11200, soft-reserve and DKP raid loot. No Retail processing cohort."
         }
       ],
-      "disposition": "Refreshed branch and required instructions and queue. Named searches for 272246 Miststalker's Wristbands, Umbral Tin/Eversong Diamond, Copper/Silver and Tranquility Bloom returned prior known guides, gear census and aggregates; no new verified original processing cohort. Previously screened Nov 24 official hotfix and Nov 25 ForeverDisenchant Retail release were not counted as new. Recent repository searches yielded two previously unlisted leads; direct README/empty repository checks above. No new evidence JSONL, numeric admission or baseline change. Search indexing is not exhaustive."
+      "disposition": "Read current instructions/queue and refreshed branch. Named DE/272246, Tin/Diamond, Copper/Silver and milling searches returned previously reviewed guides, census and aggregates; no independent original numerical cohort. Latest repository issue listing shows only already owner-reviewed processing export #94, no new submission; no duplicate community ingestion. Three newly surfaced tracker repositories directly screened and excluded for incompatible client/loot scope. No new JSONL, numeric admission, or baseline change. Search coverage is not exhaustive."
     }
   ],
   "catalogue_checkpoint": {
@@ -4132,5 +4162,5 @@
     "release_status": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending",
     "worker_recataloguing": "not performed"
   },
-  "previous_verified_status_commit_sha": "fafa984a9d15c2497ccf318747153355d63d1f03"
+  "previous_verified_status_commit_sha": "7e19b1e88b82dab65380baccb45a1c4afdb85619"
 }
