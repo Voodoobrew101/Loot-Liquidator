@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-27T19:11:19.758Z",
-  "status": "active_new_retail_export_pending_community_review",
+  "updated_at": "2026-11-27T20:15:00.723Z",
+  "status": "active_waiting_new_original_cohorts_community_review_pending",
   "task_ids": [
     "T0026",
     "T0049",
@@ -2250,24 +2250,14 @@
       "reason": "New indexed 12.1.7 PTR item-side lead for 250047: reported aggregate 42 disenchants; two unlinked Dawn Crystal occurrences 22 and 20 (displayed 52%, 48%). Direct PTR and live page reads omit the actual table. Default-branch exact-ID search returns no match, not proof of disjointness from catalogue. No raw source links, ranks, actual at-cast ilvl, profile, build, units, or verified observation date. Hold in status only; no rate, zero or live eligibility inference."
     }
   ],
-  "newly_verified_fields_or_cohorts": [
-    {
-      "source": "https://github.com/Voodoobrew101/Loot-Liquidator/issues/97",
-      "verified_fields": [
-        "Retail selection",
-        "public sharing/ownership/completeness attestations",
-        "submission timestamp",
-        "envelope schema and declared byte sizes"
-      ],
-      "numeric_cohort_verified": false
-    }
-  ],
+  "newly_verified_fields_or_cohorts": [],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": [],
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/issues/97"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/issues/97",
+    "https://eu.forums.blizzard.com/en/wow/t/enchanting-enchantresses-spire-does-not-reduce-disenchant-cast-time-by-25/645576"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -4129,40 +4119,46 @@
       "blob_sha": "078c427baf3337f5964b009f1c7a526297b96152",
       "disposition": "excluded_non_retail_profession_and_disenchant_ledger",
       "reason": "Publisher README v0.46.1 explicitly says only WoW Forever, not Retail; local disenchant accounting and classic table comparisons are not Midnight source cohorts."
+    },
+    {
+      "url": "https://eu.forums.blizzard.com/en/wow/t/enchanting-enchantresses-spire-does-not-reduce-disenchant-cast-time-by-25/645576",
+      "published": "2026-11-24",
+      "disposition": "excluded_non_retail_cast_duration_only",
+      "reason": "Direct original forum post explicitly categorized WoW Forever. Item 287025 is the equipped staff whose cast-time effect is tested, not the destroyed item; actual duration 3.00 seconds versus expected 2.25 seconds is not a measured Retail Midnight yield, completed-operation count or at-cast gear eligibility. No cross-flavor inference."
     }
   ],
-  "next_concrete_step": "Inspect the dedicated community-review disposition for #97 when available; reuse its verified scoped decisions and seek remaining gaps in 272246 variant/build/skill and rank-specific 237362/237363 prospecting or milling only after source deduplication. Continue fresh original source change triggers; do not re-screen unchanged trackers or duplicate the community intake.",
-  "verified_base_commit_sha": "482a9755e92a99481e3f43ae3aac0bd8f9879633",
+  "next_concrete_step": "Check #97 only for a new dedicated review disposition or new community submissions; reuse verified scopes without duplicating intake. Seek genuinely new original 272246 at-cast variants, rank-specific 237362/237363 prospecting and ten-herb milling ledgers; do not re-screen unchanged guides or exhausted sources.",
+  "verified_base_commit_sha": "f2595d21d9cfeae1d01f5b81b0520375300535e7",
   "commit_sha": null,
   "verified_commit_sha": null,
   "commit_note": "Status commit SHA is verified by external exact read-back; a commit cannot embed its own SHA.",
   "new_leads_screened": [
     {
-      "category": "new_original_submission",
+      "category": "community_intake_change_trigger",
       "sources": [
         {
           "url": "https://github.com/Voodoobrew101/Loot-Liquidator/issues/97",
-          "published": "2026-11-27T18:32:35Z",
-          "disposition": "new_consented_retail_submission_pending_dedicated_review",
+          "disposition": "unchanged_pending_dedicated_review",
           "source_reported": {
-            "schemaVersion": "loot-liquidator.cast-transfer/4",
-            "encoding": "craft-groups-zlib-ascii13",
-            "compressedBytes": 52099,
-            "groupBytes": 178329,
-            "uncompressedBytes": 4894427,
-            "completed_casts": null,
-            "inputItemIDs": null,
-            "outputItemIDs": null
+            "state": "open",
+            "comments": 0,
+            "updated_at": "2026-11-27T18:32:35Z"
           },
-          "reason": "Direct issue read confirms Retail selection, all three public sharing/ownership/completeness attestations checked, open community-research issue, no comments as of this run. Metadata is envelope-declared byte sizes, not independently decoded or validated. Dedicated community review owns strict parsing, completeness checks, cohort overlap with #94 and other captures, profile/recipe validation, and admission. No duplicate processing, raw payload copy, inferred counts or publication."
+          "reason": "Direct issue and comments read-back confirms no disposition or new update since prior checkpoint; no duplicate decoding, review or admission."
         }
-      ],
-      "disposition": "New original post-cutoff source discovered; community review pending, no new numerical admission."
+      ]
     },
     {
-      "category": "targeted_public_source_search",
-      "sources": [],
-      "disposition": "Fresh named searches across DE/272246, Tin/Diamond, Copper/Silver and pigment milling surfaced already-screened sources or unrelated expansions and market/collector metadata. No independent completed-operation evidence identified; search not exhaustive. No repeated catalogue transcription."
+      "category": "fresh_public_source_delta",
+      "sources": [
+        {
+          "url": "https://eu.forums.blizzard.com/en/wow/t/enchanting-enchantresses-spire-does-not-reduce-disenchant-cast-time-by-25/645576",
+          "published": "2026-11-24",
+          "disposition": "excluded_non_retail_cast_duration_only",
+          "reason": "Direct original forum post explicitly categorized WoW Forever. Item 287025 is the equipped staff whose cast-time effect is tested, not the destroyed item; actual duration 3.00 seconds versus expected 2.25 seconds is not a measured Retail Midnight yield, completed-operation count or at-cast gear eligibility. No cross-flavor inference."
+        }
+      ],
+      "disposition": "New source excluded; targeted name and recent-date searches for DE, Tin/Diamond, Copper/Silver and pigments otherwise returned unchanged already-screened sources, market metadata, or unrelated game versions; no qualifying original Retail receipt cohort. No cutoff re-cataloguing."
     }
   ],
   "catalogue_checkpoint": {
@@ -4178,5 +4174,5 @@
     "release_status": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending",
     "worker_recataloguing": "not performed"
   },
-  "previous_verified_status_commit_sha": "6b3162876349313d3928f17c9cdbe70f661e37b7"
+  "previous_verified_status_commit_sha": "df1cfa2915366fb3b3526fc7c4e49a6db103a863"
 }
