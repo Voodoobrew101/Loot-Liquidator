@@ -1,148 +1,51 @@
 {
   "role": "coordinator",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-27T05:59:20.511Z",
-  "status": "Material epoch defect expanded: three additional obsolete junk powder ordinary baseline EVs and one historical Iron Powder model candidate verified; no runtime execution.",
+  "updated_at": "2026-11-27T07:57:59.309Z",
+  "status": "New static producer-path diagnosis for removed legacy prospecting outputs: two distinct admission paths; output-specific applicability needed. No production edits or full consumer run.",
   "task_ids": [
     "T0042",
     "T0044",
     "legacy-prospecting-epoch-exclusion"
   ],
   "exact_gaps_targeted": [
-    "Verify whether the Fel Iron Powder defect extends to other pre-3.0.2 junk powders in the current generated baseline; separate historical model evidence from ordinary baseline rows and preserve valid Adamantite and later Titanium powders."
+    "Determine whether a normal epoch correction can eliminate removed powders across ordinary evidence and reviewed-model paths, without suppressing valid same-input gem yields."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "inputItemID": 2771,
-      "inputName": "Tin Ore",
-      "outputItemID": 24188,
-      "outputName": "Tin Powder",
-      "recordID": "evidence:v3:Prospect:2771:x5",
-      "batch": 5,
-      "expectedQuantity": 1,
-      "recordedConfidence": 40,
-      "sourceSupportSampleEquivalents": 20,
-      "recordedChance": null,
-      "source": "https://warcraft.wiki.gg/wiki/Tin_Powder",
-      "method": "Prospect",
-      "removedPatch": "3.0.2",
-      "removedDate": "2008-10-14",
-      "baselineBlob": "d8ab3d15302e53579415f448d2183c1792992b96",
-      "baseline": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/database/research-v3-baselines.lua",
-      "disposition": "Existing historical source remains valid for its epoch; exclude from current Retail prospecting decision and runtime field selection only. No new observations, no live consumer execution."
+      "finding": "Ordinary evidence epoch filter cannot represent removed output identities",
+      "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/e8356d7ece64c294048d234a4c1355abedbbe000/research/v3/tools/build_estimates.py#L345",
+      "detail": "expansion_range recognizes only Midnight, War Within and Dragonflight item-ID bands; load_rate_changes discards other scopes; epoch_weight takes method and input ID only, returns 1 when no applicable change and 0.25 for old/undated applicable evidence. No 3.0.2 powder event in rate-changes.jsonl. A legacy rate-change row alone cannot exclude these individual outputs."
     },
     {
-      "inputItemID": 3858,
-      "inputName": "Mithril Ore",
-      "outputItemID": 24234,
-      "outputName": "Mithril Powder",
-      "recordID": "evidence:v3:Prospect:3858:x5",
-      "batch": 5,
-      "expectedQuantity": 1,
-      "recordedConfidence": 25,
-      "sourceSupportSampleEquivalents": 10,
-      "recordedChance": 1,
-      "recordedChanceConfidence": 69,
-      "recordedMin": 1,
-      "recordedMax": 1,
-      "source": "https://warcraft.wiki.gg/wiki/Mithril_Powder",
-      "method": "Prospect",
-      "removedPatch": "3.0.2",
-      "removedDate": "2008-10-14",
-      "baselineBlob": "d8ab3d15302e53579415f448d2183c1792992b96",
-      "baseline": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/database/research-v3-baselines.lua",
-      "disposition": "Existing historical source remains valid for its epoch; exclude from current Retail prospecting decision and runtime field selection only. No new observations, no live consumer execution."
+      "finding": "Ordinary field-support admission rejects only zero epoch weight",
+      "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/tools/research_v3_evidence.py#L348",
+      "detail": "Positive historic weight still enters eligible field support; source weighting cannot establish output impossibility."
     },
     {
-      "inputItemID": 10620,
-      "inputName": "Thorium Ore",
-      "outputItemID": 24235,
-      "outputName": "Thorium Powder",
-      "recordID": "evidence:v3:Prospect:10620:x5",
-      "batch": 5,
-      "expectedQuantity": 1,
-      "recordedConfidence": 77,
-      "sourceSupportSampleEquivalents": 103,
-      "recordedChance": null,
-      "source": "https://warcraft.wiki.gg/wiki/Thorium_Powder",
-      "method": "Prospect",
-      "removedPatch": "3.0.2",
-      "removedDate": "2008-10-14",
-      "baselineBlob": "d8ab3d15302e53579415f448d2183c1792992b96",
-      "baseline": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/database/research-v3-baselines.lua",
-      "disposition": "Existing historical source remains valid for its epoch; exclude from current Retail prospecting decision and runtime field selection only. No new observations, no live consumer execution."
-    },
-    {
-      "inputItemID": 2772,
-      "inputName": "Iron Ore",
-      "outputItemID": 24190,
-      "outputName": "Iron Powder",
-      "recordID": "evidence:reviewed-backlog:processing:62e1533ed616e5a513c7edae",
-      "unit": "per input",
-      "expectedQuantity": 0.2,
-      "recordedConfidence": 20,
-      "modelConfidenceCap": 0,
-      "sourceSupportSampleEquivalents": 0,
-      "recordedStatus": "historical",
-      "formula": "12 / 60",
-      "source": "https://warcraft.wiki.gg/wiki/Iron_Powder",
-      "method": "Prospect",
-      "removedPatch": "3.0.2",
-      "removedDate": "2008-10-14",
-      "baselineBlob": "d8ab3d15302e53579415f448d2183c1792992b96",
-      "baseline": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/database/research-v3-baselines.lua",
-      "disposition": "Existing historical source remains valid for its epoch; exclude from current Retail prospecting decision and runtime field selection only. No new observations, no live consumer execution."
+      "finding": "Reviewed catalogue model producer has an independent append path",
+      "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/tools/reviewed_source_catalogue.py#L221",
+      "detail": "After source-row proof, model_record is appended directly; historic field status and modelConfidenceCap are metadata (lines 135–142). The producer calls preserve_published_priors and preserve_reviewed_backlog after ordinary records are constructed (tools/research_v3_to_baselines.py lines 527–530). A correction limited to the ordinary epoch filter will not necessarily suppress the separately preserved reviewed Iron Powder model."
     }
   ],
   "source_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/database/research-v3-baselines.lua",
-    "https://warcraft.wiki.gg/wiki/Tin_Powder",
-    "https://warcraft.wiki.gg/wiki/Mithril_Powder",
-    "https://warcraft.wiki.gg/wiki/Thorium_Powder",
-    "https://warcraft.wiki.gg/wiki/Iron_Powder",
-    "https://warcraft.wiki.gg/wiki/Copper_Powder",
-    "https://warcraft.wiki.gg/wiki/Patch_3.0.2_(undocumented_changes)",
-    "https://wowpedia.fandom.com/wiki/Prospecting",
-    "https://www.wowhead.com/item=24188/tin-powder",
-    "https://www.wowhead.com/wotlk/item=24234/mithril-powder",
-    "https://www.wowhead.com/tbc/item=24235/thorium-powder",
-    "https://www.wowhead.com/tbc/item=24190/iron-powder",
-    "https://www.wowhead.com/item=24243/adamantite-powder"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/e8356d7ece64c294048d234a4c1355abedbbe000/research/v3/tools/build_estimates.py#L345",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/tools/research_v3_evidence.py#L348",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/tools/reviewed_source_catalogue.py#L221",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/e8356d7ece64c294048d234a4c1355abedbbe000/research/v3/rate-changes.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/tools/research_v3_to_baselines.py#L527",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/tools/reviewed_source_catalogue.py#L135",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/database/research-v3-baselines.lua"
   ],
   "evidence_files": [],
   "previous_checkpoint": {
-    "commit": "60383ec5a123c1a8705bfb58b47b85c138e40a62",
-    "prior_updated_at": "2026-11-27T05:04:58.882Z",
-    "prior_summary": "New direct-stage WorthIt historical model evidence: 3 exact pigment fields across Frostweed and Dreamleaf; source-pinned nominal model ratios, not measurements; current gap-only admission not verified."
+    "prior_updated_at": "2026-11-27T05:59:20.511Z",
+    "prior_summary": "Material epoch defect expanded: three additional obsolete junk powder ordinary baseline EVs and one historical Iron Powder model candidate verified; no runtime execution.",
+    "prior_blob": "cf6322ef92e00d646187344b2ef054cbcb5aec9d"
   },
-  "worker_reports_verified": [
-    {
-      "role": "midnight",
-      "read_at_revision": "429c766cc5d73cb9b322d61bdefb421d0ad3d79d",
-      "updated_at": "2026-11-27T05:14:26.876Z",
-      "new_independent_cohorts": 0
-    },
-    {
-      "role": "war-within",
-      "read_at_revision": "429c766cc5d73cb9b322d61bdefb421d0ad3d79d",
-      "updated_at": "2026-11-27T05:21:22.252Z",
-      "new_independent_cohorts": 0
-    },
-    {
-      "role": "dragonflight",
-      "read_at_revision": "429c766cc5d73cb9b322d61bdefb421d0ad3d79d",
-      "updated_at": "2026-11-27T05:29:53.822Z",
-      "new_independent_cohorts": 0
-    },
-    {
-      "role": "legacy",
-      "read_at_revision": "429c766cc5d73cb9b322d61bdefb421d0ad3d79d",
-      "updated_at": "2026-11-27T05:37:32.413Z",
-      "new_independent_cohorts": 0
-    }
-  ],
-  "verified_commit_sha": "429c766cc5d73cb9b322d61bdefb421d0ad3d79d",
-  "checked_research_branch_head_before_status_write": "429c766cc5d73cb9b322d61bdefb421d0ad3d79d",
+  "worker_reports_verified": [],
+  "verified_commit_sha": "e8356d7ece64c294048d234a4c1355abedbbe000",
+  "checked_research_branch_head_before_status_write": "e8356d7ece64c294048d234a4c1355abedbbe000",
   "main_head_checked": "d4d4f248e4c5a1a0758977f508a876e858defb71",
   "owner_three_pass_head_checked": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "owner_catalogue_manifest_branch_head_checked": "76eb0891bcc56d8860eb9b7b50dc57f1e9008e5d",
@@ -158,35 +61,25 @@
     "path": "research/coordination/backlog-catalogue-20261120.json"
   },
   "validation_this_run": {
-    "static_current_pipeline_read": true,
-    "baseline_blob_verified": true,
-    "baseline_build_executed": false,
-    "actual_game_or_lua_execution": false,
-    "ci": "Combined status and PR-filtered runs returned empty for main and starting research; no CI conclusion.",
-    "automation_execution_results": "Four role reports read; scheduler result independently unverified.",
-    "measured_operations_added": 0,
-    "new_coordinator_cohorts": 0,
-    "new_model_fields": 0,
-    "new_epoch_defect_fields": 4,
-    "production_changed": false,
-    "pr_created": false,
-    "schedules_changed": false
+    "static_source_review": true,
+    "main_CI": {
+      "run": 45896789074,
+      "conclusion": "success",
+      "head": "d4d4f248e4c5a1a0758977f508a876e858defb71"
+    },
+    "starting_research_CI": {
+      "run": 45959672990,
+      "conclusion": "success",
+      "head": "e8356d7ece64c294048d234a4c1355abedbbe000"
+    },
+    "full_runtime_test": "not executed; container git host DNS unavailable and Lua command unavailable",
+    "prior_run_probe": "Previous run reported 27 isolated Lua assertions; not repeated or independently reproduced this run.",
+    "new_observed_operations": 0,
+    "production_changes": false
   },
   "blockers": [
-    "Ordinary current baseline cohort contribution and actual compiled runtime prior selection need isolated replay to establish whether the missing third alias affects any weighting. No code change authorized in this run.",
-    "No exact current variant/skill/patch or unit quantities in 1115352 original. No new qualifying independent receipt.",
-    "No GatherBuffs original exact-target export or independently logged actual operations; no supported conversion rate from generic action count.",
-    "TWW native milestones are already compiled; no remaining static threshold identity gap. Actual live allocation and simulated profile projection still require existing captured operation evidence or isolated regression. No numerical output-yield coefficient established.",
-    "New historical Adder's Tongue report has directly reported means, but structured mean fields null and sourceKind reference; no current Retail applicability or completed-cast ledger. Existing compiled prior and exact gap-only consumer scope not replayed. Do not call source mean unusable solely for unknown casts; retain pending scoped provenance/admission review.",
-    "Issue 94: five new legacy expansion receipts in four unapproved staged cohorts have unknown base/bonus/effective skill, skill line and specialization. Native community adapter cannot admit them by output identity alone; exact-profile evidence or explicitly reviewed legacy-specific context treatment required. Remaining 35 new operations outside staged cohorts are not zero outputs. No changes to review/owner release workflow.",
-    "Historical alternative range conflict for 22445/22447; underlying original empirical cohort and exact current Retail category/variant relationship are unknown. No source weighting change or range widening justified.",
-    "EnchantLens actual SavedVariables/export schema, completion and zero accounting, cohort scope and package source remain unverified; no admissible measurements from promotional screenshots.",
-    "Lazy Disenchanter partial screenshot does not establish a complete session, exact loot-to-cast correlation, source item links, output rank IDs, patch or character skill/specialization; original ZIP CDN DNS failed. No additional material rates or skill assumptions admitted.",
-    "Lazy Disenchanter v1.2 publisher documents star/silver/gold as ranks 1/2/3; exact v1.2.1 parser and original item links not accessible. No safe rank-ID mapping from partial gallery. Mirror index page 521; no export.",
-    "EasyDisenchant v1.0.18 DE display is derivative price-only; not an independent conversion source. Algari Rifle reference rows have validated arithmetic but unknown source profile/bonus/build, overlap and actual build admission; original HTML not independently verified in this run.",
-    "Current main d4d4f248 baseline still admits removed Fel Iron Powder E=1 per five ore, confidence79; 113 sample equivalents claimed, unknown chance. Needs scoped epoch exclusion in build/runtime and synthetic-price negative regression while retaining Adamantite Powder 24243. No proof actual player tooltip displays or values it.",
-    "WorthIt raw pigment model: 3 exact direct-stage values verified but no empirical denominator, profile or collection build; current gap-only applicability and overlap unresolved. Do not encode configured model quantities as observed totals, infer operation count, or add confidence from nominal quantities. Existing reviewed per-input prior adapter is exact-source archived totals, not generic model input.",
-    "Expanded patch 3.0.2 epoch issue: ordinary baseline Tin 2771→24188 EV1 confidence40, Mithril 3858→24234 EV1 confidence25 and chance1 confidence69, Thorium 10620→24235 EV1 confidence77, plus historical zero-model-confidence Iron 2772→24190 EV0.2 per input. Previous Fel Iron 23424→24242 EV1 confidence79 remains. Copper 24186 absent from exact generated baseline id= scan; not a proof of absence in all other source layers. Preserve valid 23425→24243 Adamantite and 36910→46849 Titanium. No proof of actual runtime admission or tooltip impact; separately scoped regression must test all six exact removed output IDs across source layers and ensure valid exceptions are preserved. Do not delete originals or zero historical observations."
+    "An output-specific current-Retail exclusion contract is absent from inspected ordinary epoch filter and reviewed catalogue append path; isolated full ItemDB/tooltip regression is still needed. Preserve source rows, avoid a broad input-level exclusion. No direct production changes authorized in routine research.",
+    "No full local clone or Lua interpreter available through current container; CI success does not demonstrate this defect is fixed."
   ],
   "exhausted_sources": [
     "2026-11-24 14Z direct DB2 exact rank joins for 242786/242787/242788/242789/237362/237363 and TWW 224802/224800 verified. No repeat source identity scan absent changed build or new field; avoid treating prior identity evidence as new numerical cohorts.",
@@ -250,90 +143,25 @@
     "2026-11-27T02:57:43.368Z: EasyDisenchant Nov25 price-column release source checked at exact revision; no independent material outcomes or observed operations. Do not repeat unless genuinely new capture/export implementation or original dataset. Search returned familiar archived sources. Algari Rifle corrected rows arithmetically checked; reopen only exact raw source/overlap/profile or actual consumer admission, not unchanged source totals.",
     "2026-11-27 04Z: legacy 78702 historical derivative table and 3.0.2 powder removal corroborated. Do not re-transcribe table or count mirrors; current main static residue confirmed. Next trigger is actual compiled consumer guard or new independent Retail receipts.",
     "2026-11-27T05:04:58.882Z: WorthIt fixed model source revision c2151f04385991d43fc496b33aa63a95ac96cfcf independently read; direct Frostweed/Dreamleaf pigment vectors and exact enums verified. Remaining milling rows ink-stage, no reverse inference. No new original cohort; do not repeat unchanged model or paywalled titles without an accessible new original source or scoped consumer validation.",
-    "2026-11-27T05:59:20.511Z: Exact current generated baseline blob scanned for removed powder identities; no repeat unchanged blob. Recent original-receipt searches returned previously seen posts or Classic/market context. New trigger is scoped epoch-filter consumer regression or a changed source/build."
+    "2026-11-27T05:59:20.511Z: Exact current generated baseline blob scanned for removed powder identities; no repeat unchanged blob. Recent original-receipt searches returned previously seen posts or Classic/market context. New trigger is scoped epoch-filter consumer regression or a changed source/build.",
+    "2026-11-27T07:57:59.309Z: Pinned ordinary epoch filter, rate-change registry, field-support eligibility and separate reviewed-backlog append inspected. Do not repeat static scan or suggest mere rate-weight correction; reopen on scoped guard change, new evidence, or full consumer replay."
   ],
-  "next_concrete_step": "Prioritize independent scoped build/runtime negative regression for removed powder IDs 24186,24188,24190,24234,24235,24242 and valid exceptions 24243,46849. Preserve historical rows and confirm all runtime source layers cannot reintroduce removed current-Retail outputs. Continue seeking new original input-linked Retail receipts; no routine research PR.",
+  "next_concrete_step": "Separate scoped engineering workflow should use method+output identity+applicable epoch (removed IDs 24186,24188,24190,24234,24235,24242; retain Adamantite 24243 and Titanium 46849) and test both ordinary and reviewed model admission plus runtime layers. Continue new independent source discovery; do not recatalogue cutoff backlog or repeat unchanged source scans.",
   "newly_verified_fields": [
     {
-      "inputItemID": 2771,
-      "inputName": "Tin Ore",
-      "outputItemID": 24188,
-      "outputName": "Tin Powder",
-      "recordID": "evidence:v3:Prospect:2771:x5",
-      "batch": 5,
-      "expectedQuantity": 1,
-      "recordedConfidence": 40,
-      "sourceSupportSampleEquivalents": 20,
-      "recordedChance": null,
-      "source": "https://warcraft.wiki.gg/wiki/Tin_Powder",
-      "method": "Prospect",
-      "removedPatch": "3.0.2",
-      "removedDate": "2008-10-14",
-      "baselineBlob": "d8ab3d15302e53579415f448d2183c1792992b96",
-      "baseline": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/database/research-v3-baselines.lua",
-      "disposition": "Existing historical source remains valid for its epoch; exclude from current Retail prospecting decision and runtime field selection only. No new observations, no live consumer execution."
+      "finding": "Ordinary evidence epoch filter cannot represent removed output identities",
+      "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/e8356d7ece64c294048d234a4c1355abedbbe000/research/v3/tools/build_estimates.py#L345",
+      "detail": "expansion_range recognizes only Midnight, War Within and Dragonflight item-ID bands; load_rate_changes discards other scopes; epoch_weight takes method and input ID only, returns 1 when no applicable change and 0.25 for old/undated applicable evidence. No 3.0.2 powder event in rate-changes.jsonl. A legacy rate-change row alone cannot exclude these individual outputs."
     },
     {
-      "inputItemID": 3858,
-      "inputName": "Mithril Ore",
-      "outputItemID": 24234,
-      "outputName": "Mithril Powder",
-      "recordID": "evidence:v3:Prospect:3858:x5",
-      "batch": 5,
-      "expectedQuantity": 1,
-      "recordedConfidence": 25,
-      "sourceSupportSampleEquivalents": 10,
-      "recordedChance": 1,
-      "recordedChanceConfidence": 69,
-      "recordedMin": 1,
-      "recordedMax": 1,
-      "source": "https://warcraft.wiki.gg/wiki/Mithril_Powder",
-      "method": "Prospect",
-      "removedPatch": "3.0.2",
-      "removedDate": "2008-10-14",
-      "baselineBlob": "d8ab3d15302e53579415f448d2183c1792992b96",
-      "baseline": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/database/research-v3-baselines.lua",
-      "disposition": "Existing historical source remains valid for its epoch; exclude from current Retail prospecting decision and runtime field selection only. No new observations, no live consumer execution."
+      "finding": "Ordinary field-support admission rejects only zero epoch weight",
+      "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/tools/research_v3_evidence.py#L348",
+      "detail": "Positive historic weight still enters eligible field support; source weighting cannot establish output impossibility."
     },
     {
-      "inputItemID": 10620,
-      "inputName": "Thorium Ore",
-      "outputItemID": 24235,
-      "outputName": "Thorium Powder",
-      "recordID": "evidence:v3:Prospect:10620:x5",
-      "batch": 5,
-      "expectedQuantity": 1,
-      "recordedConfidence": 77,
-      "sourceSupportSampleEquivalents": 103,
-      "recordedChance": null,
-      "source": "https://warcraft.wiki.gg/wiki/Thorium_Powder",
-      "method": "Prospect",
-      "removedPatch": "3.0.2",
-      "removedDate": "2008-10-14",
-      "baselineBlob": "d8ab3d15302e53579415f448d2183c1792992b96",
-      "baseline": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/database/research-v3-baselines.lua",
-      "disposition": "Existing historical source remains valid for its epoch; exclude from current Retail prospecting decision and runtime field selection only. No new observations, no live consumer execution."
-    },
-    {
-      "inputItemID": 2772,
-      "inputName": "Iron Ore",
-      "outputItemID": 24190,
-      "outputName": "Iron Powder",
-      "recordID": "evidence:reviewed-backlog:processing:62e1533ed616e5a513c7edae",
-      "unit": "per input",
-      "expectedQuantity": 0.2,
-      "recordedConfidence": 20,
-      "modelConfidenceCap": 0,
-      "sourceSupportSampleEquivalents": 0,
-      "recordedStatus": "historical",
-      "formula": "12 / 60",
-      "source": "https://warcraft.wiki.gg/wiki/Iron_Powder",
-      "method": "Prospect",
-      "removedPatch": "3.0.2",
-      "removedDate": "2008-10-14",
-      "baselineBlob": "d8ab3d15302e53579415f448d2183c1792992b96",
-      "baseline": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/database/research-v3-baselines.lua",
-      "disposition": "Existing historical source remains valid for its epoch; exclude from current Retail prospecting decision and runtime field selection only. No new observations, no live consumer execution."
+      "finding": "Reviewed catalogue model producer has an independent append path",
+      "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/d4d4f248e4c5a1a0758977f508a876e858defb71/tools/reviewed_source_catalogue.py#L221",
+      "detail": "After source-row proof, model_record is appended directly; historic field status and modelConfidenceCap are metadata (lines 135–142). The producer calls preserve_published_priors and preserve_reviewed_backlog after ordinary records are constructed (tools/research_v3_to_baselines.py lines 527–530). A correction limited to the ordinary epoch filter will not necessarily suppress the separately preserved reviewed Iron Powder model."
     }
   ],
   "newly_verified_cohorts": []
