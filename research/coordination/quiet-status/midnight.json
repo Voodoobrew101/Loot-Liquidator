@@ -1,6 +1,6 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-27T05:14:26.876Z",
+  "updated_at": "2026-11-27T06:15:43.890Z",
   "status": "active_search_no_new_qualifying_evidence",
   "task_ids": [
     "T0026",
@@ -2256,7 +2256,8 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/nemesis/briarian/"
+    "https://wowgoldfarms.com/guides/retail/mining-leveling-midnight/",
+    "https://www.wow-farming.info/farming-umbral-tin-ore/"
   ],
   "blockers": [
     "272246 Miststalker's Wristbands: historical build70783 ilvl305/292 successful events and separate 12.1.5 ilvl305/295 equipped variants do not establish present-client at-cast eligibility/rate; require joined item instance/bonus, output-rank, zero-inclusive ledger with skill/spec/build and independent 140-row Looter cohort check. Nov 22 build70961 source has no retained 272246 event; two other epic armor IDs at 305 do not resolve target.",
@@ -3884,10 +3885,22 @@
         "build": null
       },
       "reason": "Official Armory indexed display gives a 321 equipped variant by name; direct fetch 403. Exact linked item ID/bonus/build not retrievable; prior equipped 321 and 305 sources already establish variation. No at-cast eligibility, no measured yield, no new cohort."
+    },
+    {
+      "url": "https://wowgoldfarms.com/guides/retail/mining-leveling-midnight/",
+      "published": "2026-11-25",
+      "disposition": "new_datamine_gathering_reference_not_processing",
+      "reason": "Direct publisher page describes hypothetical 60 gathers from recipe skill bands and explicitly says the ladder was not walked. Datamine build 12.1.7.71087 is not an observation build. No prospecting casts, outputs, rank-specific receipt vector or Diamond unlock data."
+    },
+    {
+      "url": "https://www.wow-farming.info/farming-umbral-tin-ore/",
+      "published": "2026-10-21",
+      "disposition": "gathering_guide_only",
+      "reason": "Direct Retail guide describes mining node routes, not prospecting or observed processing receipts; no operation counts, yield, rank or refund evidence. Older source not re-catalogued."
     }
   ],
-  "next_concrete_step": "Seek newly published or newly changed original Retail receipt exports with exact item/bonus ID and at-cast profile for 272246, then rank-specific 237362/237363 completed casts, output receipts and 242608 unlock, Copper/Silver and milling. Do not recheck unchanged static armory/guide or same-blob Goldsmith data, or duplicate completed cutoff catalogue.",
-  "verified_base_commit_sha": "60383ec5a123c1a8705bfb58b47b85c138e40a62",
+  "next_concrete_step": "Seek newly published or changed original receipt exports with exact item/bonus IDs and at-cast profile for 272246, then rank-specific 237362/237363 completed casts, 242608 unlock, Copper/Silver and milling. Skip already-screened static guide/armory pages and unchanged aggregate exports. Preserve community review ownership; do not duplicate issue 94 or cutoff catalogue.",
+  "verified_base_commit_sha": "6777a2d6e44bb49312c5e96294943409b0604a79",
   "commit_sha": null,
   "verified_commit_sha": null,
   "commit_note": "Status commit SHA is verified by external exact read-back; a commit cannot embed its own SHA.",
@@ -3896,23 +3909,19 @@
       "category": "new_source_delta_only",
       "sources": [
         {
-          "url": "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/nemesis/briarian/",
-          "input_id_candidate": 272246,
-          "disposition": "indexed_equipment_display_only",
-          "source_reported": {
-            "equipped_name": "Miststalker's Wristbands",
-            "equipped_item_level": 321,
-            "at_cast_item_level": null,
-            "completed_casts": null,
-            "outputItemID": null,
-            "skill": null,
-            "specialization": null,
-            "build": null
-          },
-          "reason": "Official Armory indexed display gives a 321 equipped variant by name; direct fetch 403. Exact linked item ID/bonus/build not retrievable; prior equipped 321 and 305 sources already establish variation. No at-cast eligibility, no measured yield, no new cohort."
+          "url": "https://wowgoldfarms.com/guides/retail/mining-leveling-midnight/",
+          "published": "2026-11-25",
+          "disposition": "new_datamine_gathering_reference_not_processing",
+          "reason": "Direct publisher page describes hypothetical 60 gathers from recipe skill bands and explicitly says the ladder was not walked. Datamine build 12.1.7.71087 is not an observation build. No prospecting casts, outputs, rank-specific receipt vector or Diamond unlock data."
+        },
+        {
+          "url": "https://www.wow-farming.info/farming-umbral-tin-ore/",
+          "published": "2026-10-21",
+          "disposition": "gathering_guide_only",
+          "reason": "Direct Retail guide describes mining node routes, not prospecting or observed processing receipts; no operation counts, yield, rank or refund evidence. Older source not re-catalogued."
         }
       ],
-      "disposition": "Refreshed exact branch head and read README, evidence-format, mechanics, worker and queue. Recent web searches for gear-variant DE, Tin/diamond, Copper/Silver and milling surfaced already-screened guides and non-Retail addon releases; no repeat intake. GitHub issue searches for Eversong Diamond prospecting, Dawn Crystal disenchanting and Powder Pigment milling created after Nov 20 returned no results. Upstream Goldsmith revision changed but TourData blob did not. No qualifying new original receipt cohort, no new evidence file or baseline change."
+      "disposition": "Refreshed branch and read README, evidence-format, mechanics, worker, and queue at exact initial head 6777a2d6e44bb49312c5e96294943409b0604a79. New date-filtered forum and Reddit searches and targeted names yielded no new original receipt cohorts. Protector's Discarded Shield 248077 PTR indexed 29-operation lead is already covered by 2026-11-01T0755-wowhead-disenchant-outcomes.jsonl and 2026-11-14T0215-protectors-shield-source-identity.jsonl in default branch/snapshot; not independently re-intaken. Repo recent issues show existing #94 community export and #96 integration, no additional new submission among recent issues; separate review team owns these. No baseline changes or new evidence JSONL."
     }
   ],
   "catalogue_checkpoint": {
@@ -3928,5 +3937,5 @@
     "release_status": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending",
     "worker_recataloguing": "not performed"
   },
-  "previous_verified_status_commit_sha": "2ca7888096ded6d8f66ba2fe2068f304d2aa64a5"
+  "previous_verified_status_commit_sha": "db6e9c98be5eb5f3dc32d85afb681f46e334b696"
 }
