@@ -1,7 +1,7 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-27T19:41:19.491Z",
+  "updated_at": "2026-11-27T20:44:43.210Z",
   "status": "searching",
   "task_ids": [
     "T0047",
@@ -16,17 +16,17 @@
   ],
   "newly_verified_fields_cohorts": [],
   "source_urls": [
-    "https://www.reddit.com/r/woweconomy/comments/1smgllg/prospecting_calculator/",
-    "https://us.forums.blizzard.com/en/wow/t/how-to-train-all-of-the-expansion-enchanting-skills/799652",
-    "https://www.wowhead.com/item=24995/warmaul-legplates"
+    "https://github.com/oxedtv/OxedHub/blob/535385051d50e1c028bde4848b251933b52f0ec3/Modules/Shattersight/Data.lua",
+    "https://github.com/oxedtv/OxedHub/blob/535385051d50e1c028bde4848b251933b52f0ec3/Modules/Shattersight/Shattersight.lua",
+    "https://coldsgoldfactory.blogspot.com/2011/01/clearing-out-netherweave-cloth-reserves.html"
   ],
-  "numeric_summary": "Refreshed all five required documents and owner catalogue receipt at c38cd85c4cc395abb2a1fb9c350dbad719626836. T0047/T0052 Warmaul and matched armor/weapon searches: original Wowhead numeric table remains unavailable in rendered view; no new completed-operation evidence. T0022/T0044/T0042 Cobalt, Fel Iron and legacy milling: recently indexed prospecting calculator author explicitly identifies copied WoW Professions values, not original legacy measurements; April 2022 milling formulas already in cutoff receipt, not recatalogued. December 2020 trainer discussion corroborates historical difficulty identifying expansion after squish, not eligibility or measured yield. No new qualifying legacy numerical or identity field, no evidence JSONL. Existing cohorts, unknowns and closed token T0053 preserved; no game actions/prices.",
+  "numeric_summary": "Refreshed required README, evidence format, mechanics, worker role, queue and current owner catalogue receipt. T0047/T0052: new pinned OxedHub Shattersight source explicitly separates Forever level-bracket models from Retail tables limited to TWW/Midnight; no current Warmaul or TBC matched-item event ledger. Cold's January 2011 original advice on Netherweave Bracers/Pants provides no measured outcome data. T0022/T0044/T0042: alternate targeted ore/milling searches surfaced known Wowhead and historical Kaliope sources, including cutoff-catalogued Milling spell page; do not recatalogue or duplicate author batches. No new qualifying measured or independently grounded model rows for legacy Retail; all actual N, hits, zero bins and quantities remain unknown where unsupported. Token T0053 remains done. No game operations, prices, production or schedule changes.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-26T1944-adders-tongue-original-2009-milling.jsonl",
   "preserved_prior_status_summary": "Recovered one new original historical WotLK-era milling cohort: anonymous WoW Alone comment dated October 29, 2009, Adder's Tongue 36903, 20 stacks reported milled, 229 Azure Pigment 39343 and 45 Icy Pigment 43109. Discussion indicates 20 herbs/stack and 5 herbs/mill; 400 herbs/80 nominal equivalents, not completed-cast counts. Source reported 2.86/0.56 per mill and 11.5/2.25 per stack; max five Icy and zero Icy on some stacks do not identify cast-level ranges or zeros. Preserve two historical reference rows, held for Retail eligibility and denominator evidence. Separate October 30 blog author mixed-herb ink tally reports 2.98/0.56 pigment-equivalent means per mill without exact input split, N or conversion details; held without assigning item-specific values. Targeted Warmaul/Bloodfist and Cobalt/Fel Iron searches found known historical sources/profile conflicts, no new independently identified cohort. T0053 remains done. No game actions or prices.",
-  "verified_parent_sha": "c38cd85c4cc395abb2a1fb9c350dbad719626836",
-  "verified_commit_sha": "c38cd85c4cc395abb2a1fb9c350dbad719626836",
-  "commit_note": "Verified pre-write branch head c38cd85c4cc395abb2a1fb9c350dbad719626836; owned blob beafacb90d5b0d2083fd3b71981537ca6acf8c32. Resulting commit read back externally by exact SHA; no self-referential SHA.",
+  "verified_parent_sha": "984849d04cbb3445ff170ca986ba430daa15b8d5",
+  "verified_commit_sha": "984849d04cbb3445ff170ca986ba430daa15b8d5",
+  "commit_note": "Verified pre-write branch head 984849d04cbb3445ff170ca986ba430daa15b8d5; previous owned blob 9221104450f98111d76467e468884aed5a6c9286. Resulting commit to be verified by immutable read-back, not self-referential SHA.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -1143,6 +1143,19 @@
       "source": "https://us.forums.blizzard.com/en/wow/t/low-level-enchanting-bugged/1415613",
       "disposition": "Newly screened historical profile context; not a disenchant study",
       "reason": "Direct November 26 2022 thread, Ventorath posts 1/8 and other participants posts 10/15/18/19 (lines 5–23, 67–83, 107–142), reports changing gear item levels and low-level enchant application limits during Dragonflight prepatch. Claims refer principally to applying enchants, not breaking items; contradictory level approximations and no exact itemLink or named processing output. Cannot use as evidence of DE eligibility, yield or a universal scaling formula. No counts or weights admitted. Thread key and official announcement ID absent from previous owned status and compact cutoff manifest; exhaustive scoped novelty not established."
+    },
+    {
+      "task": "T0047/T0052",
+      "source": "https://github.com/oxedtv/OxedHub/blob/535385051d50e1c028bde4848b251933b52f0ec3/Modules/Shattersight/Data.lua",
+      "disposition": "New source-model screening: no legacy Retail numerical admission",
+      "reason": "Original pinned Data.lua blob ac379739266ef7b7f3b03902f69b1f05c5e0bfe3. Lines 110–149 define expansion-keyed Retail tables only for TWW/Midnight; lines 166–276 explicitly define WoW Forever classic item-level brackets and algorithmic dust/essence/shard probabilities. Companion Shattersight.lua blob f3ef05c461de20a110c9efdcb2baa59ca24cf793 lines 216–222 chooses the classic branch only when not Mainline. The presence of a Classic modeled 31-level bracket does not validate Retail 24995 or any TBC output; no original completed operations, output counts, source build or known zeros are documented by these model tables. No model coefficients transferred or measurements inferred. Repository name absent from prior owned status and compact cutoff receipt; exhaustive scoped novelty not claimed.",
+      "corroboration": "https://github.com/oxedtv/OxedHub/blob/535385051d50e1c028bde4848b251933b52f0ec3/Modules/Shattersight/Shattersight.lua"
+    },
+    {
+      "task": "T0047/T0052",
+      "source": "https://coldsgoldfactory.blogspot.com/2011/01/clearing-out-netherweave-cloth-reserves.html",
+      "disposition": "Historical qualitative advice, no independent cohort",
+      "reason": "Author Cold, January 3 2011, recommends Netherweave Bracers for Arcane Dust and Netherweave Pants for Greater Planar Essence. Gives crafting reagents, not a completed disenchant sample, observed totals or hit counts; no exact collection date/build/skill. Cannot infer rates or modern eligibility. Domain absent from prior owned status and compact cutoff receipt; no exhaustive scoped novelty claim."
     }
   ],
   "blockers": [
@@ -1712,10 +1725,21 @@
       "source": "https://us.forums.blizzard.com/en/wow/t/how-to-train-all-of-the-expansion-enchanting-skills/799652",
       "disposition": "Historical skill-training context only; not a processing or eligibility study",
       "reason": "Direct Loudent post Dec 27 2020, lines 5–11 describes uncertainty identifying gear expansion after level/item-level squish, and learning expansion professions for potential skill gains. Replies Dec 28 describe access to trainers, not actual successful disenchant receipts or specific skill thresholds. Do not infer Warmaul Legplates 24995 eligibility, required skill, output family, yield or rate from these reports. No exact itemLink, build, observed N, material identities, output units, zero bins or specialization. Thread ID absent from prior owned status and compact cutoff receipt; no exhaustive novelty claim."
+    },
+    {
+      "source": "https://github.com/oxedtv/OxedHub/blob/535385051d50e1c028bde4848b251933b52f0ec3/Modules/Shattersight/Data.lua",
+      "disposition": "New source-model screening: no legacy Retail numerical admission",
+      "reason": "Original pinned Data.lua blob ac379739266ef7b7f3b03902f69b1f05c5e0bfe3. Lines 110–149 define expansion-keyed Retail tables only for TWW/Midnight; lines 166–276 explicitly define WoW Forever classic item-level brackets and algorithmic dust/essence/shard probabilities. Companion Shattersight.lua blob f3ef05c461de20a110c9efdcb2baa59ca24cf793 lines 216–222 chooses the classic branch only when not Mainline. The presence of a Classic modeled 31-level bracket does not validate Retail 24995 or any TBC output; no original completed operations, output counts, source build or known zeros are documented by these model tables. No model coefficients transferred or measurements inferred. Repository name absent from prior owned status and compact cutoff receipt; exhaustive scoped novelty not claimed.",
+      "corroboration": "https://github.com/oxedtv/OxedHub/blob/535385051d50e1c028bde4848b251933b52f0ec3/Modules/Shattersight/Shattersight.lua"
+    },
+    {
+      "source": "https://coldsgoldfactory.blogspot.com/2011/01/clearing-out-netherweave-cloth-reserves.html",
+      "disposition": "Historical qualitative advice, no independent cohort",
+      "reason": "Author Cold, January 3 2011, recommends Netherweave Bracers for Arcane Dust and Netherweave Pants for Greater Planar Essence. Gives crafting reagents, not a completed disenchant sample, observed totals or hit counts; no exact collection date/build/skill. Cannot infer rates or modern eligibility. Domain absent from prior owned status and compact cutoff receipt; no exhaustive scoped novelty claim."
     }
   ],
   "previous_verified_evidence_sha": "bd0ae3dd28e479f8f63272f2d0f5fdf6210b7fd9",
-  "next_concrete_step": "Seek new post-cutoff source-linked processing exports or genuinely missing profile fields, with actual completed operations and input/output units. Do not re-query unchanged derivative calculators, reference tables, trainer discussions or known inaccessible Looter tables absent a new original data route.",
+  "next_concrete_step": "Seek independent original source-linked post-cutoff Retail legacy processing exports or genuinely new event-level historical records with precise profiles; exclude unchanged Forever tables and qualitative guides, and do not repeat cutoff-catalogued Wowhead sources absent a new raw data path.",
   "coordination_cutoff": {
     "summary": "Owner catalogue receipt reports 731 sources and 12222 scopes, 0 unresolved build rows; reuse scoped decisions.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -1725,24 +1749,20 @@
   },
   "sources_reviewed_this_run": [
     {
-      "source": "https://www.reddit.com/r/woweconomy/comments/1smgllg/prospecting_calculator/",
-      "disposition": "Derivative calculator, excluded from legacy independent evidence",
-      "reason": "Direct author TheNo1Yeti, April 15 2026, original post lines 16–22 states spreadsheet results are hard-coded from WoW Professions and omit specialization. Author explicitly identifies a derivative, not a new measured processing ledger. Reply lines 96–103 concerns Midnight ores only and gives rough estimates; outside legacy scope. No legacy exact input/output profile, completed N, hits, zeros, total units or collection build verified. No sample/confidence increment or price data retained; do not repeat unchanged. Post ID and sheet ID absent from prior owned status and compact cutoff receipt; exhaustive source-level novelty not asserted."
+      "source": "https://github.com/oxedtv/OxedHub/blob/535385051d50e1c028bde4848b251933b52f0ec3/Modules/Shattersight/Data.lua",
+      "disposition": "New source-model screening: no legacy Retail numerical admission",
+      "reason": "Original pinned Data.lua blob ac379739266ef7b7f3b03902f69b1f05c5e0bfe3. Lines 110–149 define expansion-keyed Retail tables only for TWW/Midnight; lines 166–276 explicitly define WoW Forever classic item-level brackets and algorithmic dust/essence/shard probabilities. Companion Shattersight.lua blob f3ef05c461de20a110c9efdcb2baa59ca24cf793 lines 216–222 chooses the classic branch only when not Mainline. The presence of a Classic modeled 31-level bracket does not validate Retail 24995 or any TBC output; no original completed operations, output counts, source build or known zeros are documented by these model tables. No model coefficients transferred or measurements inferred. Repository name absent from prior owned status and compact cutoff receipt; exhaustive scoped novelty not claimed.",
+      "corroboration": "https://github.com/oxedtv/OxedHub/blob/535385051d50e1c028bde4848b251933b52f0ec3/Modules/Shattersight/Shattersight.lua"
     },
     {
-      "source": "https://us.forums.blizzard.com/en/wow/t/how-to-train-all-of-the-expansion-enchanting-skills/799652",
-      "disposition": "Historical skill-training context only; not a processing or eligibility study",
-      "reason": "Direct Loudent post Dec 27 2020, lines 5–11 describes uncertainty identifying gear expansion after level/item-level squish, and learning expansion professions for potential skill gains. Replies Dec 28 describe access to trainers, not actual successful disenchant receipts or specific skill thresholds. Do not infer Warmaul Legplates 24995 eligibility, required skill, output family, yield or rate from these reports. No exact itemLink, build, observed N, material identities, output units, zero bins or specialization. Thread ID absent from prior owned status and compact cutoff receipt; no exhaustive novelty claim."
-    },
-    {
-      "source": "https://www.wowhead.com/item=24995/warmaul-legplates",
-      "disposition": "Known target, original numeric table remains inaccessible",
-      "reason": "Search index indicates four disenchanting entries; direct rendered page find for Disenchanting and Arcane Dust yields no matching text. No verification of 2068-operation cumulative table, per-hit stacks, total quantities, build or itemLink. Not a new cohort; no reweighting."
+      "source": "https://coldsgoldfactory.blogspot.com/2011/01/clearing-out-netherweave-cloth-reserves.html",
+      "disposition": "Historical qualitative advice, no independent cohort",
+      "reason": "Author Cold, January 3 2011, recommends Netherweave Bracers for Arcane Dust and Netherweave Pants for Greater Planar Essence. Gives crafting reagents, not a completed disenchant sample, observed totals or hit counts; no exact collection date/build/skill. Cannot infer rates or modern eligibility. Domain absent from prior owned status and compact cutoff receipt; no exhaustive scoped novelty claim."
     }
   ],
   "latest_run_source_date": null,
-  "latest_run": "Refreshed all five required documents and owner catalogue receipt at c38cd85c4cc395abb2a1fb9c350dbad719626836. T0047/T0052 Warmaul and matched armor/weapon searches: original Wowhead numeric table remains unavailable in rendered view; no new completed-operation evidence. T0022/T0044/T0042 Cobalt, Fel Iron and legacy milling: recently indexed prospecting calculator author explicitly identifies copied WoW Professions values, not original legacy measurements; April 2022 milling formulas already in cutoff receipt, not recatalogued. December 2020 trainer discussion corroborates historical difficulty identifying expansion after squish, not eligibility or measured yield. No new qualifying legacy numerical or identity field, no evidence JSONL. Existing cohorts, unknowns and closed token T0053 preserved; no game actions/prices.",
+  "latest_run": "Refreshed required README, evidence format, mechanics, worker role, queue and current owner catalogue receipt. T0047/T0052: new pinned OxedHub Shattersight source explicitly separates Forever level-bracket models from Retail tables limited to TWW/Midnight; no current Warmaul or TBC matched-item event ledger. Cold's January 2011 original advice on Netherweave Bracers/Pants provides no measured outcome data. T0022/T0044/T0042: alternate targeted ore/milling searches surfaced known Wowhead and historical Kaliope sources, including cutoff-catalogued Milling spell page; do not recatalogue or duplicate author batches. No new qualifying measured or independently grounded model rows for legacy Retail; all actual N, hits, zero bins and quantities remain unknown where unsupported. Token T0053 remains done. No game operations, prices, production or schedule changes.",
   "new_evidence_file_this_run": null,
-  "next": "Seek new post-cutoff source-linked processing exports or genuinely missing profile fields, with actual completed operations and input/output units. Do not re-query unchanged derivative calculators, reference tables, trainer discussions or known inaccessible Looter tables absent a new original data route.",
+  "next": "Seek independent original source-linked post-cutoff Retail legacy processing exports or genuinely new event-level historical records with precise profiles; exclude unchanged Forever tables and qualitative guides, and do not repeat cutoff-catalogued Wowhead sources absent a new raw data path.",
   "previous_run_model_summary": "Newly recovered public author-associated WorthIt v4.0.10 fixed flip model (commit c2151f04385991d43fc496b33aa63a95ac96cfcf, committed 2022-05-07, TOC Interface 90200, author DALAGG). Raw configured Fel Iron Ore 23424 material quantity 200, results 23112 Golden Draenite=7, 23107 Shadow Draenite=10, 21929 Flame Spessarite=11, 23077 Blood Garnet=7, 23117 Azure Moonstone=6, 23079 Deep Peridot=3, 23438 Star of Elune=1, 23440 Dawnstone=1, 23441 Nightseye=1, 23439 Noble Topaz=1. Cobalt 36909 is present in ore enum but absent from that prospect model/module. Netherweave Bracers 21849 configured Quantity=100 and results Arcane Dust 22445=60, Small Prismatic Shard 22448=10, Lesser Planar Essence 22447=140; it is a separate craft-and-DE flip, not the Warmaul profile. README describes average-based valuations, DestroyingResultModule consumes fixed model data; no actual operations, input consumption, event hits, zero counts, histograms, refunds, skill/spec or collection build documented. TOC interface is addon compatibility, not collection version. Milling model uses final ink quantities (e.g. Felweed 200 -> Ethereal Ink 50, Darkflame Ink 13); these are not raw pigment drops. Retain raw model quantities in status as reference-only, not measured totals or independent cast cohorts. Schema has no explicit nominal modeled batch/result quantity field separate from observed totalQuantity; Master to review a source-preserving model representation before build admission. Do not silently set casts=40 or 100, unlisted outputs=0, or current Retail eligibility. Author's public sitemap separately lists 1,000 Cobalt and Fel Iron WorthIt export titles, but no accessible output rows; website export index classified them under Patreon and direct retrieval failed (404); no purchases or access bypass. No new empirical cohort. Prior Warmaul and matched Reaver source searches repeated already-catalogued historical observations; token T0053 remains done. No evidence JSONL because only model quantities with undocumented collection lineage and no safe measured-field mapping."
 }
