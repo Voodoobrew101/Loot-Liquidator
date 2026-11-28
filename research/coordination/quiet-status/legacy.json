@@ -1,31 +1,35 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-28T09:36:53.433Z",
+  "updated_at": "2026-11-28T10:37:06.548Z",
   "status": "searching",
   "task_ids": [
     "T0047",
     "T0052",
+    "T0042",
     "T0022",
     "T0044",
-    "T0042"
+    "T0050",
+    "T0021"
   ],
   "exact_gaps_targeted": [
-    "24995 and matched TBC armor/weapon: exact held-item profile, complete original DE operations, outputs 22445/22446/22447/22449 with quantities, hits and zero-inclusive histograms",
-    "36909 and 23424: independent Retail prospecting input/operation ledger, outputs, conditional quantities, hits/zeros and refunds; distinct legacy milling cohorts"
+    "24995 and matched TBC armor/weapon: exact held-item profile, independent completed DE operations and per-output hits, quantities, zeros, histograms for 22445/22446/22447/22449",
+    "36909/23424 and legacy milling: independent operation and input denominators, exact output identity, quantities, hits, zero bins, refunds and collection profile",
+    "13866 and 36910: new independent original sample or concrete unresolved identity/profile field only"
   ],
   "newly_verified_fields_cohorts": [],
   "source_urls": [
-    "https://wowmarkets.app/us/nightslayer/horde/items/23424",
-    "https://www.wow-farming.info/farming-cobalt-ore/"
+    "https://www.curseforge.com/wow/addons/disenchantvalue",
+    "https://www.curseforge.com/wow/addons/disenchantvalue/files/7701600/dependencies",
+    "https://www.curseforge.com/wow/addons/dropatlas/files/9633351"
   ],
-  "numeric_summary": "No new independent qualifying numerical cohort; screened an indexed Classic expected-yield page and a Retail mining-only guide, neither containing a processing ledger.",
+  "numeric_summary": "No new independent qualifying numeric cohort or target identity correction. Direct addon documentation clarifies that a CSV is a price export, not a processing log; separate capture lead is Forever-only.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-26T1944-adders-tongue-original-2009-milling.jsonl",
   "preserved_prior_status_summary": "Recovered one new original historical WotLK-era milling cohort: anonymous WoW Alone comment dated October 29, 2009, Adder's Tongue 36903, 20 stacks reported milled, 229 Azure Pigment 39343 and 45 Icy Pigment 43109. Discussion indicates 20 herbs/stack and 5 herbs/mill; 400 herbs/80 nominal equivalents, not completed-cast counts. Source reported 2.86/0.56 per mill and 11.5/2.25 per stack; max five Icy and zero Icy on some stacks do not identify cast-level ranges or zeros. Preserve two historical reference rows, held for Retail eligibility and denominator evidence. Separate October 30 blog author mixed-herb ink tally reports 2.98/0.56 pigment-equivalent means per mill without exact input split, N or conversion details; held without assigning item-specific values. Targeted Warmaul/Bloodfist and Cobalt/Fel Iron searches found known historical sources/profile conflicts, no new independently identified cohort. T0053 remains done. No game actions or prices.",
-  "verified_parent_sha": "55a45d4912b53725c929924cae01e5f999568995",
-  "verified_commit_sha": "55a45d4912b53725c929924cae01e5f999568995",
-  "commit_note": "Verified pre-write head 55a45d4912b53725c929924cae01e5f999568995; owned status blob 8721a214543a6b035e99ff0f93b2bea6531e0828. Resulting commit checked by immutable read-back outside this file; no circular self-reference.",
+  "verified_parent_sha": "2508db8975297fea35e5665f49a1df038c1457e4",
+  "verified_commit_sha": "2508db8975297fea35e5665f49a1df038c1457e4",
+  "commit_note": "Verified pre-write head 2508db8975297fea35e5665f49a1df038c1457e4; owned status blob e9eeffce1054e62e91c5501ff210da9e11d4c9eb. Resulting commit to be checked by immutable read-back outside this file; no circular self-reference.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -1924,10 +1928,21 @@
       "disposition": "Indexed generic leveling assumption, held inaccessible",
       "reason": "Indexed guide describes a generic 2–3 pigments per five herbs assumption used in leveling calculations, with herb families but no original reported study or exact input-specific output ledger in excerpt. Direct open and find both returned HTTP 500. No verified source date, individual material quantities, operation counts, per-output hits/zeros, collection skill/build or independence. Do not assign the assumption to individual legacy herbs or treat it as a measured mean or histogram. Domain absent from the previous owned status and compact cutoff manifest; exhaustive scoped novelty not asserted."
     },
-    "2026-11-28T09:36:53.433Z: Fresh exact-name and reverse-material searches yielded previously reviewed historical sources; no independent Retail event rows. https://wowmarkets.app/us/nightslayer/horde/items/23424 — Indexed Classic realm estimate; direct source held inaccessible; https://www.wow-farming.info/farming-cobalt-ore/ — Current Retail mining guide only; no prospect sample. No new empirical quantities or model weights."
+    "2026-11-28T09:36:53.433Z: Fresh exact-name and reverse-material searches yielded previously reviewed historical sources; no independent Retail event rows. https://wowmarkets.app/us/nightslayer/horde/items/23424 — Indexed Classic realm estimate; direct source held inaccessible; https://www.wow-farming.info/farming-cobalt-ore/ — Current Retail mining guide only; no prospect sample. No new empirical quantities or model weights.",
+    {
+      "source": "https://www.curseforge.com/wow/addons/disenchantvalue",
+      "corroboration": "https://www.curseforge.com/wow/addons/disenchantvalue/files/7701600/dependencies",
+      "disposition": "Model and export semantics clarified; no independent processing cohort",
+      "reason": "Direct GildedFool project description lines 191–200 and 208–223 says its exported CSV is enchanting market price data, not a loot ledger; probability breakdown is a valuation model. March 2 2026 v1.2.0 file 7701600 lines 201–230 documents Retail 12.0.1 and Classic flavors, and an author-reported fix for overlapping TWW/Midnight item-level model routing. This software correction is not a Blizzard mechanic or evidence of current 24995 DE eligibility. No exact target input/output results, original study provenance, completed operations, hits, zeros, total units or collection skill/build disclosed. Do not treat displayed illustrative model chances or exported prices as observations. The project name previously appeared in status only in a different author's derivative-model discussion; direct project/author and file ID not found in compact cutoff receipt. No exhaustive novelty assertion."
+    },
+    {
+      "source": "https://www.curseforge.com/wow/addons/dropatlas/files/9633351",
+      "disposition": "Excluded capture lead, Forever-only",
+      "reason": "Direct VikInks release 1.9.3, November 15 2026, lines 160–201 explicitly targets Forever 1.60.1; this release describes opt-in quest-observation exports. No documented target-item processing ledger, completed cast N, output quantities, hit/zero histogram or Retail collection profile. No implication that undocumented features do not exist. No cross-flavor transfer or access to private exports. Project slug and file ID absent from previous owned status and compact cutoff receipt."
+    }
   ],
   "previous_verified_evidence_sha": "bd0ae3dd28e479f8f63272f2d0f5fdf6210b7fd9",
-  "next_concrete_step": "Seek new original event exports or direct dated independent reports for 24995/36909/23424; avoid repeated guides, mining acquisition counts and derivative models. Reopen an old source only for a concrete unreviewed identity/profile/denominator field. T0053 remains done.",
+  "next_concrete_step": "Prioritize a new publicly disclosed event export or original dated sample for 24995, 36909 or 23424; do not repeat exhausted reference and logger listings. Reopen only on a new receipt or concrete unassessed denominator/identity/profile field; keep 45661 closed.",
   "coordination_cutoff": {
     "summary": "Owner catalogue receipt reports 731 sources and 12222 scopes, 0 unresolved build rows; reuse scoped decisions.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -1937,19 +1952,20 @@
   },
   "sources_reviewed_this_run": [
     {
-      "source": "https://wowmarkets.app/us/nightslayer/horde/items/23424",
-      "disposition": "Indexed Classic realm estimate; direct source held inaccessible",
-      "reason": "Indexed Nightslayer Horde Fel Iron Ore 23424 operation page describes an expected yield and estimated acquisition/yield model, not observed receipts. Direct fetch HTTP 404; no output vector, original provenance, completed operation N, hits, zeros, quantities, skill or collection build verified. The Jewelcrafting 275 label is not an observed character skill. No Retail transfer or price retained."
+      "source": "https://www.curseforge.com/wow/addons/disenchantvalue",
+      "corroboration": "https://www.curseforge.com/wow/addons/disenchantvalue/files/7701600/dependencies",
+      "disposition": "Model and export semantics clarified; no independent processing cohort",
+      "reason": "Direct GildedFool project description lines 191–200 and 208–223 says its exported CSV is enchanting market price data, not a loot ledger; probability breakdown is a valuation model. March 2 2026 v1.2.0 file 7701600 lines 201–230 documents Retail 12.0.1 and Classic flavors, and an author-reported fix for overlapping TWW/Midnight item-level model routing. This software correction is not a Blizzard mechanic or evidence of current 24995 DE eligibility. No exact target input/output results, original study provenance, completed operations, hits, zeros, total units or collection skill/build disclosed. Do not treat displayed illustrative model chances or exported prices as observations. The project name previously appeared in status only in a different author's derivative-model discussion; direct project/author and file ID not found in compact cutoff receipt. No exhaustive novelty assertion."
     },
     {
-      "source": "https://www.wow-farming.info/farming-cobalt-ore/",
-      "disposition": "Current Retail mining guide only; no prospect sample",
-      "reason": "Direct page lines 5–13 and 28–39, originally August 14 2011, updated October 21 2026, explicitly distinguishes Retail Northrend mining skill bar 1–75 from Classic mining thresholds 350/375; it cites WoW-Professions for locations and does not supply prospecting operations for Cobalt Ore 36909. No consumed inputs, named outputs, hits, zeros, quantities, refunds, jewelcrafting skill or collection build. Do not interpret gathering training/route as processing evidence."
+      "source": "https://www.curseforge.com/wow/addons/dropatlas/files/9633351",
+      "disposition": "Excluded capture lead, Forever-only",
+      "reason": "Direct VikInks release 1.9.3, November 15 2026, lines 160–201 explicitly targets Forever 1.60.1; this release describes opt-in quest-observation exports. No documented target-item processing ledger, completed cast N, output quantities, hit/zero histogram or Retail collection profile. No implication that undocumented features do not exist. No cross-flavor transfer or access to private exports. Project slug and file ID absent from previous owned status and compact cutoff receipt."
     }
   ],
   "latest_run_source_date": "2026-11-28",
-  "latest_run": "Read current shared rules, evidence format, mechanics, worker role, queue and catalogue receipt. Exact-name and reverse-material searches for Warmaul and matched TBC groups, Cobalt, Fel Iron and legacy milling produced known historical cohorts, mirrored comments and non-empirical models. No re-cataloguing. Newly screened source paths recorded separately; novelty checked against previous status and compact catalogue, not exhaustive. No new evidence JSONL, invented zero or confidence, prices, game actions, PRs, releases or schedule changes. T0053 remains done.",
+  "latest_run": "Refreshed pinned research head and read required README, evidence schema, mechanics, worker role, queue and closed verified catalogue receipt. Exact-name, reverse-material, historical original blog and current logger searches returned previously reviewed sources; 1115352 five-DE mirror and Kaliope skill/quantity reports are already covered. Direct source screening of two additional addon documentation paths found no target operation data. Token T0053 is done; no duplicated catalogue, evidence JSONL, inferred counts, prices, game actions, PRs, releases or schedule changes.",
   "new_evidence_file_this_run": null,
-  "next": "Seek new original event exports or direct dated independent reports for 24995/36909/23424; avoid repeated guides, mining acquisition counts and derivative models. Reopen an old source only for a concrete unreviewed identity/profile/denominator field. T0053 remains done.",
+  "next": "Prioritize a new publicly disclosed event export or original dated sample for 24995, 36909 or 23424; do not repeat exhausted reference and logger listings. Reopen only on a new receipt or concrete unassessed denominator/identity/profile field; keep 45661 closed.",
   "previous_run_model_summary": "Newly recovered public author-associated WorthIt v4.0.10 fixed flip model (commit c2151f04385991d43fc496b33aa63a95ac96cfcf, committed 2022-05-07, TOC Interface 90200, author DALAGG). Raw configured Fel Iron Ore 23424 material quantity 200, results 23112 Golden Draenite=7, 23107 Shadow Draenite=10, 21929 Flame Spessarite=11, 23077 Blood Garnet=7, 23117 Azure Moonstone=6, 23079 Deep Peridot=3, 23438 Star of Elune=1, 23440 Dawnstone=1, 23441 Nightseye=1, 23439 Noble Topaz=1. Cobalt 36909 is present in ore enum but absent from that prospect model/module. Netherweave Bracers 21849 configured Quantity=100 and results Arcane Dust 22445=60, Small Prismatic Shard 22448=10, Lesser Planar Essence 22447=140; it is a separate craft-and-DE flip, not the Warmaul profile. README describes average-based valuations, DestroyingResultModule consumes fixed model data; no actual operations, input consumption, event hits, zero counts, histograms, refunds, skill/spec or collection build documented. TOC interface is addon compatibility, not collection version. Milling model uses final ink quantities (e.g. Felweed 200 -> Ethereal Ink 50, Darkflame Ink 13); these are not raw pigment drops. Retain raw model quantities in status as reference-only, not measured totals or independent cast cohorts. Schema has no explicit nominal modeled batch/result quantity field separate from observed totalQuantity; Master to review a source-preserving model representation before build admission. Do not silently set casts=40 or 100, unlisted outputs=0, or current Retail eligibility. Author's public sitemap separately lists 1,000 Cobalt and Fel Iron WorthIt export titles, but no accessible output rows; website export index classified them under Patreon and direct retrieval failed (404); no purchases or access bypass. No new empirical cohort. Prior Warmaul and matched Reaver source searches repeated already-catalogued historical observations; token T0053 remains done. No evidence JSONL because only model quantities with undocumented collection lineage and no safe measured-field mapping."
 }
