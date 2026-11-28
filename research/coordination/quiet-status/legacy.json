@@ -1,7 +1,7 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-28T11:40:28.540Z",
+  "updated_at": "2026-11-28T12:45:12.262Z",
   "status": "searching",
   "task_ids": [
     "T0047",
@@ -11,22 +11,24 @@
     "T0042"
   ],
   "exact_gaps_targeted": [
-    "24995 and matched 25003: exact Retail itemLink/bonus profile, completed operations, 22445/22446/22447/22449 hits and quantities, zeros and collection skill/build",
-    "36909 and 23424: independent original completed operations, output IDs, quantities/hits, refunds and per-cast histograms",
-    "Legacy WotLK milling: original independent cast or input totals and profile only"
+    "24995 and matching BC gear: actual Retail itemLink/bonus/eligibility and output operation ledger",
+    "36909 and 23424: independent actual prospecting casts, outputs, hit counts, refunds and zero-inclusive histograms",
+    "Legacy milling: new original source and duplicate provenance"
   ],
   "newly_verified_fields_cohorts": [],
   "source_urls": [
-    "https://tradeskillmaster.com/retail/us/items/25003",
-    "https://worldofwarcraft.judgehype.com/guide-profession-joaillerie/"
+    "https://www.scrap-o-matic.com/retail/24995?back=https://www.scrap-o-matic.com/retail/npc/20210&npc_display_name=Shaleskin+Flayer",
+    "https://www.wowhead.com/cata/item=39343/azure-pigment",
+    "https://www.wowhead.com/wotlk/item=39343/azure-pigment",
+    "https://www.wowhead.com/ptr-2/item=175788/tranquil-pigment"
   ],
-  "numeric_summary": "No new independent qualifying yield cohort. Additional direct Retail TSM corroboration of Bloodfist Legplates 25003 displayed item level 74 (not an exact held-item receipt); previous variant evidence remains held. No new measured fields admitted.",
+  "numeric_summary": "No new independent qualifying numerical cohort. Identified exact duplicate numeric-author presentation of existing historical Adder's Tongue and Icethorn cohorts (128 and 256 mills) and excluded Scrap-o-matic NPC acquisition data from Warmaul disenchant measurements. No sample counts or confidence increment.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-26T1944-adders-tongue-original-2009-milling.jsonl",
   "preserved_prior_status_summary": "Recovered one new original historical WotLK-era milling cohort: anonymous WoW Alone comment dated October 29, 2009, Adder's Tongue 36903, 20 stacks reported milled, 229 Azure Pigment 39343 and 45 Icy Pigment 43109. Discussion indicates 20 herbs/stack and 5 herbs/mill; 400 herbs/80 nominal equivalents, not completed-cast counts. Source reported 2.86/0.56 per mill and 11.5/2.25 per stack; max five Icy and zero Icy on some stacks do not identify cast-level ranges or zeros. Preserve two historical reference rows, held for Retail eligibility and denominator evidence. Separate October 30 blog author mixed-herb ink tally reports 2.98/0.56 pigment-equivalent means per mill without exact input split, N or conversion details; held without assigning item-specific values. Targeted Warmaul/Bloodfist and Cobalt/Fel Iron searches found known historical sources/profile conflicts, no new independently identified cohort. T0053 remains done. No game actions or prices.",
-  "verified_parent_sha": "ec88ca7e659c17900a4e9ff07e9d6d5d70e5f8ea",
-  "verified_commit_sha": "ec88ca7e659c17900a4e9ff07e9d6d5d70e5f8ea",
-  "commit_note": "Verified pre-write head ec88ca7e659c17900a4e9ff07e9d6d5d70e5f8ea; owned status blob c3b4078e91720b49de1c169bd01df7fd68a6316e. Resulting status commit verified by immutable read-back outside this file; no circular self-reference.",
+  "verified_parent_sha": "fa8607d74871202dea11a4bb1c7fa48c6c85eb07",
+  "verified_commit_sha": "fa8607d74871202dea11a4bb1c7fa48c6c85eb07",
+  "commit_note": "Verified pre-write head fa8607d74871202dea11a4bb1c7fa48c6c85eb07; owned status blob 81d9f4a4946fe4ae7107f4b6768a820c8b134d7f. Resulting status commit verified by immutable read-back outside this file; no circular self-reference.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -1222,6 +1224,25 @@
       "source": "https://www.wow-farming.info/farming-cobalt-ore/",
       "disposition": "Current Retail mining guide only; no prospect sample",
       "reason": "Direct page lines 5–13 and 28–39, originally August 14 2011, updated October 21 2026, explicitly distinguishes Retail Northrend mining skill bar 1–75 from Classic mining thresholds 350/375; it cites WoW-Professions for locations and does not supply prospecting operations for Cobalt Ore 36909. No consumed inputs, named outputs, hits, zeros, quantities, refunds, jewelcrafting skill or collection build. Do not interpret gathering training/route as processing evidence."
+    },
+    {
+      "task": "T0047/T0052",
+      "source": "https://www.scrap-o-matic.com/retail/24995?back=https://www.scrap-o-matic.com/retail/npc/20210&npc_display_name=Shaleskin+Flayer",
+      "disposition": "Acquisition catalogue, not a DE cohort",
+      "reason": "Direct linked item page lines 19–32 reports item 24995, class ID 4, inventory slot 7, and 200 location/drop entries. NPC 20210 page explicitly labels its percentages as a creature loot table. These are acquisition probabilities, not material output probabilities; no current itemLink/bonus/ilvl, DE eligibility, actual operations, material hits, quantities, zeros, or skill/build established. Source lineage is unspecified. Domain absent from prior owned status and compact catalogue receipt."
+    },
+    {
+      "task": "T0042",
+      "source": "https://www.wowhead.com/cata/item=39343/azure-pigment",
+      "corroboration": "https://www.wowhead.com/wotlk/item=39343/azure-pigment",
+      "disposition": "Exact mirrored cohort, numeric-author alias; not new evidence",
+      "reason": "Direct Cata comment labelled 31845 repeats the already-preserved Sgtown vectors exactly: Adder's Tongue 36903, 128 mills/640 herbs, 39343 Azure 383 and 43109 Icy 61; Icethorn 36906, 256 mills/1280 herbs, 39343 Azure 774 and 43109 Icy 141. Existing legacy 2026-11-09T0956-northrend-outland-classic-milling-cohorts.jsonl records legacy-20261109-95501..95504. Treat numeric display alias as the same two batches, not another 384 operations; no new hit/zero/skill/patch profile. Existing source already preserved; no recataloguing."
+    },
+    {
+      "task": "T0042",
+      "source": "https://www.wowhead.com/ptr-2/item=175788/tranquil-pigment",
+      "disposition": "Historical mirrored published means; cutoff review already owns scope",
+      "reason": "Direct comment lines 24–35 reproduces Melch1337 pooled >100,000-herb historical per-100-herb means. No separate per-species sample sizes or hit/zero histograms. Existing source wowhead:item=175788 is in owner catalogue; M03b/M06 and Oct 28 submission explicitly document the source and Widowbloom per-input means. The current PTR page is a mirror, not current PTR or Retail collection evidence; no duplicate weight."
     }
   ],
   "blockers": [
@@ -1946,10 +1967,29 @@
       "source": "https://worldofwarcraft.judgehype.com/guide-profession-joaillerie/",
       "disposition": "Indexed historical profession guide, direct source inaccessible",
       "reason": "French exact-name search returned an indexed table of prospective gem identities and old skill thresholds for Fel Iron and other ores. Direct page returned HTTP 403. No original event ledger, patch, input consumption, per-output hits, zeros, totals or independent cohort verified; do not import the historical access rules or assign weights from the excerpt. Guide path absent from prior owned status and compact cutoff manifest."
+    },
+    {
+      "task": "T0047/T0052",
+      "source": "https://www.scrap-o-matic.com/retail/24995?back=https://www.scrap-o-matic.com/retail/npc/20210&npc_display_name=Shaleskin+Flayer",
+      "disposition": "Acquisition catalogue, not a DE cohort",
+      "reason": "Direct linked item page lines 19–32 reports item 24995, class ID 4, inventory slot 7, and 200 location/drop entries. NPC 20210 page explicitly labels its percentages as a creature loot table. These are acquisition probabilities, not material output probabilities; no current itemLink/bonus/ilvl, DE eligibility, actual operations, material hits, quantities, zeros, or skill/build established. Source lineage is unspecified. Domain absent from prior owned status and compact catalogue receipt."
+    },
+    {
+      "task": "T0042",
+      "source": "https://www.wowhead.com/cata/item=39343/azure-pigment",
+      "corroboration": "https://www.wowhead.com/wotlk/item=39343/azure-pigment",
+      "disposition": "Exact mirrored cohort, numeric-author alias; not new evidence",
+      "reason": "Direct Cata comment labelled 31845 repeats the already-preserved Sgtown vectors exactly: Adder's Tongue 36903, 128 mills/640 herbs, 39343 Azure 383 and 43109 Icy 61; Icethorn 36906, 256 mills/1280 herbs, 39343 Azure 774 and 43109 Icy 141. Existing legacy 2026-11-09T0956-northrend-outland-classic-milling-cohorts.jsonl records legacy-20261109-95501..95504. Treat numeric display alias as the same two batches, not another 384 operations; no new hit/zero/skill/patch profile. Existing source already preserved; no recataloguing."
+    },
+    {
+      "task": "T0042",
+      "source": "https://www.wowhead.com/ptr-2/item=175788/tranquil-pigment",
+      "disposition": "Historical mirrored published means; cutoff review already owns scope",
+      "reason": "Direct comment lines 24–35 reproduces Melch1337 pooled >100,000-herb historical per-100-herb means. No separate per-species sample sizes or hit/zero histograms. Existing source wowhead:item=175788 is in owner catalogue; M03b/M06 and Oct 28 submission explicitly document the source and Widowbloom per-input means. The current PTR page is a mirror, not current PTR or Retail collection evidence; no duplicate weight."
     }
   ],
   "previous_verified_evidence_sha": "bd0ae3dd28e479f8f63272f2d0f5fdf6210b7fd9",
-  "next_concrete_step": "Only reopen target studies on newly published original event export, complete source receipt or specific unresolved denominator/profile field. Seek publicly disclosed 24995/25003 itemLink plus actual disenchants or 36909/23424 processing ledgers; no repeat of indexed historical tables or logger listings. T0053 closed.",
+  "next_concrete_step": "Seek newly published original Retail itemLink + completed disenchant receipts, or independent 36909/23424 completed-processing logs. Avoid repeating old indexed model and mirrored comment searches. Reopen only on specific new provenance/denominator/profile evidence. T0053 remains done.",
   "coordination_cutoff": {
     "summary": "Owner catalogue receipt reports 731 sources and 12222 scopes, 0 unresolved build rows; reuse scoped decisions.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -1959,19 +1999,28 @@
   },
   "sources_reviewed_this_run": [
     {
-      "source": "https://tradeskillmaster.com/retail/us/items/25003",
-      "disposition": "Additional third-party Retail profile corroboration, held; no yield inference",
-      "reason": "Direct Retail TSM page lines 1105–1122 and 1175–1184 identifies Bloodfist Legplates 25003 as plate legs, item level 74, required level 26, BoE. This matches the previously documented GoldCap variant category for 25003 and TSM level-74 listing for 24995; not a new independent DE cohort or proof of collection build, itemLink/bonus IDs, eligibility or shared disenchant bracket. No prices or market sample counts retained. Exact TSM path absent from prior owned status and compact cutoff manifest; no exhaustive scoped novelty asserted."
+      "task": "T0047/T0052",
+      "source": "https://www.scrap-o-matic.com/retail/24995?back=https://www.scrap-o-matic.com/retail/npc/20210&npc_display_name=Shaleskin+Flayer",
+      "disposition": "Acquisition catalogue, not a DE cohort",
+      "reason": "Direct linked item page lines 19–32 reports item 24995, class ID 4, inventory slot 7, and 200 location/drop entries. NPC 20210 page explicitly labels its percentages as a creature loot table. These are acquisition probabilities, not material output probabilities; no current itemLink/bonus/ilvl, DE eligibility, actual operations, material hits, quantities, zeros, or skill/build established. Source lineage is unspecified. Domain absent from prior owned status and compact catalogue receipt."
     },
     {
-      "source": "https://worldofwarcraft.judgehype.com/guide-profession-joaillerie/",
-      "disposition": "Indexed historical profession guide, direct source inaccessible",
-      "reason": "French exact-name search returned an indexed table of prospective gem identities and old skill thresholds for Fel Iron and other ores. Direct page returned HTTP 403. No original event ledger, patch, input consumption, per-output hits, zeros, totals or independent cohort verified; do not import the historical access rules or assign weights from the excerpt. Guide path absent from prior owned status and compact cutoff manifest."
+      "task": "T0042",
+      "source": "https://www.wowhead.com/cata/item=39343/azure-pigment",
+      "corroboration": "https://www.wowhead.com/wotlk/item=39343/azure-pigment",
+      "disposition": "Exact mirrored cohort, numeric-author alias; not new evidence",
+      "reason": "Direct Cata comment labelled 31845 repeats the already-preserved Sgtown vectors exactly: Adder's Tongue 36903, 128 mills/640 herbs, 39343 Azure 383 and 43109 Icy 61; Icethorn 36906, 256 mills/1280 herbs, 39343 Azure 774 and 43109 Icy 141. Existing legacy 2026-11-09T0956-northrend-outland-classic-milling-cohorts.jsonl records legacy-20261109-95501..95504. Treat numeric display alias as the same two batches, not another 384 operations; no new hit/zero/skill/patch profile. Existing source already preserved; no recataloguing."
+    },
+    {
+      "task": "T0042",
+      "source": "https://www.wowhead.com/ptr-2/item=175788/tranquil-pigment",
+      "disposition": "Historical mirrored published means; cutoff review already owns scope",
+      "reason": "Direct comment lines 24–35 reproduces Melch1337 pooled >100,000-herb historical per-100-herb means. No separate per-species sample sizes or hit/zero histograms. Existing source wowhead:item=175788 is in owner catalogue; M03b/M06 and Oct 28 submission explicitly document the source and Widowbloom per-input means. The current PTR page is a mirror, not current PTR or Retail collection evidence; no duplicate weight."
     }
   ],
   "latest_run_source_date": "2026-11-28",
-  "latest_run": "Refreshed research branch and read required README, evidence format, mechanics, worker role, queue and closed verified catalogue receipt. Exact-name, reverse-material, French/German and historical milling queries returned predominantly already reviewed sources (565-ore Thottbot, Kaliope, killerpet/Sgtown, Psynister and historical model tables). TSM 25003 gives narrow profile corroboration only; JudgeHype guide direct access denied. No new data file, duplicated cutoff review, game actions, inferred counts, prices, PR, release, or schedule change. Token T0053 remains done.",
+  "latest_run": "Refreshed research branch, read required README, evidence format, mechanics, worker role, queue and owner catalogue receipt. Targeted current and reverse-material source searches for Warmaul and Cobalt/Fel Iron returned previously preserved historical cohorts and acquisition catalogues. Checked direct newly surfaced Scrap-o-matic item link and exact mirrored historical milling comment against existing worker evidence; Melch1337 source is already in cutoff catalogue. No new JSONL, inferred denominators, game actions, prices, PRs, release or schedule changes. T0053 remains done.",
   "new_evidence_file_this_run": null,
-  "next": "Only reopen target studies on newly published original event export, complete source receipt or specific unresolved denominator/profile field. Seek publicly disclosed 24995/25003 itemLink plus actual disenchants or 36909/23424 processing ledgers; no repeat of indexed historical tables or logger listings. T0053 closed.",
+  "next": "Seek newly published original Retail itemLink + completed disenchant receipts, or independent 36909/23424 completed-processing logs. Avoid repeating old indexed model and mirrored comment searches. Reopen only on specific new provenance/denominator/profile evidence. T0053 remains done.",
   "previous_run_model_summary": "Newly recovered public author-associated WorthIt v4.0.10 fixed flip model (commit c2151f04385991d43fc496b33aa63a95ac96cfcf, committed 2022-05-07, TOC Interface 90200, author DALAGG). Raw configured Fel Iron Ore 23424 material quantity 200, results 23112 Golden Draenite=7, 23107 Shadow Draenite=10, 21929 Flame Spessarite=11, 23077 Blood Garnet=7, 23117 Azure Moonstone=6, 23079 Deep Peridot=3, 23438 Star of Elune=1, 23440 Dawnstone=1, 23441 Nightseye=1, 23439 Noble Topaz=1. Cobalt 36909 is present in ore enum but absent from that prospect model/module. Netherweave Bracers 21849 configured Quantity=100 and results Arcane Dust 22445=60, Small Prismatic Shard 22448=10, Lesser Planar Essence 22447=140; it is a separate craft-and-DE flip, not the Warmaul profile. README describes average-based valuations, DestroyingResultModule consumes fixed model data; no actual operations, input consumption, event hits, zero counts, histograms, refunds, skill/spec or collection build documented. TOC interface is addon compatibility, not collection version. Milling model uses final ink quantities (e.g. Felweed 200 -> Ethereal Ink 50, Darkflame Ink 13); these are not raw pigment drops. Retain raw model quantities in status as reference-only, not measured totals or independent cast cohorts. Schema has no explicit nominal modeled batch/result quantity field separate from observed totalQuantity; Master to review a source-preserving model representation before build admission. Do not silently set casts=40 or 100, unlisted outputs=0, or current Retail eligibility. Author's public sitemap separately lists 1,000 Cobalt and Fel Iron WorthIt export titles, but no accessible output rows; website export index classified them under Patreon and direct retrieval failed (404); no purchases or access bypass. No new empirical cohort. Prior Warmaul and matched Reaver source searches repeated already-catalogued historical observations; token T0053 remains done. No evidence JSONL because only model quantities with undocumented collection lineage and no safe measured-field mapping."
 }
