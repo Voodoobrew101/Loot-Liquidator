@@ -1,7 +1,7 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-28T18:45:23.565Z",
+  "updated_at": "2026-11-28T19:38:49.850Z",
   "status": "searching",
   "task_ids": [
     "T0047",
@@ -11,61 +11,22 @@
     "T0044"
   ],
   "exact_gaps_targeted": [
-    "Historical TBC/Wrath model gear-kind ambiguity and current Retail exact-item eligibility; seek independent 24995/30364 completed disenchants with stack/hit/zero distributions.",
-    "Seek published original legacy ore/herb processing exports; verify recorder flavor, input consumption and completion semantics."
+    "Warmaul Legplates 24995 and matching uncommon TBC armor/weapon profiles: original completed operations, output totals/hits/zeros and exact Retail itemLink/build eligibility.",
+    "Cobalt Ore 36909 and Fel Iron Ore 23424: independent original direct-stage processing export with real casts, material counts, refunds and zeros."
   ],
-  "newly_verified_fields_cohorts": [
-    {
-      "inputItemID": 30364,
-      "inputName": "Resonating Axe",
-      "itemLevel": 108,
-      "quality": "uncommon",
-      "kind": "weapon",
-      "source": "https://legacyofwarcraft.com/db/wrath/item/30364.html",
-      "patchContext": "Historical Wrath 3.3.5 catalogue; no observed collection patch",
-      "referenceOnly": true,
-      "modeledOutputs": [
-        {
-          "outputItemID": 22446,
-          "percentShown": 75,
-          "modeledRange": [
-            1,
-            2
-          ]
-        },
-        {
-          "outputItemID": 22445,
-          "percentShown": 22,
-          "modeledRange": [
-            2,
-            5
-          ]
-        },
-        {
-          "outputItemID": 22449,
-          "percentShown": 3,
-          "modeledRange": null
-        }
-      ],
-      "casts": null,
-      "castsWithDrop": null,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "specialization": null
-    }
-  ],
+  "newly_verified_fields_cohorts": [],
   "source_urls": [
-    "https://legacyofwarcraft.com/db/wrath/item/30364.html",
-    "https://legacyofwarcraft.com/db/wrath/professions/disenchanting.html"
+    "https://www.curseforge.com/wow/addons/golden-data",
+    "https://www.curseforge.com/wow/addons/golden-data/files/8236607",
+    "https://www.curseforge.com/wow/addons/golden-data/comments"
   ],
-  "numeric_summary": "No new independent numerical processing cohort. Item-specific historical model clarifies the weapon vector only; recorder release metadata does not establish measured yields.",
+  "numeric_summary": "No new qualifying numeric cohort or identity correction. One additional public Retail data recorder lead screened; export documentation alone cannot establish completed processing operations or output distributions.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-26T1944-adders-tongue-original-2009-milling.jsonl",
   "preserved_prior_status_summary": "Recovered one new original historical WotLK-era milling cohort: anonymous WoW Alone comment dated October 29, 2009, Adder's Tongue 36903, 20 stacks reported milled, 229 Azure Pigment 39343 and 45 Icy Pigment 43109. Discussion indicates 20 herbs/stack and 5 herbs/mill; 400 herbs/80 nominal equivalents, not completed-cast counts. Source reported 2.86/0.56 per mill and 11.5/2.25 per stack; max five Icy and zero Icy on some stacks do not identify cast-level ranges or zeros. Preserve two historical reference rows, held for Retail eligibility and denominator evidence. Separate October 30 blog author mixed-herb ink tally reports 2.98/0.56 pigment-equivalent means per mill without exact input split, N or conversion details; held without assigning item-specific values. Targeted Warmaul/Bloodfist and Cobalt/Fel Iron searches found known historical sources/profile conflicts, no new independently identified cohort. T0053 remains done. No game actions or prices.",
-  "verified_parent_sha": "a1c16caf030a62996dad412fa596bc1c7b629429",
-  "verified_commit_sha": "a1c16caf030a62996dad412fa596bc1c7b629429",
-  "commit_note": "Verified pre-write research head a1c16caf030a62996dad412fa596bc1c7b629429; prior owned status blob e0a05d268d86f99be03f12d73a53d5843e64547c. Resulting status-only commit to be verified externally by immutable read-back, avoiding circular self-reference.",
+  "verified_parent_sha": "ab3655eb1ce66895f7dd9ae6c5f5db1e1f2b39ea",
+  "verified_commit_sha": "ab3655eb1ce66895f7dd9ae6c5f5db1e1f2b39ea",
+  "commit_note": "Verified pre-write branch head ab3655eb1ce66895f7dd9ae6c5f5db1e1f2b39ea; owned blob ff932056f60e3baf81b8b0b525d193960a187d69. Resulting status-only commit must be verified by immutable read-back, not self-referenced.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -2155,10 +2116,17 @@
       "corroboration": "https://legacyofwarcraft.com/db/wrath/professions/disenchanting.html",
       "disposition": "Same-source historical model clarification, not new cohort",
       "reason": "Wrath item-specific page lines 44–77 and 84–90 identifies Resonating Axe 30364 as uncommon one-hand axe, ilvl108, with modeled 22446 Greater Planar Essence 75% (1–2), 22445 Arcane Dust 22% (2–5), 22449 Large Prismatic Shard 3% (quantity not printed). This identifies the essence-majority row as applicable to this weapon in this site's model despite duplicate weapon labels on its 3.3.5 group table. Does NOT establish armor mapping, independence from previously documented 2.4.3 model, or current Retail eligibility; Warmaul item page unavailable. No actual casts, hits, zeros, quantities, skill or collection build. Keep reference-only."
+    },
+    {
+      "task": "T0047/T0052/T0042/T0022/T0044",
+      "source": "https://www.curseforge.com/wow/addons/golden-data",
+      "corroboration": "https://www.curseforge.com/wow/addons/golden-data/files/8236607 ; https://www.curseforge.com/wow/addons/golden-data/comments",
+      "disposition": "New public recorder lead; held, no outcome dataset",
+      "reason": "Author GoldenRoutesOG documents Retail 12.0.5 file 8236607, June 12 2026, item ID/name capture, gathering/loot events, summary and full event exports, and a private submission form for GoldenData.lua (description lines 183–195, 218–244). No explicit linkage of consumed item/bonus to completed DE/prospect/mill event, per-cast zero records, refunds, skill or collection build; source code not inspected. Public indexed searches for GoldenData.lua and author export yielded documentation, not an original target cohort. No access to submissions requested or implied; no form submitted. Name and URL absent from prior owned status and compact cutoff source list. No measurements, prices, identity/rank corrections or admission."
     }
   ],
   "previous_verified_evidence_sha": "bd0ae3dd28e479f8f63272f2d0f5fdf6210b7fd9",
-  "next_concrete_step": "Prioritize new publicly released existing Retail raw operation exports, with verified input itemLink/bonus/build and observed event completion, per-output totals/hits/zeros or supported means; avoid repeating known historical tables, and do not infer recorder data from supported version.",
+  "next_concrete_step": "Seek newly published existing Retail original processing logs with exact input/bonus/build, event-level completion and output counts; consider full Golden Data export only if publicly released and processing attribution/completeness demonstrable. Do not repeat its unchanged listing or earlier model/repost families.",
   "coordination_cutoff": {
     "summary": "Owner catalogue receipt reports 731 sources and 12222 scopes, 0 unresolved build rows; reuse scoped decisions.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -2168,16 +2136,16 @@
   },
   "sources_reviewed_this_run": [
     {
-      "task": "T0052",
-      "source": "https://legacyofwarcraft.com/db/wrath/item/30364.html",
-      "corroboration": "https://legacyofwarcraft.com/db/wrath/professions/disenchanting.html",
-      "disposition": "Same-source historical model clarification, not new cohort",
-      "reason": "Wrath item-specific page lines 44–77 and 84–90 identifies Resonating Axe 30364 as uncommon one-hand axe, ilvl108, with modeled 22446 Greater Planar Essence 75% (1–2), 22445 Arcane Dust 22% (2–5), 22449 Large Prismatic Shard 3% (quantity not printed). This identifies the essence-majority row as applicable to this weapon in this site's model despite duplicate weapon labels on its 3.3.5 group table. Does NOT establish armor mapping, independence from previously documented 2.4.3 model, or current Retail eligibility; Warmaul item page unavailable. No actual casts, hits, zeros, quantities, skill or collection build. Keep reference-only."
+      "task": "T0047/T0052/T0042/T0022/T0044",
+      "source": "https://www.curseforge.com/wow/addons/golden-data",
+      "corroboration": "https://www.curseforge.com/wow/addons/golden-data/files/8236607 ; https://www.curseforge.com/wow/addons/golden-data/comments",
+      "disposition": "New public recorder lead; held, no outcome dataset",
+      "reason": "Author GoldenRoutesOG documents Retail 12.0.5 file 8236607, June 12 2026, item ID/name capture, gathering/loot events, summary and full event exports, and a private submission form for GoldenData.lua (description lines 183–195, 218–244). No explicit linkage of consumed item/bonus to completed DE/prospect/mill event, per-cast zero records, refunds, skill or collection build; source code not inspected. Public indexed searches for GoldenData.lua and author export yielded documentation, not an original target cohort. No access to submissions requested or implied; no form submitted. Name and URL absent from prior owned status and compact cutoff source list. No measurements, prices, identity/rank corrections or admission."
     }
   ],
   "latest_run_source_date": "2026-11-28",
-  "latest_run": "Refreshed exact research head; read README, evidence format, mechanics, worker, queue, owner catalogue receipt and registry. Historical reference tables and ore/material searches returned already catalogued or mirrored studies; no reopening of cutoff corpus. Reviewed exact historical weapon mapping and newly surfaced recorder documentation; no qualifying raw Retail cohort, no evidence JSONL, no game actions or PR/release changes. Token T0053 remains done.",
+  "latest_run": "Read current required research rules, queue and owner receipt at ab3655eb1ce66895f7dd9ae6c5f5db1e1f2b39ea. Named exact-item DE and ore searches across web indexes, forums, wiki, Reddit, blogs, GitHub and addon listings returned known sources or no original target ledger; existing historical TBC model, Warmaul conflicting profiles, Tobold beta repost family and DalaGG restricted exports not re-transcribed. New Golden Data documentation screened. Housing dye beta discussion concerns separate deterministic recipes, not legacy random milling. Owner receipt CLOSED_VERIFIED_CURRENT_PIPELINE; do not reopen catalogue; T0053 remains done. No new evidence JSONL, no game actions or PR/release changes.",
   "new_evidence_file_this_run": null,
-  "next": "Prioritize new publicly released existing Retail raw operation exports, with verified input itemLink/bonus/build and observed event completion, per-output totals/hits/zeros or supported means; avoid repeating known historical tables, and do not infer recorder data from supported version.",
+  "next": "Seek newly published existing Retail original processing logs with exact input/bonus/build, event-level completion and output counts; consider full Golden Data export only if publicly released and processing attribution/completeness demonstrable. Do not repeat its unchanged listing or earlier model/repost families.",
   "previous_run_model_summary": "Newly recovered public author-associated WorthIt v4.0.10 fixed flip model (commit c2151f04385991d43fc496b33aa63a95ac96cfcf, committed 2022-05-07, TOC Interface 90200, author DALAGG). Raw configured Fel Iron Ore 23424 material quantity 200, results 23112 Golden Draenite=7, 23107 Shadow Draenite=10, 21929 Flame Spessarite=11, 23077 Blood Garnet=7, 23117 Azure Moonstone=6, 23079 Deep Peridot=3, 23438 Star of Elune=1, 23440 Dawnstone=1, 23441 Nightseye=1, 23439 Noble Topaz=1. Cobalt 36909 is present in ore enum but absent from that prospect model/module. Netherweave Bracers 21849 configured Quantity=100 and results Arcane Dust 22445=60, Small Prismatic Shard 22448=10, Lesser Planar Essence 22447=140; it is a separate craft-and-DE flip, not the Warmaul profile. README describes average-based valuations, DestroyingResultModule consumes fixed model data; no actual operations, input consumption, event hits, zero counts, histograms, refunds, skill/spec or collection build documented. TOC interface is addon compatibility, not collection version. Milling model uses final ink quantities (e.g. Felweed 200 -> Ethereal Ink 50, Darkflame Ink 13); these are not raw pigment drops. Retain raw model quantities in status as reference-only, not measured totals or independent cast cohorts. Schema has no explicit nominal modeled batch/result quantity field separate from observed totalQuantity; Master to review a source-preserving model representation before build admission. Do not silently set casts=40 or 100, unlisted outputs=0, or current Retail eligibility. Author's public sitemap separately lists 1,000 Cobalt and Fel Iron WorthIt export titles, but no accessible output rows; website export index classified them under Patreon and direct retrieval failed (404); no purchases or access bypass. No new empirical cohort. Prior Warmaul and matched Reaver source searches repeated already-catalogued historical observations; token T0053 remains done. No evidence JSONL because only model quantities with undocumented collection lineage and no safe measured-field mapping."
 }
