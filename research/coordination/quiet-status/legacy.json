@@ -1,7 +1,7 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-28T04:39:52.367Z",
+  "updated_at": "2026-11-28T05:40:34.701Z",
   "status": "searching",
   "task_ids": [
     "T0047",
@@ -12,22 +12,22 @@
     "T0050"
   ],
   "exact_gaps_targeted": [
-    "24995 and matched TBC gear: exact current itemLink/eligibility and original completed DE operations with output 22445/22446/22447/22449 hits and quantities",
-    "36909/23424 prospect and legacy milling: actual operation counts, named output hits, total quantities, zero bins and refunds",
-    "13866: new original profile-specific DE observations, without re-cataloguing prior studies"
+    "24995 and matched TBC armor/weapon: exact held Retail itemLink/eligibility, original completed operations with output 22445/22446/22447/22449 hit counts and quantities",
+    "36909/23424 and legacy milling: independent original per-operation or per-input data, named output counts, hit/zero bins and refunds",
+    "13866: exact modern dust identity and original independent profile-specific cohort"
   ],
   "newly_verified_fields_cohorts": [],
   "source_urls": [
-    "https://www.curseforge.com/wow/addons/thewowdb-companion/files/9640779",
-    "https://github.com/ExcEssIv3/profit"
+    "https://ids-water.com/2019/08/09/where-is-the-best-place-to-farm-fel-iron/",
+    "https://www.warcrafttavern.com/tbc/guides/disenchanting"
   ],
-  "numeric_summary": "No new qualifying independent numerical cohort, measured or source-reported mean. Additional documented recorder methodology only; no sample weights.",
+  "numeric_summary": "No new qualifying independent numerical cohort or identity correction; no sample weights or fabricated zeros.",
   "evidence_file": null,
   "preserved_prior_evidence_file": "research/v3/evidence/legacy/2026-11-26T1944-adders-tongue-original-2009-milling.jsonl",
   "preserved_prior_status_summary": "Recovered one new original historical WotLK-era milling cohort: anonymous WoW Alone comment dated October 29, 2009, Adder's Tongue 36903, 20 stacks reported milled, 229 Azure Pigment 39343 and 45 Icy Pigment 43109. Discussion indicates 20 herbs/stack and 5 herbs/mill; 400 herbs/80 nominal equivalents, not completed-cast counts. Source reported 2.86/0.56 per mill and 11.5/2.25 per stack; max five Icy and zero Icy on some stacks do not identify cast-level ranges or zeros. Preserve two historical reference rows, held for Retail eligibility and denominator evidence. Separate October 30 blog author mixed-herb ink tally reports 2.98/0.56 pigment-equivalent means per mill without exact input split, N or conversion details; held without assigning item-specific values. Targeted Warmaul/Bloodfist and Cobalt/Fel Iron searches found known historical sources/profile conflicts, no new independently identified cohort. T0053 remains done. No game actions or prices.",
-  "verified_parent_sha": "ab07343af1a53e912713e683e7396a07abb754d6",
-  "verified_commit_sha": "ab07343af1a53e912713e683e7396a07abb754d6",
-  "commit_note": "Verified pre-write branch head ab07343af1a53e912713e683e7396a07abb754d6; previous owned status blob 4ec12e164b4a27fa9857890be75083bfaa920765. Resulting status commit verified by immutable read-back separately; no self-referential commit SHA.",
+  "verified_parent_sha": "82047e03b82772a3e73684ca65e82bd0bdd1c249",
+  "verified_commit_sha": "82047e03b82772a3e73684ca65e82bd0bdd1c249",
+  "commit_note": "Verified pre-write branch head 82047e03b82772a3e73684ca65e82bd0bdd1c249; owned status blob cd12c5c6477e6fb80bd43b78a1a5adc29c1ec16c. Resulting status commit is checked by immutable read-back separately; no self-referential SHA.",
   "backlog_triage": [
     {
       "task": "T0047",
@@ -1826,10 +1826,20 @@
       "source": "https://github.com/ExcEssIv3/profit",
       "disposition": "New source screening; explicit Forever flavor, not Retail",
       "reason": "Direct public author README lines 191–198, 221–227, 240–253 describes Forever-specific DB2-based estimated bracket models and separate local recordings of material counts from disenchants, export and importer. The sharing prompt emphasizes unexpected outcomes; that alone is not proof that submitted exports are an unbiased complete sample. The example build is a recipe generation argument, not collection metadata. No public Retail target ledger identified; no actual recorded.json content inspected, no prices or model coefficients retained. Repository name absent from prior owned status and compact cutoff receipt; exhaustive scoped novelty not asserted."
+    },
+    {
+      "source": "https://ids-water.com/2019/08/09/where-is-the-best-place-to-farm-fel-iron/",
+      "disposition": "Excluded derivative Q&A; not an original prospecting cohort",
+      "reason": "Direct page lines 28–42 repeats the same Adamantite advice in two questions about Fel Iron. Approximate blue-gem chance is specifically about Adamantite and lacks named output, denominator, original cohort, collection version or skill. The page combines TBC Classic and Retail farming advice under a 2019 header, not a verifiable collection date. Do not attribute its number to Fel Iron 23424, convert mining skill to prospecting skill, or assign sample weight. Domain absent from previous owned status and compact cutoff manifest; exhaustive novelty not asserted."
+    },
+    {
+      "source": "https://www.warcrafttavern.com/tbc/guides/disenchanting",
+      "disposition": "Historical Classic reference only; direct fetch denied",
+      "reason": "Indexed guide distinguishes expansion-specific materials and character required-level brackets, not current Retail item-level brackets. Direct fetch HTTP 403; no original exact-item operations, quantity ledger, hits, zero bins or collection context verified. No measured data or current Retail profile inferred. Path absent from previous owned status and compact cutoff receipt; exhaustive novelty not asserted."
     }
   ],
   "previous_verified_evidence_sha": "bd0ae3dd28e479f8f63272f2d0f5fdf6210b7fd9",
-  "next_concrete_step": "Seek independently published Retail exact-input event logs with complete operation boundaries, itemLink/profile, material quantities/hits, zeros and refunds; exclude unexpected-only submissions or deduplicated source lists as complete denominators. Do not repeat unchanged source screens.",
+  "next_concrete_step": "Seek newly published original Retail player exports or independently documented exact-input operation receipts with complete operation boundaries and itemLink/build, material units, hits, zeros and refunds; do not repeat unchanged source screens or cutoff catalogue. Prioritize actual 24995 eligibility and Cobalt/Fel Iron per-output data.",
   "coordination_cutoff": {
     "summary": "Owner catalogue receipt reports 731 sources and 12222 scopes, 0 unresolved build rows; reuse scoped decisions.",
     "scopeCutoffResearchCommit": "0cd0bad8867e7a8d909b4ecae74f6136a3e23d42",
@@ -1839,19 +1849,19 @@
   },
   "sources_reviewed_this_run": [
     {
-      "source": "https://www.curseforge.com/wow/addons/thewowdb-companion/files/9640779",
-      "disposition": "Additional source-method context for previously screened project; no empirical admission",
-      "reason": "Original Cryptic252 Retail 0.19.2 release dated Nov 16 2026, file 9640779, versions 12.1.0/12.0.7 (lines 164–196). Its cumulative changelog 0.13.0 (lines 282–295) explicitly describes local disenchant-result recording, deduplicated and capped at 600 disenchant sources, with optional sharing through the desktop client. This qualifies the earlier Nov24 description-only screen: a collection mechanism is documented, but deduplicated source identities are not completed operation counts and the shared changelog does not establish which client flavor collected any particular result. No public target item result ledger located by exact-name site searches; no code or private exports inspected. No hit counts, material units, zeros, build/skill per event or weights admitted."
+      "source": "https://ids-water.com/2019/08/09/where-is-the-best-place-to-farm-fel-iron/",
+      "disposition": "Excluded derivative Q&A; not an original prospecting cohort",
+      "reason": "Direct page lines 28–42 repeats the same Adamantite advice in two questions about Fel Iron. Approximate blue-gem chance is specifically about Adamantite and lacks named output, denominator, original cohort, collection version or skill. The page combines TBC Classic and Retail farming advice under a 2019 header, not a verifiable collection date. Do not attribute its number to Fel Iron 23424, convert mining skill to prospecting skill, or assign sample weight. Domain absent from previous owned status and compact cutoff manifest; exhaustive novelty not asserted."
     },
     {
-      "source": "https://github.com/ExcEssIv3/profit",
-      "disposition": "New source screening; explicit Forever flavor, not Retail",
-      "reason": "Direct public author README lines 191–198, 221–227, 240–253 describes Forever-specific DB2-based estimated bracket models and separate local recordings of material counts from disenchants, export and importer. The sharing prompt emphasizes unexpected outcomes; that alone is not proof that submitted exports are an unbiased complete sample. The example build is a recipe generation argument, not collection metadata. No public Retail target ledger identified; no actual recorded.json content inspected, no prices or model coefficients retained. Repository name absent from prior owned status and compact cutoff receipt; exhaustive scoped novelty not asserted."
+      "source": "https://www.warcrafttavern.com/tbc/guides/disenchanting",
+      "disposition": "Historical Classic reference only; direct fetch denied",
+      "reason": "Indexed guide distinguishes expansion-specific materials and character required-level brackets, not current Retail item-level brackets. Direct fetch HTTP 403; no original exact-item operations, quantity ledger, hits, zero bins or collection context verified. No measured data or current Retail profile inferred. Path absent from previous owned status and compact cutoff receipt; exhaustive novelty not asserted."
     }
   ],
   "latest_run_source_date": "2026-11-27",
-  "latest_run": "Read required README, evidence-format, mechanics, worker role, queue and current catalogue receipt. Targeted Warmaul and matched TBC armor, Cobalt/Fel Iron, legacy milling and original recorder searches across Wowhead, Reddit, Blizzard forums, CurseForge, GitHub and TheWoWDB. Most results are already screened, non-Retail, or unrelated. New source-method context: TheWoWDB Companion documentation describes capped/deduplicated DE source recording and opt-in sharing, not a public operation denominator; Profit is explicitly Forever. No new qualifying numerical or identity rows. T0053 remains done. No new game actions, prices, PRs, schedule, code or production changes.",
+  "latest_run": "Read required README, evidence-format, mechanics, worker role, queue and current catalogue receipt (731 sources; zero unresolved cutoff rows). Name-based searches across Wowhead localizations, Warcraft Wiki, Reddit, guides, CurseForge and GitHub returned predominantly already reviewed sources. New Q&A screening separates Adamantite advice from Fel Iron and rejects unsupported denominator; indexed TBC guide is inaccessible and cannot establish a Retail profile. No new numerical or identity rows. Previously catalogued Ebon Pigment, Dreamleaf, Warmaul, Cobalt, Fel Iron and Runecloth observations not re-transcribed. T0053 remains done. No game actions, prices, PRs, schedule, code or production changes.",
   "new_evidence_file_this_run": null,
-  "next": "Seek independently published Retail exact-input event logs with complete operation boundaries, itemLink/profile, material quantities/hits, zeros and refunds; exclude unexpected-only submissions or deduplicated source lists as complete denominators. Do not repeat unchanged source screens.",
+  "next": "Seek newly published original Retail player exports or independently documented exact-input operation receipts with complete operation boundaries and itemLink/build, material units, hits, zeros and refunds; do not repeat unchanged source screens or cutoff catalogue. Prioritize actual 24995 eligibility and Cobalt/Fel Iron per-output data.",
   "previous_run_model_summary": "Newly recovered public author-associated WorthIt v4.0.10 fixed flip model (commit c2151f04385991d43fc496b33aa63a95ac96cfcf, committed 2022-05-07, TOC Interface 90200, author DALAGG). Raw configured Fel Iron Ore 23424 material quantity 200, results 23112 Golden Draenite=7, 23107 Shadow Draenite=10, 21929 Flame Spessarite=11, 23077 Blood Garnet=7, 23117 Azure Moonstone=6, 23079 Deep Peridot=3, 23438 Star of Elune=1, 23440 Dawnstone=1, 23441 Nightseye=1, 23439 Noble Topaz=1. Cobalt 36909 is present in ore enum but absent from that prospect model/module. Netherweave Bracers 21849 configured Quantity=100 and results Arcane Dust 22445=60, Small Prismatic Shard 22448=10, Lesser Planar Essence 22447=140; it is a separate craft-and-DE flip, not the Warmaul profile. README describes average-based valuations, DestroyingResultModule consumes fixed model data; no actual operations, input consumption, event hits, zero counts, histograms, refunds, skill/spec or collection build documented. TOC interface is addon compatibility, not collection version. Milling model uses final ink quantities (e.g. Felweed 200 -> Ethereal Ink 50, Darkflame Ink 13); these are not raw pigment drops. Retain raw model quantities in status as reference-only, not measured totals or independent cast cohorts. Schema has no explicit nominal modeled batch/result quantity field separate from observed totalQuantity; Master to review a source-preserving model representation before build admission. Do not silently set casts=40 or 100, unlisted outputs=0, or current Retail eligibility. Author's public sitemap separately lists 1,000 Cobalt and Fel Iron WorthIt export titles, but no accessible output rows; website export index classified them under Patreon and direct retrieval failed (404); no purchases or access bypass. No new empirical cohort. Prior Warmaul and matched Reaver source searches repeated already-catalogued historical observations; token T0053 remains done. No evidence JSONL because only model quantities with undocumented collection lineage and no safe measured-field mapping."
 }
