@@ -1,6 +1,6 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-28T20:09:01.772Z",
+  "updated_at": "2026-11-28T21:15:56.573Z",
   "status": "active_no_new_independent_cohort_community_97_hold_unchanged",
   "task_ids": [
     "T0026",
@@ -2269,8 +2269,9 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/proevilz/Disenchantry-Auctionator/blob/0a0d33ebdc3258c3d6ea570dc902cbe82164bbf2/README.md",
-    "https://us.forums.blizzard.com/en/wow/t/wow-forever-%E2%80%93-item-restoration-fails-despite-item-being-eligible/2429825",
+    "https://www.wowhead.com/ptr/item=250057/voidbreakers-sage-cord",
+    "https://www.wowhead.com/ptr/item=250001/disappearing-cloth-of-the-grim-jest",
+    "https://www.wowhead.com/ptr/item=250020/bindings-of-the-luminous-bloom",
     "https://github.com/Voodoobrew101/Loot-Liquidator/issues/97"
   ],
   "blockers": [
@@ -4453,30 +4454,114 @@
       "published": "2026-11-26",
       "disposition": "excluded_non_retail_restoration_anecdote",
       "reason": "Original player report explicitly describes Forever and Headmaster’s Charge with Nexus Crystal versus initial restoration requirement of Greater Eternal Essence. The recovery UI is not an independent Retail Midnight event ledger. No transferable DE eligibility or quantity/rate."
+    },
+    {
+      "url": "https://www.wowhead.com/ptr/item=250057/voidbreakers-sage-cord",
+      "input_id": 250057,
+      "disposition": "changed_cumulative_snapshot_not_independent",
+      "source_reported": {
+        "aggregate": 63,
+        "unlinked_Dawn_Crystal_occurrences": [
+          40,
+          22
+        ],
+        "output_ids": null,
+        "output_ranks": null,
+        "actual_cast_build": null,
+        "at_cast_ilvl": null,
+        "completed_casts_verified": null,
+        "totalQuantity": null,
+        "histogram": null,
+        "skill": null,
+        "specialization": null
+      },
+      "reason": "Indexed PTR 12.1.7 table reports 63, 40/22; existing live original rows midnight-20261101-090743/090744 report 65, 40/24 with output IDs 243606/243605. Direct live and PTR pages omit table. Smaller mutable snapshot is not a distinct cohort, a new completed-operation count, or a rank mapping; do not subtract, infer zero events or assume the selected 289 preview is at-cast ilvl. No cutoff recataloguing."
+    },
+    {
+      "url": "https://www.wowhead.com/ptr/item=250001/disappearing-cloth-of-the-grim-jest",
+      "input_id": 250001,
+      "disposition": "duplicate_mirrored_aggregate",
+      "source_reported": {
+        "aggregate": 8,
+        "unlinked_Dawn_Crystal_occurrences": [
+          4,
+          4
+        ]
+      },
+      "reason": "Matches existing midnight-20261101-21007/21008 exactly; direct PTR page has no raw table. No new original cohort, linked output ranks, at-cast profile or units."
+    },
+    {
+      "url": "https://www.wowhead.com/ptr/item=250020/bindings-of-the-luminous-bloom",
+      "input_id": 250020,
+      "disposition": "duplicate_existing_held_aggregate",
+      "source_reported": {
+        "aggregate": 5,
+        "unlinked_Dawn_Crystal_occurrences": [
+          2,
+          2
+        ]
+      },
+      "reason": "Matches existing midnight-20261117-1620-09/10 and midnight-20261119-0822-003/004, verified from branch originals. Direct PTR page does not expose table; neither rank IDs nor actual operation profile and quantities recovered. No new cohort."
     }
   ],
   "next_concrete_step": "Seek a genuinely new original operation/export ledger or explicit identity/profile/units delta for 272246, ranked Tin and Diamond, Copper/Silver and ten-herb milling; revisit community #97 only upon dedicated intake change or reviewed parser support. Do not repeat known source mirrors, budgets or cutoff catalogue.",
-  "verified_base_commit_sha": "7a7c6d219ef126eae027526e4f55aeac5bf69993",
+  "verified_base_commit_sha": "b3f347fab0aecbff0c6bef53cef50543cb7a5efb",
   "commit_sha": null,
   "verified_commit_sha": null,
   "commit_note": "Status commit SHA is verified externally by exact commit and branch read-back; a commit cannot embed its own SHA.",
   "new_leads_screened": [
     {
-      "url": "https://github.com/proevilz/Disenchantry-Auctionator/blob/0a0d33ebdc3258c3d6ea570dc902cbe82164bbf2/README.md",
-      "blob_sha": "d26eb89ae11d194975b3c8f7321addb709ca35c1",
-      "disposition": "excluded_non_retail_auction_cache_not_processing_receipts",
-      "reason": "New repository lead, direct publisher README explicitly targets WoW Forever and uses Auctionator browse snapshots with estimated disenchant value. Its 20-variant live-search limit and 30-minute market cache are UI settings, not casts or material receipts. No Retail Midnight observed processing cohort or transferable eligibility/yield."
+      "url": "https://www.wowhead.com/ptr/item=250057/voidbreakers-sage-cord",
+      "input_id": 250057,
+      "disposition": "changed_cumulative_snapshot_not_independent",
+      "source_reported": {
+        "aggregate": 63,
+        "unlinked_Dawn_Crystal_occurrences": [
+          40,
+          22
+        ],
+        "output_ids": null,
+        "output_ranks": null,
+        "actual_cast_build": null,
+        "at_cast_ilvl": null,
+        "completed_casts_verified": null,
+        "totalQuantity": null,
+        "histogram": null,
+        "skill": null,
+        "specialization": null
+      },
+      "reason": "Indexed PTR 12.1.7 table reports 63, 40/22; existing live original rows midnight-20261101-090743/090744 report 65, 40/24 with output IDs 243606/243605. Direct live and PTR pages omit table. Smaller mutable snapshot is not a distinct cohort, a new completed-operation count, or a rank mapping; do not subtract, infer zero events or assume the selected 289 preview is at-cast ilvl. No cutoff recataloguing."
     },
     {
-      "url": "https://us.forums.blizzard.com/en/wow/t/wow-forever-%E2%80%93-item-restoration-fails-despite-item-being-eligible/2429825",
-      "published": "2026-11-26",
-      "disposition": "excluded_non_retail_restoration_anecdote",
-      "reason": "Original player report explicitly describes Forever and Headmaster’s Charge with Nexus Crystal versus initial restoration requirement of Greater Eternal Essence. The recovery UI is not an independent Retail Midnight event ledger. No transferable DE eligibility or quantity/rate."
+      "url": "https://www.wowhead.com/ptr/item=250001/disappearing-cloth-of-the-grim-jest",
+      "input_id": 250001,
+      "disposition": "duplicate_mirrored_aggregate",
+      "source_reported": {
+        "aggregate": 8,
+        "unlinked_Dawn_Crystal_occurrences": [
+          4,
+          4
+        ]
+      },
+      "reason": "Matches existing midnight-20261101-21007/21008 exactly; direct PTR page has no raw table. No new original cohort, linked output ranks, at-cast profile or units."
+    },
+    {
+      "url": "https://www.wowhead.com/ptr/item=250020/bindings-of-the-luminous-bloom",
+      "input_id": 250020,
+      "disposition": "duplicate_existing_held_aggregate",
+      "source_reported": {
+        "aggregate": 5,
+        "unlinked_Dawn_Crystal_occurrences": [
+          2,
+          2
+        ]
+      },
+      "reason": "Matches existing midnight-20261117-1620-09/10 and midnight-20261119-0822-003/004, verified from branch originals. Direct PTR page does not expose table; neither rank IDs nor actual operation profile and quantities recovered. No new cohort."
     },
     {
       "category": "fresh_source_delta_search",
       "disposition": "no_new_qualifying_cohort",
-      "reason": "Fresh searches across Reddit, Blizzard US/EU, Wowhead and recent GitHub repository leads for DE, ranked Tin/Diamond, Copper/Silver and milling returned already logged guide/market data, existing 272246 variant previews, non-Retail reports or previously screened collectors. No new independent actual-operation cohort, explicit rank-linked units, hits, zeros, skill/spec or at-cast variant. Issue #97 read from GitHub remains open, one comment, updated 2026-11-28T16:59:43Z; no intake state change."
+      "reason": "Nov 28 freshness searches across Reddit, Blizzard forums, Wowhead, GitHub and addon publishers for DE, ranked Tin/Diamond, Copper/Silver and milling yielded already screened guides, market data, known collector releases and overlapping item-side displays. No new original complete receipt or rank/profile delta. Community #97 still open, 1 comment, updated 2026-11-28T16:59:43Z; no dedicated intake change."
     }
   ],
   "catalogue_checkpoint": {
@@ -4492,5 +4577,5 @@
     "release_status": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending",
     "worker_recataloguing": "not performed"
   },
-  "previous_verified_status_commit_sha": "434aa6d77b5d5ee700bfb6cdde918a750093ba9c"
+  "previous_verified_status_commit_sha": "09a027897d7ea73e23c1565b28a82c81abc80881"
 }
