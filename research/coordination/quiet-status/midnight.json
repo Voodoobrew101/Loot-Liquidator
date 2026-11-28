@@ -1,6 +1,6 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-28T07:09:42.954Z",
+  "updated_at": "2026-11-28T08:07:20.389Z",
   "status": "active_waiting_new_original_cohorts_community_review_pending",
   "task_ids": [
     "T0026",
@@ -2256,8 +2256,8 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/rojosinalma/salvager/blob/main/README.md",
-    "https://github.com/Shweep8/bagsmith/blob/main/README.md",
+    "https://github.com/apnotix/SexyLoot/blob/0e4154598c546d54a25f4fcb2ab529e1eed2ece4/Disenchant.lua",
+    "https://www.curseforge.com/wow/addons/profession-master/files/9853435",
     "https://github.com/Voodoobrew101/Loot-Liquidator/issues/97"
   ],
   "blockers": [
@@ -4243,37 +4243,51 @@
       "previous_blob_sha": "c1e52162948a2fab245e733e323f57be505656d5",
       "disposition": "changed_source_blob_still_non_retail",
       "reason": "Updated publisher README still explicitly targets Forever, describes local disenchant results and mock-client tests. Neither is a published Retail Midnight original cast cohort."
+    },
+    {
+      "url": "https://github.com/apnotix/SexyLoot/blob/0e4154598c546d54a25f4fcb2ab529e1eed2ece4/Disenchant.lua",
+      "blob_sha": "399c45d8b76780191013eeec6925e93504df6109",
+      "related_source": "https://www.curseforge.com/wow/addons/sexyloot/files/9861568",
+      "published": "2026-11-28",
+      "disposition": "post_cutoff_retail_ui_source_no_published_original_cohort",
+      "reason": "Exact source commit bumps 0.1.33; Disenchant.lua scans candidate quality and class, uses item/vendor/AH prices and secure cast/use actions. UNIT_SPELLCAST_SUCCEEDED is used to reset the cast bar, not as a source-linked material receipt. Publisher project includes explicit test/sample display data and generic session loot. No participant receipt dataset, actual at-cast 272246 identity, per-output counts, profile or zero-inclusive observations in reviewed module/release. Direct release page fetch failed, indexed changelog and exact GitHub source available; do not claim complete release-page inspection."
+    },
+    {
+      "url": "https://www.curseforge.com/wow/addons/profession-master/files/9853435",
+      "published": "2026-11-27",
+      "disposition": "excluded_non_retail_recipe_reference",
+      "reason": "Publisher v7.2.21 supports Classic-era and Forever flavors only; new recipe/location data are not Retail Midnight player processing operations. No independent Retail outcome cohort."
     }
   ],
-  "next_concrete_step": "Seek newly published original Retail receipts or independent community intake disposition; require actual 272246 at-cast instance, ranked 237362/237363 Tin and Diamond unlock profile, complete output/operation/refund basis. Revisit datamine lead only if raw trait export or resolved coefficients become available; never treat descriptions as measured yields.",
-  "verified_base_commit_sha": "8395c8886545082eccd0d527556faa1bd581d8c8",
+  "next_concrete_step": "Seek newly published independent Retail receipt data or a changed dedicated intake disposition. Require 272246 at-cast instance, 237362/237363 ranked Tin, 242608 unlock and gross/net input/refund basis; no repeated transcription of unchanged exhausted sources or cutoff catalogue.",
+  "verified_base_commit_sha": "e64fb94110b666395909898dd84a543062625fd2",
   "commit_sha": null,
   "verified_commit_sha": null,
   "commit_note": "Status commit SHA verified externally by exact commit and branch read-back; a commit cannot embed its own SHA.",
   "new_leads_screened": [
     {
-      "category": "changed_source_blob_screen",
+      "category": "new_release_source_screen",
       "sources": [
         {
-          "url": "https://github.com/rojosinalma/salvager/blob/main/README.md",
-          "blob_sha": "b19be68ecf83d069e9fcf5680f0cb5a636a9d378",
-          "previous_blob_sha": "2436e6a62cf0febc217049799552b73af308c527",
-          "disposition": "changed_source_blob_still_non_retail",
-          "reason": "Recent repository search surfaced a changed README. Publisher still explicitly targets Forever and uses Classic item-level DE tables, with local cost tracking. No public Retail Midnight observed operation receipts or transferable numeric yields."
+          "url": "https://github.com/apnotix/SexyLoot/blob/0e4154598c546d54a25f4fcb2ab529e1eed2ece4/Disenchant.lua",
+          "blob_sha": "399c45d8b76780191013eeec6925e93504df6109",
+          "related_source": "https://www.curseforge.com/wow/addons/sexyloot/files/9861568",
+          "published": "2026-11-28",
+          "disposition": "post_cutoff_retail_ui_source_no_published_original_cohort",
+          "reason": "Exact source commit bumps 0.1.33; Disenchant.lua scans candidate quality and class, uses item/vendor/AH prices and secure cast/use actions. UNIT_SPELLCAST_SUCCEEDED is used to reset the cast bar, not as a source-linked material receipt. Publisher project includes explicit test/sample display data and generic session loot. No participant receipt dataset, actual at-cast 272246 identity, per-output counts, profile or zero-inclusive observations in reviewed module/release. Direct release page fetch failed, indexed changelog and exact GitHub source available; do not claim complete release-page inspection."
         },
         {
-          "url": "https://github.com/Shweep8/bagsmith/blob/main/README.md",
-          "blob_sha": "36b55b7f4e006d802ba7f4d563debf2944f80a2f",
-          "previous_blob_sha": "c1e52162948a2fab245e733e323f57be505656d5",
-          "disposition": "changed_source_blob_still_non_retail",
-          "reason": "Updated publisher README still explicitly targets Forever, describes local disenchant results and mock-client tests. Neither is a published Retail Midnight original cast cohort."
+          "url": "https://www.curseforge.com/wow/addons/profession-master/files/9853435",
+          "published": "2026-11-27",
+          "disposition": "excluded_non_retail_recipe_reference",
+          "reason": "Publisher v7.2.21 supports Classic-era and Forever flavors only; new recipe/location data are not Retail Midnight player processing operations. No independent Retail outcome cohort."
         }
       ],
-      "disposition": "No new Retail cohort."
+      "disposition": "No new qualifying Retail Midnight original processing cohort."
     },
     {
       "category": "fresh_search_delta",
-      "disposition": "Named 272246 DE, rank-specific Tin/Diamond, Copper/Silver and milling queries returned already catalogued studies, equipment displays rather than at-cast items, or leveling/price guides. GitHub recent repository searches returned known leads only; no new original Retail operation ledger found. Unchanged exhausted source blobs were not transcribed again."
+      "disposition": "Recent named gear, Umbral Tin, Diamond, Copper/Silver and milling queries across web, forum/Reddit and addon releases surfaced known or nonqualifying results; no new independent numeric observations. Existing 206/321 public selected tooltip and equipped displays do not change actual at-cast identity. No cutoff backlog re-review."
     },
     {
       "category": "community_intake_change_trigger",
@@ -4288,7 +4302,7 @@
           }
         }
       ],
-      "disposition": "Repository issue search found no later issue matching current date; do not duplicate intake review."
+      "disposition": "No later issue returned by Nov 27+ issue search; dedicated intake owns the export."
     }
   ],
   "catalogue_checkpoint": {
@@ -4304,5 +4318,5 @@
     "release_status": "CurseForge publication explicitly requested; verified main build prepared; release workflow pending",
     "worker_recataloguing": "not performed"
   },
-  "previous_verified_status_commit_sha": "349132c7c5727254bed49ae2334cea837b209d20"
+  "previous_verified_status_commit_sha": "229023dbd90572f723f7b708ea3a28eef512d836"
 }
