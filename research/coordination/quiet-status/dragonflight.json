@@ -2,15 +2,15 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-28T19:33:57.731Z",
-  "status": "New historical client-table identity corroboration: 66 exact item/order/category rows across 22 Dragonflight reagent families, including nonconsecutive rank IDs; no new independent numerical processing cohort. Master review requested via this owned status; no automatic rank admission.",
+  "updated_at": "2026-11-28T20:35:07.857Z",
+  "status": "Dated Retail client-table corroboration: all 66 historical Dragonflight reagent item/order/category records match the independent 12.1.5.70783 dump (22 families, no differences). No new independent measured processing cohort; identity handoff ready for Master review.",
   "task_ids": [
     "T0020",
+    "T0046",
+    "T0019",
     "T0018",
     "T0015",
-    "T0041",
-    "T0019",
-    "T0046"
+    "T0041"
   ],
   "exact_gaps_targeted": [
     "Draconium 189143/188658, Serevite 190395/190396/190394, Khaz'gorite 190312/190313/190314 and Prismatic 194545 direct-stage completed operations, output ranks, refunds, hits and zeros",
@@ -18,7 +18,7 @@
     "Dragonflight gear DE -> 194123/194124/200113 exact input variant, profile and zero-inclusive quantities"
   ],
   "newly_verified_fields": [
-    "Historical CraftingReagentQuality raw row ID, ItemID, zero-based OrderIndex and ModifiedCraftingCategoryID for 66 rows; joined by exact category ID to 22 named ModifiedCraftingCategory records. Rank interpretation corroborated by selected independently published GoldCap labels, not a live client query."
+    "Pinned Retail build 12.1.5.70783 dated 2026-11-17: 66/66 historical DB2 row IDs, OrderIndex, ItemID, MaxDifficultyAdjustment, ReagentEffectPct and category joins match; all 22 categories contain exactly three ordered rows with matching names. This closes the specific dated-client-table corroboration gap, not historical cohort rank attribution or yield semantics."
   ],
   "newly_verified_cohorts": [],
   "new_numerical_measurements": 0,
@@ -27,25 +27,23 @@
   "current_run_evidence_file": null,
   "evidence_file": null,
   "source_links": [
-    "https://github.com/JackBorah/wow-profit-calculator/blob/5c3953a231358f32202d158a7e59470c406c09e0/calculator/wow_csv_data/CraftingReagentQuality.csv",
-    "https://github.com/JackBorah/wow-profit-calculator/blob/5c3953a231358f32202d158a7e59470c406c09e0/calculator/wow_csv_data/ModifiedCraftingCategory.csv",
-    "https://github.com/JackBorah/wow-profit-calculator/blob/5c3953a231358f32202d158a7e59470c406c09e0/calculator/old_csvs/CraftingReagentQuality_before_10.1.5.49.csv",
-    "https://github.com/JackBorah/wow-profit-calculator/blob/5c3953a231358f32202d158a7e59470c406c09e0/calculator/consume_api_async.py",
-    "https://github.com/wowdev/WoWDBDefs/blob/master/definitions/CraftingReagentQuality.dbd",
-    "https://goldcap.gg/retail/us/items/190395",
-    "https://goldcap.gg/retail/us/items/190396",
-    "https://goldcap.gg/retail/kr/items/192851",
-    "https://goldcap.gg/retail/us/items/192855",
-    "https://goldcap.gg/retail/us/items/192852",
-    "https://wago.tools/db2/CraftingReagentQuality/csv?build=10.2.7.55664",
-    "https://www.wowhead.com/ptr/spell%3D374627/dragon-isles-prospecting",
-    "https://www.method.gg/guides/what-dragonflight-herbs-do-you-need-to-mill-to-get-each-pigment",
-    "https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight",
-    "https://www.wowhead.com/news/dragonflight-jewelcrafting-analysis-wowhead-economy-weekly-wrap-up-249-329385"
+    "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/enUS/craftingreagentquality.csv",
+    "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/enUS/modifiedcraftingcategory.csv",
+    "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/README.md",
+    "https://github.com/ThingEngineering/wow-dumps/commit/06185cb997bdcabeee4b554f8b2b88429d4708e2",
+    "https://www.wowhead.com/ptr/spell=374627/dragon-isles-prospecting",
+    "https://www.reddit.com/r/woweconomy/comments/10i63zb",
+    "https://www.reddit.com/r/woweconomy/comments/zez5sj",
+    "https://www.reddit.com/r/woweconomy/comments/zjh0d0",
+    "https://thelazygoldmaker.com/i-prospected-40-000-serevite-ore-so-you-dont-have-to",
+    "https://www.wowhead.com/ptr-2/item=191465/saxifrage",
+    "https://www.wowhead.com/item=198413/serene-pigment",
+    "https://www.wowhead.com/guide/professions/inscription/overview-dragonflight",
+    "https://warcraft.wiki.gg/wiki/Disenchanting_tables"
   ],
-  "verified_parent_sha": "704ca5eb9937c7e524cedc78ca0a6383774bd520",
-  "verified_commit_sha": "704ca5eb9937c7e524cedc78ca0a6383774bd520",
-  "commit_sha_scope": "Verified pre-write research head by identical-ref compare; resulting status-only commit verified separately after write. No self-referential commit hash or evidence commit.",
+  "verified_parent_sha": "25a763c05836985165ef6382e92e55c9030fe3dd",
+  "verified_commit_sha": "25a763c05836985165ef6382e92e55c9030fe3dd",
+  "commit_sha_scope": "Pre-write branch head observed; status-only commit verified externally after write; no self-referential hash.",
   "blockers": [
     "No new independent R1 Draconium 189143, ranked Bubble Poppy 191467 or Saxifrage 191464 completed-operation ledger.",
     "No new stage-separated Prismatic/Crumbled Stone yields, actual operations, refunds, hits or zero-inclusive histograms.",
@@ -3362,11 +3360,31 @@
         "https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight",
         "https://www.wowhead.com/news/dragonflight-jewelcrafting-analysis-wowhead-economy-weekly-wrap-up-249-329385"
       ]
+    },
+    {
+      "at": "2026-11-28T20:35:07.857Z",
+      "scope": "12 named web queries and pinned Retail DB2 client metadata comparison",
+      "reason": "Bugy, 10i63zb, zez5sj, zjh0d0, Lazy Goldmaker 40k, Aary, and known guides resurfaced. No new independently attributable direct-stage completed-operation ledger. Existing source families not re-transcribed. Current client dump resolves dated rank metadata corroboration only. Search coverage not exhaustive.",
+      "whereLooked": [
+        "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/enUS/craftingreagentquality.csv",
+        "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/enUS/modifiedcraftingcategory.csv",
+        "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/README.md",
+        "https://github.com/ThingEngineering/wow-dumps/commit/06185cb997bdcabeee4b554f8b2b88429d4708e2",
+        "https://www.wowhead.com/ptr/spell=374627/dragon-isles-prospecting",
+        "https://www.reddit.com/r/woweconomy/comments/10i63zb",
+        "https://www.reddit.com/r/woweconomy/comments/zez5sj",
+        "https://www.reddit.com/r/woweconomy/comments/zjh0d0",
+        "https://thelazygoldmaker.com/i-prospected-40-000-serevite-ore-so-you-dont-have-to",
+        "https://www.wowhead.com/ptr-2/item=191465/saxifrage",
+        "https://www.wowhead.com/item=198413/serene-pigment",
+        "https://www.wowhead.com/guide/professions/inscription/overview-dragonflight",
+        "https://warcraft.wiki.gg/wiki/Disenchanting_tables"
+      ]
     }
   ],
-  "next_concrete_step": "Master: review the new historical DB2 reagent identity handoff, particularly R3 Amber and nonconsecutive Alexstraszite/Neltharite identities; confirm with dated direct client data/live read-only tooltip before current-applicability admission. Worker: seek new direct-stage processing exports and zero-inclusive casts; do not repeat this unchanged DB2 mirror or existing original studies.",
+  "next_concrete_step": "Master: review the dated 12.1.5.70783 exact-match rank metadata, especially 192851 R3 Amber and nonconsecutive gem rank IDs; apply only affected supported identity fields via existing pipeline. Worker: seek new original post-cutoff direct-stage processing logs with completed operations and refunds; do not repeat unchanged DB2 joins or known study searches.",
   "validation": {
-    "scope": "All required research instruction files and queue read on current branch, catalogue receipt checked (CLOSED_VERIFIED_CURRENT_PIPELINE); joined 66 historical quality rows to 22 categories with exactly three distinct ordered items per category; original and old CSV blob match; selected GoldCap labels corroborate ordering. No evidence JSONL because schema has no standalone rank-identity type; no processing observations invented. Status-only write, exact commit readback and changed-path check to follow."
+    "scope": "Required instructions and queue read; historical-to-dated-DB2 comparison 66/66, no differences, 22 named categories each exactly three rows. No processing evidence JSONL because standalone rank metadata has no evidence type and no new independent processing cohort. Status JSON parse checked before write; exact commit readback and changed paths verified separately."
   },
   "production_changed": false,
   "merge_performed": false,
@@ -3375,7 +3393,7 @@
   "identity_corrections": [],
   "backlog_triage": "Owner receipt CLOSED_VERIFIED_CURRENT_PIPELINE (731 sources); do not reopen assigned catalogue.",
   "current_run_context_checks": {
-    "branch_head": "e7e48d50ce16578cd14c20345c2743400d4187a5",
+    "branch_head": "25a763c05836985165ef6382e92e55c9030fe3dd",
     "required_instructions_read": [
       "research/v3/README.md",
       "research/v3/evidence-format.md",
@@ -3383,9 +3401,9 @@
       "research/v3/roles/worker.md",
       "research/v3/queue.json"
     ],
-    "search_queries": 19,
+    "search_queries": 12,
     "cutoff_manifest_status": "Current README records completed owner catalogue; no assigned backlog reopened.",
-    "community_97": "Not polled; designated reviewer owns intake."
+    "community_97": "Designated intake owns review; not polled."
   },
   "pipeline_catalogue_receipt": {
     "path": "research/coordination/backlog-catalogue-20261120.json",
@@ -3401,9 +3419,9 @@
     "scope": "Read-only owner receipt; no independent deployment claim."
   },
   "last_search_review": {
-    "at": "2026-11-28T19:33:57.731Z",
-    "scope": "New archived DB2 quality identity source; no new original numeric observations",
-    "status": "reviewable identity corroboration"
+    "at": "2026-11-28T20:35:07.857Z",
+    "scope": "Dated Retail DB2 identity verification and fresh named direct-stage source searches",
+    "status": "66 matched identity rows; no new independent numerical processing cohort"
   },
   "held_source_lead": {
     "source_url": "https://www.reddit.com/r/woweconomy/comments/1ecaqi9",
@@ -4947,5 +4965,98 @@
       "https://wago.tools/db2/CraftingReagentQuality/csv?build=10.2.7.55664"
     ],
     "request_to_master": "Review raw table join/order semantics and exact archived build; admit only affected rank identity facts where supported, especially T0020/T0046/S19 and T0041/S21. Do not treat a rank mapping as observed yields, infer cast counts, or alter existing catalogue decisions beyond affected identity fields. An in-client read-only API/tooltip check or another dated DB2 extract would close current applicability."
+  },
+  "dated_retail_db2_rank_corroboration": {
+    "classification": "Verified exact cross-build client-table identity corroboration, not measured processing data or in-game operation",
+    "source_repo": "ThingEngineering/wow-dumps",
+    "source_commit": "06185cb997bdcabeee4b554f8b2b88429d4708e2",
+    "source_commit_date": "2026-11-17T17:59:01Z",
+    "build": "12.1.5.70783",
+    "quality_csv_blob_sha": "22773a59c70706bf8f5739e347891676ccc39213",
+    "category_csv_blob_sha": "9eecd42465814f6abb5f8ddea74d5cf81cebca1e",
+    "comparison_against": "historical_db2_rank_identity_handoff (JackBorah 2023 pinned extract)",
+    "matched_rows": 66,
+    "category_count": 22,
+    "discrepancies": [],
+    "all_categories_exactly_three_rows": true,
+    "comparison_fields": [
+      "ID",
+      "OrderIndex",
+      "ItemID",
+      "MaxDifficultyAdjustment",
+      "ReagentEffectPct",
+      "ModifiedCraftingCategoryID",
+      "category display name"
+    ],
+    "key_identity_families": {
+      "Draconium": [
+        189143,
+        188658,
+        190311
+      ],
+      "Serevite": [
+        190395,
+        190396,
+        190394
+      ],
+      "Khazgorite": [
+        190312,
+        190313,
+        190314
+      ],
+      "EternityAmber": [
+        192849,
+        192850,
+        192851
+      ],
+      "Alexstraszite": [
+        192852,
+        192853,
+        192855
+      ],
+      "Ysemerald": [
+        192859,
+        192860,
+        192861
+      ],
+      "Neltharite": [
+        192862,
+        192863,
+        192865
+      ],
+      "BubblePoppy": [
+        191467,
+        191468,
+        191469
+      ],
+      "SerenePigment": [
+        198412,
+        198413,
+        198414
+      ],
+      "Saxifrage": [
+        191464,
+        191465,
+        191466
+      ],
+      "BlazingPigment": [
+        198418,
+        198419,
+        198420
+      ]
+    },
+    "rank_order": "OrderIndex 0/1/2; previously corroborated rank 1/2/3 by selected independent labels. Do not claim a specific earlier unnamed output rank from family identity alone.",
+    "sources": [
+      "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/enUS/craftingreagentquality.csv",
+      "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/enUS/modifiedcraftingcategory.csv",
+      "https://github.com/ThingEngineering/wow-dumps/blob/06185cb997bdcabeee4b554f8b2b88429d4708e2/README.md",
+      "https://github.com/ThingEngineering/wow-dumps/commit/06185cb997bdcabeee4b554f8b2b88429d4708e2"
+    ],
+    "casts": null,
+    "castsWithDrop": null,
+    "totalQuantity": null,
+    "histogram": null,
+    "baseline_admission": false,
+    "request_to_master": "Review identity-only handoff against existing scoped decisions, including R3 Eternity Amber 192851 and nonconsecutive IDs; dated-client data now corroborates all historical rows. No independent measured yields, live in-client tooltip check or automatic admission."
   }
 }
