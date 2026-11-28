@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-28T08:19:33.623Z",
-  "status": "New source screening; relative prospecting comparison held, no independent measured TWW yield or correction.",
+  "updated_at": "2026-11-28T09:19:42.860Z",
+  "status": "New source screening; reported rank-pooled green DE mean held for provenance/scope, no independent rank-specific numerical cohort or correction.",
   "task_ids": [
     "T0048",
     "T0040",
@@ -17,8 +17,8 @@
     "T0040/T0007/T0008/T0009: post-hotfix prospecting by ore/rank/unlock and real operations/refunds.",
     "T0010/T0011/T0012: Khaz Algar herb/rank-specific observed yields and complete operations."
   ],
-  "source_branch_head_reviewed": "c31b30d0cec5ba924df390ff628360e1bdf963fa",
-  "source_policy": "Five required files and queue read at immutable reviewed head; owner catalogue receipt CLOSED_VERIFIED_CURRENT_PIPELINE and enabled registry confirmed; no cutoff re-cataloguing.",
+  "source_branch_head_reviewed": "413200dd71ac43ba209e26bd392898cea15ba506",
+  "source_policy": "Five required files and queue read at immutable reviewed head; catalogue receipt CLOSED_VERIFIED_CURRENT_PIPELINE and enabled registry confirmed; no cutoff re-cataloguing.",
   "study_backlog_triage": [
     {
       "status": "admitted",
@@ -2715,12 +2715,42 @@
       "exact_inputs": null,
       "outputs": null,
       "reason": "Followed the prior ProfitProphet changelog lead to the creator's public website. Full page documents auction scans, market history and sales ledger, with no original processing sample attribution or TWW material yield tables. No independent evidence recovered from public site; do not use valuation or market data as physical output rates."
+    },
+    {
+      "status": "held",
+      "scope": "held-rank-pooled-green-profession-gear-mean-no-cohort-provenance",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1gabkel",
+      "original_cohort": null,
+      "existing_ids": null,
+      "exact_inputs": null,
+      "outputs": null,
+      "reason": "Oct 23 2024 indexed comment reports 2.85 Storm Dust per DE from greens and a 1–6 quantity range for green profession gear including blacksmith hammers. Scope of mean versus range is not unequivocally identical; original sample count, specific gear IDs/class mix, rank split, skill/spec for that mean and independence from known hammer cohorts are unknown. Direct Reddit fetch disabled. Preserve the reported aggregate mean as a lead, not a rank-specific or class-specific baseline, measured range/hit chance, or independent cohort. Separately mentioned shatter yields are not direct DE."
+    },
+    {
+      "status": "held",
+      "scope": "excluded-shatter-and-market-discussion-no-direct-de-yield",
+      "source": "https://us.forums.blizzard.com/en/wow/t/enchanting-question/2113817",
+      "original_cohort": null,
+      "existing_ids": null,
+      "exact_inputs": null,
+      "outputs": null,
+      "reason": "June 3 2025 full forum thread discusses whether Refulgent Crystals can be shattered into Gleaming Shards. No direct gear DE operations, identities or material yields; proposed exchanges are not existing recipes and prices are not physical output counts."
+    },
+    {
+      "status": "held",
+      "scope": "excluded-market-inventory-and-achievement-counts-not-cohort",
+      "source": "https://us.forums.blizzard.com/en/wow/t/refine-storm-dust-and-cloth/2130416",
+      "original_cohort": null,
+      "existing_ids": null,
+      "exact_inputs": null,
+      "outputs": null,
+      "reason": "July 10 2025 full forum thread gives AH inventory by dust rank and historical achievement statistics, not an observed item-specific disenchant cohort. Discusses proposed refining/shattering; do not convert stock counts or achievement thresholds to completed TWW processing operations or material yields."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 30,
-    "held": 178,
+    "held": 181,
     "duplicate": 7
   },
   "newly_verified_fields": [],
@@ -2729,16 +2759,16 @@
   "new_reference_only_numeric_records": 0,
   "new_no_disenchant_records": 0,
   "new_condition_records": 0,
-  "numeric_fields_advanced": "None. April 2025 R2-vs-R1 relative comparison is ambiguous and not a physical yield. Four held shard-rank rows remain unresolved.",
+  "numeric_fields_advanced": "None. New 2.85 per-DE rank-pooled Storm Dust claim retained for scope/provenance review only; not an admitted baseline.",
   "evidence_file": null,
   "evidence_files": [],
   "evidence_source_links": [],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-27T2220-gleaming-shard-live-stack-corrections.jsonl",
-  "verified_commit_sha": "c31b30d0cec5ba924df390ff628360e1bdf963fa",
+  "verified_commit_sha": "413200dd71ac43ba209e26bd392898cea15ba506",
   "verification": "Required files and queue fetched at immutable reviewed SHA; own status blob unchanged at preflight. verified_commit_sha identifies reviewed source head, not self-referential status commit; exact committed read-back required.",
   "blockers": [
-    "No original independent TWW rank/profile-specific completed processing ledger or separable physical yield located; relative-value anecdote is not a yield.",
-    "Four 232784/233338 × 219949/219951 cumulative reference rows remain held pending exact-scope deduplication and variant/profile/epoch verification."
+    "Rank-pooled green DE reported mean lacks verified scope, original independent sample attribution, item/class identity and rank split; no measured probability or rank-specific baseline.",
+    "No new independent TWW prospecting/milling paired physical input/output ledger located; prior held 232784/233338 × 219949/219951 rows require exact-scope deduplication and variant/profile/epoch verification."
   ],
   "exhausted_sources": [
     "2026-11-20: Reddit 1ftqzxp historical shatter original/commenter estimates inspected; new but unfit for direct DE numeric admission without distinct recipe method/raw ledger; do not scrape it repeatedly without author export.",
@@ -2883,23 +2913,24 @@
     "2026-11-28T05:23:48.764Z: Orbinid and Blossom Pigment wiki pages are recipe-only; Warcraft Tavern Aug 29 hotfix report duplicates known official change. No rescan of known original studies or unchanged evidence blobs.",
     "2026-11-28T06:17:49.086Z: New market-only 1fu60z7, profit-only 1fm1o2d and WowVendor enchanting leveling guide screened; no physical yield ledger. Known original sources not re-transcribed.",
     "2026-11-28T07:22:54.606Z: 1r82g3l, 8960620 screened; no independent TWW numerical yields. Avoid repeating these unchanged sources.",
-    "2026-11-28T08:19:33.623Z: 1k78h4v, forum 1931525, and ProfitProphet public site screened; unchanged pages are not new processing evidence."
+    "2026-11-28T08:19:33.623Z: 1k78h4v, forum 1931525, and ProfitProphet public site screened; unchanged pages are not new processing evidence.",
+    "2026-11-28T09:19:42.860Z: 1gabkel, forum 2113817, forum 2130416 screened; do not repeat unchanged sources. Localized Wowhead comment mirrors are the same existing cohorts, not new studies."
   ],
-  "next_concrete_step": "Seek independently published post-hotfix rank-specific source logs with paired physical inputs/outputs, e.g. original collector-linked milling or prospecting spreadsheets that expose units and profile. Do not repeat unchanged ProfitProphet site or relative-value thread. Revisit held shard rows only with new exact-scope evidence.",
-  "previous_status_updated_at": "2026-11-28T07:22:54.606Z",
+  "next_concrete_step": "Seek attributable original green profession gear study with explicit item identity, rank-specific dust quantities and completed DE operations; seek public post-hotfix prospecting/milling collector exports with physical paired inputs and outputs. Do not repeat unchanged forum threads or translated Wowhead mirrors.",
+  "previous_status_updated_at": "2026-11-28T08:19:33.623Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "checked_at_utc": "2026-11-28T08:19:33.623Z",
+    "checked_at_utc": "2026-11-28T09:19:42.860Z",
     "sources": [
-      "https://www.reddit.com/r/woweconomy/comments/1k78h4v",
-      "https://us.forums.blizzard.com/en/wow/t/jewlcrafting-and-other-professions-are-too-convoluted-in-material-cost/1931525",
-      "https://wowprofitprophet.com/"
+      "https://www.reddit.com/r/woweconomy/comments/1gabkel",
+      "https://us.forums.blizzard.com/en/wow/t/enchanting-question/2113817",
+      "https://us.forums.blizzard.com/en/wow/t/refine-storm-dust-and-cloth/2130416"
     ],
-    "summary": "Searches across Reddit, Blizzard forums, creator sites, named ore/herb studies and spreadsheets. Known sources reused without re-transcription; three distinct sources screened, no independent physical yield ledger."
+    "summary": "Searches across Reddit, Blizzard forums, Wowhead localized mirrors, public spreadsheet and collector-code queries; screened three previously unlisted sources, including a rank-pooled DE mean with unresolved original scope; no new independent eligible yield."
   },
   "source_integrity_findings": [
     {
@@ -11261,6 +11292,89 @@
       "status": "held-author-site-no-attributed-processing-study",
       "detail": "Followed the prior ProfitProphet changelog lead to the creator's public website. Full page documents auction scans, market history and sales ledger, with no original processing sample attribution or TWW material yield tables. No independent evidence recovered from public site; do not use valuation or market data as physical output rates.",
       "checked_at_utc": "2026-11-28T08:19:33.623Z"
+    },
+    {
+      "inputItemID": null,
+      "inputRank": null,
+      "outputItemID": null,
+      "outputRank": null,
+      "casts": null,
+      "inputsPerCast": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "minSeen": null,
+      "maxSeen": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": null,
+      "patch": null,
+      "build": null,
+      "refund_basis": null,
+      "source": "https://www.reddit.com/r/woweconomy/comments/1gabkel",
+      "method": "Disenchant",
+      "status": "held-rank-pooled-green-profession-gear-mean-no-cohort-provenance",
+      "detail": "Oct 23 2024 indexed comment reports 2.85 Storm Dust per DE from greens and a 1–6 quantity range for green profession gear including blacksmith hammers. Scope of mean versus range is not unequivocally identical; original sample count, specific gear IDs/class mix, rank split, skill/spec for that mean and independence from known hammer cohorts are unknown. Direct Reddit fetch disabled. Preserve the reported aggregate mean as a lead, not a rank-specific or class-specific baseline, measured range/hit chance, or independent cohort. Separately mentioned shatter yields are not direct DE.",
+      "reported_average": 2.85,
+      "reported_average_per": "cast",
+      "reported_output_family": "Storm Dust (ranks pooled)",
+      "reported_range": [
+        1,
+        6
+      ],
+      "reported_range_scope": "green profession gear including blacksmith hammer; measurement basis unknown",
+      "published": "2024-10-23",
+      "checked_at_utc": "2026-11-28T09:19:42.860Z"
+    },
+    {
+      "inputItemID": null,
+      "inputRank": null,
+      "outputItemID": null,
+      "outputRank": null,
+      "casts": null,
+      "inputsPerCast": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "minSeen": null,
+      "maxSeen": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": null,
+      "patch": null,
+      "build": null,
+      "refund_basis": null,
+      "source": "https://us.forums.blizzard.com/en/wow/t/enchanting-question/2113817",
+      "method": "Disenchant",
+      "status": "excluded-shatter-and-market-discussion-no-direct-de-yield",
+      "detail": "June 3 2025 full forum thread discusses whether Refulgent Crystals can be shattered into Gleaming Shards. No direct gear DE operations, identities or material yields; proposed exchanges are not existing recipes and prices are not physical output counts.",
+      "published": "2025-06-03",
+      "checked_at_utc": "2026-11-28T09:19:42.860Z"
+    },
+    {
+      "inputItemID": null,
+      "inputRank": null,
+      "outputItemID": null,
+      "outputRank": null,
+      "casts": null,
+      "inputsPerCast": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "zero_outcomes": null,
+      "minSeen": null,
+      "maxSeen": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": null,
+      "patch": null,
+      "build": null,
+      "refund_basis": null,
+      "source": "https://us.forums.blizzard.com/en/wow/t/refine-storm-dust-and-cloth/2130416",
+      "method": "Disenchant",
+      "status": "excluded-market-inventory-and-achievement-counts-not-cohort",
+      "detail": "July 10 2025 full forum thread gives AH inventory by dust rank and historical achievement statistics, not an observed item-specific disenchant cohort. Discusses proposed refining/shattering; do not convert stock counts or achievement thresholds to completed TWW processing operations or material yields.",
+      "published": "2025-07-10",
+      "checked_at_utc": "2026-11-28T09:19:42.860Z"
     }
   ],
   "last_source_commit_pending": false
